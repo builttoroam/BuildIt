@@ -45,12 +45,16 @@
     <Compile Include="BaseConfiguration.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DisplayNameAttribute.cs" />
+    <Compile Include="DualParameterEventArgs.cs" />
+    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="IConfigurationManager.cs" />
     <Compile Include="ILogService.cs" />
     <None Include="app.config" />
     <Compile Include="LogHelper.cs" />
     <Compile Include="NotifyBase.cs" />
     <Compile Include="ParameterEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TripleParameterEventArgs.cs" />
     <Compile Include="Utilities.cs" />
     <None Include="packages.config" />
   </ItemGroup>

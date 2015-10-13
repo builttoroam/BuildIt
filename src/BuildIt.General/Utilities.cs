@@ -3,29 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml.Linq;
 
 namespace BuildIt
 {
-    public static class EnumExtensions
-    {
-        public static TAttribute GetAttribute<TAttribute>(this Enum value)
-            where TAttribute : Attribute
-        {
-            var type = value.GetType();
-            var name = Enum.GetName(type, value);
-
-            var typeInfo = type.GetTypeInfo();
-            return typeInfo.GetDeclaredField(name)
-                .GetCustomAttributes(false)
-                .OfType<TAttribute>()
-                .SingleOrDefault();
-        }
-    }
-
     public static class Utilities
     {
 
