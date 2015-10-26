@@ -41,6 +41,7 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\Pex\Microsoft.Pex.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.General\BuildIt.General.csproj">
@@ -83,6 +84,11 @@
     <Compile Include="TripleParameterEventArgsT1T2T3Test.cs" />
     <Compile Include="TripleParameterEventArgsT1T2T3Test.op_Implicit.g.cs">
       <DependentUpon>TripleParameterEventArgsT1T2T3Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.cs" />
+    <Compile Include="UtilitiesTest.DecodeJson01.custom.cs" />
+    <Compile Include="UtilitiesTest.DecodeJson01.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Choose>

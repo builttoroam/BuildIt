@@ -31,6 +31,7 @@ namespace BuildIt
         {
             try
             {
+
                 if (string.IsNullOrWhiteSpace(jsonString)) return null;
                 var builder = Encoding.UTF8.GetBytes(jsonString);
                 using (var strm = new MemoryStream(builder))
