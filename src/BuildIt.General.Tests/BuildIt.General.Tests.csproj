@@ -50,7 +50,13 @@
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="mscorlib.4.0.0.0.Fakes">
+      <HintPath>FakesAssemblies\mscorlib.4.0.0.0.Fakes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.4.0.0.0.Fakes">
+      <HintPath>FakesAssemblies\System.4.0.0.0.Fakes.dll</HintPath>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
@@ -81,6 +87,22 @@
     <Compile Include="LogHelperTest.cs" />
     <Compile Include="LogHelperTest.LogException.g.cs">
       <DependentUpon>LogHelperTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyBaseTest.CallerMemberNoHandlerTest.g.cs">
+      <DependentUpon>NotifyBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyBaseTest.CallerMemberTest.g.cs">
+      <DependentUpon>NotifyBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyBaseTest.cs" />
+    <Compile Include="NotifyBaseTest.ExpressionNoHandlerTest.g.cs">
+      <DependentUpon>NotifyBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyBaseTest.ExpressionTest.g.cs">
+      <DependentUpon>NotifyBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyBaseTest.InvalidExpressionTest.g.cs">
+      <DependentUpon>NotifyBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ParameterEventArgsTTest.Constructor.g.cs">
       <DependentUpon>ParameterEventArgsTTest.cs</DependentUpon>
@@ -196,6 +218,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Factories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Fakes Include="Fakes\System.fakes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Fakes Include="Fakes\mscorlib.fakes" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">

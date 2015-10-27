@@ -17,7 +17,8 @@ namespace BuildIt
         protected virtual void OnPropertyChanged<TValue>(Expression<Func<TValue>> selector)
         {
             var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs((selector.Body as MemberExpression)?.Member.Name));
+            var name = (selector.Body as MemberExpression)?.Member.Name;
+            handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
