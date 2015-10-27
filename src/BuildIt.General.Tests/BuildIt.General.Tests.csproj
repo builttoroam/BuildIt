@@ -37,11 +37,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BuildIt.General.Fakes">
+      <HintPath>FakesAssemblies\BuildIt.General.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ExtendedReflection, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\Pex\Microsoft.ExtendedReflection.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Pex.Framework">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\Pex\Microsoft.Pex.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.General\BuildIt.General.csproj">
@@ -85,11 +98,104 @@
     <Compile Include="TripleParameterEventArgsT1T2T3Test.op_Implicit.g.cs">
       <DependentUpon>TripleParameterEventArgsT1T2T3Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="UtilitiesTest.AppendCommaIfNeeded.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.AppendIfNotNullOrEmpty.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.AppendOnCondition.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.Combine.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.ConvertToDateTimeFromUnixTimestamp.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.CopyToStream.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UtilitiesTest.cs" />
     <Compile Include="UtilitiesTest.DecodeJson01.custom.cs" />
     <Compile Include="UtilitiesTest.DecodeJson01.g.cs">
       <DependentUpon>UtilitiesTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="UtilitiesTest.DoForEach.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.DoIfNotNull.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.EncodeJson.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.EnumParse.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.ExecuteIfNotNull.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.Fill.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.FriendlyDateFormat.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.ReadObject.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.Replace.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeAttributeValue.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeAttributeValue01.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeDecendentValue.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeDecendentValue01.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeDictionaryValue.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeElementValue.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeElementValue01.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeRaise01.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeRaise02.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeRaise03.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.SafeRaise04.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.ToDate.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.ToDouble.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UtilitiesTest.ToInt.g.cs">
+      <DependentUpon>UtilitiesTest.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Fakes Include="Fakes\BuildIt.General.fakes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Factories\" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">

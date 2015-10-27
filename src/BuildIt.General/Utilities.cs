@@ -16,7 +16,7 @@ namespace BuildIt
         {
             try
             {
-                var decoded = DecodeJson(jsonString, typeof(T));
+                var decoded = InternalDecodeJson(jsonString, typeof(T));
                 if (decoded == null) return default(T);
                 return (T)decoded;
             }
@@ -32,19 +32,24 @@ namespace BuildIt
             try
             {
 
-                if (string.IsNullOrWhiteSpace(jsonString)) return null;
-                var builder = Encoding.UTF8.GetBytes(jsonString);
-                using (var strm = new MemoryStream(builder))
-                {
-                    var serializer = new DataContractJsonSerializer(jsonType);
-                    var obj = serializer.ReadObject(strm);
-                    return obj;
-                }
+                return InternalDecodeJson(jsonString, jsonType);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return null;
+            }
+        }
+
+        private static object InternalDecodeJson(string jsonString, Type jsonType)
+        {
+            if (string.IsNullOrWhiteSpace(jsonString)) return null;
+            var builder = Encoding.UTF8.GetBytes(jsonString);
+            using (var strm = new MemoryStream(builder))
+            {
+                var serializer = new DataContractJsonSerializer(jsonType);
+                var obj = serializer.ReadObject(strm);
+                return obj;
             }
         }
 
@@ -67,16 +72,19 @@ namespace BuildIt
 
      
 
-        public static void DoForEach<T>(this IEnumerable<T> source, Action<T> action)
+        public static bool DoForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
+            if (source == null || action == null) return false;
             foreach (var item in source)
             {
                 action(item);
             }
+            return true;
         }
 
         public static TList Fill<TList, T>(this TList source, IEnumerable<T> items) where TList : IList<T>
         {
+            if (source == null || items == null) return source;
             if (items != null)
             {
                 foreach (var item in items)
@@ -89,6 +97,7 @@ namespace BuildIt
 
         public static TList Replace<TList, T>(this TList source, IEnumerable<T> newItems) where TList : IList<T>
         {
+            if (source == null || newItems == null) return source;
             source.Clear();
             source.Fill(newItems);
             return source;
@@ -98,30 +107,44 @@ namespace BuildIt
 
         public static StringBuilder AppendCommaIfNeeded(this StringBuilder sb)
         {
-            if (sb.Length > 0) sb.Append(",");
+            if (sb!=null && sb.Length > 0) sb.Append(",");
             return sb;
         }
         public static StringBuilder AppendOnCondition(this StringBuilder sb, Func<bool> condition, string toAppend)
         {
-            if (condition()) sb.Append(toAppend);
+            if (sb!=null && condition!=null && condition()) sb.Append(toAppend);
             return sb;
         }
 
         public static StringBuilder AppendIfNotNullOrEmpty(this StringBuilder sb, string toAppend)
         {
-            if (!string.IsNullOrEmpty(toAppend)) sb.Append(toAppend);
+            if (sb!=null && !string.IsNullOrEmpty(toAppend)) sb.Append(toAppend);
             return sb;
         }
 
 
 
-        public static void CopyToStream(this Stream sourceStream, Stream destinationStream)
+        public static bool CopyToStream(this Stream sourceStream, Stream destinationStream)
         {
-            var readWriteBuffer = new byte[1000];
-            int cnt;
-            while ((cnt = sourceStream.Read(readWriteBuffer, 0, readWriteBuffer.Length)) > 0)
+            if (sourceStream == null || 
+                !sourceStream.CanRead ||
+                destinationStream == null ||
+                !destinationStream.CanWrite 
+                ) return false;
+            try
             {
-                destinationStream.Write(readWriteBuffer, 0, cnt);
+                var readWriteBuffer = new byte[1000];
+                int cnt;
+                while ((cnt = sourceStream.Read(readWriteBuffer, 0, readWriteBuffer.Length)) > 0)
+                {
+                    destinationStream.Write(readWriteBuffer, 0, cnt);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
             }
         }
 
@@ -225,16 +248,18 @@ namespace BuildIt
 
 
 
-        public static void DoIfNotNull<T>(this T item, Action<T> action) where T : class
+        public static bool DoIfNotNull<T>(this T item, Action<T> action) where T : class
         {
-            if (item == null) return;
+            if (item == null || action==null) return false;
             action(item);
+            return true;
         }
 
-        public static void ExecuteIfNotNull(this object instance, Action method)
+        public static bool ExecuteIfNotNull(this object instance, Action method)
         {
-            if (instance == null) return;
+            if (instance == null || method==null) return false;
             method();
+            return true;
         }
 
 
