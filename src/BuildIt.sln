@@ -1,13 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24622.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.General", "BuildIt.General\BuildIt.General.csproj", "{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.General.Tests", "BuildIt.General.Tests\BuildIt.General.Tests.csproj", "{18F7DCCA-467D-4B0E-B7B8-9FB19A023CF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Tests", "BuildIt.Lifecycle.Tests\BuildIt.Lifecycle.Tests.csproj", "{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Synchronization", "BuildIt.Synchronization\BuildIt.Synchronization.csproj", "{CC098E36-DBA0-45A7-BF77-B8DD282937F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Synchronization.Tests", "BuildIt.Synchronization.Tests\BuildIt.Synchronization.Tests.csproj", "{911CB710-7F03-4774-8115-3747085F6DC2}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -21,6 +37,22 @@ Global
 		{18F7DCCA-467D-4B0E-B7B8-9FB19A023CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18F7DCCA-467D-4B0E-B7B8-9FB19A023CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18F7DCCA-467D-4B0E-B7B8-9FB19A023CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA40C3D1-C786-4A96-89D3-78D3AF17A437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA40C3D1-C786-4A96-89D3-78D3AF17A437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA40C3D1-C786-4A96-89D3-78D3AF17A437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA40C3D1-C786-4A96-89D3-78D3AF17A437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC098E36-DBA0-45A7-BF77-B8DD282937F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC098E36-DBA0-45A7-BF77-B8DD282937F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC098E36-DBA0-45A7-BF77-B8DD282937F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC098E36-DBA0-45A7-BF77-B8DD282937F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{911CB710-7F03-4774-8115-3747085F6DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{911CB710-7F03-4774-8115-3747085F6DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{911CB710-7F03-4774-8115-3747085F6DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{911CB710-7F03-4774-8115-3747085F6DC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

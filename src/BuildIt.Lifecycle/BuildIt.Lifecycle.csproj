@@ -5,22 +5,16 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}</ProjectGuid>
+    <ProjectGuid>{FA40C3D1-C786-4A96-89D3-78D3AF17A437}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt</RootNamespace>
-    <AssemblyName>BuildIt.General</AssemblyName>
+    <RootNamespace>BuildIt.Lifecycle</RootNamespace>
+    <AssemblyName>BuildIt.Lifecycle</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -42,23 +36,56 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseConfiguration.cs" />
-    <Compile Include="ConfigurationManager.cs" />
-    <Compile Include="DisplayNameAttribute.cs" />
-    <Compile Include="DualParameterEventArgs.cs" />
-    <Compile Include="EnumExtensions.cs" />
-    <Compile Include="IConfigurationManager.cs" />
-    <Compile Include="ILogService.cs" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
     <None Include="app.config" />
-    <Compile Include="LogHelper.cs" />
-    <Compile Include="NotifyBase.cs" />
-    <Compile Include="ParameterEventArgs.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TripleParameterEventArgs.cs" />
-    <Compile Include="Utilities.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationRegion.cs" />
+    <Compile Include="ISettingsService.cs" />
+    <Compile Include="IUiContext.cs" />
+    <Compile Include="RegionManager.cs" />
+    <Compile Include="RootApplication.cs" />
+    <Compile Include="States\BaseStateDefinition.cs" />
+    <Compile Include="States\BaseStateManager.cs" />
+    <Compile Include="States\BaseTransitionDefinition.cs" />
+    <Compile Include="States\IApplicationRegion.cs" />
+    <Compile Include="States\StateHelper.cs" />
+    <Compile Include="States\ViewModel\BaseViewModel.cs" />
+    <Compile Include="States\ViewModel\IAboutToLeaveViewModelState.cs" />
+    <Compile Include="States\ViewModel\IArrivingViewModelState.cs" />
+    <Compile Include="States\ViewModel\ICanRegisterDependencies.cs" />
+    <Compile Include="States\ViewModel\IGenerateViewModel.cs" />
+    <Compile Include="States\IHasStateManager.cs" />
+    <Compile Include="States\IStateDefinition.cs" />
+    <Compile Include="States\IStateManager.cs" />
+    <Compile Include="States\ITransitionDefinition.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\StateEventArgs.cs" />
+    <Compile Include="States\ViewModel\IHasCurrentViewModel.cs" />
+    <Compile Include="States\ViewModel\ILeavingViewModelState.cs" />
+    <Compile Include="States\ViewModel\IViewModelStateDefinition.cs" />
+    <Compile Include="States\ViewModel\IViewModelStateManager.cs" />
+    <Compile Include="States\ViewModel\IViewModelTransitionDefinition.cs" />
+    <Compile Include="States\ViewModel\ViewModelStateDefinition.cs" />
+    <Compile Include="States\ViewModel\ViewModelStateHelper.cs" />
+    <Compile Include="States\ViewModel\ViewModelStateManager.cs" />
+    <Compile Include="States\ViewModel\ViewModelTransitionDefinition.cs" />
+    <Compile Include="UIContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Extras.CommonServiceLocator, Version=3.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.CommonServiceLocator.3.2.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.Extras.CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BuildIt.General, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BuildIt.General.0.1.1.0\lib\portable-net45+dnxcore50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\BuildIt.General.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
