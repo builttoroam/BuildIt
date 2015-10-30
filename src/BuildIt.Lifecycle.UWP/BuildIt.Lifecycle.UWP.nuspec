@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>0.1.1.0</version>
+    <title>BuildIt.Lifecycle.UWP</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://www.builttoroam.com</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UWP Lifecycle Implementation</description>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+</package>

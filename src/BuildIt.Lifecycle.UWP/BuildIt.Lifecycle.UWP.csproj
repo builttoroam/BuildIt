@@ -117,6 +117,7 @@
     <Content Include="Properties\BuiltToRoam.Lifecycle.UWP.rd.xml" />
   </ItemGroup>
   <Import Project="..\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems" Label="Shared" />
+  <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
