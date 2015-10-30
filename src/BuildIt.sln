@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.UWP", "Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Win8x", "BuildIt.Lifecycle.Win8x\BuildIt.Lifecycle.Win8x.csproj", "{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{91AB0555-948A-41AD-A08B-306240425E9A}"
+	ProjectSection(SolutionItems) = preProject
+		..\tools\nuget.exe = ..\tools\nuget.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
