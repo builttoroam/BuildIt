@@ -139,7 +139,6 @@
       <DependentUpon>UtilitiesTest.cs</DependentUpon>
     </Compile>
     <Compile Include="UtilitiesTest.cs" />
-    <Compile Include="UtilitiesTest.DecodeJson01.custom.cs" />
     <Compile Include="UtilitiesTest.DecodeJson01.g.cs">
       <DependentUpon>UtilitiesTest.cs</DependentUpon>
     </Compile>
