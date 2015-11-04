@@ -84,6 +84,7 @@
     <Compile Include="EnumExtensionsTest.GetAttributeTest.g.cs">
       <DependentUpon>EnumExtensionsTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Factories\DictionaryFactory.cs" />
     <Compile Include="LogHelperTest.cs" />
     <Compile Include="LogHelperTest.LogException.g.cs">
       <DependentUpon>LogHelperTest.cs</DependentUpon>
@@ -215,9 +216,7 @@
   <ItemGroup>
     <Fakes Include="Fakes\BuildIt.General.fakes" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Factories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Fakes Include="Fakes\System.fakes" />
   </ItemGroup>

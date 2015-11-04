@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +10,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
+using BuildIt.Lifecycle.States.ViewModel;
 
 namespace BuildIt.Lifecycle
 {
@@ -107,16 +109,19 @@ namespace BuildIt.Lifecycle
         }
     }
 
-    public class FrameNavigation<TState,TTransition> 
+    public class FrameNavigation<TState,TTransition>:IHasCurrentViewModel 
         where TState : struct
         where TTransition:struct
     {
-        public IStateManager<TState, TTransition> StateManager { get; }
+        public INotifyPropertyChanged CurrentViewModel => StateManager?.CurrentViewModel;
+
+
+        public IViewModelStateManager<TState, TTransition> StateManager { get; }
 
         private Frame RootFrame { get; }
 
         public FrameNavigation(Frame rootFrame,
-            IHasStateManager<TState, TTransition> hasStateManager,
+            IHasViewModelStateManager<TState, TTransition> hasStateManager,
             string registerAs = null)
         {
             var stateManager = hasStateManager.StateManager;
