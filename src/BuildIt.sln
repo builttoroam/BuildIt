@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24627.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.General", "BuildIt.General\BuildIt.General.csproj", "{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}"
 EndProject
@@ -28,14 +28,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{91AB0555
 		..\tools\nuget.exe = ..\tools\nuget.exe
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.MvvmCross", "BuildIt.MvvmCross\BuildIt.MvvmCross.csproj", "{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
-		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
@@ -179,6 +181,22 @@ Global
 		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x64.Build.0 = Release|Any CPU
 		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x86.ActiveCfg = Release|Any CPU
 		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x86.Build.0 = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|ARM.Build.0 = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|ARM.ActiveCfg = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|ARM.Build.0 = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|x64.Build.0 = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
