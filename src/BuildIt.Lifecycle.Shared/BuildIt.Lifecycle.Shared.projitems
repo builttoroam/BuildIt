@@ -10,16 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BasePage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolBoldConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolOpacityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\CaseConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FrameNavigation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UniversalUIContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VisualStateChanger.cs" />
   </ItemGroup>
 </Project>

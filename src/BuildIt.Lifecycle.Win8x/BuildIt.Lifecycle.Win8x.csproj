@@ -83,6 +83,7 @@
   </ItemGroup>
   <Import Project="..\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems" Label="Shared" />
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
+  <Import Project="..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
