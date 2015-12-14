@@ -14,7 +14,7 @@ using Cirrious.MvvmCross.WindowsCommon.Views;
 using Cirrious.MvvmCross.WindowsStore.Views;
 
 #endif
-#if WINDOWS_PHONE_APP || WINDOWS_UAP
+#if WINDOWS_PHONE_APP || WINDOWS_UWP
 using Windows.Phone.UI.Input;
 #endif
 #else
@@ -35,7 +35,7 @@ namespace BuiltToRoam.MvvmCross.UI.Views
 {
     public class BaseStateEnabledPage :
 #if NETFX_CORE && !WIN8
-        MvxWindowsPage 
+        MvxWindowsPage
 #elif WINDOWS_PHONE
  MvxPhonePage
 #else
@@ -57,6 +57,8 @@ namespace BuiltToRoam.MvvmCross.UI.Views
         }
 
 #if WINDOWS_UWP
+        public static bool AutomaticallyShowAppViewBackButton { get; set; } = true;
+
         public virtual bool DisplayAppViewBackButton { get; } = true;
 
         public virtual bool CanSubscribeToBackRequest { get; } = true;
@@ -77,26 +79,32 @@ namespace BuiltToRoam.MvvmCross.UI.Views
 #if WINDOWS_PHONE_APP
                 HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
-#elif WINDOWS_UAP
+#elif WINDOWS_UWP
                 if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
                 {
                     Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
                 }
-#elif WINDOWS_UWP
+
                 if (CanSubscribeToBackRequest)
                 {
                     SubscribeToBackRequestedEvent();
                 }
-                if (DisplayAppViewBackButton)
+                if (AutomaticallyShowAppViewBackButton)
                 {
-                    var rootFrame = Window.Current.Content as Frame;
-                    if (rootFrame != null)
+                    if (DisplayAppViewBackButton)
                     {
-                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = rootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                        var rootFrame = Window.Current.Content as Frame;
+                        if (rootFrame != null)
+                        {
+                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                                rootFrame.CanGoBack
+                                    ? AppViewBackButtonVisibility.Visible
+                                    : AppViewBackButtonVisibility.Collapsed;
+                        }
                     }
                 }
 #endif
-                if (GoBackViewModel!=null)
+                if (GoBackViewModel != null)
                 {
                     GoBackViewModel.ClearPreviousViews += ClearViews;
                 }
@@ -164,7 +172,7 @@ namespace BuiltToRoam.MvvmCross.UI.Views
 
         protected async virtual Task OnNavigatedToCompleted()
         {
-            
+
         }
 
         private void ClearViews(object sender, EventArgs e)
@@ -191,7 +199,7 @@ namespace BuiltToRoam.MvvmCross.UI.Views
             }
         }
 
-#if WINDOWS_PHONE_APP || WINDOWS_UAP
+#if WINDOWS_PHONE_APP || WINDOWS_UWP
         async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
             var gb = GoBackViewModel;
@@ -259,7 +267,7 @@ namespace BuiltToRoam.MvvmCross.UI.Views
 #if !NETFX_CORE
                             EventHandler eventHandler = null;
 #else
-                        EventHandler<object> eventHandler = null;
+                            EventHandler<object> eventHandler = null;
 #endif
                             eventHandler = (s, es) =>
                             {
@@ -328,12 +336,11 @@ namespace BuiltToRoam.MvvmCross.UI.Views
 #if WINDOWS_PHONE_APP
                 HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
 
-#elif WINDOWS_UAP
-                 if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
-            }
 #elif WINDOWS_UWP
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+                {
+                    Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+                }
                 if (CanSubscribeToBackRequest)
                 {
                     UnsubscribeFromBackRequestedEvent();

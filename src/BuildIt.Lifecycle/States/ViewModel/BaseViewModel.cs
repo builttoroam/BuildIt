@@ -2,9 +2,9 @@
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public class BaseViewModel:NotifyBase, ICanRegisterDependencies
+    public class BaseViewModel:NotifyBase, ICanRegisterDependencies, IRequiresUIAccess
     {
-        public UIContext UIContext { get; } = new UIContext();
+        public UIExecutionContext UIContext { get; } = new UIExecutionContext();
 
         public virtual void RegisterDependencies(IContainer container)
         {

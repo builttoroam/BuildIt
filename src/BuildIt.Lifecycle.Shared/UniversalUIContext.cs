@@ -9,6 +9,7 @@ namespace BuildIt.Lifecycle
     {
         public async Task RunOnUIThreadAsync(Func<Task> action)
         {
+
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await action());
              
         }

@@ -1,13 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
-    public class UIContext
+    public class UIExecutionContext
     {
-        private IUIContext runContext;
-        private IUIContext RunContext => runContext ?? (runContext = ServiceLocator.Current.GetInstance<IUIContext>());
+        public IUIExecutionContext RunContext { get; set; }
 
         public async Task RunAsync(Action action)
         {
@@ -19,7 +17,14 @@ namespace BuildIt.Lifecycle
         public async Task RunAsync(Func<Task> action)
         {
             var context = RunContext;
-            await context.RunOnUIThreadAsync(action);
+            if (context.IsRunningOnUIThread)
+            {
+                await action();
+            }
+            else
+            {
+                await context.RunOnUIThreadAsync(action);
+            }
         }
     }
 }

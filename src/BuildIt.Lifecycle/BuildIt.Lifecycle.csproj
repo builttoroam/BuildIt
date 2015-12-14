@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="ApplicationRegion.cs" />
     <Compile Include="ISettingsService.cs" />
-    <Compile Include="IUiContext.cs" />
+    <Compile Include="IUIContext.cs" />
     <Compile Include="RegionManager.cs" />
     <Compile Include="RootApplication.cs" />
     <Compile Include="States\BaseStateDefinition.cs" />
