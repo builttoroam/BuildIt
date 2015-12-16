@@ -40,6 +40,7 @@ namespace BuildIt.Lifecycle
             var manager = mgr as IHasCurrentViewModel;
             $"Found current view model manager? '{manager!=null}'".Log();
             var dc = manager?.CurrentViewModel;
+
             $"Found data context? '{dc!=null}'".Log();
             DataContext = dc;
 
@@ -67,6 +68,12 @@ namespace BuildIt.Lifecycle
                         var parm = inf.GenericTypeArguments;
                         var vsc = Activator.CreateInstance(vsct.MakeGenericType(parm), this, p.GetValue(dc));
                         "Instance created".Log();
+
+                        var uiRequired = p.GetValue(dc) as IRequiresUIAccess;
+                        if (uiRequired != null)
+                        {
+                            uiRequired.UIContext.RunContext = (mgr as IRequiresUIAccess)?.UIContext.RunContext;
+                        }
                     }
                 }
             }

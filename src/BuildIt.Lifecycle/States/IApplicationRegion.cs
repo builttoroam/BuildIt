@@ -5,7 +5,7 @@ using BuildIt.Lifecycle.States.ViewModel;
 
 namespace BuildIt.Lifecycle.States
 {
-    public interface IApplicationRegion: ICanRegisterDependencies
+    public interface IApplicationRegion: ICanRegisterDependencies, IRegisterForUIAccess
     {
         string RegionId { get; set; }
 

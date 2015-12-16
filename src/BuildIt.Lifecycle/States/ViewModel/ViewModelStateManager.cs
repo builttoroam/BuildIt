@@ -7,7 +7,8 @@ using Autofac;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public class ViewModelStateManager<TState, TTransition> : BaseStateManager<TState, TTransition>, IViewModelStateManager<TState,TTransition>
+    public class ViewModelStateManager<TState, TTransition> : 
+        BaseStateManager<TState, TTransition>, IViewModelStateManager<TState,TTransition>, IRequiresUIAccess
         where TState : struct
         where TTransition : struct
     {
@@ -137,6 +138,9 @@ namespace BuildIt.Lifecycle.States.ViewModel
             ViewModels[vm.GetType()] = vm;
             CurrentViewModel = vm;
 
+            var requireUI = vm as IRequiresUIAccess;
+            requireUI.UIContext.RunContext = UIContext.RunContext;
+
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             var arrived = vm as IArrivingViewModelState; 
             if (arrived != null)
@@ -191,6 +195,12 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 cb.RegisterType(state.ViewModelType);
             }
             cb.Update(container);
+        }
+
+        public UIExecutionContext UIContext { get; } = new UIExecutionContext();
+        public void RegisterForUIAccess(IRequiresUIAccess manager)
+        {
+            manager.UIContext.RunContext = UIContext.RunContext;
         }
     }
 }

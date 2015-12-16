@@ -5,7 +5,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
     public interface IViewModelStateManager<TState, TTransition> :
         ICanRegisterDependencies,
         IStateManager<TState, TTransition>,
-        IHasCurrentViewModel
+        IHasCurrentViewModel, IRegisterForUIAccess
         where TState : struct
         where TTransition : struct
     {

@@ -11,7 +11,7 @@ namespace BuildIt
 
         protected string Value([CallerMemberName] string propertyName = null)
         {
-            return propertyName == null ? null : Data.SafeDictionaryValue<string, string, string>(propertyName);
+            return propertyName == null ? null : Data.SafeValue<string, string, string>(propertyName);
         }
 
         protected BaseConfiguration(IDictionary<Expression<Func<string>>, string> initializers=null)

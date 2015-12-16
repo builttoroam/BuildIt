@@ -5,14 +5,22 @@ using Windows.UI.Core;
 
 namespace BuildIt.Lifecycle
 {
-    public class UniversalUIContext : IUIContext
+    public class UniversalUIContext : IUIExecutionContext
     {
+        private CoreDispatcher Dispatcher { get; set; }
+
+        public UniversalUIContext(CoreDispatcher dispatcher)
+        {
+            Dispatcher = dispatcher;
+        }
+
         public async Task RunOnUIThreadAsync(Func<Task> action)
         {
 
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await action());
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await action());
              
         }
 
+        public bool IsRunningOnUIThread => Dispatcher.HasThreadAccess;
     }
 }

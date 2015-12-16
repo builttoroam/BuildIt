@@ -15,4 +15,9 @@ namespace BuildIt.Lifecycle
     {
         UIExecutionContext UIContext { get; }
     }
+
+    public interface IRegisterForUIAccess: IRequiresUIAccess
+    {
+        void RegisterForUIAccess(IRequiresUIAccess manager);
+    }
 }

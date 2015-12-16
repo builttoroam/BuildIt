@@ -16,7 +16,7 @@ namespace BuildIt
 
         public void SelectConfiguration(TConfigurationKey key)
         {
-            Current = Configurations.SafeDictionaryValue<TConfigurationKey, TConfiguration, TConfiguration>(key);
+            Current = Configurations.SafeValue<TConfigurationKey, TConfiguration, TConfiguration>(key);
         }
 
         public TConfiguration Current { get; private set; }

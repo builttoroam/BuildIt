@@ -181,7 +181,14 @@ namespace BuildIt
         public const string PageStateKey = "Page";
 
 
-        public static TReturn SafeDictionaryValue<TKey, TValue, TReturn>(this IDictionary<TKey, TValue> dictionary, TKey key)
+        [Obsolete("Use SafeValue instead")]
+        public static TReturn SafeDictionaryValue<TKey, TValue, TReturn>(this IDictionary<TKey, TValue> dictionary,
+            TKey key)
+        {
+            return dictionary.SafeValue<TKey, TValue, TReturn>(key);
+        }
+
+        public static TReturn SafeValue<TKey, TValue, TReturn>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             if (dictionary == null) return default(TReturn);
             TValue val;
@@ -196,7 +203,20 @@ namespace BuildIt
 
         }
 
-      
+        [Obsolete("Use SafeValue instead")]
+        public static TValue SafeDictionaryValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
+        {
+            return SafeValue(dictionary, key);
+        }
+
+        public static TValue SafeValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
+        {
+            if (dictionary == null) return default(TValue);
+            TValue val;
+            return dictionary.TryGetValue(key, out val) ? val : default(TValue);
+        }
+
+
 
         public static string SafeDecendentValue(this XElement element, string name)
         {

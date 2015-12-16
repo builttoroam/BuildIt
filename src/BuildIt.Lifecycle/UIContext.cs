@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle
@@ -17,6 +18,12 @@ namespace BuildIt.Lifecycle
         public async Task RunAsync(Func<Task> action)
         {
             var context = RunContext;
+            if (context == null)
+            {
+                await action();
+                Debug.WriteLine("UI Context not defined");
+                return;
+            }
             if (context.IsRunningOnUIThread)
             {
                 await action();

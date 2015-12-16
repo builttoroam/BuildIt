@@ -1,0 +1,19 @@
+﻿<lifecycle:BasePage
+    x:Class="StateByState.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StateByState"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uwp="using:BuildIt.Lifecycle.UWP"
+    xmlns:lifecycle="using:BuildIt.Lifecycle"
+    mc:Ignorable="d">
+
+    <StackPanel VerticalAlignment="Center" Background ="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+<TextBlock Text="{Binding Data}"></TextBlock>
+        <Button Click="{x:Bind CurrentViewModel.Test}">Test</Button>
+        <Button Click="{x:Bind CurrentViewModel.Three}">Page Thre</Button>
+        <Button Click="{x:Bind CurrentViewModel.Spawn}">Another Window</Button>
+
+    </StackPanel>
+</lifecycle:BasePage>

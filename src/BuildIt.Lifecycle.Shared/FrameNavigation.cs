@@ -41,6 +41,7 @@ namespace BuildIt.Lifecycle
 #if WINDOWS_UWP
             var newView = CoreApplication.CreateNewView();
             int newViewId = 0;
+            e.Parameter1.UIContext.RunContext = new UniversalUIContext(newView.Dispatcher);
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 var frame = new Frame();

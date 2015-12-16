@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Hello">Hello World, Click Me!</string>
+    <string name="ApplicationName">StateByState.Android</string>
+    <string name="FirstTitle">First</string>
+    <string name="SecondTitle">Second</string>
+    <string name="ThirdTitle">Third</string>
+</resources>
