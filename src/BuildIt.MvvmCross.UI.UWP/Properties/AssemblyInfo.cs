@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BuildIt.MvvmCross.UI.UWP")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("UI layer support for visual states with mvvmcross")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("BuildIt.MvvmCross.UI.UWP")]
 [assembly: ComVisible(false)]
