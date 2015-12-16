@@ -126,10 +126,16 @@
     </SDKReference>
   </ItemGroup>
   <Import Project="..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems" Label="Shared" />
+  <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+"$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

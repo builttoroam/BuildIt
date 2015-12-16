@@ -194,4 +194,5 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-/src/BuildIt.Lifecycle.UWP/project.lock.json
+*.lock.json
+*.targets
