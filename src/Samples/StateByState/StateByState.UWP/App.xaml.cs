@@ -41,27 +41,27 @@ namespace StateByState
             }
 #endif
 
-            var rootFrame = Window.Current.Content as Frame;
+            //var rootFrame = Window.Current.Content as Frame;
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+            //// Do not repeat app initialization when the Window already has content,
+            //// just ensure that the window is active
+            //if (rootFrame == null)
+            //{
+            //    // Create a Frame to act as the navigation context and navigate to the first page
+            //    rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+            //    rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                }
+            //    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //    {
+            //    }
 
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-            }
+            //    // Place the frame in the current Window
+            //    Window.Current.Content = rootFrame;
+            //}
 
-            if (rootFrame.Content == null)
-            {
+            //if (rootFrame.Content == null)
+            //{
 
                 NavigationHelper.Register<PageStates, MainPage>(PageStates.Main);
                 NavigationHelper.Register<PageStates, SecondPage>(PageStates.Second);
@@ -69,17 +69,18 @@ namespace StateByState
                 NavigationHelper.Register<SecondaryStates, SeparatePage>(SecondaryStates.Main);
 
                 var core = new SampleApplication();
-                await core.Startup(builder =>
+            var wm = new WindowManager(core);
+            await core.Startup(builder =>
                 {
                     builder.RegisterType<Special>().As<ISpecial>();
                 });
-                var region = core.RegionManager.RegionByType<MainWindow>();
-                var fn = new FrameNavigation<PageStates, PageTransitions>(rootFrame, region);
-                region.UIContext.RunContext=new UniversalUIContext(rootFrame.Dispatcher);
-                await region.Startup(core.RegionManager);
+                //var region = core.RegionManager.RegionByType<MainWindow>();
+                //var fn = new FrameNavigation<PageStates, PageTransitions>(rootFrame, region);
+                //region.UIContext.RunContext=new UniversalUIContext(rootFrame.Dispatcher);
+                //await region.Startup(core.RegionManager);
                 
 
-                var wm = new WindowManager(core);
+                //var wm = new WindowManager(core);
 
                 
 
@@ -87,9 +88,9 @@ namespace StateByState
                 // configuring the new page by passing required information as a navigation
                 // parameter
                 //rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            }
-            // Ensure the current window is active
-            Window.Current.Activate();
+            //}
+            //// Ensure the current window is active
+            //Window.Current.Activate();
         }
 
         /// <summary>

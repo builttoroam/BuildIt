@@ -19,6 +19,8 @@ namespace BuildIt.Lifecycle
         TRegion CreateRegion<TRegion>() where TRegion : IApplicationRegion;
 
         TRegion RegionByType<TRegion>() where TRegion : IApplicationRegion;
+
+        bool IsPrimaryRegion(IApplicationRegion region);
     }
 
     public class RegionManager:IRegionManager
@@ -30,6 +32,8 @@ namespace BuildIt.Lifecycle
 
         private IDictionary<string, IApplicationRegion> Regions { get; }=new Dictionary<string, IApplicationRegion>();
 
+        private IApplicationRegion PrimaryRegion { get; set; }
+
         private List<Type> RegionTypes { get; set; } =new List<Type>(); 
 
         public void DefineRegion<TRegion>() where TRegion : IApplicationRegion
@@ -40,6 +44,11 @@ namespace BuildIt.Lifecycle
         public TRegion RegionByType<TRegion>() where TRegion : IApplicationRegion
         {
             return (TRegion)Regions.Values.FirstOrDefault(x => x.GetType() == typeof (TRegion));
+        }
+
+        public bool IsPrimaryRegion(IApplicationRegion region)
+        {
+            return region == PrimaryRegion;
         }
 
         public void RegisterDependencies(IContainer container)
@@ -70,6 +79,12 @@ namespace BuildIt.Lifecycle
             vm.RegionId = Guid.NewGuid().ToString();
 
             Regions[vm.RegionId] = vm;
+
+            // The first region created should be the primary region for this region manager (often the app!)
+            if (Regions.Count == 1)
+            {
+                PrimaryRegion = vm;
+            }
 
             vm.CloseRegion += RegionClosing;
             RegionCreated.SafeRaise(this,vm as IApplicationRegion);
