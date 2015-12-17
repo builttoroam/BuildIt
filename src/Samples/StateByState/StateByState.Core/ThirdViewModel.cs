@@ -66,6 +66,7 @@ namespace StateByState
 
         public async Task Start()
         {
+            RegisterForUIAccess(StateManager);
             await StateManager.ChangeTo(ThirdStates.One);
         }
 

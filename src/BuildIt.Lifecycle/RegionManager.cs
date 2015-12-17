@@ -9,7 +9,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
-    public interface IRegionManager : ICanRegisterDependencies, IRequiresUIAccess
+    public interface IRegionManager : ICanRegisterDependencies//, IRequiresUIAccess
     {
         event EventHandler<ParameterEventArgs<IApplicationRegion>> RegionCreated;
         event EventHandler<ParameterEventArgs<IApplicationRegion>> RegionIsClosing;
@@ -67,11 +67,11 @@ namespace BuildIt.Lifecycle
             $"Creating instance of {typeof(TRegion).Name}".Log();
             var vm = ServiceLocator.Current.GetInstance<TRegion>();
 
-            var uiRequired = vm as IRequiresUIAccess;
-            if (uiRequired != null)
-            {
-                uiRequired.UIContext.RunContext = UIContext.RunContext;
-            }
+            //var uiRequired = vm as IRequiresUIAccess;
+            //if (uiRequired != null)
+            //{
+            //    uiRequired.UIContext.RunContext = UIContext.RunContext;
+            //}
 
             "Registering dependencies".Log();
             (vm as ICanRegisterDependencies)?.RegisterDependencies(DependencyContainer);
@@ -96,6 +96,6 @@ namespace BuildIt.Lifecycle
             RegionIsClosing.SafeRaise(this, sender as IApplicationRegion);
         }
 
-        public UIExecutionContext UIContext { get; } = new UIExecutionContext();
+        //public UIExecutionContext UIContext { get; } = new UIExecutionContext();
     }
 }

@@ -62,6 +62,8 @@ namespace StateByState
 
         protected async override Task CompleteStartup()
         {
+            RegisterForUIAccess(StateManager);
+
             await base.CompleteStartup();
 
             await StateManager.ChangeTo(SecondaryStates.Main);

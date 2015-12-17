@@ -139,7 +139,10 @@ namespace BuildIt.Lifecycle.States.ViewModel
             CurrentViewModel = vm;
 
             var requireUI = vm as IRequiresUIAccess;
-            requireUI.UIContext.RunContext = UIContext.RunContext;
+            if (requireUI != null)
+            {
+                requireUI.UIContext.RunContext = UIContext.RunContext;
+            }
 
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             var arrived = vm as IArrivingViewModelState; 

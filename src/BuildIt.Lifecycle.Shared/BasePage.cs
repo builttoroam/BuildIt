@@ -69,11 +69,11 @@ namespace BuildIt.Lifecycle
                         var vsc = Activator.CreateInstance(vsct.MakeGenericType(parm), this, p.GetValue(dc));
                         "Instance created".Log();
 
-                        var uiRequired = p.GetValue(dc) as IRequiresUIAccess;
-                        if (uiRequired != null)
-                        {
-                            uiRequired.UIContext.RunContext = (mgr as IRequiresUIAccess)?.UIContext.RunContext;
-                        }
+                        //var uiRequired = p.GetValue(dc) as IRequiresUIAccess;
+                        //if (uiRequired != null)
+                        //{
+                        //    uiRequired.UIContext.RunContext = (mgr as IRequiresUIAccess)?.UIContext.RunContext;
+                        //}
                     }
                 }
             }
