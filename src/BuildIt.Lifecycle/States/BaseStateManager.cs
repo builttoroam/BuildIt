@@ -100,24 +100,27 @@ namespace BuildIt.Lifecycle.States
             CurrentState = newState;
             $"CurrentState updated (now: {CurrentState})".Log();
 
-            var newStateDef = States.SafeDictionaryValue<TState,IStateDefinition<TState>, IStateDefinition<TState>>(newState);
-            if (newStateDef.ChangedTo != null)
-            {
-                $"State definition found, of type {newStateDef.GetType().Name}, invoking ChangedTo method".Log();
-                await newStateDef.ChangedTo();
-                "ChangedTo completed".Log(); 
-            }
-            else
-            {
-                "No new state definition".Log();
-            }
 
+            await NotifyStateChanged(newState,useTransitions);
+
+
+
+            await ChangedToState(newState);
+
+
+
+            "ChangeTo completed".Log();
+            return true;
+        }
+
+        protected virtual async Task NotifyStateChanged(TState newState, bool useTransitions)
+        {
             try
             {
                 if (StateChanged != null)
                 {
                     "Invoking StateChanged event".Log();
-                    StateChanged.Invoke(this, new StateEventArgs<TState>(newState, useTransitions));
+                    StateChanged.Invoke(this, new StateEventArgs<TState>(CurrentState, useTransitions));
                     "StateChanged event completed".Log();
                 }
                 else
@@ -132,8 +135,6 @@ namespace BuildIt.Lifecycle.States
                 // the state change has still occurred
             }
 
-            "ChangeTo completed".Log();
-            return true;
         }
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
@@ -151,6 +152,27 @@ namespace BuildIt.Lifecycle.States
 
             return true;
         }
+
+
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        protected virtual async Task ChangedToState(TState newState)
+#pragma warning restore 1998
+        {
+
+            var newStateDef = States.SafeDictionaryValue<TState, IStateDefinition<TState>, IStateDefinition<TState>>(newState);
+            if (newStateDef.ChangedTo != null)
+            {
+                $"State definition found, of type {newStateDef.GetType().Name}, invoking ChangedTo method".Log();
+                await newStateDef.ChangedTo();
+                "ChangedTo completed".Log();
+            }
+            else
+            {
+                "No new state definition".Log();
+            }
+
+        }
+
 
         protected virtual ITransitionDefinition<TState> CreateDefaultTransition()
         {

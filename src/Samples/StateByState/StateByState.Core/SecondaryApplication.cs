@@ -9,21 +9,21 @@ using BuildIt.Lifecycle.States.ViewModel;
 
 namespace StateByState
 {
-    public enum SecondaryStates
+    public enum SecondaryRegionView
     {
         Base,
         Main
     }
-    public class SecondaryApplication : ApplicationRegion, IHasViewModelStateManager<SecondaryStates, PageTransitions>
+    public class SecondaryApplication : ApplicationRegion, IHasViewModelStateManager<SecondaryRegionView, MainRegionTransition>
     {
-        public IViewModelStateManager<SecondaryStates, PageTransitions> StateManager { get; }
+        public IViewModelStateManager<SecondaryRegionView, MainRegionTransition> StateManager { get; }
 
         public SecondaryApplication()
         {
 
-            var sm = new ViewModelStateManager<SecondaryStates, PageTransitions>();
+            var sm = new ViewModelStateManager<SecondaryRegionView, MainRegionTransition>();
 
-            sm.DefineViewModelState<SecondardyMainViewModel>(SecondaryStates.Main)
+            sm.DefineViewModelState<SecondardyMainViewModel>(SecondaryRegionView.Main)
                 .WhenChangedTo(vm =>
                 {
                     vm.Done += State_Completed;
@@ -66,7 +66,7 @@ namespace StateByState
 
             await base.CompleteStartup();
 
-            await StateManager.ChangeTo(SecondaryStates.Main);
+            await StateManager.ChangeTo(SecondaryRegionView.Main);
         }
     }
 }

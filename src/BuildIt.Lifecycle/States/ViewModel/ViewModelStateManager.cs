@@ -144,24 +144,42 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 requireUI.UIContext.RunContext = UIContext.RunContext;
             }
 
+            
+
+
+           
+
+            return true;
+        }
+
+        protected override async Task NotifyStateChanged(TState newState, bool useTransitions)
+        {
+            await UIContext.RunAsync(async () =>
+            {
+                await base.NotifyStateChanged(newState, useTransitions);
+            });
+        }
+
+        protected override async Task ChangedToState(TState newState)
+        {
+            await base.ChangedToState(newState);
+
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
-            var arrived = vm as IArrivingViewModelState; 
+            var arrived = CurrentViewModel as IArrivingViewModelState;
             if (arrived != null)
             {
                 "Invoking Arriving on new ViewModel".Log();
                 await arrived.Arriving();
             }
 
-
-            currentVMStates = States[newState] as IGenerateViewModel;
+            var currentVMStates = States[CurrentState] as IGenerateViewModel;
             if (currentVMStates != null)
             {
                 "Invoking ChangedTo on new state definition".Log();
                 await currentVMStates.InvokeChangedToViewModel(CurrentViewModel);
             }
-
-            return true;
         }
+
 
         protected async override Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
         {
@@ -172,6 +190,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             {
                 await trans.ArrivedStateViewModel(currentState, CurrentViewModel);
             }
+
         }
 
         protected async override Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)

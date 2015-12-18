@@ -5,8 +5,11 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using System.Diagnostics;
 using Autofac;
+using BuildIt;
 using BuildIt.Lifecycle;
+using StateByState.Services;
 using StateByState.Shared;
 
 namespace StateByState
@@ -14,7 +17,7 @@ namespace StateByState
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App 
+    sealed partial class App
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -41,56 +44,36 @@ namespace StateByState
             }
 #endif
 
-            //var rootFrame = Window.Current.Content as Frame;
+           
+            // Associate main region states with corresponding native pages
+            NavigationHelper.Register<MainRegionView, MainPage>(MainRegionView.Main);
+            NavigationHelper.Register<MainRegionView, SecondPage>(MainRegionView.Second);
+            NavigationHelper.Register<MainRegionView, ThirdPage>(MainRegionView.Third);
 
-            //// Do not repeat app initialization when the Window already has content,
-            //// just ensure that the window is active
-            //if (rootFrame == null)
-            //{
-            //    // Create a Frame to act as the navigation context and navigate to the first page
-            //    rootFrame = new Frame();
+            // Associate secondary region states with corresponding native pages
+            NavigationHelper.Register<SecondaryRegionView, SeparatePage>(SecondaryRegionView.Main);
 
-            //    rootFrame.NavigationFailed += OnNavigationFailed;
-
-            //    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-            //    {
-            //    }
-
-            //    // Place the frame in the current Window
-            //    Window.Current.Content = rootFrame;
-            //}
-
-            //if (rootFrame.Content == null)
-            //{
-
-                NavigationHelper.Register<PageStates, MainPage>(PageStates.Main);
-                NavigationHelper.Register<PageStates, SecondPage>(PageStates.Second);
-                NavigationHelper.Register<PageStates, ThirdPage>(PageStates.Third);
-                NavigationHelper.Register<SecondaryStates, SeparatePage>(SecondaryStates.Main);
-
-                var core = new SampleApplication();
+            var core = new SampleApplication();
             var wm = new WindowManager(core);
             await core.Startup(builder =>
-                {
+            {
+                builder.RegisterType<BasicDebugLogger>().As<ILogService>();
                     builder.RegisterType<Special>().As<ISpecial>();
                 });
-                //var region = core.RegionManager.RegionByType<MainWindow>();
-                //var fn = new FrameNavigation<PageStates, PageTransitions>(rootFrame, region);
-                //region.UIContext.RunContext=new UniversalUIContext(rootFrame.Dispatcher);
-                //await region.Startup(core.RegionManager);
-                
+          
+        }
 
-                //var wm = new WindowManager(core);
+        public class BasicDebugLogger : ILogService
+        {
+            public void Debug(string message)
+            {
+                System.Diagnostics.Debug.WriteLine(message);
+            }
 
-                
-
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                //rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            //}
-            //// Ensure the current window is active
-            //Window.Current.Activate();
+            public void Exception(string message, Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception:" + ex.Message +" - " +message);
+            }
         }
 
         /// <summary>

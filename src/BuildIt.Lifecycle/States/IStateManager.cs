@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle.States
 {
+    public enum DefaultTransition
+    {
+        Base
+    }
+
     public interface IStateManager<TState, TTransition> : INotifyPropertyChanged
         where TState : struct
         where TTransition:struct

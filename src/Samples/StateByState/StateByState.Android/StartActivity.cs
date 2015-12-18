@@ -1,6 +1,7 @@
 using Android.App;
 using Android.OS;
 using Autofac;
+using StateByState.Services;
 
 namespace StateByState.Android
 {
@@ -12,9 +13,9 @@ namespace StateByState.Android
             base.OnCreate(bundle);
 
             var core = new SampleApplication();
-            var fn = new AcitivityNavigation<PageStates, PageTransitions>(this, core);
-            fn.Register<MainActivity>(PageStates.Main);
-            fn.Register<SecondActivity>(PageStates.Second);
+            var fn = new AcitivityNavigation<MainRegionView, MainRegionTransition>(this, core);
+            fn.Register<MainActivity>(MainRegionView.Main);
+            fn.Register<SecondActivity>(MainRegionView.Second);
             //fn.Register<ThirdActivity>(PageStates.Third);
             await core.Startup(builder =>
             {

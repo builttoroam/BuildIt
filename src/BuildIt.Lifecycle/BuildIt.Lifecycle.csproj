@@ -44,6 +44,7 @@
     <Compile Include="ApplicationRegion.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="IUIContext.cs" />
+    <Compile Include="RegionAwareBaseApplication.cs" />
     <Compile Include="RegionManager.cs" />
     <Compile Include="RootApplication.cs" />
     <Compile Include="States\BaseStateDefinition.cs" />

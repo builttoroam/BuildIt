@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using BuildIt;
 using BuildIt.Lifecycle.States.ViewModel;
+using StateByState.Services;
 
 namespace StateByState
 {
@@ -24,8 +25,15 @@ namespace StateByState
         public async Task Init()
 #pragma warning restore 1998
         {
+            
+
             Data += " Hello Page 1";
             Debug.WriteLine("Break");
+        }
+
+        public async Task StartViewModel()
+        {
+            await Task.Delay(20000);
         }
 
         public void Test()

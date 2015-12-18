@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -37,7 +38,8 @@ namespace BuildIt.Lifecycle
         {
 #if WINDOWS_UWP
 
-            var newView = RegionManager.IsPrimaryRegion(e.Parameter1)
+            var isPrimary = RegionManager.IsPrimaryRegion(e.Parameter1);
+            var newView = isPrimary
                 ? CoreApplication.MainView
                 : CoreApplication.CreateNewView();
             var newViewId = 0;
@@ -56,12 +58,11 @@ namespace BuildIt.Lifecycle
                     {
                         var args = it.GenericTypeArguments;
                         var fnt = typeof (FrameNavigation<,>).MakeGenericType(args);
-                        var fn = Activator.CreateInstance(fnt, frame, region, string.Empty);
+                        var fn = Activator.CreateInstance(fnt, frame, region);//, string.Empty);
                     }
                 }
 
 
-                await region.Startup(sender as IRegionManager);
                 Window.Current.Content = frame;
 
                 region.CloseRegion += Region_CloseRegion;
@@ -72,11 +73,16 @@ namespace BuildIt.Lifecycle
 
                 Windows[region.RegionId] = Window.Current.CoreWindow;
 
+                Task.Run(async () => await region.Startup(sender as IRegionManager));
+
+
             });
 
-
-            var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-            Debug.WriteLine(viewShown);
+            if (!isPrimary)
+            {
+                var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+                Debug.WriteLine(viewShown);
+            }
 #endif
         }
 

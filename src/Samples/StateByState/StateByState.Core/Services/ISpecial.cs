@@ -1,4 +1,4 @@
-namespace StateByState
+namespace StateByState.Services
 {
     public interface ISpecial
     {

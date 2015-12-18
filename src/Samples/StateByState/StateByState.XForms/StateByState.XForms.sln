@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms", "StateByState.XForms\StateByState.XForms.csproj", "{3547BD44-1607-4AD4-B5A0-2B29D2736749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms.Droid", "Droid\StateByState.XForms.Droid.csproj", "{2991D261-DF81-421A-B6BA-05D13A3A7CB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2991D261-DF81-421A-B6BA-05D13A3A7CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2991D261-DF81-421A-B6BA-05D13A3A7CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2991D261-DF81-421A-B6BA-05D13A3A7CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2991D261-DF81-421A-B6BA-05D13A3A7CB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3547BD44-1607-4AD4-B5A0-2B29D2736749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3547BD44-1607-4AD4-B5A0-2B29D2736749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3547BD44-1607-4AD4-B5A0-2B29D2736749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3547BD44-1607-4AD4-B5A0-2B29D2736749}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
