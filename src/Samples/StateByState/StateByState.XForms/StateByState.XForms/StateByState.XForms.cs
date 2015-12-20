@@ -16,46 +16,47 @@ namespace StateByState.XForms
            
             //var cnt=new ContentPage();
             // The root page of your application
-		    MainPage = new NavigationPage();
+		    MainPage = new NavigationPage(new ContentPage());
 
             StartApplication();
             //new Views.MainPage());
-            //new ContentPage();
-		    //var btn = new Button()
-		    //{
-		    //    Text = "test",
+      //      var cnt = new ContentPage();
+      //      var btn = new Button()
+      //      {
+      //          Text = "test",
 
-		    //};
-		    //btn.Clicked += (s, e) =>
-		    //{
-		    //    MainPage.Navigation.PushAsync(new MainPage());
-		    //};
+      //      };
+      //      btn.Clicked += (s, e) =>
+      //      {
+      //          MainPage.Navigation.PushAsync(new MainPage());
+      //      };
       //      cnt.Content = new StackLayout
       //      {
       //          VerticalOptions = LayoutOptions.Center,
       //          Children = {
-      //              btn,
-      //                  new Label {
-      //                      XAlign = TextAlignment.Center,
-      //                      Text = "Welcome to Xamarin Forms!"
+      //                    btn,
+      //                        new Label {
+      //                            XAlign = TextAlignment.Center,
+      //                            Text = "Welcome to Xamarin Forms!"
 
-      //                  },
-      //                  new Label {
-      //                      XAlign = TextAlignment.Center,
-      //                      Text = "Welcome to Xamarin Forms!"
-      //                  },
-      //                  new Label {
-      //                      XAlign = TextAlignment.Center,
-      //                      Text = "Welcome to Xamarin Forms!"
-      //                  }
+      //                        },
+      //                        new Label {
+      //                            XAlign = TextAlignment.Center,
+      //                            Text = "Welcome to Xamarin Forms!"
+      //                        },
+      //                        new Label {
+      //                            XAlign = TextAlignment.Center,
+      //                            Text = "Welcome to Xamarin Forms!"
+      //                        }
 
-      //              }
+      //                    }
 
 
       //      };
-        }
+		    //(MainPage as NavigationPage).Navigation.PushAsync(cnt);
+		}
 
-	    private async void StartApplication()
+        private async void StartApplication()
 	    {
 
             // Handle when your app starts
