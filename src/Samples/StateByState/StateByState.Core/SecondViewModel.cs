@@ -86,19 +86,19 @@ namespace StateByState
         }
 
 
-        public async Task XtoZ()
+        public async void XtoZ()
         {
             await StateManager2.Transition(SecondStates2.StateZ);
         }
-        public async Task YtoZ()
+        public async void YtoZ()
         {
             await StateManager2.Transition(SecondStates2.StateZ);
         }
-        public async Task ZtoY()
+        public async void ZtoY()
         {
             await StateManager2.Transition(SecondStates2.StateY);
         }
-        public async Task YtoX()
+        public async void YtoX()
         {
             await StateManager2.Transition(SecondStates2.StateX);
         }

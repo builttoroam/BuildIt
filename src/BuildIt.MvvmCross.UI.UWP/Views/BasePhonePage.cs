@@ -170,7 +170,9 @@ namespace BuiltToRoam.MvvmCross.UI.Views
 
 #endif
 
-        protected async virtual Task OnNavigatedToCompleted()
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        protected virtual async Task OnNavigatedToCompleted()
+#pragma warning restore 1998
         {
 
         }

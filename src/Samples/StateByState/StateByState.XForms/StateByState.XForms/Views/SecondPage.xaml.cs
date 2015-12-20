@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BuildIt;
 using BuildIt.Lifecycle;
+using BuildIt.VisualStates;
 using Xamarin.Forms;
 
 namespace StateByState.XForms.Views
@@ -160,24 +161,24 @@ namespace StateByState.XForms.Views
             CurrentViewModel.Done();
         }
 
-        private void XtoZ(object sender, EventArgs e)
+        private  void XtoZ(object sender, EventArgs e)
         {
-            CurrentViewModel.XtoZ();
+             CurrentViewModel.XtoZ();
         }
 
-        private void YtoZ(object sender, EventArgs e)
+        private  void YtoZ(object sender, EventArgs e)
         {
-            CurrentViewModel.YtoZ();
+             CurrentViewModel.YtoZ();
         }
 
-        private void ZtoY(object sender, EventArgs e)
+        private  void ZtoY(object sender, EventArgs e)
         {
-            CurrentViewModel.ZtoY();
+             CurrentViewModel.ZtoY();
         }
 
-        private void YtoX(object sender, EventArgs e)
+        private  void YtoX(object sender, EventArgs e)
         {
-            CurrentViewModel.YtoX();
+             CurrentViewModel.YtoX();
         }
     }
 

@@ -29,14 +29,14 @@ namespace BuildIt.MvvmCross.ViewModels
         private readonly Dictionary<string, string> currentStates = new Dictionary<string, string>();
         public T CurrentState<T>() where T : struct
         {
-            var current = currentStates.SafeDictionaryValue<string, string, string>(typeof(T).FullName);
+            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
             var tvalue = current.EnumParse<T>();
             return tvalue;
         }
 
         public void ChangePageState<T>(T stateName, bool useTransitions = true) where T : struct
         {
-            var current = currentStates.SafeDictionaryValue<string, string, string>(typeof(T).FullName);
+            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
 
             var attrib =((Enum)(object)stateName).GetAttribute<VisualStateAttribute>();
             string newState;
@@ -117,9 +117,11 @@ namespace BuildIt.MvvmCross.ViewModels
 
     }
 
-        public async virtual Task StartAsync()
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        public virtual async Task StartAsync()
+#pragma warning restore 1998
         {
-            
+
         }
 
         public async Task WaitForStartCompleted()

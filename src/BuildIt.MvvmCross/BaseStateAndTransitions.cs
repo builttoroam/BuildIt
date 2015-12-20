@@ -25,14 +25,14 @@ namespace BuildIt.MvvmCross
         private readonly Dictionary<string, string> currentStates = new Dictionary<string, string>();
         public T CurrentState<T>() where T : struct
         {
-            var current = currentStates.SafeDictionaryValue<string, string, string>(typeof(T).FullName);
+            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
             var tvalue = current.EnumParse<T>();
             return tvalue;
         }
 
         public void ChangePageState<T>(T stateName, bool useTransitions = true) where T : struct
         {
-            var current = currentStates.SafeDictionaryValue<string, string, string>(typeof(T).FullName);
+            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
 
             var attrib = ((Enum)(object)stateName).GetAttribute<VisualStateAttribute>();
             string newState;

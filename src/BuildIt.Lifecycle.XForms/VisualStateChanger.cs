@@ -1,4 +1,5 @@
 using BuildIt.Lifecycle.States;
+using BuildIt.VisualStates;
 
 namespace BuildIt.Lifecycle
 {

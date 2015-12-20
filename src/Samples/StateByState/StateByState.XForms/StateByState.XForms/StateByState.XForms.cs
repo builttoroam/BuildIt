@@ -77,7 +77,7 @@ namespace StateByState.XForms
 //            (MainPage as NavigationPage).Navigation.PushAsync(new MainPage());
         }
 
-        protected override async void OnStart ()
+        protected override void OnStart ()
 		{
 
         }

@@ -27,7 +27,7 @@ namespace BuildIt.Lifecycle
 
         private void RegionManager_RegionIsClosing(object sender, ParameterEventArgs<IApplicationRegion> e)
         {
-            var view = Windows.SafeDictionaryValue<string, CoreWindow, CoreWindow>(e.Parameter1.RegionId);
+            var view = Windows.SafeValue<string, CoreWindow, CoreWindow>(e.Parameter1.RegionId);
             view.Close();
 
         }
@@ -44,7 +44,7 @@ namespace BuildIt.Lifecycle
                 : CoreApplication.CreateNewView();
             var newViewId = 0;
             e.Parameter1.UIContext.RunContext = new UniversalUIContext(newView.Dispatcher);
-            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
             {
                 var frame = new Frame();
 

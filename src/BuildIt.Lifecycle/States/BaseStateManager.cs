@@ -113,7 +113,9 @@ namespace BuildIt.Lifecycle.States
             return true;
         }
 
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
         protected virtual async Task NotifyStateChanged(TState newState, bool useTransitions)
+#pragma warning restore 1998
         {
             try
             {

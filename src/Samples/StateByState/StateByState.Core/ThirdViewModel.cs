@@ -71,23 +71,23 @@ namespace StateByState
             await StateManager.ChangeTo(ThirdStates.One);
         }
 
-        public async Task One()
+        public async void One()
         {
             await StateManager.Transition(ThirdStates.Two);// ThirdTransitions.OneToTwo);
         }
 
-        public async Task Two ()
+        public async void Two ()
         {
             await StateManager.Transition(ThirdStates.Three);// ThirdTransitions.TwoToThree);
 
         }
 
-        public async Task Three()
+        public async void Three()
         {
 
             await StateManager.Transition(ThirdStates.Four);// ThirdTransitions.ThreeToFour);
         }
-        public async Task Four()
+        public async void Four()
         {
             await StateManager.Transition(ThirdStates.One);// ThirdTransitions.FourToOne);
 

@@ -95,6 +95,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -133,10 +134,25 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\BuildIt.General\BuildIt.General.csproj">
+      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj">
+      <Project>{fa40c3d1-c786-4a96-89d3-78d3af17a437}</Project>
+      <Name>BuildIt.Lifecycle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StateByState.Core\StateByState.Core.csproj">
+      <Project>{b03072fe-40a3-4507-bfd1-c904bb0fe1fa}</Project>
+      <Name>StateByState.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StateByState.XForms\StateByState.XForms.csproj">
       <Project>{3547bd44-1607-4ad4-b5a0-2b29d2736749}</Project>
       <Name>StateByState.XForms</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
