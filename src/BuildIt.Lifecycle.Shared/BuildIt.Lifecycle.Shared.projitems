@@ -11,7 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BasePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FrameNavigation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UniversalUIContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VisualStateChanger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WindowManager.cs" />

@@ -159,7 +159,7 @@ namespace BuildIt.Lifecycle.States
 #pragma warning restore 1998
         {
 
-            var newStateDef = States.SafeDictionaryValue<TState, IStateDefinition<TState>, IStateDefinition<TState>>(newState);
+            var newStateDef = States.SafeValue<TState, IStateDefinition<TState>, IStateDefinition<TState>>(newState);
             if (newStateDef.ChangedTo != null)
             {
                 $"State definition found, of type {newStateDef.GetType().Name}, invoking ChangedTo method".Log();

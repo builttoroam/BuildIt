@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseConfiguration.cs" />
+    <Compile Include="BasicDebugLogger.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DisplayNameAttribute.cs" />
     <Compile Include="DualParameterEventArgs.cs" />
@@ -80,7 +81,13 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
-)</PostBuildEvent>
+)
+if $(ConfigurationName) == Debug (
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.General.0.1.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.General\0.1.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+)
+
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

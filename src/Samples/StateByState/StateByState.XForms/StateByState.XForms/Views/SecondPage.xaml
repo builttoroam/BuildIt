@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StateByState.XForms.Views.SecondPage">
+  <StackLayout>
+  <Label Text="{Binding Name}"
+                 x:Name="textBlock"
+                 FontSize="30"
+    TextColor="Blue"     
+    />
+  <Label x:Name="textBlock2"
+             Text="Test 1 2 3 4"
+             FontSize="30"
+             TextColor="Blue" />
+  <Button Clicked="ToFirst" Text="To First" />
+  <Button Clicked="ToSecond" Text="To Second" />
+  <Button Clicked="ToThird" Text="To Third" />
+  <Button Clicked="Done" Text="Done" />
+  <Button Clicked="XtoZ" Text="X To Z" />
+  <Button Clicked="YtoZ" Text="Y To Z" />
+  <Button Clicked="ZtoY" Text="Z To Y" />
+  <Button Clicked="YtoX" Text="Y To X" />
+  </StackLayout>
+
+
+</ContentPage>

@@ -12,7 +12,8 @@ namespace StateByState
         Base,
         State1,
         State2,
-        State3
+        State3,
+        State4
     }
 
     public enum SecondStateTransitions

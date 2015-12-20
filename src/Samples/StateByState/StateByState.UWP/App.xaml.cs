@@ -63,18 +63,7 @@ namespace StateByState
           
         }
 
-        public class BasicDebugLogger : ILogService
-        {
-            public void Debug(string message)
-            {
-                System.Diagnostics.Debug.WriteLine(message);
-            }
-
-            public void Exception(string message, Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Exception:" + ex.Message +" - " +message);
-            }
-        }
+       
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
