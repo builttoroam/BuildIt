@@ -42,38 +42,47 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRegion.cs" />
+    <Compile Include="IRegionManager.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="IUIContext.cs" />
     <Compile Include="NavigationHelper.cs" />
     <Compile Include="RegionAwareBaseApplication.cs" />
     <Compile Include="RegionManager.cs" />
     <Compile Include="RootApplication.cs" />
-    <Compile Include="States\BaseStateDefinition.cs" />
-    <Compile Include="States\BaseStateManager.cs" />
-    <Compile Include="States\BaseTransitionDefinition.cs" />
-    <Compile Include="States\IApplicationRegion.cs" />
-    <Compile Include="States\StateHelper.cs" />
+    <Compile Include="IHasRegionManager.cs" />
+    <Compile Include="States\INotifyStateChanged.cs" />
+    <Compile Include="States\StateDefinition.cs" />
+    <Compile Include="States\TransitionDefinition.cs" />
+    <Compile Include="IApplicationRegion.cs" />
     <Compile Include="States\ViewModel\BaseViewModel.cs" />
     <Compile Include="States\ViewModel\IAboutToLeaveViewModelState.cs" />
     <Compile Include="States\ViewModel\IArrivingViewModelState.cs" />
     <Compile Include="States\ViewModel\ICanRegisterDependencies.cs" />
     <Compile Include="States\ViewModel\IGenerateViewModel.cs" />
-    <Compile Include="States\IHasStateManager.cs" />
     <Compile Include="States\IStateDefinition.cs" />
-    <Compile Include="States\IStateManager.cs" />
+    <Compile Include="States\IStateGroupManager.cs" />
     <Compile Include="States\ITransitionDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="States\StateEventArgs.cs" />
     <Compile Include="States\ViewModel\IHasCurrentViewModel.cs" />
     <Compile Include="States\ViewModel\ILeavingViewModelState.cs" />
     <Compile Include="States\ViewModel\IViewModelStateDefinition.cs" />
-    <Compile Include="States\ViewModel\IViewModelStateManager.cs" />
     <Compile Include="States\ViewModel\IViewModelTransitionDefinition.cs" />
     <Compile Include="States\ViewModel\ViewModelStateDefinition.cs" />
     <Compile Include="States\ViewModel\ViewModelStateHelper.cs" />
-    <Compile Include="States\ViewModel\ViewModelStateManager.cs" />
+    <Compile Include="States\ViewModel\ViewModelStateGroup.cs" />
     <Compile Include="States\ViewModel\ViewModelTransitionDefinition.cs" />
     <Compile Include="UIContext.cs" />
+    <Compile Include="States\DefaultValue.cs" />
+    <Compile Include="States\IDefaultValue.cs" />
+    <Compile Include="States\IHasStates.cs" />
+    <Compile Include="States\IStateGroup.cs" />
+    <Compile Include="States\IStateManager.cs" />
+    <Compile Include="States\IStateValue.cs" />
+    <Compile Include="States\StateHelpers.cs" />
+    <Compile Include="States\StateGroup.cs" />
+    <Compile Include="States\StateManager.cs" />
+    <Compile Include="States\StateValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">

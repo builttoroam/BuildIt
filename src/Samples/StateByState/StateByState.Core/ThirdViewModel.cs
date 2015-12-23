@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Autofac;
 using BuildIt;
+using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using StateByState.Services;
@@ -26,20 +27,21 @@ namespace StateByState
         //FourToOne
     }
 
-    public class ThirdViewModel:BaseViewModel, IHasViewModelStateManager<ThirdStates,ThirdTransitions>
+    public class ThirdViewModel:BaseViewModel, IHasStates
     {
         public event EventHandler ThirdCompleted;
 
-        public IViewModelStateManager<ThirdStates, ThirdTransitions> StateManager { get; }
+        public IStateManager StateManager { get; }
 
         public ThirdViewModel()
         {
 
-            var sm = new ViewModelStateManager<ThirdStates, ThirdTransitions>();
-            sm.DefineViewModelState<ThirdOneViewModel>(ThirdStates.One);
-            sm.DefineViewModelState<ThirdTwoViewModel>(ThirdStates.Two);
-            sm.DefineViewModelState<ThirdThreViewModel>(ThirdStates.Three);
-            sm.DefineViewModelState<ThirdFourViewModel>(ThirdStates.Four)
+            var sm = new StateManager();
+            var gp = sm.GroupWithViewModels<ThirdStates>().Item2;
+            gp.DefineViewModelState<ThirdOneViewModel>(ThirdStates.One);
+            gp.DefineViewModelState<ThirdTwoViewModel>(ThirdStates.Two);
+            gp.DefineViewModelState<ThirdThreViewModel>(ThirdStates.Three);
+            gp.DefineViewModelState<ThirdFourViewModel>(ThirdStates.Four)
                 .WhenChangedTo(vm =>
                 {
                     vm.Done += Vm_Done;
@@ -67,29 +69,29 @@ namespace StateByState
 
         public async Task Start()
         {
-            RegisterForUIAccess(StateManager);
-            await StateManager.ChangeTo(ThirdStates.One);
+            RegisterForUIAccess((StateManager as IRequiresUIAccess)?.UIContext);
+            await StateManager.GoToState(ThirdStates.One);
         }
 
         public async void One()
         {
-            await StateManager.Transition(ThirdStates.Two);// ThirdTransitions.OneToTwo);
+            await StateManager.GoToState(ThirdStates.Two);// ThirdTransitions.OneToTwo);
         }
 
         public async void Two ()
         {
-            await StateManager.Transition(ThirdStates.Three);// ThirdTransitions.TwoToThree);
+            await StateManager.GoToState(ThirdStates.Three);// ThirdTransitions.TwoToThree);
 
         }
 
         public async void Three()
         {
 
-            await StateManager.Transition(ThirdStates.Four);// ThirdTransitions.ThreeToFour);
+            await StateManager.GoToState(ThirdStates.Four);// ThirdTransitions.ThreeToFour);
         }
         public async void Four()
         {
-            await StateManager.Transition(ThirdStates.One);// ThirdTransitions.FourToOne);
+            await StateManager.GoToState(ThirdStates.One);// ThirdTransitions.FourToOne);
 
         }
     }

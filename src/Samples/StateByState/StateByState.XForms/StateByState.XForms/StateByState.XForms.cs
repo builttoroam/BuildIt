@@ -16,7 +16,7 @@ namespace StateByState.XForms
            
             //var cnt=new ContentPage();
             // The root page of your application
-		    MainPage = new NavigationPage(new ContentPage());
+		    MainPage = new NavigationPage();//new ContentPage());
 
             StartApplication();
             //new Views.MainPage());

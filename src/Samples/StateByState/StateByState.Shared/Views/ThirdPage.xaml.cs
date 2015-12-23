@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using BuildIt.Lifecycle;
+using BuildIt.Lifecycle.States;
 
 
 namespace StateByState
@@ -23,7 +24,7 @@ namespace StateByState
 
             var frame = Split.FindName("InnerFrame") as Frame;
 
-            var fn = new FrameNavigation<ThirdStates, ThirdTransitions>(frame, CurrentViewModel);
+            var fn = new FrameNavigation<ThirdStates>(frame, CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
             NavigationHelper.Register<ThirdStates,ThrirdOnePage>(ThirdStates.One);
             NavigationHelper.Register<ThirdStates,ThirdTwoPage>(ThirdStates.Two);
             NavigationHelper.Register<ThirdStates,ThirdThreePage>(ThirdStates.Three);

@@ -7,8 +7,12 @@ using Autofac;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public class ViewModelStateManager<TState, TTransition> : 
-        BaseStateManager<TState, TTransition>, IViewModelStateManager<TState,TTransition>, IRequiresUIAccess
+    public class ViewModelStateGroup<TState, TTransition> :
+        StateGroup<TState, TTransition>, 
+        ICanRegisterDependencies,
+        IHasCurrentViewModel,
+        //IViewModelStateManager<TState,TTransition>, 
+        IRegisterForUIAccess
         where TState : struct
         where TTransition : struct
     {
@@ -134,20 +138,13 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 "Generating ViewModel for new state".Log();
                 vm = await newGen.Generate(DependencyContainer);
             }
+            var requireUI = vm as IRegisterForUIAccess;
+            requireUI?.RegisterForUIAccess(UIContext);
 
             ViewModels[vm.GetType()] = vm;
             CurrentViewModel = vm;
 
-            var requireUI = vm as IRequiresUIAccess;
-            if (requireUI != null)
-            {
-                requireUI.UIContext.RunContext = UIContext.RunContext;
-            }
 
-            
-
-
-           
 
             return true;
         }
@@ -181,7 +178,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
         }
 
 
-        protected async override Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
+        protected override async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
         {
             await base.ArrivedState(transition, currentState);
 
@@ -193,7 +190,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         }
 
-        protected async override Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
+        protected override async Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
         {
             await base.LeavingState(transition, currentState, cancel);
 
@@ -219,10 +216,10 @@ namespace BuildIt.Lifecycle.States.ViewModel
             cb.Update(container);
         }
 
-        public UIExecutionContext UIContext { get; } = new UIExecutionContext();
-        public void RegisterForUIAccess(IRequiresUIAccess manager)
+        public IUIExecutionContext UIContext { get; private set; }
+        public virtual void RegisterForUIAccess(IUIExecutionContext context)
         {
-            manager.UIContext.RunContext = UIContext.RunContext;
+            UIContext = context;
         }
     }
 }

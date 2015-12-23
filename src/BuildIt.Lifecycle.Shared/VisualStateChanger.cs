@@ -5,19 +5,18 @@ using BuildIt.Lifecycle.States;
 
 namespace BuildIt.Lifecycle
 {
-    public class VisualStateChanger<TState, TTransition>
+    public class VisualStateChanger<TState>
         where TState : struct
-        where TTransition : struct
     {
-        public IStateManager<TState, TTransition> StateManager { get; }
+        public INotifyStateChanged<TState> ChangeNotifier { get; }
 
         private Control VisualStateRoot { get; }
 
-        public VisualStateChanger(Control visualStateRoot, IStateManager<TState, TTransition> stateManager)
+        public VisualStateChanger(Control visualStateRoot, INotifyStateChanged<TState> changeNotifier)
         {
             VisualStateRoot = visualStateRoot;
-            StateManager = stateManager;
-            StateManager.StateChanged += StateManager_StateChanged;
+            ChangeNotifier = changeNotifier;
+            ChangeNotifier.StateChanged += StateManager_StateChanged;
         }
 
         private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)

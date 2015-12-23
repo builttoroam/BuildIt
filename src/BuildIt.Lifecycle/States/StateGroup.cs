@@ -1,37 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle.States
 {
-    public class BaseStateManager<TState, TTransition> :
-        NotifyBase, IStateManager<TState, TTransition>
+    public class StateGroup<TState, TTransition> : INotifyStateChanged<TState>, IStateGroupManager<TState,TTransition>
         where TState : struct
         where TTransition : struct
     {
+
         public event EventHandler<StateEventArgs<TState>> StateChanged;
 
         public TState CurrentState { get; private set; }
 
-        public IDictionary<TState, IStateDefinition<TState>> States { get; set; } = new Dictionary<TState, IStateDefinition<TState>>();
+        public IDictionary<TState, IStateDefinition<TState>> States { get; } =
+            new Dictionary<TState, IStateDefinition<TState>>();
 
-        public IDictionary<TTransition, ITransitionDefinition<TState>> Transitions { get; set; } = new Dictionary<TTransition, ITransitionDefinition<TState>>();
+        private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
+            = new Dictionary<Tuple<object, string>, IDefaultValue>();
+
+        private IStateDefinition<TState> State<TFindState>(TFindState state)
+            where TFindState : struct
+        {
+            if (typeof(TFindState) != typeof(TState)) return null;
+            var searchState = (TState)(object)state;
+            return States.SafeValue(searchState);
+        }
+
+        //public void TransitionTo<TFindState>(TFindState state) where TFindState : struct
+        //{
+        //    var visualState = State(state);
+        //    visualState?.TransitionTo(DefaultValues);
+        //}
 
         public void DefineAllStates()
         {
-            var vals = Enum.GetValues(typeof (TState));
+            var vals = Enum.GetValues(typeof(TState));
             foreach (var enumVal in vals)
             {
                 $"Defining state {enumVal}".Log();
-                DefineState((TState) enumVal);
+                DefineState((TState)enumVal);
             }
         }
 
         public virtual IStateDefinition<TState> DefineState(TState state)
         {
-            var stateDefinition = new BaseStateDefinition<TState> { State = state };
+            var stateDefinition = new StateDefinition<TState> { State = state };
             return DefineState(stateDefinition);
         }
 
@@ -42,12 +57,21 @@ namespace BuildIt.Lifecycle.States
             return stateDefinition;
         }
 
-        public virtual ITransitionDefinition<TState> DefineTransition(TTransition transition)
+      
+
+
+        public async Task<bool> ChangeTo<TFindState>(TFindState findState, bool useTransitions = true)
+            where TFindState : struct
         {
-            var transitionDefinition = new BaseTransitionDefinition<TState>();
-            Transitions[transition] = transitionDefinition;
-            $"Defining transition of type {transition.GetType().Name}".Log();
-            return transitionDefinition;
+            if (typeof (TFindState) != typeof (TState))
+            {
+                $"Attempting to change to the wrong state type {typeof (TFindState)}".Log();
+                return false;
+            }
+
+            var newState = (TState) (object) findState;
+
+            return await ChangeTo(newState, useTransitions);
         }
 
         public async Task<bool> ChangeTo(TState newState, bool useTransitions = true)
@@ -100,11 +124,10 @@ namespace BuildIt.Lifecycle.States
             CurrentState = newState;
             $"CurrentState updated (now: {CurrentState})".Log();
 
+            States[CurrentState].TransitionTo(DefaultValues);
 
-            await NotifyStateChanged(newState,useTransitions);
-
-
-
+            await NotifyStateChanged(newState, useTransitions);
+            
             await ChangedToState(newState);
 
 
@@ -176,9 +199,21 @@ namespace BuildIt.Lifecycle.States
         }
 
 
+        public IDictionary<TTransition, ITransitionDefinition<TState>> Transitions { get; set; } =
+           new Dictionary<TTransition, ITransitionDefinition<TState>>();
+
+
+        public virtual ITransitionDefinition<TState> DefineTransition(TTransition transition)
+        {
+            var transitionDefinition = new TransitionDefinition<TState>();
+            Transitions[transition] = transitionDefinition;
+            $"Defining transition of type {transition.GetType().Name}".Log();
+            return transitionDefinition;
+        }
+
         protected virtual ITransitionDefinition<TState> CreateDefaultTransition()
         {
-            return new BaseTransitionDefinition<TState>();
+            return new TransitionDefinition<TState>();
         }
 
         public async Task<bool> Transition(TState newState, bool useTransition = true)
@@ -216,7 +251,7 @@ namespace BuildIt.Lifecycle.States
             "Invoking ArrivingState".Log();
             await ArrivingState(transition);
             "ArrivingState completed, now invoking ChangeTo".Log();
-            
+
             if (!await ChangeTo(transition.EndState, useTransition))
             {
                 "ChangeTo not completed, transition aborted".Log();
@@ -229,7 +264,7 @@ namespace BuildIt.Lifecycle.States
             return true;
         }
 
-        protected async virtual Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
+        protected virtual async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
         {
             if (transition.ArrivedState != null)
             {
@@ -237,7 +272,7 @@ namespace BuildIt.Lifecycle.States
             }
         }
 
-        protected async virtual Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
+        protected virtual async Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
         {
             if (transition.LeavingState != null)
             {
@@ -245,12 +280,13 @@ namespace BuildIt.Lifecycle.States
             }
         }
 
-        protected async virtual Task ArrivingState(ITransitionDefinition<TState> transition)
+        protected virtual async Task ArrivingState(ITransitionDefinition<TState> transition)
         {
             if (transition.ArrivingState != null)
             {
                 await transition.ArrivingState(transition.EndState);
             }
         }
+
     }
 }

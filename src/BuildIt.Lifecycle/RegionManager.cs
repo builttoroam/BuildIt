@@ -9,24 +9,10 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
-    public interface IRegionManager : ICanRegisterDependencies//, IRequiresUIAccess
-    {
-        event EventHandler<ParameterEventArgs<IApplicationRegion>> RegionCreated;
-        event EventHandler<ParameterEventArgs<IApplicationRegion>> RegionIsClosing;
-
-        void DefineRegion<TRegion>() where TRegion : IApplicationRegion;
-
-        TRegion CreateRegion<TRegion>() where TRegion : IApplicationRegion;
-
-        TRegion RegionByType<TRegion>() where TRegion : IApplicationRegion;
-
-        bool IsPrimaryRegion(IApplicationRegion region);
-    }
-
     public class RegionManager:IRegionManager
     {
-        public event EventHandler<ParameterEventArgs<IApplicationRegion>> RegionCreated;
-        public event EventHandler<ParameterEventArgs<IApplicationRegion>> RegionIsClosing;
+        public Action<IRegionManager,IApplicationRegion> RegionCreated { get; set; }
+        public Action<IRegionManager, IApplicationRegion> RegionIsClosing { get; set; }
 
         protected IContainer DependencyContainer { get; private set; }
 
@@ -87,13 +73,13 @@ namespace BuildIt.Lifecycle
             }
 
             vm.CloseRegion += RegionClosing;
-            RegionCreated.SafeRaise(this,vm as IApplicationRegion);
+            RegionCreated?.Invoke(this,vm);
             return vm;
         }
 
         private void RegionClosing(object sender, EventArgs e)
         {
-            RegionIsClosing.SafeRaise(this, sender as IApplicationRegion);
+            RegionIsClosing?.Invoke(this, sender as IApplicationRegion);
         }
 
         //public UIExecutionContext UIContext { get; } = new UIExecutionContext();

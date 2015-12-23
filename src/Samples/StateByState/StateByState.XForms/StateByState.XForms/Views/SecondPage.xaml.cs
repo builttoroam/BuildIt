@@ -5,21 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using BuildIt;
 using BuildIt.Lifecycle;
-using BuildIt.VisualStates;
+using BuildIt.Lifecycle.States;
 using Xamarin.Forms;
 
 namespace StateByState.XForms.Views
 {
-    public partial class SecondPage : ContentPage, IHasVisualStateManager
+    public partial class SecondPage : ContentPage, IHasStates
     {
-        public IVisualStateManager VisualStateManager { get; }
+        public IStateManager StateManager { get; }
 
         public SecondPage()
         {
             InitializeComponent();
 
-            VisualStateManager = new VisualStateManager();
-            VisualStateManager
+            StateManager = new StateManager();
+            StateManager
                 .Group<SecondStates>()
                     .DefineState(SecondStates.State1)
                     .DefineState(SecondStates.State2)
@@ -52,8 +52,7 @@ namespace StateByState.XForms.Views
                             .ToValue(Color.FromHex("FFFFC500"))
                         .Target(textBlock2)
                             .Change(x => x.FontSize, (x, c) => x.FontSize = c)
-                            .ToValue(10)
-                ;
+                            .ToValue(10);
 
 
 

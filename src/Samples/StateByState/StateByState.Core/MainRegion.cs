@@ -25,18 +25,17 @@ namespace StateByState
         ThirdToMain
     }
 
-    public class MainRegion : ApplicationRegion, 
-        IHasViewModelStateManager<MainRegionView, MainRegionTransition>
+    public class MainRegion : ApplicationRegion, IHasStates
     {
-        public IViewModelStateManager<MainRegionView, MainRegionTransition> StateManager { get; }
+        public IStateManager StateManager { get; }
 
 
         public MainRegion()
         {
 
             #region State Definitions
-            var sm = new ViewModelStateManager<MainRegionView, MainRegionTransition>();
-
+            var ssm = new StateManager();
+            var sm = ssm.GroupWithViewModels<MainRegionView>().Item2;
             sm.DefineViewModelState<MainViewModel>(MainRegionView.Main)
                 .Initialise(async vm =>
                 {
@@ -101,19 +100,19 @@ namespace StateByState
                 });
 
 
-            StateManager = sm;
+            StateManager = ssm;
 
 
-            sm.DefineTransition(MainRegionTransition.MainToSecond)
-                .From(MainRegionView.Main)
-                .To(MainRegionView.Second);
+            //sm.DefineTransition(MainRegionTransition.MainToSecond)
+            //    .From(MainRegionView.Main)
+            //    .To(MainRegionView.Second);
 
-            sm.DefineTransition(MainRegionTransition.AnyToMain)
-                .To(MainRegionView.Main);
+            //sm.DefineTransition(MainRegionTransition.AnyToMain)
+            //    .To(MainRegionView.Main);
 
-            sm.DefineTransition(MainRegionTransition.ThirdToMain)
-                .From(MainRegionView.Third)
-                .To(MainRegionView.Main);
+            //sm.DefineTransition(MainRegionTransition.ThirdToMain)
+            //    .From(MainRegionView.Third)
+            //    .To(MainRegionView.Main);
             #endregion
 
            
@@ -133,33 +132,42 @@ namespace StateByState
             //RegionManager?.RegisterDependencies(container);
         }
 
+        public override void RegisterForUIAccess(IUIExecutionContext context)
+        {
+            base.RegisterForUIAccess(context);
+
+            (StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
+        }
 
         protected override async Task CompleteStartup()
         {
-            RegisterForUIAccess(StateManager);
 
             await base.CompleteStartup();
 
-            await StateManager.ChangeTo(MainRegionView.Main, false);
+            await StateManager.GoToState(MainRegionView.Main, false);
         }
 
 
         private async void State_Completed(object sender, EventArgs e)
         {
-            await StateManager.Transition(MainRegionTransition.MainToSecond);
+            await StateManager.GoToState(MainRegionView.Second);
+            // await StateManager.Transition(MainRegionTransition.MainToSecond);
         }
         private async void State_UnableToCompleted(object sender, EventArgs e)
         {
-            await StateManager.Transition(MainRegionView.Third);
+            await StateManager.GoToState(MainRegionView.Third);
+            //await StateManager.Transition(MainRegionView.Third);
         }
 
         private async void SecondCompleted(object sender, EventArgs e)
         {
-            await StateManager.Transition(MainRegionTransition.AnyToMain);
+            await StateManager.GoToState(MainRegionView.Main);
+            // await StateManager.Transition(MainRegionTransition.AnyToMain);
         }
         private async void ThirdCompleted(object sender, EventArgs e)
         {
-            await StateManager.Transition(MainRegionTransition.ThirdToMain);
+            await StateManager.GoToState(MainRegionView.Main);
+            // await StateManager.Transition(MainRegionTransition.ThirdToMain);
         }
     }
 }

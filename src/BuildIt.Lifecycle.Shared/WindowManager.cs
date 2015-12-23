@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -21,19 +22,19 @@ namespace BuildIt.Lifecycle
         public WindowManager(IHasRegionManager root)
         {
             RegionManager = root.RegionManager;
-            RegionManager.RegionCreated += RegionManager_RegionCreated;
-            RegionManager.RegionIsClosing += RegionManager_RegionIsClosing;
+            RegionManager.RegionCreated = RegionManager_RegionCreated;
+            RegionManager.RegionIsClosing = RegionManager_RegionIsClosing;
         }
 
-        private void RegionManager_RegionIsClosing(object sender, ParameterEventArgs<IApplicationRegion> e)
+        private void RegionManager_RegionIsClosing(IRegionManager sender, IApplicationRegion e)
         {
-            var view = Windows.SafeValue<string, CoreWindow, CoreWindow>(e.Parameter1.RegionId);
+            var view = Windows.SafeValue<string, CoreWindow, CoreWindow>(e.RegionId);
             view.Close();
 
         }
 
 #pragma warning disable 1998 // Async required for Windows UWP support for multiple views
-        private async void RegionManager_RegionCreated(object sender, ParameterEventArgs<IApplicationRegion> e)
+        private async void RegionManager_RegionCreated(IRegionManager sender, IApplicationRegion e)
 #pragma warning restore 1998
         {
 #if WINDOWS_UWP
@@ -43,24 +44,43 @@ namespace BuildIt.Lifecycle
                 ? CoreApplication.MainView
                 : CoreApplication.CreateNewView();
             var newViewId = 0;
-            e.Parameter1.UIContext.RunContext = new UniversalUIContext(newView.Dispatcher);
+            var context = new UniversalUIContext(newView.Dispatcher);
+            e.Parameter1.RegisterForUIAccess(context);
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
             {
                 var frame = new Frame();
 
                 var region = e.Parameter1;
 
-                var interfaces = region.GetType().GetInterfaces();
-                foreach (var it in interfaces)
+                var hasStates = region as IHasStates;
+                var sm = (region as IHasStates)?.StateManager;
+                if (sm != null)
                 {
-                    if (it.IsConstructedGenericType && 
-                    it.GetGenericTypeDefinition() == typeof(IHasViewModelStateManager<,>))
+
+                    var groups = sm.StateGroups;
+                    var inotifier = typeof(INotifyStateChanged<>);
+                    foreach (var stateGroup in groups)
                     {
-                        var args = it.GenericTypeArguments;
-                        var fnt = typeof (FrameNavigation<,>).MakeGenericType(args);
-                        var fn = Activator.CreateInstance(fnt, frame, region);//, string.Empty);
+                        var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
+                        if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
+                        {
+                            var fnt = typeof(FrameNavigation<>).MakeGenericType(stateGroup.Key);
+                            var fn = Activator.CreateInstance(fnt, frame, stateGroup.Value);
+                        }
                     }
                 }
+
+                //var interfaces = region.GetType().GetInterfaces();
+                //foreach (var it in interfaces)
+                //{
+                //    if (it.IsConstructedGenericType && 
+                //    it.GetGenericTypeDefinition() == typeof(IHasViewModelStateManager<,>))
+                //    {
+                //        var args = it.GenericTypeArguments;
+                //        var fnt = typeof (FrameNavigation<,>).MakeGenericType(args);
+                //        var fn = Activator.CreateInstance(fnt, frame, region);//, string.Empty);
+                //    }
+                //}
 
 
                 Window.Current.Content = frame;

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BuildIt;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.Lifecycle;
 
 namespace StateByState
 {
@@ -36,32 +37,37 @@ namespace StateByState
         StateY,
         StateZ
     }
-    public class SecondViewModel : BaseViewModel
+    public class SecondViewModel : BaseViewModel, IHasStates
     {
         public event EventHandler SecondCompleted;
 
 
         public string Name { get; } = "Bob";
 
-        public IStateManager<SecondStates, SecondStateTransitions> StateManager { get; }
-        public IStateManager<SecondStates2, SecondStateTransitions> StateManager2 { get; }
+        public IStateManager StateManager { get; } = new StateManager();
 
         public SecondViewModel()
         {
-            StateManager = new BaseStateManager<SecondStates, SecondStateTransitions>();
-            StateManager.DefineAllStates();
-            
+            var gm = StateManager.GroupWithTransition<SecondStates, SecondStateTransitions>();
+            gm.Item2.DefineAllStates();
 
 
-            StateManager2 = new BaseStateManager<SecondStates2, SecondStateTransitions>();
-            StateManager2.DefineAllStates();
-            
+            //StateManager = new BaseStateManager<SecondStates, SecondStateTransitions>();
+            //StateManager.DefineAllStates();
+
+            var gm2 = StateManager.GroupWithTransition<SecondStates2, SecondStateTransitions>();
+            gm2.Item2.DefineAllStates();
+
+
+            //StateManager2 = new BaseStateManager<SecondStates2, SecondStateTransitions>();
+            //StateManager2.DefineAllStates();
+
         }
 
         public async Task InitSecond()
         {
-           await  StateManager.ChangeTo(SecondStates.State1);
-            await StateManager2.ChangeTo(SecondStates2.StateX);
+           await  StateManager.GoToState(SecondStates.State1);
+            await StateManager.GoToState(SecondStates2.StateX);
             await Task.Delay(1000);
             Debug.WriteLine("Break");
         }
@@ -74,33 +80,33 @@ namespace StateByState
 
         public void ToFirst()
         {
-            StateManager.Transition(SecondStates.State1);
+            StateManager.GoToState(SecondStates.State1);
         }
         public void ToSecond()
         {
-            StateManager.Transition(SecondStates.State2);
+            StateManager.GoToState(SecondStates.State2);
         }
         public void ToThird()
         {
-            StateManager.Transition(SecondStates.State3);
+            StateManager.GoToState(SecondStates.State3);
         }
 
 
         public async void XtoZ()
         {
-            await StateManager2.Transition(SecondStates2.StateZ);
+            await StateManager.GoToState(SecondStates2.StateZ);
         }
         public async void YtoZ()
         {
-            await StateManager2.Transition(SecondStates2.StateZ);
+            await StateManager.GoToState(SecondStates2.StateZ);
         }
         public async void ZtoY()
         {
-            await StateManager2.Transition(SecondStates2.StateY);
+            await StateManager.GoToState(SecondStates2.StateY);
         }
         public async void YtoX()
         {
-            await StateManager2.Transition(SecondStates2.StateX);
+            await StateManager.GoToState(SecondStates2.StateX);
         }
 
         public void Done()

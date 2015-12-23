@@ -14,15 +14,15 @@ namespace StateByState
         Base,
         Main
     }
-    public class SecondaryApplication : ApplicationRegion, IHasViewModelStateManager<SecondaryRegionView, MainRegionTransition>
+    public class SecondaryApplication : ApplicationRegion, IHasStates
     {
-        public IViewModelStateManager<SecondaryRegionView, MainRegionTransition> StateManager { get; }
+        public IStateManager StateManager { get; }
 
         public SecondaryApplication()
         {
 
-            var sm = new ViewModelStateManager<SecondaryRegionView, MainRegionTransition>();
-
+            var ssm = new StateManager();
+            var sm = ssm.GroupWithViewModels<SecondaryRegionView>().Item2;
             sm.DefineViewModelState<SecondardyMainViewModel>(SecondaryRegionView.Main)
                 .WhenChangedTo(vm =>
                 {
@@ -44,7 +44,7 @@ namespace StateByState
 
 
 
-            StateManager = sm;
+            StateManager = ssm;
 
         }
 
@@ -60,13 +60,13 @@ namespace StateByState
             OnCloseRegion();
         }
 
-        protected async override Task CompleteStartup()
+        protected override async Task CompleteStartup()
         {
-            RegisterForUIAccess(StateManager);
+            (StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
 
             await base.CompleteStartup();
 
-            await StateManager.ChangeTo(SecondaryRegionView.Main);
+            await StateManager.GoToState(SecondaryRegionView.Main);
         }
     }
 }

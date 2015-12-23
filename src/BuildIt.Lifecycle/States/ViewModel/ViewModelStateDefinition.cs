@@ -7,7 +7,7 @@ using Microsoft.Practices.ServiceLocation;
 namespace BuildIt.Lifecycle.States.ViewModel
 {
     public class ViewModelStateDefinition<TState, TViewModel> :
-        BaseStateDefinition<TState>,
+        StateDefinition<TState>,
         IViewModelStateDefinition<TState, TViewModel>
         where TState : struct
         where TViewModel : INotifyPropertyChanged 

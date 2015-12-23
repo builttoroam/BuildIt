@@ -6,6 +6,12 @@ namespace BuildIt.Lifecycle
 {
     public interface IUIExecutionContext
     {
+        /// <summary>
+        /// NOTE: Don't call directly, use helper method RunAsync which uses IsRunningOnUIThread
+        /// to determine whether switch to UI thread is necessary
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
         Task RunOnUIThreadAsync(Func<Task> action);
 
         bool IsRunningOnUIThread { get; }
@@ -13,11 +19,11 @@ namespace BuildIt.Lifecycle
 
     public interface IRequiresUIAccess
     {
-        UIExecutionContext UIContext { get; }
+        IUIExecutionContext UIContext { get; }
     }
 
     public interface IRegisterForUIAccess: IRequiresUIAccess
     {
-        void RegisterForUIAccess(IRequiresUIAccess manager);
+        void RegisterForUIAccess(IUIExecutionContext context);
     }
 }

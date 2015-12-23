@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Autofac;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using Xamarin.Forms;
@@ -12,22 +13,21 @@ namespace BuildIt.Lifecycle
 {
    
 
-    public class FrameNavigation<TState,TTransition>:IHasCurrentViewModel 
+    public class FrameNavigation<TState>:IHasCurrentViewModel 
         where TState : struct
-        where TTransition:struct
     {
-        public INotifyPropertyChanged CurrentViewModel => StateManager?.CurrentViewModel;
+        public INotifyPropertyChanged CurrentViewModel => (StateNotifier as IHasCurrentViewModel)?.CurrentViewModel;
 
 
-        public IViewModelStateManager<TState, TTransition> StateManager { get; }
+        public INotifyStateChanged<TState> StateNotifier { get; }
 
         private NavigationPage NavigationRoot { get; }
 
         public FrameNavigation(NavigationPage navigationRoot,
-            IHasViewModelStateManager<TState, TTransition> hasStateManager)
+            INotifyStateChanged<TState> stateNotifier)
             //,string registerAs = null)
         {
-            var stateManager = hasStateManager.StateManager;
+            //var stateManager = hasStateManager.StateManager;
             //if (string.IsNullOrWhiteSpace( registerAs ))
             //{
             //    registerAs = hasStateManager.GetType().Name;
@@ -40,8 +40,8 @@ namespace BuildIt.Lifecycle
             NavigationRoot.Pushed += NavigationRoot_Pushed;
 
             //RootFrame.Tag = registerAs;
-            StateManager = stateManager;
-            StateManager.StateChanged += StateManager_StateChanged;
+            StateNotifier = stateNotifier;
+            StateNotifier.StateChanged += StateManager_StateChanged;
         }
 
 
@@ -64,33 +64,51 @@ namespace BuildIt.Lifecycle
             $"Found data context? '{dc != null}'".Log();
             if (dc == null) return;
 
+            var pgHasNotifier = pg as IHasStates;
+            if (pgHasNotifier == null) return;
 
-            var pps = dc.GetType().GetTypeInfo().DeclaredProperties;
-            "Iterating through declared properties".Log();
-            foreach (var p in pps)
+
+            var sm = (dc as IHasStates)?.StateManager;
+
+            var groups = sm.StateGroups;
+            var inotifier = typeof(INotifyStateChanged<>);
+            var vsct = typeof(VisualStateChanger<>);
+            foreach (var stateGroup in groups)
             {
-                var pt = p.PropertyType.GetTypeInfo();
-                var interfaces = pt.ImplementedInterfaces;
-                if (pt.IsInterface)
+                var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
+                if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
                 {
-                    interfaces = new[] { pt.AsType() }.Union(interfaces);
-                }
-                "Completed interface search".Log();
-                var ism = typeof(IStateManager<,>);
-                var vsct = typeof(VisualStateChanger<,>);
-                foreach (var inf in interfaces)
-                {
-                    $"Inspecting interface {inf.Name}".Log();
-                    if (inf.IsConstructedGenericType &&
-                        inf.GetGenericTypeDefinition() == ism)
-                    {
-                        "Interface matched, creating instance".Log();
-                        var parm = inf.GenericTypeArguments;
-                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(parm), pg, p.GetValue(dc));
-                        "Instance created".Log();
-                    }
+                    var vsc = Activator.CreateInstance(vsct.MakeGenericType(stateGroup.Key), pgHasNotifier, stateGroup.Value);
                 }
             }
+
+
+            //var pps = dc.GetType().GetTypeInfo().DeclaredProperties;
+            //"Iterating through declared properties".Log();
+            //foreach (var p in pps)
+            //{
+            //    var pt = p.PropertyType.GetTypeInfo();
+            //    var interfaces = pt.ImplementedInterfaces;
+            //    if (pt.IsInterface)
+            //    {
+            //        interfaces = new[] { pt.AsType() }.Union(interfaces);
+            //    }
+            //    "Completed interface search".Log();
+            //    var ism = typeof(IStateManager<,>);
+            //    //var vsct = typeof(VisualStateChanger<,>);
+            //    foreach (var inf in interfaces)
+            //    {
+            //        $"Inspecting interface {inf.Name}".Log();
+            //        if (inf.IsConstructedGenericType &&
+            //            inf.GetGenericTypeDefinition() == ism)
+            //        {
+            //            "Interface matched, creating instance".Log();
+            //            var parm = inf.GenericTypeArguments;
+            //            var vsc = Activator.CreateInstance(vsct.MakeGenericType(parm), pg, p.GetValue(dc));
+            //            "Instance created".Log();
+            //        }
+            //    }
+            //}
 
 
         }

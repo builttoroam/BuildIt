@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Autofac;
 using BuildIt.Lifecycle.States.ViewModel;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.Lifecycle
 {
     public interface IApplicationRegion: ICanRegisterDependencies, IRegisterForUIAccess
     {

@@ -45,11 +45,10 @@ namespace BuildIt.Lifecycle
             
         }
 
-        public UIExecutionContext UIContext { get; } = new UIExecutionContext();
-        public void RegisterForUIAccess(IRequiresUIAccess manager)
+        public IUIExecutionContext UIContext { get; private set; }
+        public virtual void RegisterForUIAccess(IUIExecutionContext context)
         {
-            if (manager == null) return;
-            manager.UIContext.RunContext = UIContext?.RunContext;
+            UIContext = context;
         }
     }
 }

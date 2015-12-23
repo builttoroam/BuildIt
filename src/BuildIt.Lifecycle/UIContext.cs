@@ -1,27 +1,40 @@
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle
 {
-    public class UIExecutionContext
+    public static class UIHelper
     {
-        public IUIExecutionContext RunContext { get; set; }
+        public static void RegisterForUIAccess(this IRegisterForUIAccess requiresAccess, IRequiresUIAccess hasAccess)
+        {
+            requiresAccess?.RegisterForUIAccess(hasAccess?.UIContext);
+        }
 
-        public async Task RunAsync(Action action)
+        public static async Task RunAsync(this IRequiresUIAccess context, Action action)
         {
 #pragma warning disable 1998 // Required to force to Task overloaded method
-            await RunAsync(async () => action());
+            await context.UIContext.RunAsync(async () => action());
 #pragma warning restore 1998
         }
 
-        public async Task RunAsync(Func<Task> action)
+        public static async Task RunAsync(this IRequiresUIAccess context, Func<Task> action)
         {
-            var context = RunContext;
+            await context.UIContext.RunAsync(action);
+        }
+
+        public static async Task RunAsync(this IUIExecutionContext context, Action action)
+        {
+#pragma warning disable 1998 // Required to force to Task overloaded method
+            await context.RunAsync(async () => action());
+#pragma warning restore 1998
+        }
+
+        public static async Task RunAsync(this IUIExecutionContext context, Func<Task> action)
+        {
             if (context == null)
             {
+                "UI Context not defined, running action on current thread".Log();
                 await action();
-                Debug.WriteLine("UI Context not defined");
                 return;
             }
             if (context.IsRunningOnUIThread)
