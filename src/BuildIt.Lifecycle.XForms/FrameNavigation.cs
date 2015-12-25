@@ -7,6 +7,7 @@ using System.Reflection;
 using Autofac;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle

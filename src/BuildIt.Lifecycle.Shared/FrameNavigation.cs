@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {

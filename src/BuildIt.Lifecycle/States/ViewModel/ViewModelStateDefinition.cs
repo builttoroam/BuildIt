@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Autofac;
+using BuildIt.States;
 using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle.States.ViewModel

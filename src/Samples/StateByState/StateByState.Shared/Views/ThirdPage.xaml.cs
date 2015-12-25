@@ -3,6 +3,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
+using BuildIt.States;
 
 
 namespace StateByState
@@ -18,7 +19,7 @@ namespace StateByState
 
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 

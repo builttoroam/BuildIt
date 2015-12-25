@@ -1,4 +1,4 @@
-namespace BuildIt.VisualStates
+namespace BuildIt.States
 {
     public interface IDefaultValue
     {

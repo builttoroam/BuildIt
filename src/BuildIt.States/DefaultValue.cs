@@ -1,16 +1,18 @@
-namespace BuildIt.VisualStates
+using System;
+
+namespace BuildIt.States
 {
     public class DefaultValue<TElement, TPropertyValue> : IDefaultValue
 
     {
-        public VisualStateValue<TElement, TPropertyValue> VisualStateValue { get; set; }
+        public TElement Element { get; set; }
+        public Action<TElement, TPropertyValue> Setter { get; set; }
 
         public TPropertyValue Value { get; set; }
 
-
         public void RevertToDefault()
         {
-            VisualStateValue.Setter(VisualStateValue.Element, Value);
+            Setter(Element,Value);
         }
     }
 }

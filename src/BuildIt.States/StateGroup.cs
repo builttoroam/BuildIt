@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public class StateGroup<TState, TTransition> : INotifyStateChanged<TState>, IStateGroupManager<TState,TTransition>
         where TState : struct

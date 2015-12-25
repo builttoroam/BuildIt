@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace BuildIt.VisualStates
+namespace BuildIt.States
 {
-    public class VisualStateValue<TElement, TPropertyValue> : IVisualStateValue
+    public class StateValue<TElement, TPropertyValue> : IStateValue
 
     {
         public Tuple<object, string> Key { get; set; }
@@ -14,9 +14,10 @@ namespace BuildIt.VisualStates
 
         public Action<TElement, TPropertyValue> Setter { get; set; }
 
-        public TPropertyValue StateValue { get; set; }
+        public TPropertyValue Value { get; set; }
 
-        private IDefaultValue Default => new DefaultValue<TElement, TPropertyValue> { VisualStateValue = this, Value = Getter(Element) };
+        private IDefaultValue Default => 
+            new DefaultValue<TElement, TPropertyValue> { Element = Element, Setter=Setter, Value = Getter(Element) };
 
         public void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
         {
@@ -24,7 +25,8 @@ namespace BuildIt.VisualStates
             {
                 defaultValues[Key] = Default;
             }
-            Setter(Element, StateValue);
+            Setter(Element, Value);
         }
+
     }
 }

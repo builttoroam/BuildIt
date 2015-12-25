@@ -1,4 +1,4 @@
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public interface IHasStates
     {

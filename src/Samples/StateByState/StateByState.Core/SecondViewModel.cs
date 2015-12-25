@@ -5,6 +5,7 @@ using BuildIt;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.Lifecycle;
+using BuildIt.States;
 
 namespace StateByState
 {

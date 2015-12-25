@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace BuildIt.VisualStates
+namespace BuildIt.States
 {
-    public interface IVisualState
+    public interface IStateValue
     {
+        Tuple<object, string> Key { get; }
+
         void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
     }
 }

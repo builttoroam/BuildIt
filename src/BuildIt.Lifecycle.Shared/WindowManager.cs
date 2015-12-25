@@ -10,6 +10,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {
@@ -39,18 +40,18 @@ namespace BuildIt.Lifecycle
         {
 #if WINDOWS_UWP
 
-            var isPrimary = RegionManager.IsPrimaryRegion(e.Parameter1);
+            var isPrimary = RegionManager.IsPrimaryRegion(e);
             var newView = isPrimary
                 ? CoreApplication.MainView
                 : CoreApplication.CreateNewView();
             var newViewId = 0;
             var context = new UniversalUIContext(newView.Dispatcher);
-            e.Parameter1.RegisterForUIAccess(context);
+            e.RegisterForUIAccess(context);
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
             {
                 var frame = new Frame();
 
-                var region = e.Parameter1;
+                var region = e;
 
                 var hasStates = region as IHasStates;
                 var sm = (region as IHasStates)?.StateManager;

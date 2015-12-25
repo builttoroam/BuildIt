@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public interface IStateGroup
 

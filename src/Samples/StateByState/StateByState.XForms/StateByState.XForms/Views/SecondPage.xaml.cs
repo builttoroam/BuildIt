@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BuildIt;
-using BuildIt.Lifecycle;
-using BuildIt.Lifecycle.States;
+using BuildIt.States;
 using Xamarin.Forms;
 
 namespace StateByState.XForms.Views
 {
-    public partial class SecondPage : ContentPage, IHasStates
+    public partial class SecondPage : IHasStates
     {
         public IStateManager StateManager { get; }
 

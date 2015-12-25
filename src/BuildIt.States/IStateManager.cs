@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
-    public interface IStateManager:IRegisterForUIAccess
+    public interface IStateManager//:IRegisterForUIAccess
     {
         IDictionary<Type, IStateGroup> StateGroups { get; }
 

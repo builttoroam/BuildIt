@@ -1,6 +1,6 @@
 using System;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public interface INotifyStateChanged<TState>
         where TState:struct 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {

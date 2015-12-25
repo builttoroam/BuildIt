@@ -1,12 +1,28 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public static class ViewModelStateHelper
+    public static class ViewModelStateHelpers
     {
-        public static IViewModelStateDefinition<TState, TViewModel> Initialise<TState, TViewModel>(
+        public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>> GroupWithViewModels<TState>(
+           this IStateManager vsm) where TState : struct
+        {
+            var grp = new ViewModelStateGroup<TState, DefaultTransition>();
+            vsm.StateGroups.Add(typeof(TState), grp);
+            return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>>(vsm, grp);
+        }
+
+        public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>> Group<TState>(
+            this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>> vsmGroup)
+            where TState : struct
+        {
+            return vsmGroup.Item1.GroupWithViewModels<TState>();
+        }
+    
+    public static IViewModelStateDefinition<TState, TViewModel> Initialise<TState, TViewModel>(
             this IViewModelStateDefinition<TState, TViewModel> stateDefinition,
             Action<TViewModel> action)
             where TState : struct

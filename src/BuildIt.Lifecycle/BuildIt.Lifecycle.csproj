@@ -50,20 +50,13 @@
     <Compile Include="RegionManager.cs" />
     <Compile Include="RootApplication.cs" />
     <Compile Include="IHasRegionManager.cs" />
-    <Compile Include="States\INotifyStateChanged.cs" />
-    <Compile Include="States\StateDefinition.cs" />
-    <Compile Include="States\TransitionDefinition.cs" />
     <Compile Include="IApplicationRegion.cs" />
     <Compile Include="States\ViewModel\BaseViewModel.cs" />
     <Compile Include="States\ViewModel\IAboutToLeaveViewModelState.cs" />
     <Compile Include="States\ViewModel\IArrivingViewModelState.cs" />
     <Compile Include="States\ViewModel\ICanRegisterDependencies.cs" />
     <Compile Include="States\ViewModel\IGenerateViewModel.cs" />
-    <Compile Include="States\IStateDefinition.cs" />
-    <Compile Include="States\IStateGroupManager.cs" />
-    <Compile Include="States\ITransitionDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\StateEventArgs.cs" />
     <Compile Include="States\ViewModel\IHasCurrentViewModel.cs" />
     <Compile Include="States\ViewModel\ILeavingViewModelState.cs" />
     <Compile Include="States\ViewModel\IViewModelStateDefinition.cs" />
@@ -73,16 +66,6 @@
     <Compile Include="States\ViewModel\ViewModelStateGroup.cs" />
     <Compile Include="States\ViewModel\ViewModelTransitionDefinition.cs" />
     <Compile Include="UIContext.cs" />
-    <Compile Include="States\DefaultValue.cs" />
-    <Compile Include="States\IDefaultValue.cs" />
-    <Compile Include="States\IHasStates.cs" />
-    <Compile Include="States\IStateGroup.cs" />
-    <Compile Include="States\IStateManager.cs" />
-    <Compile Include="States\IStateValue.cs" />
-    <Compile Include="States\StateHelpers.cs" />
-    <Compile Include="States\StateGroup.cs" />
-    <Compile Include="States\StateManager.cs" />
-    <Compile Include="States\StateValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -105,6 +88,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuildIt.States\BuildIt.States.csproj">
+      <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
+      <Name>BuildIt.States</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

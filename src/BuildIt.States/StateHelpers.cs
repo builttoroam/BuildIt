@@ -2,9 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using BuildIt.Lifecycle.States.ViewModel;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public static class StateHelpers
     {
@@ -250,21 +249,5 @@ namespace BuildIt.Lifecycle.States
 
     }
 
-    public static class ViewModelStateHelpers
-    {
-        public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>> GroupWithViewModels<TState>(
-           this IStateManager vsm) where TState : struct
-        {
-            var grp = new ViewModelStateGroup<TState, DefaultTransition>();
-            vsm.StateGroups.Add(typeof(TState), grp);
-            return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>>(vsm, grp);
-        }
-
-        public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>> Group<TState>(
-            this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>> vsmGroup)
-            where TState : struct
-        {
-            return vsmGroup.Item1.GroupWithViewModels<TState>();
-        }
-    }
+    
 }

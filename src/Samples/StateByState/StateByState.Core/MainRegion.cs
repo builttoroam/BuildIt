@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 
 namespace StateByState
 {

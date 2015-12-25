@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {

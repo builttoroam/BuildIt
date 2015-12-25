@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public interface ITransitionDefinition<TState> where TState : struct
     {

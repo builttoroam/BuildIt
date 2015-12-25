@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BuildIt.Lifecycle.States
+namespace BuildIt.States
 {
     public class StateEventArgs<TState> : EventArgs
     {
