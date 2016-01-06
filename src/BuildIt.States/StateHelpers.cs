@@ -66,6 +66,15 @@ namespace BuildIt.States
             return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>>(vsmGroup.Item1, grp);
         }
 
+        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>> DefineAllStates<TState>(
+    this Tuple<IStateManager, StateGroup<TState, DefaultTransition>> vsmGroup)
+    where TState : struct
+        {
+            vsmGroup.Item2.DefineAllStates();
+            return vsmGroup;
+        }
+
+
         public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>,
             StateDefinition<TState>> DefineState<TState>(
             this Tuple<IStateManager, StateGroup<TState, DefaultTransition>> vsmGroup, TState state)

@@ -14,6 +14,9 @@ namespace BuildIt.Lifecycle
 
             var builder = new ContainerBuilder();
 
+            // Build and application dependencies
+            RegisterDependencies(builder);
+
             buildDependencies?.Invoke(builder);
 
             // Perform registrations and build the container.
@@ -40,6 +43,11 @@ namespace BuildIt.Lifecycle
         {
         }
 
+        protected virtual void RegisterDependencies(ContainerBuilder builder)
+        {
+            
+        }
+
         protected IContainer DependencyContainer { get; private set; }
 #pragma warning disable 1998 // Async so it can be overridden
         protected virtual async Task BuildCoreDependencies(IContainer container)
@@ -48,7 +56,7 @@ namespace BuildIt.Lifecycle
             DependencyContainer = container;
         }
 
-        public void RegisterDependencies(Action<ContainerBuilder> build)
+        public void RegisterAdditionalDependencies(Action<ContainerBuilder> build)
         {
             var cb = new ContainerBuilder();
             build?.Invoke(cb);

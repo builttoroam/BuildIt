@@ -85,7 +85,13 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
-)</PostBuildEvent>
+)
+if $(ConfigurationName) == Debug (
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.States.0.1.2\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.States\0.1.2\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+)
+
+</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -9,5 +9,7 @@ namespace BuildIt.States
         IDictionary<Type, IStateGroup> StateGroups { get; }
 
         Task<bool> GoToState<TState>(TState state, bool animate = true) where TState : struct;
+
+        IStateBinder Bind(IStateManager managerToBindTo);
     }
 }

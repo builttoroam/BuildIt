@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Autofac;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {
@@ -42,13 +43,25 @@ namespace BuildIt.Lifecycle
 
         public virtual void RegisterDependencies(IContainer container)
         {
-            
+            var hasSM = this as IHasStates;
+            if (hasSM == null) return;
+            foreach (var stateGroup in hasSM.StateManager.StateGroups)
+            {
+                (stateGroup.Value as ICanRegisterDependencies)?.RegisterDependencies(container);
+            }
         }
 
         public IUIExecutionContext UIContext { get; private set; }
         public virtual void RegisterForUIAccess(IUIExecutionContext context)
         {
             UIContext = context;
+
+            var hasSM = this as IHasStates;
+            if (hasSM == null) return;
+            foreach (var stateGroup in hasSM.StateManager.StateGroups)
+            {
+                (stateGroup.Value as IRegisterForUIAccess)?.RegisterForUIAccess(context);
+            }
         }
     }
 }

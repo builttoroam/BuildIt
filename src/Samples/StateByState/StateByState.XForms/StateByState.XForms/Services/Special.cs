@@ -2,8 +2,8 @@ using StateByState.Services;
 
 namespace StateByState
 {
-    public class Special : ISpecial
+    public class XFormsSpecial : ISpecial
     {
-        public string Data { get { return "Special Info"; } }
+        public string Data => "Special Info from XForms";
     }
 }

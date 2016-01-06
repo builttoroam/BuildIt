@@ -124,21 +124,26 @@ namespace StateByState
             Manager.CreateRegion<SecondaryApplication>();
         }
 
-        public override void RegisterDependencies(IContainer container)
-        {
-            base.RegisterDependencies(container);
+        //public override void RegisterDependencies(IContainer container)
+        //{
+        //    base.RegisterDependencies(container);
 
-            (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
+        //    foreach (var stateGroup in StateManager.StateGroups)
+        //    {
+        //        (stateGroup.Value as ICanRegisterDependencies)?.RegisterDependencies(container);
+        //    }
 
-            //RegionManager?.RegisterDependencies(container);
-        }
+        //      //  (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
 
-        public override void RegisterForUIAccess(IUIExecutionContext context)
-        {
-            base.RegisterForUIAccess(context);
+        //    //RegionManager?.RegisterDependencies(container);
+        //}
 
-            (StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
-        }
+        //public override void RegisterForUIAccess(IUIExecutionContext context)
+        //{
+        //    base.RegisterForUIAccess(context);
+
+        //    (StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
+        //}
 
         protected override async Task CompleteStartup()
         {

@@ -41,26 +41,31 @@ namespace StateByState
             }
 #endif
 
-           
-            // Associate main region states with corresponding native pages
-            NavigationHelper.Register<MainRegionView, MainPage>(MainRegionView.Main);
-            NavigationHelper.Register<MainRegionView, SecondPage>(MainRegionView.Second);
-            NavigationHelper.Register<MainRegionView, ThirdPage>(MainRegionView.Third);
 
-            // Associate secondary region states with corresponding native pages
-            NavigationHelper.Register<SecondaryRegionView, SeparatePage>(SecondaryRegionView.Main);
+            // Associate main region states with corresponding native pages
+            LifecycleHelper.RegisterView<MainPage>().ForState(MainRegionView.Main);
+            LifecycleHelper.RegisterView<SecondPage>().ForState(MainRegionView.Second);
+            LifecycleHelper.RegisterView<ThirdPage>().ForState(MainRegionView.Third);
+
+            // Register the sub-pages of the third page
+            LifecycleHelper.RegisterView<ThrirdOnePage>().ForState(ThirdStates.One);
+            LifecycleHelper.RegisterView<ThirdTwoPage>().ForState(ThirdStates.Two);
+            LifecycleHelper.RegisterView<ThirdThreePage>().ForState(ThirdStates.Three);
+            LifecycleHelper.RegisterView<ThirdFourPage>().ForState(ThirdStates.Four);
+
+            // Register the page to be used in the additional window
+            LifecycleHelper.RegisterView<SeparatePage>().ForState(SecondaryRegionView.Main);
 
             var core = new SampleApplication();
             var wm = new WindowManager(core);
             await core.Startup(builder =>
             {
-                builder.RegisterType<BasicDebugLogger>().As<ILogService>();
-                    builder.RegisterType<Special>().As<ISpecial>();
-                });
-          
+                builder.RegisterType<UWPSpecial>().As<ISpecial>();
+            });
+
         }
 
-       
+
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails

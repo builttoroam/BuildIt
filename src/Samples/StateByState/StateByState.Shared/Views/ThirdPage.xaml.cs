@@ -26,10 +26,6 @@ namespace StateByState
             var frame = Split.FindName("InnerFrame") as Frame;
 
             var fn = new FrameNavigation<ThirdStates>(frame, CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
-            NavigationHelper.Register<ThirdStates,ThrirdOnePage>(ThirdStates.One);
-            NavigationHelper.Register<ThirdStates,ThirdTwoPage>(ThirdStates.Two);
-            NavigationHelper.Register<ThirdStates,ThirdThreePage>(ThirdStates.Three);
-            NavigationHelper.Register<ThirdStates,ThirdFourPage>(ThirdStates.Four);
             await CurrentViewModel.Start();
         }
 

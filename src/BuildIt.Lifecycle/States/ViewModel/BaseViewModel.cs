@@ -12,7 +12,6 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         public virtual void RegisterDependencies(IContainer container)
         {
-            
         }
     }
 }

@@ -9,14 +9,13 @@ namespace BuildIt.States
         Base
     }
 
-    public interface IStateGroupManager<TState, TTransition> : 
+    public interface IStateGroupManager<TState, TTransition> :
         //INotifyPropertyChanged, 
+        INotifyStateChanged<TState>,
         IStateGroup
         where TState : struct
         where TTransition:struct
     {
-        event EventHandler<StateEventArgs<TState>> StateChanged;
-
         TState CurrentState { get; }
 
         IDictionary<TState, IStateDefinition<TState>> States { get; }

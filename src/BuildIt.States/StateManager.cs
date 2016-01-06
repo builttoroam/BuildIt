@@ -17,6 +17,41 @@ namespace BuildIt.States
             return await group.ChangeTo(state,animate);
         }
 
+        public IStateBinder Bind(IStateManager managerToBindTo)
+        {
+            return new StateManagerBinder(this, managerToBindTo);
+        }
+
+        private class StateManagerBinder : IStateBinder
+        {
+            IStateManager StateManager { get; }
+            IStateManager StateManagerToBindTo { get; }
+
+            IList<IStateBinder> GroupBinders { get; }=new List<IStateBinder>(); 
+            public StateManagerBinder(IStateManager sm, IStateManager manager)
+            {
+                StateManager = sm;
+                StateManagerToBindTo = manager;
+
+                foreach (var kvp in manager.StateGroups)
+                {
+                    var sg = StateManager.StateGroups.SafeValue(kvp.Key);
+                    if (sg == null) continue;
+                    var binder = sg.Bind(kvp.Value);
+                    if (binder == null) continue;
+                    GroupBinders.Add(binder);
+                }
+            }
+
+            public void Unbind()
+            {
+                foreach (var groupBinder in GroupBinders)
+                {
+                    groupBinder.Unbind();
+                }
+            }
+        }
+
         //public void RegisterDependencies(IContainer container)
         //{
         //    foreach (var stateGroup in StateGroups)

@@ -51,6 +51,7 @@
     <Compile Include="RootApplication.cs" />
     <Compile Include="IHasRegionManager.cs" />
     <Compile Include="IApplicationRegion.cs" />
+    <Compile Include="States\ViewModel\BaseStateManagerViewModel.cs" />
     <Compile Include="States\ViewModel\BaseViewModel.cs" />
     <Compile Include="States\ViewModel\IAboutToLeaveViewModelState.cs" />
     <Compile Include="States\ViewModel\IArrivingViewModelState.cs" />
@@ -107,8 +108,8 @@
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
 )
 if $(ConfigurationName) == Debug (
- xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Lifecycle.0.1.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
- xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Lifecycle\0.1.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Lifecycle.0.1.2.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Lifecycle\0.1.2\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
 )
 </PostBuildEvent>
   </PropertyGroup>

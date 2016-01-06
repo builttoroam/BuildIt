@@ -1,5 +1,6 @@
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
+using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
 {
@@ -21,5 +22,16 @@ namespace BuildIt.Lifecycle
         {
             VisualStateManager.GoToState(e.State, e.UseTransitions);
         }
+    }
+
+    public static class LifecycleHelper
+    {
+
+        public static NavigationRegistrationHelper RegisterView<TView>() where TView : Page
+        {
+            return new NavigationRegistrationHelper { ViewType = typeof(TView) };
+        }
+
+
     }
 }

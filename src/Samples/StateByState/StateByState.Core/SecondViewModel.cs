@@ -38,14 +38,13 @@ namespace StateByState
         StateY,
         StateZ
     }
-    public class SecondViewModel : BaseViewModel, IHasStates
+    public class SecondViewModel : BaseStateManagerViewModel
     {
         public event EventHandler SecondCompleted;
 
 
         public string Name { get; } = "Bob";
 
-        public IStateManager StateManager { get; } = new StateManager();
 
         public SecondViewModel()
         {

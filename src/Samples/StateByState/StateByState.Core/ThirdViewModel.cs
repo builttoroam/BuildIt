@@ -28,16 +28,14 @@ namespace StateByState
         //FourToOne
     }
 
-    public class ThirdViewModel:BaseViewModel, IHasStates
+    public class ThirdViewModel:BaseStateManagerViewModel
     {
         public event EventHandler ThirdCompleted;
-
-        public IStateManager StateManager { get; }
 
         public ThirdViewModel()
         {
 
-            var sm = new StateManager();
+            var sm = StateManager;
             var gp = sm.GroupWithViewModels<ThirdStates>().Item2;
             gp.DefineViewModelState<ThirdOneViewModel>(ThirdStates.One);
             gp.DefineViewModelState<ThirdTwoViewModel>(ThirdStates.Two);
@@ -51,26 +49,19 @@ namespace StateByState
                 {
                     vm.Done -= Vm_Done;
                 });
-            StateManager = sm;
             
         }
 
-        public override void RegisterDependencies(IContainer container)
-        {
-            base.RegisterDependencies(container);
+        //public override void RegisterDependencies(IContainer container)
+        //{
+        //    base.RegisterDependencies(container);
 
-            (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
-        }
+        //    (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
+        //}
 
-
-        private void Vm_Done(object sender, EventArgs e)
-        {
-            ThirdCompleted.SafeRaise(this);
-        }
 
         public async Task Start()
         {
-            RegisterForUIAccess((StateManager as IRequiresUIAccess)?.UIContext);
             await StateManager.GoToState(ThirdStates.One);
         }
 

@@ -6,5 +6,14 @@ namespace BuildIt.States
 
     {
         Task<bool> ChangeTo<TFindState>(TFindState newState, bool useTransitions = true) where TFindState : struct;
+
+        IStateBinder Bind(IStateGroup groupToBindTo);
     }
+
+    public interface IStateBinder
+    {
+        void Unbind();
+    }
+
+    
 }

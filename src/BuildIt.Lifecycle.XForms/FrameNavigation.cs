@@ -69,7 +69,11 @@ namespace BuildIt.Lifecycle
             if (pgHasNotifier == null) return;
 
 
+
             var sm = (dc as IHasStates)?.StateManager;
+
+           // pgHasNotifier.StateManager.Bind(sm);
+
 
             var groups = sm.StateGroups;
             var inotifier = typeof(INotifyStateChanged<>);

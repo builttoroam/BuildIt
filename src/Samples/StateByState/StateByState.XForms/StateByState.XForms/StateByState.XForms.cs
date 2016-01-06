@@ -60,19 +60,18 @@ namespace StateByState.XForms
 	    {
 
             // Handle when your app starts
-            NavigationHelper.Register<MainRegionView, MainPage>(MainRegionView.Main);
-            NavigationHelper.Register<MainRegionView, SecondPage>(MainRegionView.Second);
-            NavigationHelper.Register<MainRegionView, ThirdPage>(MainRegionView.Third);
+            LifecycleHelper.RegisterView<MainPage>().ForState(MainRegionView.Main);
+            LifecycleHelper.RegisterView<SecondPage>().ForState(MainRegionView.Second);
+            LifecycleHelper.RegisterView<ThirdPage>().ForState(MainRegionView.Third);
 
-            // Associate secondary region states with corresponding native pages
-            NavigationHelper.Register<SecondaryRegionView, SeparatePage>(SecondaryRegionView.Main);
+            LifecycleHelper.RegisterView<SeparatePage>().ForState(SecondaryRegionView.Main);
+
 
             var core = new SampleApplication();
             var wm = new WindowManager(MainPage as NavigationPage, core);
             await core.Startup(builder =>
             {
-                builder.RegisterType<BasicDebugLogger>().As<ILogService>();
-                builder.RegisterType<Special>().As<ISpecial>();
+                builder.RegisterType<XFormsSpecial>().As<ISpecial>();
             });
 
 //            (MainPage as NavigationPage).Navigation.PushAsync(new MainPage());

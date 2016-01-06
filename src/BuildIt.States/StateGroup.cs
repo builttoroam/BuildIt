@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
-    public class StateGroup<TState, TTransition> : INotifyStateChanged<TState>, IStateGroupManager<TState,TTransition>
+    public class StateGroup<TState, TTransition> :  IStateGroupManager<TState,TTransition>
         where TState : struct
         where TTransition : struct
     {
@@ -72,6 +72,38 @@ namespace BuildIt.States
             var newState = (TState) (object) findState;
 
             return await ChangeTo(newState, useTransitions);
+        }
+
+        public IStateBinder Bind(IStateGroup groupToBindTo)
+        {
+            var sg = groupToBindTo as INotifyStateChanged<TState>;
+            if (sg == null) return null;
+
+            return new StateGroupBinder<TState>(this,sg);
+        }
+
+        private class StateGroupBinder<TStateBind> : IStateBinder
+            where TStateBind : struct
+        {
+            IStateGroup StateGroup { get; }
+            INotifyStateChanged<TStateBind> Source { get; }
+            public StateGroupBinder(IStateGroup sg, INotifyStateChanged<TStateBind> source)
+            {
+                StateGroup = sg;
+                Source = source;
+
+                Source.StateChanged += Source_StateChanged;
+            }
+
+            private void Source_StateChanged(object sender, StateEventArgs<TStateBind> e)
+            {
+                StateGroup.ChangeTo(e.State, e.UseTransitions);
+            }
+
+            public void Unbind()
+            {
+                Source.StateChanged -= Source_StateChanged;
+            }
         }
 
         public async Task<bool> ChangeTo(TState newState, bool useTransitions = true)

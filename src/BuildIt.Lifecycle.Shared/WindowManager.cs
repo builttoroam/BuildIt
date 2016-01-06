@@ -47,6 +47,9 @@ namespace BuildIt.Lifecycle
             var newViewId = 0;
             var context = new UniversalUIContext(newView.Dispatcher);
             e.RegisterForUIAccess(context);
+
+
+
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,  () =>
             {
                 var frame = new Frame();
@@ -94,7 +97,13 @@ namespace BuildIt.Lifecycle
 
                 Windows[region.RegionId] = Window.Current.CoreWindow;
 
+                if (isPrimary)
+                {
+                    region.Startup(sender as IRegionManager);
+                }
+                else { 
                 Task.Run(async () => await region.Startup(sender as IRegionManager));
+                }
 
 
             });
