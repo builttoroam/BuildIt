@@ -58,7 +58,10 @@ namespace StateByState
 
         //    (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
         //}
-
+        private void Vm_Done(object sender, EventArgs e)
+        {
+            ThirdCompleted.SafeRaise(this);
+        }
 
         public async Task Start()
         {

@@ -12,7 +12,7 @@ namespace BuildIt.States
     public interface IStateGroupManager<TState, TTransition> :
         //INotifyPropertyChanged, 
         INotifyStateChanged<TState>,
-        IStateGroup
+        IStateGroup<TState>
         where TState : struct
         where TTransition:struct
     {

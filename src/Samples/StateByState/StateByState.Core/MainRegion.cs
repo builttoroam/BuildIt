@@ -36,8 +36,20 @@ namespace StateByState
 
             #region State Definitions
             var ssm = new StateManager();
-            var sm = ssm.GroupWithViewModels<MainRegionView>().Item2;
-            sm.DefineViewModelState<MainViewModel>(MainRegionView.Main)
+            var smx = ssm.GroupWithViewModels<MainRegionView>();
+            var sm = smx.Item2;
+                smx.StateWithViewModel<MainRegionView, MainViewModel>(MainRegionView.Main)
+                .OnEvent((vm, a) => vm.Completed += a, 
+                        (vm, a) => vm.Completed -= a)
+                .ChangeState(MainRegionView.Second)
+                .OnEvent((vm, a) => vm.UnableToComplete += a,
+                        (vm, a) => vm.UnableToComplete -= a)
+                .ChangeState(MainRegionView.Third)
+                
+
+                .Item3
+
+            //sm.DefineViewModelState<MainViewModel>(MainRegionView.Main)
                 .Initialise(async vm =>
                 {
                     "VM State: Init".Log();
@@ -46,8 +58,8 @@ namespace StateByState
                 .WhenChangedTo(async vm =>
                 {
                     "VM State: When Changed To".Log();
-                    vm.Completed += State_Completed;
-                    vm.UnableToComplete += State_UnableToCompleted;
+                  //  vm.Completed += State_Completed;
+                    //vm.UnableToComplete += State_UnableToCompleted;
                     vm.SpawnNewRegion += Vm_SpawnNewRegion;
                     await vm.StartViewModel();
                 })
@@ -55,8 +67,8 @@ namespace StateByState
                 .WhenChangingFrom(vm =>
                 {
                     "VM State: When Changing From".Log();
-                    vm.Completed -= State_Completed;
-                    vm.UnableToComplete -= State_UnableToCompleted;
+                    //vm.Completed -= State_Completed;
+                    //vm.UnableToComplete -= State_UnableToCompleted;
                 })
                 .WhenAboutToChange(cancel => $"State: About to Change - {cancel.Cancel}".Log())
 #pragma warning disable 1998
@@ -154,16 +166,16 @@ namespace StateByState
         }
 
 
-        private async void State_Completed(object sender, EventArgs e)
-        {
-            await StateManager.GoToState(MainRegionView.Second);
-            // await StateManager.Transition(MainRegionTransition.MainToSecond);
-        }
-        private async void State_UnableToCompleted(object sender, EventArgs e)
-        {
-            await StateManager.GoToState(MainRegionView.Third);
-            //await StateManager.Transition(MainRegionView.Third);
-        }
+        //private async void State_Completed(object sender, EventArgs e)
+        //{
+        //    await StateManager.GoToState(MainRegionView.Second);
+        //    // await StateManager.Transition(MainRegionTransition.MainToSecond);
+        //}
+        //private async void State_UnableToCompleted(object sender, EventArgs e)
+        //{
+        //    await StateManager.GoToState(MainRegionView.Third);
+        //    //await StateManager.Transition(MainRegionView.Third);
+        //}
 
         private async void SecondCompleted(object sender, EventArgs e)
         {

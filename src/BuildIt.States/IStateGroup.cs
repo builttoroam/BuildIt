@@ -10,6 +10,14 @@ namespace BuildIt.States
         IStateBinder Bind(IStateGroup groupToBindTo);
     }
 
+    public interface IStateGroup<TState> : IStateGroup
+        where TState : struct
+    {
+        IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
+        IStateDefinition<TState> DefineState(TState state);
+    }
+
+
     public interface IStateBinder
     {
         void Unbind();

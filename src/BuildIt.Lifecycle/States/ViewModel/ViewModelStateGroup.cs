@@ -8,10 +8,23 @@ using BuildIt.States;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
+    public interface IViewModelStateGroup<TState> : IStateGroup<TState>, IHasCurrentViewModel
+        where TState : struct
+    {
+        IViewModelStateDefinition<TState, TViewModel> DefineViewModelState<TViewModel>(TState state)
+            where TViewModel : INotifyPropertyChanged;
+
+        IViewModelStateDefinition<TState, TViewModel> DefineViewModelState<TViewModel>(
+            IViewModelStateDefinition<TState, TViewModel> stateDefinition)
+            where TViewModel : INotifyPropertyChanged;
+    }
+
+
     public class ViewModelStateGroup<TState, TTransition> :
         StateGroup<TState, TTransition>, 
         ICanRegisterDependencies,
         IHasCurrentViewModel,
+        IViewModelStateGroup<TState>,
         //IViewModelStateManager<TState,TTransition>, 
         IRegisterForUIAccess
         where TState : struct
