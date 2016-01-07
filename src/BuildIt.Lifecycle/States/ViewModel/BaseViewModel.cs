@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Diagnostics.Contracts;
+using Autofac;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {

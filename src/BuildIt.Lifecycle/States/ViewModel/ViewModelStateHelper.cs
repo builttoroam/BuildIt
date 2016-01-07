@@ -186,6 +186,36 @@ namespace BuildIt.Lifecycle.States.ViewModel
             //return stateDefinition;
         }
 
+      
+
+
+        public static Tuple<IStateManager, 
+            ViewModelStateGroup<TState, DefaultTransition>, 
+            IViewModelStateDefinition<TState, TViewModel>, 
+            StateCompletionBinder<TCompletion>>
+           OnComplete<TState, TViewModel, TCompletion>(
+           this Tuple<IStateManager, 
+               ViewModelStateGroup<TState, DefaultTransition>, 
+               IViewModelStateDefinition<TState, TViewModel>> smInfo,
+                TCompletion completion)
+           where TState : struct
+           where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TCompletion:struct
+        {
+            if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            var binder = new StateCompletionBinder<TCompletion> { Completion=completion };
+            return new Tuple<IStateManager, 
+                ViewModelStateGroup<TState, DefaultTransition>, 
+                IViewModelStateDefinition<TState, TViewModel>, 
+                StateCompletionBinder<TCompletion>>(
+                smInfo.Item1, smInfo.Item2, smInfo.Item3, binder);
+            //"Adding Behaviour: ChangedToViewModel".Log();
+            //stateDefinition.ChangedToViewModel = action;
+            //return stateDefinition;
+        }
+
         public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>> ChangeState<TState, TViewModel>(
             this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>, StateEventBinder<TViewModel>> smInfo,
             TState stateToChangeTo) where TState : struct
@@ -193,7 +223,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
         {
             if (smInfo?.Item1 == null ||
                 smInfo.Item2 == null ||
-                smInfo.Item2 == null) return null;
+                smInfo.Item3 == null) return null;
 
             var binder = smInfo.Item4;
             var sm = smInfo.Item1;
@@ -215,11 +245,58 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
             return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
         }
+        public static Tuple<IStateManager, 
+            ViewModelStateGroup<TState, DefaultTransition>, 
+            IViewModelStateDefinition<TState, TViewModel>> 
+            ChangeState<TState, TViewModel, TCompletion>(
+            this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, 
+                IViewModelStateDefinition<TState, TViewModel>, 
+                StateCompletionBinder<TCompletion>> smInfo,
+            TState stateToChangeTo) 
+            where TState : struct
+            where TViewModel : INotifyPropertyChanged,IViewModelCompletion<TCompletion>
+            where TCompletion:struct
+        {
+            if (smInfo?.Item1 == null ||
+                smInfo.Item2 == null ||
+                smInfo.Item3 == null) return null;
+
+            var comp = smInfo.Item4?.Completion;
+            var sm = smInfo.Item1;
+            var newState = stateToChangeTo;
+            var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>((s, e) =>
+            {
+                if (e.Completion.Equals(comp))
+                {
+                    sm.GoToState(newState);
+                }
+            });
+
+
+
+            smInfo.Item3
+                .WhenChangedTo(vm =>
+                {
+                    vm.Complete += changeStateAction;
+                })
+                .WhenChangingFrom(vm =>
+                {
+                    vm.Complete -= changeStateAction;
+                });
+
+            return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
+        }
 
         public class StateEventBinder<TViewModel> where TViewModel : INotifyPropertyChanged
         {
             public Action<TViewModel, EventHandler> Subscribe { get; set; }
             public Action<TViewModel, EventHandler> Unsubscribe { get; set; }
         }
+
+        public class StateCompletionBinder<TCompletion>
+            where TCompletion : struct
+        {
+            public TCompletion Completion { get; set; }
+        } 
     }
 }

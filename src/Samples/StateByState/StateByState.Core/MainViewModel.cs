@@ -7,7 +7,14 @@ using StateByState.Services;
 
 namespace StateByState
 {
-    public class MainViewModel : BaseViewModel
+    public enum MainCompletion
+    {
+        Base,
+        Page2,
+        Page3
+    }
+
+    public class MainViewModel : BaseViewModelWithCompletion<MainCompletion>
     {
         public event EventHandler Completed;
         public event EventHandler UnableToComplete;
@@ -38,11 +45,13 @@ namespace StateByState
 
         public void Test()
         {
+            OnComplete(MainCompletion.Page2);
             Completed?.Invoke(this, EventArgs.Empty);
         }
 
         public void Three()
         {
+            OnComplete(MainCompletion.Page3);
             UnableToComplete?.Invoke(this, EventArgs.Empty);
         }
 

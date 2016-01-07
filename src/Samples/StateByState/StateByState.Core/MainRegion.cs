@@ -39,9 +39,11 @@ namespace StateByState
             var smx = ssm.GroupWithViewModels<MainRegionView>();
             var sm = smx.Item2;
                 smx.StateWithViewModel<MainRegionView, MainViewModel>(MainRegionView.Main)
-                .OnEvent((vm, a) => vm.Completed += a, 
-                        (vm, a) => vm.Completed -= a)
+                .OnComplete(MainCompletion.Page2)
                 .ChangeState(MainRegionView.Second)
+                //.OnEvent((vm, a) => vm.Completed += a, 
+                //        (vm, a) => vm.Completed -= a)
+                //.ChangeState(MainRegionView.Second)
                 .OnEvent((vm, a) => vm.UnableToComplete += a,
                         (vm, a) => vm.UnableToComplete -= a)
                 .ChangeState(MainRegionView.Third)
