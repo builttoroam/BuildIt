@@ -7,10 +7,12 @@ namespace BuildIt.States
         public TState State { get; set; }
         public bool UseTransitions { get; set; }
 
-        public StateEventArgs(TState state, bool useTransitions = false)
+        public bool IsNewState { get; set; }
+        public StateEventArgs(TState state, bool useTransitions, bool isNewState)
         {
             State = state;
             UseTransitions = useTransitions;
+            IsNewState = isNewState;
         }
     }
 }

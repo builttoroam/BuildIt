@@ -23,13 +23,17 @@ namespace BuildIt.Lifecycle.States.ViewModel
     public class ViewModelStateGroup<TState, TTransition> :
         StateGroup<TState, TTransition>, 
         ICanRegisterDependencies,
-        IHasCurrentViewModel,
         IViewModelStateGroup<TState>,
-        //IViewModelStateManager<TState,TTransition>, 
         IRegisterForUIAccess
         where TState : struct
         where TTransition : struct
     {
+        public ViewModelStateGroup()
+        {
+            TrackHistory = true;
+        }
+
+
         private const string ErrorDontUseDefineState =
             "Use DefineViewModelState instead of DefineState for ViewModelStateManager";
         public override IStateDefinition<TState> DefineState(TState state)
@@ -85,7 +89,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
         }
 
 
-        protected override async Task<bool> ChangeToState(TState oldState, TState newState)
+        protected override async Task<bool> ChangeToState(TState oldState, TState newState, bool isNewState)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
             var aboutVM = CurrentViewModel as IAboutToLeaveViewModelState;
@@ -129,7 +133,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             }
 
             "Invoking ChangeToState to invoke state change".Log();
-            var ok = await base.ChangeToState(oldState, newState);
+            var ok = await base.ChangeToState(oldState, newState, isNewState);
             if (!ok)
             {
                 "ChangeToState aborted".Log();
@@ -163,11 +167,11 @@ namespace BuildIt.Lifecycle.States.ViewModel
             return true;
         }
 
-        protected override async Task NotifyStateChanged(TState newState, bool useTransitions)
+        protected override async Task NotifyStateChanged(TState newState, bool useTransitions, bool isNewState)
         {
             await UIContext.RunAsync(async () =>
             {
-                await base.NotifyStateChanged(newState, useTransitions);
+                await base.NotifyStateChanged(newState, useTransitions, isNewState);
             });
         }
 

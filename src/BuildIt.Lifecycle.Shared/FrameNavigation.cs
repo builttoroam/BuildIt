@@ -117,13 +117,22 @@ namespace BuildIt.Lifecycle
         {
             var tp = NavigationHelper.TypeForState(e.State);
 
-            if (RootFrame.BackStack.FirstOrDefault()?.SourcePageType == tp)
+            if (e.IsNewState)
             {
-                RootFrame.GoBack();
+                RootFrame.Navigate(tp, CurrentViewModel);
             }
             else
             {
-                RootFrame.Navigate(tp, CurrentViewModel);
+                var previous = RootFrame.BackStack.FirstOrDefault();
+                while (previous != null && previous.SourcePageType != tp)
+                {
+                    RootFrame.BackStack.Remove(previous);
+                    previous = RootFrame.BackStack.FirstOrDefault();
+                }
+                if (previous != null)
+                {
+                    RootFrame.GoBack();
+                }
             }
         }
 

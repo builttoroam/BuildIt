@@ -245,6 +245,37 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
             return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
         }
+
+        public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>> 
+            ChangeToPreviousState<TState, TViewModel>(
+            this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>, StateEventBinder<TViewModel>> smInfo
+            ) where TState : struct
+            where TViewModel : INotifyPropertyChanged
+        {
+            if (smInfo?.Item1 == null ||
+                smInfo.Item2 == null ||
+                smInfo.Item3 == null) return null;
+
+            var binder = smInfo.Item4;
+            var sm = smInfo.Item1;
+            var changeStateAction = new EventHandler((s, e) =>
+            {
+                sm.GoBackToPreviousState();
+            });
+
+            smInfo.Item3
+                .WhenChangedTo(vm =>
+                {
+                    binder.Subscribe(vm, changeStateAction);
+                })
+                .WhenChangingFrom(vm =>
+                {
+                    binder.Unsubscribe(vm, changeStateAction);
+                });
+
+            return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
+        }
+
         public static Tuple<IStateManager, 
             ViewModelStateGroup<TState, DefaultTransition>, 
             IViewModelStateDefinition<TState, TViewModel>> 
@@ -269,6 +300,47 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 if (e.Completion.Equals(comp))
                 {
                     sm.GoToState(newState);
+                }
+            });
+
+
+
+            smInfo.Item3
+                .WhenChangedTo(vm =>
+                {
+                    vm.Complete += changeStateAction;
+                })
+                .WhenChangingFrom(vm =>
+                {
+                    vm.Complete -= changeStateAction;
+                });
+
+            return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
+        }
+
+        public static Tuple<IStateManager,
+            ViewModelStateGroup<TState, DefaultTransition>,
+            IViewModelStateDefinition<TState, TViewModel>>
+            ChangeToPreviousState<TState, TViewModel, TCompletion>(
+            this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>,
+                IViewModelStateDefinition<TState, TViewModel>,
+                StateCompletionBinder<TCompletion>> smInfo
+            )
+            where TState : struct
+            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TCompletion : struct
+        {
+            if (smInfo?.Item1 == null ||
+                smInfo.Item2 == null ||
+                smInfo.Item3 == null) return null;
+
+            var comp = smInfo.Item4?.Completion;
+            var sm = smInfo.Item1;
+            var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>((s, e) =>
+            {
+                if (e.Completion.Equals(comp))
+                {
+                    sm.GoBackToPreviousState();
                 }
             });
 

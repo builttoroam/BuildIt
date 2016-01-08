@@ -17,6 +17,23 @@ namespace BuildIt.States
             return await group.ChangeTo(state,animate);
         }
 
+        public async  Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
+        {
+            var group = StateGroups.SafeValue(state.GetType());
+            if (group == null) return false;
+            return await group.ChangeBackTo(state, animate);
+    }
+
+        public async Task<bool> GoBackToPreviousState(bool animate = true)
+        {
+            foreach (var stateGroup in StateGroups)
+            {
+                var grp = stateGroup.Value;
+                if (grp.TrackHistory) return await grp.ChangeToPrevious(animate);
+            }
+            return false;
+        }
+
         public IStateBinder Bind(IStateManager managerToBindTo)
         {
             return new StateManagerBinder(this, managerToBindTo);

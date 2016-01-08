@@ -7,7 +7,15 @@ namespace BuildIt.States
     {
         Task<bool> ChangeTo<TFindState>(TFindState newState, bool useTransitions = true) where TFindState : struct;
 
+        Task<bool> ChangeBackTo<TFindState>(TFindState newState, bool useTransitions = true) where TFindState : struct;
+
+        Task<bool> ChangeToPrevious(bool useTransitions = true);
+
         IStateBinder Bind(IStateGroup groupToBindTo);
+
+        bool TrackHistory { get; set; }
+
+        bool HasHistory { get; }
     }
 
     public interface IStateGroup<TState> : IStateGroup

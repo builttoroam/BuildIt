@@ -38,9 +38,16 @@ namespace StateByState
         StateY,
         StateZ
     }
-    public class SecondViewModel : BaseStateManagerViewModel
+
+    public enum SecondCompletion
     {
-        public event EventHandler SecondCompleted;
+        Base,
+        Complete
+    }
+
+    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>
+    {
+        //public event EventHandler SecondCompleted;
 
 
         public string Name { get; } = "Bob";
@@ -74,7 +81,8 @@ namespace StateByState
 
         public void GoBack()
         {
-            SecondCompleted?.Invoke(this, EventArgs.Empty);
+            OnComplete(DefaultCompletion.Complete);
+            //SecondCompleted?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -111,7 +119,8 @@ namespace StateByState
 
         public void Done()
         {
-            SecondCompleted?.Invoke(this, EventArgs.Empty);
+            OnComplete(DefaultCompletion.Complete);
+            //SecondCompleted?.Invoke(this, EventArgs.Empty);
 
         }
 

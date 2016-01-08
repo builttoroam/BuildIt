@@ -55,6 +55,7 @@
     <Compile Include="States\ViewModel\BaseViewModel.cs" />
     <Compile Include="States\ViewModel\BaseViewModelWithCompletion.cs" />
     <Compile Include="States\ViewModel\CompletionEventArgs.cs" />
+    <Compile Include="States\ViewModel\DefaultCompletion.cs" />
     <Compile Include="States\ViewModel\IAboutToLeaveViewModelState.cs" />
     <Compile Include="States\ViewModel\IArrivingViewModelState.cs" />
     <Compile Include="States\ViewModel\ICanRegisterDependencies.cs" />

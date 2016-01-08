@@ -20,6 +20,19 @@ namespace BuildIt.States
         private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
             = new Dictionary<Tuple<object, string>, IDefaultValue>();
 
+        public bool TrackHistory { get; set; } = false;
+
+        public bool HasHistory
+        {
+            get
+            {
+                if(TrackHistory==false)throw new Exception("History tracking not enabled");
+                return History.Count > 0;
+            }
+        }
+
+        private Stack<TState> History { get; } = new Stack<TState>(); 
+
         private IStateDefinition<TState> State<TFindState>(TFindState state)
             where TFindState : struct
         {
@@ -74,6 +87,33 @@ namespace BuildIt.States
             return await ChangeTo(newState, useTransitions);
         }
 
+        public async Task<bool> ChangeBackTo<TFindState>(TFindState findState, bool useTransitions = true)
+            where TFindState : struct
+        {
+            if(TrackHistory==false)throw new Exception("History tracking not enabled");
+
+            if (typeof(TFindState) != typeof(TState))
+            {
+                $"Attempting to change to the wrong state type {typeof(TFindState)}".Log();
+                return false;
+            }
+
+            var newState = (TState)(object)findState;
+
+            return await ChangeBackTo(newState, useTransitions);
+        }
+
+        public async Task<bool> ChangeToPrevious(bool useTransitions = true)
+        {
+            if (TrackHistory == false) throw new Exception("History tracking not enabled");
+
+            if (History.Count == 0) return false;
+
+            var previous = History.Peek();
+
+            return await ChangeBackTo(previous, useTransitions);
+        }
+
         public IStateBinder Bind(IStateGroup groupToBindTo)
         {
             var sg = groupToBindTo as INotifyStateChanged<TState>;
@@ -97,7 +137,14 @@ namespace BuildIt.States
 
             private void Source_StateChanged(object sender, StateEventArgs<TStateBind> e)
             {
-                StateGroup.ChangeTo(e.State, e.UseTransitions);
+                if (e.IsNewState)
+                {
+                    StateGroup.ChangeTo(e.State, e.UseTransitions);
+                }
+                else
+                {
+                    StateGroup.ChangeBackTo(e.State, e.UseTransitions);
+                }
             }
 
             public void Unbind()
@@ -108,7 +155,18 @@ namespace BuildIt.States
 
         public async Task<bool> ChangeTo(TState newState, bool useTransitions = true)
         {
-            $"Changing to state {newState} ({useTransitions})".Log();
+            return await ChangeTo(newState, true, useTransitions);
+        }
+
+        public async Task<bool> ChangeBackTo(TState newState, bool useTransitions = true)
+        {
+            return await ChangeTo(newState, false, useTransitions);
+        }
+
+        private async Task<bool> ChangeTo(TState newState, bool isNewState, bool useTransitions)
+        {
+            
+    $"Changing to state {newState} ({useTransitions})".Log();
             var current = CurrentState;
             if (current.Equals(newState))
             {
@@ -139,7 +197,7 @@ namespace BuildIt.States
             try
             {
                 "Invoking internal ChangeToState to perform state change".Log();
-                var proceed = await ChangeToState(current, newState);
+                var proceed = await ChangeToState(current, newState, isNewState);
                 if (!proceed)
                 {
                     "Unable to complete ChangeToState so exiting the ChangeTo, returning false".Log();
@@ -153,12 +211,36 @@ namespace BuildIt.States
             }
 
             $"About to updated CurrentState (currently: {CurrentState})".Log();
-            CurrentState = newState;
+
+            if (isNewState)
+            {
+                var oldState = CurrentState;
+                CurrentState = newState;
+                if (TrackHistory && !oldState.Equals(default(TState)))
+                {
+                    History.Push(oldState);
+                }
+            }
+            else
+            {
+                while (History.Count > 0)
+                {
+                    var historyState = History.Pop();
+                    if (!historyState.Equals(newState)) continue;
+                    CurrentState = newState;
+                    break;
+                }
+                if (!CurrentState.Equals(newState))
+                {
+                    $"Unable to go back to {newState} as it doesn't exist in the state History".Log();
+                    return false;
+                }
+            }
             $"CurrentState updated (now: {CurrentState})".Log();
 
             States[CurrentState].TransitionTo(DefaultValues);
 
-            await NotifyStateChanged(newState, useTransitions);
+            await NotifyStateChanged(newState, useTransitions, isNewState);
             
             await ChangedToState(newState);
 
@@ -169,7 +251,7 @@ namespace BuildIt.States
         }
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected virtual async Task NotifyStateChanged(TState newState, bool useTransitions)
+        protected virtual async Task NotifyStateChanged(TState newState, bool useTransitions, bool isNewState)
 #pragma warning restore 1998
         {
             try
@@ -177,7 +259,7 @@ namespace BuildIt.States
                 if (StateChanged != null)
                 {
                     "Invoking StateChanged event".Log();
-                    StateChanged.Invoke(this, new StateEventArgs<TState>(CurrentState, useTransitions));
+                    StateChanged.Invoke(this, new StateEventArgs<TState>(CurrentState, useTransitions, isNewState));
                     "StateChanged event completed".Log();
                 }
                 else
@@ -195,7 +277,7 @@ namespace BuildIt.States
         }
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected virtual async Task<bool> ChangeToState(TState oldState, TState newState)
+        protected virtual async Task<bool> ChangeToState(TState oldState, TState newState, bool isNewState)
 #pragma warning restore 1998
         {
             if (oldState.Equals(default(TState))) return true;

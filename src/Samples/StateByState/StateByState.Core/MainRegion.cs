@@ -82,12 +82,16 @@ namespace StateByState
 
 
 
+            smx.StateWithViewModel<MainRegionView, SecondViewModel>(MainRegionView.Second)
+                .OnComplete(DefaultCompletion.Complete)
+                .ChangeToPreviousState()
 
-            sm.DefineViewModelState<SecondViewModel>(MainRegionView.Second)
+                .Item3
+            //sm.DefineViewModelState<SecondViewModel>(MainRegionView.Second)
                 .Initialise(async vm => await vm.InitSecond())
                 .WhenChangedTo(vm =>
                 {
-                    vm.SecondCompleted += SecondCompleted;
+                    //vm.SecondCompleted += SecondCompleted;
 
                     Task.Run(async () =>
                     {
@@ -101,7 +105,7 @@ namespace StateByState
                 })
                 .WhenChangingFrom(vm =>
                 {
-                    vm.SecondCompleted -= SecondCompleted;
+                    //vm.SecondCompleted -= SecondCompleted;
                 });
 
             sm.DefineViewModelState<ThirdViewModel>(MainRegionView.Third)
@@ -181,7 +185,8 @@ namespace StateByState
 
         private async void SecondCompleted(object sender, EventArgs e)
         {
-            await StateManager.GoToState(MainRegionView.Main);
+            await StateManager.GoBackToPreviousState();
+            //await StateManager.GoToState(MainRegionView.Main);
             // await StateManager.Transition(MainRegionTransition.AnyToMain);
         }
         private async void ThirdCompleted(object sender, EventArgs e)
