@@ -24,10 +24,10 @@ namespace BuildIt.States
 
         void DefineAllStates();
 
-        IStateDefinition<TState> DefineState(TState state);
+        //IStateDefinition<TState> DefineState(TState state);
 
 
-        IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
+        //IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
 
         Task<bool> ChangeTo(TState newState, bool useTransition = true);
 

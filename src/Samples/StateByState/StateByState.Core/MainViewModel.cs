@@ -28,6 +28,8 @@ namespace StateByState
 
         public string Data { get; set; }
 
+        public int TickCount { get; } = (int) DateTime.Now.Ticks;
+
 #pragma warning disable 1998 // So we can do async actions
         public async Task Init()
 #pragma warning restore 1998

@@ -47,11 +47,22 @@ namespace StateByState
 
     public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>
     {
+        private int extraData;
         //public event EventHandler SecondCompleted;
 
 
-        public string Name { get; } = "Bob";
+        public string Name { get;  } = "Bob";
 
+
+        public int ExtraData
+        {
+            get { return extraData; }
+            set
+            {
+                extraData = value; 
+                OnPropertyChanged();
+            }
+        }
 
         public SecondViewModel()
         {
@@ -77,6 +88,11 @@ namespace StateByState
             await StateManager.GoToState(SecondStates2.StateX);
             await Task.Delay(1000);
             Debug.WriteLine("Break");
+        }
+
+        public void UpdateExtraData(int data)
+        {
+            ExtraData = data;
         }
 
         public void GoBack()

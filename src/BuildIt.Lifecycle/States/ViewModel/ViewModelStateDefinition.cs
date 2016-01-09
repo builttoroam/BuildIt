@@ -65,5 +65,15 @@ namespace BuildIt.Lifecycle.States.ViewModel
             "Invoking ChangedToViewModel".Log();
             await ChangedToViewModel((TViewModel)viewModel);
         }
+
+        public Func<TViewModel,string, Task> ChangedToWithDataViewModel { get; set; }
+
+        public async Task InvokeChangedToWithDataViewModel(INotifyPropertyChanged viewModel, string data)
+        {
+            if (ChangedToWithDataViewModel == null) return;
+
+            "Invoking ChangedToWithDataViewModel".Log();
+            await ChangedToWithDataViewModel((TViewModel)viewModel,data);
+        }
     }
 }

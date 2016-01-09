@@ -6,4 +6,10 @@ namespace BuildIt.Lifecycle.States.ViewModel
     {
         public TCompletion Completion { get; set; }
     }
+
+    public class CompletionWithDataEventArgs<TCompletion, TData> : CompletionEventArgs<TCompletion>
+        where TCompletion : struct
+    {
+        public TData Data { get; set; }
+    }
 }

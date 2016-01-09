@@ -39,7 +39,7 @@ namespace StateByState
             var smx = ssm.GroupWithViewModels<MainRegionView>();
             var sm = smx.Item2;
                 smx.StateWithViewModel<MainRegionView, MainViewModel>(MainRegionView.Main)
-                .OnComplete(MainCompletion.Page2)
+                .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount)
                 .ChangeState(MainRegionView.Second)
                 //.OnEvent((vm, a) => vm.Completed += a, 
                 //        (vm, a) => vm.Completed -= a)
@@ -102,6 +102,10 @@ namespace StateByState
 
                         });
                     });
+                })
+                .WhenChangedToWithData<MainRegionView,SecondViewModel, int>((vm, data) =>
+                {
+                    vm.ExtraData = data;
                 })
                 .WhenChangingFrom(vm =>
                 {

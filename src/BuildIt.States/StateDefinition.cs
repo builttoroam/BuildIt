@@ -14,6 +14,8 @@ namespace BuildIt.States
         public Func<Task> ChangingFrom { get; set; }
         public Func<Task> ChangedTo { get; set; }
 
+        public Func<string, Task> ChangedToWithJsonData { get; set; }
+
         public IList<IStateValue> Values { get; } = new List<IStateValue>();
 
         public void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)

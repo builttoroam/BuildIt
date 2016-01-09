@@ -7,6 +7,8 @@ namespace BuildIt.States
     {
         Task<bool> ChangeTo<TFindState>(TFindState newState, bool useTransitions = true) where TFindState : struct;
 
+        Task<bool> ChangeToWithData<TFindState,TData>(TFindState newState, TData data, bool useTransitions = true) where TFindState : struct;
+
         Task<bool> ChangeBackTo<TFindState>(TFindState newState, bool useTransitions = true) where TFindState : struct;
 
         Task<bool> ChangeToPrevious(bool useTransitions = true);

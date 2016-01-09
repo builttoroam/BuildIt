@@ -87,6 +87,21 @@ namespace BuildIt.States
             return await ChangeTo(newState, useTransitions);
         }
 
+        public async Task<bool> ChangeToWithData<TFindState,TData>(TFindState findState, TData data, bool useTransitions = true)
+           where TFindState : struct
+        {
+            if (typeof(TFindState) != typeof(TState))
+            {
+                $"Attempting to change to the wrong state type {typeof(TFindState)}".Log();
+                return false;
+            }
+
+            var newState = (TState)(object)findState;
+
+            var dataAsString = data.EncodeJson();
+            return await ChangeTo(newState, true, useTransitions, dataAsString);
+        }
+
         public async Task<bool> ChangeBackTo<TFindState>(TFindState findState, bool useTransitions = true)
             where TFindState : struct
         {
@@ -158,12 +173,13 @@ namespace BuildIt.States
             return await ChangeTo(newState, true, useTransitions);
         }
 
+
         public async Task<bool> ChangeBackTo(TState newState, bool useTransitions = true)
         {
             return await ChangeTo(newState, false, useTransitions);
         }
 
-        private async Task<bool> ChangeTo(TState newState, bool isNewState, bool useTransitions)
+        private async Task<bool> ChangeTo(TState newState, bool isNewState, bool useTransitions, string data=null)
         {
             
     $"Changing to state {newState} ({useTransitions})".Log();
@@ -242,7 +258,7 @@ namespace BuildIt.States
 
             await NotifyStateChanged(newState, useTransitions, isNewState);
             
-            await ChangedToState(newState);
+            await ChangedToState(newState,data);
 
 
 
@@ -294,16 +310,27 @@ namespace BuildIt.States
 
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected virtual async Task ChangedToState(TState newState)
+        protected virtual async Task ChangedToState(TState newState, string dataAsJson)
 #pragma warning restore 1998
         {
 
             var newStateDef = States.SafeValue<TState, IStateDefinition<TState>, IStateDefinition<TState>>(newState);
-            if (newStateDef.ChangedTo != null)
+            if (newStateDef?.ChangedTo != null)
             {
                 $"State definition found, of type {newStateDef.GetType().Name}, invoking ChangedTo method".Log();
                 await newStateDef.ChangedTo();
                 "ChangedTo completed".Log();
+            }
+            else
+            {
+                "No new state definition".Log();
+            }
+
+            if (newStateDef?.ChangedToWithJsonData != null)
+            {
+                $"State definition found, of type {newStateDef.GetType().Name}, invoking ChangedToWithJsonData method".Log();
+                await newStateDef.ChangedToWithJsonData(dataAsJson);
+                "ChangedToWithJsonData completed".Log();
             }
             else
             {

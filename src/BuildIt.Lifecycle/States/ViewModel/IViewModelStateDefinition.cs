@@ -18,5 +18,6 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         Func<TViewModel, Task> ChangedToViewModel { get; set; }
 
+        Func<TViewModel,string, Task> ChangedToWithDataViewModel { get; set; }
     }
 }

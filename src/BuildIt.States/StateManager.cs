@@ -17,6 +17,13 @@ namespace BuildIt.States
             return await group.ChangeTo(state,animate);
         }
 
+        public async Task<bool> GoToStateWithData<TState,TData>(TState state, TData data, bool animate = true)
+           where TState : struct
+        {
+            var group = StateGroups.SafeValue(state.GetType());
+            if (group == null) return false;
+            return await group.ChangeToWithData(state, data, animate);
+        }
         public async  Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
         {
             var group = StateGroups.SafeValue(state.GetType());

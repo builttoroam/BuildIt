@@ -12,6 +12,7 @@ namespace BuildIt.States
         Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
         Func<Task> ChangingFrom { get; set; }
         Func<Task> ChangedTo { get; set; }
+        Func<string,Task> ChangedToWithJsonData { get; set; }
 
         void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
 

@@ -16,5 +16,6 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         Task InvokeChangedToViewModel(INotifyPropertyChanged viewModel);
 
+        Task InvokeChangedToWithDataViewModel(INotifyPropertyChanged viewModel,string data);
     }
 }

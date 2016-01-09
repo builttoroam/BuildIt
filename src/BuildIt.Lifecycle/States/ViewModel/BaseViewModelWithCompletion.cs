@@ -11,5 +11,11 @@ namespace BuildIt.Lifecycle.States.ViewModel
         {
             Complete?.Invoke(this, new CompletionEventArgs<TCompletion> {Completion = completion});
         }
+
+        protected void OnCompleteWithData<TData>(TCompletion completion, TData data)
+        {
+            Complete?.Invoke(this, new CompletionWithDataEventArgs<TCompletion, TData> { Completion = completion, Data = data });
+        }
+
     }
 }

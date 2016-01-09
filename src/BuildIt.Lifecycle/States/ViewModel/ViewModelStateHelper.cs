@@ -168,6 +168,42 @@ namespace BuildIt.Lifecycle.States.ViewModel
             return stateDefinition;
         }
 
+        public static IViewModelStateDefinition<TState, TViewModel> WhenChangedToWithData<TState, TViewModel,TData>(
+            this IViewModelStateDefinition<TState, TViewModel> stateDefinition,
+            Action<TViewModel, TData> action) where TState : struct
+            where TViewModel : INotifyPropertyChanged
+        {
+#pragma warning disable 1998  // Convert sync method into async call
+            return stateDefinition.WhenChangedToWithData<TState, TViewModel, TData>(async (vm,s) => action(vm,s));
+#pragma warning restore 1998
+        }
+
+        public static IViewModelStateDefinition<TState, TViewModel> WhenChangedToWithData<TState, TViewModel,TData>(
+            this IViewModelStateDefinition<TState, TViewModel> stateDefinition,
+            Func<TViewModel,TData, Task> action) where TState : struct
+            where TViewModel : INotifyPropertyChanged
+        {
+            if (stateDefinition == null) return null;
+
+            "Adding Behaviour: ChangedToWithDataViewModel".Log();
+
+            var modAction = new Func<TViewModel, string, Task>(async (vm, d) =>
+            {
+                var data = d.DecodeJson<TData>();
+                action(vm, data);
+            });
+
+            if (action == null)
+            {
+                stateDefinition.ChangedToWithDataViewModel = null;
+            }
+            else
+            {
+                stateDefinition.ChangedToWithDataViewModel += modAction;
+            }
+            return stateDefinition;
+        }
+
         public static Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>, StateEventBinder<TViewModel>> 
             OnEvent<TState, TViewModel>(
             this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>> smInfo,
@@ -210,6 +246,34 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 ViewModelStateGroup<TState, DefaultTransition>, 
                 IViewModelStateDefinition<TState, TViewModel>, 
                 StateCompletionBinder<TCompletion>>(
+                smInfo.Item1, smInfo.Item2, smInfo.Item3, binder);
+            //"Adding Behaviour: ChangedToViewModel".Log();
+            //stateDefinition.ChangedToViewModel = action;
+            //return stateDefinition;
+        }
+
+        public static Tuple<IStateManager,
+            ViewModelStateGroup<TState, DefaultTransition>,
+            IViewModelStateDefinition<TState, TViewModel>,
+            StateCompletionWithDataBinder<TViewModel,TCompletion,TData>>
+           OnCompleteWithData<TState, TViewModel, TCompletion, TData>(
+           this Tuple<IStateManager,
+               ViewModelStateGroup<TState, DefaultTransition>,
+               IViewModelStateDefinition<TState, TViewModel>> smInfo,
+                TCompletion completion,
+                Func<TViewModel,TData> completionData)
+           where TState : struct
+           where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TCompletion : struct
+        {
+            if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            var binder = new StateCompletionWithDataBinder<TViewModel,TCompletion,TData> { Completion = completion, CompletionData=completionData };
+            return new Tuple<IStateManager,
+                ViewModelStateGroup<TState, DefaultTransition>,
+                IViewModelStateDefinition<TState, TViewModel>,
+                StateCompletionWithDataBinder<TViewModel, TCompletion, TData>>(
                 smInfo.Item1, smInfo.Item2, smInfo.Item3, binder);
             //"Adding Behaviour: ChangedToViewModel".Log();
             //stateDefinition.ChangedToViewModel = action;
@@ -321,6 +385,59 @@ namespace BuildIt.Lifecycle.States.ViewModel
         public static Tuple<IStateManager,
             ViewModelStateGroup<TState, DefaultTransition>,
             IViewModelStateDefinition<TState, TViewModel>>
+            ChangeState<TState, TViewModel, TCompletion, TData>(
+            this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>,
+                IViewModelStateDefinition<TState, TViewModel>,
+                StateCompletionWithDataBinder<TViewModel, TCompletion, TData>> smInfo,
+            TState stateToChangeTo)
+            where TState : struct
+            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TCompletion : struct
+        {
+            if (smInfo?.Item1 == null ||
+                smInfo.Item2 == null ||
+                smInfo.Item3 == null) return null;
+
+            var comp = smInfo.Item4?.Completion;
+            var data = smInfo.Item4?.CompletionData;
+            var sm = smInfo.Item1;
+            var newState = stateToChangeTo;
+            var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>((s, e) =>
+            {
+                var dataVal=default(TData);
+                var cc = e as CompletionWithDataEventArgs<TCompletion, TData>;
+                if (cc != null)
+                {
+                    dataVal = cc.Data;
+                }
+                if (data != null)
+                {
+                    var vvm = (TViewModel)s;
+                    dataVal = data(vvm);
+                }
+                if (e.Completion.Equals(comp))
+                {
+                    sm.GoToStateWithData(newState, dataVal);
+                }
+            });
+
+
+
+            smInfo.Item3
+                .WhenChangedTo(vm =>
+                {
+                    vm.Complete += changeStateAction;
+                })
+                .WhenChangingFrom(vm =>
+                {
+                    vm.Complete -= changeStateAction;
+                });
+
+            return new Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
+        }
+        public static Tuple<IStateManager,
+            ViewModelStateGroup<TState, DefaultTransition>,
+            IViewModelStateDefinition<TState, TViewModel>>
             ChangeToPreviousState<TState, TViewModel, TCompletion>(
             this Tuple<IStateManager, ViewModelStateGroup<TState, DefaultTransition>,
                 IViewModelStateDefinition<TState, TViewModel>,
@@ -369,6 +486,16 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TCompletion : struct
         {
             public TCompletion Completion { get; set; }
-        } 
+
+        }
+
+        public class StateCompletionWithDataBinder<TViewModel, TCompletion,TData>: StateCompletionBinder<TCompletion>
+            where TCompletion : struct
+            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+        {
+
+            public Func<TViewModel, TData> CompletionData { get; set; }
+
+        }
     }
 }

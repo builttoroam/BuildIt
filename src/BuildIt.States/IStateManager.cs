@@ -9,6 +9,7 @@ namespace BuildIt.States
         IDictionary<Type, IStateGroup> StateGroups { get; }
 
         Task<bool> GoToState<TState>(TState state, bool animate = true) where TState : struct;
+        Task<bool> GoToStateWithData<TState,TData>(TState state, TData data, bool animate = true) where TState : struct;
         Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct;
 
         Task<bool> GoBackToPreviousState(bool animate = true);

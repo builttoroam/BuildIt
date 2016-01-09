@@ -175,9 +175,9 @@ namespace BuildIt.Lifecycle.States.ViewModel
             });
         }
 
-        protected override async Task ChangedToState(TState newState)
+        protected override async Task ChangedToState(TState newState, string dataAsJson)
         {
-            await base.ChangedToState(newState);
+            await base.ChangedToState(newState,dataAsJson);
 
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             var arrived = CurrentViewModel as IArrivingViewModelState;
@@ -192,7 +192,9 @@ namespace BuildIt.Lifecycle.States.ViewModel
             {
                 "Invoking ChangedTo on new state definition".Log();
                 await currentVMStates.InvokeChangedToViewModel(CurrentViewModel);
+                await currentVMStates.InvokeChangedToWithDataViewModel(CurrentViewModel, dataAsJson);
             }
+
         }
 
 

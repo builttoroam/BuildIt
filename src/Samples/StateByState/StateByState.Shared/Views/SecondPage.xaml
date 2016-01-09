@@ -77,6 +77,10 @@
                    Text="Test 1 2 3 4"
                    FontSize="30"
                    Foreground="Blue" />
+        <TextBlock 
+                   Text="{Binding ExtraData}"
+                   FontSize="30"
+                   Foreground="Blue" />
         <Button Click="{x:Bind CurrentViewModel.ToFirst}">To First</Button>
         <Button Click="{x:Bind CurrentViewModel.ToSecond}">To Second</Button>
         <Button Click="{x:Bind CurrentViewModel.ToThird}">To Third</Button>
