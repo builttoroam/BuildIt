@@ -28,102 +28,88 @@ namespace StateByState
 
     public class MainRegion : ApplicationRegion, IHasStates
     {
-        public IStateManager StateManager { get; }
+        public IStateManager StateManager { get; }= new StateManager();
 
 
         public MainRegion()
         {
 
             #region State Definitions
-            var ssm = new StateManager();
-            var smx = ssm.GroupWithViewModels<MainRegionView>();
-            var sm = smx.Item2;
-                smx.StateWithViewModel<MainRegionView, MainViewModel>(MainRegionView.Main)
-                .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount)
-                .ChangeState(MainRegionView.Second)
-                //.OnEvent((vm, a) => vm.Completed += a, 
-                //        (vm, a) => vm.Completed -= a)
-                //.ChangeState(MainRegionView.Second)
-                .OnEvent((vm, a) => vm.UnableToComplete += a,
-                        (vm, a) => vm.UnableToComplete -= a)
-                .ChangeState(MainRegionView.Third)
-                
-
-                .Item3
-
-            //sm.DefineViewModelState<MainViewModel>(MainRegionView.Main)
-                .Initialise(async vm =>
-                {
-                    "VM State: Init".Log();
-                    await vm.Init();
-                })
-                .WhenChangedTo(async vm =>
-                {
-                    "VM State: When Changed To".Log();
-                  //  vm.Completed += State_Completed;
-                    //vm.UnableToComplete += State_UnableToCompleted;
-                    vm.SpawnNewRegion += Vm_SpawnNewRegion;
-                    await vm.StartViewModel();
-                })
-                .WhenAboutToChange((vm, cancel) => $"VM State: About to Change - {cancel.Cancel}".Log())
-                .WhenChangingFrom(vm =>
-                {
-                    "VM State: When Changing From".Log();
-                    //vm.Completed -= State_Completed;
-                    //vm.UnableToComplete -= State_UnableToCompleted;
-                })
-                .WhenAboutToChange(cancel => $"State: About to Change - {cancel.Cancel}".Log())
-#pragma warning disable 1998
-                .WhenChangingFrom(async () => "State: Changing".Log())
-#pragma warning restore 1998
-                .WhenChangedTo(() => Debug.WriteLine("State: Changing"));
-
-
-
-
-
-            smx.StateWithViewModel<MainRegionView, SecondViewModel>(MainRegionView.Second)
-                .OnComplete(DefaultCompletion.Complete)
-                .ChangeToPreviousState()
-
-                .Item3
-            //sm.DefineViewModelState<SecondViewModel>(MainRegionView.Second)
-                .Initialise(async vm => await vm.InitSecond())
-                .WhenChangedTo(vm =>
-                {
-                    //vm.SecondCompleted += SecondCompleted;
-
-                    Task.Run(async () =>
+            StateManager.GroupWithViewModels<MainRegionView>()
+                .StateWithViewModel<MainRegionView, MainViewModel>(MainRegionView.Main)
+                    .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount) 
+                        .ChangeState(MainRegionView.Second)
+                    .OnEvent((vm, a) => vm.UnableToComplete += a,
+                            (vm, a) => vm.UnableToComplete -= a)
+                        .ChangeState(MainRegionView.Third)
+                    .Initialise(async vm =>
                     {
-                        await Task.Delay(5000);
-                        await vm.UIContext.RunAsync(() =>
+                        "VM State: Init".Log();
+                        await vm.Init();
+                    })
+                    .WhenChangedTo(async vm =>
+                    {
+                        "VM State: When Changed To".Log();
+                      //  vm.Completed += State_Completed;
+                        //vm.UnableToComplete += State_UnableToCompleted;
+                        vm.SpawnNewRegion += Vm_SpawnNewRegion;
+                        await vm.StartViewModel();
+                    })
+                    .WhenAboutToChange((vm, cancel) => $"VM State: About to Change - {cancel.Cancel}".Log())
+                    .WhenChangingFrom(vm =>
+                    {
+                        "VM State: When Changing From".Log();
+                        //vm.Completed -= State_Completed;
+                        //vm.UnableToComplete -= State_UnableToCompleted;
+                    })
+                .AsState()
+                    .WhenAboutToChange(cancel => $"State: About to Change - {cancel.Cancel}".Log())
+    #pragma warning disable 1998
+                    .WhenChangingFrom(async () => "State: Changing".Log())
+    #pragma warning restore 1998
+                    .WhenChangedTo(() => Debug.WriteLine("State: Changing"))
+                .AsStateWithViewModel<MainRegionView,MainViewModel>()
+                .EndState()
+                
+                .StateWithViewModel<MainRegionView, SecondViewModel>(MainRegionView.Second)
+                    .OnComplete(DefaultCompletion.Complete)
+                    .ChangeToPreviousState()
+                    .Initialise(async vm => await vm.InitSecond())
+                    .WhenChangedTo(vm =>
+                    {
+                        //vm.SecondCompleted += SecondCompleted;
+
+                        Task.Run(async () =>
                         {
-                            Debug.WriteLine("test");
+                            await Task.Delay(5000);
+                            await vm.UIContext.RunAsync(() =>
+                            {
+                                Debug.WriteLine("test");
 
+                            });
                         });
-                    });
-                })
-                .WhenChangedToWithData<MainRegionView,SecondViewModel, int>((vm, data) =>
-                {
-                    vm.ExtraData = data;
-                })
-                .WhenChangingFrom(vm =>
-                {
-                    //vm.SecondCompleted -= SecondCompleted;
-                });
+                    })
+                    .WhenChangedToWithData<MainRegionView,SecondViewModel, int>((vm, data) =>
+                    {
+                        vm.ExtraData = data;
+                    })
+                    .WhenChangingFrom(vm =>
+                    {
+                        //vm.SecondCompleted -= SecondCompleted;
+                    })
+                .EndState()
+                .StateWithViewModel<MainRegionView,ThirdViewModel>(MainRegionView.Third)
+                    .WhenChangedTo(vm =>
+                    {
+                        vm.ThirdCompleted += ThirdCompleted;
+                    })
+                    .WhenChangingFrom(vm =>
+                    {
+                        vm.ThirdCompleted -= ThirdCompleted;
+                    })
+                .EndState();
 
-            sm.DefineViewModelState<ThirdViewModel>(MainRegionView.Third)
-                .WhenChangedTo(vm =>
-                {
-                    vm.ThirdCompleted += ThirdCompleted;
-                })
-                .WhenChangingFrom(vm =>
-                {
-                    vm.ThirdCompleted -= ThirdCompleted;
-                });
 
-
-            StateManager = ssm;
 
 
             //sm.DefineTransition(MainRegionTransition.MainToSecond)

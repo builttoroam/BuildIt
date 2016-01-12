@@ -17,14 +17,13 @@ namespace StateByState
     }
     public class SecondaryApplication : ApplicationRegion, IHasStates
     {
-        public IStateManager StateManager { get; }
+        public IStateManager StateManager { get; } = new StateManager();
 
         public SecondaryApplication()
         {
 
-            var ssm = new StateManager();
-            var sm = ssm.GroupWithViewModels<SecondaryRegionView>().Item2;
-            sm.DefineViewModelState<SecondardyMainViewModel>(SecondaryRegionView.Main)
+            StateManager.GroupWithViewModels<SecondaryRegionView>()
+            .StateWithViewModel<SecondaryRegionView,SecondardyMainViewModel>(SecondaryRegionView.Main)
                 .WhenChangedTo(vm =>
                 {
                     vm.Done += State_Completed;
@@ -42,10 +41,6 @@ namespace StateByState
                 {
                     vm.Done -= State_Completed;
                 });
-
-
-
-            StateManager = ssm;
 
         }
 

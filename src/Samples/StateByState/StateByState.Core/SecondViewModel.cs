@@ -18,19 +18,7 @@ namespace StateByState
         State4
     }
 
-    public enum SecondStateTransitions
-    {
-        Base,
-        //State1To2,
-        //State2To3,
-        //State3To1,
-        //StateXToZ,
-        //StateYToZ,
-        //StateZToY,
-        //StateYToX
-    }
-
-
+  
     public enum SecondStates2
     {
         Base,
@@ -66,15 +54,14 @@ namespace StateByState
 
         public SecondViewModel()
         {
-            var gm = StateManager.GroupWithTransition<SecondStates, SecondStateTransitions>();
-            gm.Item2.DefineAllStates();
-
+            StateManager.Group<SecondStates>().DefineAllStates();
+            StateManager.Group<SecondStates2>().DefineAllStates();
 
             //StateManager = new BaseStateManager<SecondStates, SecondStateTransitions>();
             //StateManager.DefineAllStates();
 
-            var gm2 = StateManager.GroupWithTransition<SecondStates2, SecondStateTransitions>();
-            gm2.Item2.DefineAllStates();
+            //var gm2 = StateManager.GroupWithTransition<SecondStates2, SecondStateTransitions>();
+            //gm2.Item2.DefineAllStates();
 
 
             //StateManager2 = new BaseStateManager<SecondStates2, SecondStateTransitions>();

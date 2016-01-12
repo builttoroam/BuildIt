@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
-    public class StateGroup<TState, TTransition> :  IStateGroupManager<TState,TTransition>
+    public class StateGroup<TState> :  IStateGroupManager<TState>
         where TState : struct
-        where TTransition : struct
+        
     {
 
         public event EventHandler<StateEventArgs<TState>> StateChanged;
@@ -340,70 +340,68 @@ namespace BuildIt.States
         }
 
 
-        public IDictionary<TTransition, ITransitionDefinition<TState>> Transitions { get; set; } =
-           new Dictionary<TTransition, ITransitionDefinition<TState>>();
 
 
-        public virtual ITransitionDefinition<TState> DefineTransition(TTransition transition)
-        {
-            var transitionDefinition = new TransitionDefinition<TState>();
-            Transitions[transition] = transitionDefinition;
-            $"Defining transition of type {transition.GetType().Name}".Log();
-            return transitionDefinition;
-        }
+        //public virtual ITransitionDefinition<TState> DefineTransition(TTransition transition)
+        //{
+        //    var transitionDefinition = new TransitionDefinition<TState>();
+        //    Transitions[transition] = transitionDefinition;
+        //    $"Defining transition of type {transition.GetType().Name}".Log();
+        //    return transitionDefinition;
+        //}
 
-        protected virtual ITransitionDefinition<TState> CreateDefaultTransition()
-        {
-            return new TransitionDefinition<TState>();
-        }
+        //protected virtual ITransitionDefinition<TState> CreateDefaultTransition()
+        //{
+        //    return new TransitionDefinition<TState>();
+        //}
 
-        public async Task<bool> Transition(TState newState, bool useTransition = true)
-        {
-            var transition = CreateDefaultTransition();
-            transition.EndState = newState;
-            return await InternalTransition(transition, useTransition);
-        }
+        //public async Task<bool> Transition(TState newState, bool useTransition = true)
+        //{
+        //    var transition = CreateDefaultTransition();
+        //    transition.EndState = newState;
+        //    return await InternalTransition(transition, useTransition);
+        //}
 
-        public async Task<bool> Transition(TTransition transitionDef, bool useTransition = true)
-        {
-            var transition = Transitions[transitionDef];
-            return await InternalTransition(transition, useTransition);
-        }
+        //public async Task<bool> Transition(TTransition transitionDef, bool useTransition = true)
+        //{
+        //    var transition = Transitions[transitionDef];
+        //    return await InternalTransition(transition, useTransition);
+        //}
 
-        private async Task<bool> InternalTransition(ITransitionDefinition<TState> transition, bool useTransition)
-        {
-            $"Checking initial state {CurrentState} and transition start state {transition.StartState}".Log();
-            if (!transition.StartState.Equals(CurrentState) && !transition.StartState.Equals(default(TState)))
-            {
-                "Current state doesn't match start state of transition".Log();
-                return false;
-            }
-            var cancel = new CancelEventArgs();
-            "Invoking LeavingState".Log();
-            await LeavingState(transition, CurrentState, cancel);
-            "LeavingState completed".Log();
+        //private async Task<bool> InternalTransition(ITransitionDefinition<TState> transition, bool useTransition)
+        //{
+        //    $"Checking initial state {CurrentState} and transition start state {transition.StartState}".Log();
+        //    if (!transition.StartState.Equals(CurrentState) && !transition.StartState.Equals(default(TState)))
+        //    {
+        //        "Current state doesn't match start state of transition".Log();
+        //        return false;
+        //    }
+        //    var cancel = new CancelEventArgs();
+        //    "Invoking LeavingState".Log();
+        //    await LeavingState(transition, CurrentState, cancel);
+        //    "LeavingState completed".Log();
 
-            if (cancel.Cancel)
-            {
-                "Transition cancelled by LeavingState".Log();
-                return false;
-            }
+        //    if (cancel.Cancel)
+        //    {
+        //        "Transition cancelled by LeavingState".Log();
+        //        return false;
+        //    }
 
-            "Invoking ArrivingState".Log();
-            await ArrivingState(transition);
-            "ArrivingState completed, now invoking ChangeTo".Log();
+        //    "Invoking ArrivingState".Log();
+        //    await ArrivingState(transition);
+        //    "ArrivingState completed, now invoking ChangeTo".Log();
 
-            if (!await ChangeTo(transition.EndState, useTransition))
-            {
-                "ChangeTo not completed, transition aborted".Log();
-                return false;
-            }
+        //    if (!await ChangeTo(transition.EndState, useTransition))
+        //    {
+        //        "ChangeTo not completed, transition aborted".Log();
+        //        return false;
+        //    }
 
-            "Invokign ArrivedState".Log();
-            await ArrivedState(transition, CurrentState);
-            "ArrivedState completed".Log();
-            return true;
-        }
+        //    "Invokign ArrivedState".Log();
+        //    await ArrivedState(transition, CurrentState);
+        //    "ArrivedState completed".Log();
+        //    return true;
+        //}
 
         protected virtual async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
         {

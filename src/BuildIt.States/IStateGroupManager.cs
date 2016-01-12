@@ -9,18 +9,16 @@ namespace BuildIt.States
         Base
     }
 
-    public interface IStateGroupManager<TState, TTransition> :
+    public interface IStateGroupManager<TState> :
         //INotifyPropertyChanged, 
         INotifyStateChanged<TState>,
         IStateGroup<TState>
         where TState : struct
-        where TTransition:struct
     {
         TState CurrentState { get; }
 
         IDictionary<TState, IStateDefinition<TState>> States { get; }
 
-        IDictionary<TTransition, ITransitionDefinition<TState>> Transitions { get; }
 
         void DefineAllStates();
 
@@ -31,8 +29,5 @@ namespace BuildIt.States
 
         Task<bool> ChangeTo(TState newState, bool useTransition = true);
 
-        Task<bool> Transition(TState newState, bool useTransition = true);
-
-        Task<bool> Transition(TTransition transition, bool useTransition = true);
     }
 }

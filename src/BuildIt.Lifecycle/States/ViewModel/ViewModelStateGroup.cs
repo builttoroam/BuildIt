@@ -20,13 +20,13 @@ namespace BuildIt.Lifecycle.States.ViewModel
     }
 
 
-    public class ViewModelStateGroup<TState, TTransition> :
-        StateGroup<TState, TTransition>, 
+    public class ViewModelStateGroup<TState> :
+        StateGroup<TState>, 
         ICanRegisterDependencies,
         IViewModelStateGroup<TState>,
         IRegisterForUIAccess
         where TState : struct
-        where TTransition : struct
+        
     {
         public ViewModelStateGroup()
         {
@@ -60,19 +60,6 @@ namespace BuildIt.Lifecycle.States.ViewModel
             return stateDefinition;
         }
 
-        public override ITransitionDefinition<TState> DefineTransition(TTransition transition)
-        {
-            var transitionDefinition = new ViewModelTransitionDefinition<TState>();
-            Transitions[transition] = transitionDefinition;
-            $"Defining transition {transition.GetType().Name} for type {typeof(TState)}".Log();
-            return transitionDefinition;
-        }
-
-        protected override ITransitionDefinition<TState> CreateDefaultTransition()
-        {
-            $"Creating default transition for type {typeof (TState)}".Log();
-            return new ViewModelTransitionDefinition<TState>();
-        }
 
         private IDictionary<Type, INotifyPropertyChanged> ViewModels { get; } =
             new Dictionary<Type, INotifyPropertyChanged>();

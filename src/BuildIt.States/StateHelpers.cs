@@ -7,67 +7,67 @@ namespace BuildIt.States
 {
     public static class StateHelpers
     {
-        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>> Group<TState>(
+        public static Tuple<IStateManager, StateGroup<TState>> Group<TState>(
             this IStateManager vsm) where TState : struct
         {
-            return vsm.GroupWithTransition<TState, DefaultTransition>();
-            //var grp = new StateGroup<TState, DefaultTransition>();
+            return vsm.GroupWithTransition<TState>();
+            //var grp = new StateGroup<TState>();
             //vsm.StateGroups.Add(typeof(TState), grp);
-            //return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>>(vsm, grp);
+            //return new Tuple<IStateManager, StateGroup<TState>>(vsm, grp);
         }
 
-        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>> Group<TState>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>> vsmGroup)
+        public static Tuple<IStateManager, StateGroup<TState>> Group<TState>(
+            this Tuple<IStateManager, StateGroup<TState>> vsmGroup)
             where TState : struct
         {
             return vsmGroup.Item1.Group<TState>();
         }
 
-        public static Tuple<IStateManager, StateGroup<TState, TTransition>> GroupWithTransition<TState, TTransition>(
+        public static Tuple<IStateManager, StateGroup<TState>> GroupWithTransition<TState>(
             this IStateManager vsm) where TState : struct
-            where TTransition : struct
+            
         {
-            var grp = new StateGroup<TState, TTransition>();
+            var grp = new StateGroup<TState>();
             vsm.StateGroups.Add(typeof (TState), grp);
-            return new Tuple<IStateManager, StateGroup<TState, TTransition>>(vsm, grp);
+            return new Tuple<IStateManager, StateGroup<TState>>(vsm, grp);
         }
 
-        public static Tuple<IStateManager, StateGroup<TState, TTransition>> GroupWithTransition<TState, TTransition>(
-            this Tuple<IStateManager, StateGroup<TState, TTransition>> vsmGroup)
+        public static Tuple<IStateManager, StateGroup<TState>> GroupWithTransition<TState>(
+            this Tuple<IStateManager, StateGroup<TState>> vsmGroup)
             where TState : struct
-            where TTransition : struct
+            
         {
-            return vsmGroup.Item1.GroupWithTransition<TState, TTransition>();
+            return vsmGroup.Item1.GroupWithTransition<TState>();
         }
 
         public static Tuple<IStateManager,
-            StateGroup<TState, DefaultTransition>> Group<TState, TExistingState>(
-            this Tuple<IStateManager, StateGroup<TExistingState, DefaultTransition>,
+            StateGroup<TState>> Group<TState, TExistingState>(
+            this Tuple<IStateManager, StateGroup<TExistingState>,
                 StateDefinition<TExistingState>> vsmGroup, TState state)
             where TExistingState : struct
             where TState : struct
         {
-            var grp = new StateGroup<TState, DefaultTransition>();
+            var grp = new StateGroup<TState>();
             vsmGroup.Item1.StateGroups.Add(typeof(TState), grp);
-            return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>>(vsmGroup.Item1, grp);
+            return new Tuple<IStateManager, StateGroup<TState>>(vsmGroup.Item1, grp);
         }
 
 
         public static Tuple<IStateManager,
-            StateGroup<TState, DefaultTransition>> Group<TState, TExistingState, TExistingElement, TExistingPropertyValue>(
-            this Tuple<IStateManager, StateGroup<TExistingState, DefaultTransition>,
+            StateGroup<TState>> Group<TState, TExistingState, TExistingElement, TExistingPropertyValue>(
+            this Tuple<IStateManager, StateGroup<TExistingState>,
                 StateDefinition<TExistingState>,
                 StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TState state)
             where TExistingState : struct
             where TState : struct
         {
-            var grp = new StateGroup<TState, DefaultTransition>();
+            var grp = new StateGroup<TState>();
             vsmGroup.Item1.StateGroups.Add(typeof(TState), grp);
-            return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>>(vsmGroup.Item1, grp);
+            return new Tuple<IStateManager, StateGroup<TState>>(vsmGroup.Item1, grp);
         }
 
-        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>> DefineAllStates<TState>(
-    this Tuple<IStateManager, StateGroup<TState, DefaultTransition>> vsmGroup)
+        public static Tuple<IStateManager, StateGroup<TState>> DefineAllStates<TState>(
+    this Tuple<IStateManager, StateGroup<TState>> vsmGroup)
     where TState : struct
         {
             vsmGroup.Item2.DefineAllStates();
@@ -75,63 +75,63 @@ namespace BuildIt.States
         }
 
 
-        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>,
+        public static Tuple<IStateManager, StateGroup<TState>,
             StateDefinition<TState>> DefineState<TState>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>> vsmGroup, TState state)
+            this Tuple<IStateManager, StateGroup<TState>> vsmGroup, TState state)
             where TState : struct
         {
             var vs = new StateDefinition<TState> { State = state };
             vsmGroup.Item2.States.Add(state, vs);
-            return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
+            return new Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
-        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>> DefineState<TState>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>> vsmGroup, TState state) where TState : struct
+        public static Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>> DefineState<TState>(
+            this Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>> vsmGroup, TState state) where TState : struct
         {
             var vs = new StateDefinition<TState> { State = state };
             vsmGroup.Item2.States.Add(state, vs);
-            return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
+            return new Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
         public static Tuple<IStateManager,
-            StateGroup<TState, DefaultTransition>, StateDefinition<TState>> DefineState<TState, TExistingState, TExistingElement, TExistingPropertyValue>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TExistingState>, StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TState state)
+            StateGroup<TState>, StateDefinition<TState>> DefineState<TState, TExistingState, TExistingElement, TExistingPropertyValue>(
+            this Tuple<IStateManager, StateGroup<TState>, StateDefinition<TExistingState>, StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TState state)
             where TExistingState : struct
             where TState : struct
         {
             var vs = new StateDefinition<TState> { State = state };
             vsmGroup.Item2.States.Add(state, vs);
             return new Tuple<IStateManager,
-                StateGroup<TState, DefaultTransition>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
+                StateGroup<TState>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
 
         public static Tuple<IStateManager,
-            StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+            StateGroup<TState>, StateDefinition<TState>,
             TElement> Target<TState, TElement>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>> vsmGroup, TElement element) where TState : struct
+            this Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>> vsmGroup, TElement element) where TState : struct
         {
-            return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>, TElement>(vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, element);
+            return new Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>, TElement>(vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, element);
         }
 
         public static Tuple<IStateManager,
-            StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+            StateGroup<TState>, StateDefinition<TState>,
             TElement> Target<TState, TElement, TExistingElement, TExistingPropertyValue>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+            this Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>,
                 StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TElement element)
             where TState : struct
 
         {
             return new Tuple<IStateManager,
-                StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+                StateGroup<TState>, StateDefinition<TState>,
                 TElement>(vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, element);
         }
 
 
         public static Tuple<IStateManager,
-            StateGroup<TState, DefaultTransition>, StateDefinition<TState>, StateValue<TElement, TPropertyValue>> Change<TState, TElement, TPropertyValue>(
+            StateGroup<TState>, StateDefinition<TState>, StateValue<TElement, TPropertyValue>> Change<TState, TElement, TPropertyValue>(
             this Tuple<IStateManager,
-                StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+                StateGroup<TState>, StateDefinition<TState>,
                 TElement> vsmGroup,
             Expression<Func<TElement, TPropertyValue>> getter,
             Action<TElement, TPropertyValue> setter) where TState : struct
@@ -143,13 +143,13 @@ namespace BuildIt.States
                 Getter = getter.Compile(),
                 Setter = setter
             };
-            return new Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>, StateValue<TElement, TPropertyValue>>(
+            return new Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>, StateValue<TElement, TPropertyValue>>(
                 vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, vsv);
         }
 
-        public static Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+        public static Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>,
             StateValue<TElement, TPropertyValue>> ToValue<TState, TElement, TPropertyValue>(
-            this Tuple<IStateManager, StateGroup<TState, DefaultTransition>, StateDefinition<TState>,
+            this Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>,
                 StateValue<TElement, TPropertyValue>> vsmGroup,
             TPropertyValue value) where TState : struct
         {
@@ -179,8 +179,12 @@ namespace BuildIt.States
             return state;
         }
 
-        public static IStateDefinition<TState> WhenAboutToChange<TState>(
-           this IStateDefinition<TState> stateDefinition,
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> WhenAboutToChange<TState>(
+           this Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> stateDefinition,
            Action<CancelEventArgs> action) where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
@@ -188,19 +192,28 @@ namespace BuildIt.States
 #pragma warning restore 1998
         }
 
-        public static IStateDefinition<TState> WhenAboutToChange<TState>(
-            this IStateDefinition<TState> stateDefinition,
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> WhenAboutToChange<TState>(
+            this Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> smInfo,
             Func<CancelEventArgs, Task> action) where TState : struct
         {
-            if (stateDefinition == null) return null;
+            if (smInfo?.Item3 == null) return null;
+            var stateDefinition = smInfo.Item3;
 
             "Adding Behaviour: AboutToChangeFrom".Log();
             stateDefinition.AboutToChangeFrom = action;
-            return stateDefinition;
+            return smInfo;
         }
 
-        public static IStateDefinition<TState> WhenChangingFrom<TState>(
-            this IStateDefinition<TState> stateDefinition,
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> WhenChangingFrom<TState>(
+            this Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> stateDefinition,
             Action action) where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
@@ -208,35 +221,49 @@ namespace BuildIt.States
 #pragma warning restore 1998
         }
 
-        public static IStateDefinition<TState> WhenChangingFrom<TState>(
-            this IStateDefinition<TState> stateDefinition,
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> WhenChangingFrom<TState>(
+            this Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> smInfo,
             Func<Task> action) where TState : struct
         {
-            if (stateDefinition == null) return null;
+            if (smInfo?.Item3 == null) return null;
+            var stateDefinition = smInfo.Item3;
 
             "Adding Behaviour: ChangingFrom".Log();
             stateDefinition.ChangingFrom = action;
-            return stateDefinition;
+            return smInfo;
         }
 
-        public static IStateDefinition<TState> WhenChangedTo<TState>(
-            this IStateDefinition<TState> stateDefinition,
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> WhenChangedTo<TState>(
+            this Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> smInfo,
             Action action) where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return stateDefinition.WhenChangedTo(async () => action());
+            return smInfo.WhenChangedTo(async () => action());
 #pragma warning restore 1998
         }
 
-        public static IStateDefinition<TState> WhenChangedTo<TState>(
-            this IStateDefinition<TState> stateDefinition,
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>>  WhenChangedTo<TState>(
+            this Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>> smInfo,
             Func<Task> action) where TState : struct
         {
-            if (stateDefinition == null) return null;
+            if (smInfo?.Item3 == null) return null;
+            var stateDefinition = smInfo.Item3;
 
             "Adding Behaviour: ChangedTo".Log();
             stateDefinition.ChangedTo = action;
-            return stateDefinition;
+            return smInfo;
         }
 
 
