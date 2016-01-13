@@ -11,8 +11,7 @@ namespace BuildIt.Lifecycle
         event EventHandler CloseRegion;
 
         Task RequestClose();
-
-
+        IRegionManager Manager { get; }
         Task Startup(IRegionManager manager);
     }
 }

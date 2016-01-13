@@ -5,7 +5,7 @@ using StateByState.Services;
 
 namespace StateByState
 {
-    public class SecondardyMainViewModel:BaseViewModel
+    public class SecondardyMainViewModel:BaseViewModelWithCompletion<DefaultCompletion>
     {
         public event EventHandler Done;
 
@@ -18,7 +18,8 @@ namespace StateByState
 
         public void IsDone()
         {
-            Done.SafeRaise(this);
+            OnComplete(DefaultCompletion.Complete);
+            //Done.SafeRaise(this);
 
         }
 

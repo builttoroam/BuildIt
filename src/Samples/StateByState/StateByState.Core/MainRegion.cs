@@ -26,10 +26,8 @@ namespace StateByState
         ThirdToMain
     }
 
-    public class MainRegion : ApplicationRegion, IHasStates
+    public class MainRegion : StateAwareApplicationRegion
     {
-        public IStateManager StateManager { get; }= new StateManager();
-
 
         public MainRegion()
         {
@@ -42,6 +40,8 @@ namespace StateByState
                     .OnEvent((vm, a) => vm.UnableToComplete += a,
                             (vm, a) => vm.UnableToComplete -= a)
                         .ChangeState(MainRegionView.Third)
+                    .OnComplete(MainCompletion.NewRegion)
+                    .LaunchRegion(this,TypeHelper.Ref<SecondaryApplication>())
                     .Initialise(async vm =>
                     {
                         "VM State: Init".Log();
@@ -52,7 +52,7 @@ namespace StateByState
                         "VM State: When Changed To".Log();
                       //  vm.Completed += State_Completed;
                         //vm.UnableToComplete += State_UnableToCompleted;
-                        vm.SpawnNewRegion += Vm_SpawnNewRegion;
+                        //vm.SpawnNewRegion += Vm_SpawnNewRegion;
                         await vm.StartViewModel();
                     })
                     .WhenAboutToChange((vm, cancel) => $"VM State: About to Change - {cancel.Cancel}".Log())

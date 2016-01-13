@@ -11,7 +11,8 @@ namespace StateByState
     {
         Base,
         Page2,
-        Page3
+        Page3,
+        NewRegion
     }
 
     public class MainViewModel : BaseViewModelWithCompletion<MainCompletion>
@@ -59,7 +60,8 @@ namespace StateByState
 
         public void Spawn()
         {
-            SpawnNewRegion.SafeRaise(this);
+            OnComplete(MainCompletion.NewRegion);
+            //SpawnNewRegion.SafeRaise(this);
 
         }
 

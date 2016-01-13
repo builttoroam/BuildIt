@@ -439,6 +439,87 @@ namespace BuildIt.Lifecycle.States.ViewModel
         public static Tuple<IStateManager,
             IViewModelStateGroup<TState>,
             IViewModelStateDefinition<TState, TViewModel>>
+            CloseRegion<TState, TViewModel, TCompletion>(
+            this Tuple<IStateManager, IViewModelStateGroup<TState>,
+                IViewModelStateDefinition<TState, TViewModel>,
+                StateCompletionBinder<TCompletion>> smInfo,
+            IApplicationRegion region)
+            where TState : struct
+            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TCompletion : struct
+        {
+            if (smInfo?.Item1 == null ||
+                smInfo.Item2 == null ||
+                smInfo.Item3 == null) return null;
+
+            var comp = smInfo.Item4?.Completion;
+            var sm = smInfo.Item1;
+            var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>(async (s, e) =>
+            {
+                if (e.Completion.Equals(comp))
+                {
+                    await region.RequestClose();
+                }
+            });
+
+            var smreturn = smInfo.Remove();
+
+            smreturn.WhenChangedTo(vm =>
+            {
+                vm.Complete += changeStateAction;
+            })
+                .WhenChangingFrom(vm =>
+                {
+                    vm.Complete -= changeStateAction;
+                });
+            return smreturn;
+            //            return new Tuple<IStateManager, IViewModelStateGroup<TState>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
+        }
+
+        public static Tuple<IStateManager,
+            IViewModelStateGroup<TState>,
+            IViewModelStateDefinition<TState, TViewModel>>
+            LaunchRegion<TState, TViewModel, TCompletion, TNewRegion>(
+            this Tuple<IStateManager, IViewModelStateGroup<TState>,
+                IViewModelStateDefinition<TState, TViewModel>,
+                StateCompletionBinder<TCompletion>> smInfo,
+            IApplicationRegion region, TypeHelper.TypeWrapper<TNewRegion> wrapper)
+            where TState : struct
+            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TCompletion : struct
+            where TNewRegion :IApplicationRegion
+        {
+            if (smInfo?.Item1 == null ||
+                smInfo.Item2 == null ||
+                smInfo.Item3 == null) return null;
+
+            var comp = smInfo.Item4?.Completion;
+            var sm = smInfo.Item1;
+            var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>( (s, e) =>
+            {
+                if (e.Completion.Equals(comp))
+                {
+                    region.Manager.CreateRegion<TNewRegion>();
+                }
+            });
+
+            var smreturn = smInfo.Remove();
+
+            smreturn.WhenChangedTo(vm =>
+            {
+                vm.Complete += changeStateAction;
+            })
+                .WhenChangingFrom(vm =>
+                {
+                    vm.Complete -= changeStateAction;
+                });
+            return smreturn;
+            //            return new Tuple<IStateManager, IViewModelStateGroup<TState>, IViewModelStateDefinition<TState, TViewModel>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
+        }
+
+        public static Tuple<IStateManager,
+            IViewModelStateGroup<TState>,
+            IViewModelStateDefinition<TState, TViewModel>>
             ChangeState<TState, TViewModel, TCompletion, TData>(
             this Tuple<IStateManager, IViewModelStateGroup<TState>,
                 IViewModelStateDefinition<TState, TViewModel>,
@@ -553,5 +634,19 @@ namespace BuildIt.Lifecycle.States.ViewModel
             public Func<TViewModel, TData> CompletionData { get; set; }
 
         }
+
+        
+    }
+
+    public class TypeHelper
+    {
+        public class TypeWrapper<TType>
+        { }
+
+        public static TypeWrapper<TType> Ref<TType>()
+        {
+            return new TypeWrapper<TType>();
+        } 
+
     }
 }

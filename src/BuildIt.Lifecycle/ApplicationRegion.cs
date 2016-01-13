@@ -7,6 +7,11 @@ using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {
+    public class StateAwareApplicationRegion : ApplicationRegion, IHasStates
+    {
+        public IStateManager StateManager { get; } = new StateManager();
+    }
+
     public class ApplicationRegion:IApplicationRegion
     {
         public event EventHandler CloseRegion;
@@ -17,9 +22,10 @@ namespace BuildIt.Lifecycle
         public virtual async Task RequestClose()
 #pragma warning restore 1998
         {
+            OnCloseRegion();
         }
 
-        protected IRegionManager Manager { get; private set; }
+        public IRegionManager Manager { get; private set; }
 
 #pragma warning disable 1998 // Task to allow for async override
         public async Task Startup(IRegionManager manager)
@@ -40,6 +46,8 @@ namespace BuildIt.Lifecycle
         {
             CloseRegion.SafeRaise(this);
         }
+
+
 
         public virtual void RegisterDependencies(IContainer container)
         {
