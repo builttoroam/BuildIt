@@ -9,10 +9,18 @@ namespace BuildIt.States
         public IDictionary<Type, IStateGroup> StateGroups { get; } =
             new Dictionary<Type, IStateGroup>();
 
+        public TState CurrentState<TState>()
+            where TState : struct
+        {
+            var group = StateGroups.SafeValue(typeof(TState)) as IStateGroupManager<TState>;
+            if (group == null) return default(TState);
+            return group.CurrentState;
+        }
+
         public async Task<bool> GoToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
-            var group = StateGroups.SafeValue(state.GetType());
+            var group = StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeTo(state,animate);
         }
@@ -20,13 +28,13 @@ namespace BuildIt.States
         public async Task<bool> GoToStateWithData<TState,TData>(TState state, TData data, bool animate = true)
            where TState : struct
         {
-            var group = StateGroups.SafeValue(state.GetType());
+            var group = StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeToWithData(state, data, animate);
         }
         public async  Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
         {
-            var group = StateGroups.SafeValue(state.GetType());
+            var group = StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeBackTo(state, animate);
     }
