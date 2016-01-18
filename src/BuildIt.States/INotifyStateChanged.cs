@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
@@ -6,5 +7,7 @@ namespace BuildIt.States
         where TState:struct 
     {
         event EventHandler<StateEventArgs<TState>> StateChanged;
+
+        Task<bool> ChangeTo(TState newState, bool useTransition = true);
     }
 }

@@ -22,6 +22,26 @@ namespace BuildIt.Lifecycle
             VisualStateRoot = visualStateRoot;
             ChangeNotifier = changeNotifier;
             ChangeNotifier.StateChanged += StateManager_StateChanged;
+
+            var control = (VisualStateRoot as UserControl)?.Content as FrameworkElement;
+            if (control == null)
+            {
+                return;
+            }
+
+            var stateTypeName = typeof (TState).Name;
+            var visualStateGroup =
+                VisualStateManager.GetVisualStateGroups(control).FirstOrDefault(x => x.Name == stateTypeName);
+
+            if (visualStateGroup == null) return;
+            visualStateGroup.CurrentStateChanged += VisualStateGroupOnCurrentStateChanged;
+        }
+
+        private void VisualStateGroupOnCurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            var newState = e.NewState?.Name.EnumParse<TState>()??default(TState);
+            if (newState.Equals(default(TState))) return;
+            ChangeNotifier?.ChangeTo(newState, false);
         }
 
         private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)

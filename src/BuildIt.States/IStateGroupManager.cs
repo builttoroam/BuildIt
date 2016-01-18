@@ -27,7 +27,7 @@ namespace BuildIt.States
 
         //IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
 
-        Task<bool> ChangeTo(TState newState, bool useTransition = true);
+        
 
     }
 }
