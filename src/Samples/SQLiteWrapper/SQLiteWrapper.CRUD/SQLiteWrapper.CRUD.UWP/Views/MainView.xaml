@@ -1,0 +1,48 @@
+﻿<views:MvxWindowsPage x:Class="SQLiteWrapper.CRUD.UWP.Views.MainView"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewModels="using:SQLiteWrapper.CRUD.Core.Models.Views"
+                      xmlns:views="using:Cirrious.MvvmCross.WindowsCommon.Views"
+                      mc:Ignorable="d">
+    <views:MvxWindowsPage.Resources>
+        <DataTemplate x:Key="PersonsItemTemplate"
+                      x:DataType="viewModels:Person">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind Surname, Mode=OneWay}"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="PersonItemsFooterTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Create"
+                        Click="CreateClicked" />
+                <Button Content="Read"
+                        Click="ReadClicked"
+                        Margin="10,0,0,0" />
+                <Button Content="Update"
+                        Click="UpdateClicked"
+                        Margin="10,0,0,0" />
+                <Button Content="Delete"
+                        Click="DeleteClicked"
+                        Margin="10,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
+    </views:MvxWindowsPage.Resources>
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Margin="10">
+        <TextBlock Text="Database file path" />
+        <TextBlock Text="{x:Bind CurrentViewModel.DatabaseFilePath, Mode=OneWay}"
+                   IsTextSelectionEnabled="True"
+                   Margin="0,10,0,0"
+                   TextWrapping="Wrap" />
+
+        <ListView ItemsSource="{x:Bind CurrentViewModel.Persons, Mode=OneWay}"
+                  ItemTemplate="{StaticResource PersonsItemTemplate}"
+                  FooterTemplate="{StaticResource PersonItemsFooterTemplate}"
+                  Margin="0,10,0,0" />
+    </StackPanel>
+</views:MvxWindowsPage>
