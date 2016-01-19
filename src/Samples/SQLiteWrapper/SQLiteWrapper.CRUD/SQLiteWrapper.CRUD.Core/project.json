@@ -1,0 +1,10 @@
+{
+  "supports": {},
+  "dependencies": {
+    "MvvmCross": "3.5.1",
+    "SQLite.Net-PCL": "3.0.5"
+  },
+  "frameworks": {
+    ".NETPortable,Version=v4.5,Profile=Profile111": {}
+  }
+}
