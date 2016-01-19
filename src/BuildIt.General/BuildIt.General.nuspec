@@ -11,8 +11,8 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+   <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
     <tags>BuildIt</tags>
   </metadata>
 </package>
