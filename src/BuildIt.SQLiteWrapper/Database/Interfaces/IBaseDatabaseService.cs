@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuiltToRoam.Data.SQLite.Database.Models.Results;
-using BuiltToRoam.Data.SQLite.Repository;
+using BuildIt.SQLiteWrapper.Database.Models.Results;
+using BuildIt.SQLiteWrapper.Repository;
 
-namespace BuiltToRoam.Data.SQLite.Database.Interfaces
+namespace BuildIt.SQLiteWrapper.Database.Interfaces
 {
     public interface IBaseDatabaseService
     {

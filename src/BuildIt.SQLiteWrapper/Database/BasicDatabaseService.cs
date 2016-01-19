@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using BuiltToRoam.Data.SQLite.Common;
-using BuiltToRoam.Data.SQLite.Database.Interfaces;
-using BuiltToRoam.Data.SQLite.Database.Models;
-using BuiltToRoam.Data.SQLite.Database.Models.Results;
-using BuiltToRoam.Data.SQLite.File;
-using BuiltToRoam.Data.SQLite.Repository;
+using BuildIt.SQLiteWrapper.Common;
+using BuildIt.SQLiteWrapper.Database.Interfaces;
+using BuildIt.SQLiteWrapper.File;
 using SQLite.Net;
 using SQLite.Net.Interop;
+
 // ReSharper disable InconsistentNaming
 
-namespace BuiltToRoam.Data.SQLite.Database
+namespace BuildIt.SQLiteWrapper.Database
 {
     public abstract class BasicDatabaseService : BaseDatabaseService, IBasicDatabaseService
     {

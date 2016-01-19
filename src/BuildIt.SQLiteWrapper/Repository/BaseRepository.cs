@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using SQLite.Net;
+
 // ReSharper disable UnusedVariable
 
-namespace BuiltToRoam.Data.SQLite.Repository
+namespace BuildIt.SQLiteWrapper.Repository
 {
     public class BaseRepository<TEntity> : IDisposable where TEntity : BaseEntity<TEntity>
     {

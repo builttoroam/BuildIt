@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using BuiltToRoam.Data.SQLite.Database.Interfaces;
-using BuiltToRoam.Data.SQLite.Database.Models.Results;
-using BuiltToRoam.Data.SQLite.Repository;
+using BuildIt.SQLiteWrapper.Database.Interfaces;
+using BuildIt.SQLiteWrapper.Database.Models.Results;
+using BuildIt.SQLiteWrapper.Repository;
 using SQLite.Net;
-using SQLite.Net.Attributes;
 
-namespace BuiltToRoam.Data.SQLite.Database
+namespace BuildIt.SQLiteWrapper.Database
 {
     public abstract class BaseDatabaseService : IBaseDatabaseService
     {

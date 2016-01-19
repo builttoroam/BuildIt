@@ -1,4 +1,4 @@
-﻿namespace BuiltToRoam.Data.SQLite.Repository.Interfaces
+﻿namespace BuildIt.SQLiteWrapper.Repository.Interfaces
 {
     public interface IBaseEntity
     {

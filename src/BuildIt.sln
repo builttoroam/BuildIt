@@ -60,7 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States", "BuildIt.States\BuildIt.States.csproj", "{B18D3D00-AD5F-41E5-8D44-1670F28946FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.SQLiteWrapper", "BuildIt.SQLiteWrapper\BuildIt.SQLiteWrapper.csproj", "{27622A0A-9C78-43ED-89A5-98215100E054}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Data.Sqlite", "BuildIt.SQLiteWrapper\BuildIt.Data.Sqlite.csproj", "{27622A0A-9C78-43ED-89A5-98215100E054}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLiteWrapper", "SQLiteWrapper", "{69E3FC12-300C-4FAC-9B2B-864131D50087}"
 EndProject
@@ -78,14 +78,15 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
+		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{ee72434b-cb9d-41f4-b6b7-3bb60b2e7218}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{27622a0a-9c78-43ed-89a5-98215100e054}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4

@@ -1,6 +1,6 @@
 ﻿using SQLite.Net.Interop;
 
-namespace BuiltToRoam.Data.SQLite.Database.Interfaces
+namespace BuildIt.SQLiteWrapper.Database.Interfaces
 {
     public interface ISqlitePlatformProvider
     {

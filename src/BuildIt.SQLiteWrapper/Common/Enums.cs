@@ -1,4 +1,4 @@
-﻿namespace BuiltToRoam.Data.SQLite.Common
+﻿namespace BuildIt.SQLiteWrapper.Common
 {
     public enum CreationCollisionOption
     {

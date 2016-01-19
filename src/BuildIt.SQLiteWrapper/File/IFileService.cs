@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BuiltToRoam.Data.SQLite.File
+namespace BuildIt.SQLiteWrapper.File
 {
     public interface IFileService
     {

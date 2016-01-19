@@ -1,8 +1,8 @@
 ﻿using System;
-using BuiltToRoam.Data.SQLite.Repository.Interfaces;
+using BuildIt.SQLiteWrapper.Repository.Interfaces;
 using SQLite.Net.Attributes;
 
-namespace BuiltToRoam.Data.SQLite.Repository
+namespace BuildIt.SQLiteWrapper.Repository
 {
     public abstract class BaseEntity<TEntity> : IBaseEntity where TEntity : IBaseEntity
     {

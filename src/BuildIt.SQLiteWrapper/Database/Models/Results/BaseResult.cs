@@ -1,4 +1,4 @@
-﻿namespace BuiltToRoam.Data.SQLite.Database.Models.Results
+﻿namespace BuildIt.SQLiteWrapper.Database.Models.Results
 {
     public class BaseResult
     {

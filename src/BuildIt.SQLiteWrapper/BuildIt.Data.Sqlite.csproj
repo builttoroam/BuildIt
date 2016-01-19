@@ -8,8 +8,8 @@
     <ProjectGuid>{27622A0A-9C78-43ED-89A5-98215100E054}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.SQLiteWrapper</RootNamespace>
-    <AssemblyName>BuildIt.SQLiteWrapper</AssemblyName>
+    <RootNamespace>BuildIt.Data.Sqlite</RootNamespace>
+    <AssemblyName>BuildIt.Data.Sqlite</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="BuildIt.SQLiteWrapper.nuspec" />
+    <None Include="BuildIt.Data.Sqlite.nuspec" />
     <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
@@ -58,6 +58,7 @@
     <Content Include="NuGet\README.txt" />
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (

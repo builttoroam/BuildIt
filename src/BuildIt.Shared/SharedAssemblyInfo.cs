@@ -1,8 +1,8 @@
 ﻿using System.Resources;
 using System.Reflection;
 
-[assembly: AssemblyCompany("Built to Roam Pty LTd")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("Built to Roam Pty Ltd")]
+[assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
