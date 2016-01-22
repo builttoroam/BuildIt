@@ -122,16 +122,35 @@ namespace BuildIt.Lifecycle
         {
             var tp = NavigationHelper.TypeForState(e.State);
 
-            //if (NavigationRoot.Navigation.NavigationStack.FirstOrDefault()?.SourcePageType == tp)
-            //{
-            //    RootFrame.GoBack();
-            //}
-            //else
-            //{
-            var page = Activator.CreateInstance(tp) as Page;
-            page.BindingContext = CurrentViewModel;
-            await NavigationRoot.Navigation.PushAsync(page);
-            //}
+            if (e.IsNewState)
+            {
+                var page = Activator.CreateInstance(tp) as Page;
+                page.BindingContext = CurrentViewModel;
+                await NavigationRoot.Navigation.PushAsync(page);
+                
+            }
+            else
+            {
+                var previous = NavigationRoot.Navigation.NavigationStack.FirstOrDefault();
+                while (previous != null && previous.GetType() != tp)
+                {
+                    await NavigationRoot.Navigation.PopAsync();
+                    previous = NavigationRoot.Navigation.NavigationStack.FirstOrDefault();
+                }
+                if (previous != null)
+                {
+                    await NavigationRoot.Navigation.PopAsync();
+                }
+            }
+
+            if (NavigationRoot.Navigation.NavigationStack.Any())
+            {
+                NavigationPage.SetHasNavigationBar(NavigationRoot, true);
+            }
+            else
+            {
+                NavigationPage.SetHasNavigationBar(NavigationRoot, false);
+            }
         }
 
 
