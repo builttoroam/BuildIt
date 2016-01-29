@@ -1,4 +1,4 @@
-﻿<lifecycle:BasePage
+﻿<Page
     x:Class="StateByState.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -17,4 +17,4 @@
         <Button Click="RegularCodebehindHandler">Test</Button>
 
     </StackPanel>
-</lifecycle:BasePage>
+</Page>

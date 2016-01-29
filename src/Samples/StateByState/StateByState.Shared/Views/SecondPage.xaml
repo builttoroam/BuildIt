@@ -1,4 +1,4 @@
-﻿<lifecycle:BasePage
+﻿<Page
     x:Class="StateByState.SecondPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -91,4 +91,4 @@
         <Button Click="{x:Bind CurrentViewModel.YtoX}">Y To X</Button>
     </StackPanel>
 
-</lifecycle:BasePage>
+</Page>

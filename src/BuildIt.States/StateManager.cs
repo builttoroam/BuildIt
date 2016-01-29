@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BuildIt.States
@@ -22,32 +23,41 @@ namespace BuildIt.States
         {
             var group = StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
-            return await group.ChangeTo(state,animate);
+            return await group.ChangeTo(state, animate);
         }
 
-        public async Task<bool> GoToStateWithData<TState,TData>(TState state, TData data, bool animate = true)
+        public async Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
            where TState : struct
         {
             var group = StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeToWithData(state, data, animate);
         }
-        public async  Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
+        public async Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
         {
             var group = StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeBackTo(state, animate);
-    }
+        }
 
         public async Task<bool> GoBackToPreviousState(bool animate = true)
         {
             foreach (var stateGroup in StateGroups)
             {
                 var grp = stateGroup.Value;
-                if (grp.TrackHistory) return await grp.ChangeToPrevious(animate);
+                if (grp.TrackHistory && grp.HasHistory) return await grp.ChangeToPrevious(animate);
             }
             return false;
         }
+
+        public bool PreviousStateExists
+        {
+            get
+            {
+                return StateGroups.Select(stateGroup => stateGroup.Value).Any(grp => grp.TrackHistory && grp.HasHistory);
+            }
+        }
+
 
         public IStateBinder Bind(IStateManager managerToBindTo)
         {
@@ -59,7 +69,7 @@ namespace BuildIt.States
             IStateManager StateManager { get; }
             IStateManager StateManagerToBindTo { get; }
 
-            IList<IStateBinder> GroupBinders { get; }=new List<IStateBinder>(); 
+            IList<IStateBinder> GroupBinders { get; } = new List<IStateBinder>();
             public StateManagerBinder(IStateManager sm, IStateManager manager)
             {
                 StateManager = sm;

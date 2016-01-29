@@ -16,6 +16,8 @@ namespace BuildIt.States
 
         Task<bool> GoBackToPreviousState(bool animate = true);
 
+        bool PreviousStateExists { get; }
+
         IStateBinder Bind(IStateManager managerToBindTo);
     }
 }

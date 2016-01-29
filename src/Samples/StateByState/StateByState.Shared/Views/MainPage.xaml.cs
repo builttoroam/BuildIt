@@ -26,7 +26,7 @@ namespace StateByState
 
         private void RegularCodebehindHandler(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine(ViewModel != null);
+           // Debug.WriteLine(ViewModel != null);
         }
     }
     

@@ -118,6 +118,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\BuiltToRoam.Lifecycle.UWP.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.10586.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <Import Project="..\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems" Label="Shared" />
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems" Label="Shared" />
@@ -130,8 +138,8 @@
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
 )
 if $(ConfigurationName) == Debug (
- xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Lifecycle.UWP.0.1.2\lib\.NETCore50\$(TargetFileName)" /y
- xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Lifecycle.UWP\0.1.2\lib\.NETCore50\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Lifecycle.UWP.0.1.3\lib\.NETCore50\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Lifecycle.UWP\0.1.3\lib\.NETCore50\$(TargetFileName)" /y
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

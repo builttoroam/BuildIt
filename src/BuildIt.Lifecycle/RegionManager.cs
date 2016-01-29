@@ -32,6 +32,11 @@ namespace BuildIt.Lifecycle
             return (TRegion)Regions.Values.FirstOrDefault(x => x.GetType() == typeof (TRegion));
         }
 
+        public IApplicationRegion RegionById(string id)
+        {
+            return Regions.SafeValue(id);
+        }
+
         public bool IsPrimaryRegion(IApplicationRegion region)
         {
             return region == PrimaryRegion;

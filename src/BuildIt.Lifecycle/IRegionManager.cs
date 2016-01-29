@@ -18,6 +18,8 @@ namespace BuildIt.Lifecycle
 
         TRegion RegionByType<TRegion>() where TRegion : IApplicationRegion;
 
+        IApplicationRegion RegionById(string id);
+
         bool IsPrimaryRegion(IApplicationRegion region);
     }
 }

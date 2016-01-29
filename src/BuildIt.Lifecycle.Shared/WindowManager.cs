@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -11,14 +12,16 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
-
+    #if WINDOWS_UWP
+using Windows.Phone.UI.Input;
+#endif
 namespace BuildIt.Lifecycle
 {
     public class WindowManager
     {
         private IRegionManager RegionManager { get; }
 
-        private IDictionary<string, CoreWindow> Windows { get; }=new Dictionary<string, CoreWindow>(); 
+        private IDictionary<string, CoreWindow> RegionWindows { get; }=new Dictionary<string, CoreWindow>(); 
 
         public WindowManager(IHasRegionManager root)
         {
@@ -29,7 +32,7 @@ namespace BuildIt.Lifecycle
 
         private void RegionManager_RegionIsClosing(IRegionManager sender, IApplicationRegion e)
         {
-            var view = Windows.SafeValue<string, CoreWindow, CoreWindow>(e.RegionId);
+            var view = RegionWindows.SafeValue<string, CoreWindow, CoreWindow>(e.RegionId);
             view.Close();
 
         }
@@ -74,6 +77,9 @@ namespace BuildIt.Lifecycle
                     }
                 }
 
+#if WINDOWS_UWP
+                frame.Navigated += Frame_Navigated;
+#endif
                 //var interfaces = region.GetType().GetInterfaces();
                 //foreach (var it in interfaces)
                 //{
@@ -91,11 +97,13 @@ namespace BuildIt.Lifecycle
 
                 region.CloseRegion += Region_CloseRegion;
 
+                Window.Current.Activated += Current_Activated;
+
                 Window.Current.Activate();
 
                 newViewId = ApplicationView.GetForCurrentView().Id;
 
-                Windows[region.RegionId] = Window.Current.CoreWindow;
+                RegionWindows[region.RegionId] = Window.Current.CoreWindow;
 
                 if (isPrimary)
                 {
@@ -116,9 +124,151 @@ namespace BuildIt.Lifecycle
 #endif
         }
 
+        private void Current_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            
+            var win = sender as Window;
+//#if WINDOWS_PHONE_APP
+//             if (e. != CoreWindowActivationState.Deactivated)
+//                {
+//                    Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+//                }
+//                else
+//                {
+//                    Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+//                }
+//# el
+#if WINDOWS_UWP
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
+                {
+                    Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+                }
+                else
+                {
+                    Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+                }
+            }
+
+            if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
+            {
+                SubscribeToBackRequestedEvent();
+            }
+            else
+            {
+                UnsubscribeFromBackRequestedEvent();
+            }
+#endif
+        }
+
+
+#if WINDOWS_UWP
+        private async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            var backArgs = e;
+            var wrapper = new ActionWrapper
+            {
+                WrappedAction = () => { backArgs.Handled = true; }
+            };
+            await GoToPreviousState(wrapper);
+        }
+
+
+
+        private void Frame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            var rootFrame = sender as Frame;
+            if (rootFrame != null)
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    rootFrame.CanGoBack
+                        ? AppViewBackButtonVisibility.Visible
+                        : AppViewBackButtonVisibility.Collapsed;
+            }
+
+        }
+
+#endif
+
+        public void SubscribeToBackRequestedEvent()
+        {
+#if WINDOWS_UWP
+            SystemNavigationManager.GetForCurrentView().BackRequested += BackRequested;
+#endif
+        }
+
+        public void UnsubscribeFromBackRequestedEvent()
+        {
+#if WINDOWS_UWP
+            SystemNavigationManager.GetForCurrentView().BackRequested -= BackRequested;
+#endif
+        }
+
+#if WINDOWS_UWP
+        protected async void BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            var backArgs = e;
+            var wrapper = new ActionWrapper
+            {
+                WrappedAction = () => { backArgs.Handled = true; }
+            };
+            await GoToPreviousState(wrapper);
+        }
+#endif
+        private class ActionWrapper
+        {
+            public Action WrappedAction { get; set; }
+
+            public void InvokeAction()
+            {
+                WrappedAction?.Invoke();
+            }
+        }
+
+        private async Task GoToPreviousState(ActionWrapper onsuccess)
+        { 
+
+        Debug.WriteLine("Going back");
+
+            var win = Window.Current.CoreWindow;
+            var regId = (from r in RegionWindows
+                where r.Value == win
+                select r.Key).FirstOrDefault();
+            if (regId != null)
+            {
+                var reg = RegionManager.RegionById(regId) as IHasStates;
+                if (reg?.StateManager.PreviousStateExists??false)
+                {
+                    onsuccess.InvokeAction();
+                    await reg.StateManager.GoBackToPreviousState();
+                    return;
+                }
+            }
+
+            //var gb = GoBackViewModel;
+            //if (gb != null)
+            //{
+
+            //    var cancel = new CancelEventArgs();
+            //    await GoBackViewModel.GoingBack(cancel);
+            //    if (cancel.Cancel)
+            //    {
+            //        e.Handled = true;
+            //        return;
+            //    }
+            //}
+            //e.Handled = true;
+            //if (Frame.CanGoBack)
+            //{
+            //    Frame.GoBack();
+            //}
+        }
+
+
         private void Region_CloseRegion(object sender, EventArgs e)
         {
-            Windows[(sender as IApplicationRegion).RegionId].Close();
+            RegionWindows[(sender as IApplicationRegion).RegionId].Close();
         }
     }
 }

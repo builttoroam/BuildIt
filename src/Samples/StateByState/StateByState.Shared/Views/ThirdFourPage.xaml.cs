@@ -7,6 +7,6 @@
             InitializeComponent();
         }
 
-        public ThirdFourViewModel CurrentViewModel=> ViewModel as ThirdFourViewModel;
+        public ThirdFourViewModel CurrentViewModel=> DataContext as ThirdFourViewModel;
     }
 }
