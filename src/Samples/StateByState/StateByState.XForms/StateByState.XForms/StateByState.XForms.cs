@@ -9,6 +9,7 @@ using Xamarin.Forms;
 
 namespace StateByState.XForms
 {
+   
 	public class App : Application
 	{
 		public App ()
@@ -16,7 +17,7 @@ namespace StateByState.XForms
            
             //var cnt=new ContentPage();
             // The root page of your application
-		    MainPage = new NavigationPage();//new ContentPage());
+		    MainPage = new CustomNavigationPage();//new ContentPage());
 
             StartApplication();
             //new Views.MainPage());
@@ -68,7 +69,7 @@ namespace StateByState.XForms
 
 
             var core = new SampleApplication();
-            var wm = new WindowManager(MainPage as NavigationPage, core);
+            var wm = new WindowManager(MainPage as CustomNavigationPage, core);
             await core.Startup(builder =>
             {
                 builder.RegisterType<XFormsSpecial>().As<ISpecial>();

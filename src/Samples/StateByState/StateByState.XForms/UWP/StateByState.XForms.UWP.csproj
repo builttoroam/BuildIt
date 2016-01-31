@@ -138,6 +138,10 @@
       <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
       <Name>BuildIt.General</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\BuildIt.Lifecycle.XForms\BuildIt.Lifecycle.XForms.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Name>BuildIt.Lifecycle.XForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj">
       <Project>{fa40c3d1-c786-4a96-89d3-78d3af17a437}</Project>
       <Name>BuildIt.Lifecycle</Name>

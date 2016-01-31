@@ -13,16 +13,32 @@ using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
 {
+    public class CustomNavigationPage : NavigationPage
+    {
+        public IApplicationRegion ActiveRegion { get; set; }
+        protected override bool OnBackButtonPressed()
+        {
+            var reg = ActiveRegion as IHasStates;
+            if (reg?.StateManager.PreviousStateExists ?? false)
+            {
+                reg.StateManager.GoBackToPreviousState();
+                return true;
+            }
+
+            return base.OnBackButtonPressed();
+        }
+    }
+
     public class WindowManager
     {
         private IRegionManager RegionManager { get; }
 
         //private IDictionary<string, CoreWindow> Windows { get; }=new Dictionary<string, CoreWindow>(); 
 
-            public NavigationPage NavigationRoot { get; }
+            public CustomNavigationPage NavigationRoot { get; }
 
 
-        public WindowManager(NavigationPage navRoot, IHasRegionManager root)
+        public WindowManager(CustomNavigationPage navRoot, IHasRegionManager root)
         {
             NavigationRoot=navRoot;
             RegionManager = root.RegionManager;
@@ -116,6 +132,8 @@ namespace BuildIt.Lifecycle
             //newViewId = ApplicationView.GetForCurrentView().Id;
 
             //Windows[region.RegionId] = Window.Current.CoreWindow;
+
+            NavigationRoot.ActiveRegion = region;
 
             if (RegionManager.IsPrimaryRegion(region))
             {

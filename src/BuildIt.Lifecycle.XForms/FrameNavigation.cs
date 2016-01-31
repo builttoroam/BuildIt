@@ -156,6 +156,13 @@ namespace BuildIt.Lifecycle
 
     }
 
+    public class BasePage : ContentPage
+    {
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    return base.OnBackButtonPressed();
+        //}
+    }
 
     //public interface ICodeBehindViewModel<TViewModel>
     //{
