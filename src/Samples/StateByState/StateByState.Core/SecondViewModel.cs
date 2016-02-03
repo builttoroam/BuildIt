@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using BuildIt;
@@ -33,13 +34,22 @@ namespace StateByState
         Complete
     }
 
-    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>
+    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>, IArrivingViewModelState, IAboutToLeaveViewModelState, ILeavingViewModelState
     {
         private int extraData;
+        private string name = "Bob";
         //public event EventHandler SecondCompleted;
 
 
-        public string Name { get;  } = "Bob";
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public int ExtraData
@@ -127,5 +137,20 @@ namespace StateByState
 
         }
 
+        public async Task Arriving()
+        {
+            await Task.Delay(2000);
+            Name += ".... arrived ....";
+        }
+
+        public async Task AboutToLeave(CancelEventArgs cancel)
+        {
+            cancel.Cancel = true;
+        }
+
+        public async Task Leaving()
+        {
+            
+        }
     }
 }
