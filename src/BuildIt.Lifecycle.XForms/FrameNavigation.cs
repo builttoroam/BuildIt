@@ -22,12 +22,16 @@ namespace BuildIt.Lifecycle
 
         public INotifyStateChanged<TState> StateNotifier { get; }
 
+        private IStateManager StateManager { get; }
+
         private NavigationPage NavigationRoot { get; }
 
         public FrameNavigation(NavigationPage navigationRoot,
-            INotifyStateChanged<TState> stateNotifier)
+            IStateManager sm)
             //,string registerAs = null)
         {
+            StateManager = sm;
+            var stateNotifier = sm.StateGroups[typeof (TState)] as INotifyStateChanged<TState>;
             //var stateManager = hasStateManager.StateManager;
             //if (string.IsNullOrWhiteSpace( registerAs ))
             //{
@@ -43,7 +47,10 @@ namespace BuildIt.Lifecycle
             //RootFrame.Tag = registerAs;
             StateNotifier = stateNotifier;
             StateNotifier.StateChanged += StateManager_StateChanged;
+
+            sm.GoToPreviousStateIsBlockedChanged += Sm_GoToPreviousStateIsBlockedChanged;
         }
+
 
 
         //private void RootFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
@@ -143,14 +150,27 @@ namespace BuildIt.Lifecycle
                 }
             }
 
-            if (NavigationRoot.Navigation.NavigationStack.Any())
+            UpdateNavigationBar();
+            
+        }
+
+
+        private void UpdateNavigationBar()
+        {
+            
+            if (StateManager.PreviousStateExists && !StateManager.GoToPreviousStateIsBlocked)
             {
-                NavigationPage.SetHasNavigationBar(NavigationRoot, true);
+                NavigationPage.SetHasBackButton(NavigationRoot.CurrentPage, true);
             }
             else
             {
-                NavigationPage.SetHasNavigationBar(NavigationRoot, false);
+                NavigationPage.SetHasBackButton(NavigationRoot.CurrentPage, false);
             }
+        }
+
+        private void Sm_GoToPreviousStateIsBlockedChanged(object sender, EventArgs e)
+        {
+            UpdateNavigationBar();
         }
 
 

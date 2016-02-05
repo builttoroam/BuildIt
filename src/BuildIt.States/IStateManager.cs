@@ -6,9 +6,17 @@ namespace BuildIt.States
 {
     public interface IStateManager//:IRegisterForUIAccess
     {
-        IDictionary<Type, IStateGroup> StateGroups { get; }
+        event EventHandler GoToPreviousStateIsBlockedChanged;
 
-        TState CurrentState<TState>() where TState : struct;
+        IReadOnlyDictionary<Type, IStateGroup> StateGroups { get; }
+
+
+        void AddStateGroup<TState>(IStateGroup<TState> group)
+            where TState : struct;
+
+        void AddStateGroup(Type state, IStateGroup group);
+
+
 
         Task<bool> GoToState<TState>(TState state, bool animate = true) where TState : struct;
         Task<bool> GoToStateWithData<TState,TData>(TState state, TData data, bool animate = true) where TState : struct;
@@ -17,6 +25,8 @@ namespace BuildIt.States
         Task<bool> GoBackToPreviousState(bool animate = true);
 
         bool PreviousStateExists { get; }
+
+        bool GoToPreviousStateIsBlocked { get; }
 
         IStateBinder Bind(IStateManager managerToBindTo);
     }

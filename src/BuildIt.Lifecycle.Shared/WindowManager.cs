@@ -97,6 +97,12 @@ namespace BuildIt.Lifecycle
 
                 region.CloseRegion += Region_CloseRegion;
 
+                if (hasStates != null)
+                {
+                    hasStates.StateManager.GoToPreviousStateIsBlockedChanged +=
+                        StateManager_GoToPreviousStateIsBlockedChanged;
+                }
+
                 Window.Current.Activated += Current_Activated;
 
                 Window.Current.Activate();
@@ -122,6 +128,11 @@ namespace BuildIt.Lifecycle
                 Debug.WriteLine(viewShown);
             }
 #endif
+        }
+
+        private void StateManager_GoToPreviousStateIsBlockedChanged(object sender, EventArgs e)
+        {
+            UpdateAppViewBackButton();
         }
 
         private void Current_Activated(object sender, WindowActivatedEventArgs e)
@@ -175,21 +186,38 @@ namespace BuildIt.Lifecycle
         }
 
 
-
         private void Frame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
-            var rootFrame = sender as Frame;
-            if (rootFrame != null)
-            {
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    rootFrame.CanGoBack
-                        ? AppViewBackButtonVisibility.Visible
-                        : AppViewBackButtonVisibility.Collapsed;
-            }
+            UpdateAppViewBackButton();
+            //var rootFrame = sender as Frame;
+            //if (rootFrame != null)
+            //{
+            //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+            //        rootFrame.CanGoBack
+            //            ? AppViewBackButtonVisibility.Visible
+            //            : AppViewBackButtonVisibility.Collapsed;
+            //}
 
         }
 
 #endif
+
+        private void UpdateAppViewBackButton()
+        {
+            var hasStates = RegionForCurrentWindow as IHasStates;
+            var rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null)
+            {
+#if WINDOWS_UWP
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    (rootFrame.CanGoBack && !(hasStates?.StateManager.GoToPreviousStateIsBlocked ?? false))
+                        ? AppViewBackButtonVisibility.Visible
+                        : AppViewBackButtonVisibility.Collapsed;
+#else
+                // TODO: Find a Win8x equivalent
+#endif
+            }
+        }
 
         public void SubscribeToBackRequestedEvent()
         {
@@ -226,25 +254,46 @@ namespace BuildIt.Lifecycle
             }
         }
 
+        private IApplicationRegion RegionForCurrentWindow
+        {
+            get
+            {
+                var win = Window.Current.CoreWindow;
+                var regId = (from r in RegionWindows
+                    where r.Value == win
+                    select r.Key).FirstOrDefault();
+                if (regId != null)
+                {
+                    return RegionManager.RegionById(regId);
+
+                }
+                return null;
+            }
+        }
+
         private async Task GoToPreviousState(ActionWrapper onsuccess)
         { 
 
         Debug.WriteLine("Going back");
 
-            var win = Window.Current.CoreWindow;
-            var regId = (from r in RegionWindows
-                where r.Value == win
-                select r.Key).FirstOrDefault();
-            if (regId != null)
+            var reg = RegionForCurrentWindow as IHasStates;
+            //var win = Window.Current.CoreWindow;
+            //var regId = (from r in RegionWindows
+            //    where r.Value == win
+            //    select r.Key).FirstOrDefault();
+            //if (regId != null)
+            //{
+            //    var reg = RegionManager.RegionById(regId) as IHasStates;
+            if (reg?.StateManager.PreviousStateExists ?? false)
             {
-                var reg = RegionManager.RegionById(regId) as IHasStates;
-                if (reg?.StateManager.PreviousStateExists??false)
+                onsuccess.InvokeAction();
+                if (!(reg?.StateManager.GoToPreviousStateIsBlocked ?? false))
                 {
-                    onsuccess.InvokeAction();
                     await reg.StateManager.GoBackToPreviousState();
-                    return;
                 }
+                return;
             }
+            //}
 
             //var gb = GoBackViewModel;
             //if (gb != null)

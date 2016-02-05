@@ -216,6 +216,12 @@ namespace BuildIt
             return dictionary.TryGetValue(key, out val) ? val : default(TValue);
         }
 
+        public static TValue SafeValue<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key)
+        {
+            if (dictionary == null) return default(TValue);
+            TValue val;
+            return dictionary.TryGetValue(key, out val) ? val : default(TValue);
+        }
 
 
         public static string SafeDecendentValue(this XElement element, string name)

@@ -28,7 +28,7 @@ namespace BuildIt.States
             
         {
             var grp = new StateGroup<TState>();
-            vsm.StateGroups.Add(typeof (TState), grp);
+            vsm.AddStateGroup(grp);
             return new Tuple<IStateManager, StateGroup<TState>>(vsm, grp);
         }
 
@@ -48,7 +48,7 @@ namespace BuildIt.States
             where TState : struct
         {
             var grp = new StateGroup<TState>();
-            vsmGroup.Item1.StateGroups.Add(typeof(TState), grp);
+            vsmGroup.Item1.AddStateGroup(grp);
             return new Tuple<IStateManager, StateGroup<TState>>(vsmGroup.Item1, grp);
         }
 
@@ -62,7 +62,7 @@ namespace BuildIt.States
             where TState : struct
         {
             var grp = new StateGroup<TState>();
-            vsmGroup.Item1.StateGroups.Add(typeof(TState), grp);
+            vsmGroup.Item1.AddStateGroup(grp);
             return new Tuple<IStateManager, StateGroup<TState>>(vsmGroup.Item1, grp);
         }
 

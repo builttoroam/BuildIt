@@ -9,6 +9,7 @@ namespace BuildIt.States
         where TState : struct
         
     {
+        public event EventHandler GoToPreviousStateIsBlockedChanged;
 
         public event EventHandler<StateEventArgs<TState>> StateChanged;
 
@@ -30,6 +31,14 @@ namespace BuildIt.States
                 return History.Count > 0;
             }
         }
+
+        public virtual bool GoToPreviousStateIsBlocked { get; } = false;
+
+        protected void OnGoToPreviousStateIsBlockedChanged()
+        {
+            GoToPreviousStateIsBlockedChanged.SafeRaise(this);
+        }
+
 
         private Stack<TState> History { get; } = new Stack<TState>(); 
 
@@ -70,7 +79,6 @@ namespace BuildIt.States
             return stateDefinition;
         }
 
-      
 
 
         public async Task<bool> ChangeTo<TFindState>(TFindState findState, bool useTransitions = true)

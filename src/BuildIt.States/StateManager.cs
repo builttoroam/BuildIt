@@ -7,8 +7,29 @@ namespace BuildIt.States
 {
     public class StateManager : IStateManager//, ICanRegisterDependencies
     {
-        public IDictionary<Type, IStateGroup> StateGroups { get; } =
+        public event EventHandler GoToPreviousStateIsBlockedChanged;
+
+        private readonly Dictionary<Type, IStateGroup> stateGroups =
             new Dictionary<Type, IStateGroup>();
+
+        public IReadOnlyDictionary<Type, IStateGroup> StateGroups => stateGroups;
+
+        public void AddStateGroup<TState>(IStateGroup<TState> group)
+            where TState : struct
+        {
+            AddStateGroup(typeof(TState), group);
+        }
+
+        public void AddStateGroup(Type state, IStateGroup group)
+        {
+            stateGroups[state] = group;
+            group.GoToPreviousStateIsBlockedChanged += Group_IsBlockedChanged;
+        }
+
+        private void Group_IsBlockedChanged(object sender, EventArgs e)
+        {
+            GoToPreviousStateIsBlockedChanged.SafeRaise(this);
+        }
 
         public TState CurrentState<TState>()
             where TState : struct
@@ -58,6 +79,14 @@ namespace BuildIt.States
             }
         }
 
+        public bool GoToPreviousStateIsBlocked
+        {
+            get
+            {
+                return PreviousStateExists &&
+                    StateGroups.Select(stateGroup => stateGroup.Value).Any(grp => grp.GoToPreviousStateIsBlocked);
+            }
+        }
 
         public IStateBinder Bind(IStateManager managerToBindTo)
         {

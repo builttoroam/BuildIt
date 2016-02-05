@@ -75,6 +75,19 @@ namespace BuildIt.Lifecycle.States.ViewModel
             return existing;
         }
 
+        public override bool GoToPreviousStateIsBlocked
+        {
+            get
+            {
+                var isBlocked = base.GoToPreviousStateIsBlocked;
+                if (isBlocked) return true;
+
+                // ReSharper disable once SuspiciousTypeConversion.Global 
+                var isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
+                return isBlockable?.IsBlocked ?? false;
+            }
+        }
+
 
         protected override async Task<bool> ChangeToState(TState oldState, TState newState, bool isNewState)
         {
@@ -113,6 +126,15 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 await leaving.Leaving();
             }
 
+            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+            var isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
+            if (isBlockable != null)
+            {
+                "Detaching event handlers for isblocked on current view model".Log();
+                isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
+            }
+
+
             if (currentVMStates != null)
             {
                 "Invoking ChangingFrom on current state definition".Log();
@@ -148,10 +170,19 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
             ViewModels[vm.GetType()] = vm;
             CurrentViewModel = vm;
-
+            isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
+            if (isBlockable != null)
+            {
+                isBlockable.IsBlockedChanged += IsBlockable_IsBlockedChanged;
+            }
 
 
             return true;
+        }
+
+        private void IsBlockable_IsBlockedChanged(object sender, EventArgs e)
+        {
+            OnGoToPreviousStateIsBlockedChanged();
         }
 
         protected override async Task NotifyStateChanged(TState newState, bool useTransitions, bool isNewState)

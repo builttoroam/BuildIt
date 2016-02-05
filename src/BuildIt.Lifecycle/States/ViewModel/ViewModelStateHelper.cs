@@ -14,7 +14,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
            this IStateManager vsm) where TState : struct
         {
             var grp = new ViewModelStateGroup<TState>() as IViewModelStateGroup<TState>;
-            vsm.StateGroups.Add(typeof(TState), grp);
+            vsm.AddStateGroup(grp);
             return TupleHelpers.Build(vsm, grp);
         }
 

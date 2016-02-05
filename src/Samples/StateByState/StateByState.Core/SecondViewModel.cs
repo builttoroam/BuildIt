@@ -85,8 +85,18 @@ namespace StateByState
             await StateManager.GoToState(SecondStates2.StateX);
             await Task.Delay(1000);
             Debug.WriteLine("Break");
+
+            Run();
         }
 
+        public async void Run()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                IsBlocked = !IsBlocked;
+                await Task.Delay(1000);
+            }
+        }
         public void UpdateExtraData(int data)
         {
             ExtraData = data;
@@ -145,7 +155,7 @@ namespace StateByState
 
         public async Task AboutToLeave(CancelEventArgs cancel)
         {
-            cancel.Cancel = true;
+            //cancel.Cancel = true;
         }
 
         public async Task Leaving()

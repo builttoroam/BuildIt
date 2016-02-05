@@ -39,6 +39,7 @@
     <Compile Include="DefaultValue.cs" />
     <Compile Include="IDefaultValue.cs" />
     <Compile Include="IHasStates.cs" />
+    <Compile Include="IIsAbleToBeBlocked.cs" />
     <Compile Include="INotifyStateChanged.cs" />
     <Compile Include="IStateDefinition.cs" />
     <Compile Include="IStateGroup.cs" />

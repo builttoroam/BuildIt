@@ -97,7 +97,7 @@ namespace BuildIt.Lifecycle
                     if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
                     {
                         var fnt = typeof(FrameNavigation<>).MakeGenericType(stateGroup.Key);
-                        var fn = Activator.CreateInstance(fnt, NavigationRoot, stateGroup.Value);
+                        var fn = Activator.CreateInstance(fnt, NavigationRoot, sm);
                     }
                 }
             }
