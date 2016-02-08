@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.1.3.0</version>
+    <version>0.1.3.1</version>
     <title>BuildIt.Lifecycle.UWP</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
@@ -12,7 +12,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>UWP Lifecycle Implementation</description>
    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>$copyright$</copyright>
     <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="BuildIt.General" version="0.1.3.1" />
+      <dependency id="BuildIt.Lifecycle" version="0.1.3.1" />
+    </dependencies>
   </metadata>
 </package>
