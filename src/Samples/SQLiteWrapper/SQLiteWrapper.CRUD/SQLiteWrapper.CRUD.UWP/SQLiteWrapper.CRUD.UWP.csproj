@@ -138,15 +138,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\BuildIt.SQLiteWrapper\BuildIt.Data.Sqlite.csproj">
+      <Project>{27622a0a-9c78-43ed-89a5-98215100e054}</Project>
+      <Name>BuildIt.Data.Sqlite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SQLiteWrapper.CRUD.Core\SQLiteWrapper.CRUD.Core.csproj">
       <Project>{b7c0b624-ea49-46cf-a513-d852a389986d}</Project>
       <Name>SQLiteWrapper.CRUD.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="BuiltToRoam.Data.SQLite">
-      <HintPath>..\Libraries\BuiltToRoam.SQLite\BuiltToRoam.Data.SQLite.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">

@@ -51,9 +51,10 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="BuiltToRoam.Data.SQLite">
-      <HintPath>..\Libraries\BuiltToRoam.SQLite\BuiltToRoam.Data.SQLite.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\..\..\BuildIt.SQLiteWrapper\BuildIt.Data.Sqlite.csproj">
+      <Project>{27622a0a-9c78-43ed-89a5-98215100e054}</Project>
+      <Name>BuildIt.Data.Sqlite</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

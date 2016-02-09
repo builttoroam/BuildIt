@@ -1,4 +1,4 @@
-﻿using BuiltToRoam.Data.SQLite.Database.Interfaces;
+﻿using BuildIt.SQLiteWrapper.Database.Interfaces;
 using SQLite.Net.Interop;
 
 namespace SQLiteWrapper.CRUD.UWP.Services

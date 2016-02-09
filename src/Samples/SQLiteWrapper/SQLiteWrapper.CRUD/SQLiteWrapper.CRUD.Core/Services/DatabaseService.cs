@@ -1,5 +1,5 @@
-﻿using BuiltToRoam.Data.SQLite.Database;
-using BuiltToRoam.Data.SQLite.Database.Interfaces;
+﻿using BuildIt.SQLiteWrapper.Database;
+using BuildIt.SQLiteWrapper.Database.Interfaces;
 using SQLite.Net;
 using SQLiteWrapper.CRUD.Core.Models.Database;
 using SQLiteWrapper.CRUD.Core.Services.Interfaces;
