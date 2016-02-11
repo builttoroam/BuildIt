@@ -16,6 +16,7 @@ namespace SQLiteWrapper.CRUD.Core.Services
         protected override void CreateDatabaseTables(SQLiteConnection dbConnection)
         {
             dbConnection.CreateTable<PersonEntity>();
+            dbConnection.CreateTable<AgencyEntity>();
         }
     }
 }

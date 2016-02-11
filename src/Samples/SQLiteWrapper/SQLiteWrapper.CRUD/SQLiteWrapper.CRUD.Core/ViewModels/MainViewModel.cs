@@ -52,15 +52,17 @@ namespace SQLiteWrapper.CRUD.Core.ViewModels
         {
             try
             {
+                var agency = new AgencyEntity() {Name = "Hollywood Foreign Press"};
                 var newPerson = new PersonEntity()
                 {
                     Name = Constants.Nick,
-                    Surname = Constants.Cage
+                    Surname = Constants.Cage,
+                    Agency = agency
                 };
-                var createRes = await databaseService.InsertOrUpdate(newPerson);
+                var createRes = await databaseService.InsertOrUpdateWithChildren(newPerson);
                 if (createRes.Success)
                 {
-                    var personEntity = await databaseService.Get<PersonEntity>(createRes.NewEntityId);
+                    var personEntity = await databaseService.GetWithChildren<PersonEntity>(createRes.NewEntityId);
                     var person = Converter.Convert(personEntity);
                     if (person != null)
                     {
@@ -77,7 +79,7 @@ namespace SQLiteWrapper.CRUD.Core.ViewModels
         {
             try
             {
-                var personsInDb = await databaseService.Get<PersonEntity>();
+                var personsInDb = await databaseService.GetWithChildren<PersonEntity>();
                 if (personsInDb == null) return;
 
                 foreach (var p in personsInDb)
@@ -103,7 +105,11 @@ namespace SQLiteWrapper.CRUD.Core.ViewModels
                     if (person == null) continue;
 
                     person.Name = string.Equals(person.Name, Constants.Nick, StringComparison.CurrentCultureIgnoreCase) ? Constants.Nicholas : Constants.Nick;
-                    var updateRes = await databaseService.InsertOrUpdate(Converter.Convert(person));
+                    if (person.Agency != null)
+                    {
+                        person.Agency.Name = "Bollywood Native Junket";
+                    }
+                    var updateRes = await databaseService.InsertOrUpdateWithChildren(Converter.Convert(person));
                 }
             }
             catch (Exception e)

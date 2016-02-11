@@ -41,7 +41,9 @@
     <Compile Include="App.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Converter.cs" />
+    <Compile Include="Models\Database\AgencyEntity.cs" />
     <Compile Include="Models\Database\PersonEntity.cs" />
+    <Compile Include="Models\Views\Agency.cs" />
     <Compile Include="Models\Views\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DatabaseNameProvider.cs" />

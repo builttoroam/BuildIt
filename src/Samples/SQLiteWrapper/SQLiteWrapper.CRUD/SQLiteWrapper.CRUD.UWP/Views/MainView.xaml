@@ -5,14 +5,19 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="using:SQLiteWrapper.CRUD.Core.Models.Views"
                       xmlns:views="using:Cirrious.MvvmCross.WindowsCommon.Views"
+                      xmlns:converters="using:SQLiteWrapper.CRUD.UWP.Converters"
                       mc:Ignorable="d">
     <views:MvxWindowsPage.Resources>
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
         <DataTemplate x:Key="PersonsItemTemplate"
                       x:DataType="viewModels:Person">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
-                <TextBlock Text="{x:Bind Surname, Mode=OneWay}"
-                           Margin="10,0,0,0" />
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+                    <TextBlock Text="{x:Bind Surname, Mode=OneWay}"
+                               Margin="10,0,0,0" />
+                </StackPanel>
+                <TextBlock Text="{x:Bind Agency.Name, Mode=OneWay}" Visibility="{x:Bind Agency,Converter={StaticResource NullVisibilityConverter}, FallbackValue=Collapsed}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="PersonItemsFooterTemplate">

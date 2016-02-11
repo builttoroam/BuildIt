@@ -9,24 +9,36 @@ namespace SQLiteWrapper.CRUD.Core.Common
         {
             if (personEntity == null) return null;
 
-            return new Person()
+            var person = new Person()
             {
                 Id = personEntity.Id,
                 Name = personEntity.Name,
-                Surname = personEntity.Surname
+                Surname = personEntity.Surname,
+
             };
+            if (personEntity.Agency != null)
+            {
+                person.Agency = new Agency() {Id = personEntity.AgencyId, Name = personEntity.Agency.Name};
+            }
+            return person;
         }
 
         public static PersonEntity Convert(Person person)
         {
             if (person == null) return null;
 
-            return new PersonEntity()
+            var personEntity = new PersonEntity()
             {
                 Id = person.Id,
                 Name = person.Name,
-                Surname = person.Surname
+                Surname = person.Surname,
+                
             };
+            if (person.Agency != null)
+            {
+                personEntity.Agency = new AgencyEntity() {Id = person.Agency.Id, Name = person.Agency.Name};
+            }
+            return personEntity;
         }
     }
 }
