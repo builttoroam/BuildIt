@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using SQLite.Net;
+using SQLiteNetExtensions.Extensions;
 
 // ReSharper disable UnusedVariable
 
@@ -37,6 +38,34 @@ namespace BuildIt.SQLiteWrapper.Repository
             }
         }
 
+        public TEntity GetWithChildren(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) return null;
+
+                return db.GetWithChildren<TEntity>(id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public List<TEntity> GetWithChildren()
+        {
+            try
+            {
+                return db.GetAllWithChildren<TEntity>();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         /// <summary>
         /// Inserts entity to db
         /// </summary>
@@ -61,41 +90,58 @@ namespace BuildIt.SQLiteWrapper.Repository
         }
 
         /// <summary>
-        /// Inserts entity to db or updates if entity already exists (tries to grab entity by ID)
+        /// Inserts entity to db or updates if entity already exists 
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="throwsOnError"></param>
+        /// <param name="withChildren"></param>
         /// <returns>Returns true if entity inserterd or false if not</returns>
         public bool InsertOrUpdate(TEntity entity, bool throwsOnError = false)
         {
             if (entity == null) return false;
 
-            var existingEntity = Get(entity.Id);
 
             try
             {
-                if (existingEntity == null)
+                try
                 {
-                    return Insert(entity);
+                    return Execute(() =>
+                    {
+                        var result = db.InsertOrReplace(entity);
+                        return result > 0;
+                    }, throwsOnError);
                 }
-                else
+                finally
                 {
-                    try
+                    concurrencyResetEvent.Set();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return false;
+        }
+
+        public bool InsertOrUpdateWithChildren(TEntity entity, bool throwsOnError = false)
+        {
+            if (entity == null) return false;
+
+
+            try
+            {
+                try
+                {
+                    return Execute(() =>
                     {
-                        if (entity.UpdateFromEntity(existingEntity, entity))
-                        {
-                            return Execute(() =>
-                            {
-                                // MK update returns number of rows updated
-                                var updateRes = db.Update(existingEntity);
-                                return updateRes > 0;
-                            }, throwsOnError);
-                        }
-                    }
-                    finally
-                    {
-                        concurrencyResetEvent.Set();
-                    }
+                        db.InsertOrReplaceWithChildren(entity);
+                        return true;
+                    }, throwsOnError);
+                }
+                finally
+                {
+                    concurrencyResetEvent.Set();
                 }
             }
             catch (Exception e)
@@ -134,6 +180,7 @@ namespace BuildIt.SQLiteWrapper.Repository
 
             return res;
         }
+
         public bool Delete(TEntity entity, bool throwsOnError = false)
         {
             if (entity == null) return false;
@@ -153,6 +200,7 @@ namespace BuildIt.SQLiteWrapper.Repository
                 return false;
             }
         }
+
         public Dictionary<TEntity, bool> Delete(IEnumerable<TEntity> entities, bool throwsOnError = false)
         {
             var res = new Dictionary<TEntity, bool>();

@@ -27,5 +27,21 @@ namespace SQLiteWrapper.CRUD.Core.Models.Views
                 RaisePropertyChanged(() => Surname);
             }
         }
+
+        private Agency agency;
+
+        public Agency Agency
+        {
+            get { return agency; }
+
+            set
+            {
+
+                if (agency == value) return;
+
+                agency = value;
+                RaisePropertyChanged(() => Agency);
+            }
+        }
     }
 }

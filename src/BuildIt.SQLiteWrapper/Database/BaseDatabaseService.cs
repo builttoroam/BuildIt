@@ -36,6 +36,28 @@ namespace BuildIt.SQLiteWrapper.Database
 
             return new List<TEntity>();
         }
+
+        public async Task<List<TEntity>> GetWithChildren<TEntity>() where TEntity : BaseEntity<TEntity>
+        {
+            try
+            {
+                var database = await CreateSQLiteConnection();
+                if (database == null) return null;
+
+                using (var repo = new BaseRepository<TEntity>(database))
+                {
+                    return repo.GetWithChildren();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                Debug.WriteLine(ex.Message);
+            }
+
+            return new List<TEntity>();
+        }
+
         public async Task<TEntity> Get<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
         {
             if (string.IsNullOrEmpty(entityId)) return null;
@@ -56,6 +78,28 @@ namespace BuildIt.SQLiteWrapper.Database
                 Debug.WriteLine(ex.Message);
             }
 
+            return null;
+        }
+
+        public async Task<TEntity> GetWithChildren<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
+        {
+            if (string.IsNullOrEmpty(entityId)) return null;
+
+            try
+            {
+                var database = await CreateSQLiteConnection();
+                if (database == null) return null;
+
+                using (var repo = new BaseRepository<TEntity>(database))
+                {
+                    return repo.GetWithChildren(entityId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                Debug.WriteLine(ex.Message);
+            }
             return null;
         }
 
@@ -88,6 +132,37 @@ namespace BuildIt.SQLiteWrapper.Database
 
             return res;
         }
+
+        public async Task<BaseSaveEntityResult> InsertOrUpdateWithChildren<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>
+        {
+            var res = new BaseSaveEntityResult();
+
+            if (entity == null) return res;
+
+            try
+            {
+                var database = await CreateSQLiteConnection();
+                if (database == null) return res;
+
+                using (var repo = new BaseRepository<TEntity>(database))
+                {
+                    var insertRes = repo.InsertOrUpdateWithChildren(entity);
+                    if (insertRes)
+                    {
+                        res.NewEntityId = entity.Id;
+                        res.Success = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                Debug.WriteLine(ex.Message);
+            }
+
+            return res;
+        }
+
         public async Task<BaseResult> Delete<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
         {
             var res = new BaseResult();
