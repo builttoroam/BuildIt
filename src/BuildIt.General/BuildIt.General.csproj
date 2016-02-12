@@ -53,6 +53,7 @@
     <None Include="app.config" />
     <Compile Include="LogHelper.cs" />
     <Compile Include="NotifyBase.cs" />
+    <Compile Include="ObservableCollectionExtensions.cs" />
     <Compile Include="ParameterEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TripleParameterEventArgs.cs" />

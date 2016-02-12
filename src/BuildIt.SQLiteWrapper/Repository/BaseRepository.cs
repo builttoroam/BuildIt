@@ -152,6 +152,34 @@ namespace BuildIt.SQLiteWrapper.Repository
             return false;
         }
 
+        public bool UpdateWithChildren(TEntity entity, bool throwsOnError = false)
+        {
+            if (entity == null) return false;
+
+
+            try
+            {
+                try
+                {
+                    return Execute(() =>
+                    {
+                        db.UpdateWithChildren(entity);
+                        return true;
+                    }, throwsOnError);
+                }
+                finally
+                {
+                    concurrencyResetEvent.Set();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return false;
+        }
+
         public bool Delete(string id, bool throwsOnError = false)
         {
             return Delete(Get(id));
