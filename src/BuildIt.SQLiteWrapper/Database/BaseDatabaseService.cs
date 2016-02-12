@@ -163,6 +163,32 @@ namespace BuildIt.SQLiteWrapper.Database
             return res;
         }
 
+        /// <summary>
+        /// Method is provided as it is recommended to avoid performance impact of InsertOrReaplceWithChildren that will delete and re-insert objects
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateWithChildren<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>
+        {
+            try
+            {
+                var database = await CreateSQLiteConnection();
+                using (var repo = new BaseRepository<TEntity>(database))
+                {
+                    var res = repo.UpdateWithChildren(entity);
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                Debug.WriteLine(ex.Message);
+            }
+
+            return false;
+        }
+
         public async Task<BaseResult> Delete<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
         {
             var res = new BaseResult();
