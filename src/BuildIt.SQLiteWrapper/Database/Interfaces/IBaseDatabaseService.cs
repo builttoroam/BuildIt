@@ -16,6 +16,8 @@ namespace BuildIt.SQLiteWrapper.Database.Interfaces
         Task<BaseSaveEntityResult> InsertOrUpdate<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>;
         Task<BaseSaveEntityResult> InsertOrUpdateWithChildren<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>;
 
+        Task<bool> UpdateWithChildren<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>;
+
         Task<BaseResult> Delete<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>;
 
         Task<List<T>> ExecuteQuery<T>(string sqlQuery) where T : class;
