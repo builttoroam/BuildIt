@@ -20,7 +20,7 @@ namespace StateByState
         public event EventHandler Completed;
         public event EventHandler UnableToComplete;
 
-        public event EventHandler SpawnNewRegion;
+        //public event EventHandler SpawnNewRegion;
 
         public MainViewModel(ISpecial special)
         {

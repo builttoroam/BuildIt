@@ -15,7 +15,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using BuiltToRoam.Lifecycle;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -24,11 +23,11 @@ namespace StateByState.Win8x
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    public sealed partial class App //: Application
     {
-#if WINDOWS_PHONE_APP
-        private TransitionCollection transitions;
-#endif
+//#if WINDOWS_PHONE_APP
+//        private TransitionCollection transitions;
+//#endif
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -80,10 +79,10 @@ namespace StateByState.Win8x
             {
 
                 var core = new SampleApplication();
-                var fn = new FrameNavigation<PageStates, PageTransitions>(rootFrame, core);
-                fn.Register<MainPage>(PageStates.Main);
-                fn.Register<SecondPage>(PageStates.Second);
-                fn.Register<ThirdPage>(PageStates.Third);
+                //var fn = new FrameNavigation<PageStates, PageTransitions>(rootFrame, core);
+                //fn.Register<MainPage>(PageStates.Main);
+                //fn.Register<SecondPage>(PageStates.Second);
+                //fn.Register<ThirdPage>(PageStates.Third);
                 await core.Startup();
                 //#if WINDOWS_PHONE_APP
                 //                // Removes the turnstile navigation for startup.
@@ -113,19 +112,19 @@ namespace StateByState.Win8x
             Window.Current.Activate();
         }
 
-#if WINDOWS_PHONE_APP
-        /// <summary>
-        /// Restores the content transitions after the app has launched.
-        /// </summary>
-        /// <param name="sender">The object where the handler is attached.</param>
-        /// <param name="e">Details about the navigation event.</param>
-        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
-        {
-            var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
-            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
-        }
-#endif
+//#if WINDOWS_PHONE_APP
+//        /// <summary>
+//        /// Restores the content transitions after the app has launched.
+//        /// </summary>
+//        /// <param name="sender">The object where the handler is attached.</param>
+//        /// <param name="e">Details about the navigation event.</param>
+//        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
+//        {
+//            var rootFrame = sender as Frame;
+//            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
+//            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
+//        }
+//#endif
 
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved

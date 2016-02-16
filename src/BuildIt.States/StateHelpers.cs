@@ -105,6 +105,112 @@ namespace BuildIt.States
                 StateGroup<TState>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
+        public class StateCompletionBinder<TCompletion>
+           where TCompletion : struct
+        {
+            public TCompletion Completion { get; set; }
+
+        }
+
+        public class StateEventBinder 
+        {
+            public Action<EventHandler> Subscribe { get; set; }
+            public Action<EventHandler> Unsubscribe { get; set; }
+        }
+
+
+
+        public class StateCompletionWithDataBinder<TCompletion, TData> : StateCompletionBinder<TCompletion>
+            where TCompletion : struct
+        {
+
+            public Func<TData> CompletionData { get; set; }
+
+        }
+
+
+        public static Tuple<IStateManager,
+           IStateGroup<TState>,
+           IStateDefinition<TState>,
+           StateCompletionBinder<DefaultCompletion>>
+          OnDefaultComplete<TState>(
+          this Tuple<IStateManager,
+              IStateGroup<TState>,
+              IStateDefinition<TState>> smInfo)
+          where TState : struct
+        {
+            if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
+            return smInfo.Extend(binder);
+        }
+
+
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>,
+            StateCompletionBinder<TCompletion>>
+           OnComplete<TState, TViewModel, TCompletion>(
+           this Tuple<IStateManager,
+               IStateGroup<TState>,
+               IStateDefinition<TState>> smInfo,
+                TCompletion completion)
+           where TState : struct
+            where TCompletion : struct
+        {
+            if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            var binder = new StateCompletionBinder<TCompletion> { Completion = completion };
+            return smInfo.Extend(binder);
+        }
+
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>,
+            StateCompletionWithDataBinder<DefaultCompletion, TData>>
+           OnDefaultCompleteWithData<TState, TData>(
+           this Tuple<IStateManager,
+               IStateGroup<TState>,
+               IStateDefinition<TState>> smInfo,
+                Func<TData> completionData)
+           where TState : struct
+        {
+            if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            var binder = new StateCompletionWithDataBinder<DefaultCompletion, TData>
+            {
+                Completion = DefaultCompletion.Complete, CompletionData = completionData
+            };
+            return smInfo.Extend(binder);
+
+        }
+
+        public static Tuple<IStateManager,
+            IStateGroup<TState>,
+            IStateDefinition<TState>,
+            StateCompletionWithDataBinder<TCompletion, TData>>
+           OnCompleteWithData<TState, TCompletion, TData>(
+           this Tuple<IStateManager,
+               IStateGroup<TState>,
+               IStateDefinition<TState>> smInfo,
+                TCompletion completion,
+                Func<TData> completionData)
+           where TState : struct
+            where TCompletion : struct
+        {
+            if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            var binder = new StateCompletionWithDataBinder<TCompletion, TData>
+            {
+                Completion = completion, CompletionData = completionData
+            };
+            return smInfo.Extend(binder);
+
+        }
 
         public static Tuple<IStateManager,
             StateGroup<TState>, StateDefinition<TState>,

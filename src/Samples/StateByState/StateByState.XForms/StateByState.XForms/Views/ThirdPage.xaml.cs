@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace StateByState.XForms.Views
 {
-    public partial class ThirdPage :BasePage
+    public partial class ThirdPage 
     {
         public ThirdPage()
         {

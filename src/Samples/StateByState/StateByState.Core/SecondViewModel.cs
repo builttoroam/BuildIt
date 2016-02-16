@@ -153,12 +153,16 @@ namespace StateByState
             Name += ".... arrived ....";
         }
 
+#pragma warning disable 1998 // sample only
         public async Task AboutToLeave(CancelEventArgs cancel)
+#pragma warning restore 1998
         {
             //cancel.Cancel = true;
         }
 
+#pragma warning disable 1998 // sample only
         public async Task Leaving()
+#pragma warning restore 1998
         {
             
         }

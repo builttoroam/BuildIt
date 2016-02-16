@@ -10,10 +10,10 @@
     mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Center" Background ="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="{x:Bind Data.ViewModel.Data}"></TextBlock>
+        <!--<TextBlock Text="{x:Bind Data.ViewModel.Data}"></TextBlock>
         <Button Click="{x:Bind Data.ViewModel.Test}">Test</Button>
         <Button Click="{x:Bind Data.ViewModel.Three}">Page Thre</Button>
-        <Button Click="{x:Bind Data.ViewModel.Spawn}">Another Window</Button>
+        <Button Click="{x:Bind Data.ViewModel.Spawn}">Another Window</Button>-->
         <Button Click="RegularCodebehindHandler">Test</Button>
 
     </StackPanel>

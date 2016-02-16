@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "BuildIt.General": "0.1.3.1",
+    "BuildIt.General": "0.1.3.6",
     "BuildIt.MvvmCross": "0.1.3",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",

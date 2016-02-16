@@ -84,6 +84,7 @@ namespace BuildIt.SQLiteWrapper.Repository
             }
             catch (Exception ex)
             {
+                ex.LogException();
                 if (throwsOnError) throw;
                 return false;
             }
@@ -201,6 +202,7 @@ namespace BuildIt.SQLiteWrapper.Repository
                 // ReSharper disable once UnusedVariable
                 catch (Exception ex)
                 {
+                    ex.LogException();
                     if (throwsOnError) throw;
                     res.Add(id, false);
                 }
@@ -224,6 +226,7 @@ namespace BuildIt.SQLiteWrapper.Repository
             }
             catch (Exception ex)
             {
+                ex.LogException();
                 if (throwsOnError) throw;
                 return false;
             }
@@ -244,6 +247,7 @@ namespace BuildIt.SQLiteWrapper.Repository
                 // ReSharper disable once UnusedVariable
                 catch (Exception ex)
                 {
+                    ex.LogException();
                     if (throwsOnError) throw;
                     res.Add(entity, false);
                 }
@@ -260,6 +264,7 @@ namespace BuildIt.SQLiteWrapper.Repository
             }
             catch (Exception ex)
             {
+                ex.LogException();
                 if (throwsOnError) throw;
             }
         }
@@ -296,6 +301,7 @@ namespace BuildIt.SQLiteWrapper.Repository
             // ReSharper disable once UnusedVariable
             catch (Exception ex)
             {
+                ex.LogException();
                 if (throwsOnError) throw;
                 return false;
             }

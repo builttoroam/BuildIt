@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Android.App;
 using Android.Content;
-using BuiltToRoam.Lifecycle.States;
+using BuildIt.States;
 
 namespace StateByState.Android
 {
@@ -10,18 +10,17 @@ namespace StateByState.Android
     {
         public static IDictionary<string, object> Managers { get; } = new Dictionary<string, object>();
     }
-    public class AcitivityNavigation<TState, TTransition>
+    public class AcitivityNavigation<TState>
         where TState : struct
-        where TTransition : struct
     {
         public IDictionary<TState, Type> NavigationIndex { get; } = new Dictionary<TState, Type>();
 
-        public IStateManager<TState, TTransition> StateManager { get; }
+        public IStateManager StateManager { get; }
 
         private BaseActivity RootActivity { get; }
 
         public AcitivityNavigation(BaseActivity rootActivity,
-            IHasStateManager<TState, TTransition> hasStateManager,
+            IHasStates hasStateManager,
             string registerAs = null)
         {
             var stateManager = hasStateManager.StateManager;
@@ -34,7 +33,7 @@ namespace StateByState.Android
             RootActivity = rootActivity;
             rootActivity.Tag = registerAs;
             StateManager = stateManager;
-            StateManager.StateChanged += StateManager_StateChanged;
+            //StateManager.StateChanged += StateManager_StateChanged;
         }
 
         private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)

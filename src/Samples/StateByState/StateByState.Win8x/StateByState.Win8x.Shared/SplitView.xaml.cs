@@ -39,15 +39,15 @@ namespace StateByState
 
 
 
-        public UIElement Content
+        public UIElement MainContent
         {
-            get { return (UIElement)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
+            get { return (UIElement)GetValue(MainContentProperty); }
+            set { SetValue(MainContentProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(UIElement), typeof(CustomSplitView), new PropertyMetadata(null,ContentChanged));
+        public static readonly DependencyProperty MainContentProperty =
+            DependencyProperty.Register("MainContent", typeof(UIElement), typeof(CustomSplitView), new PropertyMetadata(null,ContentChanged));
 
         private static void ContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

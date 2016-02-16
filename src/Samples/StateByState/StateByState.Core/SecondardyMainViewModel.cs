@@ -16,7 +16,7 @@ namespace StateByState
     public class SecondardyMainViewModel:BaseStateManagerViewModelWithCompletion<DefaultCompletion>
     {
         private string data;
-        public event EventHandler Done;
+        //public event EventHandler Done;
 
         public string Data
         {

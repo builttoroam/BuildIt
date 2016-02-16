@@ -30,5 +30,25 @@ namespace StateByState
         }
 
         public ThirdViewModel CurrentViewModel=>DataContext as ThirdViewModel;
+
+        private void Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentViewModel.One();
+        }
+
+        private void Button1_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentViewModel.Two();
+        }
+
+        private void Button2_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentViewModel.Three();
+        }
+
+        private void Button3_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentViewModel.Four();
+        }
     }
 }

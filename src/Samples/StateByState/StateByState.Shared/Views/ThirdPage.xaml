@@ -8,7 +8,7 @@
                     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
+        <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ThirdVS">
                 <VisualState x:Name="One">
                     <VisualState.Setters>
@@ -35,7 +35,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        </VisualStateManager.VisualStateGroups>-->
         <local:CustomSplitView DisplayMode="Inline"
                                IsPaneOpen="True"
                                OpenPaneLength="400"
@@ -44,6 +44,18 @@
             <local:CustomSplitView.Pane>
                 <StackPanel>
                     <Button x:Name="button"
+                            Click="Button_OnClick"
+                            IsEnabled="False">Option One</Button>
+                    <Button x:Name="button1"
+                            Click="Button1_OnClick"
+                            IsEnabled="False">Option Two</Button>
+                    <Button x:Name="button2"
+                            Click="Button2_OnClick"
+                            IsEnabled="False">Option Three</Button>
+                    <Button x:Name="button3"
+                            Click="Button3_OnClick"
+                            IsEnabled="False">Option Four</Button>
+                    <!--<Button x:Name="button"
                             Click="{x:Bind CurrentViewModel.One}"
                             IsEnabled="False">Option One</Button>
                     <Button x:Name="button1"
@@ -54,7 +66,7 @@
                             IsEnabled="False">Option Three</Button>
                     <Button x:Name="button3"
                             Click="{x:Bind CurrentViewModel.Four}"
-                            IsEnabled="False">Option Four</Button>
+                            IsEnabled="False">Option Four</Button>-->
                 </StackPanel>
             </local:CustomSplitView.Pane>
             <local:CustomSplitView.Content>

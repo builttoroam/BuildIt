@@ -6,8 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using BuiltToRoam;
-using BuiltToRoam.Lifecycle.States;
+using BuildIt;
+using BuildIt.States;
 using Java.Util;
 
 namespace StateByState.Android
@@ -44,37 +44,36 @@ namespace StateByState.Android
     }
 
 
-    public class VisualStateWrapper<TState, TTransition>
+    public class VisualStateWrapper<TState>
         where TState : struct
-        where TTransition: struct
     {
-        private IStateManager<TState, TTransition> stateManager;
+        private IStateManager stateManager;
         public IDictionary<TState, Action<bool>> States { get; } =new Dictionary<TState,Action<bool>>();
 
         public static string StateManagerName => nameof(StateManager);
 
 
-        public IStateManager<TState, TTransition> StateManager
+        public IStateManager StateManager
         {
             get { return stateManager; }
             set
             {
-                if (stateManager == value) return;
-                if (stateManager != null)
-                {
-                    stateManager.StateChanged -= StateManager_StateChanged;
-                }
-                stateManager = value;
-                if (stateManager != null)
-                {
-                    stateManager.StateChanged += StateManager_StateChanged;
-                }
+                //if (stateManager == value) return;
+                //if (stateManager != null)
+                //{
+                //    stateManager.StateChanged -= StateManager_StateChanged;
+                //}
+                //stateManager = value;
+                //if (stateManager != null)
+                //{
+                //    stateManager.StateChanged += StateManager_StateChanged;
+                //}
             }
         }
 
         private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)
         {
-            var state = States.SafeDictionaryValue<TState, Action<Boolean>, Action<bool>>(e.State);
+            var state = States.SafeValue(e.State);
             state?.Invoke(e.UseTransitions);
         }
     }

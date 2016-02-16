@@ -2,9 +2,9 @@ using System.Linq;
 using System.Reflection;
 using Android.App;
 using Android.OS;
-using BuiltToRoam;
-using BuiltToRoam.Lifecycle.States;
-using BuiltToRoam.Lifecycle.States.ViewModel;
+using BuildIt;
+using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 
 namespace StateByState.Android
 {
@@ -22,7 +22,7 @@ namespace StateByState.Android
 
             if (string.IsNullOrWhiteSpace(Tag)) return;
 
-            var mgr = ActivityStateManager.Managers.SafeDictionaryValue<string,object,object>(Tag);
+            var mgr = ActivityStateManager.Managers.SafeValue(Tag);
             if (mgr == null) return;
 
             var props = mgr.GetType().GetTypeInfo().DeclaredProperties.FirstOrDefault(p => p.Name == "StateManager");
@@ -43,7 +43,7 @@ namespace StateByState.Android
                 {
                     interfaces = new[] { pt.AsType() }.Union(interfaces);
                 }
-                var ism = typeof(IStateManager<,>);
+                var ism = typeof(IStateManager);
                 foreach (var inf in interfaces)
                 {
                     if (inf.IsConstructedGenericType &&
@@ -51,13 +51,13 @@ namespace StateByState.Android
                     {
                         var parm = inf.GenericTypeArguments;
 
-                        var vsct = typeof (VisualStateWrapper<,>).MakeGenericType(parm);
+                        var vsct = typeof (VisualStateWrapper<>).MakeGenericType(parm);
                         foreach (var px in actpps)
                         {
                             if (px.PropertyType == vsct)
                             {
                                 var vsw = px.GetValue(this);
-                                var pmgr = vsw.GetType().GetProperty(VisualStateWrapper<int, int>.StateManagerName);
+                                var pmgr = vsw.GetType().GetProperty(VisualStateWrapper<int>.StateManagerName);
                                 pmgr.SetValue(vsw, p.GetValue(dc));
                             }
                         }

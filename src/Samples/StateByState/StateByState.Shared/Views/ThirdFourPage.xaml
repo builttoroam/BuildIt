@@ -10,7 +10,7 @@
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock Text="{Binding Title}"
                    FontSize="50"></TextBlock>
-        <Button Content="Complete"
-                Click="{x:Bind CurrentViewModel.SayImDone}"></Button>
+        <!--<Button Content="Complete"
+                Click="{x:Bind CurrentViewModel.SayImDone}"></Button>-->
     </StackPanel>
 </Page>

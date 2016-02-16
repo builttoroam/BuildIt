@@ -10,7 +10,7 @@
     <Grid x:Name="grid"
           Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="AdaptiveStates">
+            <!--<VisualStateGroup x:Name="AdaptiveStates">
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800" />
@@ -35,7 +35,7 @@
                         </Setter>
                     </VisualState.Setters>
                 </VisualState>
-            </VisualStateGroup>
+            </VisualStateGroup>-->
         </VisualStateManager.VisualStateGroups>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">

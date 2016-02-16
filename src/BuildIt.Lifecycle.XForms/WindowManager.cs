@@ -141,7 +141,9 @@ namespace BuildIt.Lifecycle
             }
             else
             {
+#pragma warning disable 4014 // Pushed intentionally to different thread without blocking this code
                 Task.Run(async () => await region.Startup(RegionManager));
+#pragma warning restore 4014
             }
 
         }

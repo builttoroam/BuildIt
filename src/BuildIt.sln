@@ -70,30 +70,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLiteWrapper.CRUD.Core", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLiteWrapper.CRUD.UWP", "Samples\SQLiteWrapper\SQLiteWrapper.CRUD\SQLiteWrapper.CRUD.UWP\SQLiteWrapper.CRUD.UWP.csproj", "{47AF0EB8-FFF9-4F86-8572-8B70D716367F}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StateByState.Win8x.Shared", "Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.shproj", "{C9E72DD3-AC4F-49C6-BB4E-70DCB8BA184E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
+		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
+		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
+		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{c9e72dd3-ac4f-49c6-bb4e-70dcb8ba184e}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{ee72434b-cb9d-41f4-b6b7-3bb60b2e7218}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{27622a0a-9c78-43ed-89a5-98215100e054}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
-		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
+		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{24b24ff9-10fc-4b8d-89a1-6c16ac1086d5}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 	EndGlobalSection
@@ -547,5 +550,6 @@ Global
 		{3F0ED018-7559-4454-8C0A-18B188A58449} = {69E3FC12-300C-4FAC-9B2B-864131D50087}
 		{B7C0B624-EA49-46CF-A513-D852A389986D} = {3F0ED018-7559-4454-8C0A-18B188A58449}
 		{47AF0EB8-FFF9-4F86-8572-8B70D716367F} = {3F0ED018-7559-4454-8C0A-18B188A58449}
+		{C9E72DD3-AC4F-49C6-BB4E-70DCB8BA184E} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
 	EndGlobalSection
 EndGlobal

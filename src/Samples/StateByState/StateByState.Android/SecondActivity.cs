@@ -7,7 +7,7 @@ namespace StateByState.Android
     [Activity(Label = "@string/SecondTitle")]
     public class SecondActivity : BaseActivity
     {
-        public VisualStateWrapper<SecondStates, SecondStateTransitions> VisualStates { get; } = new VisualStateWrapper<SecondStates, SecondStateTransitions>();
+        public VisualStateWrapper<SecondStates> VisualStates { get; } = new VisualStateWrapper<SecondStates>();
 
         public Button  MyButton1 { get; set; }
         public Button MyButton2 { get; set; }

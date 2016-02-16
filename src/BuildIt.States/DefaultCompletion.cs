@@ -1,4 +1,4 @@
-﻿namespace BuildIt.Lifecycle.States.ViewModel
+﻿namespace BuildIt.States
 {
     public enum DefaultCompletion
     {

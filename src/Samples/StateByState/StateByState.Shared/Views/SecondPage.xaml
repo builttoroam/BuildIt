@@ -81,14 +81,14 @@
                    Text="{Binding ExtraData}"
                    FontSize="30"
                    Foreground="Blue" />
-        <Button Click="{x:Bind CurrentViewModel.ToFirst}">To First</Button>
+        <!--<Button Click="{x:Bind CurrentViewModel.ToFirst}">To First</Button>
         <Button Click="{x:Bind CurrentViewModel.ToSecond}">To Second</Button>
         <Button Click="{x:Bind CurrentViewModel.ToThird}">To Third</Button>
         <Button Click="{x:Bind CurrentViewModel.Done}">Done</Button>
         <Button Click="{x:Bind CurrentViewModel.XtoZ}">X To Z</Button>
         <Button Click="{x:Bind CurrentViewModel.YtoZ}">Y To Z</Button>
         <Button Click="{x:Bind CurrentViewModel.ZtoY}">Z To Y</Button>
-        <Button Click="{x:Bind CurrentViewModel.YtoX}">Y To X</Button>
+        <Button Click="{x:Bind CurrentViewModel.YtoX}">Y To X</Button>-->
     </StackPanel>
 
 </Page>
