@@ -46,6 +46,7 @@
     <Compile Include="IStateGroup.cs" />
     <Compile Include="IStateGroupManager.cs" />
     <Compile Include="IStateManager.cs" />
+    <Compile Include="IStateTriggerActivation.cs" />
     <Compile Include="IStateValue.cs" />
     <Compile Include="ITransitionDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BuildIt.States
@@ -20,6 +21,37 @@ namespace BuildIt.States
 
         private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
             = new Dictionary<Tuple<object, string>, IDefaultValue>();
+
+
+        private IList<IStateTrigger> Triggers { get; }=new List<IStateTrigger>();
+
+        public void WatchTrigger(IStateTrigger trigger)
+        {
+            trigger.IsActiveChanged += Trigger_IsActiveChanged;
+            Triggers.Add(trigger);
+        }
+
+        private void Trigger_IsActiveChanged(object sender, EventArgs e)
+        {
+            UpdateStatesByTriggers();
+        }
+
+        private async void UpdateStatesByTriggers()
+        {
+            var firstActiveState = States.FirstOrDefault(x => StateTriggersActive(x.Value));
+            // If there's no active state, then just return
+            if (firstActiveState.Key.Equals(default(TState))) return;
+
+            if (CurrentState.Equals(firstActiveState.Key)) return;
+
+            await ChangeTo(firstActiveState.Key);
+
+        }
+
+        private bool StateTriggersActive(IStateDefinition<TState> state)
+        {
+            return state.Triggers.Any(x => x.IsActive);
+        }
 
         public bool TrackHistory { get; set; } = false;
 

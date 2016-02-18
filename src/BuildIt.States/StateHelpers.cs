@@ -75,9 +75,12 @@ namespace BuildIt.States
         }
 
 
-        public static Tuple<IStateManager, StateGroup<TState>,
-            StateDefinition<TState>> DefineState<TState>(
-            this Tuple<IStateManager, StateGroup<TState>> vsmGroup, TState state)
+        public static Tuple<IStateManager, 
+                            StateGroup<TState>,
+                            StateDefinition<TState>> DefineState<TState>(
+            this Tuple<IStateManager, 
+                        StateGroup<TState>> vsmGroup, 
+            TState state)
             where TState : struct
         {
             var vs = new StateDefinition<TState> { State = state };
@@ -85,12 +88,33 @@ namespace BuildIt.States
             return new Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
-        public static Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>> DefineState<TState>(
-            this Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>> vsmGroup, TState state) where TState : struct
+        public static Tuple<IStateManager, 
+                            StateGroup<TState>, 
+                            StateDefinition<TState>> DefineState<TState>(
+            this Tuple<IStateManager, 
+                        StateGroup<TState>, 
+                        StateDefinition<TState>> vsmGroup, 
+            TState state) where TState : struct
         {
             var vs = new StateDefinition<TState> { State = state };
             vsmGroup.Item2.States.Add(state, vs);
             return new Tuple<IStateManager, StateGroup<TState>, StateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
+        }
+
+        public static Tuple<IStateManager,
+                            StateGroup<TState>,
+                            StateDefinition<TState>> AddTrigger<TState>(
+            this Tuple<IStateManager,
+                        StateGroup<TState>,
+                        StateDefinition<TState>> vsmGroup,
+            IStateTrigger trigger) where TState : struct
+        {
+            // Add trigger to triggers collection
+            vsmGroup.Item3.Triggers.Add(trigger);
+
+            // Advise the state group to monitor triggers
+            vsmGroup.Item2.WatchTrigger(trigger);
+            return vsmGroup;
         }
 
         public static Tuple<IStateManager,

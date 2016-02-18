@@ -10,6 +10,8 @@ namespace BuildIt.States
     {
         public TState State { get; set; }
 
+        public IList<IStateTrigger> Triggers { get; }  = new List<IStateTrigger>();
+
         public Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
         public Func<Task> ChangingFrom { get; set; }
         public Func<Task> ChangedTo { get; set; }

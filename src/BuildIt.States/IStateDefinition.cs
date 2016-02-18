@@ -9,6 +9,8 @@ namespace BuildIt.States
     {
         TState State { get; }
 
+        IList<IStateTrigger> Triggers { get; }
+
         Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
         Func<Task> ChangingFrom { get; set; }
         Func<Task> ChangedTo { get; set; }

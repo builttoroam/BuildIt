@@ -27,7 +27,9 @@ namespace BuildIt.States
 
         //IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
 
-        
+        void WatchTrigger(IStateTrigger trigger);
+
+
 
     }
 }
