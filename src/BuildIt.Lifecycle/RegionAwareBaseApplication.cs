@@ -16,7 +16,10 @@ namespace BuildIt.Lifecycle
             RegionManager.DefineRegion<TStartupRegion>();
         }
 
-        protected abstract void DefineApplicationRegions();
+        protected virtual void DefineApplicationRegions()
+        {
+            
+        }
 
         protected override async Task CommenceStartup()
         {
