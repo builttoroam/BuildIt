@@ -7,6 +7,7 @@ using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.Lifecycle;
 using BuildIt.States;
+using BuildIt.States.Completion;
 
 namespace StateByState
 {
@@ -34,7 +35,8 @@ namespace StateByState
         Complete
     }
 
-    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>, IArrivingViewModelState, IAboutToLeaveViewModelState, ILeavingViewModelState
+    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>, 
+        IArriving, IAboutToLeave, ILeaving
     {
         private int extraData;
         private string name = "Bob";

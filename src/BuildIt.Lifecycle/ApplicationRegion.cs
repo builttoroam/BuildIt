@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Autofac;
-using BuildIt.Lifecycle.States;
-using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
 
 namespace BuildIt.Lifecycle
@@ -49,13 +46,13 @@ namespace BuildIt.Lifecycle
 
 
 
-        public virtual void RegisterDependencies(IContainer container)
+        public virtual void RegisterDependencies(IDependencyContainer container)
         {
             var hasSM = this as IHasStates;
             if (hasSM == null) return;
             foreach (var stateGroup in hasSM.StateManager.StateGroups)
             {
-                (stateGroup.Value as ICanRegisterDependencies)?.RegisterDependencies(container);
+                (stateGroup.Value as IRegisterDependencies)?.RegisterDependencies(container);
             }
         }
 

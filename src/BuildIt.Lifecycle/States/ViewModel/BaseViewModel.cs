@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
-using Autofac;
 using BuildIt.States;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public class BaseViewModel:NotifyBase, ICanRegisterDependencies, IRegisterForUIAccess, IIsAbleToBeBlocked
+    public class BaseViewModel:NotifyBase, IRegisterDependencies, IRegisterForUIAccess, IIsAbleToBeBlocked
     {
         private bool isBlocked = false;
         public IUIExecutionContext UIContext { get; private set; }
@@ -14,7 +12,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             UIContext = context;
         }
 
-        public virtual void RegisterDependencies(IContainer container)
+        public virtual void RegisterDependencies(IDependencyContainer container)
         {
         }
 

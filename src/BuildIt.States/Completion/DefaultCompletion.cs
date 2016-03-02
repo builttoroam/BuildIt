@@ -1,4 +1,4 @@
-﻿namespace BuildIt.States
+﻿namespace BuildIt.States.Completion
 {
     public enum DefaultCompletion
     {

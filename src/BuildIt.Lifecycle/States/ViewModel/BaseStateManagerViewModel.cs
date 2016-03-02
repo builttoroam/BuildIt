@@ -1,5 +1,4 @@
-﻿using Autofac;
-using BuildIt.States;
+﻿using BuildIt.States;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
@@ -17,12 +16,12 @@ namespace BuildIt.Lifecycle.States.ViewModel
             }
         }
 
-        public override void RegisterDependencies(IContainer container)
+        public override void RegisterDependencies(IDependencyContainer container)
         {
             base.RegisterDependencies(container);
             foreach (var stateGroup in StateManager.StateGroups)
             {
-                (stateGroup.Value as ICanRegisterDependencies)?.RegisterDependencies(container);
+                (stateGroup.Value as IRegisterDependencies)?.RegisterDependencies(container);
             }
         }
 

@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
-    public interface IStateGroup
+    public interface IStateGroup:IRequiresUIAccess
 
     {
         event EventHandler GoToPreviousStateIsBlockedChanged;
@@ -23,13 +25,38 @@ namespace BuildIt.States
         bool HasHistory { get; }
 
         bool GoToPreviousStateIsBlocked { get; }
+
+        IDependencyContainer DependencyContainer { get; set; }
+
     }
 
-    public interface IStateGroup<TState> : IStateGroup
+    public interface IStateGroup<TState> : IStateGroup, INotifyStateChanged<TState>
         where TState : struct
     {
+
+
         IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
         IStateDefinition<TState> DefineState(TState state);
+
+        IStateDefinitionWithData<TState, TStateData> DefineStateWithData<TStateData>(TState state)
+            where TStateData : INotifyPropertyChanged;
+
+        TState CurrentState { get; }
+
+        IDictionary<TState, IStateDefinition<TState>> States { get; }
+
+
+        void DefineAllStates();
+
+        //IStateDefinition<TState> DefineState(TState state);
+
+
+        //IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
+
+        void WatchTrigger(IStateTrigger trigger);
+
+
+
     }
 
 

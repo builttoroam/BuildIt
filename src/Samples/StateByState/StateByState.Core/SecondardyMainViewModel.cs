@@ -2,6 +2,7 @@ using System;
 using BuildIt;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
+using BuildIt.States.Completion;
 using StateByState.Services;
 
 namespace StateByState

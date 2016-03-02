@@ -1,9 +1,10 @@
 using System;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {
-    public interface IRegionManager : ICanRegisterDependencies
+    public interface IRegionManager : IRegisterDependencies
     {
         Action<IRegionManager, IApplicationRegion> RegionCreated { get; set; }
         Action<IRegionManager, IApplicationRegion> RegionIsClosing { get; set; }

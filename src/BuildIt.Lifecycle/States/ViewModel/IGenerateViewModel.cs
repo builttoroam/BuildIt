@@ -8,7 +8,9 @@ namespace BuildIt.Lifecycle.States.ViewModel
     public interface IGenerateViewModel
     {
         Type ViewModelType { get; }
-        Task<INotifyPropertyChanged> Generate(IContainer dependency);
+        INotifyPropertyChanged Generate();
+
+        Task InvokeInitialiseViewModel(INotifyPropertyChanged viewModel);
 
         Task InvokeAboutToChangeFromViewModel(INotifyPropertyChanged viewModel, CancelEventArgs cancel);
 

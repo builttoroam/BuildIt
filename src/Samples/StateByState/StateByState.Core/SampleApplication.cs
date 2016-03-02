@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Autofac;
 using BuildIt;
 using BuildIt.Lifecycle;
+using BuildIt.States;
 
 namespace StateByState
 {
@@ -14,9 +15,9 @@ namespace StateByState
             RegionManager.DefineRegion<SecondaryApplication>();
         }
 
-        protected override void RegisterDependencies(ContainerBuilder builder)
+        protected override void RegisterDependencies(IDependencyContainer builder)
         {
-            builder.RegisterType<BasicDebugLogger>().As<ILogService>();
+            builder.Register<BasicDebugLogger,ILogService>();
 
             base.RegisterDependencies(builder);
         }

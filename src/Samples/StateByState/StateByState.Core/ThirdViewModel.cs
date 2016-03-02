@@ -35,22 +35,22 @@ namespace StateByState
         public ThirdViewModel()
         {
 
-            StateManager.GroupWithViewModels<ThirdStates>()
-                .StateWithViewModel<ThirdStates, ThirdOneViewModel>(ThirdStates.One)
-                .EndState()
-                .StateWithViewModel<ThirdStates, ThirdTwoViewModel>(ThirdStates.Two)
-                .EndState()
-                .StateWithViewModel<ThirdStates, ThirdThreViewModel>(ThirdStates.Three)
-                .EndState()
-                .StateWithViewModel<ThirdStates, ThirdFourViewModel>(ThirdStates.Four)
-                    .WhenChangedTo(vm =>
-                    {
-                        vm.Done += Vm_Done;
-                    }).
-                    WhenChangingFrom(vm =>
-                    {
-                        vm.Done -= Vm_Done;
-                    });
+            //StateManager.Group<ThirdStates>()
+            //    .StateWithViewModel<ThirdStates, ThirdOneViewModel>(ThirdStates.One)
+            //    .EndState()
+            //    .StateWithViewModel<ThirdStates, ThirdTwoViewModel>(ThirdStates.Two)
+            //    .EndState()
+            //    .StateWithViewModel<ThirdStates, ThirdThreViewModel>(ThirdStates.Three)
+            //    .EndState()
+            //    .StateWithViewModel<ThirdStates, ThirdFourViewModel>(ThirdStates.Four)
+            //        .WhenChangedTo(vm =>
+            //        {
+            //            vm.Done += Vm_Done;
+            //        }).
+            //        WhenChangingFrom(vm =>
+            //        {
+            //            vm.Done -= Vm_Done;
+            //        });
 
         }
 

@@ -60,7 +60,7 @@ namespace StateByState
             var wm = new WindowManager(core);
             await core.Startup(builder =>
             {
-                builder.RegisterType<UWPSpecial>().As<ISpecial>();
+                builder.Register<UWPSpecial,ISpecial>();
             });
 
         }

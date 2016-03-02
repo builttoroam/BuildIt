@@ -7,6 +7,7 @@ using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
+using BuildIt.States.Completion;
 
 namespace StateByState
 {
@@ -26,6 +27,13 @@ namespace StateByState
         ThirdToMain
     }
 
+    public enum SimpleTest
+    {
+        Base,
+        Test1, 
+        Test2
+    }
+
     public class MainRegion : StateAwareApplicationRegion
     {
 
@@ -33,81 +41,86 @@ namespace StateByState
         {
 
             #region State Definitions
-            StateManager.GroupWithViewModels<MainRegionView>()
-                .StateWithViewModel<MainRegionView, MainViewModel>(MainRegionView.Main)
-                    .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount) 
-                        .ChangeState(MainRegionView.Second)
-                    .OnEvent((vm, a) => vm.UnableToComplete += a,
-                            (vm, a) => vm.UnableToComplete -= a)
-                        .ChangeState(MainRegionView.Third)
-                    .OnComplete(MainCompletion.NewRegion)
-                    .LaunchRegion(this,TypeHelper.Ref<SecondaryApplication>())
-                    .Initialise(async vm =>
-                    {
-                        "VM State: Init".Log();
-                        await vm.Init();
-                    })
-                    .WhenChangedTo(async vm =>
-                    {
-                        "VM State: When Changed To".Log();
-                      //  vm.Completed += State_Completed;
-                        //vm.UnableToComplete += State_UnableToCompleted;
-                        //vm.SpawnNewRegion += Vm_SpawnNewRegion;
-                        await vm.StartViewModel();
-                    })
-                    .WhenAboutToChange((vm, cancel) => $"VM State: About to Change - {cancel.Cancel}".Log())
-                    .WhenChangingFrom(vm =>
-                    {
-                        "VM State: When Changing From".Log();
-                        //vm.Completed -= State_Completed;
-                        //vm.UnableToComplete -= State_UnableToCompleted;
-                    })
-                .AsState()
-                    .WhenAboutToChange(cancel => $"State: About to Change - {cancel.Cancel}".Log())
-    #pragma warning disable 1998
-                    .WhenChangingFrom(async () => "State: Changing".Log())
-    #pragma warning restore 1998
-                    .WhenChangedTo(() => Debug.WriteLine("State: Changing"))
-                .AsStateWithViewModel<MainRegionView,MainViewModel>()
-                .EndState()
-                
-                .StateWithViewModel<MainRegionView, SecondViewModel>(MainRegionView.Second)
-                    .OnComplete(DefaultCompletion.Complete)
-                    .ChangeToPreviousState()
-                    .Initialise(async vm => await vm.InitSecond())
-                    .WhenChangedTo(vm =>
-                    {
-                        //vm.SecondCompleted += SecondCompleted;
 
-                        Task.Run(async () =>
-                        {
-                            await Task.Delay(5000);
-                            await vm.UIContext.RunAsync(() =>
+            var group = StateManager.Group<SimpleTest>();
+
+
+            StateManager.Group<MainRegionView>().WithHistory()
+                .StateWithStateData<MainRegionView, MainViewModel>(MainRegionView.Main)
+                            
+                            .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount)
+                                .ChangeState(MainRegionView.Second)
+                            .OnEvent((vm, a) => vm.UnableToComplete += a,
+                                    (vm, a) => vm.UnableToComplete -= a)
+                                .ChangeState(MainRegionView.Third)
+                            .OnComplete(MainCompletion.NewRegion)
+                                .LaunchRegion(this, TypeRef.Get<SecondaryApplication>())
+                            .Initialise(async vm =>
                             {
-                                Debug.WriteLine("test");
+                                "VM State: Init".Log();
+                                await vm.Init();
+                            })
+                            .WhenChangedTo(async vm =>
+                            {
+                                "VM State: When Changed To".Log();
+                                //  vm.Completed += State_Completed;
+                                //vm.UnableToComplete += State_UnableToCompleted;
+                                //vm.SpawnNewRegion += Vm_SpawnNewRegion;
+                                await vm.StartViewModel();
+                            })
+                            .WhenAboutToChange((vm, cancel) => $"VM State: About to Change - {cancel.Cancel}".Log())
+                            .WhenChangingFrom(vm =>
+                            {
+                                "VM State: When Changing From".Log();
+                                //vm.Completed -= State_Completed;
+                                //vm.UnableToComplete -= State_UnableToCompleted;
+                            })
+//                        .AsState()
+                            .WhenAboutToChange(cancel => $"State: About to Change - {cancel.Cancel}".Log())
+#pragma warning disable 1998
+                            .WhenChangingFrom(async () => "State: Changing".Log())
+#pragma warning restore 1998
+                            .WhenChangedTo(() => Debug.WriteLine("State: Changing"))
+//                        .AsStateWithStateData<MainRegionView, MainViewModel>()
+//                        .EndState()
 
-                            });
-                        });
-                    })
-                    .WhenChangedToWithData<MainRegionView,SecondViewModel, int>((vm, data) =>
-                    {
-                        vm.ExtraData = data;
-                    })
-                    .WhenChangingFrom(vm =>
-                    {
-                        //vm.SecondCompleted -= SecondCompleted;
-                    })
-                .EndState()
-                .StateWithViewModel<MainRegionView,ThirdViewModel>(MainRegionView.Third)
-                    .WhenChangedTo(vm =>
-                    {
-                        vm.ThirdCompleted += ThirdCompleted;
-                    })
-                    .WhenChangingFrom(vm =>
-                    {
-                        vm.ThirdCompleted -= ThirdCompleted;
-                    })
-                .EndState();
+                                    .StateWithStateData<MainRegionView, SecondViewModel>(MainRegionView.Second)
+                                        .OnComplete(DefaultCompletion.Complete)
+                                        .ChangeToPreviousState()
+                                        .Initialise(async vm => await vm.InitSecond())
+                                        .WhenChangedTo(vm =>
+                                        {
+                                            //vm.SecondCompleted += SecondCompleted;
+
+                                            Task.Run(async () =>
+                                            {
+                                                await Task.Delay(5000);
+                                                await vm.UIContext.RunAsync(() =>
+                                                {
+                                                    Debug.WriteLine("test");
+
+                                                });
+                                            });
+                                        })
+                                        .WhenChangedToWithData<MainRegionView, SecondViewModel, int>((vm, data) =>
+                                         {
+                                             vm.ExtraData = data;
+                                         })
+                                        .WhenChangingFrom(vm =>
+                                        {
+                                            //vm.SecondCompleted -= SecondCompleted;
+                                        })
+                                    //.EndState()
+                                    .StateWithStateData<MainRegionView, ThirdViewModel>(MainRegionView.Third)
+                                        .WhenChangedTo(vm =>
+                                        {
+                                            vm.ThirdCompleted += ThirdCompleted;
+                                        })
+                                        .WhenChangingFrom(vm =>
+                                        {
+                                            vm.ThirdCompleted -= ThirdCompleted;
+                                        });
+                                    //.EndState();
 
 
 
@@ -122,9 +135,10 @@ namespace StateByState
             //sm.DefineTransition(MainRegionTransition.ThirdToMain)
             //    .From(MainRegionView.Third)
             //    .To(MainRegionView.Main);
+
             #endregion
 
-           
+
         }
 
         private void Vm_SpawnNewRegion(object sender, EventArgs e)

@@ -9,27 +9,12 @@ namespace BuildIt.States
         Base
     }
 
-    public interface IStateGroupManager<TState> :
-        //INotifyPropertyChanged, 
-        INotifyStateChanged<TState>,
-        IStateGroup<TState>
-        where TState : struct
-    {
-        TState CurrentState { get; }
+    //public interface IStateGroupManager<TState> :
+    //    //INotifyPropertyChanged, 
+    //    INotifyStateChanged<TState>,
+    //    IStateGroup<TState>
+    //    where TState : struct
+    //{
 
-        IDictionary<TState, IStateDefinition<TState>> States { get; }
-
-
-        void DefineAllStates();
-
-        //IStateDefinition<TState> DefineState(TState state);
-
-
-        //IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition);
-
-        void WatchTrigger(IStateTrigger trigger);
-
-
-
-    }
+    //}
 }

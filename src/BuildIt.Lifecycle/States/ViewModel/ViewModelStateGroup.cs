@@ -60,6 +60,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             return stateDefinition;
         }
 
+        #region Migrated to StateGroup
 
         private IDictionary<Type, INotifyPropertyChanged> ViewModels { get; } =
             new Dictionary<Type, INotifyPropertyChanged>();
@@ -87,7 +88,6 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 return isBlockable?.IsBlocked ?? false;
             }
         }
-
 
         protected override async Task<bool> ChangeToState(TState oldState, TState newState, bool isNewState)
         {
@@ -163,7 +163,18 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 var newGen = States[newState] as IGenerateViewModel;
                 if (newGen == null) return false;
                 "Generating ViewModel for new state".Log();
-                vm = await newGen.Generate(DependencyContainer);
+                vm = newGen.Generate();
+
+                "Registering dependencies".Log();
+                (vm as ICanRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+
+                await newGen.InvokeInitialiseViewModel(vm);
+
+                //if (vm.InitialiseViewModel != null)
+                //{
+                //    "Initialising ViewModel".Log();
+                //    await InitialiseViewModel(vm);
+                //}
             }
             var requireUI = vm as IRegisterForUIAccess;
             requireUI?.RegisterForUIAccess(UIContext);
@@ -185,6 +196,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             OnGoToPreviousStateIsBlockedChanged();
         }
 
+
         protected override async Task NotifyStateChanged(TState newState, bool useTransitions, bool isNewState)
         {
             await UIContext.RunAsync(async () =>
@@ -192,7 +204,6 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 await base.NotifyStateChanged(newState, useTransitions, isNewState);
             });
         }
-
         protected override async Task ChangedToState(TState newState, string dataAsJson)
         {
             await base.ChangedToState(newState,dataAsJson);
@@ -241,6 +252,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             }
 
         }
+        #endregion
 
         protected IContainer DependencyContainer { get; private set; }
         public void RegisterDependencies(IContainer container)

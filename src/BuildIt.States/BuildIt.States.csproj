@@ -36,7 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DefaultCompletion.cs" />
+    <Compile Include="Completion\CompletionEventArgs.cs" />
+    <Compile Include="Completion\CompletionWithDataEventArgs.cs" />
+    <Compile Include="Completion\DefaultCompletion.cs" />
+    <Compile Include="Completion\ICompletion.cs" />
     <Compile Include="DefaultValue.cs" />
     <Compile Include="IDefaultValue.cs" />
     <Compile Include="IHasStates.cs" />
@@ -48,7 +51,9 @@
     <Compile Include="IStateManager.cs" />
     <Compile Include="IStateTriggerActivation.cs" />
     <Compile Include="IStateValue.cs" />
-    <Compile Include="ITransitionDefinition.cs" />
+    <Compile Include="Loading\ILoadingManager.cs" />
+    <Compile Include="Loading\LoadingManager.cs" />
+    <Compile Include="Loading\LoadingTrigger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateDefinition.cs" />
     <Compile Include="StateEventArgs.cs" />
@@ -56,7 +61,6 @@
     <Compile Include="StateHelpers.cs" />
     <Compile Include="StateManager.cs" />
     <Compile Include="StateValue.cs" />
-    <Compile Include="TransitionDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BuildIt.General, Version=0.1.3.6, Culture=neutral, processorArchitecture=MSIL">

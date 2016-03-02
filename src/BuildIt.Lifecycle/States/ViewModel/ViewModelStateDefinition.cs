@@ -15,25 +15,27 @@ namespace BuildIt.Lifecycle.States.ViewModel
     {
         public Type ViewModelType => typeof(TViewModel);
 
-        public async Task<INotifyPropertyChanged> Generate(IContainer container)
+        public INotifyPropertyChanged Generate()
         {
             $"Creating instance of {typeof(TViewModel).Name}".Log();
             var vm = ServiceLocator.Current.GetInstance<TViewModel>();
 
-            "Registering dependencies".Log();
-            (vm as ICanRegisterDependencies)?.RegisterDependencies(container);
-
-            if (InitialiseViewModel != null)
-            {
-                "Initialising ViewModel".Log();
-                await InitialiseViewModel(vm);
-            }
-
+            
             "ViewModel generated".Log();
             return vm;
         }
 
         public Func<TViewModel, Task> InitialiseViewModel { get; set; }
+
+
+        public async Task InvokeInitialiseViewModel(INotifyPropertyChanged viewModel)
+        {
+            if (InitialiseViewModel == null) return;
+
+            "Invoking InitialiseViewModel".Log();
+            await InitialiseViewModel((TViewModel)viewModel);
+        }
+
 
         public Func<TViewModel, CancelEventArgs, Task> AboutToChangeFromViewModel { get; set; }
 

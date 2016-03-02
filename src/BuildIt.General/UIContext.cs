@@ -1,12 +1,14 @@
 using System;
 using System.Threading.Tasks;
 
-namespace BuildIt.Lifecycle
+namespace BuildIt
 {
     public static class UIHelper
     {
         public static void RegisterForUIAccess(this IRegisterForUIAccess requiresAccess, IRequiresUIAccess hasAccess)
         {
+            var cxt = hasAccess?.UIContext;
+            if (cxt == null) return;
             requiresAccess?.RegisterForUIAccess(hasAccess?.UIContext);
         }
 

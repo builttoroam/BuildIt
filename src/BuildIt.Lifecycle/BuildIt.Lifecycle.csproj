@@ -51,38 +51,16 @@
     <Compile Include="RootApplication.cs" />
     <Compile Include="IHasRegionManager.cs" />
     <Compile Include="IApplicationRegion.cs" />
+    <Compile Include="States\LifecycleHelpers.cs" />
     <Compile Include="States\ViewModel\BaseStateManagerViewModel.cs" />
     <Compile Include="States\ViewModel\BaseStateManagerViewModelWithCompletion.cs" />
     <Compile Include="States\ViewModel\BaseStateManagerViewModelWithDefaultCompletion.cs" />
     <Compile Include="States\ViewModel\BaseViewModel.cs" />
     <Compile Include="States\ViewModel\BaseViewModelWithCompletion.cs" />
     <Compile Include="States\ViewModel\BaseViewModelWithDefaultCompletion.cs" />
-    <Compile Include="States\ViewModel\CompletionEventArgs.cs" />
-    <Compile Include="States\ViewModel\IAboutToLeaveViewModelState.cs" />
-    <Compile Include="States\ViewModel\IArrivingViewModelState.cs" />
-    <Compile Include="States\ViewModel\ICanRegisterDependencies.cs" />
-    <Compile Include="States\ViewModel\IGenerateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\ViewModel\IHasCurrentViewModel.cs" />
-    <Compile Include="States\ViewModel\ILeavingViewModelState.cs" />
-    <Compile Include="States\ViewModel\IViewModelCompletion.cs" />
-    <Compile Include="States\ViewModel\IViewModelStateDefinition.cs" />
-    <Compile Include="States\ViewModel\IViewModelTransitionDefinition.cs" />
-    <Compile Include="States\ViewModel\ViewModelStateDefinition.cs" />
-    <Compile Include="States\ViewModel\ViewModelStateHelper.cs" />
-    <Compile Include="States\ViewModel\ViewModelStateGroup.cs" />
-    <Compile Include="States\ViewModel\ViewModelTransitionDefinition.cs" />
-    <Compile Include="UIContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Autofac.Extras.CommonServiceLocator, Version=3.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Extras.CommonServiceLocator.3.2.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.Extras.CommonServiceLocator.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="BuildIt.General, Version=0.1.3.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BuildIt.General.0.1.3.6\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\BuildIt.General.dll</HintPath>
       <Private>True</Private>

@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
-using Autofac;
 using BuildIt.Lifecycle.States;
+using BuildIt.States;
 
 namespace BuildIt.Lifecycle
 {
-    public abstract class RegionAwareBaseApplication<TStartupRegion> : BaseApplication, IHasRegionManager
+    public abstract class RegionAwareBaseApplication<TStartupRegion> : BaseApplication, 
+        IHasRegionManager
         where TStartupRegion  : IApplicationRegion
     {
 
@@ -36,7 +37,7 @@ namespace BuildIt.Lifecycle
             RegionManager.CreateRegion<TStartupRegion>();
         }
 
-        protected override async Task BuildCoreDependencies(IContainer container)
+        protected override async Task BuildCoreDependencies(IDependencyContainer container)
         {
             await base.BuildCoreDependencies(container);
 

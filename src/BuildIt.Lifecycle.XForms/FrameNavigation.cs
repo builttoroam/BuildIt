@@ -14,10 +14,10 @@ namespace BuildIt.Lifecycle
 {
    
 
-    public class FrameNavigation<TState>:IHasCurrentViewModel 
+    public class FrameNavigation<TState>: IHasStateData
         where TState : struct
     {
-        public INotifyPropertyChanged CurrentViewModel => (StateNotifier as IHasCurrentViewModel)?.CurrentViewModel;
+        public INotifyPropertyChanged CurrentStateData=> (StateNotifier as IHasStateData)?.CurrentStateData;
 
 
         public INotifyStateChanged<TState> StateNotifier { get; }
@@ -132,7 +132,7 @@ namespace BuildIt.Lifecycle
             if (e.IsNewState)
             {
                 var page = Activator.CreateInstance(tp) as Page;
-                page.BindingContext = CurrentViewModel;
+                page.BindingContext = CurrentStateData;
                 await NavigationRoot.Navigation.PushAsync(page);
                 
             }

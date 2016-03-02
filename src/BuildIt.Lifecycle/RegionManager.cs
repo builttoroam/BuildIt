@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Autofac;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
 using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle
@@ -14,7 +14,7 @@ namespace BuildIt.Lifecycle
         public Action<IRegionManager,IApplicationRegion> RegionCreated { get; set; }
         public Action<IRegionManager, IApplicationRegion> RegionIsClosing { get; set; }
 
-        protected IContainer DependencyContainer { get; private set; }
+        protected IDependencyContainer DependencyContainer { get; private set; }
 
         private IDictionary<string, IApplicationRegion> Regions { get; }=new Dictionary<string, IApplicationRegion>();
 
@@ -42,15 +42,18 @@ namespace BuildIt.Lifecycle
             return region == PrimaryRegion;
         }
 
-        public void RegisterDependencies(IContainer container)
+        public void RegisterDependencies(IDependencyContainer container)
         {
             DependencyContainer = container;
-            var cb = new ContainerBuilder();
+            //var cb = new ContainerBuilder();
+            container.StartUpdate();
             foreach (var state in RegionTypes)
             {
-                cb.RegisterType(state);
+                container.RegisterType(state);
+                //cb.RegisterType(state);
             }
-            cb.Update(container);
+            container.EndUpdate();
+            //cb.Update(container);
         }
 
         public TRegion CreateRegion<TRegion>() where TRegion : IApplicationRegion
@@ -65,7 +68,7 @@ namespace BuildIt.Lifecycle
             //}
 
             "Registering dependencies".Log();
-            (vm as ICanRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+            (vm as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
 
             vm.RegionId = Guid.NewGuid().ToString();
 

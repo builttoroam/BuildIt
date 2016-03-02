@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
+
+
+
     public class StateDefinition<TState> : IStateDefinition<TState>
         where TState : struct
     {
@@ -36,5 +39,6 @@ namespace BuildIt.States
             }
         }
 
+        public IStateDefinitionDataWrapper UntypedStateDataWrapper { get; set; }
     }
 }

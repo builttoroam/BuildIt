@@ -34,7 +34,7 @@ namespace BuildIt.States
         public TState CurrentState<TState>()
             where TState : struct
         {
-            var group = StateGroups.SafeValue(typeof(TState)) as IStateGroupManager<TState>;
+            var group = StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (group == null) return default(TState);
             return group.CurrentState;
         }

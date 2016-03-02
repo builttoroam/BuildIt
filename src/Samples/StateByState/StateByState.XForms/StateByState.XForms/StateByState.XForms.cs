@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Extras.CommonServiceLocator;
 using BuildIt;
 using BuildIt.Lifecycle;
 using StateByState.Services;
@@ -67,12 +68,13 @@ namespace StateByState.XForms
 
             LifecycleHelper.RegisterView<SeparatePage>().ForState(SecondaryRegionView.Main);
 
-
+ 
             var core = new SampleApplication();
             var wm = new WindowManager(MainPage as CustomNavigationPage, core);
-            await core.Startup(builder =>
+            await core.Startup(
+                builder =>
             {
-                builder.RegisterType<XFormsSpecial>().As<ISpecial>();
+                builder.Register<XFormsSpecial,ISpecial>();
             });
 
 //            (MainPage as NavigationPage).Navigation.PushAsync(new MainPage());

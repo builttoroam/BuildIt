@@ -128,6 +128,10 @@
       <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
       <Name>BuildIt.General</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj">
+      <Project>{88ae5f64-0f5e-4ad5-b673-1748f25c5458}</Project>
+      <Name>BuildIt.Lifecycle.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\BuildIt.Lifecycle.UWP\BuildIt.Lifecycle.UWP.csproj">
       <Project>{0959f4b6-d9e4-4947-8889-d913a26f4788}</Project>
       <Name>BuildIt.Lifecycle.UWP</Name>

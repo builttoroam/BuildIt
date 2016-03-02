@@ -1,8 +1,11 @@
 ﻿using System;
+using BuildIt.States.Completion;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public class BaseViewModelWithCompletion<TCompletion> : BaseViewModel, IViewModelCompletion<TCompletion>
+    public class BaseViewModelWithCompletion<TCompletion> 
+        : BaseViewModel, 
+        ICompletion<TCompletion>
         where TCompletion : struct
     {
         public event EventHandler<CompletionEventArgs<TCompletion>> Complete;

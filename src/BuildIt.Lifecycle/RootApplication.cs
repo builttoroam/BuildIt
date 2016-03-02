@@ -1,32 +1,37 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extras.CommonServiceLocator;
+using BuildIt.States;
 using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
     public class BaseApplication
     {
-        public async Task Startup(Action<ContainerBuilder> buildDependencies = null)
+        public async Task Startup(ServiceLocatorProvider locatorProvider,
+            IDependencyContainer container,
+            Action<IDependencyContainer> buildDependencies = null)
         {
             await CommenceStartup();
 
-            var builder = new ContainerBuilder();
+            //            var builder = new ContainerBuilder();
 
-            // Build and application dependencies
-            RegisterDependencies(builder);
+            using (container.StartUpdate())
+            {
+                // Build and application dependencies
+                RegisterDependencies(container);
 
-            buildDependencies?.Invoke(builder);
+            buildDependencies?.Invoke(container);
 
-            // Perform registrations and build the container.
-            var container = builder.Build();
+            //// Perform registrations and build the container.
+            //var container = builder.Build();
 
             await BuildCoreDependencies(container);
+            }
 
             // Set the service locator to an AutofacServiceLocator.
-            var csl = new AutofacServiceLocator(container);
-            ServiceLocator.SetLocatorProvider(() => csl);
+            //var csl = new AutofacServiceLocator(container);
+            //ServiceLocator.SetLocatorProvider(() => csl);
+            ServiceLocator.SetLocatorProvider(locatorProvider);
 
             await CompleteStartup();
         }
@@ -43,24 +48,24 @@ namespace BuildIt.Lifecycle
         {
         }
 
-        protected virtual void RegisterDependencies(ContainerBuilder builder)
+        protected virtual void RegisterDependencies(IDependencyContainer builder)
         {
             
         }
 
-        protected IContainer DependencyContainer { get; private set; }
+        protected IDependencyContainer DependencyContainer { get; private set; }
 #pragma warning disable 1998 // Async so it can be overridden
-        protected virtual async Task BuildCoreDependencies(IContainer container)
+        protected virtual async Task BuildCoreDependencies(IDependencyContainer container)
 #pragma warning restore 1998
         {
             DependencyContainer = container;
         }
 
-        public void RegisterAdditionalDependencies(Action<ContainerBuilder> build)
+        public void RegisterAdditionalDependencies(Action<IDependencyContainer> build)
         {
-            var cb = new ContainerBuilder();
-            build?.Invoke(cb);
-            cb.Update(DependencyContainer);
+            //var cb = new ContainerBuilder();
+            build?.Invoke(DependencyContainer);
+            //cb.Update(DependencyContainer);
 
         }
 

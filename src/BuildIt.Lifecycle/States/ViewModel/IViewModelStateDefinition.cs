@@ -5,7 +5,9 @@ using BuildIt.States;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public interface IViewModelStateDefinition<TState,TViewModel> :IGenerateViewModel, IStateDefinition<TState> 
+    public interface IViewModelStateDefinition<TState,TViewModel> 
+        :IGenerateViewModel, 
+        IStateDefinition<TState> 
         where TViewModel: INotifyPropertyChanged 
         where TState : struct
     {

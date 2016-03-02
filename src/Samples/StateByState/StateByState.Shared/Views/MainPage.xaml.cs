@@ -35,7 +35,7 @@ namespace StateByState
                 .DefineState(TestStates.Custom)
                 .AddTrigger(new WindowSizeTrigger(this) {MinWidth = 700});
 
-            (sm.StateGroups[typeof(TestStates)] as IStateGroupManager<TestStates>).StateChanged += MainPage_StateChanged;
+            (sm.StateGroups[typeof(TestStates)] as IStateGroup<TestStates>).StateChanged += MainPage_StateChanged;
         }
 
         private void MainPage_StateChanged(object sender, StateEventArgs<TestStates> e)

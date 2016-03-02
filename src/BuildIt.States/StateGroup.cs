@@ -6,7 +6,44 @@ using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
-    public class StateGroup<TState> :  IStateGroupManager<TState>
+    public interface IHasStateData
+    {
+        INotifyPropertyChanged CurrentStateData { get; }
+    }
+
+    public interface IDependencyContainer
+    {
+        IDisposable StartUpdate();
+        void EndUpdate();
+        void Register<TTypeToRegister, TInterfaceTypeToRegisterAs>();
+
+        void Register<TTypeToRegister>();
+
+        void RegisterType(Type typeToRegister);
+    }
+
+    public interface IRegisterDependencies
+    {
+        void RegisterDependencies(IDependencyContainer container);
+    }
+
+
+    public interface IAboutToLeave
+    {
+        Task AboutToLeave(CancelEventArgs cancel);
+    }
+
+    public interface ILeaving
+    {
+        Task Leaving();
+    }
+
+    public interface IArriving
+    {
+        Task Arriving();
+    }
+
+    public class StateGroup<TState> :  IStateGroup<TState>, IHasStateData, IRegisterDependencies
         where TState : struct
         
     {
@@ -16,11 +53,30 @@ namespace BuildIt.States
 
         public TState CurrentState { get; private set; }
 
+        public IDependencyContainer DependencyContainer { get; set; }
+
+        public IUIExecutionContext UIContext { get; set; }
+
         public IDictionary<TState, IStateDefinition<TState>> States { get; } =
             new Dictionary<TState, IStateDefinition<TState>>();
 
         private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
             = new Dictionary<Tuple<object, string>, IDefaultValue>();
+
+
+        private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
+           new Dictionary<Type, INotifyPropertyChanged>();
+
+        public INotifyPropertyChanged CurrentStateData { get; set; }
+
+        public INotifyPropertyChanged Existing(Type stateDataType)
+        {
+            if (stateDataType == null) return null;
+
+            INotifyPropertyChanged existing;
+            StateDataCache.TryGetValue(stateDataType, out existing);
+            return existing;
+        }
 
 
         private IList<IStateTrigger> Triggers { get; }=new List<IStateTrigger>();
@@ -50,7 +106,7 @@ namespace BuildIt.States
 
         private bool StateTriggersActive(IStateDefinition<TState> state)
         {
-            return state.Triggers.Any(x => x.IsActive);
+            return state.Triggers.All(x => x.IsActive);
         }
 
         public bool TrackHistory { get; set; } = false;
@@ -64,7 +120,21 @@ namespace BuildIt.States
             }
         }
 
-        public virtual bool GoToPreviousStateIsBlocked { get; } = false;
+        public virtual bool GoToPreviousStateIsBlocked
+        {
+            get
+            {
+                // ReSharper disable once SuspiciousTypeConversion.Global 
+                var isBlockable = CurrentStateData as IIsAbleToBeBlocked;
+                return isBlockable?.IsBlocked ?? false;
+            }
+        }
+
+        private void IsBlockable_IsBlockedChanged(object sender, EventArgs e)
+        {
+            OnGoToPreviousStateIsBlockedChanged();
+        }
+
 
         protected void OnGoToPreviousStateIsBlockedChanged()
         {
@@ -98,12 +168,6 @@ namespace BuildIt.States
             }
         }
 
-        public virtual IStateDefinition<TState> DefineState(TState state)
-        {
-            var stateDefinition = new StateDefinition<TState> { State = state };
-            return DefineState(stateDefinition);
-        }
-
         public virtual IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition)
         {
             $"Defining state of type {stateDefinition.GetType().Name}".Log();
@@ -111,6 +175,25 @@ namespace BuildIt.States
             return stateDefinition;
         }
 
+        public virtual IStateDefinition<TState> DefineState(TState state)
+        {
+            var stateDefinition = new StateDefinition<TState> { State = state };
+            return DefineState(stateDefinition);
+        }
+
+
+        public virtual IStateDefinitionWithData<TState, TStateData> DefineStateWithData<TStateData>(TState state) 
+            where TStateData : INotifyPropertyChanged
+        {
+            $"Defining state for {typeof(TState).Name} with data type {typeof(TStateData)}".Log();
+            var stateDefinition = new StateDefinition<TState>
+            {
+                State = state,
+                UntypedStateDataWrapper = new StateDefinitionTypedDataWrapper<TStateData>()
+            };
+            var stateDef = DefineState(stateDefinition);
+            return new StateDefinitionWithDataWrapper<TState, TStateData> {State = stateDef};
+        }
 
 
         public async Task<bool> ChangeTo<TFindState>(TFindState findState, bool useTransitions = true)
@@ -314,9 +397,14 @@ namespace BuildIt.States
             {
                 if (StateChanged != null)
                 {
-                    "Invoking StateChanged event".Log();
-                    StateChanged.Invoke(this, new StateEventArgs<TState>(CurrentState, useTransitions, isNewState));
-                    "StateChanged event completed".Log();
+                    "Invoking StateChanged event (before UI context check)".Log();
+                    await UIContext.RunAsync(() =>
+                    {
+                        "Raising StateChanged event".Log();
+                        StateChanged.Invoke(this, new StateEventArgs<TState>(CurrentState, useTransitions, isNewState));
+                        "Raising StateChanged event completed".Log();
+                    });
+                    "StateChanged event completed (after UI context check)".Log();
                 }
                 else
                 {
@@ -336,12 +424,105 @@ namespace BuildIt.States
         protected virtual async Task<bool> ChangeToState(TState oldState, TState newState, bool isNewState)
 #pragma warning restore 1998
         {
-            if (oldState.Equals(default(TState))) return true;
-            var currentStateDef = States[oldState];
-            if (currentStateDef.ChangingFrom != null)
+            // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
+            var aboutVM = CurrentStateData as IAboutToLeave;
+            var cancel = new CancelEventArgs();
+            if (aboutVM != null)
             {
-                "Invoking 'ChangingFrom'".Log();
-                await currentStateDef.ChangingFrom();
+                "Invoking AboutToLeave".Log();
+                await aboutVM.AboutToLeave(cancel);
+                if (cancel.Cancel)
+                {
+                    "ChangeToState cancelled by AboutToLeave".Log();
+                    return false;
+                }
+            }
+
+            "Retrieving current state definition".Log();
+            // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
+            var currentVMStates = !oldState.Equals(default(TState)) ? States[oldState] as IStateDefinitionDataWrapper : null;
+            if (currentVMStates != null)
+            {
+                "Invoking AboutToChangeFrom for existing state definition".Log();
+                await currentVMStates.InvokeAboutToChangeFrom(CurrentStateData, cancel);
+                if (cancel.Cancel)
+                {
+                    "ChangeToState cancelled by existing state definition".Log();
+                    return false;
+                }
+            }
+
+            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+            var leaving = CurrentStateData as ILeaving;
+            if (leaving != null)
+            {
+                "Invoking Leaving on current view model".Log();
+                await leaving.Leaving();
+            }
+
+            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+            var isBlockable = CurrentStateData as IIsAbleToBeBlocked;
+            if (isBlockable != null)
+            {
+                "Detaching event handlers for isblocked on current view model".Log();
+                isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
+            }
+
+
+            if (currentVMStates != null)
+            {
+                "Invoking ChangingFrom on current state definition".Log();
+                await currentVMStates.InvokeChangingFrom(CurrentStateData);
+            }
+
+            if (!oldState.Equals(default(TState)))
+            {
+                var currentStateDef = States[oldState];
+                if (currentStateDef.ChangingFrom != null)
+                {
+                    "Invoking 'ChangingFrom'".Log();
+                    await currentStateDef.ChangingFrom();
+                }
+            }
+
+
+            INotifyPropertyChanged vm = null;
+            currentVMStates = null; // Make sure we don't accidentally refernce the wrapper for the old state
+            if (!newState.Equals(default(TState)))
+            {
+                var current = States[newState];// as IGenerateViewModel;
+                currentVMStates = current?.UntypedStateDataWrapper;
+
+                "Retrieving existing ViewModel for new state".Log();
+                vm = Existing(currentVMStates?.StateDataType);
+            }
+
+            if (currentVMStates != null)
+            {
+
+                if (vm == null)
+                {
+                    //var newGen = States[newState] as IGenerateViewModel;
+                    //if (newGen == null) return false;
+                    "Generating ViewModel for new state".Log();
+                    vm = currentVMStates.Generate();
+
+                    "Registering dependencies".Log();
+                    (vm as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+
+                    await currentVMStates.InvokeInitialise(vm);
+
+                }
+                var requireUI = vm as IRegisterForUIAccess;
+                requireUI?.RegisterForUIAccess(this);
+
+                StateDataCache[vm.GetType()] = vm;
+                CurrentStateData = vm;
+                isBlockable = CurrentStateData as IIsAbleToBeBlocked;
+                if (isBlockable != null)
+                {
+                    isBlockable.IsBlockedChanged += IsBlockable_IsBlockedChanged;
+                }
             }
 
 
@@ -375,6 +556,23 @@ namespace BuildIt.States
             else
             {
                 "No new state definition".Log();
+            }
+
+
+            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+            var arrived = CurrentStateData as IArriving;
+            if (arrived != null)
+            {
+                "Invoking Arriving on new ViewModel".Log();
+                await arrived.Arriving();
+            }
+
+            var currentVMStates = States[CurrentState]?.UntypedStateDataWrapper;
+            if (currentVMStates != null)
+            {
+                "Invoking ChangedTo on new state definition".Log();
+                await currentVMStates.InvokeChangedTo(CurrentStateData);
+                await currentVMStates.InvokeChangedToWithData(CurrentStateData, dataAsJson);
             }
 
         }
@@ -443,27 +641,56 @@ namespace BuildIt.States
         //    return true;
         //}
 
-        protected virtual async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
-        {
-            if (transition.ArrivedState != null)
-            {
-                await transition.ArrivedState(currentState);
-            }
-        }
+        //protected virtual async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
+        //{
+        //    if (transition.ArrivedState != null)
+        //    {
+        //        await transition.ArrivedState(currentState);
+        //    }
 
-        protected virtual async Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
-        {
-            if (transition.LeavingState != null)
-            {
-                await transition.LeavingState(currentState, cancel);
-            }
-        }
+        //    // TODO: Consider doing this for when there is data
+        //    //var trans = transition as ViewModelTransitionDefinition<TState>;
+        //    //if (trans?.ArrivedStateViewModel != null)
+        //    //{
+        //    //    await trans.ArrivedStateViewModel(currentState, CurrentViewModel);
+        //    //}
 
-        protected virtual async Task ArrivingState(ITransitionDefinition<TState> transition)
+        //}
+
+        //protected virtual async Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
+        //{
+        //    if (transition.LeavingState != null)
+        //    {
+        //        await transition.LeavingState(currentState, cancel);
+        //    }
+
+        //    // TODO: Consider doing this for when there is data
+        //    //if (cancel.Cancel) return;
+        //    //var trans = transition as ViewModelTransitionDefinition<TState>;
+        //    //if (trans?.LeavingStateViewModel != null)
+        //    //{
+        //    //    await trans.LeavingStateViewModel(currentState, CurrentViewModel, cancel);
+        //    //}
+        //}
+
+        //protected virtual async Task ArrivingState(ITransitionDefinition<TState> transition)
+        //{
+        //    if (transition.ArrivingState != null)
+        //    {
+        //        await transition.ArrivingState(transition.EndState);
+        //    }
+        //}
+
+
+        public void RegisterDependencies(IDependencyContainer container)
         {
-            if (transition.ArrivingState != null)
+            DependencyContainer = container;
+            using (container.StartUpdate())
             {
-                await transition.ArrivingState(transition.EndState);
+                foreach (var state in States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
+                {
+                    container.RegisterType(state.StateDataType);
+                }
             }
         }
 

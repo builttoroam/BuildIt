@@ -3,10 +3,12 @@ using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Autofac;
+using BuildIt;
 using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
+using BuildIt.States.Completion;
 
 namespace StateByState
 {
@@ -20,27 +22,30 @@ namespace StateByState
         public SecondaryApplication()
         {
 
-            StateManager.GroupWithViewModels<SecondaryRegionView>()
-            .StateWithViewModel<SecondaryRegionView,SecondardyMainViewModel>(SecondaryRegionView.Main)
+            StateManager.Group<SecondaryRegionView>()
+                .StateWithStateData<SecondaryRegionView, SecondardyMainViewModel>(SecondaryRegionView.Main)
                 .OnComplete(DefaultCompletion.Complete)
                 .CloseRegion(this);
-                //.WhenChangedTo(vm =>
-                //{
-                //    vm.Done += State_Completed;
-                //    Task.Run(async () =>
-                //    {
-                //        await Task.Delay(5000);
-                //        await vm.UIContext.RunAsync(() =>
-                //        {
-                //            Debug.WriteLine("test");
 
-                //        });
-                //    });
-                //})
-                //.WhenChangingFrom(vm =>
-                //{
-                //    vm.Done -= State_Completed;
-                //});
+
+
+            //.WhenChangedTo(vm =>
+            //{
+            //    vm.Done += State_Completed;
+            //    Task.Run(async () =>
+            //    {
+            //        await Task.Delay(5000);
+            //        await vm.UIContext.RunAsync(() =>
+            //        {
+            //            Debug.WriteLine("test");
+
+            //        });
+            //    });
+            //})
+            //.WhenChangingFrom(vm =>
+            //{
+            //    vm.Done -= State_Completed;
+            //});
 
         }
 
