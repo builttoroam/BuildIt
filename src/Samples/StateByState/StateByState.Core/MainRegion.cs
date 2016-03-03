@@ -46,7 +46,7 @@ namespace StateByState
 
 
             StateManager.Group<MainRegionView>().WithHistory()
-                .StateWithStateData<MainRegionView, MainViewModel>(MainRegionView.Main)
+                .DefineStateWithData<MainRegionView, MainViewModel>(MainRegionView.Main)
                             
                             .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount)
                                 .ChangeState(MainRegionView.Second)
@@ -84,7 +84,7 @@ namespace StateByState
 //                        .AsStateWithStateData<MainRegionView, MainViewModel>()
 //                        .EndState()
 
-                                    .StateWithStateData<MainRegionView, SecondViewModel>(MainRegionView.Second)
+                                    .DefineStateWithData<MainRegionView, SecondViewModel>(MainRegionView.Second)
                                         .OnComplete(DefaultCompletion.Complete)
                                         .ChangeToPreviousState()
                                         .Initialise(async vm => await vm.InitSecond())
@@ -111,7 +111,7 @@ namespace StateByState
                                             //vm.SecondCompleted -= SecondCompleted;
                                         })
                                     //.EndState()
-                                    .StateWithStateData<MainRegionView, ThirdViewModel>(MainRegionView.Third)
+                                    .DefineStateWithData<MainRegionView, ThirdViewModel>(MainRegionView.Third)
                                         .WhenChangedTo(vm =>
                                         {
                                             vm.ThirdCompleted += ThirdCompleted;

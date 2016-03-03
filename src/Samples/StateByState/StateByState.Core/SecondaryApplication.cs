@@ -23,7 +23,7 @@ namespace StateByState
         {
 
             StateManager.Group<SecondaryRegionView>()
-                .StateWithStateData<SecondaryRegionView, SecondardyMainViewModel>(SecondaryRegionView.Main)
+                .DefineStateWithData<SecondaryRegionView, SecondardyMainViewModel>(SecondaryRegionView.Main)
                 .OnComplete(DefaultCompletion.Complete)
                 .CloseRegion(this);
 

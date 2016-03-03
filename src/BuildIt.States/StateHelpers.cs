@@ -49,7 +49,7 @@ where TState : struct
     }
 
 
-    public interface IStateDefinitionValueBuilder<TState,TElement, TPropertyValue> : IStateDefinitionBuilder<TState>
+    public interface IStateDefinitionValueBuilder<TState, TElement, TPropertyValue> : IStateDefinitionBuilder<TState>
     where TState : struct
     {
         StateValue<TElement, TPropertyValue> Value { get; }
@@ -59,31 +59,31 @@ where TState : struct
         where TState : struct
         where TCompletion : struct
     {
-        TCompletion Completion { get;  }
+        TCompletion Completion { get; }
     }
 
-    public interface IStateCompletionWithDataBuilder<TState, TCompletion,TData> : IStateCompletionBuilder<TState,TCompletion>
+    public interface IStateCompletionWithDataBuilder<TState, TCompletion, TData> : IStateCompletionBuilder<TState, TCompletion>
         where TState : struct
         where TCompletion : struct
     {
         Func<TData> Data { get; }
     }
 
-    public interface IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> : 
-         IStateDefinitionWithDataBuilder<TState, TStateData>, IStateCompletionBuilder<TState,TCompletion>
+    public interface IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> :
+         IStateDefinitionWithDataBuilder<TState, TStateData>, IStateCompletionBuilder<TState, TCompletion>
         where TState : struct
         where TCompletion : struct
-        where TStateData: INotifyPropertyChanged
+        where TStateData : INotifyPropertyChanged
     {
     }
 
-    public interface IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> : 
+    public interface IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> :
         IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>
         where TState : struct
         where TCompletion : struct
         where TStateData : INotifyPropertyChanged
     {
-        Func<TStateData,TData> Data { get; }
+        Func<TStateData, TData> Data { get; }
     }
 
     public static class StateHelpers
@@ -110,9 +110,9 @@ where TState : struct
 
         }
 
-        private class StateDefinitionWithDataBuilder<TState,TData> : StateGroupBuilder<TState>, 
-            IStateDefinitionWithDataBuilder<TState,TData>
-            where TData:INotifyPropertyChanged
+        private class StateDefinitionWithDataBuilder<TState, TData> : StateGroupBuilder<TState>,
+            IStateDefinitionWithDataBuilder<TState, TData>
+            where TData : INotifyPropertyChanged
            where TState : struct
         {
             public IStateDefinition<TState> State { get; set; }
@@ -134,12 +134,12 @@ where TState : struct
            StateDefinitionBuilder<TState>, IStateDefinitionValueTargetBuilder<TState, TElement>
           where TState : struct
         {
-            public TElement Target  { get; set; }
+            public TElement Target { get; set; }
 
         }
 
-        private class StateDefinitionValueBuilder<TState,TElement, TPropertyValue> : 
-            StateDefinitionBuilder<TState>, IStateDefinitionValueBuilder<TState,TElement, TPropertyValue>
+        private class StateDefinitionValueBuilder<TState, TElement, TPropertyValue> :
+            StateDefinitionBuilder<TState>, IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
            where TState : struct
         {
             public StateValue<TElement, TPropertyValue> Value { get; set; }
@@ -148,24 +148,24 @@ where TState : struct
 
         private class StateCompletionBuilder<TState, TCompletion> : StateDefinitionBuilder<TState>,
             IStateCompletionBuilder<TState, TCompletion>
-            where TState:struct
-            where TCompletion:struct
+            where TState : struct
+            where TCompletion : struct
         {
             public TCompletion Completion { get; set; }
         }
 
-        private class StateCompletionWithDataBuilder<TState, TCompletion,TData> : 
+        private class StateCompletionWithDataBuilder<TState, TCompletion, TData> :
             StateCompletionBuilder<TState, TCompletion>,
-    IStateCompletionWithDataBuilder<TState, TCompletion,TData>
+    IStateCompletionWithDataBuilder<TState, TCompletion, TData>
     where TState : struct
     where TCompletion : struct
         {
-            public Func<TData> Data{ get; set; }
+            public Func<TData> Data { get; set; }
         }
 
-        private class StateWithDataCompletionBuilder<TState, TStateData, TCompletion>:
+        private class StateWithDataCompletionBuilder<TState, TStateData, TCompletion> :
             StateCompletionBuilder<TState, TCompletion>,
-            IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> 
+            IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>
         where TState : struct
         where TCompletion : struct
         where TStateData : INotifyPropertyChanged
@@ -174,14 +174,14 @@ where TState : struct
                 => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TStateData>;
         }
 
-        private class StateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>:
+        private class StateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> :
             StateWithDataCompletionBuilder<TState, TStateData, TCompletion>,
-            IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> 
+            IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
             where TState : struct
             where TCompletion : struct
             where TStateData : INotifyPropertyChanged
         {
-            public Func<TStateData,TData> Data { get; set; }
+            public Func<TStateData, TData> Data { get; set; }
         }
 
         #endregion
@@ -191,6 +191,7 @@ where TState : struct
             (this IStateManager vsm) where TState : struct
 
         {
+            if (vsm == null) return null;
             var grp = new StateGroup<TState>();
             vsm?.AddStateGroup(grp);
             return new StateGroupBuilder<TState>
@@ -204,15 +205,17 @@ where TState : struct
             this IStateBuilder vsmGroup)
             where TState : struct
         {
+            if (vsmGroup == null) return null;
             return vsmGroup.StateManager.Group<TState>();
         }
 
 
-       
+
         public static IStateGroupBuilder<TState> WithHistory<TState>(
     this IStateGroupBuilder<TState> vsmGroup)
     where TState : struct
         {
+            if (vsmGroup == null) return null;
             vsmGroup.StateGroup.TrackHistory = true;
             return vsmGroup;
         }
@@ -247,18 +250,22 @@ where TState : struct
     this IStateGroupBuilder<TState> vsmGroup)
     where TState : struct
         {
+            if (vsmGroup == null) return null;
             vsmGroup.StateGroup.DefineAllStates();
             return vsmGroup;
         }
 
 
-        public static 
+        public static
             IStateDefinitionBuilder<TState> DefineState<TState>(
             this IStateGroupBuilder<TState> vsmGroup,
             TState state)
             where TState : struct
         {
-            var vs = new StateDefinition<TState> { State = state };
+            if (vsmGroup == null) return null;
+            //var vs = new StateDefinition<TState> { State = state };
+            var vs = vsmGroup.StateGroup.DefineState(state);
+            if (vs == null) return null;
             return new StateDefinitionBuilder<TState>
             {
                 StateManager = vsmGroup.StateManager,
@@ -287,6 +294,10 @@ where TState : struct
             this IStateDefinitionBuilder<TState> vsmGroup,
             IStateTrigger trigger) where TState : struct
         {
+            if (vsmGroup == null) return null;
+
+            if (trigger == null) return vsmGroup;
+
             // Add trigger to triggers collection
             vsmGroup.State.Triggers.Add(trigger);
 
@@ -315,11 +326,11 @@ where TState : struct
 
         //}
 
-        public class StateEventBinder
-        {
-            public Action<EventHandler> Subscribe { get; set; }
-            public Action<EventHandler> Unsubscribe { get; set; }
-        }
+        //public class StateEventBinder
+        //{
+        //    public Action<EventHandler> Subscribe { get; set; }
+        //    public Action<EventHandler> Unsubscribe { get; set; }
+        //}
 
 
 
@@ -331,35 +342,14 @@ where TState : struct
 
         //}
 
-
-        public static IStateCompletionBuilder<TState,DefaultCompletion>
-          OnDefaultComplete<TState>(
-          this IStateDefinitionBuilder<TState> smInfo)
-          where TState : struct
-        {
-            return new StateCompletionBuilder<TState, DefaultCompletion>
-            {
-                StateManager = smInfo.StateManager,
-                StateGroup = smInfo.StateGroup,
-                State = smInfo.State,
-                Completion = DefaultCompletion.Complete
-            };
-
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
-            //return smInfo.Extend(binder);
-        }
-
-
         public static IStateCompletionBuilder<TState, TCompletion>
-           OnComplete<TState, TCompletion>(
-           this IStateDefinitionBuilder<TState> smInfo,
-                TCompletion completion)
-           where TState : struct
-            where TCompletion : struct
+      OnComplete<TState, TCompletion>(
+      this IStateDefinitionBuilder<TState> smInfo,
+           TCompletion completion)
+      where TState : struct
+       where TCompletion : struct
         {
+            if (smInfo == null) return null;
             return new StateCompletionBuilder<TState, TCompletion>
             {
                 StateManager = smInfo.StateManager,
@@ -375,15 +365,38 @@ where TState : struct
             //return smInfo.Extend(binder);
         }
 
-        public static IStateWithDataCompletionBuilder<TState,TStateData, TCompletion>
-            OnComplete<TState, TStateData,TCompletion>(
-            this IStateDefinitionWithDataBuilder<TState,TStateData> smInfo,
+
+        public static IStateCompletionBuilder<TState, DefaultCompletion>
+          OnDefaultComplete<TState>(
+          this IStateDefinitionBuilder<TState> smInfo)
+          where TState : struct
+        {
+            if (smInfo == null) return null;
+            return new StateCompletionBuilder<TState, DefaultCompletion>
+            {
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Completion = DefaultCompletion.Complete
+            };
+
+            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            //var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
+            //return smInfo.Extend(binder);
+        }
+
+        public static IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>
+            OnComplete<TState, TStateData, TCompletion>(
+            this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
             TCompletion completion)
             where TState : struct
             where TCompletion : struct
-            where TStateData:INotifyPropertyChanged
+            where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
         {
-            return new StateWithDataCompletionBuilder<TState, TStateData,TCompletion>
+            if (smInfo == null) return null;
+            return new StateWithDataCompletionBuilder<TState, TStateData, TCompletion>
             {
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
@@ -392,43 +405,39 @@ where TState : struct
             };
         }
 
-        public static IStateCompletionWithDataBuilder<TState,DefaultCompletion,TData>
-           OnDefaultCompleteWithData<TState, TData>(
-           this IStateDefinitionBuilder<TState> smInfo,
-                Func<TData> completionData)
-           where TState : struct
+        public static
+           IStateWithDataCompletionBuilder<TState, TStateData, DefaultCompletion>
+          OnDefaultComplete<TState, TStateData>(
+          this
+           IStateDefinitionWithDataBuilder<TState, TStateData> smInfo)
+          where TState : struct
+          where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
         {
-            return new StateCompletionWithDataBuilder<TState, DefaultCompletion,TData>
+            if (smInfo == null) return null;
+
+            return new StateWithDataCompletionBuilder<TState, TStateData, DefaultCompletion>
             {
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                Completion = DefaultCompletion.Complete,
-                Data=completionData
+                Completion = DefaultCompletion.Complete
             };
 
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionWithDataBinder<DefaultCompletion, TData>
-            //{
-            //    Completion = DefaultCompletion.Complete,
-            //    CompletionData = completionData
-            //};
+            //var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
             //return smInfo.Extend(binder);
-
         }
 
         public static
-            IStateCompletionWithDataBuilder<TState, TCompletion, TData>
-           OnCompleteWithData<TState, TCompletion, TData>(
-           this
-            IStateDefinitionBuilder<TState> smInfo,
-                TCompletion completion,
-                Func<TData> completionData)
-           where TState : struct
-            where TCompletion : struct
+           IStateCompletionWithDataBuilder<TState, TCompletion, TData>
+          OnCompleteWithData<TState, TCompletion, TData>(
+          this
+           IStateDefinitionBuilder<TState> smInfo,
+               TCompletion completion,
+               Func<TData> completionData)
+          where TState : struct
+           where TCompletion : struct
         {
+            if (smInfo == null) return null;
             return new StateCompletionWithDataBuilder<TState, TCompletion, TData>
             {
                 StateManager = smInfo.StateManager,
@@ -449,8 +458,138 @@ where TState : struct
 
         }
 
+        public static IStateCompletionWithDataBuilder<TState, DefaultCompletion, TData>
+          OnDefaultCompleteWithData<TState, TData>(
+          this IStateDefinitionBuilder<TState> smInfo,
+               Func<TData> completionData)
+          where TState : struct
+        {
+            if (smInfo == null) return null;
+            return new StateCompletionWithDataBuilder<TState, DefaultCompletion, TData>
+            {
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Completion = DefaultCompletion.Complete,
+                Data = completionData
+            };
+
+            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            //var binder = new StateCompletionWithDataBinder<DefaultCompletion, TData>
+            //{
+            //    Completion = DefaultCompletion.Complete,
+            //    CompletionData = completionData
+            //};
+            //return smInfo.Extend(binder);
+
+        }
+
+
+        public static IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
+                 OnCompleteWithData<TState, TStateData, TCompletion, TData>(
+                 this
+                  IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
+                      TCompletion completion,
+                      Func<TStateData, TData> completionData)
+                 where TState : struct
+                 where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
+                  where TCompletion : struct
+        {
+            return new StateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
+            {
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Completion = completion,
+                Data = completionData
+            };
+
+            //var binder = new ViewModelStateCompletionWithDataBinder<TStateData, TCompletion, TData> { Completion = completion, CompletionData = completionData };
+            //return smInfo.Extend(binder);
+
+        }
+
+
+        public static IStateWithDataCompletionWithDataBuilder<TState,TStateData, DefaultCompletion, TData>
+          OnDefaultCompleteWithData<TState, TStateData, TData>(
+          this IStateDefinitionWithDataBuilder<TState,TStateData> smInfo,
+               Func<TStateData,TData> completionData)
+          where TState : struct
+            where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
+        {
+            if (smInfo == null) return null;
+            return new StateWithDataCompletionWithDataBuilder<TState, TStateData, DefaultCompletion, TData>
+            {
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Completion = DefaultCompletion.Complete,
+                Data = completionData
+            };
+
+            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+            //var binder = new StateCompletionWithDataBinder<DefaultCompletion, TData>
+            //{
+            //    Completion = DefaultCompletion.Complete,
+            //    CompletionData = completionData
+            //};
+            //return smInfo.Extend(binder);
+
+        }
+
+
+
+
+        //public static Tuple<IStateManager,
+        //    IStateGroup<TState>,
+        //    IStateDefinitionWithData<TState, TStateData>,
+        //    StateCompletionBinder<TCompletion>>
+        //   OnComplete<TState, TStateData, TCompletion>(
+        //   this Tuple<IStateManager,
+        //       IStateGroup<TState>,
+        //       IStateDefinitionWithData<TState, TStateData>> smInfo,
+        //        TCompletion completion)
+        //   where TState : struct
+        //   where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
+        //    where TCompletion : struct
+        //{
+        //    if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+        //    var binder = new StateCompletionBinder<TCompletion> { Completion = completion };
+        //    return smInfo.Extend(binder);
+        //}
+
+        //public static Tuple<IStateManager,
+        //    IStateGroup<TState>,
+        //    IStateDefinitionWithData<TState, TStateData>,
+        //    ViewModelStateCompletionWithDataBinder<TStateData, DefaultCompletion, TData>>
+        //   OnDefaultCompleteWithData<TState, TStateData, TData>(
+        //   this Tuple<IStateManager,
+        //       IStateGroup<TState>,
+        //       IStateDefinitionWithData<TState, TStateData>> smInfo,
+        //        Func<TStateData, TData> completionData)
+        //   where TState : struct
+        //   where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
+        //{
+        //    if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
+
+
+        //    var binder = new ViewModelStateCompletionWithDataBinder<TStateData, DefaultCompletion, TData> { Completion = DefaultCompletion.Complete, CompletionData = completionData };
+        //    return smInfo.Extend(binder);
+
+        //}
+
+
+
+
+
         public static
-            IStateDefinitionValueTargetBuilder<TState,TElement> Target<TState, TElement>(
+            IStateDefinitionValueTargetBuilder<TState, TElement> Target<TState, TElement>(
             this IStateDefinitionBuilder<TState> vsmGroup, TElement element) where TState : struct
         {
             return new StateDefinitionValueTargetBuilder<TState, TElement>
@@ -478,7 +617,7 @@ where TState : struct
 
 
         public static
-            IStateDefinitionValueBuilder<TState, TElement,TPropertyValue>
+            IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             Change<TState, TElement, TPropertyValue>(
             this IStateDefinitionValueTargetBuilder<TState, TElement> vsmGroup,
             Expression<Func<TElement, TPropertyValue>> getter,
@@ -491,12 +630,12 @@ where TState : struct
                 Getter = getter.Compile(),
                 Setter = setter
             };
-            return new StateDefinitionValueBuilder<TState, TElement,TPropertyValue>
+            return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             {
                 StateManager = vsmGroup.StateManager,
                 StateGroup = vsmGroup.StateGroup,
                 State = vsmGroup.State,
-                Value=vsv
+                Value = vsv
             };
             //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>, StateValue<TElement, TPropertyValue>>(
             //    vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, vsv);
@@ -516,26 +655,26 @@ where TState : struct
             return vsmGroup;
         }
 
-        public static StateValue<TElement, TPropertyValue> ChangeProperty<TElement, TPropertyValue>(
-            this TElement element, Expression<Func<TElement, TPropertyValue>> getter, Action<TElement, TPropertyValue> setter)
+        //public static StateValue<TElement, TPropertyValue> ChangeProperty<TElement, TPropertyValue>(
+        //    this TElement element, Expression<Func<TElement, TPropertyValue>> getter, Action<TElement, TPropertyValue> setter)
 
-        {
-            return new StateValue<TElement, TPropertyValue>
-            {
-                Key = new Tuple<object, string>(element, (getter.Body as MemberExpression)?.Member.Name),
-                Element = element,
-                Getter = getter.Compile(),
-                Setter = setter
-            };
-        }
+        //{
+        //    return new StateValue<TElement, TPropertyValue>
+        //    {
+        //        Key = new Tuple<object, string>(element, (getter.Body as MemberExpression)?.Member.Name),
+        //        Element = element,
+        //        Getter = getter.Compile(),
+        //        Setter = setter
+        //    };
+        //}
 
-        public static StateValue<TElement, TPropertyValue> ToValue<TElement, TPropertyValue>(
-            this StateValue<TElement, TPropertyValue> state, TPropertyValue newValue)
+        //public static StateValue<TElement, TPropertyValue> ToValue<TElement, TPropertyValue>(
+        //    this StateValue<TElement, TPropertyValue> state, TPropertyValue newValue)
 
-        {
-            state.Value = newValue;
-            return state;
-        }
+        //{
+        //    state.Value = newValue;
+        //    return state;
+        //}
 
         public static
             IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
@@ -548,7 +687,7 @@ where TState : struct
         }
 
         public static IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
-            this IStateDefinitionBuilder<TState>  smInfo,
+            this IStateDefinitionBuilder<TState> smInfo,
             Func<CancelEventArgs, Task> action) where TState : struct
         {
             if (smInfo?.State == null) return null;
@@ -620,8 +759,8 @@ where TState : struct
 
         #region Create State
         public static
-            IStateDefinitionWithDataBuilder<TState,TStateData>
-           StateWithStateData<TState, TStateData>(
+            IStateDefinitionWithDataBuilder<TState, TStateData>
+           DefineStateWithData<TState, TStateData>(
                 this IStateGroupBuilder<TState> smInfo,
                 TState state)
             where TState : struct
@@ -676,7 +815,7 @@ where TState : struct
 
         public static
 
-            IStateDefinitionWithDataBuilder<TState,TStateData>
+            IStateDefinitionWithDataBuilder<TState, TStateData>
             Initialise<TState, TStateData>(
                 this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
                 Action<TStateData> action)
@@ -712,7 +851,7 @@ where TState : struct
             return smInfo;
         }
 
-        public static IStateDefinitionWithDataBuilder<TState, TStateData>  WhenAboutToChange<TState, TStateData>(
+        public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> stateDefinition,
             Action<TStateData, CancelEventArgs> action) where TState : struct
             where TStateData : INotifyPropertyChanged
@@ -773,7 +912,7 @@ where TState : struct
         }
 
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedTo<TState, TStateData>(
-            this IStateDefinitionWithDataBuilder<TState, TStateData>  smInfo,
+            this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
             Action<TStateData> action) where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -840,8 +979,8 @@ where TState : struct
             return smInfo;
         }
 
-        public static IStateDefinitionWithDataEventBuilder<TState,TStateData>
-            
+        public static IStateDefinitionWithDataEventBuilder<TState, TStateData>
+
             OnEvent<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
             Action<TStateData, EventHandler> subscribe,
@@ -872,95 +1011,9 @@ where TState : struct
         }
 
 
-        public static 
-            IStateCompletionWithDataBuilder<TState,DefaultCompletion,TStateData>
-           OnDefaultComplete<TState, TStateData>(
-           this 
-            IStateDefinitionWithDataBuilder<TState,TStateData> smInfo)
-           where TState : struct
-           where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
-        {
-            if (smInfo?.State == null) return null;
-
-            return new StateCompletionWithDataBuilder<TState, DefaultCompletion, TStateData>
-            {
-                StateManager = smInfo.StateManager,
-                StateGroup = smInfo.StateGroup,
-                State = smInfo.State,
-                Completion = DefaultCompletion.Complete
-            };
-
-            //var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
-            //return smInfo.Extend(binder);
-        }
-
-
-        //public static Tuple<IStateManager,
-        //    IStateGroup<TState>,
-        //    IStateDefinitionWithData<TState, TStateData>,
-        //    StateCompletionBinder<TCompletion>>
-        //   OnComplete<TState, TStateData, TCompletion>(
-        //   this Tuple<IStateManager,
-        //       IStateGroup<TState>,
-        //       IStateDefinitionWithData<TState, TStateData>> smInfo,
-        //        TCompletion completion)
-        //   where TState : struct
-        //   where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
-        //    where TCompletion : struct
-        //{
-        //    if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-        //    var binder = new StateCompletionBinder<TCompletion> { Completion = completion };
-        //    return smInfo.Extend(binder);
-        //}
-
-        //public static Tuple<IStateManager,
-        //    IStateGroup<TState>,
-        //    IStateDefinitionWithData<TState, TStateData>,
-        //    ViewModelStateCompletionWithDataBinder<TStateData, DefaultCompletion, TData>>
-        //   OnDefaultCompleteWithData<TState, TStateData, TData>(
-        //   this Tuple<IStateManager,
-        //       IStateGroup<TState>,
-        //       IStateDefinitionWithData<TState, TStateData>> smInfo,
-        //        Func<TStateData, TData> completionData)
-        //   where TState : struct
-        //   where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
-        //{
-        //    if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-        //    var binder = new ViewModelStateCompletionWithDataBinder<TStateData, DefaultCompletion, TData> { Completion = DefaultCompletion.Complete, CompletionData = completionData };
-        //    return smInfo.Extend(binder);
-
-        //}
-
-        public static IStateWithDataCompletionWithDataBuilder<TState, TStateData,TCompletion, TData>
-           OnCompleteWithData<TState, TStateData, TCompletion, TData>(
-           this
-            IStateDefinitionWithDataBuilder<TState,TStateData> smInfo,
-                TCompletion completion,
-                Func<TStateData, TData> completionData)
-           where TState : struct
-           where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
-            where TCompletion : struct
-        {
-            return new StateWithDataCompletionWithDataBuilder<TState, TStateData,TCompletion, TData>
-            {
-                StateManager = smInfo.StateManager,
-                StateGroup = smInfo.StateGroup,
-                State = smInfo.State,
-                Completion = completion,
-                Data = completionData
-            };
-
-            //var binder = new ViewModelStateCompletionWithDataBinder<TStateData, TCompletion, TData> { Completion = completion, CompletionData = completionData };
-            //return smInfo.Extend(binder);
-
-        }
 
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeState<TState, TStateData>(
-            this IStateDefinitionWithDataEventBuilder<TState,TStateData> smInfo,
+            this IStateDefinitionWithDataEventBuilder<TState, TStateData> smInfo,
             TState stateToChangeTo) where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -995,7 +1048,7 @@ where TState : struct
 
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             ChangeToPreviousState<TState, TStateData>(
-            this IStateDefinitionWithDataEventBuilder<TState, TStateData> smInfo) 
+            this IStateDefinitionWithDataEventBuilder<TState, TStateData> smInfo)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -1025,10 +1078,10 @@ where TState : struct
             //            return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinitionWithData<TState, TStateData>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
         }
 
-        public static 
-            IStateDefinitionWithDataBuilder<TState,TStateData> 
+        public static
+            IStateDefinitionWithDataBuilder<TState, TStateData>
             ChangeState<TState, TStateData, TCompletion>(
-            this IStateWithDataCompletionBuilder<TState, TStateData,TCompletion> smInfo,
+            this IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> smInfo,
             TState stateToChangeTo)
             where TState : struct
             where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
@@ -1065,10 +1118,10 @@ where TState : struct
         }
 
 
-        public static 
-            IStateDefinitionWithDataBuilder<TState,TStateData>
+        public static
+            IStateDefinitionWithDataBuilder<TState, TStateData>
             ChangeState<TState, TStateData, TCompletion, TData>(
-            this  IStateWithDataCompletionWithDataBuilder<TState,TStateData,TCompletion,TData> smInfo,
+            this IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> smInfo,
             TState stateToChangeTo)
             where TState : struct
             where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
@@ -1120,7 +1173,7 @@ where TState : struct
             IStateDefinitionWithDataBuilder<TState, TStateData>
             ChangeToPreviousState<TState, TStateData, TCompletion>(
             this
-            IStateWithDataCompletionBuilder<TState,TStateData,TCompletion> smInfo
+            IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> smInfo
             )
             where TState : struct
             where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
@@ -1156,7 +1209,7 @@ where TState : struct
             //            return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinitionWithData<TState, TStateData>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
         }
 
-        
+
 
         //public class ViewModelStateEventBinder<TStateData> where TStateData : INotifyPropertyChanged
         //{

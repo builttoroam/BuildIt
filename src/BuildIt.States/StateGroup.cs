@@ -94,6 +94,13 @@ namespace BuildIt.States
 
         private async void UpdateStatesByTriggers()
         {
+            var current = States.SafeValue(CurrentState);
+            if (current != null)
+            {
+                // Don't change state if current state triggers are still active
+                if (StateTriggersActive(current)) return;
+            }
+
             var firstActiveState = States.FirstOrDefault(x => StateTriggersActive(x.Value));
             // If there's no active state, then just return
             if (firstActiveState.Key.Equals(default(TState))) return;
@@ -170,6 +177,12 @@ namespace BuildIt.States
 
         public virtual IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition)
         {
+            if (stateDefinition == null)
+            {
+                $"Can't define null state definition".Log();
+                return null;
+            }
+
             $"Defining state of type {stateDefinition.GetType().Name}".Log();
             States[stateDefinition.State] = stateDefinition;
             return stateDefinition;
@@ -177,6 +190,12 @@ namespace BuildIt.States
 
         public virtual IStateDefinition<TState> DefineState(TState state)
         {
+            // Don't ever add the default value (eg Base) state
+            if (default(TState).Equals(state))
+            {
+                $"Attempted to add the default state definition".Log();
+                return null;
+            }
             var stateDefinition = new StateDefinition<TState> { State = state };
             return DefineState(stateDefinition);
         }
@@ -185,6 +204,14 @@ namespace BuildIt.States
         public virtual IStateDefinitionWithData<TState, TStateData> DefineStateWithData<TStateData>(TState state) 
             where TStateData : INotifyPropertyChanged
         {
+            // Don't ever add the default value (eg Base) state
+            if (default(TState).Equals(state))
+            {
+                $"Attempted to add the default state definition".Log();
+                return null;
+            }
+
+
             $"Defining state for {typeof(TState).Name} with data type {typeof(TStateData)}".Log();
             var stateDefinition = new StateDefinition<TState>
             {
