@@ -183,6 +183,13 @@ namespace BuildIt.States
                 return null;
             }
 
+            var existing = States.SafeValue(stateDefinition.State);
+            if (existing != null)
+            {
+                $"State definition already defined, returning existing instance - {existing.GetType().Name}".Log();
+                return existing;
+            }
+
             $"Defining state of type {stateDefinition.GetType().Name}".Log();
             States[stateDefinition.State] = stateDefinition;
             return stateDefinition;
@@ -467,7 +474,7 @@ namespace BuildIt.States
 
             "Retrieving current state definition".Log();
             // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
-            var currentVMStates = !oldState.Equals(default(TState)) ? States[oldState] as IStateDefinitionDataWrapper : null;
+            var currentVMStates = !oldState.Equals(default(TState)) ? States[oldState].UntypedStateDataWrapper : null;
             if (currentVMStates != null)
             {
                 "Invoking AboutToChangeFrom for existing state definition".Log();
@@ -512,7 +519,7 @@ namespace BuildIt.States
                 }
             }
 
-
+            CurrentStateData = null;
             INotifyPropertyChanged vm = null;
             currentVMStates = null; // Make sure we don't accidentally refernce the wrapper for the old state
             if (!newState.Equals(default(TState)))

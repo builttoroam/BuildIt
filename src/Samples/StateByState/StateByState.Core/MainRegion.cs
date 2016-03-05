@@ -16,7 +16,8 @@ namespace StateByState
         Base,
         Main,
         Second,
-        Third
+        Third,
+        Fourth
     }
 
     public enum MainRegionTransition
@@ -55,6 +56,10 @@ namespace StateByState
                                 .ChangeState(MainRegionView.Third)
                             .OnComplete(MainCompletion.NewRegion)
                                 .LaunchRegion(this, TypeRef.Get<SecondaryApplication>())
+                            .OnCompleteWithDataEvent<MainRegionView,MainViewModel,MainCompletion,int>(MainCompletion.Page4)
+                                .ChangeState(MainRegionView.Fourth)
+                                    .InitializeNewState < MainRegionView,MainViewModel,FourthViewModel,int>(
+                                        (vm,d)=>vm.InitValue=$"Started with {d}")
                             .Initialise(async vm =>
                             {
                                 "VM State: Init".Log();

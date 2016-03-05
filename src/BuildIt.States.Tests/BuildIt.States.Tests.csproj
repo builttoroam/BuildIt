@@ -123,6 +123,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="BuildIt.States.Tests_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\UnitTestLogo.scale-100.png">
@@ -143,10 +144,28 @@
       <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
       <Name>BuildIt.General</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj">
+      <Project>{88AE5F64-0F5E-4AD5-B673-1748F25C5458}</Project>
+      <Name>BuildIt.Lifecycle.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuildIt.States\BuildIt.States.csproj">
       <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
       <Name>BuildIt.States</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Extras.CommonServiceLocator, Version=3.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.CommonServiceLocator.3.2.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.Extras.CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

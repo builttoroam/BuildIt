@@ -6,4 +6,10 @@ namespace BuildIt.States.Completion
     {
         event EventHandler<CompletionEventArgs<TCompletion>> Complete;
     }
+
+    public interface ICompletionWithData<TCompletion,TData> 
+        where TCompletion : struct
+    {
+        event EventHandler<CompletionWithDataEventArgs<TCompletion,TData>> CompleteWithData;
+    }
 }

@@ -9,6 +9,10 @@
     <Import_RootNamespace>StateByState.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\FourthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -44,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Services\Special.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\FourthPage.xaml.cs">
+      <DependentUpon>FourthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

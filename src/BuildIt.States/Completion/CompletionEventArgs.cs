@@ -6,4 +6,5 @@ namespace BuildIt.States.Completion
     {
         public TCompletion Completion { get; set; }
     }
+
 }

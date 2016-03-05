@@ -8,6 +8,7 @@ using BuildIt;
 using BuildIt.Lifecycle;
 using StateByState.Services;
 using StateByState.Shared;
+using StateByState.Shared.Views;
 
 namespace StateByState
 {
@@ -46,6 +47,7 @@ namespace StateByState
             LifecycleHelper.RegisterView<MainPage>().ForState(MainRegionView.Main);
             LifecycleHelper.RegisterView<SecondPage>().ForState(MainRegionView.Second);
             LifecycleHelper.RegisterView<ThirdPage>().ForState(MainRegionView.Third);
+            LifecycleHelper.RegisterView<FourthPage>().ForState(MainRegionView.Fourth);
 
             // Register the sub-pages of the third page
             LifecycleHelper.RegisterView<ThrirdOnePage>().ForState(ThirdStates.One);

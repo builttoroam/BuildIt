@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using BuildIt;
 using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States.Completion;
 using StateByState.Services;
 
 namespace StateByState
@@ -12,10 +13,12 @@ namespace StateByState
         Base,
         Page2,
         Page3,
+        Page4,
         NewRegion
     }
 
-    public class MainViewModel : BaseViewModelWithCompletion<MainCompletion>
+    public class MainViewModel : BaseViewModelWithCompletion<MainCompletion>, 
+        ICompletionWithData<MainCompletion, int>
     {
         public event EventHandler Completed;
         public event EventHandler UnableToComplete;
@@ -29,7 +32,7 @@ namespace StateByState
 
         public string Data { get; set; }
 
-        public int TickCount { get; } = (int) DateTime.Now.Ticks;
+        public int TickCount => (int) DateTime.Now.Ticks;
 
 #pragma warning disable 1998 // So we can do async actions
         public async Task Init()
@@ -65,5 +68,11 @@ namespace StateByState
 
         }
 
+        public void Fourth()
+        {
+            CompleteWithData?.Invoke(this,new CompletionWithDataEventArgs<MainCompletion, int> {Completion = MainCompletion.Page4,Data=TickCount});
+        }
+
+        public event EventHandler<CompletionWithDataEventArgs<MainCompletion, int>> CompleteWithData;
     }
 }

@@ -28,6 +28,7 @@ namespace StateByState
         //FourToOne
     }
 
+
     public class ThirdViewModel : BaseStateManagerViewModel
     {
         public event EventHandler ThirdCompleted;

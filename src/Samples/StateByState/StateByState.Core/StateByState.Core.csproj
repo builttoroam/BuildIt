@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FourthViewModel.cs" />
     <Compile Include="MainRegion.cs" />
     <Compile Include="SampleApplication.cs" />
     <Compile Include="Services\ISpecial.cs" />
