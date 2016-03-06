@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BuildIt.Lifecycle.Autofac")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Support for Autofac (formerly in BuildIt.Lifecycle)")]
 [assembly: AssemblyProduct("BuildIt.Lifecycle.Autofac")]
 [assembly: AssemblyConfiguration("")]
 

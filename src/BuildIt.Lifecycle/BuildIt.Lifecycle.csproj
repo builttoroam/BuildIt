@@ -61,12 +61,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="BuildIt.General, Version=0.1.3.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BuildIt.General.0.1.3.6\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\BuildIt.General.dll</HintPath>
+    <Reference Include="BuildIt.General, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BuildIt.General.0.1.4.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\BuildIt.General.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BuildIt.States, Version=0.1.3.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BuildIt.States.0.1.3.6\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\BuildIt.States.dll</HintPath>
+    <Reference Include="BuildIt.States, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BuildIt.States.0.1.4.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\BuildIt.States.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -92,8 +92,8 @@
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
 )
 if $(ConfigurationName) == Debug (
- xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Lifecycle.0.1.3.6\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
- xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Lifecycle\0.1.3.6\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Lifecycle.0.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Lifecycle\0.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
 )
 </PostBuildEvent>
   </PropertyGroup>
