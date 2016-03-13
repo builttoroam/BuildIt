@@ -1,9 +1,9 @@
 using Windows.UI.Xaml.Controls;
 using BuildIt.SQLiteWrapper.Database.Interfaces;
-using Cirrious.CrossCore;
-using Cirrious.CrossCore.Platform;
-using Cirrious.MvvmCross.ViewModels;
-using Cirrious.MvvmCross.WindowsCommon.Platform;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
+using MvvmCross.WindowsUWP.Platform;
 using SQLiteWrapper.CRUD.Core.Services;
 using SQLiteWrapper.CRUD.Core.Services.Interfaces;
 using SQLiteWrapper.CRUD.UWP.Services;
