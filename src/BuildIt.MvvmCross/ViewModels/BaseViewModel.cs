@@ -4,8 +4,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.MvvmCross.Interfaces;
-using Cirrious.MvvmCross.ViewModels;
-using BuildIt.MvvmCross;
+using MvvmCross.Core.ViewModels;
 
 namespace BuildIt.MvvmCross.ViewModels
 {

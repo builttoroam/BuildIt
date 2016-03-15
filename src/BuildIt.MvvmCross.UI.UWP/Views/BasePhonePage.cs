@@ -1,21 +1,23 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-#if NETFX_CORE
-using Windows.UI.Xaml.Media.Animation;
+using Windows.Phone.UI.Input;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using BuildIt.MvvmCross.Interfaces;
+using BuildIt.MvvmCross.ViewModels;
+using MvvmCross.WindowsUWP.Views;
+#if NETFX_CORE
 #if !WIN8
-using Cirrious.MvvmCross.WindowsCommon.Views;
 #else
 using Cirrious.MvvmCross.WindowsStore.Views;
 
 #endif
 #if WINDOWS_PHONE_APP || WINDOWS_UWP
-using Windows.Phone.UI.Input;
 #endif
 #else
 using System.Windows;
@@ -24,14 +26,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using Cirrious.MvvmCross.WindowsPhone.Views;
 #endif
-using Cirrious.MvvmCross.ViewModels;
-using System.Collections.Generic;
-using Windows.UI.Core;
-using BuildIt;
-using BuildIt.MvvmCross.Interfaces;
-using BuildIt.MvvmCross.ViewModels;
 
-namespace BuiltToRoam.MvvmCross.UI.Views
+namespace BuildIt.MvvmCross.UI.UWP.Views
 {
     public class BaseStateEnabledPage :
 #if NETFX_CORE && !WIN8

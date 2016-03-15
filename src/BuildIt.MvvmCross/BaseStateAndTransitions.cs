@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BuildIt.MvvmCross.Interfaces;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 
 namespace BuildIt.MvvmCross
 {

@@ -4,8 +4,8 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="using:SQLiteWrapper.CRUD.Core.Models.Views"
-                      xmlns:views="using:Cirrious.MvvmCross.WindowsCommon.Views"
                       xmlns:converters="using:SQLiteWrapper.CRUD.UWP.Converters"
+                      xmlns:views="using:MvvmCross.WindowsUWP.Views"
                       mc:Ignorable="d">
     <views:MvxWindowsPage.Resources>
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />

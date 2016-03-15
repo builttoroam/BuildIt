@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 using SQLiteWrapper.CRUD.Core.Common;
 using SQLiteWrapper.CRUD.Core.Models.Database;
 using SQLiteWrapper.CRUD.Core.Models.Views;
