@@ -1,4 +1,4 @@
-﻿namespace BuildIt.SQLiteWrapper.Repository.Interfaces
+﻿namespace BuildIt.Data.Sqlite.Repository.Interfaces
 {
     public interface IBaseEntity
     {

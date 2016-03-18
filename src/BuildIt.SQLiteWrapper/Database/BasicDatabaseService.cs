@@ -2,15 +2,15 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.SQLiteWrapper.Common;
-using BuildIt.SQLiteWrapper.Database.Interfaces;
-using BuildIt.SQLiteWrapper.File;
+using BuildIt.Data.Sqlite.Common;
+using BuildIt.Data.Sqlite.Database.Interfaces;
+using BuildIt.Data.Sqlite.File;
 using SQLite.Net;
 using SQLite.Net.Interop;
 
 // ReSharper disable InconsistentNaming
 
-namespace BuildIt.SQLiteWrapper.Database
+namespace BuildIt.Data.Sqlite.Database
 {
     public abstract class BasicDatabaseService : BaseDatabaseService, IBasicDatabaseService
     {
@@ -53,7 +53,7 @@ namespace BuildIt.SQLiteWrapper.Database
 
             try
             {
-                return CreateSQLiteConnection(await fileService.RetrieveNativePath(databaseNameProvider.DatabseName), creationCollisionOption);
+                return CreateSQLiteConnection(await fileService.RetrieveNativePath(databaseNameProvider.DatabaseName), creationCollisionOption);
             }
             catch (Exception e)
             {

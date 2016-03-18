@@ -1,6 +1,9 @@
-﻿namespace BuildIt.SQLiteWrapper.Database.Models.Results
+﻿using System.Diagnostics.Contracts;
+using BuildIt.Data.Sqlite.Database.Interfaces;
+
+namespace BuildIt.Data.Sqlite.Database.Models.Results
 {
-    public class BaseResult
+    public class BaseResult:IDataResult
     {
         public bool Success { get; set; }
     }

@@ -1,7 +1,7 @@
-﻿namespace BuildIt.SQLiteWrapper.Database.Interfaces
+﻿namespace BuildIt.Data.Sqlite.Database.Interfaces
 {
     public interface IDatabaseNameProvider
     {
-        string DatabseName { get; set; }        
+        string DatabaseName { get; set; }        
     }
 }

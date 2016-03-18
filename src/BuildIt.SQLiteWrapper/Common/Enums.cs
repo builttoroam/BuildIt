@@ -1,4 +1,4 @@
-﻿namespace BuildIt.SQLiteWrapper.Common
+﻿namespace BuildIt.Data.Sqlite.Common
 {
     public enum CreationCollisionOption
     {

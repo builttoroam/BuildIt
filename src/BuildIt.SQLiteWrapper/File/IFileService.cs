@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BuildIt.SQLiteWrapper.File
+namespace BuildIt.Data.Sqlite.File
 {
     public interface IFileService
     {

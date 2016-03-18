@@ -1,5 +1,5 @@
 ﻿
-using BuildIt.SQLiteWrapper.Database.Interfaces;
+using BuildIt.Data.Sqlite.Database.Interfaces;
 
 namespace SQLiteWrapper.CRUD.Core.Services.Interfaces
 {

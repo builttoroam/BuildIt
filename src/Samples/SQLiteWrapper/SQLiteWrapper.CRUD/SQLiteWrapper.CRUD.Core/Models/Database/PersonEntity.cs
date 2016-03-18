@@ -1,6 +1,4 @@
-﻿
-
-using BuildIt.SQLiteWrapper.Repository;
+﻿using BuildIt.Data.Sqlite.Repository;
 using SQLiteNetExtensions.Attributes;
 
 namespace SQLiteWrapper.CRUD.Core.Models.Database

@@ -1,4 +1,4 @@
-﻿using BuildIt.SQLiteWrapper.Database.Interfaces;
+﻿using BuildIt.Data.Sqlite.Database.Interfaces;
 using SQLite.Net.Interop;
 
 namespace SQLiteWrapper.CRUD.UWP.Services

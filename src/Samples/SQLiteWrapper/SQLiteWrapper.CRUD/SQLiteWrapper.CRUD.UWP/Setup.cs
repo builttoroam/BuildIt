@@ -1,5 +1,5 @@
 using Windows.UI.Xaml.Controls;
-using BuildIt.SQLiteWrapper.Database.Interfaces;
+using BuildIt.Data.Sqlite.Database.Interfaces;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;

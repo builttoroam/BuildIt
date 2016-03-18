@@ -1,4 +1,4 @@
-﻿namespace BuildIt.SQLiteWrapper.Database.Interfaces
+﻿namespace BuildIt.Data.Sqlite.Database.Interfaces
 {
     public interface IBasicDatabaseService : IBaseDatabaseService
     {

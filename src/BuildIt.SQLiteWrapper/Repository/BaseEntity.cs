@@ -1,10 +1,10 @@
 ﻿using System;
-using BuildIt.SQLiteWrapper.Repository.Interfaces;
+using BuildIt.Data.Sqlite.Repository.Interfaces;
 using SQLite.Net.Attributes;
 
-namespace BuildIt.SQLiteWrapper.Repository
+namespace BuildIt.Data.Sqlite.Repository
 {
-    public abstract class BaseEntity<TEntity> : IBaseEntity where TEntity : IBaseEntity
+    public abstract class BaseEntity : IBaseEntity 
     {
         [PrimaryKey]
         public string Id { get; set; }
@@ -13,6 +13,11 @@ namespace BuildIt.SQLiteWrapper.Repository
         {
             Id = Guid.NewGuid().ToString();
         }
+    }
+
+
+    public abstract class BaseEntity<TEntity> : BaseEntity where TEntity : IBaseEntity
+    {
 
         /// <summary>
         /// Override and write update logic for entity in it

@@ -1,6 +1,6 @@
 ﻿using SQLite.Net.Interop;
 
-namespace BuildIt.SQLiteWrapper.Database.Interfaces
+namespace BuildIt.Data.Sqlite.Database.Interfaces
 {
     public interface ISqlitePlatformProvider
     {

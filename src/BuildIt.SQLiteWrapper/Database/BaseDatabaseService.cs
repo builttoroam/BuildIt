@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildIt.SQLiteWrapper.Database.Interfaces;
-using BuildIt.SQLiteWrapper.Database.Models.Results;
-using BuildIt.SQLiteWrapper.Repository;
+using BuildIt.Data.Sqlite.Database.Interfaces;
+using BuildIt.Data.Sqlite.Database.Models.Results;
+using BuildIt.Data.Sqlite.Repository;
+using BuildIt.Data.Sqlite.Repository.Interfaces;
 using SQLite.Net;
 
-namespace BuildIt.SQLiteWrapper.Database
+namespace BuildIt.Data.Sqlite.Database
 {
     public abstract class BaseDatabaseService : IBaseDatabaseService
     {
@@ -16,7 +17,7 @@ namespace BuildIt.SQLiteWrapper.Database
         protected abstract Task<SQLiteConnection> CreateSQLiteConnection();
         protected abstract void CreateDatabaseTables(SQLiteConnection dbConnection);
 
-        public async Task<List<TEntity>> Get<TEntity>() where TEntity : BaseEntity<TEntity>
+        public async Task<List<TEntity>> Get<TEntity>() where TEntity : class, IBaseEntity
         {
             try
             {
@@ -37,7 +38,7 @@ namespace BuildIt.SQLiteWrapper.Database
             return new List<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetWithChildren<TEntity>() where TEntity : BaseEntity<TEntity>
+        public async Task<List<TEntity>> GetWithChildren<TEntity>() where TEntity : class, IBaseEntity
         {
             try
             {
@@ -58,7 +59,7 @@ namespace BuildIt.SQLiteWrapper.Database
             return new List<TEntity>();
         }
 
-        public async Task<TEntity> Get<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
+        public async Task<TEntity> Get<TEntity>(string entityId) where TEntity : class, IBaseEntity
         {
             if (string.IsNullOrEmpty(entityId)) return null;
 
@@ -81,7 +82,7 @@ namespace BuildIt.SQLiteWrapper.Database
             return null;
         }
 
-        public async Task<TEntity> GetWithChildren<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
+        public async Task<TEntity> GetWithChildren<TEntity>(string entityId) where TEntity : class, IBaseEntity
         {
             if (string.IsNullOrEmpty(entityId)) return null;
 
@@ -103,7 +104,7 @@ namespace BuildIt.SQLiteWrapper.Database
             return null;
         }
 
-        public async Task<BaseSaveEntityResult> InsertOrUpdate<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>
+        public async Task<ISaveDataResult> InsertOrUpdate<TEntity>(TEntity entity) where TEntity : class, IBaseEntity
         {
             var res = new BaseSaveEntityResult();
 
@@ -133,7 +134,7 @@ namespace BuildIt.SQLiteWrapper.Database
             return res;
         }
 
-        public async Task<BaseSaveEntityResult> InsertOrUpdateWithChildren<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>
+        public async Task<ISaveDataResult> InsertOrUpdateWithChildren<TEntity>(TEntity entity) where TEntity : class, IBaseEntity
         {
             var res = new BaseSaveEntityResult();
 
@@ -169,7 +170,7 @@ namespace BuildIt.SQLiteWrapper.Database
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateWithChildren<TEntity>(TEntity entity) where TEntity : BaseEntity<TEntity>
+        public async Task<bool> UpdateWithChildren<TEntity>(TEntity entity) where TEntity : class, IBaseEntity
         {
             try
             {
@@ -189,7 +190,7 @@ namespace BuildIt.SQLiteWrapper.Database
             return false;
         }
 
-        public async Task<BaseResult> Delete<TEntity>(string entityId) where TEntity : BaseEntity<TEntity>
+        public async Task<IDataResult> Delete<TEntity>(string entityId) where TEntity : class, IBaseEntity
         {
             var res = new BaseResult();
 

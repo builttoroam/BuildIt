@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BuildIt.SQLiteWrapper.Repository;
+using BuildIt.Data.Sqlite.Repository;
 using SQLiteNetExtensions.Attributes;
 
 namespace SQLiteWrapper.CRUD.Core.Models.Database
