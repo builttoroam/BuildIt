@@ -6,8 +6,7 @@
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "MvvmCross": "4.0.0",
-    "MvvmCross.StarterPack": "4.0.0"
+    "MvvmCross": "4.1.4"
   },
   "frameworks": {
     "uap10.0": {}
