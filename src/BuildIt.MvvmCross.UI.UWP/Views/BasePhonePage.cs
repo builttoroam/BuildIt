@@ -55,12 +55,23 @@ namespace BuildIt.MvvmCross.UI.UWP.Views
 #if WINDOWS_UWP
         public static bool AutomaticallyShowAppViewBackButton { get; set; } = true;
 
+        public static bool EnablePageCaching { get; set; } = false;
+
         public virtual bool DisplayAppViewBackButton { get; } = true;
 
         public virtual bool CanSubscribeToBackRequest { get; } = true;
+
+        public BaseStateEnabledPage()
+        {
+            if (EnablePageCaching)
+            {
+                NavigationCacheMode = NavigationCacheMode.Required;
+            }
+        }
 #endif
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             try
             {
@@ -68,7 +79,9 @@ namespace BuildIt.MvvmCross.UI.UWP.Views
                 if (e.NavigationMode != NavigationMode.Back)
                 {
                     DataContext = null;
+                    ViewModel = null;
                 }
+
 
                 base.OnNavigatedTo(e);
 
@@ -359,6 +372,16 @@ namespace BuildIt.MvvmCross.UI.UWP.Views
                 }
 
                 base.OnNavigatedFrom(e);
+#if WINDOWS_UWP
+                if (EnablePageCaching)
+                {
+                    if (e.NavigationMode == NavigationMode.Back)
+                    {
+                        NavigationCacheMode = NavigationCacheMode.Disabled;
+                    }
+                }
+
+#endif
             }
             catch (Exception exception)
             {
