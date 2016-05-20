@@ -3,21 +3,19 @@
   <metadata>
     <id>$id$</id>
     <version>0.1.4.2</version>
-    <title>BuildIt.MvvmCross.UI.UWP</title>
+    <title>BuildIt.General.UWP</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://www.builttoroam.com</projectUrl>
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>UWP MvvmCross</description>
-    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <description>UWP General Implementation</description>
+   <releaseNotes>Initial release.</releaseNotes>
+    <copyright>$copyright$</copyright>
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="BuildIt.General" version="0.1.4.0" />
-      <dependency id="BuildIt.General.UWP" version="0.1.4.2" />
-      <dependency id="BuildIt.MvvmCross" version="0.1.4.0" />
     </dependencies>
   </metadata>
 </package>

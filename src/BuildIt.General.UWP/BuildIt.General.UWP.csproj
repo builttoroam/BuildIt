@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{745261C8-2FB3-40BE-997F-C24E29F09CB1}</ProjectGuid>
+    <ProjectGuid>{2B0F08A9-A48C-476E-8EA9-CF4A36DDED90}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.MvvmCross.UI.UWP</RootNamespace>
-    <AssemblyName>BuildIt.MvvmCross.UI.UWP</AssemblyName>
+    <RootNamespace>BuildIt.General.UWP</RootNamespace>
+    <AssemblyName>BuildIt.General.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -104,33 +104,30 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="app.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\BasePhonePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\BuildIt.MvvmCross.UI.UWP.rd.xml" />
+    <EmbeddedResource Include="Properties\BuildIt.General.UWP.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="WindowsDesktop, Version=10.0.10586.0">
-      <Name>Windows Desktop Extensions for the UWP</Name>
-    </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
+  <Import Project="..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems" Label="Shared" />
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-      if $(ConfigurationName) == Release (
-      "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
-      )
-    </PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+"$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
+)
+if $(ConfigurationName) == Debug (
+  xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.General.UWP.0.1.4.2\lib\.NETCore50\$(TargetFileName)" /y 2&gt;nul 
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.General.UWP\0.1.4.2\lib\.NETCore50\$(TargetFileName)" /y 2&gt;nul 
+)
+
+
+
+EXIT 0</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
