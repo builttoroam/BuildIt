@@ -6,7 +6,7 @@ using System.Windows.Data;
 #else
 using Windows.UI.Xaml.Data;
 #endif
-namespace BuiltToRoam.UI.Converters
+namespace BuildIt.General.UI.Converters
 {
     public class EmptyStringToVisibilityConverter:IValueConverter
     {

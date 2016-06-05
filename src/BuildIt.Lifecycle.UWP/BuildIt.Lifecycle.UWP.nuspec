@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.1.4.2</version>
+    <version>0.1.4.3</version>
     <title>BuildIt.Lifecycle.UWP</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
@@ -16,7 +16,7 @@
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="BuildIt.General" version="0.1.4.0" />
-      <dependency id="BuildIt.General.UWP" version="0.1.4.2" />
+      <dependency id="BuildIt.General.UWP" version="0.1.4.3" />
       <dependency id="BuildIt.Lifecycle" version="0.1.4.0" />
     </dependencies>
   </metadata>

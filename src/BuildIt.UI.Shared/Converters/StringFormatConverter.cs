@@ -13,7 +13,7 @@ using System.Windows.Data;
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuiltToRoam.UI.Converters
+namespace BuildIt.General.UI.Converters
 {
     /// <summary>
     /// Converts a value to a string using a format string.

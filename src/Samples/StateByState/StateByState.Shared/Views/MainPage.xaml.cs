@@ -28,7 +28,7 @@ namespace StateByState
 
         public MainPage()
         {
-            Data = new Wrapper<MainViewModel>(this);
+            Data = new ContextWrapper<MainViewModel>(this);
             InitializeComponent();
 
             sm.Group<TestStates>()
@@ -45,7 +45,7 @@ namespace StateByState
 
         public MainViewModel CurrentViewModel => DataContext as MainViewModel;
 
-        public Wrapper<MainViewModel> Data { get; }
+        public ContextWrapper<MainViewModel> Data { get; }
 
         private void RegularCodebehindHandler(object sender, RoutedEventArgs e)
         {

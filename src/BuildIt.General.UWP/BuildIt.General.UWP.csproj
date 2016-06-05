@@ -7,7 +7,7 @@
     <ProjectGuid>{2B0F08A9-A48C-476E-8EA9-CF4A36DDED90}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.General.UWP</RootNamespace>
+    <RootNamespace>BuildIt.General.UI</RootNamespace>
     <AssemblyName>BuildIt.General.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>

@@ -11,7 +11,7 @@ using System.Windows.Media;
 using Microsoft.Phone.Controls;
 #endif
 
-namespace BuiltToRoam.UI
+namespace BuildIt.General.UI
 {
     public static class Utilities
     {

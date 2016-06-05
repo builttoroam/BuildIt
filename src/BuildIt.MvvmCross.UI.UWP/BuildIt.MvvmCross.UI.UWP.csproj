@@ -7,7 +7,7 @@
     <ProjectGuid>{745261C8-2FB3-40BE-997F-C24E29F09CB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.MvvmCross.UI.UWP</RootNamespace>
+    <RootNamespace>BuildIt.MvvmCross.UI</RootNamespace>
     <AssemblyName>BuildIt.MvvmCross.UI.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>

@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "BuildIt.General": "0.1.4",
-    "BuildIt.General.UWP": "0.1.4.2",
+    "BuildIt.General.UWP": "0.1.4.3",
     "BuildIt.MvvmCross": "0.1.4",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",

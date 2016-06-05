@@ -9,7 +9,7 @@ using Windows.UI.Text;
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuiltToRoam.UI.Converters
+namespace BuildIt.General.UI.Converters
 {
     /// <summary>
     /// Sample converter that exchanges whether an item has been read or not

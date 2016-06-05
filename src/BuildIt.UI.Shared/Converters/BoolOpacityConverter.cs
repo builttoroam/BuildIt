@@ -1,9 +1,4 @@
-﻿/********************************************************************************************************
- * Copyright (c) 2011 Built to Roam
- * This code is available for use only within authorised applications. 
- * Do not redistribute or reuse in unauthorised applications
- ********************************************************************************************************/
-
+﻿
 using System;
 using System.Globalization;
 #if !NETFX_CORE
@@ -12,7 +7,7 @@ using System.Windows.Data;
 #else
 using Windows.UI.Xaml.Data;
 #endif
-namespace BuiltToRoam.UI.Converters
+namespace BuildIt.General.UI.Converters
 {
     /// <summary>
     /// Converts between a bool and opacity. If true, returns 1

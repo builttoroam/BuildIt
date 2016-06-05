@@ -9,6 +9,7 @@
     <Import_RootNamespace>BuildIt.UI.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ContextWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolBoldConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolOpacityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolVisibilityConverter.cs" />
@@ -16,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ICodeBehindViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
   </ItemGroup>
 </Project>
