@@ -6,21 +6,13 @@ namespace BuildIt.General.UI
     public class ContextWrapper<T> : NotifyBase
         where T:class
     {
-        private T viewModel;
+        public FrameworkElement Element { get; set; }
 
-        public T ViewModel
-        {
-            get { return viewModel; }
-            private set
-            {
-                viewModel = value;
-                OnPropertyChanged();
-            }
-        }
+        public T ViewModel => Element?.DataContext as T;
 
         public ContextWrapper(FrameworkElement element)
         {
-            viewModel = element.DataContext as T;
+            Element = element;
             element.DataContextChanged += Element_DataContextChanged;
         }
 
@@ -28,7 +20,7 @@ namespace BuildIt.General.UI
         {
             try
             {
-                ViewModel = args.NewValue as T;
+                OnPropertyChanged(()=>ViewModel);
             }
             catch (Exception ex)
             {
