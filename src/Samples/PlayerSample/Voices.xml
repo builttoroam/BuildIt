@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-au" Name="PlayerCommandset_en-us">
+    <AppName> Player Sample </AppName>
+    <Example> Play / Pause / Go forward / Go back </Example>
+
+    <Command Name="pause">
+      <Example> Pause </Example>
+      <ListenFor> pause </ListenFor>
+      <Feedback> Pausing </Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="play">
+      <Example> Play </Example>
+      <ListenFor> play </ListenFor>
+      <ListenFor> resume </ListenFor>
+      <Feedback> Resuming </Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="forward">
+      <Example> Forward </Example>
+      <ListenFor> [go] forward </ListenFor>
+      <Feedback> Seeking forward... </Feedback>
+      <Navigate />
+    </Command>
+
+
+    <Command Name="back">
+      <Example> Back </Example>
+      <ListenFor> [go] back </ListenFor>
+      <Feedback> Seeking backward... </Feedback>
+      <Navigate />
+    </Command>
+  </CommandSet>
+</VoiceCommands>
