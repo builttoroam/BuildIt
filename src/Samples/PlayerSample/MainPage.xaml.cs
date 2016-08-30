@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using CortanaControl;
+using BuildIt.Media;
 using Microsoft.Xaml.Interactivity;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -352,7 +352,7 @@ namespace PlayerSample
 //        }
 //    }
 
-    public class CustomCortanaControls : CortanaForMediaElement.CortanaControls
+    public class CustomCortanaControls : CortanaMediaElementActions
     {
         protected override async Task OnMediaElementPause()
         {

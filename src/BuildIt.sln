@@ -88,39 +88,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Media.UWP", "BuildI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerSample", "Samples\PlayerSample\PlayerSample.csproj", "{ED2C7FCF-8B38-402F-818C-9799EB1684A6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle", "{C6B58AAF-DF70-496A-9180-248F142600E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.MvvmCross", "BuildIt.MvvmCross", "{82D705BC-FFC7-4A59-8C73-2430E94F56E6}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{24b24ff9-10fc-4b8d-89a1-6c16ac1086d5}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{27622a0a-9c78-43ed-89a5-98215100e054}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{4e3502a3-129f-4679-a41b-f51f0dcfc2e7}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{c9e72dd3-ac4f-49c6-bb4e-70dcb8ba184e}*SharedItemsImports = 13
 		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
 		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
-		BuildIt.Shared\BuildIt.Shared.projitems*{cffd31ad-1805-4031-a86d-da41af2f7ed2}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{ee72434b-cb9d-41f4-b6b7-3bb60b2e7218}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -703,6 +691,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{FA40C3D1-C786-4A96-89D3-78D3AF17A437} = {C6B58AAF-DF70-496A-9180-248F142600E6}
+		{1B35CBB6-69F6-49F4-AF75-5C66F202B88D} = {C6B58AAF-DF70-496A-9180-248F142600E6}
+		{A0E34142-1554-469E-8F66-0CD7D656BEAE} = {C6B58AAF-DF70-496A-9180-248F142600E6}
+		{0959F4B6-D9E4-4947-8889-D913A26F4788} = {C6B58AAF-DF70-496A-9180-248F142600E6}
+		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA} = {C6B58AAF-DF70-496A-9180-248F142600E6}
+		{EE72434B-CB9D-41F4-B6B7-3BB60B2E7218} = {82D705BC-FFC7-4A59-8C73-2430E94F56E6}
+		{745261C8-2FB3-40BE-997F-C24E29F09CB1} = {82D705BC-FFC7-4A59-8C73-2430E94F56E6}
 		{35BDA067-E25D-4AAB-BAFB-17806BFADE9E} = {22A673E6-DF53-46B7-AD66-9622028BE75A}
 		{B03072FE-40A3-4507-BFD1-C904BB0FE1FA} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
@@ -713,11 +708,16 @@ Global
 		{3547BD44-1607-4AD4-B5A0-2B29D2736749} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
 		{2991D261-DF81-421A-B6BA-05D13A3A7CB8} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
 		{EEEBC901-56E1-47CC-B83D-DA70716FF20F} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {C6B58AAF-DF70-496A-9180-248F142600E6}
 		{69E3FC12-300C-4FAC-9B2B-864131D50087} = {22A673E6-DF53-46B7-AD66-9622028BE75A}
 		{3F0ED018-7559-4454-8C0A-18B188A58449} = {69E3FC12-300C-4FAC-9B2B-864131D50087}
 		{B7C0B624-EA49-46CF-A513-D852A389986D} = {3F0ED018-7559-4454-8C0A-18B188A58449}
 		{47AF0EB8-FFF9-4F86-8572-8B70D716367F} = {3F0ED018-7559-4454-8C0A-18B188A58449}
 		{C9E72DD3-AC4F-49C6-BB4E-70DCB8BA184E} = {35BDA067-E25D-4AAB-BAFB-17806BFADE9E}
+		{88AE5F64-0F5E-4AD5-B673-1748F25C5458} = {C6B58AAF-DF70-496A-9180-248F142600E6}
+		{CFFD31AD-1805-4031-A86D-DA41AF2F7ED2} = {82D705BC-FFC7-4A59-8C73-2430E94F56E6}
+		{42D11A77-3025-4796-9EEF-80DE816CAD2E} = {82D705BC-FFC7-4A59-8C73-2430E94F56E6}
+		{94A8C9F6-C019-4B01-9AA4-9B7B97731D5C} = {82D705BC-FFC7-4A59-8C73-2430E94F56E6}
 		{ED2C7FCF-8B38-402F-818C-9799EB1684A6} = {22A673E6-DF53-46B7-AD66-9622028BE75A}
 	EndGlobalSection
 EndGlobal

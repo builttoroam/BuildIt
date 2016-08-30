@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using CortanaControl;
+using BuildIt.Media;
 
 namespace PlayerSample
 {
@@ -49,30 +49,32 @@ namespace PlayerSample
             // var handled = await BuildIt.Player.Cortana.HandleActivation(args);
             // if (handled) return;
 
-            if (VoiceActivation !=null)
-            {
-                if (VoiceActivation.Kind != ActivationKind.VoiceCommand) return;
-            }
-            else
-            {
-                if (args.Kind != ActivationKind.VoiceCommand) return;
-            }
-            var commandArgs = args as VoiceCommandActivatedEventArgs;
-            var destination = commandArgs?.Result?.RulePath[0];
-            PlayerControls.Action(destination);
+            //if (VoiceActivation !=null)
+            //{
+            //    if (VoiceActivation.Kind != ActivationKind.VoiceCommand) return;
+            //}
+            //else
+            //{
+            //    if (args.Kind != ActivationKind.VoiceCommand) return;
+            //}
+            //var commandArgs = args as VoiceCommandActivatedEventArgs;
+            //var destination = commandArgs?.Result?.RulePath[0];
+            //PlayerControls.Action(destination);
+
+            await args.HandleMediaElementCortanaCommands();
         }
 
-        public IActivatedEventArgs VoiceActivation
-        {
-            get { return voiceActivation; }
-            set { voiceActivation = value; }
-        }
+        //public IActivatedEventArgs VoiceActivation
+        //{
+        //    get { return voiceActivation; }
+        //    set { voiceActivation = value; }
+        //}
 
-        public string VoiceDefinitions
-        {
-            get { return voiceDefinitions; }
-            set { voiceDefinitions = value; }
-        }
+        //public string VoiceDefinitions
+        //{
+        //    get { return voiceDefinitions; }
+        //    set { voiceDefinitions = value; }
+        //}
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -129,28 +131,29 @@ namespace PlayerSample
                 Window.Current.Activate();
             }
 
-           // Registering for voice commands
-           // BuildIt.Player.Cortana.RegisterVoiceCommands(@"VoiceDefinitions.xml");
+            // Registering for voice commands
+            // BuildIt.Player.Cortana.RegisterVoiceCommands(@"VoiceDefinitions.xml");
 
-            try
-            {
-                StorageFile voices;
-                if (string.IsNullOrEmpty(VoiceDefinitions))
-                {
-                    voices = await Package.Current.InstalledLocation.GetFileAsync(@"Voices.xml");
-                }
-                else
-                {
-                    voices = await Package.Current.InstalledLocation.GetFileAsync(VoiceDefinitions);
-                }
+       await CortanaListener.RegisterMediaElementVoiceCommands(null);
+            //try
+            //{
+            //    StorageFile voices;
+            //    if (string.IsNullOrEmpty(VoiceDefinitions))
+            //    {
+            //        voices = await Package.Current.InstalledLocation.GetFileAsync(@"Voices.xml");
+            //    }
+            //    else
+            //    {
+            //        voices = await Package.Current.InstalledLocation.GetFileAsync(VoiceDefinitions);
+            //    }
 
-                await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(voices);
+            //    await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(voices);
 
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Installing Voice Commands Failed: " + ex.ToString());
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("Installing Voice Commands Failed: " + ex.ToString());
+            //}
         }
 
         /// <summary>
