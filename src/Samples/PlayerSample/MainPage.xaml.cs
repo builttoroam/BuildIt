@@ -12,6 +12,7 @@ using Windows.Media;
 using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System.Display;
 using Windows.System.Profile;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -157,6 +158,35 @@ namespace PlayerSample
         //    MediaControls.UpdateTimelineProperties(timeline);
         //}
 
+        // Create this variable at a global scope. Set it to null.
+        private DisplayRequest appDisplayRequest = null;
+
+
+        private void MyMediaElement_OnCurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            MediaElement mediaElement = sender as MediaElement;
+            if (mediaElement != null && mediaElement.IsAudioOnly == false)
+            {
+                if (mediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Playing)
+                {
+                    if (appDisplayRequest == null)
+                    {
+                        // This call creates an instance of the DisplayRequest object. 
+                        appDisplayRequest = new DisplayRequest();
+                        appDisplayRequest.RequestActive();
+                    }
+                }
+                else // CurrentState is Buffering, Closed, Opening, Paused, or Stopped. 
+                {
+                    if (appDisplayRequest != null)
+                    {
+                        // Deactivate the display request and set the var to null.
+                        appDisplayRequest.RequestRelease();
+                        appDisplayRequest = null;
+                    }
+                }
+            }
+        }
     }
 
     public class CortanaMediaElementControls : Behavior<MediaElement>

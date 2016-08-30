@@ -62,6 +62,7 @@
         <MediaElement x:Name="MyMediaElement"
                       Source="http://rdmedia.bbc.co.uk/dash/ondemand/bbb/2/client_manifest-common_init.mpd"
                       AutoPlay="True"
+                      CurrentStateChanged="MyMediaElement_OnCurrentStateChanged"
                       MediaOpened="MyMediaElement_OnMediaOpened"
                       PosterSource="http://camendesign.com/code/video_for_everybody/poster.jpg"
                       AreTransportControlsEnabled="True">
