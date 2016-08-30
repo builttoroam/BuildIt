@@ -27,7 +27,7 @@
                 <Setter  Property="Background"
                          Value="Red" />
             </Style>
-            <Style TargetType="playerFramework:BufferingView">
+            <!--<Style TargetType="playerFramework:BufferingView">
                 <Setter Property="Background"
                         Value="#FF0000FF" />
                 <Setter Property="Template">
@@ -42,13 +42,13 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <!--PosterSource="http://camendesign.com/code/video_for_everybody/poster.jpg"-->
 
-        <playerFramework:MediaPlayer Name="Player"
+        <!--<playerFramework:MediaPlayer Name="Player"
                                      Source="http://rdmedia.bbc.co.uk/dash/ondemand/bbb/2/client_manifest-common_init.mpd"
                                      AutoPlay="False"
                                      MediaOpened="MediaPlayer_OnMediaOpened"
@@ -58,13 +58,15 @@
             <interactivity:Interaction.Behaviors>
                 <local:CustomCortanaControls />
             </interactivity:Interaction.Behaviors>
-        </playerFramework:MediaPlayer>
-        <!--<MediaElement x:Name="MyMediaElement"
+        </playerFramework:MediaPlayer>-->
+        <MediaElement x:Name="MyMediaElement"
                       Source="http://rdmedia.bbc.co.uk/dash/ondemand/bbb/2/client_manifest-common_init.mpd"
                       AutoPlay="True"
                       MediaOpened="MyMediaElement_OnMediaOpened"
                       PosterSource="http://camendesign.com/code/video_for_everybody/poster.jpg"
-                      AreTransportControlsEnabled="True"></MediaElement>-->
+                      AreTransportControlsEnabled="True">
+            
+        </MediaElement>
     </Grid>
 </Page>
 <!--<Style TargetType="MediaTransportControls">

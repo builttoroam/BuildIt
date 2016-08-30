@@ -134,6 +134,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.Media.UWP\BuildIt.Media.UWP.csproj">
       <Project>{4e3502a3-129f-4679-a41b-f51f0dcfc2e7}</Project>
       <Name>BuildIt.Media.UWP</Name>

@@ -25,6 +25,9 @@ namespace PlayerSample
     /// </summary>
     sealed partial class App : Application
     {
+        private IActivatedEventArgs voiceActivation;
+        private string voiceDefinitions;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -46,11 +49,29 @@ namespace PlayerSample
             // var handled = await BuildIt.Player.Cortana.HandleActivation(args);
             // if (handled) return;
 
-            if (args.Kind != ActivationKind.VoiceCommand) return;
-
+            if (VoiceActivation !=null)
+            {
+                if (VoiceActivation.Kind != ActivationKind.VoiceCommand) return;
+            }
+            else
+            {
+                if (args.Kind != ActivationKind.VoiceCommand) return;
+            }
             var commandArgs = args as VoiceCommandActivatedEventArgs;
             var destination = commandArgs?.Result?.RulePath[0];
             PlayerControls.Action(destination);
+        }
+
+        public IActivatedEventArgs VoiceActivation
+        {
+            get { return voiceActivation; }
+            set { voiceActivation = value; }
+        }
+
+        public string VoiceDefinitions
+        {
+            get { return voiceDefinitions; }
+            set { voiceDefinitions = value; }
         }
 
         /// <summary>
@@ -113,8 +134,15 @@ namespace PlayerSample
 
             try
             {
-                var voices = await Package.Current.InstalledLocation.GetFileAsync(@"Voices.xml");
-                //var voicesFromUser = await Package.Current.InstalledLocation.GetFilesAsync()
+                StorageFile voices;
+                if (string.IsNullOrEmpty(VoiceDefinitions))
+                {
+                    voices = await Package.Current.InstalledLocation.GetFileAsync(@"Voices.xml");
+                }
+                else
+                {
+                    voices = await Package.Current.InstalledLocation.GetFileAsync(VoiceDefinitions);
+                }
 
                 await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(voices);
 
