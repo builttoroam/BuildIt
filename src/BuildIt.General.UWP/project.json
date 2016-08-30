@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
     "BuildIt.General": "0.1.4",
+    "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0"
   },
   "frameworks": {

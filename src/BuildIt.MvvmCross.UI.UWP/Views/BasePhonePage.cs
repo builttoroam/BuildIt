@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Windows.Phone.UI.Input;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,7 +9,12 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using BuildIt.MvvmCross.Interfaces;
 using BuildIt.MvvmCross.ViewModels;
+
+#if WINDOWS_UWP
 using MvvmCross.WindowsUWP.Views;
+#else
+using MvvmCross.WindowsCommon.Views;
+#endif
 #if NETFX_CORE
 #if !WIN8
 #else
@@ -18,6 +22,7 @@ using Cirrious.MvvmCross.WindowsStore.Views;
 
 #endif
 #if WINDOWS_PHONE_APP || WINDOWS_UWP
+using Windows.Phone.UI.Input;
 #endif
 #else
 using System.Windows;
@@ -71,16 +76,21 @@ namespace BuildIt.MvvmCross.UI.UWP.Views
 #endif
 
 
+        protected virtual void DumpExistingViewModel(NavigationEventArgs e)
+        {
+            // Make sure we get a new VM each time we arrive at the page
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                DataContext = null;
+                ViewModel = null;
+            }
+        }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             try
             {
-                // Make sure we get a new VM each time we arrive at the page
-                if (e.NavigationMode != NavigationMode.Back)
-                {
-                    DataContext = null;
-                    ViewModel = null;
-                }
+                DumpExistingViewModel(e);
 
 
                 base.OnNavigatedTo(e);

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.1.4.3</version>
+    <version>0.1.4.7</version>
     <title>BuildIt.MvvmCross.UI.UWP</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
@@ -17,7 +17,7 @@
     <dependencies>
       <dependency id="BuildIt.General" version="0.1.4.0" />
       <dependency id="BuildIt.General.UWP" version="0.1.4.3" />
-      <dependency id="BuildIt.MvvmCross" version="0.1.4.0" />
+      <dependency id="BuildIt.MvvmCross" version="0.1.4.7" />
     </dependencies>
   </metadata>
 </package>

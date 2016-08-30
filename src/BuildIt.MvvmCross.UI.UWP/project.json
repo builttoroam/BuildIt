@@ -2,12 +2,12 @@
   "dependencies": {
     "BuildIt.General": "0.1.4",
     "BuildIt.General.UWP": "0.1.4.3",
-    "BuildIt.MvvmCross": "0.1.4",
+    "BuildIt.MvvmCross": "0.1.4.7",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "MvvmCross": "4.1.4"
+    "MvvmCross": "4.2.2"
   },
   "frameworks": {
     "uap10.0": {}
