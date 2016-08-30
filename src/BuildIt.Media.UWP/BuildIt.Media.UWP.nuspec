@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>0.1.4.7</version>
+    <title>BuildIt.Media.UWP</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://www.builttoroam.com</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UWP Media Helpers</description>
+   <releaseNotes>Initial release.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="BuildIt.General" version="0.1.4.0" />
+      <dependency id="BuildIt.General.UWP" version="0.1.4.5" />
+      <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.1.0.0">
+      <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2.0">
+    </dependencies>
+  </metadata>
+</package>

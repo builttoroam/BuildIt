@@ -94,19 +94,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.MvvmCross", "BuildI
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
-		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{24b24ff9-10fc-4b8d-89a1-6c16ac1086d5}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{27622a0a-9c78-43ed-89a5-98215100e054}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{4e3502a3-129f-4679-a41b-f51f0dcfc2e7}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
-		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
-		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
-		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{c9e72dd3-ac4f-49c6-bb4e-70dcb8ba184e}*SharedItemsImports = 13
-		Samples\StateByState\StateByState.Shared\StateByState.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
-		Samples\StateByState\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
@@ -666,7 +659,9 @@ Global
 		{4E3502A3-129F-4679-A41B-F51F0DCFC2E7}.Release|x64.Build.0 = Release|x64
 		{4E3502A3-129F-4679-A41B-F51F0DCFC2E7}.Release|x86.ActiveCfg = Release|x86
 		{4E3502A3-129F-4679-A41B-F51F0DCFC2E7}.Release|x86.Build.0 = Release|x86
-		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|Any CPU.Build.0 = Debug|x64
+		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|Any CPU.Deploy.0 = Debug|x64
 		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|ARM.ActiveCfg = Debug|ARM
 		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|ARM.Build.0 = Debug|ARM
 		{ED2C7FCF-8B38-402F-818C-9799EB1684A6}.Debug|ARM.Deploy.0 = Debug|ARM

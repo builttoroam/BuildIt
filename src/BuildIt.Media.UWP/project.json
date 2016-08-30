@@ -2,9 +2,6 @@
   "dependencies": {
     "BuildIt.General": "0.1.4",
     "BuildIt.General.UWP": "0.1.4.5",
-    "Microsoft.ApplicationInsights": "2.1.0",
-    "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
-    "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0"
   },
