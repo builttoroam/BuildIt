@@ -131,7 +131,7 @@ namespace PlayerSample
             // Registering for voice commands
             // BuildIt.Player.Cortana.RegisterVoiceCommands(@"VoiceDefinitions.xml");
 
-       await CortanaListener.RegisterMediaElementVoiceCommands(null);
+       await CortanaListener.RegisterMediaElementVoiceCommands(@"DefaultVoices.xml");
             //try
             //{
             //    StorageFile voices;
