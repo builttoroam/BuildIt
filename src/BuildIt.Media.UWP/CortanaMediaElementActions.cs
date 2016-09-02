@@ -23,9 +23,19 @@ namespace BuildIt.Media
             {
                 PlayerControls.Pause += MediaElement_Pause;
             }
-            PlayerControls.Play += MediaElement_Play;
-            PlayerControls.Forward += MediaElement_Forward;
-            PlayerControls.Backward += MediaElement_Backward;
+            if (IsPlayEnabled)
+            {
+                PlayerControls.Play += MediaElement_Play;
+            }
+
+            if (IsSeekForwardEnabled)
+            {
+                PlayerControls.Forward += MediaElement_Forward;
+            }
+            if (IsSeekBackEnabled)
+            {
+                PlayerControls.Backward += MediaElement_Backward;
+            }
 
         }
 
@@ -35,10 +45,19 @@ namespace BuildIt.Media
             {
                 PlayerControls.Pause -= MediaElement_Pause;
             }
-            PlayerControls.Play -= MediaElement_Pause;
-            PlayerControls.Forward -= MediaElement_Forward;
-            PlayerControls.Backward -= MediaElement_Backward;
+            if (IsPlayEnabled)
+            {
+                PlayerControls.Play -= MediaElement_Pause;
+            }
 
+            if (IsSeekForwardEnabled)
+            {
+                PlayerControls.Forward -= MediaElement_Forward;
+            }
+            if (IsSeekBackEnabled)
+            {
+                PlayerControls.Backward -= MediaElement_Backward;
+            }
             base.OnDetaching();
         }
 
@@ -61,6 +80,7 @@ namespace BuildIt.Media
 
         private async void MediaElement_Play(object sender, EventArgs e)
         {
+            if (!IsPlayEnabled) return;
             await OnMediaElementPlay();
         }
 
@@ -74,6 +94,7 @@ namespace BuildIt.Media
 
         private async void MediaElement_Forward(object sender, EventArgs e)
         {
+            if(!IsSeekForwardEnabled) return;
             await OnMediaElementForward();
         }
 
@@ -89,6 +110,7 @@ namespace BuildIt.Media
 
         private async void MediaElement_Backward(object sender, EventArgs e)
         {
+            if(!IsSeekBackEnabled) return;
             await OnMediaElementBackward();
         }
 
