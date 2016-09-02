@@ -89,7 +89,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Content Include="DefaultVoices.xml" />
+    <Content Include="CustomCortana.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="OtherVoiceCommands.xml" />
     <None Include="project.json" />
   </ItemGroup>

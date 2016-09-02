@@ -10,7 +10,17 @@
       <Feedback> Testing... </Feedback>
       <Navigate />
     </Command>
+  </CommandSet>
 
+  <CommandSet xml:lang="en-us" Name="PlayerCommandset_en-us">
+    <AppName> Test </AppName>
+    <Example> Say test </Example>
 
+    <Command Name="test2">
+      <Example> Test </Example>
+      <ListenFor> test </ListenFor>
+      <Feedback> Testing... </Feedback>
+      <Navigate />
+    </Command>
   </CommandSet>
 </VoiceCommands>
