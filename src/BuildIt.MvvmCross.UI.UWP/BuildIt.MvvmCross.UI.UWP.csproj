@@ -130,7 +130,10 @@
       if $(ConfigurationName) == Release (
       "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
       )
-    </PostBuildEvent>
+    if $(ConfigurationName) == Debug (
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.MvvmCross.UI.UWP\0.1.4.8\lib\.NETCore50\$(TargetFileName)" /y
+xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.MvvmCross.UI.UWP\0.1.4.8\lib\.NETCore50\$(TargetFileName)" /y
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
