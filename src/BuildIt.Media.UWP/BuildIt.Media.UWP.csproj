@@ -109,7 +109,7 @@
   <ItemGroup>
     <None Include="CortanaForPlayerFramework.cs" />
     <Compile Include="CortanaMediaElementActions.cs" />
-    <Compile Include="DefaultStart.cs" />
+    <Compile Include="CortanaListener.cs" />
     <Compile Include="PlayerControls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\CortanaControl.rd.xml" />

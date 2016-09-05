@@ -72,10 +72,9 @@ namespace BuildIt.Media
                                 break;
                             }
 
-                            if (!matchFound) 
+                            if (!matchFound)
                             {
                                 rootVoiceCommandsNode.Add(element);
-                                break;
                             }
                         }
 
