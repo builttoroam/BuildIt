@@ -92,7 +92,11 @@
     <Content Include="CustomCortana.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="OtherVoiceCommands.xml" />
+    <Content Include="EmptyCommandSetVoices.xml" />
+    <Content Include="EmptyCommandVoices.xml" />
+    <Content Include="EmptyElementInCommandVoices.xml" />
+    <Content Include="ForTest.xml" />
+    <Content Include="EmptyRootVoices.xml" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

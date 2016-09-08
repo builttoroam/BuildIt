@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-au" Name="PlayerCommandset_en-au">
+    <AppName></AppName>
+  </CommandSet>
+  <CommandSet xml:lang="en-us" Name="PlayerCommandset_en-au">
+    <AppName> Player Sample </AppName>
+    <Example></Example>
+  </CommandSet>
+  <CommandSet xml:lang="en-nz" Name="PlayerCommandset_en-au">
+    <AppName> Player Sample </AppName>
+    <Example> Play / Pause / Go forward / Go back </Example>
+    <Command Name="buildit_pause">
+
+    </Command>
+  </CommandSet>
+</VoiceCommands>

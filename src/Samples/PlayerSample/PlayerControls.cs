@@ -9,7 +9,11 @@ namespace PlayerSample
         public static event EventHandler Play;
         public static event EventHandler Forward;
         public static event EventHandler Backward;
-        
+        public static event EventHandler VolumeUp;
+        public static event EventHandler VolumeDown;
+        public static event EventHandler Mute;
+        public static event EventHandler Unmute;
+
         public static async void Action(string actionName)
         {
             await Task.Delay(1000);
@@ -26,6 +30,18 @@ namespace PlayerSample
                     break;
                 case "back":
                     Backward?.Invoke(null, EventArgs.Empty);
+                    break;
+                case "volumeUp":
+                    VolumeUp?.Invoke(null, EventArgs.Empty);
+                    break;
+                case "volumeDown":
+                    VolumeDown?.Invoke(null, EventArgs.Empty);
+                    break;
+                case "mute":
+                    Mute?.Invoke(null, EventArgs.Empty);
+                    break;
+                case "unmute":
+                    Unmute?.Invoke(null, EventArgs.Empty);
                     break;
             }
         }

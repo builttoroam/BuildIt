@@ -67,7 +67,7 @@
                       PosterSource="http://camendesign.com/code/video_for_everybody/poster.jpg"
                       AreTransportControlsEnabled="True">
             <interactivity:Interaction.Behaviors>
-                <media:CortanaMediaElementActions SeekForwardIncrement="30" IsSeekBackEnabled="False" />
+                <media:CortanaMediaElementActions SeekForwardIncrement="30" IsSeekBackEnabled="True" />
             </interactivity:Interaction.Behaviors>
         </MediaElement>
     </Grid>
