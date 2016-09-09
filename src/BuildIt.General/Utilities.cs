@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace BuildIt
 {
@@ -16,9 +16,7 @@ namespace BuildIt
         {
             try
             {
-                var decoded = InternalDecodeJson(jsonString, typeof(T));
-                if (decoded == null) return default(T);
-                return (T)decoded;
+                return JsonConvert.DeserializeObject<T>(jsonString);
             }
             catch (Exception ex)
             {
@@ -31,8 +29,7 @@ namespace BuildIt
         {
             try
             {
-
-                return InternalDecodeJson(jsonString, jsonType);
+                return JsonConvert.DeserializeObject(jsonString, jsonType);
             }
             catch (Exception ex)
             {
@@ -41,36 +38,15 @@ namespace BuildIt
             }
         }
 
-        private static object InternalDecodeJson(string jsonString, Type jsonType)
-        {
-            if (string.IsNullOrWhiteSpace(jsonString)) return null;
-            var builder = Encoding.UTF8.GetBytes(jsonString);
-            using (var strm = new MemoryStream(builder))
-            {
-                var serializer = new DataContractJsonSerializer(jsonType);
-                var obj = serializer.ReadObject(strm);
-                return obj;
-            }
-        }
+       
 
         public static string EncodeJson<T>(this T objectToJsonify)
         {
             // ReSharper disable CompareNonConstrainedGenericWithNull
-            if (objectToJsonify == null) return null;
+            return objectToJsonify == null ? null : JsonConvert.SerializeObject(objectToJsonify);
             // ReSharper restore CompareNonConstrainedGenericWithNull
-
-            using (var strm = new MemoryStream())
-            {
-                var serializer = new DataContractJsonSerializer(objectToJsonify.GetType());
-                serializer.WriteObject(strm, objectToJsonify);
-                strm.Flush();
-                var bytes = strm.ToArray();
-                return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            }
         }
 
-
-     
 
         public static bool DoForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
@@ -85,12 +61,9 @@ namespace BuildIt
         public static TList Fill<TList, T>(this TList source, IEnumerable<T> items) where TList : IList<T>
         {
             if (source == null || items == null) return source;
-            if (items != null)
+            foreach (var item in items)
             {
-                foreach (var item in items)
-                {
-                    source.Add(item);
-                }
+                source.Add(item);
             }
             return source;
         }
@@ -335,15 +308,16 @@ namespace BuildIt
             try
             {
                 using (var reader = new StreamReader(stream))
+                    using(var jreader = new JsonTextReader(reader))
                 {
 #if DEBUG
                     var txt = reader.ReadToEnd();
                     Debug.WriteLine(txt);
                     stream.Position = 0;
 #endif
-                    var serializer = new DataContractJsonSerializer(typeof(T));
-                    var obj = serializer.ReadObject(stream);
-                    return (T)obj;
+                    return JsonSerializer.CreateDefault().Deserialize<T>(jreader);
+
+                
                 }
             }
             catch (Exception ex)
