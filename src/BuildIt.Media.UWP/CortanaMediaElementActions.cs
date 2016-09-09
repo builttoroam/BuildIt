@@ -20,6 +20,7 @@ namespace BuildIt.Media
         public bool IsVolumeDownEnabled { get; set; } = true;
         public bool IsMuteEnabled { get; set; } = true;
         public bool IsUnmuteEnabled { get; set; } = true;
+        public bool IsHelpEnabled { get; set; } = true;
 
         protected override void OnAttached()
         {
@@ -58,6 +59,10 @@ namespace BuildIt.Media
             {
                 PlayerControls.Unmute += MediaElement_Unmute;
             }
+            //if (IsHelpEnabled)
+            //{
+            //    PlayerControls.Help += MediaElement_Help;
+            //}
 
         }
 
@@ -96,6 +101,10 @@ namespace BuildIt.Media
             {
                 PlayerControls.Unmute -= MediaElement_Unmute;
             }
+            //if (IsHelpEnabled)
+            //{
+            //    PlayerControls.Help -= MediaElement_Help;
+            //}
             base.OnDetaching();
         }
 
@@ -216,5 +225,19 @@ namespace BuildIt.Media
         {
             MediaElement.IsMuted = false;
         }
+
+//        private async void MediaElement_Help(object sender, EventArgs e)
+//        {
+//            if (!IsHelpEnabled) return;
+//            await OnMediaElementHelp();
+//        }
+
+//#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+//        protected virtual async Task OnMediaElementHelp()
+//#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+//        {
+//            var bg = new CortanaBackgroundTask();
+            
+//        }
     }
 }

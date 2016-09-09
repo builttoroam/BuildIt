@@ -13,6 +13,7 @@ namespace PlayerSample
         public static event EventHandler VolumeDown;
         public static event EventHandler Mute;
         public static event EventHandler Unmute;
+        public static event EventHandler Help;
 
         public static async void Action(string actionName)
         {

@@ -208,7 +208,7 @@ namespace PlayerSample
             PlayerControls.VolumeDown += MyMediaElement_VolumeDown;
             PlayerControls.Mute += MyMediaElement_Mute;
             PlayerControls.Unmute += MyMediaElement_Unmute;
-
+            PlayerControls.Help += MyMediaElement_Help;
         }
         
 
@@ -223,6 +223,7 @@ namespace PlayerSample
             PlayerControls.VolumeDown -= MyMediaElement_VolumeDown;
             PlayerControls.Mute -= MyMediaElement_Mute;
             PlayerControls.Unmute -= MyMediaElement_Unmute;
+            PlayerControls.Help -= MyMediaElement_Help;
 
             base.OnDetaching();
         }
@@ -318,6 +319,16 @@ namespace PlayerSample
         protected virtual async Task OnMediaElementUnmute()
         {
             MediaElement.IsMuted = false;
+        }
+
+        private async void MyMediaElement_Help(object sender, EventArgs e)
+        {
+            await OnMediaElementMute();
+        }
+
+        protected virtual async Task OnMediaElementHelp()
+        {
+            
         }
     }
 

@@ -13,6 +13,7 @@ namespace BuildIt.Media
         public static event EventHandler VolumeDown;
         public static event EventHandler Mute;
         public static event EventHandler Unmute;
+        //public static event EventHandler Help;
 
         public static async Task<bool> Action(string actionName)
         {
@@ -45,6 +46,9 @@ namespace BuildIt.Media
                     case "buildit_unmute":
                         Unmute?.Invoke(null, EventArgs.Empty);
                         break;
+                    //case "buildit_help":
+                    //    Help?.Invoke(null,EventArgs.Empty);
+                    //    break;
                     default:
                         return false;
                 }
