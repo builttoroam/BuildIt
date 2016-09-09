@@ -9,11 +9,18 @@ namespace BuildIt.Media
     {
         public int SeekForwardIncrement { get; set; } = 10;
         public int SeekBackwardIncrement { get; set; } = -10;
+        public double VolumeUpIncrement { get; set; } = 0.1;
+        public double VolumeDownIncrement { get; set; } = -0.1;
 
         public bool IsPauseEnabled { get; set; } = true;
         public bool IsPlayEnabled { get; set; } = true;
         public bool IsSeekForwardEnabled { get; set; } = true;
         public bool IsSeekBackEnabled { get; set; } = true;
+        public bool IsVolumeUpEnabled { get; set; } = true;
+        public bool IsVolumeDownEnabled { get; set; } = true;
+        public bool IsMuteEnabled { get; set; } = true;
+        public bool IsUnmuteEnabled { get; set; } = true;
+        public bool IsHelpEnabled { get; set; } = true;
 
         protected override void OnAttached()
         {
@@ -36,6 +43,26 @@ namespace BuildIt.Media
             {
                 PlayerControls.Backward += MediaElement_Backward;
             }
+            if (IsVolumeUpEnabled)
+            {
+                PlayerControls.VolumeUp += MediaElement_VolumeUp;
+            }
+            if (IsVolumeDownEnabled)
+            {
+                PlayerControls.VolumeDown+= MediaElement_VolumeDown;
+            }
+            if (IsMuteEnabled)
+            {
+                PlayerControls.Mute+= MediaElement_Mute;
+            }
+            if (IsUnmuteEnabled)
+            {
+                PlayerControls.Unmute += MediaElement_Unmute;
+            }
+            //if (IsHelpEnabled)
+            //{
+            //    PlayerControls.Help += MediaElement_Help;
+            //}
 
         }
 
@@ -58,6 +85,26 @@ namespace BuildIt.Media
             {
                 PlayerControls.Backward -= MediaElement_Backward;
             }
+            if (IsVolumeUpEnabled)
+            {
+                PlayerControls.VolumeUp -= MediaElement_VolumeUp;
+            }
+            if (IsVolumeDownEnabled)
+            {
+                PlayerControls.VolumeDown -= MediaElement_VolumeDown;
+            }
+            if (IsMuteEnabled)
+            {
+                PlayerControls.Mute -= MediaElement_Mute;
+            }
+            if (IsUnmuteEnabled)
+            {
+                PlayerControls.Unmute -= MediaElement_Unmute;
+            }
+            //if (IsHelpEnabled)
+            //{
+            //    PlayerControls.Help -= MediaElement_Help;
+            //}
             base.OnDetaching();
         }
 
@@ -123,5 +170,74 @@ namespace BuildIt.Media
             if (SeekBackwardIncrement == 0) return;
             MediaElement.Position += TimeSpan.FromSeconds(SeekBackwardIncrement);
         }
+
+        private async void MediaElement_VolumeUp(object sender, EventArgs e)
+        {
+            if (!IsVolumeUpEnabled)return;
+            await OnMediaElementVolumeUp();
+
+        }
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual async Task OnMediaElementVolumeUp()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            if (VolumeUpIncrement == 0) return;
+            MediaElement.Volume += VolumeUpIncrement;
+        }
+
+        private async void MediaElement_VolumeDown(object sender, EventArgs e)
+        {
+            if(!IsVolumeDownEnabled)return;
+            await OnMediaElementVolumeDown();
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual async Task OnMediaElementVolumeDown()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            if(VolumeDownIncrement ==0)return;
+            MediaElement.Volume += VolumeDownIncrement;
+            
+        }
+
+        private async void MediaElement_Mute(object sender, EventArgs e)
+        {
+            if (!IsVolumeDownEnabled) return;
+            await OnMediaElementMute();
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual async Task OnMediaElementMute()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            MediaElement.IsMuted = true;
+        }
+
+        private async void MediaElement_Unmute(object sender, EventArgs e)
+        {
+            if (!IsVolumeDownEnabled) return;
+            await OnMediaElementUnmute();
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual async Task OnMediaElementUnmute()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            MediaElement.IsMuted = false;
+        }
+
+//        private async void MediaElement_Help(object sender, EventArgs e)
+//        {
+//            if (!IsHelpEnabled) return;
+//            await OnMediaElementHelp();
+//        }
+
+//#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+//        protected virtual async Task OnMediaElementHelp()
+//#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+//        {
+//            var bg = new CortanaBackgroundTask();
+            
+//        }
     }
 }

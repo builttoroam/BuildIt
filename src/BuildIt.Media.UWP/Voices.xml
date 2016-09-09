@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
-  <CommandSet xml:lang="en-au" Name="PlayerCommandset_en-us">
+  <CommandSet xml:lang="en-au" Name="PlayerCommandset_en-au">
     <AppName> Player Sample </AppName>
     <Example> Play / Pause / Go forward / Go back </Example>
 
@@ -18,7 +18,6 @@
       <Feedback> Resuming </Feedback>
       <Navigate />
     </Command>
-
     <Command Name="buildit_forward">
       <Example> Forward </Example>
       <ListenFor> [go] forward </ListenFor>
@@ -31,5 +30,36 @@
       <Feedback> Seeking backward... </Feedback>
       <Navigate />
     </Command>
+    <Command Name="buildit_volumeUp">
+      <Example> Volume Up </Example>
+      <ListenFor> [volume] up </ListenFor>
+      <Feedback> Switching up volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="buildit_volumeDown">
+      <Example> Volume Down </Example>
+      <ListenFor> [volume] down </ListenFor>
+      <Feedback> Switching down volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="buildit_mute">
+      <Example> Mute </Example>
+      <ListenFor> [volume] mute </ListenFor>
+      <Feedback> Muting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="buildit_unmute">
+      <Example> Unmute </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="buildit_help">
+      <Example> Help </Example>
+      <ListenFor> help </ListenFor>
+      <Feedback> Here is the help list for you. </Feedback>
+      <VoiceCommandService Target="CortanaBackgroundTask"/>
+    </Command>
+    <PhraseTopic Label="searchterm" Scenario="Natural Language" />
   </CommandSet>
 </VoiceCommands>

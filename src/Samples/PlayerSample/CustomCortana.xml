@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
-  <CommandSet xml:lang="en-au" Name="PlayerCommandset_en-us">
+  <CommandSet xml:lang="en-nz" Name="PlayerCommandset_en-nz">
     <AppName> Test </AppName>
     <Example> Say test </Example>
 
@@ -10,7 +10,5 @@
       <Feedback> Testing... </Feedback>
       <Navigate />
     </Command>
-
-
   </CommandSet>
 </VoiceCommands>

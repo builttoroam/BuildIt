@@ -108,14 +108,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CortanaForPlayerFramework.cs" />
+    <Compile Include="CortanaBackgroundTask.cs" />
     <Compile Include="CortanaMediaElementActions.cs" />
-    <Compile Include="DefaultStart.cs" />
+    <Compile Include="CortanaListener.cs" />
     <Compile Include="PlayerControls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\CortanaControl.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Voices.xml" />
+    <EmbeddedResource Include="Voices.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

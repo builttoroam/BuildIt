@@ -193,6 +193,8 @@ namespace PlayerSample
     {
         protected double forwordTime = 10;
         protected double backwordTime = -10;
+        protected double volumeUp = 0.1;
+        protected double volumeDown = -0.1;
 
         protected override void OnAttached()
         {
@@ -202,8 +204,13 @@ namespace PlayerSample
             PlayerControls.Play += MyMediaElement_Play;
             PlayerControls.Forward += MyMediaElement_Forward;
             PlayerControls.Backward += MyMediaElement_Backward;
-
+            PlayerControls.VolumeUp += MyMediaElement_VolumeUp;
+            PlayerControls.VolumeDown += MyMediaElement_VolumeDown;
+            PlayerControls.Mute += MyMediaElement_Mute;
+            PlayerControls.Unmute += MyMediaElement_Unmute;
+            PlayerControls.Help += MyMediaElement_Help;
         }
+        
 
         protected override void OnDetaching()
         {
@@ -212,6 +219,11 @@ namespace PlayerSample
             PlayerControls.Play -= MyMediaElement_Pause;
             PlayerControls.Forward -= MyMediaElement_Forward;
             PlayerControls.Backward -= MyMediaElement_Backward;
+            PlayerControls.VolumeUp -= MyMediaElement_VolumeUp;
+            PlayerControls.VolumeDown -= MyMediaElement_VolumeDown;
+            PlayerControls.Mute -= MyMediaElement_Mute;
+            PlayerControls.Unmute -= MyMediaElement_Unmute;
+            PlayerControls.Help -= MyMediaElement_Help;
 
             base.OnDetaching();
         }
@@ -266,6 +278,57 @@ namespace PlayerSample
         {
             //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(backwordTime)));
             MediaElement.Position = TimeSpan.FromSeconds(backwordTime);
+        }
+
+        private async void MyMediaElement_VolumeUp(object sender, EventArgs e)
+        {
+            await OnMediaElementVolumeUp();
+        }
+
+        protected virtual async Task OnMediaElementVolumeUp()
+        {
+            if (volumeUp == 0) return;
+            MediaElement.Volume += volumeUp;
+        }
+
+        private async void MyMediaElement_VolumeDown(object sender, EventArgs e)
+        {
+            await OnMediaElementVolumeDown();
+        }
+
+        protected virtual async Task OnMediaElementVolumeDown()
+        {
+            if (volumeDown == 0) return;
+            MediaElement.Volume += volumeDown;
+        }
+        private async void MyMediaElement_Mute(object sender, EventArgs e)
+        {
+            await OnMediaElementMute();
+        }
+
+        protected virtual async Task OnMediaElementMute()
+        {
+            MediaElement.IsMuted = true;
+        }
+
+        private async void MyMediaElement_Unmute(object sender, EventArgs e)
+        {
+            await OnMediaElementMute();
+        }
+
+        protected virtual async Task OnMediaElementUnmute()
+        {
+            MediaElement.IsMuted = false;
+        }
+
+        private async void MyMediaElement_Help(object sender, EventArgs e)
+        {
+            await OnMediaElementMute();
+        }
+
+        protected virtual async Task OnMediaElementHelp()
+        {
+            
         }
     }
 
