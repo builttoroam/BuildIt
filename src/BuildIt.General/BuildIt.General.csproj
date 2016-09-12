@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BaseConfiguration.cs" />
     <Compile Include="BasicDebugLogger.cs" />
+    <Compile Include="CancelEventArgs.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DisplayNameAttribute.cs" />
     <Compile Include="DualParameterEventArgs.cs" />

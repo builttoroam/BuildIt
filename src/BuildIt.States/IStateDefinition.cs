@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Microsoft.Practices.ServiceLocation;
+using BuildIt.ServiceLocation;
 
 namespace BuildIt.States
 {
