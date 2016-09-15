@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.AppService;
@@ -11,8 +11,9 @@ using Windows.ApplicationModel.VoiceCommands;
 
 namespace BuildIt.Media
 {
-    public class CortanaBackgroundTask : IBackgroundTask
+    public class BaseCortanaBackgroundTask
     {
+
         VoiceCommandServiceConnection voiceServiceConnection;
         BackgroundTaskDeferral serviceDeferral;
         public async void Run(IBackgroundTaskInstance taskInstance)
@@ -36,38 +37,39 @@ namespace BuildIt.Media
                 var voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
 
                 //Find the command name witch should match the VCD
-                if (voiceCommand.CommandName == "help")
+                if (voiceCommand.CommandName == "buildit_help")
                 {
                     var props = voiceCommand.Properties;
 
-                    var searchTerm = default(string);
+                    //var searchTerm = default(string);
 
-                    foreach (var kvp in props)
-                    {
-                        Debug.WriteLine($"{kvp.Key} - {string.Join(",", kvp.Value)}");
-                        if (kvp.Key == "searchterm")
-                        {
-                            searchTerm = kvp.Value.FirstOrDefault();
-                        }
-                    }
+                    //foreach (var kvp in props)
+                    //{
+                    //    Debug.WriteLine($"{kvp.Key} - {string.Join(",", kvp.Value)}");
+                    //    if (kvp.Key == "searchterm")
+                    //    {
+                    //        searchTerm = kvp.Value.FirstOrDefault();
+                    //    }
+                    //}
 
-                    if (string.IsNullOrEmpty(searchTerm) || searchTerm == "I" || string.IsNullOrWhiteSpace(searchTerm.Trim('.')))
-                    {
-                        await LaunchAppInForeground();
-                    }
-                    else
-                    {
-                        await CortanaHelpList(searchTerm);
-                    }
+                    //if (string.IsNullOrEmpty(searchTerm) || searchTerm == "I" || string.IsNullOrWhiteSpace(searchTerm.Trim('.')))
+                    //{
+                    //    await LaunchAppInForeground();
+                    //}
+                    //else
+                    //{
+                    await CortanaHelpList();//searchTerm);
+                    //}
                 }
             }
             catch
             {
                 Debug.WriteLine("Unable to process voice command");
             }
+            serviceDeferral.Complete();
         }
 
-        private async Task CortanaHelpList(string searchTerm)
+        private async Task CortanaHelpList()//string searchTerm)
         {
             await ShowProgressScreen();
             var userMessage = new VoiceCommandUserMessage();
@@ -82,14 +84,14 @@ namespace BuildIt.Media
                 ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                 Title = "play",
                 Image = storageFile,
-                AppLaunchArgument = ""
-            };
+                AppLaunchArgument = "buildit_play"
+        };
             var pause = new VoiceCommandContentTile
             {
                 ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                 Title = "pause",
                 Image = storageFile,
-                AppLaunchArgument = ""
+                AppLaunchArgument = "buildit_pause"
             };
 
             destinationContentTiles.Add(pause);

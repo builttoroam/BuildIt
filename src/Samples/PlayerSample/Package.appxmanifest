@@ -21,8 +21,8 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="BuildIt.Media.CortanaBackgroundTask">
-          <uap:AppService Name="CortanaBackgroundTask" />
+        <uap:Extension Category="windows.appService" EntryPoint="BuildIt.Media.Background.CortanaBackgroundTask">
+          <uap:AppService Name="CortanaBackgroundTask"/>
         </uap:Extension>
         <uap:Extension Category="windows.personalAssistantLaunch" />
       </Extensions>
