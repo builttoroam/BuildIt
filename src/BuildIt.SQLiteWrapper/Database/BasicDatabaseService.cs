@@ -1,15 +1,14 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using BuildIt.Data.Sqlite.Common;
+﻿using BuildIt.Data.Sqlite.Common;
 using BuildIt.Data.Sqlite.Database.Interfaces;
 using BuildIt.Data.Sqlite.File;
 using SQLite.Net;
 using SQLite.Net.Interop;
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 // ReSharper disable InconsistentNaming
-
 namespace BuildIt.Data.Sqlite.Database
 {
     public abstract class BasicDatabaseService : BaseDatabaseService, IBasicDatabaseService
