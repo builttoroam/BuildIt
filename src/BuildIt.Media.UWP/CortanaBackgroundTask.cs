@@ -82,12 +82,14 @@ namespace BuildIt.Media
                 ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                 Title = "play",
                 Image = storageFile,
+                AppLaunchArgument = ""
             };
             var pause = new VoiceCommandContentTile
             {
                 ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                 Title = "pause",
-                Image = storageFile
+                Image = storageFile,
+                AppLaunchArgument = ""
             };
 
             destinationContentTiles.Add(pause);

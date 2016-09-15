@@ -60,6 +60,5 @@
       <Feedback> Here is the help list for you. </Feedback>
       <VoiceCommandService Target="CortanaBackgroundTask"/>
     </Command>
-    <PhraseTopic Label="searchterm" Scenario="Natural Language" />
   </CommandSet>
 </VoiceCommands>
