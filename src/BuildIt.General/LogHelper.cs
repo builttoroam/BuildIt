@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Microsoft.Practices.ServiceLocation;
+using BuildIt.ServiceLocation;
 using Newtonsoft.Json;
 
 namespace BuildIt
@@ -53,7 +53,7 @@ namespace BuildIt
                 {
                     if (hasLookedForLogService) return logService;
                     hasLookedForLogService = true;
-                     return logService ?? (logService = ServiceLocator.Current.GetInstance<ILogService>());
+                    return logService ?? (logService = ServiceLocator.Current.GetInstance<ILogService>());
                 }
                 catch (Exception ex)
                 {

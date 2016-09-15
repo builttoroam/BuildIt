@@ -4,11 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extras.CommonServiceLocator;
-using BuildIt.Lifecycle;
 using BuildIt.States.Completion;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace BuildIt.States.Tests
@@ -101,11 +97,10 @@ namespace BuildIt.States.Tests
         [TestInitialize]
         public void TestInit()
         {
-            var build = new ContainerBuilder();
-            var container = build.Build();
-            var csl = new AutofacServiceLocator(container);
-            Container = new AutofacDependencyContainer(container);
-            ServiceLocator.SetLocatorProvider(() => csl);
+            //var build = new ContainerBuilder();
+            //var container = build.Build();
+            //var csl = new AutofacServiceLocator(container);
+            //ServiceLocator.SetLocatorProvider(() => csl);
         }
 
         [TestMethod]
