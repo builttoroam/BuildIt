@@ -40,26 +40,7 @@ namespace BuildIt.Media
                 if (voiceCommand.CommandName == "buildit_help")
                 {
                     var props = voiceCommand.Properties;
-
-                    //var searchTerm = default(string);
-
-                    //foreach (var kvp in props)
-                    //{
-                    //    Debug.WriteLine($"{kvp.Key} - {string.Join(",", kvp.Value)}");
-                    //    if (kvp.Key == "searchterm")
-                    //    {
-                    //        searchTerm = kvp.Value.FirstOrDefault();
-                    //    }
-                    //}
-
-                    //if (string.IsNullOrEmpty(searchTerm) || searchTerm == "I" || string.IsNullOrWhiteSpace(searchTerm.Trim('.')))
-                    //{
-                    //    await LaunchAppInForeground();
-                    //}
-                    //else
-                    //{
-                    await CortanaHelpList();//searchTerm);
-                    //}
+                    await CortanaHelpList();
                 }
             }
             catch
@@ -69,7 +50,7 @@ namespace BuildIt.Media
             serviceDeferral.Complete();
         }
 
-        private async Task CortanaHelpList()//string searchTerm)
+        private async Task CortanaHelpList()
         {
             await ShowProgressScreen();
             var userMessage = new VoiceCommandUserMessage();
@@ -93,9 +74,57 @@ namespace BuildIt.Media
                 Image = storageFile,
                 AppLaunchArgument = "buildit_pause"
             };
+            var forward = new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+                Title = "forward",
+                Image = storageFile,
+                AppLaunchArgument = "buildit_forward"
+            };
+            var back = new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+                Title = "back",
+                Image = storageFile,
+                AppLaunchArgument = "buildit_back"
+            };
+            var volumeup = new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+                Title = "volumeup",
+                Image = storageFile,
+                AppLaunchArgument = "buildit_volumeup"
+            };
+            var volumedown = new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+                Title = "volumedown",
+                Image = storageFile,
+                AppLaunchArgument = "buildit_volumedown"
+            };
+            var mute = new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+                Title = "mute",
+                Image = storageFile,
+                AppLaunchArgument = "buildit_mute"
+            };
+            var unmute = new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+                Title = "unmute",
+                Image = storageFile,
+                AppLaunchArgument = "buildit_unmute"
+            };
 
             destinationContentTiles.Add(pause);
             destinationContentTiles.Add(play);
+            destinationContentTiles.Add(forward);
+            destinationContentTiles.Add(back);
+            destinationContentTiles.Add(volumeup);
+            destinationContentTiles.Add(volumedown);
+            destinationContentTiles.Add(mute);
+            destinationContentTiles.Add(unmute);
 
             await
                 voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
