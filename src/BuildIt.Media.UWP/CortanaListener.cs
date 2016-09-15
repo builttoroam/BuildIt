@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
+using Windows.Media.SpeechRecognition;
 using Windows.Storage;
 using BuildIt.General;
 
@@ -124,9 +125,23 @@ namespace BuildIt.Media
                 if (args.Kind != ActivationKind.VoiceCommand) return false;
 
                 var commandArgs = args as VoiceCommandActivatedEventArgs;
-                var destination = commandArgs?.Result?.RulePath.FirstOrDefault();
-                if (string.IsNullOrWhiteSpace(destination)) return false;
-                return await PlayerControls.Action(destination);
+
+                var speechRecognitionResult = commandArgs.Result;
+
+
+                // Get the name of the voice command and the text spoken. 
+                // See VoiceCommands.xml for supported voice commands.
+                var voiceCommandName = commandArgs?.Result?.RulePath.FirstOrDefault();
+                var textSpoken = speechRecognitionResult.Text;
+
+                if (string.IsNullOrWhiteSpace(voiceCommandName)) return false;
+                //if (voiceCommandName == "help")
+                //{
+                //    // Access the value of {destination} in the voice command.
+                //    var destination = SemanticInterpretation("destination", speechRecognitionResult);
+                //    return await PlayerControls.Action(voiceCommandName);
+                //}
+                return await PlayerControls.Action(voiceCommandName);
             }
             catch (Exception ex)
             {
@@ -134,8 +149,16 @@ namespace BuildIt.Media
                 return false;
             }
         }
-
-
-
+        /// <summary>
+        /// Returns the semantic interpretation of a speech result. 
+        /// Returns null if there is no interpretation for that key.
+        /// </summary>
+        /// <param name="interpretationKey">The interpretation key.</param>
+        /// <param name="speechRecognitionResult">The speech recognition result to get the semantic interpretation from.</param>
+        /// <returns></returns>
+        private static string SemanticInterpretation(string interpretationKey, SpeechRecognitionResult speechRecognitionResult)
+        {
+            return speechRecognitionResult.SemanticInterpretation.Properties[interpretationKey].FirstOrDefault();
+        }
     }
 }
