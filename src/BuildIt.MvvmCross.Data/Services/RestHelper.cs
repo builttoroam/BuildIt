@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MvvmCross.Plugins.Network.Rest;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using MvvmCross.Plugins.Network.Rest;
 
 namespace BuildIt.MvvmCross.Data.Services
 {
@@ -11,7 +11,7 @@ namespace BuildIt.MvvmCross.Data.Services
         {
             return await restClient.RequestAsync<object, TResponse>(uri, null);
         }
-        public static async Task<TResponse> RequestAsync<TRequest, TResponse>(this IMvxJsonRestClient restClient, string uri, TRequest requestObject) where TRequest:class
+        public static async Task<TResponse> RequestAsync<TRequest, TResponse>(this IMvxJsonRestClient restClient, string uri, TRequest requestObject) where TRequest : class
         {
             try
             {
@@ -20,7 +20,7 @@ namespace BuildIt.MvvmCross.Data.Services
                 //var waiter = new ManualResetEvent(false);
                 //TResponse responseValue = default(TResponse);
                 //Exception raisedException=null;
-                var response= await restClient.MakeRequestForAsync<TResponse>(request);
+                var response = await restClient.MakeRequestForAsync<TResponse>(request);
                 //    response =>
                 //    {
                 //        responseValue = response.Result;

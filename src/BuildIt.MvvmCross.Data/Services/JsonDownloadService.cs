@@ -1,11 +1,11 @@
-using System.Threading.Tasks;
 using MvvmCross.Plugins.Network.Rest;
+using System.Threading.Tasks;
 
 namespace BuildIt.MvvmCross.Data.Services
 {
-    public class JsonDownloadService:IDownloadService
+    public class JsonDownloadService : IDownloadService
     {
-        
+
         private IMvxJsonRestClient RestClient { get; set; }
 
         public JsonDownloadService(IMvxJsonRestClient restClient)
@@ -18,9 +18,9 @@ namespace BuildIt.MvvmCross.Data.Services
             return await RestClient.RequestAsync<TResponse>(uri);
         }
 
-        public async  Task<TResponse> RequestAsync<TRequest, TResponse>(string uri, TRequest requestObject) where TRequest : class
+        public async Task<TResponse> RequestAsync<TRequest, TResponse>(string uri, TRequest requestObject) where TRequest : class
         {
-            return await RestClient.RequestAsync<TRequest, TResponse>(uri,requestObject);
+            return await RestClient.RequestAsync<TRequest, TResponse>(uri, requestObject);
         }
     }
 
