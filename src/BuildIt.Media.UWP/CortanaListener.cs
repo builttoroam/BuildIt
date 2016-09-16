@@ -122,26 +122,40 @@ namespace BuildIt.Media
         {
             try
             {
-                if (args.Kind != ActivationKind.VoiceCommand) return false;
+                switch (args.Kind)
+                {
+                    case ActivationKind.VoiceCommand:
+                        var commandArgs = args as VoiceCommandActivatedEventArgs;
 
-                var commandArgs = args as VoiceCommandActivatedEventArgs;
+                        var voiceCommandName = commandArgs?.Result?.RulePath.FirstOrDefault();
+                        if (string.IsNullOrWhiteSpace(voiceCommandName)) return false;
+                        return await PlayerControls.Action(voiceCommandName);
+                    case ActivationKind.Protocol:
+                        var launchContext = "LaunchContext";
+                        var voiceCommaneNameUri = string.Empty;
+                        var commandArgsUris = args as ProtocolActivatedEventArgs;
+                        var uri = commandArgsUris?.Uri.AbsoluteUri.Split(new char[] { '?' }, 2);
+                        var keyValuePairs = uri[1].Split('&')
+                            .Select(x => x.Split('='))
+                            .Where(x => x.Length == 2)
+                            .ToDictionary(x => x.First(), x => x.Last());
+                        if (keyValuePairs.ContainsKey(launchContext))
+                        {
+                            voiceCommaneNameUri = keyValuePairs[launchContext];
+                        }
+                        //var words = uri?[1].Split(new char[] { '=' }, 2);
+                        //var vCommandNameUri = words?[1];
+                        //var voiceCommaneNameUri = commandArgsUris?.Uri.AbsoluteUri.Split(new char[] { '?' }, 2)?[1].Split(new char[] { '=' }, 2)?[1];
+                        if (string.IsNullOrWhiteSpace(voiceCommaneNameUri)) return false;
+                        return await PlayerControls.Action(voiceCommaneNameUri);
+                    default:
+                        return false;
+                }
+                //if (args.Kind != ActivationKind.VoiceCommand) return false;
+                //var test = args as ProtocolActivatedEventArgs;
+                //var commandArgs = args as VoiceCommandActivatedEventArgs;
 
-                var speechRecognitionResult = commandArgs.Result;
-
-
-                // Get the name of the voice command and the text spoken. 
-                // See VoiceCommands.xml for supported voice commands.
-                var voiceCommandName = commandArgs?.Result?.RulePath.FirstOrDefault();
-                var textSpoken = speechRecognitionResult.Text;
-
-                if (string.IsNullOrWhiteSpace(voiceCommandName)) return false;
-                //if (voiceCommandName == "help")
-                //{
-                //    // Access the value of {destination} in the voice command.
-                //    var destination = SemanticInterpretation("destination", speechRecognitionResult);
-                //    return await PlayerControls.Action(voiceCommandName);
-                //}
-                return await PlayerControls.Action(voiceCommandName);
+                //var voiceCommandName = commandArgs?.Result?.RulePath.FirstOrDefault();
             }
             catch (Exception ex)
             {

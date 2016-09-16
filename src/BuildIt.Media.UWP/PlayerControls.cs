@@ -46,9 +46,6 @@ namespace BuildIt.Media
                     case "buildit_unmute":
                         Unmute?.Invoke(null, EventArgs.Empty);
                         break;
-                    //case "buildit_help":
-                    //    Help?.Invoke(null,EventArgs.Empty);
-                    //    break;
                     default:
                         return false;
                 }
