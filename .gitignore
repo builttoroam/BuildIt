@@ -196,3 +196,4 @@ FakesAssemblies/
 *.opt
 *.lock.json
 *.targets
+/src/Samples/MvvmCross/Buildit.MvvmCross.Droid/Resources/Resource.Designer.cs
