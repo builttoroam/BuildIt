@@ -1121,7 +1121,7 @@ where TStateData : INotifyPropertyChanged
             if (setter == null)
             {
                 var propertyName = (getter.Body as MemberExpression)?.Member.Name;
-                var pinfo = typeof (TElement).GetRuntimeProperty(propertyName);
+                var pinfo = vsmGroup.Target.GetType().GetRuntimeProperty(propertyName);
                 setter = (element, value) =>
                 {
                     pinfo.SetValue(element, value);
@@ -1180,13 +1180,14 @@ where TStateData : INotifyPropertyChanged
         
 
         public static
-            IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TElement, TPropertyValue>(
+            IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
             this IStateDefinitionBuilder<TState> vsmGroup,
-            Expression<Func<TElement, TPropertyValue>> getter,
+            Expression<Func<object,TPropertyValue>> getter,
             TPropertyValue value) where TState : struct
         {
             var property = (getter.Body as MemberExpression)?.Expression as ConstantExpression;
-            var element = (TElement)property?.Value;
+            var element = property?.Value;
+
             return vsmGroup
                 .Target(element)
                 .Change(getter)
