@@ -654,12 +654,18 @@ where TStateData : INotifyPropertyChanged
 
         {
             if (vsm == null) return null;
-            var grp = new StateGroup<TState>();
-            vsm?.AddStateGroup(grp);
+
+            var existing = vsm.StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
+            if (existing == null)
+            {
+                existing = new StateGroup<TState>();
+                vsm?.AddStateGroup(existing);
+            }
+
             return new StateGroupBuilder<TState>
             {
                 StateManager = vsm,
-                StateGroup = grp
+                StateGroup = existing
             };
         }
 
@@ -1157,6 +1163,34 @@ where TStateData : INotifyPropertyChanged
             //vsmGroup.Item4.Value = value;
             //vsmGroup.Item3.Values.Add(vsmGroup.Item4);
             return vsmGroup;
+        }
+
+        public static
+            IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TElement, TPropertyValue>(
+            this IStateDefinitionBuilder<TState> vsmGroup, 
+            TElement element,
+            Expression<Func<TElement, TPropertyValue>> getter,
+            TPropertyValue value) where TState : struct
+        {
+            return vsmGroup
+                .Target(element)
+                .Change(getter)
+                .ToValue(value);
+        }
+        
+
+        public static
+            IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TElement, TPropertyValue>(
+            this IStateDefinitionBuilder<TState> vsmGroup,
+            Expression<Func<TElement, TPropertyValue>> getter,
+            TPropertyValue value) where TState : struct
+        {
+            var property = (getter.Body as MemberExpression)?.Expression as ConstantExpression;
+            var element = (TElement)property?.Value;
+            return vsmGroup
+                .Target(element)
+                .Change(getter)
+                .ToValue(value);
         }
 
         //public static StateValue<TElement, TPropertyValue> ChangeProperty<TElement, TPropertyValue>(

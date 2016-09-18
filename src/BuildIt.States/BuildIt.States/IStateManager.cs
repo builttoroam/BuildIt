@@ -29,6 +29,6 @@ namespace BuildIt.States
 
         bool GoToPreviousStateIsBlocked { get; }
 
-        IStateBinder Bind(IStateManager managerToBindTo);
+        IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections=true);
     }
 }

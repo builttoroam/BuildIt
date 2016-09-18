@@ -286,25 +286,35 @@ namespace BuildIt.States
             return await ChangeBackTo(previous, useTransitions);
         }
 
-        public IStateBinder Bind(IStateGroup groupToBindTo)
+        public IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections =true)
         {
-            var sg = groupToBindTo as INotifyStateChanged<TState>;
+            var sg = groupToBindTo as IStateGroup<TState>; // This includes INotifyStateChanged
             if (sg == null) return null;
 
-            return new StateGroupBinder<TState>(this,sg);
+            return new StateGroupBinder<TState>(this,sg, bothDirections);
         }
 
         private class StateGroupBinder<TStateBind> : IStateBinder
             where TStateBind : struct
         {
-            IStateGroup StateGroup { get; }
-            INotifyStateChanged<TStateBind> Source { get; }
-            public StateGroupBinder(IStateGroup sg, INotifyStateChanged<TStateBind> source)
+            private IStateGroup StateGroup { get; }
+            private IStateGroup<TStateBind> Source { get; }
+
+            private bool BothDirections { get; }
+            public StateGroupBinder(IStateGroup sg, IStateGroup<TStateBind> source, bool bothDirections)
             {
+                BothDirections = bothDirections;
                 StateGroup = sg;
                 Source = source;
 
                 Source.StateChanged += Source_StateChanged;
+                if (bothDirections)
+                {
+                    var dest = sg as IStateGroup<TStateBind>;
+                    if (dest == null) return;
+
+                    dest.StateChanged += Dest_StateChanged;
+                }
             }
 
             private void Source_StateChanged(object sender, StateEventArgs<TStateBind> e)
@@ -319,9 +329,29 @@ namespace BuildIt.States
                 }
             }
 
+            private void Dest_StateChanged(object sender, StateEventArgs<TStateBind> e)
+            {
+                if (e.IsNewState)
+                {
+                    Source.ChangeTo(e.State, e.UseTransitions);
+                }
+                else
+                {
+                    Source.ChangeBackTo(e.State, e.UseTransitions);
+                }
+            }
+
             public void Unbind()
             {
                 Source.StateChanged -= Source_StateChanged;
+
+                if (BothDirections)
+                {
+                    var dest = StateGroup as IStateGroup<TStateBind>;
+                    if (dest == null) return;
+
+                    dest.StateChanged += Dest_StateChanged;
+                }
             }
         }
 

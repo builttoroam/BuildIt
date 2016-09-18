@@ -88,9 +88,9 @@ namespace BuildIt.States
             }
         }
 
-        public IStateBinder Bind(IStateManager managerToBindTo)
+        public IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections=true)
         {
-            return new StateManagerBinder(this, managerToBindTo);
+            return new StateManagerBinder(this, managerToBindTo, bothDirections);
         }
 
         private class StateManagerBinder : IStateBinder
@@ -99,7 +99,7 @@ namespace BuildIt.States
             IStateManager StateManagerToBindTo { get; }
 
             IList<IStateBinder> GroupBinders { get; } = new List<IStateBinder>();
-            public StateManagerBinder(IStateManager sm, IStateManager manager)
+            public StateManagerBinder(IStateManager sm, IStateManager manager, bool bothDirections=true)
             {
                 StateManager = sm;
                 StateManagerToBindTo = manager;
@@ -107,8 +107,7 @@ namespace BuildIt.States
                 foreach (var kvp in manager.StateGroups)
                 {
                     var sg = StateManager.StateGroups.SafeValue(kvp.Key);
-                    if (sg == null) continue;
-                    var binder = sg.Bind(kvp.Value);
+                    var binder = sg?.Bind(kvp.Value, bothDirections);
                     if (binder == null) continue;
                     GroupBinders.Add(binder);
                 }

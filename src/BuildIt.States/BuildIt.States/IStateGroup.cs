@@ -18,7 +18,7 @@ namespace BuildIt.States
 
         Task<bool> ChangeToPrevious(bool useTransitions = true);
 
-        IStateBinder Bind(IStateGroup groupToBindTo);
+        IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections=true);
 
         bool TrackHistory { get; set; }
 
