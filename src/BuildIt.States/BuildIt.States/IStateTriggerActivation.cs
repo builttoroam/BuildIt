@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 
 namespace BuildIt.States
 {
@@ -14,7 +13,7 @@ namespace BuildIt.States
         bool IsActive { get; }
     }
 
-    public class StateTriggerBase:IStateTriggerActivation, IStateTrigger
+    public class StateTriggerBase : IStateTriggerActivation, IStateTrigger
     {
         public event EventHandler IsActiveChanged;
 
@@ -38,5 +37,5 @@ namespace BuildIt.States
         }
     }
 
-    
+
 }
