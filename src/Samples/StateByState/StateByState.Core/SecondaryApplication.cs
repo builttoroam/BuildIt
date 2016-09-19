@@ -1,14 +1,9 @@
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Autofac;
-using BuildIt;
 using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
-using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
 using BuildIt.States.Completion;
+using System;
+using System.Threading.Tasks;
 
 namespace StateByState
 {
