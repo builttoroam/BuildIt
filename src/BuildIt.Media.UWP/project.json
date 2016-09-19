@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "BuildIt.General": "0.1.5.1-beta",
+    "BuildIt.General": "0.1.5.2-beta",
     "BuildIt.General.UWP": "0.1.5.1-beta",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0"
