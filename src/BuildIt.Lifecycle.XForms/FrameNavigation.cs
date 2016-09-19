@@ -1,23 +1,18 @@
+using BuildIt.States;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Autofac;
-using BuildIt.Lifecycle.States;
-using BuildIt.Lifecycle.States.ViewModel;
-using BuildIt.States;
 using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
 {
-   
 
-    public class FrameNavigation<TState>: IHasStateData
+
+    public class FrameNavigation<TState> : IHasStateData
         where TState : struct
     {
-        public INotifyPropertyChanged CurrentStateData=> (StateNotifier as IHasStateData)?.CurrentStateData;
+        public INotifyPropertyChanged CurrentStateData => (StateNotifier as IHasStateData)?.CurrentStateData;
 
 
         public INotifyStateChanged<TState> StateNotifier { get; }
@@ -28,10 +23,10 @@ namespace BuildIt.Lifecycle
 
         public FrameNavigation(NavigationPage navigationRoot,
             IStateManager sm)
-            //,string registerAs = null)
+        //,string registerAs = null)
         {
             StateManager = sm;
-            var stateNotifier = sm.StateGroups[typeof (TState)] as INotifyStateChanged<TState>;
+            var stateNotifier = sm.StateGroups[typeof(TState)] as INotifyStateChanged<TState>;
             //var stateManager = hasStateManager.StateManager;
             //if (string.IsNullOrWhiteSpace( registerAs ))
             //{
@@ -79,7 +74,7 @@ namespace BuildIt.Lifecycle
 
             var sm = (dc as IHasStates)?.StateManager;
 
-           // pgHasNotifier.StateManager.Bind(sm);
+            // pgHasNotifier.StateManager.Bind(sm);
 
 
             var groups = sm.StateGroups;
@@ -134,7 +129,7 @@ namespace BuildIt.Lifecycle
                 var page = Activator.CreateInstance(tp) as Page;
                 page.BindingContext = CurrentStateData;
                 await NavigationRoot.Navigation.PushAsync(page);
-                
+
             }
             else
             {
@@ -151,13 +146,13 @@ namespace BuildIt.Lifecycle
             }
 
             UpdateNavigationBar();
-            
+
         }
 
 
         private void UpdateNavigationBar()
         {
-            
+
             if (StateManager.PreviousStateExists && !StateManager.GoToPreviousStateIsBlocked)
             {
                 NavigationPage.SetHasBackButton(NavigationRoot.CurrentPage, true);
