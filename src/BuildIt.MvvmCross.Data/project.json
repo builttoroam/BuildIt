@@ -1,9 +1,8 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "BuildIt.General": "0.1.5.1-beta",
-    "BuildIt.MvvmCross": "0.1.5.1-beta",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "BuildIt.General": "0.1.5.2-beta",
+    "BuildIt.MvvmCross": "0.1.5.2-beta",
     "MvvmCross": "4.2.3",
     "MvvmCross.Binding": "4.2.3",
     "MvvmCross.Core": "4.2.3",
