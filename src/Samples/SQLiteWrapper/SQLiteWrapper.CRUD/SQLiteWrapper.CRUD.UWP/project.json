@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
-    "BuildIt.Data.Sqlite": "0.1.5.1-beta",
+    "BuildIt.Data.Sqlite": "0.1.5.4-beta",
+    "BuildIt.General": "0.1.5.2-beta",
     "Microsoft.ApplicationInsights": "1.2.3",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",

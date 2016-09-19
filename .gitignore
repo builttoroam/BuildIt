@@ -197,3 +197,5 @@ FakesAssemblies/
 *.lock.json
 *.targets
 /src/Samples/MvvmCross/Buildit.MvvmCross.Droid/Resources/Resource.Designer.cs
+/src/Samples/StateByState/StateByState.Android/StateByState.Android.csproj.bak
+/src/Samples/StateByState/StateByState.XForms/Droid/StateByState.XForms.Droid.csproj.bak

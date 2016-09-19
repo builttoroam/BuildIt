@@ -1,7 +1,7 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "BuildIt.Data.Sqlite": "0.1.5.1-beta",
+    "BuildIt.Data.Sqlite": "0.1.5.4-beta",
     "Microsoft.Bcl.Async": "1.0.168",
     "MvvmCross": "4.2.3",
     "SQLite.Net-PCL": "3.1.1",
