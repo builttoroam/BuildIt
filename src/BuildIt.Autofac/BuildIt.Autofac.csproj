@@ -48,7 +48,13 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
-)</PostBuildEvent>
+)
+
+if $(ConfigurationName) == Debug (
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Autofac.0.1.5.5-beta\lib\netstandard1.1\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Autofac\0.1.5.5-beta\lib\netstandard1.1\$(TargetFileName)" /y
+)
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

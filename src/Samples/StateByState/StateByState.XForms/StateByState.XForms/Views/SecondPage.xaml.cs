@@ -1,5 +1,5 @@
-﻿using System;
-using BuildIt.States;
+﻿using BuildIt.States;
+using System;
 using Xamarin.Forms;
 
 namespace StateByState.XForms.Views
@@ -21,7 +21,7 @@ namespace StateByState.XForms.Views
                             .Change(x => x.TextColor, (x, c) => x.TextColor = c)
                             .ToValue(Color.FromHex("FFFF008B"))
                         .Target(textBlock)
-                            .Change(x => x.FontSize, (x, c) => x.FontSize= c)
+                            .Change(x => x.FontSize, (x, c) => x.FontSize = c)
                             .ToValue(40)
                    .DefineState(SecondStates.State3)
                         .Target(textBlock)
@@ -31,7 +31,7 @@ namespace StateByState.XForms.Views
                             .Change(x => x.FontSize, (x, c) => x.FontSize = c)
                             .ToValue(10)
                     .DefineState(SecondStates.State4)
-                .Group(SecondStates2.Base)
+                .Group<SecondStates2>()
                     .DefineState(SecondStates2.StateX)
                     .DefineState(SecondStates2.StateY)
                         .Target(textBlock2)
@@ -154,24 +154,24 @@ namespace StateByState.XForms.Views
             CurrentViewModel.Done();
         }
 
-        private  void XtoZ(object sender, EventArgs e)
+        private void XtoZ(object sender, EventArgs e)
         {
-             CurrentViewModel.XtoZ();
+            CurrentViewModel.XtoZ();
         }
 
-        private  void YtoZ(object sender, EventArgs e)
+        private void YtoZ(object sender, EventArgs e)
         {
-             CurrentViewModel.YtoZ();
+            CurrentViewModel.YtoZ();
         }
 
-        private  void ZtoY(object sender, EventArgs e)
+        private void ZtoY(object sender, EventArgs e)
         {
-             CurrentViewModel.ZtoY();
+            CurrentViewModel.ZtoY();
         }
 
-        private  void YtoX(object sender, EventArgs e)
+        private void YtoX(object sender, EventArgs e)
         {
-             CurrentViewModel.YtoX();
+            CurrentViewModel.YtoX();
         }
     }
 
