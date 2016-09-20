@@ -126,10 +126,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-"$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
-)
-if $(ConfigurationName) == Debug (
+    <PostBuildEvent>if $(ConfigurationName) == Debug (
  xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.Media.UWP\0.1.4.7\lib\.NETCore50\$(TargetFileName)" /y 2&gt;nul 
   xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.Media.UWP.0.1.4.7\lib\.NETCore50\$(TargetFileName)" /y 2&gt;nul 
 )
