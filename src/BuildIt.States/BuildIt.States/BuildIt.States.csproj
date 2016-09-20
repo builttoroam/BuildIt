@@ -70,10 +70,7 @@
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-"$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
-)
-if $(ConfigurationName) == Debug (
+    <PostBuildEvent>if $(ConfigurationName) == Debug (
  xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.States.0.1.5.5-beta\lib\netstandard1.0\$(TargetFileName)" /y
  xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.States\0.1.5.5-beta\lib\netstandard1.0\$(TargetFileName)" /y
 )
