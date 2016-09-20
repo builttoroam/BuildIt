@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.VoiceCommands;
+using Windows.Storage;
 
 namespace BuildIt.Media
 {
@@ -54,77 +58,71 @@ namespace BuildIt.Media
         {
             await ShowProgressScreen();
             var userMessage = new VoiceCommandUserMessage();
-            var destinationContentTiles = new List<VoiceCommandContentTile>();
             userMessage.DisplayMessage = "Here is the help list for you";
             userMessage.SpokenMessage = "Here is the help list for you";
 
             var storageFile = await Package.Current.InstalledLocation.GetFileAsync("assets\\artwork.png");
 
-            var play = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "play",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_play"
-        };
-            var pause = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "pause",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_pause"
-            };
-            var forward = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "forward",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_forward"
-            };
-            var back = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "back",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_back"
-            };
-            var volumeup = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "volumeup",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_volumeup"
-            };
-            var volumedown = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "volumedown",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_volumedown"
-            };
-            var mute = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "mute",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_mute"
-            };
-            var unmute = new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                Title = "unmute",
-                Image = storageFile,
-                AppLaunchArgument = "buildit_unmute"
-            };
+            //load temporary xml file
+            var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.GetFileAsync("_voices.xml");
+            var randomAccessStream = await tempVoiceFile.OpenReadAsync();
+            var stream = randomAccessStream.AsStreamForRead();
 
-            destinationContentTiles.Add(pause);
-            destinationContentTiles.Add(play);
-            destinationContentTiles.Add(forward);
-            destinationContentTiles.Add(back);
-            destinationContentTiles.Add(volumeup);
-            destinationContentTiles.Add(volumedown);
-            destinationContentTiles.Add(mute);
-            destinationContentTiles.Add(unmute);
+            var xml = XDocument.Load(stream);
+
+            var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+            var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
+            var commandName = (from c in xml.Descendants()
+                where ns.GetName("Command") == c.Name
+                select c).ToList();
+            //var commandTitle = (from c in xml.Declaration)
+
+            var destinationContentTiles = commandName.Take(4).Select(command => new VoiceCommandContentTile
+            {
+                ContentTileType = VoiceCommandContentTileType.TitleWith68x92IconAndText,
+                AppLaunchArgument = command.Attribute("Name").Value,
+                Title = command.Element(ns.GetName("Example")).Value,
+                Image = storageFile
+            }).ToList();
+
+            //var play = new VoiceCommandContentTile
+            //{
+            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //    Title = "play",
+            //    Image = storageFile,
+            //    AppLaunchArgument = "buildit_play"
+            //};
+            //var pause = new VoiceCommandContentTile
+            //{
+            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //    Title = "pause",
+            //    Image = storageFile,
+            //    AppLaunchArgument = "buildit_pause"
+            //};
+            //var forward = new VoiceCommandContentTile
+            //{
+            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //    Title = "forward",
+            //    Image = storageFile,
+            //    AppLaunchArgument = "buildit_forward"
+            //};
+            //var back = new VoiceCommandContentTile
+            //{
+            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //    Title = "back",
+            //    Image = storageFile,
+            //    AppLaunchArgument = "buildit_back"
+            //};
+
+            
+            //destinationContentTiles.Add(pause);
+            //destinationContentTiles.Add(play);
+            //destinationContentTiles.Add(forward);
+            //destinationContentTiles.Add(back);
+            //destinationContentTiles.Add(volumeup);
+            //destinationContentTiles.Add(volumedown);
+            //destinationContentTiles.Add(mute);
+            //destinationContentTiles.Add(unmute);
 
             await
                 voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
@@ -143,7 +141,7 @@ namespace BuildIt.Media
 
         private async Task LaunchAppInForeground()
         {
-            var userMessage = new VoiceCommandUserMessage { SpokenMessage = "Please launch app first" };
+            var userMessage = new VoiceCommandUserMessage { SpokenMessage = "Please launch app first",DisplayMessage = "Please launch app first" };
 
             var response = VoiceCommandResponse.CreateResponse(userMessage);
 
