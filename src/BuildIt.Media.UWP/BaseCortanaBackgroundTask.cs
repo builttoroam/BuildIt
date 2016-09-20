@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -72,12 +73,19 @@ namespace BuildIt.Media
 
             var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
             var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
-            var commandName = (from c in xml.Descendants()
+            //get current user location
+            var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
+            var commandSet = (from c in xml.Descendants()
+                where ns.GetName("CommandSet") == c.Name
+                                  where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
+                                  select c);
+            var commandList = (from c in commandSet.Descendants()
                 where ns.GetName("Command") == c.Name
                 select c).ToList();
+           
             //var commandTitle = (from c in xml.Declaration)
-
-            var destinationContentTiles = commandName.Take(4).Select(command => new VoiceCommandContentTile
+            await Task.Yield();
+            var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
             {
                 ContentTileType = VoiceCommandContentTileType.TitleWith68x92IconAndText,
                 AppLaunchArgument = command.Attribute("Name").Value,
