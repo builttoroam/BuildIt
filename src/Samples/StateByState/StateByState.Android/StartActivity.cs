@@ -5,7 +5,7 @@ using StateByState.Services;
 
 namespace StateByState.Android
 {
-    [Activity(MainLauncher = true, Icon = "@drawable/icon",NoHistory = true)]
+    [Activity(MainLauncher = true, Icon = "@drawable/icon", NoHistory = true)]
     public class StartActivity : BaseActivity
     {
         protected override void OnCreate(Bundle bundle)

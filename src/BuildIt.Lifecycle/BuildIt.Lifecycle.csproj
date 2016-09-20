@@ -60,6 +60,7 @@
     <Compile Include="States\ViewModel\BaseViewModelWithCompletion.cs" />
     <Compile Include="States\ViewModel\BaseViewModelWithDefaultCompletion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\ViewModel\IHasCurrentViewModel.cs" />
   </ItemGroup>
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
