@@ -1,26 +1,23 @@
+using BuildIt.ServiceLocation;
+using BuildIt.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using BuildIt.Lifecycle.States;
-using BuildIt.Lifecycle.States.ViewModel;
-using BuildIt.States;
-using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
-    public class RegionManager:IRegionManager
+    public class RegionManager : IRegionManager
     {
-        public Action<IRegionManager,IApplicationRegion> RegionCreated { get; set; }
+        public Action<IRegionManager, IApplicationRegion> RegionCreated { get; set; }
         public Action<IRegionManager, IApplicationRegion> RegionIsClosing { get; set; }
 
         protected IDependencyContainer DependencyContainer { get; private set; }
 
-        private IDictionary<string, IApplicationRegion> Regions { get; }=new Dictionary<string, IApplicationRegion>();
+        private IDictionary<string, IApplicationRegion> Regions { get; } = new Dictionary<string, IApplicationRegion>();
 
         private IApplicationRegion PrimaryRegion { get; set; }
 
-        private List<Type> RegionTypes { get; set; } =new List<Type>(); 
+        private List<Type> RegionTypes { get; set; } = new List<Type>();
 
         public void DefineRegion<TRegion>() where TRegion : IApplicationRegion
         {
@@ -29,7 +26,7 @@ namespace BuildIt.Lifecycle
 
         public TRegion RegionByType<TRegion>() where TRegion : IApplicationRegion
         {
-            return (TRegion)Regions.Values.FirstOrDefault(x => x.GetType() == typeof (TRegion));
+            return (TRegion)Regions.Values.FirstOrDefault(x => x.GetType() == typeof(TRegion));
         }
 
         public IApplicationRegion RegionById(string id)
@@ -81,7 +78,7 @@ namespace BuildIt.Lifecycle
             }
 
             vm.CloseRegion += RegionClosing;
-            RegionCreated?.Invoke(this,vm);
+            RegionCreated?.Invoke(this, vm);
             return vm;
         }
 

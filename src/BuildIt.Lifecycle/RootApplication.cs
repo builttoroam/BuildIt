@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using BuildIt.ServiceLocation;
 using BuildIt.States;
-using Microsoft.Practices.ServiceLocation;
+using System;
+using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle
 {
@@ -20,12 +20,12 @@ namespace BuildIt.Lifecycle
                 // Build and application dependencies
                 RegisterDependencies(container);
 
-            buildDependencies?.Invoke(container);
+                buildDependencies?.Invoke(container);
 
-            //// Perform registrations and build the container.
-            //var container = builder.Build();
+                //// Perform registrations and build the container.
+                //var container = builder.Build();
 
-            await BuildCoreDependencies(container);
+                await BuildCoreDependencies(container);
             }
 
             // Set the service locator to an AutofacServiceLocator.
@@ -50,7 +50,7 @@ namespace BuildIt.Lifecycle
 
         protected virtual void RegisterDependencies(IDependencyContainer builder)
         {
-            
+
         }
 
         protected IDependencyContainer DependencyContainer { get; private set; }

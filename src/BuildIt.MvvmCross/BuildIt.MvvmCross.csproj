@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="BuildIt.MvvmCross.nuspec" />
     <None Include="project.json" />
   </ItemGroup>
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />

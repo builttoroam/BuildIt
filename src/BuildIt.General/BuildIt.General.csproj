@@ -73,6 +73,7 @@
     <Compile Include="TypeRef.cs" />
     <Compile Include="UIContext.cs" />
     <Compile Include="Utilities.cs" />
+    <None Include="BuildIt.General.nuspec" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -89,8 +90,8 @@
 "$(SolutionDir)..\tools\nuget.exe" pack "$(ProjectPath)" -Prop Configuration=Release
 )
 if $(ConfigurationName) == Debug (
- xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.General.0.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
- xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.General\0.1.4\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.General.0.1.5.2-beta\lib\netstandard1.0\$(TargetFileName)" /y
+ xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.General\0.1.5.2-beta\lib\netstandard1.0\$(TargetFileName)" /y
 )
 
 </PostBuildEvent>

@@ -1,11 +1,11 @@
+using MvvmCross.Platform.Platform;
+using MvvmCross.Plugins.File;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using MvvmCross.Platform.Platform;
-using MvvmCross.Plugins.File;
 
 namespace BuildIt.MvvmCross.Data.Services
 {
@@ -77,7 +77,7 @@ namespace BuildIt.MvvmCross.Data.Services
                     }
 
                 }
-                return (TCached) data;
+                return (TCached)data;
             }
             catch (Exception ex)
             {
@@ -190,5 +190,5 @@ namespace BuildIt.MvvmCross.Data.Services
     }
 
 
- 
+
 }

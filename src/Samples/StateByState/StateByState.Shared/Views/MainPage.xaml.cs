@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using BuildIt.Lifecycle;
 using System;
 using Windows.UI.Xaml.Controls;
+using BuildIt.General.UI;
 using BuildIt.States;
 using StateTriggerBase = BuildIt.States.StateTriggerBase;
 

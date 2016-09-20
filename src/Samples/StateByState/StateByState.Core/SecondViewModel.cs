@@ -1,13 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using BuildIt;
-using BuildIt.Lifecycle.States;
-using BuildIt.Lifecycle.States.ViewModel;
-using BuildIt.Lifecycle;
+﻿using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
 using BuildIt.States.Completion;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using CancelEventArgs = BuildIt.CancelEventArgs;
 
 namespace StateByState
 {
@@ -20,7 +16,7 @@ namespace StateByState
         State4
     }
 
-  
+
     public enum SecondStates2
     {
         Base,
@@ -35,7 +31,7 @@ namespace StateByState
         Complete
     }
 
-    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>, 
+    public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>,
         IArriving, IAboutToLeave, ILeaving
     {
         private int extraData;
@@ -59,7 +55,7 @@ namespace StateByState
             get { return extraData; }
             set
             {
-                extraData = value; 
+                extraData = value;
                 OnPropertyChanged();
             }
         }
@@ -83,7 +79,7 @@ namespace StateByState
 
         public async Task InitSecond()
         {
-           await  StateManager.GoToState(SecondStates.State1);
+            await StateManager.GoToState(SecondStates.State1);
             await StateManager.GoToState(SecondStates2.StateX);
             await Task.Delay(1000);
             Debug.WriteLine("Break");
@@ -166,7 +162,7 @@ namespace StateByState
         public async Task Leaving()
 #pragma warning restore 1998
         {
-            
+
         }
     }
 }
