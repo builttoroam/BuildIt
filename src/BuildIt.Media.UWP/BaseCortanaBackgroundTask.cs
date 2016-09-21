@@ -75,62 +75,23 @@ namespace BuildIt.Media
             var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
             //get current user location
             var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
+            //get CommandSet which match currentLocation
             var commandSet = (from c in xml.Descendants()
                 where ns.GetName("CommandSet") == c.Name
                                   where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
                                   select c);
+            //get all command in a list
             var commandList = (from c in commandSet.Descendants()
                 where ns.GetName("Command") == c.Name
                 select c).ToList();
            
-            //var commandTitle = (from c in xml.Declaration)
             await Task.Yield();
             var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
             {
-                ContentTileType = VoiceCommandContentTileType.TitleWith68x92IconAndText,
+                ContentTileType = VoiceCommandContentTileType.TitleOnly,
                 AppLaunchArgument = command.Attribute("Name").Value,
-                Title = command.Element(ns.GetName("Example")).Value,
-                Image = storageFile
+                Title = command.Element(ns.GetName("Example")).Value
             }).ToList();
-
-            //var play = new VoiceCommandContentTile
-            //{
-            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //    Title = "play",
-            //    Image = storageFile,
-            //    AppLaunchArgument = "buildit_play"
-            //};
-            //var pause = new VoiceCommandContentTile
-            //{
-            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //    Title = "pause",
-            //    Image = storageFile,
-            //    AppLaunchArgument = "buildit_pause"
-            //};
-            //var forward = new VoiceCommandContentTile
-            //{
-            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //    Title = "forward",
-            //    Image = storageFile,
-            //    AppLaunchArgument = "buildit_forward"
-            //};
-            //var back = new VoiceCommandContentTile
-            //{
-            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //    Title = "back",
-            //    Image = storageFile,
-            //    AppLaunchArgument = "buildit_back"
-            //};
-
-            
-            //destinationContentTiles.Add(pause);
-            //destinationContentTiles.Add(play);
-            //destinationContentTiles.Add(forward);
-            //destinationContentTiles.Add(back);
-            //destinationContentTiles.Add(volumeup);
-            //destinationContentTiles.Add(volumedown);
-            //destinationContentTiles.Add(mute);
-            //destinationContentTiles.Add(unmute);
 
             await
                 voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
