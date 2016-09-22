@@ -41,6 +41,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\BuildIt.General.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseConfiguration.cs" />
