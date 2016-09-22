@@ -978,8 +978,6 @@ Global
 		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.Release|x86.Build.0 = Release|Any CPU
 		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.Release|x86.Deploy.0 = Release|Any CPU
 		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
-		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
-		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.ReleaseLibraries|Any CPU.Deploy.0 = Release|Any CPU
 		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{C587D54F-FD23-450D-AC22-A6B0AF9D656E}.ReleaseLibraries|ARM.Deploy.0 = Release|Any CPU
