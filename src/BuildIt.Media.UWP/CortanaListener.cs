@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,13 +8,14 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
-using BuildIt.General;
 
 namespace BuildIt.Media
 {
 
     public static class CortanaListener
     {
+        private const string LaunchContext = "LaunchContext";
+
         public static async Task RegisterMediaElementVoiceCommands(string voiceCommandFileName = null, bool registerMissingLocales = true)
         {
             try
@@ -131,17 +131,19 @@ namespace BuildIt.Media
                         if (string.IsNullOrWhiteSpace(voiceCommandName)) return false;
                         return await PlayerControls.Action(voiceCommandName);
                     case ActivationKind.Protocol:
-                        var launchContext = "LaunchContext";
                         var voiceCommaneNameUri = string.Empty;
                         var commandArgsUris = args as ProtocolActivatedEventArgs;
-                        var uri = commandArgsUris?.Uri.AbsoluteUri.Split(new char[] { '?' }, 2);
-                        var keyValuePairs = uri[1].Split('&')
-                            .Select(x => x.Split('='))
-                            .Where(x => x.Length == 2)
-                            .ToDictionary(x => x.First(), x => x.Last());
-                        if (keyValuePairs.ContainsKey(launchContext))
+                        var uri = commandArgsUris?.Uri.AbsoluteUri.Split(new[] { '?' }, 2);
+                        if (uri != null)
                         {
-                            voiceCommaneNameUri = keyValuePairs[launchContext];
+                            var keyValuePairs = uri[1].Split('&')
+                                .Select(x => x.Split('='))
+                                .Where(x => x.Length == 2)
+                                .ToDictionary(x => x.First(), x => x.Last());
+                            if (keyValuePairs.ContainsKey(LaunchContext))
+                            {
+                                voiceCommaneNameUri = keyValuePairs[LaunchContext];
+                            }
                         }
                         //var words = uri?[1].Split(new char[] { '=' }, 2);
                         //var vCommandNameUri = words?[1];
@@ -163,6 +165,7 @@ namespace BuildIt.Media
                 return false;
             }
         }
+
         /// <summary>
         /// Returns the semantic interpretation of a speech result. 
         /// Returns null if there is no interpretation for that key.

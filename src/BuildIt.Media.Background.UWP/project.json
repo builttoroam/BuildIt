@@ -1,8 +1,5 @@
 ﻿{
-  "dependencies": {
-    "BuildIt.General": "0.1.5.2-beta",
-    "BuildIt.General.UWP": "0.1.5.5-beta"
-  },
+  "dependencies": {},
   "frameworks": {
     "uap10.0": {}
   },

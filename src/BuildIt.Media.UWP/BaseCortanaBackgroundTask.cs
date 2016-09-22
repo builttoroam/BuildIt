@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
@@ -18,9 +16,9 @@ namespace BuildIt.Media
 {
     public class BaseCortanaBackgroundTask
     {
+        private VoiceCommandServiceConnection voiceServiceConnection;
+        private BackgroundTaskDeferral serviceDeferral;
 
-        VoiceCommandServiceConnection voiceServiceConnection;
-        BackgroundTaskDeferral serviceDeferral;
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             serviceDeferral = taskInstance.GetDeferral();
@@ -79,13 +77,13 @@ namespace BuildIt.Media
             var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
             //get CommandSet which match currentLocation
             var commandSet = (from c in xml.Descendants()
-                where ns.GetName("CommandSet") == c.Name
-                                  where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
-                                  select c);
+                              where ns.GetName("CommandSet") == c.Name
+                              where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
+                              select c);
             //get all command in a list
             var commandList = (from c in commandSet.Descendants()
-                where ns.GetName("Command") == c.Name
-                select c).ToList();
+                               where ns.GetName("Command") == c.Name
+                               select c).ToList();
             var totalCommandNo = Math.Min(commandList.Count, 4);
             await Task.Yield();
             //var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
@@ -172,30 +170,23 @@ namespace BuildIt.Media
 
         private async Task LaunchAppInForeground()
         {
-            var userMessage = new VoiceCommandUserMessage { SpokenMessage = "Please launch app first",DisplayMessage = "Please launch app first" };
+            var userMessage = new VoiceCommandUserMessage { SpokenMessage = "Please launch app first", DisplayMessage = "Please launch app first" };
 
             var response = VoiceCommandResponse.CreateResponse(userMessage);
 
             await voiceServiceConnection.RequestAppLaunchAsync(response);
         }
 
-        private void OnVoiceCommandCompleted(
-    VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
+        private void OnVoiceCommandCompleted(VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
         {
-            if (this.serviceDeferral != null)
-            {
-                this.serviceDeferral.Complete();
-            }
+            serviceDeferral?.Complete();
         }
 
         private void OnTaskCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
         {
             System.Diagnostics.Debug.WriteLine("Task cancelled, clean up");
-            if (this.serviceDeferral != null)
-            {
-                // Complete the service deferral
-                this.serviceDeferral.Complete();
-            }
+            // Complete the service deferral
+            serviceDeferral?.Complete();
         }
     }
 }
