@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\BuildIt.Data.Sqlite.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="BuildIt.Data.Sqlite.nuspec" />
