@@ -46,12 +46,14 @@
     <Compile Include="..\buildit.config.core.api\models\AppConfigurationValue.cs">
       <Link>Models\AppConfigurationValue.cs</Link>
     </Compile>
+    <Compile Include="Extensions\AppConfigurationValueExtensions.cs" />
     <Compile Include="Extensions\AppConfigurationMapperExtensions.cs" />
     <Compile Include="Models\AppConfigurationValidationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppConfigurationService.cs" />
     <Compile Include="Services\Interfaces\IAppConfigurationService.cs" />
     <Compile Include="Services\Interfaces\IAppConfigurationServiceEndpoint.cs" />
+    <Compile Include="Services\Interfaces\IVersionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
