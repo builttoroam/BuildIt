@@ -111,6 +111,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\BuildIt.General.UWP.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuildIt.General\BuildIt.General.csproj">
+      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems" Label="Shared" />
   <Import Project="..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
