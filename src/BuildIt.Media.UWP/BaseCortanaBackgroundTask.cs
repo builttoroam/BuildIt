@@ -47,6 +47,8 @@ namespace BuildIt.Media
                     var props = voiceCommand.Properties;
                     await CortanaHelpList();
                 }
+                await Task.Delay(1000);
+                await ShowProgressScreen();
             }
             catch
             {
@@ -70,7 +72,7 @@ namespace BuildIt.Media
             var stream = randomAccessStream.AsStreamForRead();
 
             var xml = XDocument.Load(stream);
-
+            var destinationContentTiles = new List<VoiceCommandContentTile>();
             var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
             var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
             //get current user location
@@ -84,18 +86,78 @@ namespace BuildIt.Media
             var commandList = (from c in commandSet.Descendants()
                 where ns.GetName("Command") == c.Name
                 select c).ToList();
-           
+            var totalCommandNo = Math.Min(commandList.Count, 4);
             await Task.Yield();
-            var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
-            {
-                ContentTileType = VoiceCommandContentTileType.TitleOnly,
-                AppLaunchArgument = command.Attribute("Name").Value,
-                Title = command.Element(ns.GetName("Example")).Value
-            }).ToList();
+            //var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
+            //{
+            //    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+            //    AppLaunchArgument = command.Attribute("Name").Value,
+            //    Title = command.Element(ns.GetName("Example")).Value
+            //}).ToList();
+            //if (totalCommandNo > 10)
+            //{
+            //    foreach (var command in commandList.Take(9))
+            //    {
+            //        var commands = new VoiceCommandContentTile
+            //        {
+            //            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //            Title = command.Element(ns.GetName("Example")).Value,
+            //            Image = storageFile,
+            //            AppLaunchArgument = command.Attribute("Name").Value
+            //        };
 
+            //        destinationContentTiles.Add(commands);
+            //    }
+            //    var nextPage = new VoiceCommandContentTile
+            //    {
+            //        ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //        Title = "More commands",
+            //        AppLaunchArgument = "",
+            //    };
+
+            //    destinationContentTiles.Add(nextPage);
+            //}
+            //else
+            //{
+            //    foreach (var command in commandList)
+            //    {
+            //        var commands = new VoiceCommandContentTile
+            //        {
+            //            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //            Title = command.Element(ns.GetName("Example")).Value,
+            //            Image = storageFile,
+            //            AppLaunchArgument = command.Attribute("Name").Value
+            //        };
+
+            //        destinationContentTiles.Add(commands);
+            //    }
+            //}
+
+            foreach (var command in commandList.Take(totalCommandNo))
+            {
+                var commands = new VoiceCommandContentTile
+                {
+                    ContentTileType = VoiceCommandContentTileType.TitleWith280x140IconAndText,
+                    Title = command.Element(ns.GetName("Example")).Value,
+                    Image = storageFile,
+                    AppLaunchArgument = command.Attribute("Name").Value
+                };
+
+                destinationContentTiles.Add(commands);
+            }
+            //var nextPage = new VoiceCommandContentTile
+            //{
+            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+            //    Title = "More commands",
+            //    Image = storageFile,
+            //    AppLaunchArgument = "",
+            //};
+
+            //destinationContentTiles.Add(nextPage);
             await
                 voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
                     destinationContentTiles));
+
         }
 
         private async Task ShowProgressScreen()
