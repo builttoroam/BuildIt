@@ -6,7 +6,7 @@ using BuildIt.Config.Core.Api.Models;
 
 namespace BuildIt.Config.Core.Api.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class AppConfigurationController : Controller
     {
         public AppConfigurationController()
@@ -19,8 +19,7 @@ namespace BuildIt.Config.Core.Api.Controllers
         {
             return new string[] { "b", "a" };
         }
-
-        //[Route("app/{hash?}")]
+        
         [HttpPost]
         public IEnumerable<AppConfigurationValue> Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
         {

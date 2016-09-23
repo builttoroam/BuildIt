@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace BuildIt.Config.Core.Api.Utilities
 {
-    public class AppConfigurationRouter : IRouter
+    public class AppConfigurationRouting : IRouter
     {
         public Task RouteAsync(RouteContext context)
         {
