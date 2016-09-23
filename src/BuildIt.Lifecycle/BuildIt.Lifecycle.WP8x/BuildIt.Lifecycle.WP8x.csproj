@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj">
+      <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
+      <Name>BuildIt.States</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj">
       <Project>{fa40c3d1-c786-4a96-89d3-78d3af17a437}</Project>
       <Name>BuildIt.Lifecycle</Name>
@@ -52,10 +56,6 @@
   <ItemGroup>
     <Reference Include="BuildIt.General, Version=0.1.5.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BuildIt.General.0.1.5.6-beta\lib\netstandard1.0\BuildIt.General.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="BuildIt.States, Version=0.1.5.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.States.0.1.5.5-beta\lib\netstandard1.0\BuildIt.States.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
