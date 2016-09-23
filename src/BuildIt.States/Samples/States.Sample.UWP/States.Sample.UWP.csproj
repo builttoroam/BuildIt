@@ -104,7 +104,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="States.Sample.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -127,15 +126,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildIt.General.UWP\BuildIt.General.UWP.csproj">
-      <Project>{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}</Project>
-      <Name>BuildIt.General.UWP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General.csproj">
-      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
-      <Name>BuildIt.General</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\States.Sample.Core\States.Sample.Core.csproj">
+    <ProjectReference Include="..\States.Sample.Core\States.Sample.Core.csproj">
       <Project>{9127482c-e5a0-47b5-af0c-6895e15e9c84}</Project>
       <Name>States.Sample.Core</Name>
     </ProjectReference>
