@@ -1,0 +1,94 @@
+﻿<Page
+    x:Class="StateByState.SecondPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StateByState"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lifecycle="using:BuildIt.Lifecycle"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="State1">
+                    <Storyboard>
+                        <ColorAnimation Duration="0"
+                                        To="Blue"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        Storyboard.TargetName="textBlock"
+                                        d:IsOptimized="True" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="State2">
+                    <Storyboard>
+                        <ColorAnimation Duration="0"
+                                        To="#FFFF008B"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        Storyboard.TargetName="textBlock"
+                                        d:IsOptimized="True" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="State3">
+                    <Storyboard>
+                        <ColorAnimation Duration="0"
+                                        To="#FFFFC500"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        Storyboard.TargetName="textBlock"
+                                        d:IsOptimized="True" />
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="VisualStateGroup2">
+                <VisualState x:Name="StateX">
+                    <Storyboard>
+                        <ColorAnimation Duration="0"
+                                        To="Blue"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        Storyboard.TargetName="textBlock2"
+                                        d:IsOptimized="True" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="StateY">
+                    <Storyboard>
+                        <ColorAnimation Duration="0"
+                                        To="#FFFF008B"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        Storyboard.TargetName="textBlock2"
+                                        d:IsOptimized="True" />
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="StateZ">
+                    <Storyboard>
+                        <ColorAnimation Duration="0"
+                                        To="#FFFFC500"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        Storyboard.TargetName="textBlock2"
+                                        d:IsOptimized="True" />
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <TextBlock Text="{Binding Name}"
+                   x:Name="textBlock"
+                   FontSize="30"
+                   Foreground="Blue" />
+        <TextBlock x:Name="textBlock2"
+                   Text="Test 1 2 3 4"
+                   FontSize="30"
+                   Foreground="Blue" />
+        <TextBlock 
+                   Text="{Binding ExtraData}"
+                   FontSize="30"
+                   Foreground="Blue" />
+        <Button Click="ToFirst">To First</Button>
+        <Button Click="ToSecond">To Second</Button>
+        <Button Click="ToThird">To Third</Button>
+        <Button Click="Done">Done</Button>
+        <Button Click="XtoZ">X To Z</Button>
+        <Button Click="YtoZ">Y To Z</Button>
+        <Button Click="ZtoY">Z To Y</Button>
+        <Button Click="YtoX">Y To X</Button>
+    </StackPanel>
+
+</Page>

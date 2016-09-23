@@ -5,19 +5,16 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B18D3D00-AD5F-41E5-8D44-1670F28946FB}</ProjectGuid>
+    <ProjectGuid>{9127482C-E5A0-47B5-AF0C-6895E15E9C84}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.States</RootNamespace>
-    <AssemblyName>BuildIt.States</AssemblyName>
+    <RootNamespace>States.Sample.Core</RootNamespace>
+    <AssemblyName>States.Sample.Core</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile />
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,45 +32,22 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\BuildIt.States.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Completion\CompletionEventArgs.cs" />
-    <Compile Include="Completion\CompletionWithDataEventArgs.cs" />
-    <Compile Include="Completion\DefaultCompletion.cs" />
-    <Compile Include="Completion\ICompletion.cs" />
-    <Compile Include="DefaultValue.cs" />
-    <Compile Include="IDefaultValue.cs" />
-    <Compile Include="IHasStates.cs" />
-    <Compile Include="IIsAbleToBeBlocked.cs" />
-    <Compile Include="INotifyStateChanged.cs" />
-    <Compile Include="IStateDefinition.cs" />
-    <Compile Include="IStateGroup.cs" />
-    <Compile Include="IStateGroupManager.cs" />
-    <Compile Include="IStateManager.cs" />
-    <Compile Include="IStateTriggerActivation.cs" />
-    <Compile Include="IStateValue.cs" />
-    <Compile Include="Loading\ILoadingManager.cs" />
-    <Compile Include="Loading\LoadingManager.cs" />
-    <Compile Include="Loading\LoadingTrigger.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StateDefinition.cs" />
-    <Compile Include="StateEventArgs.cs" />
-    <Compile Include="StateGroup.cs" />
-    <Compile Include="StateHelpers.cs" />
-    <Compile Include="StateManager.cs" />
-    <Compile Include="StateValue.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
     <None Include="project.json" />
   </ItemGroup>
-  <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildIt.States\BuildIt.States.csproj">
+      <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
+      <Name>BuildIt.States</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

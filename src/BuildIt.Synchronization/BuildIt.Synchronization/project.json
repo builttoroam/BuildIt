@@ -2,7 +2,8 @@
   "supports": {},
   "dependencies": {
     "BuildIt.General": "0.1.5.6-beta",
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
     "netstandard1.0": {}

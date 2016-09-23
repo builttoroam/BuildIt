@@ -1,10 +1,11 @@
 ﻿{
   "supports": {},
   "dependencies": {
+    "Autofac": "4.1.1",
     "BuildIt.General": "0.1.5.6-beta",
     "NETStandard.Library": "1.6.0"
   },
   "frameworks": {
-    "netstandard1.0": {}
+    "netstandard1.1": {}
   }
 }

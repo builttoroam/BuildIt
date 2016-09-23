@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0CA149FA-2055-4541-B45B-CDB6C09C51EA}</ProjectGuid>
+    <ProjectGuid>{2B0F08A9-A48C-476E-8EA9-CF4A36DDED90}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.States.UWP</RootNamespace>
-    <AssemblyName>BuildIt.States.UWP</AssemblyName>
+    <RootNamespace>BuildIt.General.UI</RootNamespace>
+    <AssemblyName>BuildIt.General.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -35,7 +35,7 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\BuildIt.States.UWP.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\BuildIt.General.UWP.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -109,17 +109,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIStateHelpers.cs" />
-    <EmbeddedResource Include="Properties\BuildIt.States.UWP.rd.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\BuildIt.General.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.States\BuildIt.States.csproj">
-      <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
-      <Name>BuildIt.States</Name>
+    <ProjectReference Include="..\BuildIt.General\BuildIt.General.csproj">
+      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
+      <Name>BuildIt.General</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems" Label="Shared" />
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
