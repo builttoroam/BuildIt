@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using BuildIt.Config.Core.Api.Extensions;
+using BuildIt.Config.Core.Api.Models;
+using BuildIt.Config.Core.Api.Utilities;
 using Microsoft.AspNetCore.Routing;
 
 namespace WebApplication1
@@ -17,7 +19,10 @@ namespace WebApplication1
         {
             //services.AddAppConfiguration();      
             //services.AddRouting();
-            services.AddMvc();
+            services.AddMvc(opts =>
+            {
+                opts.Conventions.Insert(0, new AppConfigurationRoutingConvention(new AppConfigurationRoutingModel() { Prefix = "api3", Controller = "test" }));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -31,7 +36,7 @@ namespace WebApplication1
             }
             
             app.UseMvc();
-            app.UseAppConfiguration("test", "test1");
+            
         }
 
         private void CreateEnvironmentVariables()

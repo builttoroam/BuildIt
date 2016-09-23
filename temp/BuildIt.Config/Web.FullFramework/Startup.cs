@@ -12,7 +12,7 @@ namespace Web.FullFramework
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
-        {
+        {           
             ControllerBuilder.Current.DefaultNamespaces.Add("BuildIt.Config.Core.Api.Controllers");
 
             ConfigureAuth(app);
