@@ -24,11 +24,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\BuildIt.General.dll" target="lib\netstandard1.0" />
-    <file src="bin\Release\BuildIt.General.xml" target="lib\netstandard1.0" />
-    <file src="..\BuildIt.General.UWP\bin\Release\BuildIt.General.xml" target="lib\uap10" />
-    <file src="..\BuildIt.General.UWP\bin\Release\BuildIt.General.dll" target="lib\uap10" />
-    <file src="..\BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.dll" target="lib\uap10" />
-    <file src="..\BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.xml" target="lib\uap10" />
+    <file src="BuildIt.General\bin\Release\BuildIt.General.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.General\bin\Release\BuildIt.General.xml" target="lib\netstandard1.0" />
+    <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.xml" target="lib\uap10" />
+    <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.dll" target="lib\uap10" />
+    <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.dll" target="lib\uap10" />
+    <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.xml" target="lib\uap10" />
   </files>
 </package>

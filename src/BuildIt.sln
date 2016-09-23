@@ -13,10 +13,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle", "{C6B58AAF-DF70-496A-9180-248F142600E6}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac.nuspec = BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac.nuspec
+		BuildIt.Lifecycle\BuildIt.Lifecycle.nuspec = BuildIt.Lifecycle\BuildIt.Lifecycle.nuspec
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.MvvmCross", "BuildIt.MvvmCross", "{82D705BC-FFC7-4A59-8C73-2430E94F56E6}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.MvvmCross\BuildIt.MvvmCross.nuspec = BuildIt.MvvmCross\BuildIt.MvvmCross.nuspec
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.States", "BuildIt.States", "{A87B3962-FD5D-45B0-B55E-A308668F2F2A}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.States\BuildIt.States.nuspec = BuildIt.States\BuildIt.States.nuspec
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States", "BuildIt.States\BuildIt.States\BuildIt.States.csproj", "{B18D3D00-AD5F-41E5-8D44-1670F28946FB}"
 EndProject
@@ -27,8 +37,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "States.Sample.UWP", "BuildIt.States\Samples\States.Sample.UWP\States.Sample.UWP.csproj", "{6886417B-DB5F-4C2E-AA75-4E4FF308D53D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.General", "BuildIt.General", "{CB63CFC0-3FC2-4075-B958-DFBFC77E099C}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.General\BuildIt.General.nuspec = BuildIt.General\BuildIt.General.nuspec
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Media.UWP", "BuildIt.Media.UWP", "{A6339BD2-1137-4247-AC4A-C864DAB8D953}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Media.UWP\BuildIt.Media.UWP.nuspec = BuildIt.Media.UWP\BuildIt.Media.UWP.nuspec
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C1F11C4A-0559-4C00-8ACA-BA231F7A0B05}"
 EndProject
@@ -37,16 +53,25 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1CBEB9C0-9392-4E61-9FAC-F11185677936}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Data.Sqlite", "BuildIt.Data.Sqlite", "{6B05198B-E21C-4E6B-9FEE-2266CFBD4A19}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Data.Sqlite\BuildIt.Data.Sqlite.nuspec = BuildIt.Data.Sqlite\BuildIt.Data.Sqlite.nuspec
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{7AEF77AD-1E21-431E-B152-267A8CB4CD1F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{45CB5752-FB17-4015-9E60-3393F5953B93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Synchronization", "BuildIt.Synchronization", "{1441260C-799C-4B6E-A472-4D4B8A2C23A5}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Synchronization\BuildIt.Synchronization.nuspec = BuildIt.Synchronization\BuildIt.Synchronization.nuspec
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Autofac", "BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj", "{D9058653-4416-4A9B-9FCD-1A2C805629BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Autofac", "BuildIt.Autofac", "{59BFD754-0682-45B0-A386-4A6915674BA9}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Autofac\BuildIt.Autofac.nuspec = BuildIt.Autofac\BuildIt.Autofac.nuspec
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Data.Sqlite", "BuildIt.Data.Sqlite\BuildIt.Data.Sqlite\BuildIt.Data.Sqlite.csproj", "{27622A0A-9C78-43ED-89A5-98215100E054}"
 EndProject
