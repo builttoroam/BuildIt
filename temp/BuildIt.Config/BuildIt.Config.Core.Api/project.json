@@ -23,14 +23,14 @@
                 "define": [ "NETStandard16" ]
             }
         },
-        "net451": {
+        "net452": {
             "dependencies": {
                 //"BuildIt.Config.Core": {
                 //    "target": "project"
                 //}
             },
             "buildOptions": {
-                "define": [ "NET451" ]
+                "define": [ "NET452" ]
             }
         }
     }

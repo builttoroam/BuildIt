@@ -17,5 +17,7 @@ namespace BuildIt.Config.Core.Api.Models
             Controller = Constants.DefaultAppConfigurationControllerName,
             Action = Constants.DefaultAppConfigurationControllerActionName
         };
+
+
     }
 }
