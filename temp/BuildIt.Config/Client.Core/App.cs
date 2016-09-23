@@ -22,9 +22,14 @@ namespace Client.Core
         private void InitAppConfig()
         {
             var appConfigService = Mvx.Resolve<IAppConfigurationService>();
-            appConfigService?.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
-
             appConfigService?.InitForMvvmCross();
+            // Step 1: Retrieve App config from Azure
+            if (appConfigService == null) return;
+
+            appConfigService.RetrieveAppConfig();
+            appConfigService?.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
+            // Step 2: Check the minimum versioin
+            appConfigService.CheckMinimumVersion();
         }
     }
 }

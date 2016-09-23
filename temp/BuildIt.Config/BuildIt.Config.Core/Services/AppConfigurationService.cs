@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using BuildIt.Config.Core.Api.Models;
+using BuildIt.Config.Core.Extensions;
 using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services.Interfaces;
 using MvvmCross.Platform;
@@ -18,6 +19,8 @@ namespace BuildIt.Config.Core.Services
     public class AppConfigurationService : IAppConfigurationService
     {
         private readonly IAppConfigurationServiceEndpoint serviceEndpoint;
+
+        private readonly IVersionService versionService;
 
         private readonly AutoResetEvent getAppConfigurationAutoResetEvent = new AutoResetEvent(true);
 
@@ -43,9 +46,10 @@ namespace BuildIt.Config.Core.Services
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
         public AppConfiguration AppConfig { get; private set; }
 
-        public AppConfigurationService(IAppConfigurationServiceEndpoint serviceEndpoint)
+        public AppConfigurationService(IAppConfigurationServiceEndpoint serviceEndpoint, IVersionService versionService)
         {
             this.serviceEndpoint = serviceEndpoint;
+            this.versionService = versionService;
         }
 
         public async Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true)
@@ -102,6 +106,41 @@ namespace BuildIt.Config.Core.Services
 
                 return AppConfig;
             });
+        }
+
+        public async Task<bool> CheckMinimumVersion(bool retrieveCached = false)
+        {
+            var isValidVersionNumber = false;
+
+            var minVerKey = "App_VersionInfo_MinimumRequiredVersion";
+            Version appVersion;
+            Mapper.Map(minVerKey);
+            var appConfig = await RetrieveAppConfig(retrieveCached);
+            var minimumVersionMappedValue = appConfig.GetValueForKey(minVerKey);
+            var appVerFromPlatform = new AppConfigurationValue {Value = "1.1"};//versionService?.GetVersion();
+
+            if (!Version.TryParse(appVerFromPlatform?.Value, out appVersion) || minimumVersionMappedValue == null)
+            {
+                return false;
+            }
+
+            // Check the minimum required version first
+            Version versionToCheck;
+            if (Version.TryParse(minimumVersionMappedValue, out versionToCheck) &&
+                versionToCheck.CompareTo(appVersion) > 0)
+            {
+                // Minimum version is lower than app version
+                return false;
+            }
+
+            if (Version.TryParse(minimumVersionMappedValue, out versionToCheck) &&
+                versionToCheck.CompareTo(appVersion) > 0)
+            {
+                // Non-blocking Update avaialable
+                isValidVersionNumber = true;
+            }
+
+            return isValidVersionNumber;
         }
 
         public void InitForMvvmCross()

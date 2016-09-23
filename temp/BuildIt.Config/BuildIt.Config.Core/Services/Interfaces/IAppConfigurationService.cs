@@ -10,6 +10,8 @@ namespace BuildIt.Config.Core.Services.Interfaces
 
         Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true);
 
+        Task<bool> CheckMinimumVersion(bool retrieveCachedVersion = false);
+
         void InitForMvvmCross();
     }
 }

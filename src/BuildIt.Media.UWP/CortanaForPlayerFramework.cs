@@ -116,12 +116,10 @@ namespace CortanaControl
             await OnPlayerPause();
         }
 
-#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
-        protected virtual async Task OnPlayerPause()
-#pragma warning restore CS1998
-
+        protected virtual Task OnPlayerPause()
         {
             Player.Pause();
+            return Task.FromResult(true);
         }
 
         private async void PlayerControls_Play(object sender, EventArgs e)
@@ -130,11 +128,10 @@ namespace CortanaControl
         }
 
 
-#pragma warning disable 1998 // This is async because it may be overrridden and want to allow for async methods
-        protected virtual async Task OnPlayerPlay()
-#pragma warning restore 1998
+        protected virtual Task OnPlayerPlay()
         {
             Player.Play();
+            return Task.FromResult(true);
         }
 
         private async void PlayerControls_Forward(object sender, EventArgs e)

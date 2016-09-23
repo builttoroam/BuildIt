@@ -1,7 +1,7 @@
+using Microsoft.Xaml.Interactivity;
 using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Xaml.Interactivity;
 
 namespace BuildIt.Media
 {
@@ -48,11 +48,11 @@ namespace BuildIt.Media
             }
             if (IsVolumeDownEnabled)
             {
-                PlayerControls.VolumeDown+= MediaElement_VolumeDown;
+                PlayerControls.VolumeDown += MediaElement_VolumeDown;
             }
             if (IsMuteEnabled)
             {
-                PlayerControls.Mute+= MediaElement_Mute;
+                PlayerControls.Mute += MediaElement_Mute;
             }
             if (IsUnmuteEnabled)
             {
@@ -108,12 +108,10 @@ namespace BuildIt.Media
             await OnMediaElementPause();
         }
 
-#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
-        protected virtual async Task OnMediaElementPause()
-#pragma warning restore CS1998
-
+        protected virtual Task OnMediaElementPause()
         {
             MediaElement.Pause();
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_Play(object sender, EventArgs e)
@@ -122,73 +120,65 @@ namespace BuildIt.Media
             await OnMediaElementPlay();
         }
 
-#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
-        protected virtual async Task OnMediaElementPlay()
-#pragma warning restore CS1998
-
+        protected virtual Task OnMediaElementPlay()
         {
             MediaElement.Play();
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_Forward(object sender, EventArgs e)
         {
-            if(!IsSeekForwardEnabled) return;
+            if (!IsSeekForwardEnabled) return;
             await OnMediaElementForward();
         }
 
-#pragma warning disable 1998
-        protected virtual async Task OnMediaElementForward()
-#pragma warning restore 1998
+        protected virtual Task OnMediaElementForward()
         {
             //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(forwordTime)));
-            if (SeekForwardIncrement == 0) return;
+            if (SeekForwardIncrement == 0) return Task.FromResult(true);
             MediaElement.Position += TimeSpan.FromSeconds(SeekForwardIncrement);
-
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_Backward(object sender, EventArgs e)
         {
-            if(!IsSeekBackEnabled) return;
+            if (!IsSeekBackEnabled) return;
             await OnMediaElementBackward();
         }
 
 
-#pragma warning disable 1998
-        protected virtual async Task OnMediaElementBackward()
-#pragma warning restore 1998
+        protected virtual Task OnMediaElementBackward()
         {
             //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(backwordTime)));
-            if (SeekBackwardIncrement == 0) return;
+            if (SeekBackwardIncrement == 0) return Task.FromResult(true);
             MediaElement.Position += TimeSpan.FromSeconds(SeekBackwardIncrement);
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_VolumeUp(object sender, EventArgs e)
         {
-            if (!IsVolumeUpEnabled)return;
+            if (!IsVolumeUpEnabled) return;
             await OnMediaElementVolumeUp();
 
         }
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task OnMediaElementVolumeUp()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual Task OnMediaElementVolumeUp()
         {
-            if (VolumeUpIncrement == 0) return;
+            if (VolumeUpIncrement == 0) return Task.FromResult(true);
             MediaElement.Volume += VolumeUpIncrement;
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_VolumeDown(object sender, EventArgs e)
         {
-            if(!IsVolumeDownEnabled)return;
+            if (!IsVolumeDownEnabled) return;
             await OnMediaElementVolumeDown();
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task OnMediaElementVolumeDown()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual Task OnMediaElementVolumeDown()
         {
-            if(VolumeDownIncrement ==0)return;
+            if (VolumeDownIncrement == 0) return Task.FromResult(true);
             MediaElement.Volume += VolumeDownIncrement;
-            
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_Mute(object sender, EventArgs e)
@@ -197,11 +187,10 @@ namespace BuildIt.Media
             await OnMediaElementMute();
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task OnMediaElementMute()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual Task OnMediaElementMute()
         {
             MediaElement.IsMuted = true;
+            return Task.FromResult(true);
         }
 
         private async void MediaElement_Unmute(object sender, EventArgs e)
@@ -210,11 +199,10 @@ namespace BuildIt.Media
             await OnMediaElementUnmute();
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task OnMediaElementUnmute()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected virtual Task OnMediaElementUnmute()
         {
             MediaElement.IsMuted = false;
+            return Task.FromResult(true);
         }
     }
 }
