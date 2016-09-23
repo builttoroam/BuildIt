@@ -1,18 +1,28 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>BuildIt.Autofac</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>BuildIt.Autofac</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://www.builttoroam.com</projectUrl>
-    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-   <releaseNotes>Initial release.</releaseNotes>
-    <copyright>$copyright$</copyright>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>Support for Autofac using BuildIt.General ServiceLocator</description>
+    <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
+    <dependencies>
+      <group targetFramework="netstandard1.1">
+        <dependency id="NETStandard.Library" version="1.6.0" exclude="Build,Analyzers" />
+        <dependency id="Autofac" version="4.1.1" />
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+      </group>
+    </dependencies>
   </metadata>
+  <files>
+    <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.dll" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.pdb" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
+  </files>
 </package>

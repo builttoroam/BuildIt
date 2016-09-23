@@ -17,15 +17,7 @@ namespace BuildIt.General.UI
     {
         public static Visibility Inverse(this Visibility visible)
         {
-            throw new System.Exception("Hello!");
-            if (visible == Visibility.Visible)
-            {
-                return Visibility.Collapsed;
-            }
-            else
-            {
-                return Visibility.Visible;
-            }
+            return visible == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public static Visibility ToVisibility(this bool isVisible)
