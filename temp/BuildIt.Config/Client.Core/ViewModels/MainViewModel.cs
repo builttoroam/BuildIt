@@ -54,7 +54,7 @@ namespace Client.Core.ViewModels
         {
             ConfigValues.Clear();
 
-            var config = await appConfigurationService.RetrieveAppConfig(false);
+            var config = await appConfigurationService.LoadAppConfig(false);//RetrieveAppConfig(false);
             if (config == null) return;
 
             foreach (var value in config.Values)

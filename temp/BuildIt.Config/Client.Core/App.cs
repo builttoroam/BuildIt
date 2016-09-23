@@ -19,17 +19,19 @@ namespace Client.Core
             Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<MainViewModel>());
         }
 
-        private void InitAppConfig()
+        private async void InitAppConfig()
         {
             var appConfigService = Mvx.Resolve<IAppConfigurationService>();
             appConfigService?.InitForMvvmCross();
             // Step 1: Retrieve App config from Azure
             if (appConfigService == null) return;
 
-            appConfigService.RetrieveAppConfig();
             appConfigService?.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
+            appConfigService?.Mapper.EnsurePresence("App_VersionInfo_MinimumRequiredVersion", true);
+            await appConfigService.LoadAppConfig();
+
             // Step 2: Check the minimum versioin
-            appConfigService.CheckMinimumVersion();
+            await appConfigService.CheckMinimumVersion();
         }
     }
 }

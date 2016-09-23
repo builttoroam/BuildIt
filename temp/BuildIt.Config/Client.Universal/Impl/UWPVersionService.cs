@@ -12,17 +12,21 @@ namespace Client.Universal.Impl
 {
     public class UWPVersionService : IVersionService
     {
-        public AppConfigurationValue GetVersion()
+        public Version GetVersion()
         {
-            string appVersion =
-                $"{Package.Current.Id.Version.Major}" +
-                $".{Package.Current.Id.Version.Minor}" +
-                $".{Package.Current.Id.Version.Build}" +
-                $".{Package.Current.Id.Version.Revision}";
-            return new AppConfigurationValue
-            {
-                Value = appVersion
-            };
+            return new Version(Package.Current.Id.Version.Major,
+                Package.Current.Id.Version.Minor,
+                Package.Current.Id.Version.Build,
+                Package.Current.Id.Version.Revision);
+            //string appVersion =
+            //    $"{Package.Current.Id.Version.Major}" +
+            //    $".{Package.Current.Id.Version.Minor}" +
+            //    $".{Package.Current.Id.Version.Build}" +
+            //    $".{Package.Current.Id.Version.Revision}";
+            //return new AppConfigurationValue
+            //{
+            //    Value = appVersion
+            //};
         }
     }
 }

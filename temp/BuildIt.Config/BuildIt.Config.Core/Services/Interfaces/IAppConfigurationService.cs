@@ -7,10 +7,12 @@ namespace BuildIt.Config.Core.Services.Interfaces
     {
         AppConfigurationMapper Mapper { get; }
         AppConfiguration AppConfig { get; }
+        IVersionService VersionService { get; }
 
-        Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true);
 
-        Task<bool> CheckMinimumVersion(bool retrieveCachedVersion = false);
+        Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true);
+
+        //Task<bool> CheckMinimumVersion(bool retrieveCachedVersion = false);
 
         void InitForMvvmCross();
     }
