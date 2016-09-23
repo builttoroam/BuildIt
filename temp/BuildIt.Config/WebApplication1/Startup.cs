@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
+using BuildIt.Config.Core.Api.Extensions;
+using Microsoft.AspNetCore.Routing;
 
 namespace WebApplication1
 {
@@ -13,7 +15,8 @@ namespace WebApplication1
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAppConfiguration();
+            //services.AddAppConfiguration();      
+            //services.AddRouting();
             services.AddMvc();
         }
 
@@ -26,8 +29,9 @@ namespace WebApplication1
                 app.UseDeveloperExceptionPage();
                 CreateEnvironmentVariables();
             }
-
+            
             app.UseMvc();
+            app.UseAppConfiguration("test", "test1");
         }
 
         private void CreateEnvironmentVariables()
