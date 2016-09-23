@@ -20,7 +20,7 @@ namespace BuildIt.Config.Core.Api.Controllers
             return new string[] { "b", "a" };
         }
 
-        [Route("app/{hash?}")]
+        //[Route("app/{hash?}")]
         [HttpPost]
         public IEnumerable<AppConfigurationValue> Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
         {
