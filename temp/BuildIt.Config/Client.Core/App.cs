@@ -26,12 +26,14 @@ namespace Client.Core
             // Step 1: Retrieve App config from Azure
             if (appConfigService == null) return;
 
-            appConfigService?.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
-            appConfigService?.Mapper.EnsurePresence("App_VersionInfo_MinimumRequiredVersion", true);
+            appConfigService.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
+
             await appConfigService.LoadAppConfig();
 
-            // Step 2: Check the minimum versioin
+            // Step 2: Check the minimum version & block the app from running if it's not met
             await appConfigService.CheckMinimumVersion();
+            // Step 3: Check the recommended version & alert users if it's not met
+            await appConfigService.CheckRecommendedVersion();
         }
     }
 }

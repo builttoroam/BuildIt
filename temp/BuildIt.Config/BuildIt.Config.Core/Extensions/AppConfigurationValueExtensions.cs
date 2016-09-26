@@ -4,11 +4,11 @@ namespace BuildIt.Config.Core.Extensions
 {
     public static class AppConfigurationValueExtensions
     {
-        public static string GetValueForKey(this AppConfiguration config, string mappingKey)
+        public static T GetValueForKey<T>(this AppConfiguration config, string mappingKey)
         {
-            if (config == null || string.IsNullOrEmpty((mappingKey))) return null;
+            if (config == null || string.IsNullOrEmpty((mappingKey)) || config[mappingKey] == null) return default(T);
 
-            return config[mappingKey]?.Value;
+            return config[mappingKey].GetValue<T>();
         }
     }
 }
