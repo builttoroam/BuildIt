@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Api.Models;
+#if NETStandard16
+using Microsoft.AspNetCore.Mvc;
+#elif NET452
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Http;
+#endif
 
 namespace BuildIt.Config.Core.Api.Controllers
 {
-    //[Route("api/[controller]")]
+#if NETStandard16
     public class AppConfigurationController : Controller
+#elif NET452    
+    public class AppConfigurationController : Controller
+#endif
     {
-        public AppConfigurationController()
-        {
 
-        }
-
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "b", "a" };
-        }
-        
-        [HttpPost]
+#if NETStandard16
         public IEnumerable<AppConfigurationValue> Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
+#elif NET452
+        public JsonResult Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
+#endif
         {
+            if (configMapperValues == null) return null;
+
             var res = new AppConfiguration();
 
             var config = Environment.GetEnvironmentVariables();
@@ -36,8 +40,14 @@ namespace BuildIt.Config.Core.Api.Controllers
                     Attributes = configMapperValue
                 };
             }
-
+#if NETStandard16
             return res.Values;
+#elif NET452
+            return new JsonResult()
+            {
+                Data = res.Values
+            };
+#endif
         }
     }
 

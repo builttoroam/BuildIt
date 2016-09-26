@@ -1,22 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
-using BuildIt.Config.Core.Api.Controllers;
-using BuildIt.Config.Core.Api.Models;
-using BuildIt.Config.Core.Api.Utilities;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Internal;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
-using Newtonsoft.Json;
-
-namespace BuildIt.Config.Core.Api.Extensions
+﻿namespace BuildIt.Config.Core.Api.Extensions
 {
     public static class MiddlewareExtensions
     {

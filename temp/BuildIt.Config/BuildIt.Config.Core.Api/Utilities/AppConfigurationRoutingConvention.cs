@@ -2,6 +2,8 @@
 using System.Text;
 using BuildIt.Config.Core.Api.Controllers;
 using BuildIt.Config.Core.Api.Models;
+
+#if NETStandard16
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
@@ -13,7 +15,7 @@ namespace BuildIt.Config.Core.Api.Utilities
 
         public AppConfigurationRoutingConvention(AppConfigurationRoutingModel routingModel)
         {
-            this.routingModel = routingModel;
+            this.routingModel = routingModel ?? AppConfigurationRoutingModel.Default;
         }
 
         public void Apply(ApplicationModel application)
@@ -41,3 +43,4 @@ namespace BuildIt.Config.Core.Api.Utilities
         }
     }
 }
+#endif

@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using BuildIt.Config.Core.Api.Models;
+using BuildIt.Config.Core.Api.Utilities;
+using Web.FullFramework.Models;
 
 namespace Web.FullFramework
 {
@@ -16,6 +19,13 @@ namespace Web.FullFramework
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //var r = new Route("test/config", new AppConfigurationRoutingHandler());
+            //RouteTable.Routes.Add(r);
+            RouteTable.Routes.Add(new AppConfigurationRoute(new AppConfigurationRoutingModel()
+            {
+                Prefix = "test1",
+                Controller = "configuration"
+            }));
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
