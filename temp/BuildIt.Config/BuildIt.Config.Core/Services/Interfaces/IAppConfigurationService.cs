@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Acr.UserDialogs;
 using BuildIt.Config.Core.Api.Models;
 
 namespace BuildIt.Config.Core.Services.Interfaces
@@ -8,8 +10,7 @@ namespace BuildIt.Config.Core.Services.Interfaces
         AppConfigurationMapper Mapper { get; }
         AppConfiguration AppConfig { get; }
         IVersionService VersionService { get; }
-
-
+        Task BlockAppFromRunning<T>(string title, string body, Func<T> callerFunc);
         Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true);
 
         //Task<bool> CheckMinimumVersion(bool retrieveCachedVersion = false);

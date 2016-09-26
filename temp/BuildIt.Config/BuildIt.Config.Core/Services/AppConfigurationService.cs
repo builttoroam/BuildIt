@@ -182,13 +182,14 @@ namespace BuildIt.Config.Core.Services
             return res;
         }
 
-        private AppConfigurationValidationResult ValidateRetrievedAppConfig()
+        private AppConfigurationValidationResult ValidateRetrievedAppConfig(AppConfiguration appConfig = null)
         {
             var res = new AppConfigurationValidationResult();
+            appConfig = appConfig ?? AppConfig;
 
-            if (AppConfig == null) return res;
+            if (appConfig == null) return res;
 
-            foreach (var configValue in AppConfig.Values)
+            foreach (var configValue in appConfig.Values)
             {
                 if (configValue.Attributes == null) continue;
 
@@ -202,9 +203,13 @@ namespace BuildIt.Config.Core.Services
             return res;
         }
 
-        private async Task HandleRetrievedAppConfigValidation()
+        private async Task HandleRetrievedAppConfigValidation(AppConfigurationValidationResult validationResult = null)
         {
-            var validationResult = ValidateRetrievedAppConfig();
+            if (validationResult == null)
+            {
+                validationResult = ValidateRetrievedAppConfig();
+            }
+
             if (!validationResult.IsValid)
             {
 
@@ -247,6 +252,21 @@ namespace BuildIt.Config.Core.Services
             }
 
             return formattedInvalidAppConfiguration.ToString();
+        }
+
+        public async Task BlockAppFromRunning<T>(string title, string body, Func<T> callerFunc)
+        {
+            do
+            {
+                var alertAsync = Dialogs?.AlertAsync(title);
+                if (alertAsync != null) await alertAsync;
+
+                await Task.Delay(1000);
+
+                //Check if current app version is up-to-date
+                callerFunc?.Invoke();
+
+            } while (!cancellationToken.IsCancellationRequested);
         }
     }
 }
