@@ -83,7 +83,7 @@ namespace BuildIt.Config.Core.Standard.Services
                         }
                         else
                         {
-                            var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
+                            var alertAsync = UserDialogService?.AlertAsync(Constants.AppConfigurationNotFoundError);
                             if (alertAsync != null) await alertAsync;
                         }
                     }

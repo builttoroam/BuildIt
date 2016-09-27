@@ -10,7 +10,7 @@ namespace BuildIt.Config.Core.Standard.Services
     {
         private static SemaphoreSlim SemaphoreSlim { get; } = new SemaphoreSlim(1);
         public static async Task<bool> CheckMinimumVersion(this IAppConfigurationService configurationService, 
-            bool retrieveCached = false, string minVerKey = "App_VersionInfo_MinimumRequiredVersion")
+            bool retrieveCached = false, string minVerKey = Constants.AppConfigurationMinVersionKey)
         {
             if (configurationService == null) return false;
 
@@ -32,7 +32,7 @@ namespace BuildIt.Config.Core.Standard.Services
         }
 
         public static async Task NotifyUserWhenNotMetAppMinVer(this IAppConfigurationService configurationService, 
-            bool retrieveCached = false, string minVerKey = "App_VersionInfo_MinimumRequiredVersion")
+            bool retrieveCached = false, string minVerKey = Constants.AppConfigurationMinVersionKey)
         {
             var metMinimumAppVer = await CheckMinimumVersion(configurationService, retrieveCached, minVerKey);
 
@@ -40,7 +40,7 @@ namespace BuildIt.Config.Core.Standard.Services
             {
                 //Block the app from running & alert users
                 await
-                    configurationService.BlockAppFromRunning(Constants.MinimumVersionNotMetUserDialogTitle, Constants.MinimumVersionNotMetUserDialogBody, async () =>
+                    configurationService.BlockAppFromRunning(Constants.AppConfigurationMinimumVersionNotMetUserDialogTitle, Constants.AppConfigurationMinimumVersionNotMetUserDialogBody, async () =>
                         {
                             await NotifyUserWhenNotMetAppMinVer(configurationService, retrieveCached, minVerKey);
                         });
@@ -48,7 +48,7 @@ namespace BuildIt.Config.Core.Standard.Services
         }
 
         public static async Task<bool> CheckRecommendedVersion(this IAppConfigurationService configurationService, 
-            bool retrieveCached = false, string recommVerKey = "App_VersionInfo_RecommendedVersion")
+            bool retrieveCached = false, string recommVerKey = Constants.AppConfigurationRecommVersionKey)
         {
             if (configurationService == null) return false;
             
@@ -68,7 +68,7 @@ namespace BuildIt.Config.Core.Standard.Services
         }
 
         public static async Task NotifyUserWhenNotMetAppRecommendedVer(this IAppConfigurationService configurationService, 
-            bool retrieveCached = false, Action failureHandler = null, string recommVerKey = "App_VersionInfo_RecommendedVersion")
+            bool retrieveCached = false, Action failureHandler = null, string recommVerKey = Constants.AppConfigurationRecommVersionKey)
         {
             var metRecommendedVer = await CheckRecommendedVersion(configurationService, retrieveCached, recommVerKey);
 
@@ -82,16 +82,16 @@ namespace BuildIt.Config.Core.Standard.Services
                 else
                 {
                     //Alert users
-                    await configurationService.BlockAppFromRunning(Constants.RecommendedVersionNotMetUserDialogTitle, Constants.RecommendedVersionNotMetUserDialogBody);
+                    await configurationService.BlockAppFromRunning(Constants.AppConfigurationRecommendedVersionNotMetUserDialogTitle, Constants.AppConfigurationRecommendedVersionNotMetUserDialogBody);
                 }
             }
         }
 
         public static async Task HandleServiceNotification(this IAppConfigurationService configurationService,
             bool retrieveCached = false, Action failureHandler = null,
-            string serviceNotificationTitleKey = "App_ServiceNotification_Title",
-            string serviceNotificationBodyKey = "App_ServiceNotification_Body",
-            string serviceNotificationShowKey = "App_ServiceNotification_Displaying")
+            string serviceNotificationTitleKey = Constants.AppConfigurationServiceNotificationTitleKey,
+            string serviceNotificationBodyKey = Constants.AppConfigurationServiceNotificationBodyKey,
+            string serviceNotificationShowKey = Constants.AppConfigurationServiceNotificationDisplayingKey)
         {
             if (configurationService == null) return;
 

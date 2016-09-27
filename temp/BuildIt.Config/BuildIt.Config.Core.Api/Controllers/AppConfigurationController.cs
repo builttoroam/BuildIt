@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BuildIt.Config.Core;
+using BuildIt.Config.Core.Standard;
 using BuildIt.Config.Core.Standard.Models;
 #if NETStandard16
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +45,7 @@ namespace BuildIt.Config.Core.Api.Controllers
                 {
                     var appConfigError = new AppConfigurationError
                     {
-                        Content = "Given key is not present",
+                        Content = Constants.AppConfigurationKeyNotFoundError,
                         Mapping = configMapperValue
                     };
                     res.AppConfigErors.Add(appConfigError);
