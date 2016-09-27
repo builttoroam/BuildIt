@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.Config.Core.Standard.Extensions;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
@@ -7,15 +8,13 @@ namespace BuildIt.Config.Core.Standard.Services
 {
     public static class ConfigurationHelpers
     {
-        public static async Task<bool> CheckMinimumVersion(this IAppConfigurationService configurationService, bool retrieveCached = false, string minVerKey = "App_VersionInfo_MinimumRequiredVersion")
+        private static SemaphoreSlim SemaphoreSlim { get; } = new SemaphoreSlim(1);
+        public static async Task<bool> CheckMinimumVersion(this IAppConfigurationService configurationService, 
+            bool retrieveCached = false, string minVerKey = "App_VersionInfo_MinimumRequiredVersion")
         {
             if (configurationService == null) return false;
 
-            configurationService?.Mapper.EnsurePresence(minVerKey, true);
-
-            var metMinimumAppVer = true;
-            //Version appVersion;
-            //Mapper.Map(minVerKey);
+            configurationService.Mapper.EnsurePresence(minVerKey, true); 
             var appConfig = await configurationService.LoadAppConfig(retrieveCached);
             if (appConfig == null) return false;
 
@@ -24,37 +23,35 @@ namespace BuildIt.Config.Core.Standard.Services
 
             if (appVerFromPlatform == null || minimumVersionMappedValue == null)
             {
-                //return false;
-                metMinimumAppVer = false;
+                return false;
             }
 
             // Check the minimum required version first
             Version versionToCheck;
-            if (Version.TryParse(minimumVersionMappedValue, out versionToCheck) &&
-                versionToCheck > appVerFromPlatform) //.CompareTo(appVerFromPlatform) > 0
-            {
-                // App version is lower than minimum version
-                //return false;
-                metMinimumAppVer = false;
-            }
+            return !Version.TryParse(minimumVersionMappedValue, out versionToCheck) || versionToCheck <= appVerFromPlatform;
+        }
+
+        public static async Task NotifyUserWhenNotMetAppMinVer(this IAppConfigurationService configurationService, 
+            bool retrieveCached = false, string minVerKey = "App_VersionInfo_MinimumRequiredVersion")
+        {
+            var metMinimumAppVer = await CheckMinimumVersion(configurationService, retrieveCached, minVerKey);
 
             if (!metMinimumAppVer)
             {
                 //Block the app from running & alert users
-                await configurationService.BlockAppFromRunning("App version mismatch", "Your app version does not meet up the minimum version required!", false, async () =>
-                {
-                    await CheckMinimumVersion(configurationService, retrieveCached, minVerKey);
-                });
+                await
+                    configurationService.BlockAppFromRunning(Constants.MinimumVersionNotMetUserDialogTitle, Constants.MinimumVersionNotMetUserDialogBody, async () =>
+                        {
+                            await NotifyUserWhenNotMetAppMinVer(configurationService, retrieveCached, minVerKey);
+                        });
             }
-
-            return metMinimumAppVer;
         }
 
-        public static async Task<bool> CheckRecommendedVersion(this IAppConfigurationService configurationService, bool retrieveCached = false, Action failureHandler = null, string recommVerKey = "App_VersionInfo_RecommendedVersion")
+        public static async Task<bool> CheckRecommendedVersion(this IAppConfigurationService configurationService, 
+            bool retrieveCached = false, string recommVerKey = "App_VersionInfo_RecommendedVersion")
         {
             if (configurationService == null) return false;
-
-            var metRecommendedVer = true;
+            
             configurationService.Mapper.EnsurePresence(recommVerKey);
 
             var appConfig = await configurationService.LoadAppConfig(retrieveCached);
@@ -63,18 +60,17 @@ namespace BuildIt.Config.Core.Standard.Services
 
             if (appVerFromPlatform == null || recommVersionMappedValue == null)
             {
-                //return false;
-                metRecommendedVer = false;
+                return false;
             }
 
             Version versionToCheck;
-            if (Version.TryParse(recommVersionMappedValue, out versionToCheck) &&
-                versionToCheck > appVerFromPlatform)
-            {
-                // App version is lower than recommended version
-                //return false;
-                metRecommendedVer = false;
-            }
+            return !Version.TryParse(recommVersionMappedValue, out versionToCheck) || versionToCheck <= appVerFromPlatform;
+        }
+
+        public static async Task NotifyUserWhenNotMetAppRecommendedVer(this IAppConfigurationService configurationService, 
+            bool retrieveCached = false, Action failureHandler = null, string recommVerKey = "App_VersionInfo_RecommendedVersion")
+        {
+            var metRecommendedVer = await CheckRecommendedVersion(configurationService, retrieveCached, recommVerKey);
 
             if (!metRecommendedVer)
             {
@@ -86,12 +82,9 @@ namespace BuildIt.Config.Core.Standard.Services
                 else
                 {
                     //Alert users
-                    await configurationService.BlockAppFromRunning("More recommended version available", "Your app version does not match with the version recommended!");
+                    await configurationService.BlockAppFromRunning(Constants.RecommendedVersionNotMetUserDialogTitle, Constants.RecommendedVersionNotMetUserDialogBody);
                 }
             }
-
-            //return true;
-            return metRecommendedVer;
         }
 
         public static async Task HandleServiceNotification(this IAppConfigurationService configurationService,
@@ -130,6 +123,26 @@ namespace BuildIt.Config.Core.Standard.Services
                         await configurationService.BlockAppFromRunning(serviceNotificationBody, serviceNotificationTitle);
                     }
                 }
+            }
+        }
+
+        public static async Task BlockAppFromRunning(this IAppConfigurationService configurationService, 
+            string title, string body, Func<Task> retryAction = null)
+        {
+            await SemaphoreSlim.WaitAsync();
+            try
+            {
+                await configurationService.UserDialogService.AlertAsync(body, title);
+                await Task.Delay(1000);
+                retryAction?.Invoke();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                SemaphoreSlim.Release();
             }
         }
     }

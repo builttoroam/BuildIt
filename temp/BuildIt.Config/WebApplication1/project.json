@@ -19,14 +19,11 @@
 
     "frameworks": {
         "netcoreapp1.0": {
-            "dependencies": {
-                "BuildIt.Config.Core.Standard": {
-                    "target": "project"
-                }
-                //"BuildIt.Config.Core": {
-                //    "target": "project"
-                //}
-            },
+          "dependencies": {
+            "BuildIt.Config.Core.Standard": {
+              "target": "project"
+            }
+          },
             "imports": [
                 "dotnet5.6",
                 "portable-net45+win8"

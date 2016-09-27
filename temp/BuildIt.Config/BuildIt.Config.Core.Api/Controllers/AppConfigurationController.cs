@@ -20,32 +20,50 @@ namespace BuildIt.Config.Core.Api.Controllers
     {
 
 #if NETStandard16
-        public IEnumerable<AppConfigurationValue> Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
+        public AppConfigurationResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #elif NET452
         public JsonResult Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #endif
         {
             if (configMapperValues == null) return null;
 
-            var res = new AppConfiguration();
+            var res = new AppConfigurationResponse();
 
             var config = Environment.GetEnvironmentVariables();
 
             foreach (var configMapperValue in configMapperValues)
             {
-                res[configMapperValue.Name] = new AppConfigurationValue()
+                //res[configMapperValue.Name] = new AppConfigurationValue()
+                //{
+                //    //TODO: Change this after referencing BuildIt.Core to SafeDictValue()
+                //    Value = config.Contains(configMapperValue.Name) ? config[configMapperValue.Name] as string : null,
+                //    Attributes = configMapperValue
+                //};
+
+                if (configMapperValue.ValueIsRequired && !config.Contains(configMapperValue.Name))
                 {
-                    //TODO: Change this after referencing BuildIt.Core to SafeDictValue()
-                    Value = config.Contains(configMapperValue.Name) ? config[configMapperValue.Name] as string : null,
+                    var appConfigError = new AppConfigurationError
+                    {
+                        Content = "Given key is not present",
+                        Mapping = configMapperValue
+                    };
+                    res.AppConfigErors.Add(appConfigError);
+                    continue;
+                }
+
+                var appConfigValue = new AppConfigurationValue()
+                {
+                    Value = config[configMapperValue.Name] as string,
                     Attributes = configMapperValue
                 };
+                res.AppConfigValues.Add(appConfigValue);
             }
 #if NETStandard16
-            return res.Values;
+            return res;
 #elif NET452
             return new JsonResult()
             {
-                Data = res.Values
+                Data = res
             };
 #endif
         }

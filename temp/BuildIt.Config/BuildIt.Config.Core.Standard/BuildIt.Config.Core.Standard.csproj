@@ -43,8 +43,10 @@
     <Compile Include="Extensions\AppConfigurationMapperExtensions.cs" />
     <Compile Include="Extensions\AppConfigurationValueExtensions.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Models\AppConfigurationError.cs" />
     <Compile Include="Models\AppConfigurationMapper.cs" />
     <Compile Include="Models\AppConfigurationMapperAttributes.cs" />
+    <Compile Include="Models\AppConfigurationResponse.cs" />
     <Compile Include="Models\AppConfigurationRoutingModel.cs" />
     <Compile Include="Models\AppConfigurationValidationResult.cs" />
     <Compile Include="Models\AppConfigurationValue.cs" />

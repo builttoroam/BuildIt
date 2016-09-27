@@ -10,8 +10,8 @@ namespace BuildIt.Config.Core.Standard.Services.Interfaces
         AppConfiguration AppConfig { get; }
         IVersionService VersionService { get; }
 
-        Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true);
+        IUserDialogService UserDialogService { get; }
 
-        Task BlockAppFromRunning(string title, string body, bool justOnce = true, Action retryAction = null);
+        Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true);
     }
 }
