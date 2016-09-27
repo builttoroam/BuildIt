@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Acr.UserDialogs;
-using BuildIt.Config.Core.Api.Models;
-using BuildIt.Config.Core.Extensions;
-using BuildIt.Config.Core.Services.Interfaces;
-using MvvmCross.Platform;
+using BuildIt.Config.Core.Standard.Extensions;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
 
-namespace BuildIt.Config.Core.Services
+namespace BuildIt.Config.Core.Standard.Services
 {
     public static class ConfigurationHelpers
     {
@@ -44,22 +41,13 @@ namespace BuildIt.Config.Core.Services
             if (!metMinimumAppVer)
             {
                 //Block the app from running & alert users
-                await configurationService.BlockAppFromRunning("App version mismatch", "Your app version does not meet up the minimum version required!", async () =>
+                await configurationService.BlockAppFromRunning("App version mismatch", "Your app version does not meet up the minimum version required!", false, async () =>
                 {
                     await CheckMinimumVersion(configurationService, retrieveCached, minVerKey);
                 });
             }
 
             return metMinimumAppVer;
-            //return true;
-            //if (Version.TryParse(minimumVersionMappedValue, out versionToCheck) &&
-            //    versionToCheck.CompareTo(appVersion) > 0)
-            //{
-            //    // Non-blocking Update avaialable
-            //    isValidVersionNumber = true;
-            //}
-
-            //return isValidVersionNumber;
         }
 
         public static async Task<bool> CheckRecommendedVersion(this IAppConfigurationService configurationService, bool retrieveCached = false, Action failureHandler = null, string recommVerKey = "App_VersionInfo_RecommendedVersion")
@@ -98,9 +86,7 @@ namespace BuildIt.Config.Core.Services
                 else
                 {
                     //Alert users
-                    var dialog = Mvx.Resolve<IUserDialogs>();
-                    var alertAsync = dialog?.AlertAsync("Your app version does not match with the version recommended!");
-                    if (alertAsync != null) await alertAsync;
+                    await configurationService.BlockAppFromRunning("More recommended version available", "Your app version does not match with the version recommended!");
                 }
             }
 
@@ -109,9 +95,9 @@ namespace BuildIt.Config.Core.Services
         }
 
         public static async Task HandleServiceNotification(this IAppConfigurationService configurationService,
-            bool retrieveCached = false, Action failureHandler = null, 
+            bool retrieveCached = false, Action failureHandler = null,
             string serviceNotificationTitleKey = "App_ServiceNotification_Title",
-            string serviceNotificationBodyKey = "App_ServiceNotification_Body", 
+            string serviceNotificationBodyKey = "App_ServiceNotification_Body",
             string serviceNotificationShowKey = "App_ServiceNotification_Displaying")
         {
             if (configurationService == null) return;
@@ -141,9 +127,7 @@ namespace BuildIt.Config.Core.Services
                     }
                     else
                     {
-                        var dialog = Mvx.Resolve<IUserDialogs>();
-                        var alertAsync = dialog?.AlertAsync(serviceNotificationBody, serviceNotificationTitle);
-                        if (alertAsync != null) await alertAsync;
+                        await configurationService.BlockAppFromRunning(serviceNotificationBody, serviceNotificationTitle);
                     }
                 }
             }

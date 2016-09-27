@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BuildIt.Config.Core;
-using BuildIt.Config.Core.Api.Models;
+using BuildIt.Config.Core.Standard.Models;
 #if NETStandard16
 using Microsoft.AspNetCore.Mvc;
 #elif NET452

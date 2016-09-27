@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BuildIt.Config.Core.Api.Models;
-using BuildIt.Config.Core.Extensions;
-using BuildIt.Config.Core.Services.Interfaces;
+using BuildIt.Config.Core.Standard.Extensions;
+using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Core.Models;
 using MvvmCross.Core.ViewModels;
 
@@ -54,7 +54,7 @@ namespace Client.Core.ViewModels
         {
             ConfigValues.Clear();
 
-            var config = await appConfigurationService.LoadAppConfig(false);//RetrieveAppConfig(false);
+            var config = await appConfigurationService.LoadAppConfig(false);
             if (config == null) return;
 
             foreach (var value in config.Values)

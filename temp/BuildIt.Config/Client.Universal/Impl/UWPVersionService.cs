@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using BuildIt.Config.Core.Api.Models;
-using BuildIt.Config.Core.Services;
-using BuildIt.Config.Core.Services.Interfaces;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
 
 namespace Client.Universal.Impl
 {

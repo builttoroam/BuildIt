@@ -13,6 +13,9 @@
     "frameworks": {
         "netstandard1.6": {
             "dependencies": {
+                "BuildIt.Config.Core.Standard": {
+                    "target": "project"
+                },
                 //"BuildIt.Config.Core": {
                 //    "target": "project"
                 //}
@@ -29,6 +32,9 @@
                 "System.Web.Routing": "4.0.0.0"                
             },
             "dependencies": {
+                "BuildIt.Config.Core.Standard": {
+                    "target": "project"
+                },
                 //"BuildIt.Config.Core": {
                 //    "target": "project"
                 //}

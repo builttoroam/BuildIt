@@ -4,8 +4,8 @@
                       xmlns:local="using:Client.Universal"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:views="using:MvvmCross.WindowsUWP.Views"
-                      xmlns:models="using:BuildIt.Config.Core.Api.Models"
+                      xmlns:views="using:MvvmCross.WindowsUWP.Views"                      
+                      xmlns:models="using:BuildIt.Config.Core.Standard.Models"
                       mc:Ignorable="d">
     <views:MvxWindowsPage.Resources>
         <DataTemplate x:Key="ConfigItemTemplate"

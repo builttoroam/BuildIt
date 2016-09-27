@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using BuildIt.Config.Core.Api.Controllers;
-using BuildIt.Config.Core.Api.Models;
+using BuildIt.Config.Core.Standard.Models;
 
 namespace BuildIt.Config.Core.Api.Utilities
 {

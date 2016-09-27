@@ -330,6 +330,12 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.Standard.csproj">
+      <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
+      <Name>BuildIt.Config.Core.Standard</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

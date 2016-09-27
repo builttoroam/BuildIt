@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
-using BuildIt.Config.Core.Api.Extensions;
-using BuildIt.Config.Core.Api.Models;
+using BuildIt.Config.Core.Standard.Models;
 using BuildIt.Config.Core.Api.Utilities;
 using Microsoft.AspNetCore.Routing;
 

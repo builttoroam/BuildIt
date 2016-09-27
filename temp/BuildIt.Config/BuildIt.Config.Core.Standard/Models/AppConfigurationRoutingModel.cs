@@ -1,6 +1,4 @@
-﻿using BuildIt.Config.Core.Api.Utilities;
-
-namespace BuildIt.Config.Core.Api.Models
+﻿namespace BuildIt.Config.Core.Standard.Models
 {
     public class AppConfigurationRoutingModel
     {

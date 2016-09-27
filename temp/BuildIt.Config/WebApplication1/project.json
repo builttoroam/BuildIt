@@ -20,9 +20,12 @@
     "frameworks": {
         "netcoreapp1.0": {
             "dependencies": {
-                "BuildIt.Config.Core": {
+                "BuildIt.Config.Core.Standard": {
                     "target": "project"
                 }
+                //"BuildIt.Config.Core": {
+                //    "target": "project"
+                //}
             },
             "imports": [
                 "dotnet5.6",

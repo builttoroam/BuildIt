@@ -1,9 +1,8 @@
-﻿using System.Linq;
+﻿#if NETStandard16
+using System.Linq;
 using System.Text;
 using BuildIt.Config.Core.Api.Controllers;
-using BuildIt.Config.Core.Api.Models;
-
-#if NETStandard16
+using BuildIt.Config.Core.Standard.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 

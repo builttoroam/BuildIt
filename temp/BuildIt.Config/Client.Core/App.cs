@@ -1,5 +1,5 @@
-﻿using BuildIt.Config.Core.Services;
-using BuildIt.Config.Core.Services.Interfaces;
+﻿using BuildIt.Config.Core.Standard.Services;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Core.Services;
 using Client.Core.ViewModels;
 using MvvmCross.Core.ViewModels;
@@ -11,7 +11,7 @@ namespace Client.Core
     {
         public App()
         {
-            Mvx.ConstructAndRegisterSingleton<IAppConfigurationServiceEndpoint, AppConfigurationServiceEndpoint>();
+            Mvx.ConstructAndRegisterSingleton<IAppConfigurationServiceEndpoint, AppConfigurationServiceEndpoint>();            
             Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
 
             InitAppConfig();
@@ -22,7 +22,7 @@ namespace Client.Core
         private async void InitAppConfig()
         {
             var appConfigService = Mvx.Resolve<IAppConfigurationService>();
-            appConfigService?.InitForMvvmCross();
+            //appConfigService?.InitForMvvmCross();
             // Step 1: Retrieve App config from Azure
             if (appConfigService == null) return;
 
@@ -33,7 +33,7 @@ namespace Client.Core
             // Step 2: Check the minimum version & block the app from running if it's not met
             await appConfigService.CheckMinimumVersion();
             // Step 3: Check the recommended version & alert users if it's not met
-            await appConfigService.CheckRecommendedVersion();
+            //await appConfigService.CheckRecommendedVersion();
         }
     }
 }

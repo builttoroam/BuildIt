@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BuildIt.Config.Core.Api.Models
+namespace BuildIt.Config.Core.Standard.Models
 {
     public class AppConfigurationMapper
     {

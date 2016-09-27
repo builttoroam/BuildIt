@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BuildIt.Config.Core.Api.Models
+namespace BuildIt.Config.Core.Standard.Models
 {
     public class AppConfiguration
     {

@@ -1,6 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
-using BuildIt.Config.Core.Services;
-using BuildIt.Config.Core.Services.Interfaces;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Universal.Impl;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -17,6 +16,7 @@ namespace Client.Universal
         protected override void InitializeIoC()
         {
             base.InitializeIoC();
+            Mvx.RegisterType<IUserDialogService, UserDialogService>();
             Mvx.RegisterType<IVersionService, UWPVersionService>();
         }
 

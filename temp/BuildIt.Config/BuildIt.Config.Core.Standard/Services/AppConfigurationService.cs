@@ -6,18 +6,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Acr.UserDialogs;
-using BuildIt.Config.Core.Api.Models;
-using BuildIt.Config.Core.Models;
-using BuildIt.Config.Core.Services.Interfaces;
-using MvvmCross.Platform;
+using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Newtonsoft.Json;
 
-namespace BuildIt.Config.Core.Services
+namespace BuildIt.Config.Core.Standard.Services
 {
     public class AppConfigurationService : IAppConfigurationService
     {
         private readonly IAppConfigurationServiceEndpoint serviceEndpoint;
+
+        private readonly IUserDialogService userDialogService;
 
         public IVersionService VersionService { get; }
 
@@ -27,27 +26,15 @@ namespace BuildIt.Config.Core.Services
 
         private string currentAppConfigurationMd5Hash;
 
-        private IUserDialogs dialogs;
-        private IUserDialogs Dialogs
-        {
-            get
-            {
-                return dialogs ?? (dialogs = Mvx.Resolve<IUserDialogs>());
-            }
-            set
-            {
-                dialogs = value;
-            }
-        }
-
         private CancellationTokenSource cancellationToken;
 
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
         public AppConfiguration AppConfig { get; private set; }
 
-        public AppConfigurationService(IAppConfigurationServiceEndpoint serviceEndpoint, IVersionService versionService)
+        public AppConfigurationService(IAppConfigurationServiceEndpoint serviceEndpoint, IVersionService versionService, IUserDialogService userDialogService)
         {
             this.serviceEndpoint = serviceEndpoint;
+            this.userDialogService = userDialogService;
             this.VersionService = versionService;
         }
 
@@ -57,11 +44,27 @@ namespace BuildIt.Config.Core.Services
             return await RetrieveAppConfig(retrieveCachedVersion);
         }
 
+        public async Task BlockAppFromRunning(string title, string body, bool justOnce = true, Action retryAction = null)
+        {
+            do
+            {
+                await userDialogService.AlertAsync(title);
+
+                if (!justOnce)
+                {
+                    await Task.Delay(1000);
+
+                    //Check if current app version is up-to-date
+                    retryAction?.Invoke();
+                }
+
+            } while (!cancellationToken.IsCancellationRequested && !justOnce);
+        }
 
         private async Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true)
         {
             //TODO: Handle this situation in a better way
-            if (!isInitialized) return null;
+            //if (!isInitialized) return null;
 
             cancellationToken?.Cancel();
 
@@ -97,7 +100,7 @@ namespace BuildIt.Config.Core.Services
                         }
                         else
                         {
-                            var alertAsync = Dialogs?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
+                            var alertAsync = userDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
                             if (alertAsync != null) await alertAsync;
                         }
                     }
@@ -112,26 +115,6 @@ namespace BuildIt.Config.Core.Services
 
                 return AppConfig;
             });
-        }
-
-       
-
-        public void InitForMvvmCross()
-        {
-            try
-            {
-                // On Android extra step is required to init dialogs in MainActivity (https://github.com/aritchie/userdialogs)
-                Mvx.RegisterSingleton<IUserDialogs>(() =>
-                {
-                    return Dialogs = UserDialogs.Instance;
-                });
-
-                isInitialized = true;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
         }
 
         private async Task<AppConfiguration> Get()
@@ -182,14 +165,13 @@ namespace BuildIt.Config.Core.Services
             return res;
         }
 
-        private AppConfigurationValidationResult ValidateRetrievedAppConfig(AppConfiguration appConfig = null)
+        private AppConfigurationValidationResult ValidateRetrievedAppConfig()
         {
             var res = new AppConfigurationValidationResult();
-            appConfig = appConfig ?? AppConfig;
 
-            if (appConfig == null) return res;
+            if (AppConfig == null) return res;
 
-            foreach (var configValue in appConfig.Values)
+            foreach (var configValue in AppConfig.Values)
             {
                 if (configValue.Attributes == null) continue;
 
@@ -203,13 +185,9 @@ namespace BuildIt.Config.Core.Services
             return res;
         }
 
-        private async Task HandleRetrievedAppConfigValidation(AppConfigurationValidationResult validationResult = null)
+        private async Task HandleRetrievedAppConfigValidation()
         {
-            if (validationResult == null)
-            {
-                validationResult = ValidateRetrievedAppConfig();
-            }
-
+            var validationResult = ValidateRetrievedAppConfig();
             if (!validationResult.IsValid)
             {
 
@@ -221,8 +199,7 @@ namespace BuildIt.Config.Core.Services
                     }
                     else
                     {
-                        var alertAsync = Dialogs?.AlertAsync($"{validationResult.InvalidValues[0]?.Attributes?.Name} is not present!");
-                        if (alertAsync != null) await alertAsync;
+                        await userDialogService.AlertAsync($"{validationResult.InvalidValues[0]?.Attributes?.Name} is not present!");
                     }
                 }
                 else
@@ -231,8 +208,7 @@ namespace BuildIt.Config.Core.Services
 
                     do
                     {
-                        var alertAsync = Dialogs?.AlertAsync($"{FormatInvalidAppConfiguration(validationResult.InvalidValues)}");
-                        if (alertAsync != null) await alertAsync;
+                        await userDialogService.AlertAsync($"{FormatInvalidAppConfiguration(validationResult.InvalidValues)}");
 
                         await Task.Delay(1000);
 
@@ -252,21 +228,6 @@ namespace BuildIt.Config.Core.Services
             }
 
             return formattedInvalidAppConfiguration.ToString();
-        }
-
-        public async Task BlockAppFromRunning<T>(string title, string body, Func<T> callerFunc)
-        {
-            do
-            {
-                var alertAsync = Dialogs?.AlertAsync(title);
-                if (alertAsync != null) await alertAsync;
-
-                await Task.Delay(1000);
-
-                //Check if current app version is up-to-date
-                callerFunc?.Invoke();
-
-            } while (!cancellationToken.IsCancellationRequested);
         }
     }
 }

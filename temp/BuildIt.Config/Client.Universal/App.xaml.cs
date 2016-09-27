@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -80,7 +81,7 @@ namespace Client.Universal
                 start.Start();
             }
             // Ensure the current window is active
-            Window.Current.Activate();
+            Window.Current.Activate();            
         }
 
         /// <summary>

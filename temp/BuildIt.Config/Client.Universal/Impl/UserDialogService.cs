@@ -1,0 +1,31 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.Popups;
+using BuildIt.Config.Core.Standard.Services.Interfaces;
+
+namespace Client.Universal.Impl
+{
+    public class UserDialogService : IUserDialogService
+    {
+        private readonly CoreDispatcher dispatcher;
+
+        public UserDialogService()
+        {
+            this.dispatcher = CoreWindow.GetForCurrentThread()?.Dispatcher;
+        }
+
+        public async Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null)
+        {
+            if (dispatcher == null) return;
+
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var dialog = new MessageDialog(message) { Title = title ?? "" };
+                var res = await dialog.ShowAsync();
+            });
+        }
+    }
+}

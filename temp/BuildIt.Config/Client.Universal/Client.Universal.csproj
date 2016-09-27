@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Impl\UserDialogService.cs" />
     <Compile Include="Impl\UWPVersionService.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Views\MainView.xaml.cs">
@@ -129,9 +130,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core\BuildIt.Config.Core.csproj">
-      <Project>{2C08C818-1C95-497C-9284-BDF5ADFEF386}</Project>
-      <Name>BuildIt.Config.Core</Name>
+    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.Standard.csproj">
+      <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
+      <Name>BuildIt.Config.Core.Standard</Name>
     </ProjectReference>
     <ProjectReference Include="..\Client.Core\Client.Core.csproj">
       <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>

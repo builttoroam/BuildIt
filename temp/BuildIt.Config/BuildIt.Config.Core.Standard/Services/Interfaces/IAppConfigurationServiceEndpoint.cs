@@ -1,4 +1,4 @@
-﻿namespace BuildIt.Config.Core.Services.Interfaces
+﻿namespace BuildIt.Config.Core.Standard.Services.Interfaces
 {
     public interface IAppConfigurationServiceEndpoint
     {
