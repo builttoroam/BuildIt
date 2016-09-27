@@ -1,0 +1,51 @@
+{
+    "version": "1.0.0-*",
+
+    "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+        "Newtonsoft.Json": "9.0.1"
+        //"BuildIt.Config.Core.Shared": {
+        //    "target": "project"
+        //},        
+    },
+
+    "frameworks": {
+        "netstandard1.6": {
+            "dependencies": {
+                "BuildIt.Config.Core.Standard": {
+                    "target": "project"
+                },
+                //"BuildIt.Config.Core": {
+                //    "target": "project"
+                //}
+                "Microsoft.AspNetCore.Mvc": "1.0.0"
+            },
+            "imports": "dnxcore50",
+            "buildOptions": {
+                "define": [ "NETStandard16" ]
+            }
+        },
+        "net452": {
+            "frameworkAssemblies": {
+                "System.Web": "4.0.0.0",
+                "System.Web.Routing": "4.0.0.0"                
+            },
+            "dependencies": {
+                "BuildIt.Config.Core.Standard": {
+                    "target": "project"
+                },
+                //"BuildIt.Config.Core": {
+                //    "target": "project"
+                //}
+                "Microsoft.AspNet.Mvc": "5.2.3",
+                "Microsoft.AspNet.WebApi.Core": "5.2.3",
+                "Microsoft.AspNet.WebApi.WebHost": "5.2.3",
+                "Microsoft.Bcl": "1.1.10"
+            },
+            "buildOptions": {
+                "define": [ "NET452" ]
+            }
+        }
+    }
+}

@@ -35,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\BuildIt.States.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Completion\CompletionEventArgs.cs" />
@@ -70,12 +71,8 @@
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Debug (
- xcopy "$(TargetPath)" "$(SolutionDir)packages\BuildIt.States.0.1.5.5-beta\lib\netstandard1.0\$(TargetFileName)" /y
- xcopy "$(TargetPath)" "%25appdata%25\..\..\.nuget\packages\BuildIt.States\0.1.5.5-beta\lib\netstandard1.0\$(TargetFileName)" /y
-)
-
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
