@@ -57,12 +57,20 @@ namespace BuildIt.Media
 
         private async Task CortanaHelpList()
         {
-            await ShowProgressScreen();
+            //back for cortana to show the content
+            var msgback = new VoiceCommandUserMessage();
+            msgback.DisplayMessage = msgback.SpokenMessage = "Here is the help list for you";
+            //Cortana 
+            var msgRepeat = new VoiceCommandUserMessage();
+            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Here is another help list for you";
+
             var userMessage = new VoiceCommandUserMessage();
             userMessage.DisplayMessage = "Here is the help list for you";
             userMessage.SpokenMessage = "Here is the help list for you";
 
             var storageFile = await Package.Current.InstalledLocation.GetFileAsync("assets\\artwork.png");
+
+            await ShowProgressScreen();
 
             //load temporary xml file
             var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.GetFileAsync("_voices.xml");
@@ -70,6 +78,8 @@ namespace BuildIt.Media
             var stream = randomAccessStream.AsStreamForRead();
 
             var xml = XDocument.Load(stream);
+
+            // Create items for each item. Ideally, should be limited to a small number of items.
             var destinationContentTiles = new List<VoiceCommandContentTile>();
             var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
             var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
@@ -85,77 +95,82 @@ namespace BuildIt.Media
                                where ns.GetName("Command") == c.Name
                                select c).ToList();
             var totalCommandNo = Math.Min(commandList.Count, 4);
-            await Task.Yield();
-            //var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
-            //{
-            //    ContentTileType = VoiceCommandContentTileType.TitleOnly,
-            //    AppLaunchArgument = command.Attribute("Name").Value,
-            //    Title = command.Element(ns.GetName("Example")).Value
-            //}).ToList();
-            //if (totalCommandNo > 10)
-            //{
-            //    foreach (var command in commandList.Take(9))
-            //    {
-            //        var commands = new VoiceCommandContentTile
-            //        {
-            //            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //            Title = command.Element(ns.GetName("Example")).Value,
-            //            Image = storageFile,
-            //            AppLaunchArgument = command.Attribute("Name").Value
-            //        };
 
-            //        destinationContentTiles.Add(commands);
-            //    }
-            //    var nextPage = new VoiceCommandContentTile
-            //    {
-            //        ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //        Title = "More commands",
-            //        AppLaunchArgument = "",
-            //    };
+            // var test = new VoiceCommandContentTile();
 
-            //    destinationContentTiles.Add(nextPage);
-            //}
-            //else
-            //{
-            //    foreach (var command in commandList)
-            //    {
-            //        var commands = new VoiceCommandContentTile
-            //        {
-            //            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //            Title = command.Element(ns.GetName("Example")).Value,
-            //            Image = storageFile,
-            //            AppLaunchArgument = command.Attribute("Name").Value
-            //        };
-
-            //        destinationContentTiles.Add(commands);
-            //    }
-            //}
 
             foreach (var command in commandList.Take(totalCommandNo))
             {
-                var commands = new VoiceCommandContentTile
+                destinationContentTiles.Add(new VoiceCommandContentTile
                 {
-                    ContentTileType = VoiceCommandContentTileType.TitleWith280x140IconAndText,
+                    AppLaunchArgument = command.Attribute("Name").Value,
+                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
                     Title = command.Element(ns.GetName("Example")).Value,
-                    Image = storageFile,
-                    AppLaunchArgument = command.Attribute("Name").Value
+                });
+            }
+            if (totalCommandNo == 4)
+            {
+                var nextPage = new VoiceCommandContentTile
+                {
+                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                    Title = "More voice commands",
+                    AppLaunchArgument = "More",
                 };
 
-                destinationContentTiles.Add(commands);
+                destinationContentTiles.Add(nextPage);
             }
-            //var nextPage = new VoiceCommandContentTile
-            //{
-            //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-            //    Title = "More commands",
-            //    Image = storageFile,
-            //    AppLaunchArgument = "",
-            //};
 
-            //destinationContentTiles.Add(nextPage);
-            await
+            TilesList:
+
+            // Cortana will handle re-prompting if the user does not provide a valid response.
+            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destinationContentTiles);
+            // If cortana is dismissed in this operation, null will be returned.
+
+            var selectedRes = await voiceServiceConnection.RequestDisambiguationAsync(response);
+
+            //Create dialogue confirm that user selected
+            msgback.DisplayMessage = msgback.SpokenMessage = "Are you sure you want select " + selectedRes.SelectedItem.Title + " ?";
+            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select Yes or No";
+            response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+
+            //var voiceAppLaunchArgument = string.Empty;
+            //return YES OR NO
+
+            var result = await voiceServiceConnection.RequestConfirmationAsync(response);
+            if (result.Confirmed)
+            {
+                var testTilesList = new List<VoiceCommandContentTile>();
+                if (selectedRes.SelectedItem.AppLaunchArgument == "More")
+                {
+                    for (int i = totalCommandNo; i < commandList.Count - 1; i++)
+                    {
+                        testTilesList.Add(new VoiceCommandContentTile
+                        {
+
+                            AppLaunchArgument = commandList[i].Attribute("Name").Value,
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = commandList[i].Element(ns.GetName("Example")).Value,
+
+                        });
+                    }
+                    await
                 voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
-                    destinationContentTiles));
+                    testTilesList));
+                    return;
+                }
+                msgback.DisplayMessage = msgback.SpokenMessage = $"You've selected {selectedRes.SelectedItem.Title}";
+                msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"You've selected {selectedRes.SelectedItem.Title}";
+                response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+                //var value = selectedRes.SelectedItem.AppLaunchArgument;
+                //voiceAppLaunchArgument = selectedRes.SelectedItem.AppLaunchArgument;
+                //response = VoiceCommandResponse.CreateResponse()
+            }
+            else
+            {
+                goto TilesList;
+            }
 
+            await voiceServiceConnection.ReportSuccessAsync(response);
         }
 
         private async Task ShowProgressScreen()
