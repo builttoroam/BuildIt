@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
@@ -16,9 +18,9 @@ namespace BuildIt.Media
 {
     public class BaseCortanaBackgroundTask
     {
-        private VoiceCommandServiceConnection voiceServiceConnection;
-        private BackgroundTaskDeferral serviceDeferral;
 
+        VoiceCommandServiceConnection voiceServiceConnection;
+        BackgroundTaskDeferral serviceDeferral;
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             serviceDeferral = taskInstance.GetDeferral();
@@ -55,6 +57,110 @@ namespace BuildIt.Media
             serviceDeferral.Complete();
         }
 
+        //private async Task CortanaHelpList()
+        //{
+        //    await ShowProgressScreen();
+        //    var userMessage = new VoiceCommandUserMessage();
+        //    userMessage.DisplayMessage = "Here is the help list for you";
+        //    userMessage.SpokenMessage = "Here is the help list for you";
+
+        //    var storageFile = await Package.Current.InstalledLocation.GetFileAsync("assets\\artwork.png");
+
+        //    //load temporary xml file
+        //    var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.GetFileAsync("_voices.xml");
+        //    var randomAccessStream = await tempVoiceFile.OpenReadAsync();
+        //    var stream = randomAccessStream.AsStreamForRead();
+
+        //    var xml = XDocument.Load(stream);
+        //    var destinationContentTiles = new List<VoiceCommandContentTile>();
+        //    var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+        //    var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
+        //    //get current user location
+        //    var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
+        //    //get CommandSet which match currentLocation
+        //    var commandSet = (from c in xml.Descendants()
+        //                      where ns.GetName("CommandSet") == c.Name
+        //                      where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
+        //                      select c);
+        //    //get all command in a list
+        //    var commandList = (from c in commandSet.Descendants()
+        //                       where ns.GetName("Command") == c.Name
+        //                       select c).ToList();
+        //    var totalCommandNo = Math.Min(commandList.Count, 4);
+        //    await Task.Yield();
+        //    //var destinationContentTiles = commandList.Take(4).Select(command => new VoiceCommandContentTile
+        //    //{
+        //    //    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+        //    //    AppLaunchArgument = command.Attribute("Name").Value,
+        //    //    Title = command.Element(ns.GetName("Example")).Value
+        //    //}).ToList();
+        //    //if (totalCommandNo > 10)
+        //    //{
+        //    //    foreach (var command in commandList.Take(9))
+        //    //    {
+        //    //        var commands = new VoiceCommandContentTile
+        //    //        {
+        //    //            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+        //    //            Title = command.Element(ns.GetName("Example")).Value,
+        //    //            Image = storageFile,
+        //    //            AppLaunchArgument = command.Attribute("Name").Value
+        //    //        };
+
+        //    //        destinationContentTiles.Add(commands);
+        //    //    }
+        //    //    var nextPage = new VoiceCommandContentTile
+        //    //    {
+        //    //        ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+        //    //        Title = "More commands",
+        //    //        AppLaunchArgument = "",
+        //    //    };
+
+        //    //    destinationContentTiles.Add(nextPage);
+        //    //}
+        //    //else
+        //    //{
+        //    //    foreach (var command in commandList)
+        //    //    {
+        //    //        var commands = new VoiceCommandContentTile
+        //    //        {
+        //    //            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+        //    //            Title = command.Element(ns.GetName("Example")).Value,
+        //    //            Image = storageFile,
+        //    //            AppLaunchArgument = command.Attribute("Name").Value
+        //    //        };
+
+        //    //        destinationContentTiles.Add(commands);
+        //    //    }
+        //    //}
+
+        //    foreach (var command in commandList.Take(totalCommandNo))
+        //    {
+        //        var commands = new VoiceCommandContentTile
+        //        {
+        //            ContentTileType = VoiceCommandContentTileType.TitleWith280x140IconAndText,
+        //            Title = command.Element(ns.GetName("Example")).Value,
+        //            Image = storageFile,
+        //            AppLaunchArgument = command.Attribute("Name").Value
+        //        };
+
+        //        destinationContentTiles.Add(commands);
+        //    }
+        //    //var nextPage = new VoiceCommandContentTile
+        //    //{
+        //    //    ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
+        //    //    Title = "More commands",
+        //    //    Image = storageFile,
+        //    //    AppLaunchArgument = "",
+        //    //};
+
+        //    //destinationContentTiles.Add(nextPage);
+        //    await
+        //        voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
+        //            destinationContentTiles));
+
+
+        //}
+
         private async Task CortanaHelpList()
         {
             //back for cortana to show the content
@@ -63,7 +169,7 @@ namespace BuildIt.Media
             //Cortana 
             var msgRepeat = new VoiceCommandUserMessage();
             msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Here is another help list for you";
-
+            
             var userMessage = new VoiceCommandUserMessage();
             userMessage.DisplayMessage = "Here is the help list for you";
             userMessage.SpokenMessage = "Here is the help list for you";
@@ -71,7 +177,7 @@ namespace BuildIt.Media
             var storageFile = await Package.Current.InstalledLocation.GetFileAsync("assets\\artwork.png");
 
             await ShowProgressScreen();
-
+            
             //load temporary xml file
             var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.GetFileAsync("_voices.xml");
             var randomAccessStream = await tempVoiceFile.OpenReadAsync();
@@ -96,9 +202,9 @@ namespace BuildIt.Media
                                select c).ToList();
             var totalCommandNo = Math.Min(commandList.Count, 4);
 
-            // var test = new VoiceCommandContentTile();
-
-
+           // var test = new VoiceCommandContentTile();
+            
+            
             foreach (var command in commandList.Take(totalCommandNo))
             {
                 destinationContentTiles.Add(new VoiceCommandContentTile
@@ -121,18 +227,18 @@ namespace BuildIt.Media
             }
 
             TilesList:
-
+            
             // Cortana will handle re-prompting if the user does not provide a valid response.
-            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destinationContentTiles);
+            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback,msgRepeat, destinationContentTiles);
             // If cortana is dismissed in this operation, null will be returned.
-
+            
             var selectedRes = await voiceServiceConnection.RequestDisambiguationAsync(response);
 
             //Create dialogue confirm that user selected
             msgback.DisplayMessage = msgback.SpokenMessage = "Are you sure you want select " + selectedRes.SelectedItem.Title + " ?";
             msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select Yes or No";
             response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
-
+            
             //var voiceAppLaunchArgument = string.Empty;
             //return YES OR NO
 
@@ -142,11 +248,11 @@ namespace BuildIt.Media
                 var testTilesList = new List<VoiceCommandContentTile>();
                 if (selectedRes.SelectedItem.AppLaunchArgument == "More")
                 {
-                    for (int i = totalCommandNo; i < commandList.Count - 1; i++)
+                    for (int i = totalCommandNo; i < commandList.Count -1; i++)
                     {
                         testTilesList.Add(new VoiceCommandContentTile
                         {
-
+                            
                             AppLaunchArgument = commandList[i].Attribute("Name").Value,
                             ContentTileType = VoiceCommandContentTileType.TitleOnly,
                             Title = commandList[i].Element(ns.GetName("Example")).Value,
@@ -169,7 +275,7 @@ namespace BuildIt.Media
             {
                 goto TilesList;
             }
-
+            
             await voiceServiceConnection.ReportSuccessAsync(response);
         }
 
@@ -192,16 +298,23 @@ namespace BuildIt.Media
             await voiceServiceConnection.RequestAppLaunchAsync(response);
         }
 
-        private void OnVoiceCommandCompleted(VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
+        private void OnVoiceCommandCompleted(
+    VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
         {
-            serviceDeferral?.Complete();
+            if (this.serviceDeferral != null)
+            {
+                this.serviceDeferral.Complete();
+            }
         }
 
         private void OnTaskCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
         {
             System.Diagnostics.Debug.WriteLine("Task cancelled, clean up");
-            // Complete the service deferral
-            serviceDeferral?.Complete();
+            if (this.serviceDeferral != null)
+            {
+                // Complete the service deferral
+                this.serviceDeferral.Complete();
+            }
         }
     }
 }
