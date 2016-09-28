@@ -31,6 +31,7 @@ namespace BuildIt.Config.Core.Api.Controllers
             var res = new AppConfigurationResponse();
 
             var config = Environment.GetEnvironmentVariables();
+            var tmpConfigValueCollection = new List<AppConfigurationValue>();
 
             foreach (var configMapperValue in configMapperValues)
             {
@@ -57,8 +58,15 @@ namespace BuildIt.Config.Core.Api.Controllers
                     Value = config[configMapperValue.Name] as string,
                     Attributes = configMapperValue
                 };
-                res.AppConfigValues.Add(appConfigValue);
+                //res.AppConfigValues.Add(appConfigValue);
+                tmpConfigValueCollection.Add(appConfigValue);
             }
+
+            if (!res.HasErrors())
+            {
+                tmpConfigValueCollection.CopyTo(res.AppConfigValues.ToArray());
+            }
+
 #if NETStandard16
             return res;
 #elif NET452
