@@ -12,12 +12,12 @@
 
     "frameworks": {
         "netstandard1.6": {
-          "dependencies": {
-            "BuildIt.Config.Core.Standard": {
-              "target": "project"
+            "dependencies": {
+                "BuildIt.Config.Core.Standard": {
+                    "target": "project"
+                },
+                "Microsoft.AspNetCore.Mvc": "1.0.0"
             },
-            "Microsoft.AspNetCore.Mvc": "1.0.0"
-          },
             "imports": "dnxcore50",
             "buildOptions": {
                 "define": [ "NETStandard16" ]
@@ -26,20 +26,24 @@
         "net452": {
             "frameworkAssemblies": {
                 "System.Web": "4.0.0.0",
-                "System.Web.Routing": "4.0.0.0"                
+                "System.Web.Routing": "4.0.0.0"
             },
-          "dependencies": {
-            "BuildIt.Config.Core.Standard": {
-              "target": "project"
+            "dependencies": {
+                "BuildIt.Config.Core.Standard": {
+                    "target": "project"
+                },
+                "Microsoft.AspNet.Mvc": "5.2.3",
+                "Microsoft.AspNet.WebApi.Core": "5.2.3",
+                "Microsoft.AspNet.WebApi.WebHost": "5.2.3",
+                "Microsoft.Bcl": "1.1.10"
             },
-            "Microsoft.AspNet.Mvc": "5.2.3",
-            "Microsoft.AspNet.WebApi.Core": "5.2.3",
-            "Microsoft.AspNet.WebApi.WebHost": "5.2.3",
-            "Microsoft.Bcl": "1.1.10"
-          },
             "buildOptions": {
                 "define": [ "NET452" ]
             }
         }
+    },
+
+    "scripts": {
+        "postcompile": "\"%project:Directory%/../.nuget/nuget.exe\" pack BuildIt.Config.Core.Api.nuspec"
     }
 }
