@@ -133,7 +133,7 @@ namespace BuildIt.Config.Core.Standard.Services
             try
             {
                 await configurationService.UserDialogService.AlertAsync(body, title);
-                await Task.Delay(1000);
+                //await Task.Delay(1000);
                 retryAction?.Invoke();
             }
             catch (Exception)
