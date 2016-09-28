@@ -10,21 +10,34 @@ namespace Client.Universal.Impl
 {
     public class UserDialogService : IUserDialogService
     {
-        private readonly CoreDispatcher dispatcher;
 
-        public UserDialogService()
+        private CoreDispatcher dispatcher;
+
+        private CoreDispatcher Dispatcher
+        {
+            get
+            {
+                if (dispatcher == null)
+                {
+                    dispatcher = CoreWindow.GetForCurrentThread()?.Dispatcher;
+                }
+                return dispatcher;
+            }
+        }
+
+        /*public UserDialogService()
         {
             this.dispatcher = CoreWindow.GetForCurrentThread()?.Dispatcher;
-        }
+        }*/
 
         public async Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null)
         {
-            if (dispatcher == null) return;
+            if (Dispatcher == null) return;
 
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await Dispatcher.RunTaskAsync(async () =>
             {
                 var dialog = new MessageDialog(message) { Title = title ?? "" };
-                var res = await dialog.ShowAsync();
+                await dialog.ShowAsync();
             });
         }
     }

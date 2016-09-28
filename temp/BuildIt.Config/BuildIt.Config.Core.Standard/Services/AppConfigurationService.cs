@@ -16,7 +16,7 @@ namespace BuildIt.Config.Core.Standard.Services
     {
         private readonly IAppConfigurationServiceEndpoint serviceEndpoint;
 
-        private readonly IUserDialogService userDialogService;
+        public IUserDialogService UserDialogService { get;  }
 
         public IVersionService VersionService { get; }
 
@@ -34,7 +34,7 @@ namespace BuildIt.Config.Core.Standard.Services
         public AppConfigurationService(IAppConfigurationServiceEndpoint serviceEndpoint, IVersionService versionService, IUserDialogService userDialogService)
         {
             this.serviceEndpoint = serviceEndpoint;
-            this.userDialogService = userDialogService;
+            this.UserDialogService = userDialogService;
             this.VersionService = versionService;
         }
 
@@ -42,23 +42,6 @@ namespace BuildIt.Config.Core.Standard.Services
         {
             if (AppConfig != null) return AppConfig;
             return await RetrieveAppConfig(retrieveCachedVersion);
-        }
-
-        public async Task BlockAppFromRunning(string title, string body, bool justOnce = true, Action retryAction = null)
-        {
-            do
-            {
-                await userDialogService.AlertAsync(title);
-
-                if (!justOnce)
-                {
-                    await Task.Delay(1000);
-
-                    //Check if current app version is up-to-date
-                    retryAction?.Invoke();
-                }
-
-            } while (!cancellationToken.IsCancellationRequested && !justOnce);
         }
 
         private async Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true)
@@ -100,7 +83,7 @@ namespace BuildIt.Config.Core.Standard.Services
                         }
                         else
                         {
-                            var alertAsync = userDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
+                            var alertAsync = UserDialogService?.AlertAsync(Constants.AppConfigurationNotFoundError);
                             if (alertAsync != null) await alertAsync;
                         }
                     }
@@ -139,18 +122,38 @@ namespace BuildIt.Config.Core.Standard.Services
                     requestContent.Headers.ContentType.MediaType = "application/json";
                     using (var response = await client.PostAsync(endpoint, requestContent))
                     {
+                        if (response == null) return res;
                         using (var content = response.Content)
                         {
                             var responseContent = await content.ReadAsStringAsync();
-                            var appConfigurationValues = JsonConvert.DeserializeObject<List<AppConfigurationValue>>(responseContent);
-                            if (appConfigurationValues != null && appConfigurationValues.Any())
-                            {
-                                res = new AppConfiguration();
-                                foreach (var value in appConfigurationValues)
-                                {
-                                    if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
+                            var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
 
-                                    res[value.Attributes.Name] = value;
+                            if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors())
+                            {
+                                #if DEBUG
+                                    //Display all errors
+                                    var responseErrors = appConfigurationResponse.AppConfigErors;
+                                    foreach (var responseError in responseErrors)
+                                    {
+                                        await UserDialogService.AlertAsync($"Message: {responseError.Content}");
+                                    }
+                                #else
+                                    //Display user-friendly alert
+                                    var alertAsync = userDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
+                                    if (alertAsync != null) await alertAsync;
+                                #endif
+                            }
+                            else
+                            {
+                                if (appConfigurationResponse != null && appConfigurationResponse.HasConfigValues())
+                                {
+                                    res = new AppConfiguration();
+                                    foreach (var value in appConfigurationResponse.AppConfigValues)
+                                    {
+                                        if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
+
+                                        res[value.Attributes.Name] = value;
+                                    }
                                 }
                             }
                         }
@@ -199,7 +202,7 @@ namespace BuildIt.Config.Core.Standard.Services
                     }
                     else
                     {
-                        await userDialogService.AlertAsync($"{validationResult.InvalidValues[0]?.Attributes?.Name} is not present!");
+                        await UserDialogService.AlertAsync($"{validationResult.InvalidValues[0]?.Attributes?.Name} is not present!");
                     }
                 }
                 else
@@ -208,7 +211,7 @@ namespace BuildIt.Config.Core.Standard.Services
 
                     do
                     {
-                        await userDialogService.AlertAsync($"{FormatInvalidAppConfiguration(validationResult.InvalidValues)}");
+                        await UserDialogService.AlertAsync($"{FormatInvalidAppConfiguration(validationResult.InvalidValues)}");
 
                         await Task.Delay(1000);
 

@@ -28,10 +28,10 @@ namespace Client.Core
 
             appConfigService.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
 
-            await appConfigService.LoadAppConfig();
+            //await appConfigService.LoadAppConfig();
 
             // Step 2: Check the minimum version & block the app from running if it's not met
-            await appConfigService.CheckMinimumVersion();
+            await appConfigService.NotifyUserWhenNotMetAppMinVer();
             // Step 3: Check the recommended version & alert users if it's not met
             //await appConfigService.CheckRecommendedVersion();
         }

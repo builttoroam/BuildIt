@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="Impl\UserDialogService.cs" />
     <Compile Include="Impl\UWPVersionService.cs" />
     <Compile Include="Setup.cs" />
