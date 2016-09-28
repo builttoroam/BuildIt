@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
-using Client.Universal.impl.Extensions;
+using Client.Universal.Impl.Extensions;
 
-namespace Client.Universal.impl
+namespace Client.Universal.Impl
 {
     public class UserDialogService : IUserDialogService
     {

@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Core", "Client.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core.Standard", "BuildIt.Config.Core.Standard\BuildIt.Config.Core.Standard.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Universal.impl", "Client.Universal.impl\Client.Universal.impl.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Universal.Impl", "Client.Universal.impl\Client.Universal.Impl.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
-using Client.Universal.impl;
+using Client.Universal.Impl;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.WindowsUWP.Platform;

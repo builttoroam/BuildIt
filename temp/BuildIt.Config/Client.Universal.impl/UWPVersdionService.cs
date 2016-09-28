@@ -2,7 +2,7 @@
 using Windows.ApplicationModel;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 
-namespace Client.Universal.impl
+namespace Client.Universal.Impl
 {
     public class UWPVersionService : IVersionService
     {
