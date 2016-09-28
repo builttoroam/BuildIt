@@ -14,9 +14,9 @@ namespace Client.iOS.Impl
             var tcs = new TaskCompletionSource<bool>();
             UIApplication.SharedApplication.InvokeOnMainThread(() =>
             {
-                var alert = new UIAlertView(title, message, null,
+                var alert = new UIAlertView(title, message, null, "",
                     NSBundle.MainBundle.LocalizedString("OK", "OK"));
-                alert.Clicked += (sender, buttonArgs) => tcs.SetResult(buttonArgs.ButtonIndex == alert.CancelButtonIndex);
+                alert.Clicked += (sender, buttonArgs) => tcs.SetResult(buttonArgs.ButtonIndex != alert.CancelButtonIndex);
                 alert.Show();
             });
 
