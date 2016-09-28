@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.UI.Core;
 
-namespace Client.Universal
+namespace Client.Universal.Impl.Extensions
 {
     public static class DispatcherTaskExtensions
     {

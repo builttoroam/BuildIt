@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
@@ -95,32 +96,96 @@ namespace BuildIt.Media
                                where ns.GetName("Command") == c.Name
                                select c).ToList();
             var totalCommandNo = Math.Min(commandList.Count, 4);
-
             // var test = new VoiceCommandContentTile();
+            
+            var response = await CortanaList(destinationContentTiles, commandList);
+
+            await voiceServiceConnection.ReportSuccessAsync(response);
+        }
+
+        private async Task<VoiceCommandResponse> CortanaList(List<VoiceCommandContentTile> destinationContentTiles, List<XElement> commandList)
+        {
+            var commandsTook = 0;
+            var commandsCountingNo = 0;
+            var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+            //back for cortana to show the content
+            var msgback = new VoiceCommandUserMessage();
+            msgback.DisplayMessage = msgback.SpokenMessage = "Here is the help list for you";
+            //Cortana 
+            var msgRepeat = new VoiceCommandUserMessage();
+            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Here is another help list for you";
+            var userMessage = new VoiceCommandUserMessage();
+            userMessage.DisplayMessage = "Here is the help list for you";
+            userMessage.SpokenMessage = "Here is the help list for you";
 
 
-            foreach (var command in commandList.Take(totalCommandNo))
+
+            if (commandList.Count <= 4)
             {
-                destinationContentTiles.Add(new VoiceCommandContentTile
+                for (int i = commandsCountingNo; i < commandList.Count - 1; i++)
                 {
-                    AppLaunchArgument = command.Attribute("Name").Value,
-                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
-                    Title = command.Element(ns.GetName("Example")).Value,
-                });
+                    destinationContentTiles.Add(new VoiceCommandContentTile
+                    {
+
+                        AppLaunchArgument = commandList[i].Attribute("Name").Value,
+                        ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                        Title = commandList[i].Element(ns.GetName("Example")).Value,
+
+                    });
+                }
             }
-            if (totalCommandNo == 4)
+            else
             {
-                var nextPage = new VoiceCommandContentTile
+                destinationContentTiles.Clear();
+                if (commandList.Count - commandsCountingNo > 4)
                 {
-                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
-                    Title = "More voice commands",
-                    AppLaunchArgument = "More",
-                };
+                    for (int i = 0; i < 4; i++)
+                    {
+                        destinationContentTiles.Add(new VoiceCommandContentTile
+                        {
+                            AppLaunchArgument = commandList[commandsTook].Attribute("Name").Value,
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = commandList[commandsTook].Element(ns.GetName("Example")).Value,
 
-                destinationContentTiles.Add(nextPage);
+                        });
+                        commandsTook++;
+                    }
+                    var nextPage = new VoiceCommandContentTile
+                    {
+                        ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                        Title = "More voice commands",
+                        AppLaunchArgument = "more",
+                    };
+                    destinationContentTiles.Add(nextPage);
+
+                    commandsCountingNo += 4;
+                }
+                else
+                {
+                    for (int i = commandsCountingNo; i < commandList.Count - 1; i++)
+                    {
+                        destinationContentTiles.Add(new VoiceCommandContentTile
+                        {
+                            AppLaunchArgument = commandList[i].Attribute("Name").Value,
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = commandList[i].Element(ns.GetName("Example")).Value,
+
+                        });
+                    }
+                    if (commandList.Count - commandsCountingNo >= 5)
+                    {
+                        var nextPage = new VoiceCommandContentTile
+                        {
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = "More voice commands",
+                            AppLaunchArgument = "more",
+                        };
+
+                        destinationContentTiles.Add(nextPage);
+                    }
+                }
             }
 
-            TilesList:
 
             // Cortana will handle re-prompting if the user does not provide a valid response.
             var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destinationContentTiles);
@@ -133,44 +198,240 @@ namespace BuildIt.Media
             msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select Yes or No";
             response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
 
-            //var voiceAppLaunchArgument = string.Empty;
             //return YES OR NO
-
             var result = await voiceServiceConnection.RequestConfirmationAsync(response);
             if (result.Confirmed)
             {
-                var testTilesList = new List<VoiceCommandContentTile>();
-                if (selectedRes.SelectedItem.AppLaunchArgument == "More")
+                if (selectedRes.SelectedItem.AppLaunchArgument == "more")
                 {
-                    for (int i = totalCommandNo; i < commandList.Count - 1; i++)
+                    if (commandList.Count <= 4)
                     {
-                        testTilesList.Add(new VoiceCommandContentTile
+                        for (int i = commandsCountingNo; i < commandList.Count - 1; i++)
                         {
+                            destinationContentTiles.Add(new VoiceCommandContentTile
+                            {
 
-                            AppLaunchArgument = commandList[i].Attribute("Name").Value,
-                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
-                            Title = commandList[i].Element(ns.GetName("Example")).Value,
+                                AppLaunchArgument = commandList[i].Attribute("Name").Value,
+                                ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                                Title = commandList[i].Element(ns.GetName("Example")).Value,
 
-                        });
+                            });
+                        }
                     }
-                    await
-                voiceServiceConnection.ReportSuccessAsync(VoiceCommandResponse.CreateResponse(userMessage,
-                    testTilesList));
-                    return;
+                    else
+                    {
+                        destinationContentTiles.Clear();
+                        if (commandList.Count - commandsCountingNo > 4)
+                        {
+                            for (int i = 0; i < 4; i++)
+                            {
+                                destinationContentTiles.Add(new VoiceCommandContentTile
+                                {
+                                    AppLaunchArgument = commandList[commandsTook].Attribute("Name").Value,
+                                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                                    Title = commandList[commandsTook].Element(ns.GetName("Example")).Value,
+
+                                });
+                                commandsTook++;
+                            }
+                            var nextPage = new VoiceCommandContentTile
+                            {
+                                ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                                Title = "More voice commands",
+                                AppLaunchArgument = "more",
+                            };
+                            destinationContentTiles.Add(nextPage);
+
+                            commandsCountingNo += 4;
+                        }
+                        else
+                        {
+                            destinationContentTiles.Clear();
+                            for (int i = commandsCountingNo; i < commandList.Count - 1; i++)
+                            {
+                                destinationContentTiles.Add(new VoiceCommandContentTile
+                                {
+                                    AppLaunchArgument = commandList[i].Attribute("Name").Value,
+                                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                                    Title = commandList[i].Element(ns.GetName("Example")).Value,
+
+                                });
+                            }
+                            if (commandList.Count - commandsCountingNo >= 5)
+                            {
+                                var nextPage = new VoiceCommandContentTile
+                                {
+                                    ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                                    Title = "More voice commands",
+                                    AppLaunchArgument = "more",
+                                };
+
+                                destinationContentTiles.Add(nextPage);
+                            }
+                        }
+                    }
+                    msgback.DisplayMessage = msgback.SpokenMessage = "Here is the help list for you";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Here is another help list for you";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destinationContentTiles);
+                    // If cortana is dismissed in this operation, null will be returned.
+
+                    selectedRes = await voiceServiceConnection.RequestDisambiguationAsync(response);
+
+                    //Create dialogue confirm that user selected
+                    msgback.DisplayMessage = msgback.SpokenMessage = "Are you sure you want select " + selectedRes.SelectedItem.Title + " ?";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select Yes or No";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+                    result = await voiceServiceConnection.RequestConfirmationAsync(response);
+                    if (result.Confirmed)
+                    {
+                        if (selectedRes.SelectedItem.AppLaunchArgument == "more")
+                        {
+                            destinationContentTiles.Clear();
+                            response = await
+                                ShowMoreVoiceCommand(commandList, commandsCountingNo, destinationContentTiles,
+                                    commandsTook);
+                        }
+                    }
+                    else
+                    {
+                        await Task.Delay(3000);
+                        await CortanaHelpList();
+                    }
+                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+                    return response;
                 }
-                msgback.DisplayMessage = msgback.SpokenMessage = $"You've selected {selectedRes.SelectedItem.Title}";
-                msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"You've selected {selectedRes.SelectedItem.Title}";
+
+                msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
                 response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
-                //var value = selectedRes.SelectedItem.AppLaunchArgument;
-                //voiceAppLaunchArgument = selectedRes.SelectedItem.AppLaunchArgument;
-                //response = VoiceCommandResponse.CreateResponse()
             }
             else
             {
-                goto TilesList;
+                await Task.Delay(3000);
+                await CortanaHelpList();
             }
 
-            await voiceServiceConnection.ReportSuccessAsync(response);
+            return response;
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task<VoiceCommandResponse> ShowMoreVoiceCommand(List<XElement> commandList, int commandsCountingNo, List<VoiceCommandContentTile> destinationContentTiles, int commandsTook)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var number = 1;
+            var cmdList = commandList;
+            var cmdsNo = commandsCountingNo;
+            var destContentTiles = destinationContentTiles;
+            var cmdsTook = commandsTook;
+            var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+            var msgback = new VoiceCommandUserMessage();
+            msgback.DisplayMessage = msgback.SpokenMessage = "Here is the help list for you";
+            //Cortana 
+            var msgRepeat = new VoiceCommandUserMessage();
+            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Here is the another help list for you";
+
+
+
+            if (cmdList.Count <= 4)
+            {
+                for (int i = cmdsNo; i < cmdList.Count - 1; i++)
+                {
+                    destContentTiles.Add(new VoiceCommandContentTile
+                    {
+
+                        AppLaunchArgument = cmdList[i].Attribute("Name").Value,
+                        ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                        Title = cmdList[i].Element(ns.GetName("Example")).Value,
+
+                    });
+                }
+            }
+            else
+            {
+                destContentTiles.Clear();
+                if (cmdList.Count - cmdsNo > 4)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        destContentTiles.Add(new VoiceCommandContentTile
+                        {
+                            AppLaunchArgument = cmdList[cmdsTook].Attribute("Name").Value,
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = cmdList[cmdsTook].Element(ns.GetName("Example")).Value,
+
+                        });
+                        cmdsTook++;
+                    }
+                    var nextPage = new VoiceCommandContentTile
+                    {
+                        ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                        Title = "More voice commands",
+                        AppLaunchArgument = "more",
+                    };
+                    destContentTiles.Add(nextPage);
+
+                    cmdsNo += 4;
+                }
+                else
+                {
+                    destContentTiles.Clear();
+                    for (int i = cmdsNo; i < cmdList.Count - 1; i++)
+                    {
+                        destContentTiles.Add(new VoiceCommandContentTile
+                        {
+                            AppLaunchArgument = cmdList[i].Attribute("Name").Value,
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = cmdList[i].Element(ns.GetName("Example")).Value,
+
+                        });
+                    }
+                    if (cmdList.Count - cmdsNo >= 5)
+                    {
+                        var nextPage = new VoiceCommandContentTile
+                        {
+                            ContentTileType = VoiceCommandContentTileType.TitleOnly,
+                            Title = "More voice commands",
+                            AppLaunchArgument = "more",
+                        };
+
+                        destContentTiles.Add(nextPage);
+                    }
+                }
+            }
+            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destContentTiles);
+            // If cortana is dismissed in this operation, null will be returned.
+
+            var selectedRes = await voiceServiceConnection.RequestDisambiguationAsync(response);
+
+            //Create dialogue confirm that user selected
+            msgback.DisplayMessage = msgback.SpokenMessage = "Are you sure you want select " + selectedRes.SelectedItem.Title + " ?";
+            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select Yes or No";
+            response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+            var result = await voiceServiceConnection.RequestConfirmationAsync(response);
+            if (result.Confirmed)
+            {
+                if (selectedRes.SelectedItem.AppLaunchArgument == "more")
+                {
+                    destContentTiles.Clear();
+                    number++;
+                    await ShowMoreVoiceCommand(cmdList, cmdsNo, destContentTiles, cmdsTook);
+                }
+                else
+                {
+                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+                    return response;
+                }
+            }
+            else
+            {
+                await Task.Delay(3000);
+                await CortanaHelpList();
+            }
+            return response;
         }
 
         private async Task ShowProgressScreen()

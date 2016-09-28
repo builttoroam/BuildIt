@@ -54,6 +54,48 @@
       <Feedback> Unmuting volume... </Feedback>
       <Navigate/>
     </Command>
+    <Command Name="test1">
+      <Example> test1 </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="test2">
+      <Example> test2 </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="test3">
+      <Example> test3 </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="test4">
+      <Example> test4 </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="test5">
+      <Example> test5 </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="test6">
+      <Example> test6 </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
+    <Command Name="test">
+      <Example> test </Example>
+      <ListenFor> [volume] unmute </ListenFor>
+      <Feedback> Unmuting volume... </Feedback>
+      <Navigate/>
+    </Command>
     <Command Name="buildit_help">
       <Example> Help </Example>
       <ListenFor> help </ListenFor>

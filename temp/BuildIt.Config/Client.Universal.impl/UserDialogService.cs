@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
+using Client.Universal.Impl.Extensions;
 
 namespace Client.Universal.Impl
 {
@@ -24,11 +24,6 @@ namespace Client.Universal.Impl
                 return dispatcher;
             }
         }
-
-        /*public UserDialogService()
-        {
-            this.dispatcher = CoreWindow.GetForCurrentThread()?.Dispatcher;
-        }*/
 
         public async Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null)
         {
