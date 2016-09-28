@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Standard;
@@ -31,6 +32,7 @@ namespace BuildIt.Config.Core.Api.Controllers
             var res = new AppConfigurationResponse();
 
             var config = Environment.GetEnvironmentVariables();
+            var tmpConfigValueCollection = new List<AppConfigurationValue>();
 
             foreach (var configMapperValue in configMapperValues)
             {
@@ -57,8 +59,15 @@ namespace BuildIt.Config.Core.Api.Controllers
                     Value = config[configMapperValue.Name] as string,
                     Attributes = configMapperValue
                 };
-                res.AppConfigValues.Add(appConfigValue);
+                //res.AppConfigValues.Add(appConfigValue);
+                tmpConfigValueCollection.Add(appConfigValue);
             }
+
+            if (!res.HasErrors())
+            {
+                res.AppConfigValues = tmpConfigValueCollection;
+            }
+
 #if NETStandard16
             return res;
 #elif NET452
