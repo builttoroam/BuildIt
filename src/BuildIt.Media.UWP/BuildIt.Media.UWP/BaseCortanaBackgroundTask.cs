@@ -97,7 +97,7 @@ namespace BuildIt.Media
                                select c).ToList();
             var totalCommandNo = Math.Min(commandList.Count, 4);
             // var test = new VoiceCommandContentTile();
-
+            
             var response = await CortanaList(destinationContentTiles, commandList);
 
             await voiceServiceConnection.ReportSuccessAsync(response);
@@ -133,27 +133,6 @@ namespace BuildIt.Media
 
                     });
                 }
-                //foreach (var command in commandList.Take(totalCommandNo))
-                //{
-                //    destinationContentTiles.Add(new VoiceCommandContentTile
-                //    {
-                //        AppLaunchArgument = command.Attribute("Name").Value,
-                //        ContentTileType = VoiceCommandContentTileType.TitleOnly,
-                //        Title = command.Element(ns.GetName("Example")).Value,
-                //    });
-                //}
-                //if (totalCommandNo == 4)
-                //{
-                //    var nextPage = new VoiceCommandContentTile
-                //    {
-                //        ContentTileType = VoiceCommandContentTileType.TitleOnly,
-                //        Title = "More voice commands",
-                //        AppLaunchArgument = "More",
-                //    };
-
-                //    destinationContentTiles.Add(nextPage);
-                //}
-                //commandsCountingNo += 4;
             }
             else
             {
@@ -220,7 +199,6 @@ namespace BuildIt.Media
             response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
 
             //return YES OR NO
-
             var result = await voiceServiceConnection.RequestConfirmationAsync(response);
             if (result.Confirmed)
             {
@@ -316,21 +294,22 @@ namespace BuildIt.Media
                     }
                     else
                     {
+                        await Task.Delay(3000);
                         await CortanaHelpList();
                     }
-
+                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
                     return response;
                 }
 
                 msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
                 msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
                 response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
-                //var value = selectedRes.SelectedItem.AppLaunchArgument;
-                //voiceAppLaunchArgument = selectedRes.SelectedItem.AppLaunchArgument;
-                //response = VoiceCommandResponse.CreateResponse()
             }
             else
             {
+                await Task.Delay(3000);
                 await CortanaHelpList();
             }
 
@@ -441,11 +420,15 @@ namespace BuildIt.Media
                 }
                 else
                 {
+                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
                     return response;
                 }
             }
             else
             {
+                await Task.Delay(3000);
                 await CortanaHelpList();
             }
             return response;
