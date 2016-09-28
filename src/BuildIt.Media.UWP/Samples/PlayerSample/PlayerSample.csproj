@@ -89,6 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\buildit_forward.jpg" />
     <Content Include="CustomCortana.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -115,8 +116,17 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\artwork.jpg" />
+    <Content Include="images\artwork.jpg" />
     <Content Include="Assets\artwork.png" />
+    <Content Include="images\buildit_back.jpg" />
+    <Content Include="images\buildit_forward.jpg" />
+    <Content Include="images\buildit_help.jpg" />
+    <Content Include="images\buildit_mute.jpg" />
+    <Content Include="images\buildit_play.jpg" />
+    <Content Include="images\buildit_unmute.jpg" />
+    <Content Include="images\buildit_volumeDown.jpg" />
+    <Content Include="images\buildit_volumeUp.jpg" />
+    <Content Include="images\buildit_pause.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
