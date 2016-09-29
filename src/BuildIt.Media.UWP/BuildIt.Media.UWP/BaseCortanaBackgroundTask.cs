@@ -130,7 +130,9 @@ namespace BuildIt.Media
 
             var moreCommands = "Select next page commands";
 
-            if (commandList.Count <= 4)
+            var iconsFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("builditmedia");
+
+            if (commandList.Count >0) //<= 4)
             {
                 for (int i = commandsCountingNo; i < commandList.Count - 1; i++)
                 {
@@ -149,13 +151,16 @@ namespace BuildIt.Media
                     {
                         attributeName = "artwork";
                     }
+
+                    var iconFile = await iconsFolder.GetFileAsync("{attributeName}.jpg");
+
                     destinationContentTiles.Add(new VoiceCommandContentTile
                     {
                         AppLaunchArgument = commandList[commandsTook].Attribute("Name").Value,
                         ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                         Title = commandList[commandsTook].Element(ns.GetName("Example")).Value,
                         TextLine1 = txtline1,
-                        Image = await Package.Current.InstalledLocation.GetFileAsync($"images\\{attributeName}.jpg"),
+                        Image = iconFile
                     });
                     commandsTook++;
                 }

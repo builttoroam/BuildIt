@@ -24,6 +24,9 @@ namespace BuildIt.Media
         {
             try
             {
+                //await CopyActionIconsToTempFolder("buildit_back.jpg");
+                //await CopyActionIconsToTempFolder("buildit_forward.jpg");
+
                 //var builditBack = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_back.jpg"));
                 //await builditBack.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_back.jpg");
                 //var builditForward = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_forward.jpg"));
@@ -45,23 +48,23 @@ namespace BuildIt.Media
                 var assembly = typeof(CortanaListener).GetTypeInfo().Assembly;
                 var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("_voices.xml", CreationCollisionOption.ReplaceExisting);
 
-                var temback = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("buildit_back.jpg", CreationCollisionOption.FailIfExists);
-                var backStream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + "buildit_volumeDown.jpg");
+                //var temback = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("buildit_back.jpg", CreationCollisionOption.FailIfExists);
+                //var backStream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + "buildit_volumeDown.jpg");
                 
 
-                using (IRandomAccessStream fileStream = await temback.OpenAsync(FileAccessMode.ReadWrite))
-                {
-                    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
-                    {
-                        using (DataWriter dataWriter = new DataWriter(outputStream))
-                        {
-                            dataWriter.WriteBytes();
-                            await dataWriter.StoreAsync();
-                            dataWriter.DetachStream();
-                        }
-                        await outputStream.FlushAsync();
-                    }
-                }
+                //using (IRandomAccessStream fileStream = await temback.OpenAsync(FileAccessMode.ReadWrite))
+                //{
+                //    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
+                //    {
+                //        using (DataWriter dataWriter = new DataWriter(outputStream))
+                //        {
+                //            dataWriter.WriteBytes();
+                //            await dataWriter.StoreAsync();
+                //            dataWriter.DetachStream();
+                //        }
+                //        await outputStream.FlushAsync();
+                //    }
+                //}
 
 
 
@@ -127,32 +130,15 @@ namespace BuildIt.Media
                         }
 
 
-                        //foreach (var element in commandSetList)
-                        //{
-                        //    for (int i = 0; i <= customCommandSetList.Count - 1; i++)
-                        //    {
-                        //        //add command nodes if the commandSet is existing
-                        //        if (element.Attribute(xmlns.GetName("lang")).Value == customCommandSetList[i].Attribute(xmlns.GetName("lang")).Value)
-                        //        {
-                        //            var commandSetDesc = from c in customXml.Descendants()
-                        //                                 where ns.GetName("CommandSet") == c.Name
-                        //                                 select c;
-                        //            var commandNodes = (from c in element.Descendants()
-                        //                                where ns.GetName("Command") == c.Name
-                        //                                select c).ToList();
-                        //            commandSetDesc.ElementAt(i).Add(commandNodes);
-                        //            break;
-                        //        }
+                        var allVoiceCommands = (from command in customXml.Descendants(ns.GetName("Command"))
+                            select command.SafeAttributeValue("Name")
+                            ).Distinct().ToList();
+                        foreach (var commandName in allVoiceCommands)
+                        {
+                            await CopyActionIconsToTempFolder(commandName + ".jpg");
+                        }
 
-                        //        //if commendSet not existing then add commandSet
-                        //        if (i != customCommandSetList.Count - 1) continue;
-                        //        {
-                        //            var commandSetDesc = customXml.Descendants().Where(x => ns.GetName("CommandSet") == x.Name);
-                        //            commandSetDesc.Last().AddAfterSelf(element);
-                        //            break;
-                        //        }
-                        //    }
-                        //}
+                       
                         //save customXml 
                         customXml.Save(outStream);
                     }
@@ -164,9 +150,41 @@ namespace BuildIt.Media
                 ex.LogException();
             }
         }
-        
 
-        public static async Task<bool> HandleMediaElementCortanaCommands(this IActivatedEventArgs args)
+        private static async Task CopyActionIconsToTempFolder(string iconFileName)
+        {
+            try
+            {
+                // Start by opening the image that is packaged as an embedded resource
+                var assembly = typeof(CortanaListener).GetTypeInfo().Assembly;
+                using (
+                    var stream =
+                        assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + ".Images." + iconFileName)
+                    )
+                {
+                    if (stream == null) return;
+                    // Create the image in the local folder so that it can be used as an icon in Cortana interface
+                    var iconFolder =
+                        await
+                            ApplicationData.Current.LocalFolder.CreateFolderAsync("builditmedia",
+                                CreationCollisionOption.OpenIfExists);
+                    var localIconFile =
+                        await iconFolder.CreateFileAsync(iconFileName, CreationCollisionOption.ReplaceExisting);
+                    using (var outStream = await localIconFile.OpenStreamForWriteAsync())
+                    {
+                        await stream.CopyToAsync(outStream);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
+        }
+
+
+        public static
+            async Task<bool> HandleMediaElementCortanaCommands(this IActivatedEventArgs args)
         {
             try
             {
