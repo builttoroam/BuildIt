@@ -1,6 +1,6 @@
 ﻿namespace BuildIt.Config.Core.Standard.Services.Interfaces
 {
-    public interface IAppConfigurationServiceEndpoint
+    public interface IAppConfigurationEndpointService
     {
         string Endpoint { get; }
     }

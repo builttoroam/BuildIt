@@ -2,7 +2,7 @@
 
 using UIKit;
 
-namespace Client.iOS
+namespace Client.iOS.UI.Test
 {
     public partial class ViewController : UIViewController
     {

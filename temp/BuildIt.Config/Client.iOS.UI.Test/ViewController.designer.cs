@@ -5,7 +5,7 @@
 //
 using Foundation;
 
-namespace Client.iOS
+namespace Client.iOS.UI.Test
 {
     [Register("ViewController")]
     partial class ViewController

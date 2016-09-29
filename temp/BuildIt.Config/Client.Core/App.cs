@@ -1,4 +1,5 @@
-﻿using BuildIt.Config.Core.Standard.Services;
+﻿using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Standard.Services;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Core.Services;
 using Client.Core.ViewModels;
@@ -11,7 +12,11 @@ namespace Client.Core
     {
         public App()
         {
-            Mvx.ConstructAndRegisterSingleton<IAppConfigurationServiceEndpoint, AppConfigurationServiceEndpoint>();            
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationEndpointService>(() => new AppConfigurationEndpointService(new AppConfigurationRoutingModel()
+            {
+                Prefix = "test1",
+                Controller = "configuration"
+            }));
             Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
 
             InitAppConfig();

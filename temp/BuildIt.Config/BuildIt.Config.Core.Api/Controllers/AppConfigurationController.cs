@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Standard;
@@ -31,41 +32,32 @@ namespace BuildIt.Config.Core.Api.Controllers
             var res = new AppConfigurationResponse();
 
             var config = Environment.GetEnvironmentVariables();
-            var tmpConfigValueCollection = new List<AppConfigurationValue>();
 
             foreach (var configMapperValue in configMapperValues)
             {
-                //res[configMapperValue.Name] = new AppConfigurationValue()
-                //{
-                //    //TODO: Change this after referencing BuildIt.Core to SafeDictValue()
-                //    Value = config.Contains(configMapperValue.Name) ? config[configMapperValue.Name] as string : null,
-                //    Attributes = configMapperValue
-                //};
-
                 if (configMapperValue.ValueIsRequired && !config.Contains(configMapperValue.Name))
                 {
+                    if (res.AppConfigErors == null) res.AppConfigErors = new List<AppConfigurationError>();
                     var appConfigError = new AppConfigurationError
                     {
                         Content = Constants.AppConfigurationKeyNotFoundError,
                         Mapping = configMapperValue
                     };
                     res.AppConfigErors.Add(appConfigError);
-                    continue;
                 }
-
-                var appConfigValue = new AppConfigurationValue()
+                else
                 {
-                    Value = config[configMapperValue.Name] as string,
-                    Attributes = configMapperValue
-                };
-                //res.AppConfigValues.Add(appConfigValue);
-                tmpConfigValueCollection.Add(appConfigValue);
+                    var appConfigValue = new AppConfigurationValue()
+                    {
+                        Value = config[configMapperValue.Name] as string,
+                        Attributes = configMapperValue
+                    };
+                    res.AppConfigValues.Add(appConfigValue);
+                }
             }
 
-            if (!res.HasErrors())
-            {
-                tmpConfigValueCollection.CopyTo(res.AppConfigValues.ToArray());
-            }
+            //MK don't return app configuration values if an error occured
+            if (res.HasErrors) res.AppConfigValues = null;
 
 #if NETStandard16
             return res;
