@@ -8,8 +8,7 @@
   "frameworks": {
     "netstandard1.4": {
         "imports": [
-            "portable-net45+wp80+win8+wpa81",
-            "uap10.0"
+            "portable-net45+wp80+win8+wpa81"
         ]
     }
   }

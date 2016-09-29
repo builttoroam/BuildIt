@@ -16,7 +16,7 @@ namespace BuildIt.Config.Core.Standard.Services
     {
         private readonly IAppConfigurationEndpointService _endpointService;
 
-        public IUserDialogService UserDialogService { get;  }
+        public IUserDialogService UserDialogService { get; }
 
         public IVersionService VersionService { get; }
 
@@ -132,18 +132,18 @@ namespace BuildIt.Config.Core.Standard.Services
 
                             if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors)
                             {
-                                #if DEBUG
-                                    //Display all errors
-                                    var responseErrors = appConfigurationResponse.AppConfigErors;
-                                    foreach (var responseError in responseErrors)
-                                    {
-                                        await UserDialogService.AlertAsync($"Message: {responseError.Content}");
-                                    }
+#if DEBUG
+                                //Display all errors
+                                var responseErrors = appConfigurationResponse.AppConfigErors;
+                                foreach (var responseError in responseErrors)
+                                {
+                                    await UserDialogService.AlertAsync($"Message: {responseError.Content}");
+                                }
 #else
     //Display user-friendly alert
                                     var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
                                     if (alertAsync != null) await alertAsync;
-                                #endif
+#endif
                             }
                             else
                             {
@@ -154,8 +154,7 @@ namespace BuildIt.Config.Core.Standard.Services
                                     {
                                         if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
 
-                                            res[value.Attributes.Name] = value;
-                                        }
+                                        res[value.Attributes.Name] = value;
                                     }
                                 }
                             }
