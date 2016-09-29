@@ -8,6 +8,10 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
+using Buffer = System.Buffer;
 
 namespace BuildIt.Media
 {
@@ -20,10 +24,53 @@ namespace BuildIt.Media
         {
             try
             {
+                //var builditBack = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_back.jpg"));
+                //await builditBack.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_back.jpg");
+                //var builditForward = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_forward.jpg"));
+                //await builditForward.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_forward.jpg");
+                //var builditMute = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_mute.jpg"));
+                //await builditMute.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_mute.jpg");
+                //var builditPause = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_pause.jpg"));
+                //await builditPause.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_pause.jpg");
+                //var builditPlay = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_play.jpg"));
+                //await builditPlay.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_play.jpg");
+                //var builditUnmute = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_unmute.jpg"));
+                //await builditUnmute.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_unmute.jpg");
+                //var builditVolumeDown = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_volumeDown.jpg"));
+                //await builditVolumeDown.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_volumeDown.jpg");
+                //var builditVolumeUp = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///BuildIt.Media/Image/buildit_volumeUp.jpg"));
+                //await builditVolumeUp.CopyAsync(ApplicationData.Current.TemporaryFolder, "buildit_volumeUp.jpg");
 
 
                 var assembly = typeof(CortanaListener).GetTypeInfo().Assembly;
                 var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("_voices.xml", CreationCollisionOption.ReplaceExisting);
+
+                var temback = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("buildit_back.jpg", CreationCollisionOption.FailIfExists);
+                var backStream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + "buildit_volumeDown.jpg");
+                
+
+                using (IRandomAccessStream fileStream = await temback.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
+                    {
+                        using (DataWriter dataWriter = new DataWriter(outputStream))
+                        {
+                            dataWriter.WriteBytes();
+                            await dataWriter.StoreAsync();
+                            dataWriter.DetachStream();
+                        }
+                        await outputStream.FlushAsync();
+                    }
+                }
+
+
+
+                
+                
+                
+
+
+
                 using (
                     var stream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + ".Voices.xml"))
                 using (var outStream = await tempVoiceFile.OpenStreamForWriteAsync())
@@ -117,6 +164,7 @@ namespace BuildIt.Media
                 ex.LogException();
             }
         }
+        
 
         public static async Task<bool> HandleMediaElementCortanaCommands(this IActivatedEventArgs args)
         {
