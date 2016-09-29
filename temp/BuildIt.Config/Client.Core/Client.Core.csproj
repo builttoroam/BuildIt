@@ -45,9 +45,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.Standard.csproj">
+    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj">
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
-      <Name>BuildIt.Config.Core.Standard</Name>
+      <Name>BuildIt.Config.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

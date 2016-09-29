@@ -7,6 +7,7 @@ using Android.OS;
 using Android.Widget;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 using BuildIt.Config.Core.Standard.Utilities;
+using Debug = System.Diagnostics.Debug;
 
 namespace Client.Android.Impl
 {
@@ -30,12 +31,16 @@ namespace Client.Android.Impl
         public Activity Context { get; set; }
 
         /// <summary>
-        /// Ensure that Context is set before calling GetVersion()
-        /// e.g. versionService.Context = ApplicationContext; (called from MainActivity)
+        /// Ensure that Context is set before calling this method
+        /// e.g. userDialogsService.Context = this; (where 'this' is your MainActivity)
         /// </summary>        
         public async Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null)
         {
-            if (Context == null) return;
+            if (Context == null)
+            {
+                Debug.WriteLine("You must assign Context before calling this method! (e.g. Context = this, where 'this' is MainActivity)");
+                return;
+            }
 
             var alertAsync = AcrUserDialogs?.AlertAsync(message, title, okText, cancelToken);
             if (alertAsync != null) await alertAsync;

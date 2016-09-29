@@ -112,6 +112,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BuildIt.Config.Impl.Droid.nuspec" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
@@ -119,9 +120,9 @@
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.Standard.csproj">
+    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj">
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
-      <Name>BuildIt.Config.Core.Standard</Name>
+      <Name>BuildIt.Config.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
@@ -132,6 +133,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)BuildIt.Config.Impl.Droid.nuspec -outputdirectory $(ProjectDir)
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
