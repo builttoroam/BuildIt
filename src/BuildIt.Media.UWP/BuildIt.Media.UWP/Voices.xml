@@ -8,7 +8,7 @@
       <Example> Pause </Example>
       <ListenFor> pause </ListenFor>
       <Feedback> Pausing </Feedback>
-      <!-- Description : this is description for pause -->
+      <!-- Description: this is description for pause -->
       <Navigate />
     </Command>
 
@@ -17,63 +17,63 @@
       <ListenFor> play </ListenFor>
       <ListenFor> resume </ListenFor>
       <Feedback> Resuming </Feedback>
-      <!-- Description : this is description for play -->
+      <!-- Description: this is description for play -->
       <Navigate />
     </Command>
     <Command Name="buildit_forward">
       <Example> Forward </Example>
       <ListenFor> [go] forward </ListenFor>
       <Feedback> Seeking forward... </Feedback>
-      <!-- Description : this is description for forward -->
+      <!-- Description: this is description for forward -->
       <Navigate />
     </Command>
     <Command Name="buildit_back">
       <Example> Back </Example>
       <ListenFor> [go] back </ListenFor>
       <Feedback> Seeking backward... </Feedback>
-      <!-- Description :this is description for back -->
+      <!-- Description:this is description for back -->
       <Navigate />
     </Command>
     <Command Name="buildit_volumeUp">
       <Example> Volume Up </Example>
       <ListenFor> [volume] up </ListenFor>
       <Feedback> Switching up volume... </Feedback>
-      <!-- Description :this is description for volume up -->
+      <!-- Description:this is description for volume up -->
       <Navigate/>
     </Command>
     <Command Name="buildit_volumeDown">
       <Example> Volume Down </Example>
       <ListenFor> [volume] down </ListenFor>
       <Feedback> Switching down volume... </Feedback>
-      <!-- Description :this is description for volume down -->
+      <!-- Description:this is description for volume down -->
       <Navigate/>
     </Command>
     <Command Name="buildit_mute">
       <Example> Mute </Example>
       <ListenFor> [volume] mute </ListenFor>
       <Feedback> Muting volume... </Feedback>
-      <!-- Description :this is description for mute -->
+      <!-- Description:this is description for mute -->
       <Navigate/>
     </Command>
     <Command Name="buildit_unmute">
       <Example> Unmute </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
-      <!-- Description :this is description for unmute -->
+      <!-- Description:this is description for unmute -->
       <Navigate/>
     </Command>
-    <Command Name="test1">
+    <!--<Command Name="test1">
       <Example> test1 </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
-      <!-- Description : -->
+      --><!-- Description: --><!--
       <Navigate/>
     </Command>
     <Command Name="test2">
       <Example> test2 </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
-      <!-- Description : -->
+      --><!-- Description: --><!--
       <Navigate/>
     </Command>
     <Command Name="test3">
@@ -105,7 +105,7 @@
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
       <Navigate/>
-    </Command>
+    </Command>-->
     <Command Name="buildit_help">
       <Example> Help </Example>
       <ListenFor> help </ListenFor>
