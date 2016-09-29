@@ -61,7 +61,7 @@ namespace Client.Core.ViewModels
             {
                 ConfigValues.Add(value);
             }
-            var states = config?["App_States"]?.GetValue<IEnumerable<State>>();
+            //var states = config?["App_States"]?.GetValue<IEnumerable<State>>();
         }
     }
 }

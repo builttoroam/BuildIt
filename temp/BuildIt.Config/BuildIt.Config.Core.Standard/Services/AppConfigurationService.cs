@@ -120,6 +120,7 @@ namespace BuildIt.Config.Core.Standard.Services
                 {
                     var requestContent = new StringContent(JsonConvert.SerializeObject(Mapper.MappedValues));
                     requestContent.Headers.ContentType.MediaType = "application/json";
+                    requestContent.Headers.Add("ApiKey", Constants.AppConfigurationApiKey);
                     using (var response = await client.PostAsync(endpoint, requestContent))
                     {
                         if (response == null) return res;
