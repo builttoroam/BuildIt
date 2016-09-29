@@ -5,11 +5,10 @@ namespace BuildIt.Config.Core.Standard.Models
 {
     public class AppConfigurationResponse
     {
+        public bool HasErrors => AppConfigErors?.Any() ?? false;
+        public bool HasConfigValues => AppConfigValues?.Any() ?? false;
+
         public List<AppConfigurationValue> AppConfigValues { get; set; } = new List<AppConfigurationValue>();
-        public List<AppConfigurationError> AppConfigErors { get; set; } = new List<AppConfigurationError>();
-
-        public bool HasErrors() => AppConfigErors != null && AppConfigErors.Any();
-
-        public bool HasConfigValues() => AppConfigValues != null && AppConfigValues.Any();
+        public List<AppConfigurationError> AppConfigErors { get; set; }
     }
 }
