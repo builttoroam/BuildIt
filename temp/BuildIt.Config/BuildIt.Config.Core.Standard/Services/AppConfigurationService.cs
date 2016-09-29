@@ -127,32 +127,36 @@ namespace BuildIt.Config.Core.Standard.Services
                         {
                             var responseContent = await content.ReadAsStringAsync();
                             var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
+                            //if (appConfigurationResponse == null) return res;
 
-                            if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors)
+                            if (appConfigurationResponse != null)
                             {
-                                #if DEBUG
+                                if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors)
+                                {
+#if DEBUG
                                     //Display all errors
                                     var responseErrors = appConfigurationResponse.AppConfigErors;
                                     foreach (var responseError in responseErrors)
                                     {
                                         await UserDialogService.AlertAsync($"Message: {responseError.Content}");
                                     }
-                                #else
-                                    //Display user-friendly alert
+#else
+    //Display user-friendly alert
                                     var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
                                     if (alertAsync != null) await alertAsync;
                                 #endif
-                            }
-                            else
-                            {
-                                if (appConfigurationResponse != null && appConfigurationResponse.HasConfigValues)
+                                }
+                                else
                                 {
-                                    res = new AppConfiguration();
-                                    foreach (var value in appConfigurationResponse.AppConfigValues)
+                                    if (appConfigurationResponse.HasConfigValues)
                                     {
-                                        if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
+                                        res = new AppConfiguration();
+                                        foreach (var value in appConfigurationResponse.AppConfigValues)
+                                        {
+                                            if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
 
-                                        res[value.Attributes.Name] = value;
+                                            res[value.Attributes.Name] = value;
+                                        }
                                     }
                                 }
                             }
