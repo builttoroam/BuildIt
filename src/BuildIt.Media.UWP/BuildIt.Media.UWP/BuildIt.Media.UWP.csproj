@@ -132,7 +132,8 @@
     <EmbeddedResource Include="Images\buildit_unmute.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\buildit_customTile.jpg" />
+    <EmbeddedResource Include="Images\artwork.jpg" />
+    <EmbeddedResource Include="Images\buildit_customTile.jpg" />
     <EmbeddedResource Include="Images\buildit_help.jpg" />
   </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />

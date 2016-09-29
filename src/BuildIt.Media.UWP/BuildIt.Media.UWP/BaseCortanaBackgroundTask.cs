@@ -151,7 +151,7 @@ namespace BuildIt.Media
                         ?.Replace("Description:", "") ?? ""; // If one exists, trim "Description:" by replacing it with ""
                     if (attributeName.Contains("buildit") != true)
                     {
-                        attributeName = "buildit_customTile";
+                        attributeName = "buildit_pause";
                     }
 
                     var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.jpg");
@@ -183,7 +183,7 @@ namespace BuildIt.Media
                         ?.Replace("Description:", "") ?? ""; // If one exists, trim "Description:" by replacing it with ""
                     if (attributeName.Contains("buildit") != true)
                     {
-                        attributeName = "buildit_customTile";
+                        attributeName = "buildit_pause";
                     }
 
                     var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.jpg");
@@ -205,8 +205,8 @@ namespace BuildIt.Media
                     Title = "More voice commands",
                     AppLaunchArgument = "more",
                     TextLine1 = moreCommands,
-                    Image = await Package.Current.InstalledLocation.GetFileAsync($"images\\artwork.jpg")
-                };
+                    Image = await iconsFolder.GetFileAsync("buildit_help.jpg")
+            };
                 destContentTiles.Add(nextPage);
 
                 commandsCountingNo += 4;

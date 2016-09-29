@@ -61,18 +61,18 @@
       <!-- Description:this is description for unmute -->
       <Navigate/>
     </Command>
-    <!--<Command Name="test1">
+    <Command Name="test1">
       <Example> test1 </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
-      --><!-- Description: --><!--
+      <!-- Description: -->
       <Navigate/>
     </Command>
     <Command Name="test2">
       <Example> test2 </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
-      --><!-- Description: --><!--
+      <!-- Description:  -->
       <Navigate/>
     </Command>
     <Command Name="test3">
@@ -91,6 +91,7 @@
       <Example> test5 </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
+      <!--  -->
       <Navigate/>
     </Command>
     <Command Name="test6">
@@ -103,8 +104,9 @@
       <Example> test </Example>
       <ListenFor> [volume] unmute </ListenFor>
       <Feedback> Unmuting volume... </Feedback>
+      <!-- Description:  -->
       <Navigate/>
-    </Command>-->
+    </Command>
     <Command Name="buildit_help">
       <Example> Help </Example>
       <ListenFor> help </ListenFor>
