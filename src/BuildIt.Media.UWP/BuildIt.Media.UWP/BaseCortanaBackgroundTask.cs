@@ -142,28 +142,26 @@ namespace BuildIt.Media
                 {
                     var command = cmdList[commandsTook];
                     //var cmtName = cmtList[commandsTook].Parent.Attribute("Name").Value;
-                    var attributeName = command.Attribute("Name").Value;
+                    var attributeName = cmdList[commandsTook].Attribute("Name").Value;
 
                     var descriptionComment = (from comment in command.DescendantNodes().OfType<XComment>()
-                                              where comment.Value.StartsWith("Description:")
-                                              select comment.Value)
-                                              .FirstOrDefault() // Get the first comment that starts with "Description:"
-                                              ?.Replace("Description:", ""); // If one exists, trim "Description:" by replacing it with ""
-
-                    var txtline1 = "test";
+                        where comment.Value.StartsWith("Description:")
+                        select comment.Value)
+                        .FirstOrDefault() // Get the first comment that starts with "Description:"
+                        ?.Replace("Description:", "") ?? ""; // If one exists, trim "Description:" by replacing it with ""
                     if (attributeName.Contains("buildit") != true)
                     {
-                        attributeName = "artwork";
+                        attributeName = "buildit_customTile";
                     }
 
-                    var iconFile = await iconsFolder.GetFileAsync("buildit_pause.jpg");
+                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.jpg");
 
                     destContentTiles.Add(new VoiceCommandContentTile
                     {
                         AppLaunchArgument = cmdList[commandsTook].Attribute("Name").Value,
                         ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                         Title = cmdList[commandsTook].Element(ns.GetName("Example")).Value,
-                        TextLine1 = txtline1,
+                        TextLine1 = descriptionComment,
                         Image = iconFile
                     });
                     commandsTook++;
@@ -179,20 +177,16 @@ namespace BuildIt.Media
                     var attributeName = cmdList[commandsTook].Attribute("Name").Value;
                     //var txtline1 = cmtName == attributeName ? cmtList[commandsTook].Value : "";
                     var descriptionComment = (from comment in command.DescendantNodes().OfType<XComment>()
-                                              where comment.Value.StartsWith("Description:")
-                                              select comment.Value)
-                      .FirstOrDefault() // Get the first comment that starts with "Description:"
-                      ?.Replace("Description:", ""); // If one exists, trim "Description:" by replacing it with ""
-                    if (descriptionComment == null)
-                    {
-                        descriptionComment = "";
-                    }
+                        where comment.Value.StartsWith(" Description:")
+                        select comment.Value)
+                        .FirstOrDefault() // Get the first comment that starts with "Description:"
+                        ?.Replace("Description:", "") ?? ""; // If one exists, trim "Description:" by replacing it with ""
                     if (attributeName.Contains("buildit") != true)
                     {
-                        attributeName = "artwork";
+                        attributeName = "buildit_customTile";
                     }
 
-                    var iconFile = await iconsFolder.GetFileAsync("buildit_pause.jpg");
+                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.jpg");
 
 
                     destContentTiles.Add(new VoiceCommandContentTile
@@ -256,157 +250,6 @@ namespace BuildIt.Media
                 await CortanaHelpList();
             }
 
-            return response;
-        }
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task<VoiceCommandResponse> ShowMoreVoiceCommand(List<XElement> commandList, int commandsCountingNo,
-            List<VoiceCommandContentTile> destinationContentTiles, int commandsTook, List<XComment> cmtList)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-        {
-            var number = 1;
-            var moreCommands = "Select next page commands";
-            var cmdList = commandList;
-            var cmdsNo = commandsCountingNo;
-            var destContentTiles = destinationContentTiles;
-            var cmdsTook = commandsTook;
-            var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
-            var msgback = new VoiceCommandUserMessage();
-            msgback.DisplayMessage = msgback.SpokenMessage = "Here is the help list for you";
-            //Cortana 
-            var msgRepeat = new VoiceCommandUserMessage();
-            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select one";
-
-
-
-            if (cmdList.Count <= 4)
-            {
-                for (int i = cmdsNo; i < cmdList.Count - 1; i++)
-                {
-                    var cmtName = cmtList[commandsTook].Parent.Attribute("Name").Value;
-                    var attributeName = commandList[commandsTook].Attribute("Name").Value;
-                    var txtline1 = cmtName == attributeName ? cmtList[commandsTook].Value : "";
-                    if (attributeName.Contains("buildit") != true)
-                    {
-                        attributeName = "artwork";
-                    }
-                    destContentTiles.Add(new VoiceCommandContentTile
-                    {
-
-                        AppLaunchArgument = cmdList[i].Attribute("Name").Value,
-                        ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                        Title = cmdList[i].Element(ns.GetName("Example")).Value,
-                        TextLine1 = txtline1,
-                        Image = await Package.Current.InstalledLocation.GetFileAsync($"images\\{attributeName}.jpg")
-                    });
-                }
-            }
-            else
-            {
-                destContentTiles.Clear();
-                if (cmdList.Count - cmdsNo > 4)
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        var cmtName = cmtList[commandsTook].Parent.Attribute("Name").Value;
-                        var attributeName = commandList[commandsTook].Attribute("Name").Value;
-                        var txtline1 = cmtName == attributeName ? cmtList[commandsTook].Value : "";
-                        if (attributeName.Contains("buildit") != true)
-                        {
-                            attributeName = "artwork";
-                        }
-                        destContentTiles.Add(new VoiceCommandContentTile
-                        {
-                            AppLaunchArgument = cmdList[cmdsTook].Attribute("Name").Value,
-                            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                            Title = cmdList[cmdsTook].Element(ns.GetName("Example")).Value,
-                            TextLine1 = txtline1,
-                            Image = await Package.Current.InstalledLocation.GetFileAsync($"images\\{attributeName}.jpg")
-                        });
-                        cmdsTook++;
-                    }
-                    var nextPage = new VoiceCommandContentTile
-                    {
-                        ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                        Title = "More voice commands",
-                        AppLaunchArgument = "more",
-                        TextLine1 = moreCommands,
-                        Image = await Package.Current.InstalledLocation.GetFileAsync($"images\\artwork.jpg")
-
-                    };
-                    destContentTiles.Add(nextPage);
-
-                    cmdsNo += 4;
-                }
-                else
-                {
-                    destContentTiles.Clear();
-                    for (int i = cmdsNo; i < cmdList.Count - 1; i++)
-                    {
-
-                        var cmtName = cmtList[commandsTook].Parent.Attribute("Name").Value;
-                        var attributeName = commandList[commandsTook].Attribute("Name").Value;
-                        var txtline1 = cmtName == attributeName ? cmtList[commandsTook].Value : "";
-                        if (attributeName.Contains("buildit") != true)
-                        {
-                            attributeName = "artwork";
-                        }
-
-                        destContentTiles.Add(new VoiceCommandContentTile
-                        {
-                            AppLaunchArgument = cmdList[i].Attribute("Name").Value,
-                            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                            Title = cmdList[i].Element(ns.GetName("Example")).Value,
-                            TextLine1 = txtline1,
-                            Image = await Package.Current.InstalledLocation.GetFileAsync($"images\\{attributeName}.jpg")
-                        });
-                    }
-                    if (cmdList.Count - cmdsNo >= 5)
-                    {
-                        var nextPage = new VoiceCommandContentTile
-                        {
-                            ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
-                            Title = "More voice commands",
-                            AppLaunchArgument = "more",
-                            TextLine1 = moreCommands,
-                            Image = await Package.Current.InstalledLocation.GetFileAsync($"assets\\artwork.jpg")
-                        };
-
-                        destContentTiles.Add(nextPage);
-                    }
-                }
-            }
-            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destContentTiles);
-            // If cortana is dismissed in this operation, null will be returned.
-
-            var selectedRes = await voiceServiceConnection.RequestDisambiguationAsync(response);
-
-            //Create dialogue confirm that user selected
-            msgback.DisplayMessage = msgback.SpokenMessage = "Are you sure you want select " + selectedRes.SelectedItem.Title + " ?";
-            msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select Yes or No";
-            response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
-            var result = await voiceServiceConnection.RequestConfirmationAsync(response);
-            if (result.Confirmed)
-            {
-                if (selectedRes.SelectedItem.AppLaunchArgument == "more")
-                {
-                    destContentTiles.Clear();
-                    number++;
-                    await ShowMoreVoiceCommand(cmdList, cmdsNo, destContentTiles, cmdsTook, cmtList);
-                }
-                else
-                {
-                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
-                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
-                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
-                    return response;
-                }
-            }
-            else
-            {
-                await Task.Delay(3000);
-                await CortanaHelpList();
-            }
             return response;
         }
 

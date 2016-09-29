@@ -8,7 +8,6 @@
       <Example> Pause </Example>
       <ListenFor> pause </ListenFor>
       <Feedback> Pausing </Feedback>
-      <!-- Description: this is description for pause -->
       <Navigate />
     </Command>
 
