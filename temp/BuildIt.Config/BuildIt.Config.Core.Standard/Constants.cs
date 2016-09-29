@@ -16,5 +16,6 @@
         public const string AppConfigurationServiceNotificationTitleKey = "App_ServiceNotification_Title";
         public const string AppConfigurationServiceNotificationBodyKey = "App_ServiceNotification_Body";
         public const string AppConfigurationServiceNotificationDisplayingKey = "App_ServiceNotification_Displaying";
+        public const string AppConfigurationApiKey = "94DF9BBA-455B-488D-B45D-BCF4882D71BC";
     }
 }

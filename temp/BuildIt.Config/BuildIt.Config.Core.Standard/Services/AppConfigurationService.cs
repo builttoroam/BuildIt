@@ -120,6 +120,7 @@ namespace BuildIt.Config.Core.Standard.Services
                 {
                     var requestContent = new StringContent(JsonConvert.SerializeObject(Mapper.MappedValues));
                     requestContent.Headers.ContentType.MediaType = "application/json";
+                    requestContent.Headers.Add("ApiKey", Constants.AppConfigurationApiKey);
                     using (var response = await client.PostAsync(endpoint, requestContent))
                     {
                         if (response == null) return res;
@@ -127,6 +128,7 @@ namespace BuildIt.Config.Core.Standard.Services
                         {
                             var responseContent = await content.ReadAsStringAsync();
                             var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
+                            //if (appConfigurationResponse == null) return res;
 
                             if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors)
                             {
@@ -137,8 +139,8 @@ namespace BuildIt.Config.Core.Standard.Services
                                     {
                                         await UserDialogService.AlertAsync($"Message: {responseError.Content}");
                                     }
-                                #else
-                                    //Display user-friendly alert
+#else
+    //Display user-friendly alert
                                     var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
                                     if (alertAsync != null) await alertAsync;
                                 #endif
@@ -152,7 +154,8 @@ namespace BuildIt.Config.Core.Standard.Services
                                     {
                                         if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
 
-                                        res[value.Attributes.Name] = value;
+                                            res[value.Attributes.Name] = value;
+                                        }
                                     }
                                 }
                             }
@@ -193,6 +196,7 @@ namespace BuildIt.Config.Core.Standard.Services
             var validationResult = ValidateRetrievedAppConfig();
             if (!validationResult.IsValid)
             {
+                if (!validationResult.InvalidValues.Any()) return;
 
                 if (validationResult.InvalidValues.Count == 1)
                 {
