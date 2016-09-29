@@ -72,9 +72,6 @@ namespace BuildIt.Media
             var commandsTook = 0;
             var commandsCountingNo = 0;
 
-
-            var storageFile = await Package.Current.InstalledLocation.GetFileAsync("assets\\buildit_forward.jpg");
-
             await ShowProgressScreen();
 
             //load temporary xml file
@@ -151,10 +148,10 @@ namespace BuildIt.Media
                         ?.Replace("Description:", "") ?? ""; // If one exists, trim "Description:" by replacing it with ""
                     if (attributeName.Contains("buildit") != true)
                     {
-                        attributeName = "buildit_pause";
+                        attributeName = "buildit_customTile";
                     }
 
-                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.jpg");
+                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.png");
 
                     destContentTiles.Add(new VoiceCommandContentTile
                     {
@@ -183,10 +180,10 @@ namespace BuildIt.Media
                         ?.Replace("Description:", "") ?? ""; // If one exists, trim "Description:" by replacing it with ""
                     if (attributeName.Contains("buildit") != true)
                     {
-                        attributeName = "buildit_pause";
+                        attributeName = "buildit_customTile";
                     }
 
-                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.jpg");
+                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.png");
 
 
                     destContentTiles.Add(new VoiceCommandContentTile
@@ -205,7 +202,7 @@ namespace BuildIt.Media
                     Title = "More voice commands",
                     AppLaunchArgument = "more",
                     TextLine1 = moreCommands,
-                    Image = await iconsFolder.GetFileAsync("buildit_help.jpg")
+                    Image = await iconsFolder.GetFileAsync("buildit_help.png")
             };
                 destContentTiles.Add(nextPage);
 
