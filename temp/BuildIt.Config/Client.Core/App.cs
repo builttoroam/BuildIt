@@ -11,7 +11,7 @@ namespace Client.Core
     {
         public App()
         {
-            Mvx.ConstructAndRegisterSingleton<IAppConfigurationServiceEndpoint, AppConfigurationServiceEndpoint>();            
+            Mvx.ConstructAndRegisterSingleton<IAppConfigurationEndpointService, AppConfigurationEndpointService>();            
             Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
 
             InitAppConfig();

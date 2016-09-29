@@ -14,7 +14,7 @@ namespace BuildIt.Config.Core.Standard.Services
 {
     public class AppConfigurationService : IAppConfigurationService
     {
-        private readonly IAppConfigurationServiceEndpoint serviceEndpoint;
+        private readonly IAppConfigurationEndpointService _endpointService;
 
         public IUserDialogService UserDialogService { get;  }
 
@@ -31,9 +31,9 @@ namespace BuildIt.Config.Core.Standard.Services
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
         public AppConfiguration AppConfig { get; private set; }
 
-        public AppConfigurationService(IAppConfigurationServiceEndpoint serviceEndpoint, IVersionService versionService, IUserDialogService userDialogService)
+        public AppConfigurationService(IAppConfigurationEndpointService _endpointService, IVersionService versionService, IUserDialogService userDialogService)
         {
-            this.serviceEndpoint = serviceEndpoint;
+            this._endpointService = _endpointService;
             this.UserDialogService = userDialogService;
             this.VersionService = versionService;
         }
@@ -102,7 +102,7 @@ namespace BuildIt.Config.Core.Standard.Services
 
         private async Task<AppConfiguration> Get()
         {
-            if (string.IsNullOrEmpty(this.serviceEndpoint.Endpoint)) return null;
+            if (string.IsNullOrEmpty(this._endpointService.Endpoint)) return null;
 
             AppConfiguration res = null;
 
@@ -112,7 +112,7 @@ namespace BuildIt.Config.Core.Standard.Services
                 appConfigHash = $"/{currentAppConfigurationMd5Hash}";
             }
 
-            var endpoint = $"{this.serviceEndpoint.Endpoint}{appConfigHash}";
+            var endpoint = $"{this._endpointService.Endpoint}{appConfigHash}";
 
             try
             {
