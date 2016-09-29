@@ -12,7 +12,6 @@ namespace Client.Core
     {
         public App()
         {
-            //Mvx.ConstructAndRegisterSingleton<IAppConfigurationEndpointService, AppConfigurationEndpointService>();  
             Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationEndpointService>(() => new AppConfigurationEndpointService(new AppConfigurationRoutingModel()
             {
                 Prefix = "test1",

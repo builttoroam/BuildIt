@@ -88,9 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="MainViewModel.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
@@ -123,6 +121,10 @@
     <ProjectReference Include="..\Client.Android.Impl\Client.Android.Impl.csproj">
       <Project>{e0e6a925-bc0c-4163-906b-46cc92d30f74}</Project>
       <Name>Client.Android.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Client.Core\Client.Core.csproj">
+      <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>
+      <Name>Client.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

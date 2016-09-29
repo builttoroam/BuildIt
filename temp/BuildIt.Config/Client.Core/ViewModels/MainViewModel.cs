@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using BuildIt.Config.Core.Standard.Extensions;
 using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Standard.Services;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Core.Models;
 using MvvmCross.Core.ViewModels;
@@ -44,13 +45,13 @@ namespace Client.Core.ViewModels
         private void MapConfig()
         {
             appConfigurationService.Mapper.Map("App_VersionInfo_CurrentAppVersion")
-                                          .IsRequired();
+                                          .IsRequired();            
 
             appConfigurationService.Mapper.Map("App_States")
                                           .IsJson();
         }
 
-        private async Task GetAppConfig()
+        public async Task GetAppConfig()
         {
             ConfigValues.Clear();
 
@@ -61,6 +62,8 @@ namespace Client.Core.ViewModels
             {
                 ConfigValues.Add(value);
             }
+
+            await appConfigurationService.CheckMinimumVersion();
             //var states = config?["App_States"]?.GetValue<IEnumerable<State>>();
         }
     }

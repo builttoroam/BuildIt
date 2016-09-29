@@ -9,6 +9,7 @@ using BuildIt.Config.Core.Standard.Models;
 using BuildIt.Config.Core.Standard.Services;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Android.Impl;
+using Client.Core.ViewModels;
 using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
 
@@ -45,7 +46,7 @@ namespace Client.Android.Test
             {
                 if (ViewModel == null) return;
 
-                await ViewModel?.RetrieveConfig();
+                await ViewModel?.GetAppConfig();
             };
         }
     }

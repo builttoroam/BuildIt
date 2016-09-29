@@ -6,6 +6,7 @@ using BuildIt.Config.Core.Standard.Models;
 using BuildIt.Config.Core.Standard.Services;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Android.Impl;
+using Client.Core;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Platform;
 using MvvmCross.Droid.Shared.Presenter;
@@ -49,13 +50,7 @@ namespace Client.Android.Test
         {
             base.InitializeIoC();
             Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
-            Mvx.LazyConstructAndRegisterSingleton<IVersionService, VersionService>();
-            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationEndpointService>(() => new AppConfigurationEndpointService(new AppConfigurationRoutingModel()
-            {
-                Prefix = "test1",
-                Controller = "configuration"
-            }));
-            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
+            Mvx.LazyConstructAndRegisterSingleton<IVersionService, VersionService>();                        
         }
     }
 }
