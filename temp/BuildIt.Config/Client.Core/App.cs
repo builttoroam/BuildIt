@@ -1,6 +1,9 @@
-﻿using BuildIt.Config.Core.Standard.Models;
+﻿using System.Collections.Generic;
+using BuildIt.Config.Core.Standard;
+using BuildIt.Config.Core.Standard.Models;
 using BuildIt.Config.Core.Standard.Services;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Standard.Utilities;
 using Client.Core.Services;
 using Client.Core.ViewModels;
 using MvvmCross.Core.ViewModels;
@@ -31,6 +34,7 @@ namespace Client.Core
             // Step 1: Retrieve App config from Azure
             if (appConfigService == null) return;
 
+            appConfigService.ExtraHeaders.Add(new KeyValuePair<string, string>(Strings.ApiKey, Constants.AppConfigurationApiKey));
             appConfigService.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
 
             //await appConfigService.LoadAppConfig();

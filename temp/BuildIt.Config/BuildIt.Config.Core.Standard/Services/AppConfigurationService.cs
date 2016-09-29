@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -9,31 +11,30 @@ using System.Threading.Tasks;
 using BuildIt.Config.Core.Standard.Models;
 using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Newtonsoft.Json;
+using BuildIt;
+using BuildIt.Config.Core.Standard.Utilities;
 
 namespace BuildIt.Config.Core.Standard.Services
 {
     public class AppConfigurationService : IAppConfigurationService
     {
-        private readonly IAppConfigurationEndpointService _endpointService;
+        private readonly IAppConfigurationEndpointService endpointService;
 
         public IUserDialogService UserDialogService { get; }
-
         public IVersionService VersionService { get; }
 
         private readonly AutoResetEvent getAppConfigurationAutoResetEvent = new AutoResetEvent(true);
 
-        private bool isInitialized;
-
         private string currentAppConfigurationMd5Hash;
-
-        private CancellationTokenSource cancellationToken;
 
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
         public AppConfiguration AppConfig { get; private set; }
 
-        public AppConfigurationService(IAppConfigurationEndpointService _endpointService, IVersionService versionService, IUserDialogService userDialogService)
+        public List<KeyValuePair<string, string>> ExtraHeaders { get; set; } = new List<KeyValuePair<string, string>>();
+
+        public AppConfigurationService(IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService)
         {
-            this._endpointService = _endpointService;
+            this.endpointService = endpointService;
             this.UserDialogService = userDialogService;
             this.VersionService = versionService;
         }
@@ -46,11 +47,6 @@ namespace BuildIt.Config.Core.Standard.Services
 
         private async Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true)
         {
-            //TODO: Handle this situation in a better way
-            //if (!isInitialized) return null;
-
-            cancellationToken?.Cancel();
-
             return await Task.Run(async () =>
             {
                 if (retrieveCachedVersion && AppConfig != null) return AppConfig;
@@ -93,7 +89,6 @@ namespace BuildIt.Config.Core.Standard.Services
                     getAppConfigurationAutoResetEvent.Set();
                 }
 
-                cancellationToken = new CancellationTokenSource();
                 await HandleRetrievedAppConfigValidation();
 
                 return AppConfig;
@@ -102,7 +97,7 @@ namespace BuildIt.Config.Core.Standard.Services
 
         private async Task<AppConfiguration> Get()
         {
-            if (string.IsNullOrEmpty(this._endpointService.Endpoint)) return null;
+            if (string.IsNullOrEmpty(this.endpointService.Endpoint)) return null;
 
             AppConfiguration res = null;
 
@@ -112,24 +107,32 @@ namespace BuildIt.Config.Core.Standard.Services
                 appConfigHash = $"/{currentAppConfigurationMd5Hash}";
             }
 
-            var endpoint = $"{this._endpointService.Endpoint}{appConfigHash}";
+            var endpoint = $"{this.endpointService.Endpoint}{appConfigHash}";
 
             try
             {
                 using (var client = new HttpClient())
                 {
+                    //TODO: once we have BuildIt.General refactor this code to use for instance DoForEach 
+                    if (ExtraHeaders != null)
+                    {
+                        foreach (var extraHeaderKeyValuePair in ExtraHeaders)
+                        {
+                            client.DefaultRequestHeaders.Add(extraHeaderKeyValuePair.Key, extraHeaderKeyValuePair.Value);
+                        }
+                    }
+
                     var requestContent = new StringContent(JsonConvert.SerializeObject(Mapper.MappedValues));
                     requestContent.Headers.ContentType.MediaType = "application/json";
-                    requestContent.Headers.Add("ApiKey", Constants.AppConfigurationApiKey);
                     using (var response = await client.PostAsync(endpoint, requestContent))
                     {
                         if (response == null) return res;
                         using (var content = response.Content)
                         {
                             var responseContent = await content.ReadAsStringAsync();
-                            var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);                            
+                            var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
 
-                            if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors)
+                            if (appConfigurationResponse.HasErrors)
                             {
 #if DEBUG
                                 //Display all errors
@@ -144,9 +147,13 @@ namespace BuildIt.Config.Core.Standard.Services
                                     if (alertAsync != null) await alertAsync;
 #endif
                             }
+                            else if (response.StatusCode != HttpStatusCode.OK)
+                            {
+                                await UserDialogService.AlertAsync(Strings.OpsSomethingWentWrong);
+                            }
                             else
                             {
-                                if (appConfigurationResponse != null && appConfigurationResponse.HasConfigValues)
+                                if (appConfigurationResponse.HasConfigValues)
                                 {
                                     res = new AppConfiguration();
                                     foreach (var value in appConfigurationResponse.AppConfigValues)
@@ -196,11 +203,14 @@ namespace BuildIt.Config.Core.Standard.Services
             {
                 if (!validationResult.InvalidValues.Any()) return;
 
+                var anyBlockingAppConfiguration = validationResult.InvalidValues.Any(iv => iv.Attributes.ValueIsBlocking);
+
                 if (validationResult.InvalidValues.Count == 1)
                 {
                     if (validationResult.InvalidValues[0]?.Attributes?.FailureHandler != null)
                     {
                         await validationResult.InvalidValues[0]?.Attributes?.FailureHandler.Invoke(validationResult.InvalidValues[0]);
+                        return;
                     }
                     else
                     {
@@ -209,15 +219,12 @@ namespace BuildIt.Config.Core.Standard.Services
                 }
                 else
                 {
-                    var anyBlockingAppConfiguration = validationResult.InvalidValues.Any(iv => iv.Attributes.ValueIsBlocking);
+                    await UserDialogService.AlertAsync($"{FormatInvalidAppConfiguration(validationResult.InvalidValues)}");
+                }
 
-                    do
-                    {
-                        await UserDialogService.AlertAsync($"{FormatInvalidAppConfiguration(validationResult.InvalidValues)}");
-
-                        await Task.Delay(1000);
-
-                    } while (anyBlockingAppConfiguration && !cancellationToken.IsCancellationRequested);
+                if (anyBlockingAppConfiguration)
+                {
+                    await RetrieveAppConfig(false);
                 }
             }
         }
