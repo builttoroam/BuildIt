@@ -1,10 +1,10 @@
-﻿{
+{
   "supports": {},
   "dependencies": {
     "BuildIt.General": "0.1.4",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "MvvmCross": "4.3.0",
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.0",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
   },
   "frameworks": {
     "netstandard1.4": {
