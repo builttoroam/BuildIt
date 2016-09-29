@@ -118,9 +118,9 @@
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
       <Name>BuildIt.Config.Core.Standard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Client.Android.Impl\Client.Android.Impl.csproj">
+    <ProjectReference Include="..\Client.Android.Impl\BuildIt.Config.Impl.Droid.csproj">
       <Project>{e0e6a925-bc0c-4163-906b-46cc92d30f74}</Project>
-      <Name>Client.Android.Impl</Name>
+      <Name>BuildIt.Config.Impl.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\Client.Core\Client.Core.csproj">
       <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>

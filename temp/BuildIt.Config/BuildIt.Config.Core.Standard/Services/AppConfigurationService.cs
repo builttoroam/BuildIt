@@ -20,13 +20,13 @@ namespace BuildIt.Config.Core.Standard.Services
     {
         private readonly IAppConfigurationEndpointService endpointService;
 
-        public IUserDialogService UserDialogService { get; }
-        public IVersionService VersionService { get; }
-
         private readonly AutoResetEvent getAppConfigurationAutoResetEvent = new AutoResetEvent(true);
 
         private string currentAppConfigurationMd5Hash;
 
+        public IUserDialogService UserDialogService { get; }
+        public IVersionService VersionService { get; }
+        
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
         public AppConfiguration AppConfig { get; private set; }
 

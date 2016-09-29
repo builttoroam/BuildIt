@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -11,7 +12,22 @@ namespace Client.Android.Impl
 {
     public class UserDialogService : IUserDialogService
     {
-        public Context Context { get; set; }
+        private IUserDialogs acrUserDialogs;
+        private IUserDialogs AcrUserDialogs
+        {
+            get
+            {
+                if (acrUserDialogs == null)
+                {
+                    UserDialogs.Init(Context);
+                    acrUserDialogs = UserDialogs.Instance;
+                }
+
+                return acrUserDialogs;
+            }
+        }
+
+        public Activity Context { get; set; }
 
         /// <summary>
         /// Ensure that Context is set before calling GetVersion()
@@ -21,29 +37,32 @@ namespace Client.Android.Impl
         {
             if (Context == null) return;
 
-            var taskCompletionSource = new TaskCompletionSource<Task>();
+            var alertAsync = AcrUserDialogs?.AlertAsync(message, title, okText, cancelToken);
+            if (alertAsync != null) await alertAsync;
 
-            using (var h = new Handler(Looper.MainLooper))
-            {
-                h.Post(() =>
-                {
-                    title = !string.IsNullOrWhiteSpace(title) ? title : Strings.DefaultAlertTitle;
-                    okText = !string.IsNullOrWhiteSpace(okText) ? okText : Strings.Ok;
+            //var taskCompletionSource = new TaskCompletionSource<Task>();
 
-                    var alert = new AlertDialog.Builder(Context);
-                    alert.SetTitle(title);
-                    alert.SetMessage(message);
-                    alert.SetPositiveButton(okText, (senderAlert, args) =>
-                    {
-                        taskCompletionSource.SetResult(Task.FromResult(0));
-                    });
+            //using (var h = new Handler(Looper.MainLooper))
+            //{
+            //    h.Post(() =>
+            //    {
+            //        title = !string.IsNullOrWhiteSpace(title) ? title : Strings.DefaultAlertTitle;
+            //        okText = !string.IsNullOrWhiteSpace(okText) ? okText : Strings.Ok;
 
-                    AlertDialog dialog = alert.Create();
-                    dialog.Show();
-                });
-            }
+            //        var alert = new AlertDialog.Builder(Context);
+            //        alert.SetTitle(title);
+            //        alert.SetMessage(message);
+            //        alert.SetPositiveButton(okText, (senderAlert, args) =>
+            //        {
+            //            taskCompletionSource.SetResult(Task.FromResult(0));
+            //        });
 
-            await taskCompletionSource.Task;
+            //        AlertDialog dialog = alert.Create();
+            //        dialog.Show();
+            //    });
+            //}
+
+            //await taskCompletionSource.Task;
         }
     }
 }
