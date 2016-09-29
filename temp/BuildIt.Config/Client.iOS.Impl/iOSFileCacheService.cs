@@ -1,33 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Core.Standard.Models;
+using MvvmCross.Platform;
+using MvvmCross.Plugins.File;
 
 namespace Client.iOS.Impl
 {
     public class iOSFileCacheService : IFileCacheService
     {
-        public async Task<bool> SaveConfigData(AppConfiguration configValues)
+        private IMvxFileStore fileService;
+        private const string StoreFileName = "Config.xml";
+        private Environment.SpecialFolder LocalPath => Environment.SpecialFolder.MyDocuments;
+        private IEnumerable<AppConfiguration> _config;
+        public IEnumerable<AppConfiguration> Config
         {
-            throw new System.NotImplementedException();
+            get { return _config; }
+        }
+
+        private void MvvmcrossPluginLoaded()
+        {
+            fileService = Mvx.Resolve<IMvxFileStore>();
+        }
+
+        public void Save(AppConfiguration appConfiguration)
+        {
+            MvvmcrossPluginLoaded();
+            fileService.WriteFile(StoreFileName, (stream) =>
+            {
+                var serializer = new XmlSerializer(typeof(List<AppConfiguration>));
+                serializer.Serialize(stream, Config.ToList());
+            });
         }
 
         public async Task<AppConfiguration> LoadConfigData(string relativePath)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<bool> SaveToPath<TData>(string path, TData data) where TData : class
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<TData> LoadFromPath<TData>(string path) where TData : class
-        {
+            MvvmcrossPluginLoaded();
             throw new System.NotImplementedException();
         }
 
         public async Task ClearData()
         {
+            MvvmcrossPluginLoaded();
             throw new System.NotImplementedException();
         }
     }
