@@ -61,6 +61,7 @@
     <Compile Include="Services\Interfaces\IAppConfigurationService.cs" />
     <Compile Include="Services\Interfaces\IAppConfigurationEndpointService.cs" />
     <Compile Include="Services\Interfaces\IVersionService.cs" />
+    <Compile Include="Utilities\Strings.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

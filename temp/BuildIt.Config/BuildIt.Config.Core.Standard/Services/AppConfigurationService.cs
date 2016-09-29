@@ -128,7 +128,7 @@ namespace BuildIt.Config.Core.Standard.Services
                             var responseContent = await content.ReadAsStringAsync();
                             var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
 
-                            if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors())
+                            if (!response.IsSuccessStatusCode && appConfigurationResponse.HasErrors)
                             {
                                 #if DEBUG
                                     //Display all errors
@@ -145,7 +145,7 @@ namespace BuildIt.Config.Core.Standard.Services
                             }
                             else
                             {
-                                if (appConfigurationResponse != null && appConfigurationResponse.HasConfigValues())
+                                if (appConfigurationResponse != null && appConfigurationResponse.HasConfigValues)
                                 {
                                     res = new AppConfiguration();
                                     foreach (var value in appConfigurationResponse.AppConfigValues)
