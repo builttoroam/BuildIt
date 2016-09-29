@@ -197,6 +197,7 @@ namespace BuildIt.Config.Core.Standard.Services
             var validationResult = ValidateRetrievedAppConfig();
             if (!validationResult.IsValid)
             {
+                if (!validationResult.InvalidValues.Any()) return;
 
                 if (validationResult.InvalidValues.Count == 1)
                 {
