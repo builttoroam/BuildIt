@@ -122,16 +122,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\buildit_pause.jpg" />
-    <EmbeddedResource Include="Images\buildit_back.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Content Include="Images\buildit_forward.jpg" />
-    <Content Include="Images\buildit_mute.jpg" />
-    <Content Include="Images\buildit_play.jpg" />
-    <Content Include="Images\buildit_unmute.jpg" />
-    <Content Include="Images\buildit_volumeDown.jpg" />
-    <Content Include="Images\buildit_volumeUp.jpg" />
+    <EmbeddedResource Include="Images\buildit_pause.jpg" />
+    <EmbeddedResource Include="Images\buildit_volumeDown.jpg" />
+    <EmbeddedResource Include="Images\buildit_volumeUp.jpg" />
+    <EmbeddedResource Include="Images\buildit_back.jpg" />
+    <EmbeddedResource Include="Images\buildit_forward.jpg" />
+    <EmbeddedResource Include="Images\buildit_mute.jpg" />
+    <EmbeddedResource Include="Images\buildit_play.jpg" />
+    <EmbeddedResource Include="Images\buildit_unmute.jpg" />
   </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
