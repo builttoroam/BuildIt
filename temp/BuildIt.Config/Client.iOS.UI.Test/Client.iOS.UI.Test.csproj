@@ -92,6 +92,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Setup.cs" />
+    <Compile Include="StoryboardContainer.cs" />
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
@@ -137,6 +139,14 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj">
+      <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
+      <Name>BuildIt.Config.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Client.Core\Client.Core.csproj">
+      <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>
+      <Name>Client.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Client.iOS.Impl\Client.iOS.Impl.csproj">
       <Project>{35814764-6e47-4b95-ae23-7314ef61884b}</Project>
       <Name>Client.iOS.Impl</Name>

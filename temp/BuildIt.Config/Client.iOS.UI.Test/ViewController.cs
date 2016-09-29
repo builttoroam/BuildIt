@@ -1,10 +1,15 @@
 ﻿using System;
-
+using Client.Core.ViewModels;
+using Client.iOS.Impl;
+using MvvmCross.Binding.BindingContext;
+using MvvmCross.iOS.Views;
+using MvvmCross.Platform;
 using UIKit;
 
 namespace Client.iOS.UI.Test
 {
-    public partial class ViewController : UIViewController
+    [MvxFromStoryboard("Main")]
+    public partial class ViewController : MvxViewController<MainViewModel>
     {
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -13,13 +18,9 @@ namespace Client.iOS.UI.Test
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            // Perform any additional setup after loading the view, typically from a nib.
-        }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
+            var set = this.CreateBindingSet<ViewController, MainViewModel>();
+            set.Bind(GetConfigButton).To(vm => vm.GetAppConfigCommand);
+            set.Apply();
         }
     }
 }
