@@ -136,5 +136,13 @@
   <ItemGroup>
     <Content Include="Entitlements.plist" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client.iOS.Impl\Client.iOS.Impl.csproj">
+      <Project>{35814764-6e47-4b95-ae23-7314ef61884b}</Project>
+      <Name>Client.iOS.Impl</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

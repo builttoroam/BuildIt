@@ -8,8 +8,8 @@
     <ProjectGuid>{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.Config.Core.Standard</RootNamespace>
-    <AssemblyName>BuildIt.Config.Core.Standard</AssemblyName>
+    <RootNamespace>BuildIt.Config.Core</RootNamespace>
+    <AssemblyName>BuildIt.Config.Core</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
