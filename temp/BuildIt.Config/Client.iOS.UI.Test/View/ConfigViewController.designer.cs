@@ -9,18 +9,14 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-namespace Client.iOS.UI.Test
+namespace Client.iOS.UI.Test.View
 {
-    [Register ("ViewController")]
-    partial class ViewController
+    [Register ("ConfigViewController")]
+    partial class ConfigViewController
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton GetConfigButton { get; set; }
-
-        [Action ("UIButton3_TouchUpInside:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void UIButton3_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
