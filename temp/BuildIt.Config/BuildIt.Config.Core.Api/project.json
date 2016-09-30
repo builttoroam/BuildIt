@@ -44,6 +44,8 @@
     },
 
     "scripts": {
-        "postcompile": "\"%project:Directory%/../.nuget/nuget.exe\" pack BuildIt.Config.Core.Api.nuspec"
+        "postcompile": [
+            "\"%project:Directory%/../.nuget/nuget.exe\" pack BuildIt.Config.Core.Api.nuspec"
+        ]
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
@@ -20,18 +21,9 @@ namespace Client.Android.Test
 
         protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(bundle);
+            UserDialogs.Init(this);
 
-            var userDialogService = Mvx.Resolve<IUserDialogService>() as UserDialogService;
-            if (userDialogService != null)
-            {
-                userDialogService.Context = this;
-            }
-            var versionService = Mvx.Resolve<IVersionService>() as VersionService;
-            if (versionService != null)
-            {
-                versionService.Context = this;
-            }
+            base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);

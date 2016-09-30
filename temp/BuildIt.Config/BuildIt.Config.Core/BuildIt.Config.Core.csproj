@@ -57,6 +57,7 @@
     <Compile Include="Services\AppConfigurationEndpointService.cs" />
     <Compile Include="Services\AppConfigurationService.cs" />
     <Compile Include="Services\Interfaces\IFileCacheService.cs" />
+    <Compile Include="Services\Interfaces\INetworkService.cs" />
     <Compile Include="Services\Interfaces\IUserDialogService.cs" />
     <Compile Include="Services\ConfigurationHelpers.cs" />
     <Compile Include="Services\Interfaces\IAppConfigurationService.cs" />
@@ -64,10 +65,12 @@
     <Compile Include="Services\Interfaces\IVersionService.cs" />
     <Compile Include="Utilities\Strings.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
+xcopy $(TargetPath) $(ProjectDir)lib\portable-win+net45+wp8+win8+wpa81\
+xcopy $(TargetPath) $(ProjectDir)lib\net45\
+xcopy $(TargetPath) $(ProjectDir)lib\netstandard1.0\
 $(SolutionDir).nuget\nuget.exe pack $(ProjectDir)BuildIt.Config.Core.nuspec -outputdirectory $(ProjectDir)
 )</PostBuildEvent>
   </PropertyGroup>
