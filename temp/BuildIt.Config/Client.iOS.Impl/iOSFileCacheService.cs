@@ -1,43 +1,74 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services.Interfaces;
 using MvvmCross.Platform;
-using MvvmCross.Plugins.File;
+using PCLStorage;
 
 namespace Client.iOS.Impl
 {
     public class iOSFileCacheService : IFileCacheService
     {
-        private IMvxFileStore FileService { get; } = Mvx.Resolve<IMvxFileStore>();
-        private const string StoreFileName = "Config.xml";
-        private Environment.SpecialFolder LocalPath => Environment.SpecialFolder.MyDocuments;
-        private IEnumerable<AppConfiguration> _config;
-        public IEnumerable<AppConfiguration> Config
+        //private MvxFileSystem FileService => Mvx.Resolve
+        private IFileSystem FileSystem { get; } = PCLStorage.FileSystem.Current;
+
+        private const string FileName = "cachedJson.txt";
+
+        public async Task<bool> Save(AppConfiguration appConfiguration)
         {
-            get { return _config; }
+            var folderPath = GetLocalFolderPath();
+            if (string.IsNullOrEmpty(folderPath)) return false;
+
+            var fullPath = Path.Combine(folderPath, FileName);
+            //Write the file
+            //FileService.WriteFile(fullPath, JsonConvert.SerializeObject(appConfiguration));
+            return true;
         }
 
-        public void Save(AppConfiguration appConfiguration)
+        public async Task<AppConfiguration> LoadConfigData()
         {
-            FileService.WriteFile(StoreFileName, (stream) =>
-            {
-                var serializer = new XmlSerializer(typeof(List<AppConfiguration>));
-                serializer.Serialize(stream, Config.ToList());
-            });
-        }
+            AppConfiguration cachedConfig = null;
+            var folderPath = GetLocalFolderPath();
+            if (string.IsNullOrEmpty(folderPath)) return cachedConfig;
 
-        public async Task<AppConfiguration> LoadConfigData(string relativePath)
-        {
-            throw new System.NotImplementedException();
+            var fullPath = Path.Combine(folderPath, FileName);
+
+            //if (!FileService.FolderExists(folderPath) || !FileService.Exists(fullPath))
+            //{
+                return cachedConfig;
+            //}
+            //Read the file
+            //string appConfigJson;
+            //if (FileService.TryReadTextFile(fullPath, out appConfigJson))
+            //{
+            //    cachedConfig = JsonConvert.DeserializeObject<AppConfiguration>(appConfigJson);
+            //}
+            //return cachedConfig;
         }
 
         public async Task ClearData()
         {
-            throw new System.NotImplementedException();
+            var folderPath = GetLocalFolderPath();
+            if (string.IsNullOrEmpty(folderPath)) return;
+
+            var fullPath = Path.Combine(folderPath, FileName);
+            //if (FileService.Exists(fullPath))
+            {
+            //    FileService.DeleteFile(fullPath);
+            }
+        }
+
+        private string GetLocalFolderPath()
+        {
+            var folder = Environment.SpecialFolder.MyDocuments;
+            var folderPath = Environment.GetFolderPath(folder);
+            //FileService.EnsureFolderExists(folderPath);
+            //if (FileService.FolderExists(folderPath))
+            //{
+                //return folderPath;
+            //}
+            return string.Empty;
         }
     }
 }

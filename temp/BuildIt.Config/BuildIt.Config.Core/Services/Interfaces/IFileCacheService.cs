@@ -9,9 +9,9 @@ namespace BuildIt.Config.Core.Services.Interfaces
 {
     public interface IFileCacheService
     {
-        void Save(AppConfiguration appConfiguration);
+        Task<bool> Save(AppConfiguration appConfiguration);
 
-        Task<AppConfiguration> LoadConfigData(string relativePath);
+        Task<AppConfiguration> LoadConfigData();
 
         Task ClearData();
     }
