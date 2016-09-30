@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\BuildIt.Config.Core.dll" target="lib\netstandard1.2\BuildIt.Config.Core.dll" />
+    <file src="lib\**" target="lib" />
   </files>
 </package>
