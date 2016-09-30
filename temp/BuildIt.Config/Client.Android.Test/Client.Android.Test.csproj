@@ -114,11 +114,11 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj">
+    <ProjectReference Include="..\BuildIt.Config.Core\BuildIt.Config.Core.csproj">
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
       <Name>BuildIt.Config.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Client.Android.Impl\BuildIt.Config.Impl.Droid.csproj">
+    <ProjectReference Include="..\BuildIt.Config.Impl.Droid\BuildIt.Config.Impl.Droid.csproj">
       <Project>{e0e6a925-bc0c-4163-906b-46cc92d30f74}</Project>
       <Name>BuildIt.Config.Impl.Droid</Name>
     </ProjectReference>

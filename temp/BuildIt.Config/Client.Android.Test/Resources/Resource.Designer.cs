@@ -1710,26 +1710,26 @@ namespace Client.Android.Test
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f010126
-			public const int MvxBind = 2130772262;
+			// aapt resource value: 0x7f01011a
+			public const int MvxBind = 2130772250;
 			
-			// aapt resource value: 0x7f01012a
-			public const int MvxDropDownItemTemplate = 2130772266;
+			// aapt resource value: 0x7f01011e
+			public const int MvxDropDownItemTemplate = 2130772254;
 			
-			// aapt resource value: 0x7f01012b
-			public const int MvxGroupItemTemplate = 2130772267;
+			// aapt resource value: 0x7f01011f
+			public const int MvxGroupItemTemplate = 2130772255;
 			
-			// aapt resource value: 0x7f010129
-			public const int MvxItemTemplate = 2130772265;
+			// aapt resource value: 0x7f01011d
+			public const int MvxItemTemplate = 2130772253;
 			
-			// aapt resource value: 0x7f010127
-			public const int MvxLang = 2130772263;
+			// aapt resource value: 0x7f01011b
+			public const int MvxLang = 2130772251;
 			
-			// aapt resource value: 0x7f01012c
-			public const int MvxSource = 2130772268;
+			// aapt resource value: 0x7f010120
+			public const int MvxSource = 2130772256;
 			
-			// aapt resource value: 0x7f010128
-			public const int MvxTemplate = 2130772264;
+			// aapt resource value: 0x7f01011c
+			public const int MvxTemplate = 2130772252;
 			
 			// aapt resource value: 0x7f010084
 			public const int actionBarDivider = 2130772100;
@@ -1832,42 +1832,6 @@ namespace Client.Android.Test
 			
 			// aapt resource value: 0x7f0100a6
 			public const int activityChooserViewStyle = 2130772134;
-			
-			// aapt resource value: 0x7f01011d
-			public const int ahBarColor = 2130772253;
-			
-			// aapt resource value: 0x7f010125
-			public const int ahBarLength = 2130772261;
-			
-			// aapt resource value: 0x7f010124
-			public const int ahBarWidth = 2130772260;
-			
-			// aapt resource value: 0x7f010122
-			public const int ahCircleColor = 2130772258;
-			
-			// aapt resource value: 0x7f010121
-			public const int ahDelayMillis = 2130772257;
-			
-			// aapt resource value: 0x7f010123
-			public const int ahRadius = 2130772259;
-			
-			// aapt resource value: 0x7f01011e
-			public const int ahRimColor = 2130772254;
-			
-			// aapt resource value: 0x7f01011f
-			public const int ahRimWidth = 2130772255;
-			
-			// aapt resource value: 0x7f010120
-			public const int ahSpinSpeed = 2130772256;
-			
-			// aapt resource value: 0x7f01011a
-			public const int ahText = 2130772250;
-			
-			// aapt resource value: 0x7f01011b
-			public const int ahTextColor = 2130772251;
-			
-			// aapt resource value: 0x7f01011c
-			public const int ahTextSize = 2130772252;
 			
 			// aapt resource value: 0x7f0100c9
 			public const int alertDialogButtonGroupStyle = 2130772169;
@@ -3482,22 +3446,10 @@ namespace Client.Android.Test
 			public const int design_snackbar_background = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int ic_errorstatus = 2130837581;
+			public const int Icon = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int ic_successstatus = 2130837582;
-			
-			// aapt resource value: 0x7f02004f
-			public const int Icon = 2130837583;
-			
-			// aapt resource value: 0x7f020052
-			public const int notification_template_icon_bg = 2130837586;
-			
-			// aapt resource value: 0x7f020050
-			public const int roundedbg = 2130837584;
-			
-			// aapt resource value: 0x7f020051
-			public const int roundedbgdark = 2130837585;
+			public const int notification_template_icon_bg = 2130837582;
 			
 			static Drawable()
 			{
@@ -3518,11 +3470,11 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f06000c
 			public const int MvxBindingTagUnique = 2131099660;
 			
-			// aapt resource value: 0x7f060078
-			public const int MyButton = 2131099768;
+			// aapt resource value: 0x7f060074
+			public const int MyButton = 2131099764;
 			
-			// aapt resource value: 0x7f060079
-			public const int action0 = 2131099769;
+			// aapt resource value: 0x7f060075
+			public const int action0 = 2131099765;
 			
 			// aapt resource value: 0x7f06005c
 			public const int action_bar = 2131099740;
@@ -3548,8 +3500,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f06005d
 			public const int action_context_bar = 2131099741;
 			
-			// aapt resource value: 0x7f06007d
-			public const int action_divider = 2131099773;
+			// aapt resource value: 0x7f060079
+			public const int action_divider = 2131099769;
 			
 			// aapt resource value: 0x7f060004
 			public const int action_menu_divider = 2131099652;
@@ -3584,8 +3536,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f060046
 			public const int buttonPanel = 2131099718;
 			
-			// aapt resource value: 0x7f06007a
-			public const int cancel_action = 2131099770;
+			// aapt resource value: 0x7f060076
+			public const int cancel_action = 2131099766;
 			
 			// aapt resource value: 0x7f060016
 			public const int center = 2131099670;
@@ -3599,8 +3551,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f060054
 			public const int checkbox = 2131099732;
 			
-			// aapt resource value: 0x7f060080
-			public const int chronometer = 2131099776;
+			// aapt resource value: 0x7f06007c
+			public const int chronometer = 2131099772;
 			
 			// aapt resource value: 0x7f06001f
 			public const int clip_horizontal = 2131099679;
@@ -3650,8 +3602,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f060019
 			public const int end = 2131099673;
 			
-			// aapt resource value: 0x7f060085
-			public const int end_padder = 2131099781;
+			// aapt resource value: 0x7f060081
+			public const int end_padder = 2131099777;
 			
 			// aapt resource value: 0x7f06000d
 			public const int enterAlways = 2131099661;
@@ -3695,8 +3647,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f060041
 			public const int image = 2131099713;
 			
-			// aapt resource value: 0x7f060084
-			public const int info = 2131099780;
+			// aapt resource value: 0x7f060080
+			public const int info = 2131099776;
 			
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
@@ -3704,11 +3656,11 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f06001b
 			public const int left = 2131099675;
 			
-			// aapt resource value: 0x7f06007e
-			public const int line1 = 2131099774;
+			// aapt resource value: 0x7f06007a
+			public const int line1 = 2131099770;
 			
-			// aapt resource value: 0x7f060082
-			public const int line3 = 2131099778;
+			// aapt resource value: 0x7f06007e
+			public const int line3 = 2131099774;
 			
 			// aapt resource value: 0x7f060027
 			public const int listMode = 2131099687;
@@ -3716,17 +3668,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f060043
 			public const int list_item = 2131099715;
 			
-			// aapt resource value: 0x7f060076
-			public const int loadingImage = 2131099766;
-			
-			// aapt resource value: 0x7f060074
-			public const int loadingProgressBar = 2131099764;
-			
-			// aapt resource value: 0x7f060077
-			public const int loadingProgressWheel = 2131099767;
-			
-			// aapt resource value: 0x7f06007c
-			public const int media_actions = 2131099772;
+			// aapt resource value: 0x7f060078
+			public const int media_actions = 2131099768;
 			
 			// aapt resource value: 0x7f060036
 			public const int middle = 2131099702;
@@ -3860,8 +3803,8 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f06001d
 			public const int start = 2131099677;
 			
-			// aapt resource value: 0x7f06007b
-			public const int status_bar_latest_event_content = 2131099771;
+			// aapt resource value: 0x7f060077
+			public const int status_bar_latest_event_content = 2131099767;
 			
 			// aapt resource value: 0x7f060067
 			public const int submit_area = 2131099751;
@@ -3869,20 +3812,17 @@ namespace Client.Android.Test
 			// aapt resource value: 0x7f060028
 			public const int tabMode = 2131099688;
 			
-			// aapt resource value: 0x7f060083
-			public const int text = 2131099779;
+			// aapt resource value: 0x7f06007f
+			public const int text = 2131099775;
 			
-			// aapt resource value: 0x7f060081
-			public const int text2 = 2131099777;
+			// aapt resource value: 0x7f06007d
+			public const int text2 = 2131099773;
 			
 			// aapt resource value: 0x7f06004f
 			public const int textSpacerNoButtons = 2131099727;
 			
-			// aapt resource value: 0x7f060075
-			public const int textViewStatus = 2131099765;
-			
-			// aapt resource value: 0x7f06007f
-			public const int time = 2131099775;
+			// aapt resource value: 0x7f06007b
+			public const int time = 2131099771;
 			
 			// aapt resource value: 0x7f060045
 			public const int title = 2131099717;
@@ -4073,52 +4013,43 @@ namespace Client.Android.Test
 			public const int design_navigation_menu_item = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public const int loading = 2130903077;
+			public const int Main = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public const int loadingimage = 2130903078;
+			public const int notification_media_action = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public const int loadingprogress = 2130903079;
+			public const int notification_media_cancel_action = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public const int Main = 2130903080;
+			public const int notification_template_big_media = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int notification_media_action = 2130903081;
+			public const int notification_template_big_media_narrow = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int notification_media_cancel_action = 2130903082;
+			public const int notification_template_lines = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int notification_template_big_media = 2130903083;
+			public const int notification_template_media = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int notification_template_big_media_narrow = 2130903084;
+			public const int notification_template_part_chronometer = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int notification_template_lines = 2130903085;
+			public const int notification_template_part_time = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int notification_template_media = 2130903086;
+			public const int select_dialog_item_material = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int notification_template_part_chronometer = 2130903087;
+			public const int select_dialog_multichoice_material = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int notification_template_part_time = 2130903088;
+			public const int select_dialog_singlechoice_material = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int select_dialog_item_material = 2130903089;
-			
-			// aapt resource value: 0x7f030032
-			public const int select_dialog_multichoice_material = 2130903090;
-			
-			// aapt resource value: 0x7f030033
-			public const int select_dialog_singlechoice_material = 2130903091;
-			
-			// aapt resource value: 0x7f030034
-			public const int support_simple_spinner_dropdown_item = 2130903092;
+			public const int support_simple_spinner_dropdown_item = 2130903089;
 			
 			static Layout()
 			{
@@ -4133,11 +4064,11 @@ namespace Client.Android.Test
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f0a0019
-			public const int ApplicationName = 2131361817;
-			
 			// aapt resource value: 0x7f0a0018
-			public const int Hello = 2131361816;
+			public const int ApplicationName = 2131361816;
+			
+			// aapt resource value: 0x7f0a0017
+			public const int Hello = 2131361815;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int abc_action_bar_home_description = 2131361795;
@@ -4204,9 +4135,6 @@ namespace Client.Android.Test
 			
 			// aapt resource value: 0x7f0a0002
 			public const int character_counter_pattern = 2131361794;
-			
-			// aapt resource value: 0x7f0a0017
-			public const int library_name = 2131361815;
 			
 			// aapt resource value: 0x7f0a0016
 			public const int status_bar_notification_info_overflow = 2131361814;
@@ -6369,8 +6297,8 @@ namespace Client.Android.Test
 			public const int MenuView_preserveIconSpacing = 7;
 			
 			public static int[] MvxBinding = new int[] {
-					2130772262,
-					2130772263};
+					2130772250,
+					2130772251};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -6379,26 +6307,26 @@ namespace Client.Android.Test
 			public const int MvxBinding_MvxLang = 1;
 			
 			public static int[] MvxControl = new int[] {
-					2130772264};
+					2130772252};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxExpandableListView = new int[] {
-					2130772267};
+					2130772255};
 			
 			// aapt resource value: 0
 			public const int MvxExpandableListView_MvxGroupItemTemplate = 0;
 			
 			public static int[] MvxImageView = new int[] {
-					2130772268};
+					2130772256};
 			
 			// aapt resource value: 0
 			public const int MvxImageView_MvxSource = 0;
 			
 			public static int[] MvxListView = new int[] {
-					2130772265,
-					2130772266};
+					2130772253,
+					2130772254};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
@@ -6463,56 +6391,6 @@ namespace Client.Android.Test
 			
 			// aapt resource value: 0
 			public const int PopupWindowBackgroundState_state_above_anchor = 0;
-			
-			public static int[] ProgressWheel = new int[] {
-					2130772250,
-					2130772251,
-					2130772252,
-					2130772253,
-					2130772254,
-					2130772255,
-					2130772256,
-					2130772257,
-					2130772258,
-					2130772259,
-					2130772260,
-					2130772261};
-			
-			// aapt resource value: 3
-			public const int ProgressWheel_ahBarColor = 3;
-			
-			// aapt resource value: 11
-			public const int ProgressWheel_ahBarLength = 11;
-			
-			// aapt resource value: 10
-			public const int ProgressWheel_ahBarWidth = 10;
-			
-			// aapt resource value: 8
-			public const int ProgressWheel_ahCircleColor = 8;
-			
-			// aapt resource value: 7
-			public const int ProgressWheel_ahDelayMillis = 7;
-			
-			// aapt resource value: 9
-			public const int ProgressWheel_ahRadius = 9;
-			
-			// aapt resource value: 4
-			public const int ProgressWheel_ahRimColor = 4;
-			
-			// aapt resource value: 5
-			public const int ProgressWheel_ahRimWidth = 5;
-			
-			// aapt resource value: 6
-			public const int ProgressWheel_ahSpinSpeed = 6;
-			
-			// aapt resource value: 0
-			public const int ProgressWheel_ahText = 0;
-			
-			// aapt resource value: 1
-			public const int ProgressWheel_ahTextColor = 1;
-			
-			// aapt resource value: 2
-			public const int ProgressWheel_ahTextSize = 2;
 			
 			public static int[] RecyclerView = new int[] {
 					16842948,

@@ -1,4 +1,4 @@
-﻿using BuildIt.Config.Core.Standard.Services.Interfaces;
+﻿using BuildIt.Config.Core.Services.Interfaces;
 
 namespace Client.Core.Services
 {

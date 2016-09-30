@@ -1,5 +1,4 @@
 using BuildIt.Config.Core.Services.Interfaces;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
 using Client.Core;
 using Client.iOS.Impl;
 using MvvmCross.Core.ViewModels;
@@ -20,11 +19,6 @@ namespace Client.iOS.UI.Test
         protected override IMvxApplication CreateApp()
         {
             return new App();
-        }
-
-        protected override IMvxIosViewsContainer CreateIosViewsContainer()
-        {
-            return new StoryboardContainer();
         }
 
         protected override void InitializeIoC()

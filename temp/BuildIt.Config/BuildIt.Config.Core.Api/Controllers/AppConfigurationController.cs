@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using BuildIt.Config.Core;
-using BuildIt.Config.Core.Standard;
-using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Models;
 #if NETStandard16
 using Microsoft.AspNetCore.Mvc;
 #elif NET452
@@ -22,14 +21,14 @@ namespace BuildIt.Config.Core.Api.Controllers
     {
 
 #if NETStandard16
-        public AppConfigurationResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
+        public AppConfigurationServerResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #elif NET452
         public JsonResult Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #endif
         {
             if (configMapperValues == null) return null;
 
-            var res = new AppConfigurationResponse();
+            var res = new AppConfigurationServerResponse();
 
             var config = Environment.GetEnvironmentVariables();
 

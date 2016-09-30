@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.FullFramework", "Web.Fu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Core", "Client.Core\Client.Core.csproj", "{600CABEC-1ACC-4D2B-B2FC-C6F4B3F5796C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config.Core\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Universal.Impl", "Client.Universal.impl\Client.Universal.Impl.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
 EndProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.iOS.Impl", "Client.i
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.iOS.UI.Test", "Client.iOS.UI.Test\Client.iOS.UI.Test.csproj", "{DAAF66FA-C832-4898-ADD3-B80A7BF7F101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Droid", "Client.Android.Impl\BuildIt.Config.Impl.Droid.csproj", "{E0E6A925-BC0C-4163-906B-46CC92D30F74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Droid", "BuildIt.Config.Impl.Droid\BuildIt.Config.Impl.Droid.csproj", "{E0E6A925-BC0C-4163-906B-46CC92D30F74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Android.Test", "Client.Android.Test\Client.Android.Test.csproj", "{00410E77-1CF9-44A3-BAB3-97FADEC47A95}"
 EndProject
