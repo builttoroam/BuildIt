@@ -39,13 +39,13 @@ namespace BuildIt.Config.Core.Standard.Services
             this.VersionService = versionService;
         }
 
-        public async Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true)
+        public async Task<AppConfiguration> LoadAppConfig(bool handleLoadValidation = true, bool retrieveCachedVersion = true)
         {
             if (AppConfig != null) return AppConfig;
-            return await RetrieveAppConfig(retrieveCachedVersion);
+            return await RetrieveAppConfig(handleLoadValidation, retrieveCachedVersion);
         }
 
-        private async Task<AppConfiguration> RetrieveAppConfig(bool retrieveCachedVersion = true)
+        private async Task<AppConfiguration> RetrieveAppConfig(bool handleRetrievalValidation = true, bool retrieveCachedVersion = true)
         {
             return await Task.Run(async () =>
             {
@@ -58,32 +58,51 @@ namespace BuildIt.Config.Core.Standard.Services
                         //MK After waiting for other thread to finish retrieving the app config, check if we can return cached values
                         if (retrieveCachedVersion && AppConfig != null) return AppConfig;
 
-                        var appConfig = await Get();
-                        if (appConfig != null)
-                        {
-                            AppConfig = appConfig;
-                            await HandleRetrievedAppConfigValidation();
-                        }
-                        else
-                        {
-                            await UserDialogService.AlertAsync(Constants.AppConfigurationNotFoundError);
+                        var appConfigurationServerResponse = await Get();
+                        AppConfig = CreateAppConfigurationOutOfServerResponse(appConfigurationServerResponse);
+                        if (handleRetrievalValidation)
+                        {                            
+                            if (appConfigurationServerResponse.HasErrors)
+                            {
+                                await HandleRetrievedAppConfigFailure(appConfigurationServerResponse);
+                            }
+                            else
+                            {
+                                await HandleRetrievedAppConfigValidation();                                
+                            }
                         }
                     }
                 }
                 finally
                 {
                     getAppConfigurationAutoResetEvent.Set();
-                }                
+                }
 
                 return AppConfig;
             });
         }
 
-        private async Task<AppConfiguration> Get()
+        private AppConfiguration CreateAppConfigurationOutOfServerResponse(AppConfigurationServerResponse appConfigurationServerResponse)
+        {
+            AppConfiguration res = null;
+            if ((appConfigurationServerResponse?.HasErrors ?? true) || !appConfigurationServerResponse.HasConfigValues) return res;
+
+            res = new AppConfiguration();
+            foreach (var value in appConfigurationServerResponse.AppConfigValues)
+            {
+                if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
+
+                res[value.Attributes.Name] = value;
+            }
+
+            return res;
+        }
+
+        private async Task<AppConfigurationServerResponse> Get()
         {
             if (string.IsNullOrEmpty(this.endpointService.Endpoint)) return null;
 
-            AppConfiguration res = null;
+            AppConfigurationServerResponse res = null;
 
             var appConfigHash = string.Empty;
             if (AppConfig != null)
@@ -114,36 +133,7 @@ namespace BuildIt.Config.Core.Standard.Services
                         using (var content = response.Content)
                         {
                             var responseContent = await content.ReadAsStringAsync();
-                            var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationServerResponse>(responseContent);
-
-                            if (!appConfigurationResponse.HasErrors)
-                            {
-                                if (appConfigurationResponse.HasConfigValues)
-                                {
-                                    res = new AppConfiguration();
-                                    foreach (var value in appConfigurationResponse.AppConfigValues)
-                                    {
-                                        if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
-
-                                        res[value.Attributes.Name] = value;
-                                    }
-                                }
-                            }
-                            else
-                            {
-#if DEBUG
-                                //Display all errors
-                                var responseErrors = appConfigurationResponse.AppConfigErors;
-                                foreach (var responseError in responseErrors)
-                                {
-                                    await UserDialogService.AlertAsync($"Message: {responseError.Content}");
-                                }
-#else
-                                //Display user-friendly alert
-                                var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
-                                if (alertAsync != null) await alertAsync;
-#endif
-                            }
+                            res = JsonConvert.DeserializeObject<AppConfigurationServerResponse>(responseContent);
                         }
                     }
                 }
@@ -211,6 +201,21 @@ namespace BuildIt.Config.Core.Standard.Services
                 }
             }
         }
+        private async Task HandleRetrievedAppConfigFailure(AppConfigurationServerResponse appConfigurationServerResponse)
+        {
+#if DEBUG
+            //Display all errors
+            var responseErrors = appConfigurationServerResponse.AppConfigErors;
+            foreach (var responseError in responseErrors)
+            {
+                await UserDialogService.AlertAsync($"Message: {responseError.Content}");
+            }
+#else
+            //Display user-friendly alert
+            var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
+            if (alertAsync != null) await alertAsync;
+#endif
+        }
 
         private string FormatInvalidAppConfiguration(List<AppConfigurationValue> invalidValues)
         {
@@ -226,3 +231,4 @@ namespace BuildIt.Config.Core.Standard.Services
         }
     }
 }
+

@@ -13,7 +13,7 @@ namespace BuildIt.Config.Core.Standard.Services.Interfaces
 
         IUserDialogService UserDialogService { get; }
 
-        Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true);
+        Task<AppConfiguration> LoadAppConfig(bool handleLoadValidation = true, bool retrieveCachedVersion = true);
 
         /// <summary>
         /// Key: Header name
