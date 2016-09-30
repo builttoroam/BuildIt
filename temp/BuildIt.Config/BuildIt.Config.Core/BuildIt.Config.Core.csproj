@@ -55,7 +55,11 @@
     <Compile Include="Models\AppConfigurationValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppConfigurationEndpointService.cs" />
+    <Compile Include="Services\AppConfigurationRequiredServices.cs" />
     <Compile Include="Services\AppConfigurationService.cs" />
+    <Compile Include="Services\AppConfigurationServiceSetup.cs" />
+    <Compile Include="Services\Interfaces\IAppConfigurationRequiredServices.cs" />
+    <Compile Include="Services\Interfaces\IAppConfigurationServiceSetup.cs" />
     <Compile Include="Services\Interfaces\IFileCacheService.cs" />
     <Compile Include="Services\Interfaces\INetworkService.cs" />
     <Compile Include="Services\Interfaces\IUserDialogService.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="Services\Interfaces\IAppConfigurationService.cs" />
     <Compile Include="Services\Interfaces\IAppConfigurationEndpointService.cs" />
     <Compile Include="Services\Interfaces\IVersionService.cs" />
+    <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Utilities\Strings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

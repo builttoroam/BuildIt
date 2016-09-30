@@ -15,6 +15,7 @@ namespace BuildIt.Config.Core.Services
 {
     public class AppConfigurationService : IAppConfigurationService
     {
+        private readonly IAppConfigurationServiceSetup serviceSetup;
         private readonly IAppConfigurationEndpointService endpointService;
         private readonly INetworkService networkService;
 
@@ -30,13 +31,14 @@ namespace BuildIt.Config.Core.Services
 
         public List<KeyValuePair<string, string>> AdditionalHeaders { get; set; } = new List<KeyValuePair<string, string>>();
 
-        public AppConfigurationService(IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService, INetworkService networkService)
+        public AppConfigurationService(IAppConfigurationRequiredServices requiredSerives)
         {
-            this.endpointService = endpointService;
-            this.networkService = networkService;
+            this.serviceSetup = requiredSerives.ServiceSetup;
+            this.endpointService = requiredSerives.EndpointService;
+            this.networkService = requiredSerives.NetworkService;
 
-            this.UserDialogService = userDialogService;
-            this.VersionService = versionService;
+            this.UserDialogService = requiredSerives.UserDialogService;
+            this.VersionService = requiredSerives.VersionService;
         }
 
         public async Task<AppConfiguration> LoadAppConfig(bool handleLoadValidation = true, bool retrieveCachedVersion = true)

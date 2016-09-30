@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Acr.UserDialogs;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Models;
@@ -24,9 +25,14 @@ namespace Client.Core
                 Prefix = "test1",
                 Controller = "configuration"
             }));
-            Mvx.ConstructAndRegisterSingleton<INetworkService, NetworkService>();
-            Mvx.ConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
-            Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();            
+            Mvx.LazyConstructAndRegisterSingleton<INetworkService, NetworkService>();
+            Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationServiceSetup>(() => new AppConfigurationServiceSetup()
+            {
+                CacheExpirationTime = new TimeSpan(0, 0, 10)
+            });
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationRequiredServices, AppConfigurationRequiredServices>();
 
             InitAppConfig();
 
