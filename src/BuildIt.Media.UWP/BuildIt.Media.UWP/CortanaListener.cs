@@ -50,7 +50,7 @@ namespace BuildIt.Media
 
                 //var temback = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("buildit_back.jpg", CreationCollisionOption.FailIfExists);
                 //var backStream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + "buildit_volumeDown.jpg");
-                
+
 
                 //using (IRandomAccessStream fileStream = await temback.OpenAsync(FileAccessMode.ReadWrite))
                 //{
@@ -68,9 +68,9 @@ namespace BuildIt.Media
 
 
 
-                
-                
-                
+
+
+
 
 
 
@@ -118,7 +118,17 @@ namespace BuildIt.Media
                                 var commandNodes = (from c in element.Descendants()
                                                     where ns.GetName("Command") == c.Name
                                                     select c).ToList();
-                                customElement.Add(commandNodes);
+                                var lastCommand = (from c in customElement.Descendants()
+                                                   where ns.GetName("Command") == c.Name
+                                                   select c).LastOrDefault();
+                                if (lastCommand != null)
+                                {
+                                    lastCommand.AddAfterSelf(commandNodes);
+                                }
+                                else
+                                {
+                                    customElement.Add(commandNodes);
+                                }
                                 matchFound = true;
                                 break;
                             }
@@ -131,14 +141,14 @@ namespace BuildIt.Media
 
 
                         var allVoiceCommands = (from command in customXml.Descendants(ns.GetName("Command"))
-                            select command.SafeAttributeValue("Name")
+                                                select command.SafeAttributeValue("Name")
                             ).Distinct().ToList();
                         foreach (var commandName in allVoiceCommands)
                         {
                             await CopyActionIconsToTempFolder(commandName + ".jpg");
                         }
 
-                       
+
                         //save customXml 
                         customXml.Save(outStream);
                     }
