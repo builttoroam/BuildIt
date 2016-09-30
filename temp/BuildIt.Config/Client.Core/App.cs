@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Acr.UserDialogs;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services;
@@ -15,6 +16,7 @@ namespace Client.Core
     {
         public App()
         {
+            Mvx.RegisterSingleton(() => UserDialogs.Instance);
             Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationEndpointService>(() => new AppConfigurationEndpointService(new AppConfigurationRoutingModel()
             {
                 BaseUrl = "http://fnmservices-dev.azurewebsites.net",

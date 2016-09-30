@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using BuildIt.Config.Core.Services.Interfaces;
 
 namespace BuildIt.Config.Impl.Common
 {
     public class UserDialogService : IUserDialogService
     {
-        public Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null)
+        private readonly IUserDialogs acrUserDialogs;
+
+        public UserDialogService(IUserDialogs acrUserDialogs)
         {
-            throw new NotImplementedException();
+            this.acrUserDialogs = acrUserDialogs;
+        }
+
+        public async Task AlertAsync(string message, string title = null, string okText = null, CancellationToken? cancelToken = null)
+        {
+            var alertAsync = acrUserDialogs?.AlertAsync(message, title, okText, cancelToken);
+            if (alertAsync != null) await alertAsync;
         }
     }
 }
