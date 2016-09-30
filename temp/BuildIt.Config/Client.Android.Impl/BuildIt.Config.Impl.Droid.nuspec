@@ -16,8 +16,7 @@
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="BuildIt.Config.Core" version="1.0.0" />
-      <dependency id="Acr.UserDialogs" version="6.2.3" />
-      <dependency id="MvvmCross.Plugin.File" version="4.2.3" />      
+      <dependency id="Acr.UserDialogs" version="6.2.3" />      
     </dependencies>
   </metadata>
   <files>
