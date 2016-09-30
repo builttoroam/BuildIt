@@ -145,6 +145,10 @@
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
       <Name>BuildIt.Config.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj">
+      <Project>{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}</Project>
+      <Name>BuildIt.Config.Impl.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Client.Core\Client.Core.csproj">
       <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>
       <Name>Client.Core</Name>
