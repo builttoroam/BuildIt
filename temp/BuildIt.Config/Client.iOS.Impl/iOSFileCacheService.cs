@@ -12,7 +12,7 @@ namespace Client.iOS.Impl
 {
     public class iOSFileCacheService : IFileCacheService
     {
-        private IMvxFileStore fileService;
+        private IMvxFileStore FileService { get; } = Mvx.Resolve<IMvxFileStore>();
         private const string StoreFileName = "Config.xml";
         private Environment.SpecialFolder LocalPath => Environment.SpecialFolder.MyDocuments;
         private IEnumerable<AppConfiguration> _config;
@@ -21,15 +21,9 @@ namespace Client.iOS.Impl
             get { return _config; }
         }
 
-        private void MvvmcrossPluginLoaded()
-        {
-            fileService = Mvx.Resolve<IMvxFileStore>();
-        }
-
         public void Save(AppConfiguration appConfiguration)
         {
-            MvvmcrossPluginLoaded();
-            fileService.WriteFile(StoreFileName, (stream) =>
+            FileService.WriteFile(StoreFileName, (stream) =>
             {
                 var serializer = new XmlSerializer(typeof(List<AppConfiguration>));
                 serializer.Serialize(stream, Config.ToList());
@@ -38,13 +32,11 @@ namespace Client.iOS.Impl
 
         public async Task<AppConfiguration> LoadConfigData(string relativePath)
         {
-            MvvmcrossPluginLoaded();
             throw new System.NotImplementedException();
         }
 
         public async Task ClearData()
         {
-            MvvmcrossPluginLoaded();
             throw new System.NotImplementedException();
         }
     }

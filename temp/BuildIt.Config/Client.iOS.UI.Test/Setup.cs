@@ -22,11 +22,6 @@ namespace Client.iOS.UI.Test
             return new App();
         }
 
-        protected override IMvxIosViewsContainer CreateIosViewsContainer()
-        {
-            return new StoryboardContainer();
-        }
-
         protected override void InitializeIoC()
         {
             base.InitializeIoC();
