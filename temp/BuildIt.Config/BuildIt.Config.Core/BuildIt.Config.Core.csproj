@@ -64,14 +64,12 @@
     <Compile Include="Services\Interfaces\IVersionService.cs" />
     <Compile Include="Utilities\Strings.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="lib\net45\BuildIt.Config.Core.dll" />
-    <Content Include="lib\netstandard1.0\BuildIt.Config.Core.dll" />
-    <Content Include="lib\portable-win+net45+wp8+win8+wpa81\BuildIt.Config.Core.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
+xcopy $(TargetPath) $(ProjectDir)lib\portable-win+net45+wp8+win8+wpa81\
+xcopy $(TargetPath) $(ProjectDir)lib\net45\
+xcopy $(TargetPath) $(ProjectDir)lib\netstandard1.0\
 $(SolutionDir).nuget\nuget.exe pack $(ProjectDir)BuildIt.Config.Core.nuspec -outputdirectory $(ProjectDir)
 )</PostBuildEvent>
   </PropertyGroup>
