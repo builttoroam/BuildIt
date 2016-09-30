@@ -1,6 +1,5 @@
 ﻿{
   "dependencies": {
-    "Acr.UserDialogs": "6.2.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "MvvmCross": "4.3.0"
   },
