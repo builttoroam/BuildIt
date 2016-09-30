@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Media.SpeechRecognition;
@@ -11,6 +13,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using BuildIt.General.UI;
 using Buffer = System.Buffer;
 
 namespace BuildIt.Media
@@ -26,7 +29,7 @@ namespace BuildIt.Media
             {
                 var assembly = typeof(CortanaListener).GetTypeInfo().Assembly;
                 var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("_voices.xml", CreationCollisionOption.ReplaceExisting);
-                
+
 
                 using (
                     var stream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + ".Voices.xml"))
@@ -34,6 +37,26 @@ namespace BuildIt.Media
                 {
                     if (string.IsNullOrWhiteSpace(voiceCommandFileName))
                     {
+                        var defaultXml = XDocument.Load(stream);
+                        var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+                        var commandSetList = (from c in defaultXml.Descendants()
+                                              where ns.GetName("CommandSet") == c.Name
+                                              select c).ToList();
+                        var appName = Package.Current.DisplayName;
+                        if (!string.IsNullOrEmpty(appName))
+                        {
+                            appName = Package.Current.DisplayName;
+
+
+                            foreach (var command in commandSetList)
+                            {
+                                var appNameNode = (from c in command.Descendants()
+                                                   where ns.GetName("AppName") == c.Name
+                                                   select c).FirstOrDefault();
+                                appNameNode.Value = appName;
+                            }
+                        }
+                        defaultXml.Save(outStream);
                         await stream.CopyToAsync(outStream);
                     }
                     else
@@ -46,12 +69,39 @@ namespace BuildIt.Media
                                        select c;*/
                         var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
                         var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
+                        var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
                         var commandSetList = (from c in defaultXml.Descendants()
                                               where ns.GetName("CommandSet") == c.Name
                                               select c).ToList();
                         var customCommandSetList = (from c in customXml.Descendants()
                                                     where ns.GetName("CommandSet") == c.Name
                                                     select c).ToList();
+
+                        //var appName = (from c in customXml.Descendants()
+                        //    where ns.GetName("CommandSet") == c.Name
+                        //    where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
+                        //    let appNameCommandSetDesc = c.Descendants()
+                        //    from ac in appNameCommandSetDesc
+                        //    where ns.GetName("AppName") == ac.Name
+                        //    select ac.Value).FirstOrDefault();
+                        
+                        //set commandSetList AppName to be appname if appname is not null 
+                        var appName = Package.Current.DisplayName;
+                        if (!string.IsNullOrEmpty(appName))
+                        {
+                            appName = Package.Current.DisplayName;
+
+                            
+                            foreach (var command in commandSetList)
+                            {
+                                var appNameNode = (from c in command.Descendants()
+                                                   where ns.GetName("AppName") == c.Name
+                                                   select c).FirstOrDefault();
+                                appNameNode.Value = appName;
+                            }
+                        }
+
+
 
                         var rootVoiceCommandsNode = customXml.FirstNode as XElement;
                         if (rootVoiceCommandsNode == null)
@@ -85,7 +135,7 @@ namespace BuildIt.Media
 
 
                         var allVoiceCommands = (from command in customXml.Descendants(ns.GetName("Command"))
-                            select command.SafeAttributeValue("Name")
+                                                select command.SafeAttributeValue("Name")
                             ).Distinct().ToList();
                         foreach (var commandName in allVoiceCommands)
                         {
@@ -94,7 +144,7 @@ namespace BuildIt.Media
                         //add custom tile image
                         await CopyActionIconsToTempFolder("buildit_customTile.png");
 
-                       
+
                         //save customXml 
                         customXml.Save(outStream);
                     }
