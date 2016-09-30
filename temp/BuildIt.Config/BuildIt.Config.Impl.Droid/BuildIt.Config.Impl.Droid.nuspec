@@ -16,8 +16,7 @@
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="BuildIt.Config.Core" version="1.0.0" />
-      <dependency id="BuildIt.Config.Impl.Common" version="1.0.0" />
-      <dependency id="Acr.UserDialogs" version="6.2.3" />      
+      <dependency id="BuildIt.Config.Impl.Common" version="1.0.0" />      
     </dependencies>
   </metadata>
   <files>

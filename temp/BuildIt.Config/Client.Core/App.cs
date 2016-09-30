@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Acr.UserDialogs;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services;
 using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Core.Utilities;
+using BuildIt.Config.Impl.Common;
 using Client.Core.Services;
 using Client.Core.ViewModels;
 using MvvmCross.Core.ViewModels;
@@ -23,7 +25,14 @@ namespace Client.Core
                 Prefix = "test1",
                 Controller = "configuration"
             }));
-            Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
+            Mvx.LazyConstructAndRegisterSingleton<INetworkService, NetworkService>();
+            Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationServiceSetup>(() => new AppConfigurationServiceSetup()
+            {
+                CacheExpirationTime = new TimeSpan(0, 0, 10)
+            });
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
+            Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationRequiredServices, AppConfigurationRequiredServices>();
 
             InitAppConfig();
 

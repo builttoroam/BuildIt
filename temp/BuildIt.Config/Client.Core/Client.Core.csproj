@@ -49,6 +49,10 @@
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
       <Name>BuildIt.Config.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj">
+      <Project>{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}</Project>
+      <Name>BuildIt.Config.Impl.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

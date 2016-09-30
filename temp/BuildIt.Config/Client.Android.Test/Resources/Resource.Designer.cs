@@ -1681,6 +1681,8 @@ namespace Client.Android.Test
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView = global::Client.Android.Test.Resource.Styleable.MvxListView;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::Client.Android.Test.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::Client.Android.Test.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::PCLStorage.Resource.String.ApplicationName = global::Client.Android.Test.Resource.String.ApplicationName;
+			global::PCLStorage.Resource.String.Hello = global::Client.Android.Test.Resource.String.Hello;
 			global::Splat.Resource.String.library_name = global::Client.Android.Test.Resource.String.library_name;
 		}
 		
