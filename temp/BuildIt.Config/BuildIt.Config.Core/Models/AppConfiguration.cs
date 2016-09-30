@@ -5,6 +5,7 @@ namespace BuildIt.Config.Core.Models
 {
     public class AppConfiguration
     {
+        public List<string> Keys => valuesDict.Keys.ToList();
         public List<AppConfigurationValue> Values => valuesDict.Values.ToList();
 
         private readonly Dictionary<string, AppConfigurationValue> valuesDict;
