@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Models;
 
-namespace BuildIt.Config.Core.Standard.Services.Interfaces
+namespace BuildIt.Config.Core.Services.Interfaces
 {
     public interface IAppConfigurationService
     {

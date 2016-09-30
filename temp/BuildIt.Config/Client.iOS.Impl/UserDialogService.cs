@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Services.Interfaces;
 using Foundation;
 using UIKit;
 

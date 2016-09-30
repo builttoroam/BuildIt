@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Newtonsoft.Json;
 
-namespace BuildIt.Config.Core.Standard.Models
+namespace BuildIt.Config.Core.Models
 {
     public class AppConfigurationValue
     {        

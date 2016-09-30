@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Models;
 
 namespace BuildIt.Config.Core.Services.Interfaces
 {

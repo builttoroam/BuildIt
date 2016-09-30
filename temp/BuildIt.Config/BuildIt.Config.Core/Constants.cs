@@ -1,4 +1,4 @@
-﻿namespace BuildIt.Config.Core.Standard
+﻿namespace BuildIt.Config.Core
 {
     public class Constants
     {

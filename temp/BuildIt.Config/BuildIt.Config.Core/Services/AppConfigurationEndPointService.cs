@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BuildIt.Config.Core.Standard.Models;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+﻿using BuildIt.Config.Core.Models;
+using BuildIt.Config.Core.Services.Interfaces;
 
-namespace BuildIt.Config.Core.Standard.Services
+namespace BuildIt.Config.Core.Services
 {
     public class AppConfigurationEndpointService : IAppConfigurationEndpointService
     {

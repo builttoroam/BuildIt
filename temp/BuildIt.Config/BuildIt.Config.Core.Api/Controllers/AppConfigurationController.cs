@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using BuildIt.Config.Core;
-using BuildIt.Config.Core.Standard;
-using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Models;
 #if NETStandard16
 using Microsoft.AspNetCore.Mvc;
 #elif NET452

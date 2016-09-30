@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using Android.Content;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Services.Interfaces;
 
 namespace Client.Android.Impl
 {

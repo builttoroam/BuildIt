@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using BuildIt.Config.Core.Standard;
-using BuildIt.Config.Core.Standard.Models;
-using BuildIt.Config.Core.Standard.Services;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
-using BuildIt.Config.Core.Standard.Utilities;
+using BuildIt.Config.Core;
+using BuildIt.Config.Core.Models;
+using BuildIt.Config.Core.Services;
+using BuildIt.Config.Core.Services.Interfaces;
+using BuildIt.Config.Core.Utilities;
 using Client.Core.Services;
 using Client.Core.ViewModels;
 using MvvmCross.Core.ViewModels;

@@ -5,8 +5,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
-using BuildIt.Config.Core.Standard.Utilities;
+using BuildIt.Config.Core.Services.Interfaces;
 using Debug = System.Diagnostics.Debug;
 
 namespace Client.Android.Impl

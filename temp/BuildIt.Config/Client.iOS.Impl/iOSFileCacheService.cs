@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services.Interfaces;
-using BuildIt.Config.Core.Standard.Models;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.File;
 

@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.Config.Core.Standard.Models;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Models;
+using BuildIt.Config.Core.Services.Interfaces;
+using BuildIt.Config.Core.Utilities;
 using Newtonsoft.Json;
-using BuildIt;
-using BuildIt.Config.Core.Standard.Utilities;
 
-namespace BuildIt.Config.Core.Standard.Services
+namespace BuildIt.Config.Core.Services
 {
     public class AppConfigurationService : IAppConfigurationService
     {

@@ -2,10 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BuildIt.Config.Core.Standard.Extensions;
-using BuildIt.Config.Core.Standard.Models;
-using BuildIt.Config.Core.Standard.Services;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Extensions;
+using BuildIt.Config.Core.Models;
+using BuildIt.Config.Core.Services;
+using BuildIt.Config.Core.Services.Interfaces;
 using Client.Core.Models;
 using MvvmCross.Core.ViewModels;
 

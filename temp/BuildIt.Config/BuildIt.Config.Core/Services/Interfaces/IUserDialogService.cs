@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace BuildIt.Config.Core.Standard.Services.Interfaces
+namespace BuildIt.Config.Core.Services.Interfaces
 {
     public interface IUserDialogService
     {

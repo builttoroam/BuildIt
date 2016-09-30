@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using BuildIt.Config.Core.Api.Controllers;
-using BuildIt.Config.Core.Standard.Models;
+using BuildIt.Config.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.Config.Core.Standard.Extensions;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Extensions;
+using BuildIt.Config.Core.Services.Interfaces;
 
-namespace BuildIt.Config.Core.Standard.Services
+namespace BuildIt.Config.Core.Services
 {
     public static class ConfigurationHelpers
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Windows.ApplicationModel;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Services.Interfaces;
 
 namespace Client.Universal.Impl
 {

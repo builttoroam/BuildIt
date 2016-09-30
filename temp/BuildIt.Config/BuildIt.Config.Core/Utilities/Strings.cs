@@ -1,4 +1,4 @@
-﻿namespace BuildIt.Config.Core.Standard.Utilities
+﻿namespace BuildIt.Config.Core.Utilities
 {
     public static class Strings
     {

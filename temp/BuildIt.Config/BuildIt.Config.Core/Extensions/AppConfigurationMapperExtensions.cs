@@ -1,6 +1,6 @@
-﻿using BuildIt.Config.Core.Standard.Models;
+﻿using BuildIt.Config.Core.Models;
 
-namespace BuildIt.Config.Core.Standard.Extensions
+namespace BuildIt.Config.Core.Extensions
 {
     public static class AppConfigurationMapperExtensions
     {

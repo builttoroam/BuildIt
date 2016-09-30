@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace BuildIt.Config.Core.Standard.Models
+namespace BuildIt.Config.Core.Models
 {
     public class AppConfigurationMapperAttributes
     {
