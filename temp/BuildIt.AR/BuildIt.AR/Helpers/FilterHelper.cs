@@ -4,7 +4,7 @@
     {
         public static float[] LowPassFilter(float alpha, float[] input, float[] output)
         {
-            if (output == null || (output != null && input.Length != output.Length))
+            if (output == null || (input.Length != output.Length))
             {
                 return input;
             }
