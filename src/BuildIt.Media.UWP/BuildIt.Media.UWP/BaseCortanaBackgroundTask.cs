@@ -93,27 +93,20 @@ namespace BuildIt.Media
                               where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
                               select c);
             //get all command in a list
-            var command = (from c in commandSet.Descendants()
+            var commandList = (from c in commandSet.Descendants()
                            where ns.GetName("Command") == c.Name
-
-                           select c);
-            var commandList = command.ToList();
-
-            var test = (from c in commandList.Descendants()
-                        where c.NodeType == XmlNodeType.Comment
-                        select c).ToList();
-
-
-            var cmtList = command.DescendantNodes().OfType<XComment>().ToList();
+                           select c).ToList();
+            
+            var cmtList = commandList.DescendantNodes().OfType<XComment>().ToList();
 
             var response = await CortanaList(destinationContentTiles, commandList, cmtList,commandsTook,commandsCountingNo);
 
             await voiceServiceConnection.ReportSuccessAsync(response);
         }
 
-        private async Task<VoiceCommandResponse> CortanaList(List<VoiceCommandContentTile> destinationContentTiles, List<XElement> commandList, List<XComment> commentList ,int cmdsTook,int cmdCountingNo)
+        private async Task<VoiceCommandResponse> CortanaList(List<VoiceCommandContentTile> destContentTiles, List<XElement> commandList, List<XComment> commentList ,int cmdsTook,int cmdCountingNo)
         {
-            var destContentTiles = destinationContentTiles;
+            var destinationContentTiles = destContentTiles;
             var cmdList = commandList;
             var cmtList = commentList;
             var commandsTook = cmdsTook;
@@ -125,23 +118,19 @@ namespace BuildIt.Media
             //Cortana 
             var msgRepeat = new VoiceCommandUserMessage();
             msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = "Please select one";
-            var userMessage = new VoiceCommandUserMessage();
-            userMessage.DisplayMessage = "Here is the help list for you";
-            userMessage.SpokenMessage = "Here is the help list for you";
 
             var moreCommands = "Select next page commands";
 
             var iconsFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("builditmedia");
-            destContentTiles.Clear();
+            destinationContentTiles.Clear();
             if (cmdList.Count - commandsTook <= 5)
             {
                 for (int i = commandsCountingNo; i <= cmdList.Count-1; i++)
                 {
-                    var command = cmdList[commandsTook];
-                    //var cmtName = cmtList[commandsTook].Parent.Attribute("Name").Value;
+                    //var command = cmdList[commandsTook];
                     var attributeName = cmdList[commandsTook].Attribute("Name").Value;
 
-                    var descriptionComment = (from comment in command.DescendantNodes().OfType<XComment>()
+                    var descriptionComment = (from comment in cmdList[commandsTook].DescendantNodes().OfType<XComment>()
                         where comment.Value.StartsWith("Description:")
                         select comment.Value)
                         .FirstOrDefault() // Get the first comment that starts with "Description:"
@@ -151,28 +140,26 @@ namespace BuildIt.Media
                         attributeName = "buildit_customTile";
                     }
 
-                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.png");
+                    //var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.png");
 
-                    destContentTiles.Add(new VoiceCommandContentTile
+                    destinationContentTiles.Add(new VoiceCommandContentTile
                     {
                         AppLaunchArgument = cmdList[commandsTook].Attribute("Name").Value,
                         ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                         Title = cmdList[commandsTook].Element(ns.GetName("Example")).Value,
                         TextLine1 = descriptionComment,
-                        Image = iconFile
+                        Image = await iconsFolder.GetFileAsync($"{attributeName}.png")
                     });
                     commandsTook++;
                 }
             }
             else
             {
-                destContentTiles.Clear();
+                destinationContentTiles.Clear();
                 for (int i = 0; i < 4; i++)
                 {
                     var command = cmdList[commandsTook];
-                    //var cmtName = cmtList[commandsTook].Parent.Attribute("Name").Value;
                     var attributeName = cmdList[commandsTook].Attribute("Name").Value;
-                    //var txtline1 = cmtName == attributeName ? cmtList[commandsTook].Value : "";
                     var descriptionComment = (from comment in command.DescendantNodes().OfType<XComment>()
                         where comment.Value.StartsWith(" Description:")
                         select comment.Value)
@@ -183,16 +170,16 @@ namespace BuildIt.Media
                         attributeName = "buildit_customTile";
                     }
 
-                    var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.png");
+                    //var iconFile = await iconsFolder.GetFileAsync($"{attributeName}.png");
 
 
-                    destContentTiles.Add(new VoiceCommandContentTile
+                    destinationContentTiles.Add(new VoiceCommandContentTile
                     {
                         AppLaunchArgument = cmdList[commandsTook].Attribute("Name").Value,
                         ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                         Title = cmdList[commandsTook].Element(ns.GetName("Example")).Value,
                         TextLine1 = descriptionComment,
-                        Image = iconFile
+                        Image = await iconsFolder.GetFileAsync($"{attributeName}.png")
                     });
                     commandsTook++;
                 }
@@ -204,14 +191,14 @@ namespace BuildIt.Media
                     TextLine1 = moreCommands,
                     Image = await iconsFolder.GetFileAsync("buildit_help.png")
             };
-                destContentTiles.Add(nextPage);
+                destinationContentTiles.Add(nextPage);
 
                 commandsCountingNo += 4;
             }
 
 
             // Cortana will handle re-prompting if the user does not provide a valid response.
-            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destContentTiles);
+            var response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat, destinationContentTiles);
             // If cortana is dismissed in this operation, null will be returned.
 
             var selectedRes = await voiceServiceConnection.RequestDisambiguationAsync(response);
@@ -228,9 +215,8 @@ namespace BuildIt.Media
                 if (selectedRes.SelectedItem.AppLaunchArgument == "more")
                 {
 
-                    await CortanaList(destContentTiles, cmdList, cmtList,commandsTook,commandsCountingNo);
-                    //await ShowMoreVoiceCommand(cmdList, commandsCountingNo, destContentTiles,commandsTook, cmtList);
-                 
+                    await CortanaList(destinationContentTiles, cmdList, cmtList,commandsTook,commandsCountingNo);
+
                     msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
                     msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
                     response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
