@@ -10,12 +10,12 @@ namespace BuildIt.Config.Core.Standard.Services
     {
         private static SemaphoreSlim SemaphoreSlim { get; } = new SemaphoreSlim(1);
 
-        public static async Task<bool> CheckMinimumVersion(this IAppConfigurationService configurationService, bool handleLoadConfigValidation = false, bool retrieveCached = false, string minVerKey = Constants.AppConfigurationMinVersionKey)
+        public static async Task<bool> CheckMinimumVersion(this IAppConfigurationService configurationService, bool retrieveCached = false, string minVerKey = Constants.AppConfigurationMinVersionKey)
         {
             if (configurationService == null) return false;
 
             configurationService.Mapper.EnsurePresence(minVerKey, true);
-            var appConfig = await configurationService.LoadAppConfig(handleLoadConfigValidation, retrieveCached);
+            var appConfig = await configurationService.LoadAppConfig(false, retrieveCached);
             if (appConfig == null) return false;
 
             var minimumVersionMappedValue = appConfig.GetValueForKey<string>(minVerKey);
@@ -33,8 +33,7 @@ namespace BuildIt.Config.Core.Standard.Services
 
         public static async Task NotifyUserWhenNotMetAppMinVer(this IAppConfigurationService configurationService, bool handleLoadConfigValidation = false, bool retrieveCached = false, string minVerKey = Constants.AppConfigurationMinVersionKey)
         {
-            var metMinimumAppVer = await CheckMinimumVersion(configurationService, handleLoadConfigValidation, retrieveCached, minVerKey);
-
+            var metMinimumAppVer = await CheckMinimumVersion(configurationService, retrieveCached, minVerKey);
             if (!metMinimumAppVer)
             {
                 //Block the app from running & alert users
