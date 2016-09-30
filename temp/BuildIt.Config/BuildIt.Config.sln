@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.FullFramework", "Web.Fu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Core", "Client.Core\Client.Core.csproj", "{600CABEC-1ACC-4D2B-B2FC-C6F4B3F5796C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config.Core\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Universal.Impl", "Client.Universal.impl\Client.Universal.Impl.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
 EndProject

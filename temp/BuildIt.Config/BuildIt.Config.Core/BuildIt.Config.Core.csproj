@@ -38,7 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="BuildIt.Config.Core.Standard.nuspec" />
+    <None Include="BuildIt.Config.Core.nuspec" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +68,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
-$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)BuildIt.Config.Core.Standard.nuspec -outputdirectory $(ProjectDir)
+$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)BuildIt.Config.Core.nuspec -outputdirectory $(ProjectDir)
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

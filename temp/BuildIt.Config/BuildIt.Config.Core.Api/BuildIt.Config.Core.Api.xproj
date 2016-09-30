@@ -16,7 +16,7 @@
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.csproj" />
+    <ProjectReference Include="..\BuildIt.Config.Core\BuildIt.Config.Core.csproj" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

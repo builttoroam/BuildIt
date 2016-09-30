@@ -62,20 +62,18 @@ namespace BuildIt.Config.Core.Standard.Services
                         if (appConfig != null)
                         {
                             AppConfig = appConfig;
+                            await HandleRetrievedAppConfigValidation();
                         }
                         else
                         {
-                            var alertAsync = UserDialogService?.AlertAsync(Constants.AppConfigurationNotFoundError);
-                            if (alertAsync != null) await alertAsync;
+                            await UserDialogService.AlertAsync(Constants.AppConfigurationNotFoundError);
                         }
                     }
                 }
                 finally
                 {
                     getAppConfigurationAutoResetEvent.Set();
-                }
-
-                await HandleRetrievedAppConfigValidation();
+                }                
 
                 return AppConfig;
             });

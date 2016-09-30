@@ -23,7 +23,6 @@
                 "BuildIt.Config.Core": {
                     "target": "project"
                 }
-
             },
             "imports": [
                 "dotnet5.6",

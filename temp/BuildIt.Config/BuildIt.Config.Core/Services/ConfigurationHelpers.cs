@@ -9,6 +9,7 @@ namespace BuildIt.Config.Core.Standard.Services
     public static class ConfigurationHelpers
     {
         private static SemaphoreSlim SemaphoreSlim { get; } = new SemaphoreSlim(1);
+
         public static async Task<bool> CheckMinimumVersion(this IAppConfigurationService configurationService, bool retrieveCached = false, string minVerKey = Constants.AppConfigurationMinVersionKey)
         {
             if (configurationService == null) return false;

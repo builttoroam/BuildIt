@@ -13,7 +13,7 @@
     <description>App Config Core</description>
     <releaseNotes>Init</releaseNotes>
     <copyright>Copyright 2016</copyright>
-    <tags>BuildIt</tags>	
+    <tags>BuildIt</tags>
     <dependencies>
       <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
       <dependency id="NETStandard.Library" version="1.6.0" />
@@ -21,6 +21,6 @@
     </dependencies>
   </metadata>
   <files>
-      <file src="bin\Release\BuildIt.Config.Core.Standard.dll" target="lib\netstandard1.2\BuildIt.Config.Core.Standard.dll" />
+    <file src="bin\Release\BuildIt.Config.Core.dll" target="lib\netstandard1.2\BuildIt.Config.Core.dll" />
   </files>
 </package>
