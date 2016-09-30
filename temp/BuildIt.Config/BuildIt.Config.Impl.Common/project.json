@@ -1,13 +1,13 @@
-﻿{
+{
   "supports": {},
   "dependencies": {
     "Acr.UserDialogs": "6.2.3",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "PCLStorage": "1.0.2",
     "NETStandard.Library": "1.6.0",
-    "PCLStorage": "1.0.2"
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
   },
   "frameworks": {
-    "netstandard1.2": {
+    "netstandard1.3": {
       "imports": [
         "portable-net45+wp80+win8+wpa81"
       ]
