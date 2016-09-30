@@ -26,11 +26,11 @@ namespace BuildIt.Config.Core.Standard.Services
 
         public IUserDialogService UserDialogService { get; }
         public IVersionService VersionService { get; }
-        
+
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
         public AppConfiguration AppConfig { get; private set; }
 
-        public List<KeyValuePair<string, string>> ExtraHeaders { get; set; } = new List<KeyValuePair<string, string>>();
+        public List<KeyValuePair<string, string>> AdditionalHeaders { get; set; } = new List<KeyValuePair<string, string>>();
 
         public AppConfigurationService(IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService)
         {
@@ -61,20 +61,6 @@ namespace BuildIt.Config.Core.Standard.Services
                         var appConfig = await Get();
                         if (appConfig != null)
                         {
-                            ////MK update whole config object
-                            //if (AppConfig == null || appConfig.Object?.Optional != null)
-                            //{
-                            //    AppConfig = appConfig.Object;
-                            //    if (appConfig.Object?.Optional != null)
-                            //    {
-                            //        currentAppConfigurationMd5Hash = JsonConvert.SerializeObject(AppConfig.Optional).ToMd5Hash();
-                            //    }
-                            //}
-                            ////MK update just Mandatory properties
-                            //else
-                            //{
-                            //    AppConfig.Mandatory = appConfig.Object.Mandatory;
-                            //}
                             AppConfig = appConfig;
                         }
                         else
@@ -113,10 +99,10 @@ namespace BuildIt.Config.Core.Standard.Services
             {
                 using (var client = new HttpClient())
                 {
-                    //TODO: once we have BuildIt.General refactor this code to use for instance DoForEach 
-                    if (ExtraHeaders != null)
+                    //TODO: once we have BuildIt.General referenced, refactor this code to use for instance DoForEach 
+                    if (AdditionalHeaders != null)
                     {
-                        foreach (var extraHeaderKeyValuePair in ExtraHeaders)
+                        foreach (var extraHeaderKeyValuePair in AdditionalHeaders)
                         {
                             client.DefaultRequestHeaders.Add(extraHeaderKeyValuePair.Key, extraHeaderKeyValuePair.Value);
                         }
@@ -132,26 +118,7 @@ namespace BuildIt.Config.Core.Standard.Services
                             var responseContent = await content.ReadAsStringAsync();
                             var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
 
-                            if (appConfigurationResponse.HasErrors)
-                            {
-#if DEBUG
-                                //Display all errors
-                                var responseErrors = appConfigurationResponse.AppConfigErors;
-                                foreach (var responseError in responseErrors)
-                                {
-                                    await UserDialogService.AlertAsync($"Message: {responseError.Content}");
-                                }
-#else
-    //Display user-friendly alert
-                                    var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
-                                    if (alertAsync != null) await alertAsync;
-#endif
-                            }
-                            else if (response.StatusCode != HttpStatusCode.OK)
-                            {
-                                await UserDialogService.AlertAsync(Strings.OpsSomethingWentWrong);
-                            }
-                            else
+                            if (!appConfigurationResponse.HasErrors)
                             {
                                 if (appConfigurationResponse.HasConfigValues)
                                 {
@@ -164,12 +131,30 @@ namespace BuildIt.Config.Core.Standard.Services
                                     }
                                 }
                             }
+                            else
+                            {
+#if DEBUG
+                                //Display all errors
+                                var responseErrors = appConfigurationResponse.AppConfigErors;
+                                foreach (var responseError in responseErrors)
+                                {
+                                    await UserDialogService.AlertAsync($"Message: {responseError.Content}");
+                                }
+#else
+                                //Display user-friendly alert
+                                var alertAsync = UserDialogService?.AlertAsync($"Something went wrong we couldn't retrieve your app configuration");
+                                if (alertAsync != null) await alertAsync;
+#endif
+                            }
                         }
                     }
                 }
             }
             catch (Exception e)
             {
+#if DEBUG
+                await UserDialogService.AlertAsync($"{Strings.OpsSomethingWentWrong}: {JsonConvert.SerializeObject(e)}");
+#endif
                 Debug.WriteLine(e.Message);
             }
 

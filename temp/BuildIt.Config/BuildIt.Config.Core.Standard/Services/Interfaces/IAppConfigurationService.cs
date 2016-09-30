@@ -15,6 +15,10 @@ namespace BuildIt.Config.Core.Standard.Services.Interfaces
 
         Task<AppConfiguration> LoadAppConfig(bool retrieveCachedVersion = true);
 
-        List<KeyValuePair<string, string>> ExtraHeaders { get; set; }
+        /// <summary>
+        /// Key: Header name
+        /// Value: Header value
+        /// </summary>
+        List<KeyValuePair<string, string>> AdditionalHeaders { get; set; }
     }
 }
