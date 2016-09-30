@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BuildIt.Config.Core.Standard.Models
 {
-    public class AppConfigurationResponse
+    public class AppConfigurationServerResponse
     {
         public bool HasErrors => AppConfigErors?.Any() ?? false;
         public bool HasConfigValues => AppConfigValues?.Any() ?? false;

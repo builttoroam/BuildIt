@@ -17,6 +17,7 @@ namespace Client.Core
         {
             Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationEndpointService>(() => new AppConfigurationEndpointService(new AppConfigurationRoutingModel()
             {
+                BaseUrl = "http://fnmservices-dev.azurewebsites.net",
                 Prefix = "test1",
                 Controller = "configuration"
             }));

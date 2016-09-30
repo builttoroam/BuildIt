@@ -10,29 +10,13 @@ namespace BuildIt.Config.Core.Standard.Services
 {
     public class AppConfigurationEndpointService : IAppConfigurationEndpointService
     {
-        private AppConfigurationRoutingModel routingModel;
-        private AppConfigurationRoutingModel RoutingModel
-        {
-            get
-            {
-                if (routingModel == null)
-                {
-                    routingModel = AppConfigurationRoutingModel.Default; ;
-                }
-                return routingModel;
-            }
-            set { routingModel = value; }
-        }
+        private readonly AppConfigurationRoutingModel routingModel;
 
-        public string Endpoint => $"http://fnmservices-dev.azurewebsites.net/{RoutingModel.Prefix}/{RoutingModel.Controller}";
+        public string Endpoint => $"{routingModel.BaseUrl}/{routingModel.Prefix}/{routingModel.Controller}";
 
-        public AppConfigurationEndpointService()
-        {
-            
-        }
         public AppConfigurationEndpointService(AppConfigurationRoutingModel routingModel)
         {
-            RoutingModel = routingModel;
+            this.routingModel = routingModel;
         }
     }
 }

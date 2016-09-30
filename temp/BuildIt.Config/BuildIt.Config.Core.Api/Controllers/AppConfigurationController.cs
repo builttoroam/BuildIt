@@ -22,14 +22,14 @@ namespace BuildIt.Config.Core.Api.Controllers
     {
 
 #if NETStandard16
-        public AppConfigurationResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
+        public AppConfigurationServerResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #elif NET452
         public JsonResult Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #endif
         {
             if (configMapperValues == null) return null;
 
-            var res = new AppConfigurationResponse();
+            var res = new AppConfigurationServerResponse();
 
             var config = Environment.GetEnvironmentVariables();
 

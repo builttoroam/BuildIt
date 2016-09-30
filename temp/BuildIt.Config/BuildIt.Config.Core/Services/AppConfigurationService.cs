@@ -114,7 +114,7 @@ namespace BuildIt.Config.Core.Standard.Services
                         using (var content = response.Content)
                         {
                             var responseContent = await content.ReadAsStringAsync();
-                            var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationResponse>(responseContent);
+                            var appConfigurationResponse = JsonConvert.DeserializeObject<AppConfigurationServerResponse>(responseContent);
 
                             if (!appConfigurationResponse.HasErrors)
                             {
