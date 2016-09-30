@@ -5,6 +5,7 @@ using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services;
 using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Core.Utilities;
+using BuildIt.Config.Impl.Common;
 using Client.Core.Services;
 using Client.Core.ViewModels;
 using MvvmCross.Core.ViewModels;
@@ -23,7 +24,9 @@ namespace Client.Core
                 Prefix = "test1",
                 Controller = "configuration"
             }));
-            Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();
+            Mvx.ConstructAndRegisterSingleton<INetworkService, NetworkService>();
+            Mvx.ConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
+            Mvx.ConstructAndRegisterSingleton<IAppConfigurationService, AppConfigurationService>();            
 
             InitAppConfig();
 

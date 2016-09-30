@@ -57,6 +57,7 @@
     <Compile Include="Services\AppConfigurationEndpointService.cs" />
     <Compile Include="Services\AppConfigurationService.cs" />
     <Compile Include="Services\Interfaces\IFileCacheService.cs" />
+    <Compile Include="Services\Interfaces\INetworkService.cs" />
     <Compile Include="Services\Interfaces\IUserDialogService.cs" />
     <Compile Include="Services\ConfigurationHelpers.cs" />
     <Compile Include="Services\Interfaces\IAppConfigurationService.cs" />

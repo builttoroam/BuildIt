@@ -28,7 +28,7 @@ namespace Client.Android.Test
         protected override void InitializeIoC()
         {
             base.InitializeIoC();
-            Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
+            //Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
             Mvx.LazyConstructAndRegisterSingleton<IVersionService, VersionService>();                        
         }
     }

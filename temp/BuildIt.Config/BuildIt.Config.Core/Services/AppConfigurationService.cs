@@ -16,6 +16,7 @@ namespace BuildIt.Config.Core.Services
     public class AppConfigurationService : IAppConfigurationService
     {
         private readonly IAppConfigurationEndpointService endpointService;
+        private readonly INetworkService networkService;
 
         private readonly AutoResetEvent getAppConfigurationAutoResetEvent = new AutoResetEvent(true);
 
@@ -29,9 +30,11 @@ namespace BuildIt.Config.Core.Services
 
         public List<KeyValuePair<string, string>> AdditionalHeaders { get; set; } = new List<KeyValuePair<string, string>>();
 
-        public AppConfigurationService(IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService)
+        public AppConfigurationService(IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService, INetworkService networkService)
         {
             this.endpointService = endpointService;
+            this.networkService = networkService;
+
             this.UserDialogService = userDialogService;
             this.VersionService = versionService;
         }
@@ -58,14 +61,14 @@ namespace BuildIt.Config.Core.Services
                         var appConfigurationServerResponse = await Get();
                         AppConfig = CreateAppConfigurationOutOfServerResponse(appConfigurationServerResponse);
                         if (handleRetrievalValidation)
-                        {                            
+                        {
                             if (appConfigurationServerResponse.HasErrors)
                             {
                                 await HandleRetrievedAppConfigFailure(appConfigurationServerResponse);
                             }
                             else
                             {
-                                await HandleRetrievedAppConfigValidation();                                
+                                await HandleRetrievedAppConfigValidation();
                             }
                         }
                     }

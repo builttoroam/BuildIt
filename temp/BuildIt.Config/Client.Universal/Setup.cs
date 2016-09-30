@@ -17,7 +17,7 @@ namespace Client.Universal
         protected override void InitializeIoC()
         {
             base.InitializeIoC();
-            Mvx.RegisterType<IUserDialogService, UserDialogService>();
+            //Mvx.RegisterType<IUserDialogService, UserDialogService>();
             Mvx.RegisterType<IVersionService, UWPVersionService>();
         }
 
