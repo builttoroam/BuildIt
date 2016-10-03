@@ -7,5 +7,6 @@
         IVersionService VersionService { get; }
         IUserDialogService UserDialogService { get; }
         INetworkService NetworkService { get; }
+        IFileCacheService FileCacheService { get; }
     }
 }

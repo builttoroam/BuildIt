@@ -9,7 +9,10 @@ namespace BuildIt.Config.Core.Services.Interfaces
 {
     public interface IFileCacheService
     {
-        Task<bool> Save(AppConfiguration appConfiguration);
+        bool HasExpired { get; }
+        event EventHandler CacheExpired;
+
+        Task<bool> Save(AppConfiguration appConfiguration, TimeSpan expirationTime = default(TimeSpan));
 
         Task<AppConfiguration> LoadConfigData();
 

@@ -9,11 +9,14 @@ namespace BuildIt.Config.Core.Services
         public IVersionService VersionService { get; }
         public IUserDialogService UserDialogService { get; }
         public INetworkService NetworkService { get; }
+        public IFileCacheService FileCacheService { get; }
 
-        public AppConfigurationRequiredServices(IAppConfigurationServiceSetup serviceSetup, IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService, INetworkService networkService)
+        public AppConfigurationRequiredServices(IAppConfigurationServiceSetup serviceSetup, IAppConfigurationEndpointService endpointService, IVersionService versionService, IUserDialogService userDialogService, INetworkService networkService,
+                                                IFileCacheService fileCacheService)
         {
+            this.FileCacheService = fileCacheService;
             this.ServiceSetup = serviceSetup;
-            this.EndpointService = endpointService;            
+            this.EndpointService = endpointService;
             this.VersionService = versionService;
             this.UserDialogService = userDialogService;
             this.NetworkService = networkService;

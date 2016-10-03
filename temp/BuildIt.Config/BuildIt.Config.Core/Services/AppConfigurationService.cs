@@ -18,6 +18,7 @@ namespace BuildIt.Config.Core.Services
         private readonly IAppConfigurationServiceSetup serviceSetup;
         private readonly IAppConfigurationEndpointService endpointService;
         private readonly INetworkService networkService;
+        private readonly IFileCacheService fileCacheService;
 
         private readonly AutoResetEvent getAppConfigurationAutoResetEvent = new AutoResetEvent(true);
 
@@ -35,10 +36,12 @@ namespace BuildIt.Config.Core.Services
         {
             this.serviceSetup = requiredSerives.ServiceSetup;
             this.endpointService = requiredSerives.EndpointService;
-            this.networkService = requiredSerives.NetworkService;
+            this.fileCacheService = requiredSerives.FileCacheService;
 
             this.UserDialogService = requiredSerives.UserDialogService;
             this.VersionService = requiredSerives.VersionService;
+
+            this.fileCacheService.CacheExpired += OnCacheExpired;
         }
 
         public async Task<AppConfiguration> LoadAppConfig(bool handleLoadValidation = true, bool retrieveCachedVersion = true)
@@ -51,14 +54,14 @@ namespace BuildIt.Config.Core.Services
         {
             return await Task.Run(async () =>
             {
-                if (retrieveCachedVersion && AppConfig != null) return AppConfig;
+                if (retrieveCachedVersion && await TryRetrieveCachedAppConfig()) return AppConfig;
 
                 try
                 {
                     if (getAppConfigurationAutoResetEvent.WaitOne())
                     {
                         //MK After waiting for other thread to finish retrieving the app config, check if we can return cached values
-                        if (retrieveCachedVersion && AppConfig != null) return AppConfig;
+                        if (retrieveCachedVersion && await TryRetrieveCachedAppConfig()) return AppConfig;
 
                         var appConfigurationServerResponse = await Get();
                         AppConfig = CreateAppConfigurationOutOfServerResponse(appConfigurationServerResponse);
@@ -73,6 +76,11 @@ namespace BuildIt.Config.Core.Services
                                 await HandleRetrievedAppConfigValidation();
                             }
                         }
+                        //MK Cache AppConfig
+                        if (AppConfig != null)
+                        {
+                            await fileCacheService.Save(AppConfig, serviceSetup.CacheExpirationTime);
+                        }
                     }
                 }
                 finally
@@ -82,6 +90,11 @@ namespace BuildIt.Config.Core.Services
 
                 return AppConfig;
             });
+        }
+        private async Task<bool> TryRetrieveCachedAppConfig()
+        {
+            AppConfig = await fileCacheService.LoadConfigData();            
+            return AppConfig != null && !fileCacheService.HasExpired;
         }
 
         private AppConfiguration CreateAppConfigurationOutOfServerResponse(AppConfigurationServerResponse appConfigurationServerResponse)
@@ -230,6 +243,15 @@ namespace BuildIt.Config.Core.Services
             }
 
             return formattedInvalidAppConfiguration.ToString();
+        }
+
+        private async void OnCacheExpired(object sender, EventArgs eventArgs)
+        {
+            //TODO: What should happen here?
+            //      Should we validate config?
+
+            // trying to retrieve config after it expired
+            await RetrieveAppConfig(true, false);
         }
     }
 }
