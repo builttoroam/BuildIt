@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -36,7 +37,18 @@ namespace BuildIt.Config.Impl.Common
                 var file = await folder.CreateFileAsync(FileName, CreationCollisionOption.ReplaceExisting);
                 if (file == null) return res;
 
-                var appConfigJson = JsonConvert.SerializeObject(appConfiguration);
+                var valuesDict = new Dictionary<string,AppConfigurationValue>();
+
+                var keys = appConfiguration.Keys;
+                foreach (var key in keys)
+                {
+                    if (!valuesDict.ContainsKey(key) && appConfiguration[key] != null)
+                    {
+                        valuesDict.Add(key, appConfiguration[key]);
+                    }
+                }
+
+                var appConfigJson = JsonConvert.SerializeObject(valuesDict, Formatting.Indented);
                 await file.WriteAllTextAsync(appConfigJson);
 
                 SetCacheExpirationTime(expirationTime);
@@ -64,7 +76,16 @@ namespace BuildIt.Config.Impl.Common
                 var jsonData = await file.ReadAllTextAsync();
                 if (string.IsNullOrEmpty(jsonData)) return null;
 
-                return JsonConvert.DeserializeObject<AppConfiguration>(jsonData);
+                var dic = JsonConvert.DeserializeObject<Dictionary<string, AppConfigurationValue>>(jsonData);
+
+                var appConfig = new AppConfiguration();
+                foreach (var value in dic.Values)
+                {
+                    if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
+                    appConfig[value.Attributes.Name] = value;
+                }
+
+                return appConfig;
             }
             catch (Exception ex)
             {
