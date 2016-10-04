@@ -7,9 +7,9 @@ namespace BuildIt.Media.Background
         private BaseCortanaBackgroundTask BackgroundTaskImplement { get; }= new BaseCortanaBackgroundTask();
 
 
-        public void Run(IBackgroundTaskInstance taskInstance)
+        public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            BackgroundTaskImplement.Run(taskInstance);
+            await BackgroundTaskImplement.Run(taskInstance);
         }
     }
 }

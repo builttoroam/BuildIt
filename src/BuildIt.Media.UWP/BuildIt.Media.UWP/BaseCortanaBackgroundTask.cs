@@ -44,7 +44,7 @@ namespace BuildIt.Media
                 //Find the command name witch should match the VCD
                 if (voiceCommand.CommandName == "buildit_help")
                 {
-                    var props = voiceCommand.Properties;
+                    //var props = voiceCommand.Properties;
                     await CortanaHelpList();
                 }
                 //await Task.Delay(1000);
