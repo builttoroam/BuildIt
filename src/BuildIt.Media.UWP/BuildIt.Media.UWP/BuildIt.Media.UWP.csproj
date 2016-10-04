@@ -122,14 +122,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\buildit_pause.jpg" />
-    <EmbeddedResource Include="Images\buildit_volumeDown.jpg" />
-    <EmbeddedResource Include="Images\buildit_volumeUp.jpg" />
-    <EmbeddedResource Include="Images\buildit_back.jpg" />
-    <EmbeddedResource Include="Images\buildit_forward.jpg" />
-    <EmbeddedResource Include="Images\buildit_mute.jpg" />
-    <EmbeddedResource Include="Images\buildit_play.jpg" />
-    <EmbeddedResource Include="Images\buildit_unmute.jpg" />
+    <EmbeddedResource Include="Images\buildit_customTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\buildit_back.png" />
+    <EmbeddedResource Include="Images\buildit_forward.png" />
+    <EmbeddedResource Include="Images\buildit_help.png" />
+    <EmbeddedResource Include="Images\buildit_mute.png" />
+    <EmbeddedResource Include="Images\buildit_pause.png" />
+    <EmbeddedResource Include="Images\buildit_play.png" />
+    <EmbeddedResource Include="Images\buildit_unmute.png" />
+    <EmbeddedResource Include="Images\buildit_volumeDown.png" />
+    <EmbeddedResource Include="Images\buildit_volumeUp.png" />
   </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

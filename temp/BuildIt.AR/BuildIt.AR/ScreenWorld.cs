@@ -65,7 +65,9 @@ namespace BuildIt.AR
 
         public double MaxScale { get; set; } = 2.0;
 
-        public double VisualRangeInKilometres { get; set; } = 50.0;
+        public double WorldVisualRange { get; set; } = 50.0;
+
+        public double VisualRangeKm { get; private set; }
 
         public Location CentreOfWorld { get; private set; } = new Location { Latitude = -33.865143, Longitude = 151.209900 };
 
@@ -138,16 +140,18 @@ namespace BuildIt.AR
 
         public double CalculateScale(double distance)
         {
-            var percentage = (VisualRangeInKilometres * 1000.0 - distance) / (VisualRangeInKilometres * 1000.0);
+            var percentage = (VisualRangeKm * 1000.00 - distance) / (VisualRangeKm * 1000.00);
             return percentage * MaxScale + MinScale;
         }
 
         public void UpdateRangeOfWorld(double rangeInKilometres)
         {
+            VisualRangeKm = rangeInKilometres;
             // need to multiply by 10 so calculations can correctly determine what is outside of the visual range
-            VisualRangeInKilometres = rangeInKilometres * 10;
+            WorldVisualRange = VisualRangeKm * 10;
             RepositionElements();
         }
+
 
         public void UpdateCentre(Location newCentreOfWorld)
         {
@@ -191,13 +195,13 @@ namespace BuildIt.AR
             }
 
             // Make sure there's a valid range
-            if (VisualRangeInKilometres <= 0)
+            if (WorldVisualRange <= 0)
             {
-                VisualRangeInKilometres = 1.0;
+                WorldVisualRange = 1.0;
             }
 
             // AddDirectionPoints((int)(-eastWestDistance/ 1000.0), 0, (int)(-northSouthDistance / 1000.0), eventItem.Type);
-            return new Vector3((float)(eastWestDistance / VisualRangeInKilometres), 0, (float)(northSouthDistance / (VisualRangeInKilometres)));
+            return new Vector3((float)(eastWestDistance / WorldVisualRange), 0, (float)(northSouthDistance / (WorldVisualRange)));
 
         }
 
@@ -217,7 +221,7 @@ namespace BuildIt.AR
 
     public interface ILocationBasedMarker
     {
-        Location GeoLocation { get; }
+        Location GeoLocation { get; set; }
 
         double Distance { get; set; }
     }

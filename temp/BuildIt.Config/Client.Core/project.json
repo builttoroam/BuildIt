@@ -1,15 +1,17 @@
-﻿{
+{
   "supports": {},
   "dependencies": {
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "Acr.UserDialogs": "6.2.3",
+    "BuildIt.General": "0.1.4",
     "MvvmCross": "4.3.0",
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.0",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
   },
   "frameworks": {
     "netstandard1.4": {
-        "imports": [
-            "portable-net45+wp80+win8+wpa81"
-        ]
+      "imports": [
+        "portable-net45+wp80+win8+wpa81"
+      ]
     }
   }
 }

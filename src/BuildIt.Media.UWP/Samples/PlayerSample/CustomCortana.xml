@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
   <CommandSet xml:lang="en-nz" Name="PlayerCommandset_en-nz">
-    <AppName> Test </AppName>
+    <AppName>Player Sample</AppName>
     <Example> Say test </Example>
 
     <Command Name="test">
@@ -9,6 +9,45 @@
       <ListenFor> test </ListenFor>
       <Feedback> Testing... </Feedback>
       <Navigate />
+    </Command>
+    <Command Name="helpList">
+      <Example> Test </Example>
+      <ListenFor> test </ListenFor>
+      <Feedback> Testing... </Feedback>
+      <VoiceCommandService Target="CortanaBackgroundTask"/>
+    </Command>
+  </CommandSet>
+  <CommandSet xml:lang="en-au" Name="PlayerCommandset_en-au">
+    <AppName>Player Sample</AppName>
+    <Example> Say test </Example>
+
+    <Command Name="test">
+      <Example> Test </Example>
+      <ListenFor> test </ListenFor>
+      <Feedback> Testing... </Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="helpList">
+      <Example> Test </Example>
+      <ListenFor> test </ListenFor>
+      <Feedback> Testing... </Feedback>
+      <VoiceCommandService Target="CortanaBackgroundTask"/>
+    </Command>
+  </CommandSet>
+  <CommandSet xml:lang="en-us" Name="PlayerCommandset_en-us">
+    <AppName> en-us </AppName>
+    <Example> Say test </Example>
+    <Command Name="test">
+      <Example> Test </Example>
+      <ListenFor> test </ListenFor>
+      <Feedback> Testing... </Feedback>
+      <Navigate />
+    </Command>
+    <Command Name="helpList">
+      <Example> Test </Example>
+      <ListenFor> test </ListenFor>
+      <Feedback> Testing... </Feedback>
+      <VoiceCommandService Target="CortanaBackgroundTask"/>
     </Command>
   </CommandSet>
 </VoiceCommands>

@@ -331,9 +331,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core.Standard\BuildIt.Config.Core.Standard.csproj">
+    <ProjectReference Include="..\BuildIt.Config.Core\BuildIt.Config.Core.csproj">
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
-      <Name>BuildIt.Config.Core.Standard</Name>
+      <Name>BuildIt.Config.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

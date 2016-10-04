@@ -1,13 +1,12 @@
 ﻿using System;
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using BuildIt.Config.Core.Standard.Models;
-using BuildIt.Config.Core.Standard.Services;
-using BuildIt.Config.Core.Standard.Services.Interfaces;
+using BuildIt.Config.Core.Services.Interfaces;
 using Client.Android.Impl;
 using Client.Core.ViewModels;
 using MvvmCross.Droid.Views;
@@ -22,18 +21,9 @@ namespace Client.Android.Test
 
         protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(bundle);
+            UserDialogs.Init(this);
 
-            var userDialogService = Mvx.Resolve<IUserDialogService>() as UserDialogService;
-            if (userDialogService != null)
-            {
-                userDialogService.Context = this;
-            }
-            var versionService = Mvx.Resolve<IVersionService>() as VersionService;
-            if (versionService != null)
-            {
-                versionService.Context = this;
-            }
+            base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);

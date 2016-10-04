@@ -13,7 +13,7 @@
     "frameworks": {
         "netstandard1.6": {
             "dependencies": {
-                "BuildIt.Config.Core.Standard": {
+                "BuildIt.Config.Core": {
                     "target": "project"
                 },
                 "Microsoft.AspNetCore.Mvc": "1.0.0"
@@ -29,7 +29,7 @@
                 "System.Web.Routing": "4.0.0.0"
             },
             "dependencies": {
-                "BuildIt.Config.Core.Standard": {
+                "BuildIt.Config.Core": {
                     "target": "project"
                 },
                 "Microsoft.AspNet.Mvc": "5.2.3",
@@ -44,6 +44,8 @@
     },
 
     "scripts": {
-        "postcompile": "\"%project:Directory%/../.nuget/nuget.exe\" pack BuildIt.Config.Core.Api.nuspec"
+        "postcompile": [
+            "\"%project:Directory%/../.nuget/nuget.exe\" pack BuildIt.Config.Core.Api.nuspec"
+        ]
     }
 }
