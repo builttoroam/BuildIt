@@ -122,6 +122,7 @@
       <Name>BuildIt.Config.Impl.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
