@@ -21,7 +21,7 @@ namespace BuildIt.Media
         private VoiceCommandServiceConnection voiceServiceConnection;
         private BackgroundTaskDeferral serviceDeferral;
 
-        public async void Run(IBackgroundTaskInstance taskInstance)
+        public async Task<bool> Run(IBackgroundTaskInstance taskInstance)
         {
             serviceDeferral = taskInstance.GetDeferral();
             taskInstance.Canceled += OnTaskCanceled;
@@ -31,7 +31,7 @@ namespace BuildIt.Media
             if (triggerDetails == null)
             {
                 serviceDeferral.Complete();
-                return;
+                return false;
             }
 
             try
@@ -47,14 +47,15 @@ namespace BuildIt.Media
                     var props = voiceCommand.Properties;
                     await CortanaHelpList();
                 }
-                await Task.Delay(1000);
-                await ShowProgressScreen();
+                //await Task.Delay(1000);
+                //await ShowProgressScreen();
             }
             catch
             {
                 Debug.WriteLine("Unable to process voice command");
             }
             serviceDeferral.Complete();
+            return true;
         }
 
         private async Task CortanaHelpList()

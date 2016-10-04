@@ -73,11 +73,10 @@ namespace BuildIt.Media
                         var customCommandSetList = (from c in customXml.Descendants()
                                                     where ns.GetName("CommandSet") == c.Name
                                                     select c).ToList();
-
+                        //Get voiceCommandService
                         var inventoryService = new AppServiceConnection();
                         var appServiceName = inventoryService.AppServiceName;
-
-
+                        
                         var commandList = (from c in defaultXml.Descendants()
                             where ns.GetName("Command") == c.Name
                             select c).ToList();
