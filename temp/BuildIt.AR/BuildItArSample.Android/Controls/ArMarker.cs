@@ -14,14 +14,17 @@ namespace BuildItArSample.Android.Controls
         private TextView titleText;
         public TextView TitleText => titleText ?? (titleText = FindViewById<TextView>(Resource.Id.titleText));
 
+        public POI POI { get; private set; }
+
         public ArMarker(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
             Init();
         }
 
-        public ArMarker(Context context) : base(context)
+        public ArMarker(Context context, POI poi) : base(context)
         {
             Init();
+            POI = poi;
         }
 
         public ArMarker(Context context, IAttributeSet attrs) : base(context, attrs)
