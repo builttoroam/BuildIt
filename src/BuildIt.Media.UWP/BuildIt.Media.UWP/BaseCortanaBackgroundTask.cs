@@ -34,6 +34,7 @@ namespace BuildIt.Media
         private const string CortanaReply = "Here is the help list for you";
         private const string CortanaSecondReply = "Please select one";
         private const string MoreVoiceCommands = "More voice commands";
+        private const string MoreAppLaunchArgument = "more";
         private static XNamespace VoiceCommandNameSpace { get; } = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
         private static XNamespace XmlNameSpace { get; } = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
 
@@ -209,7 +210,7 @@ namespace BuildIt.Media
                 {
                     ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText,
                     Title = MoreVoiceCommands,
-                    AppLaunchArgument = "more",
+                    AppLaunchArgument = MoreAppLaunchArgument,
                     TextLine1 = moreCommands,
                     Image = await iconsFolder.GetFileAsync("buildit_help.png")
             };
@@ -234,20 +235,23 @@ namespace BuildIt.Media
             var result = await voiceServiceConnection.RequestConfirmationAsync(response);
             if (result.Confirmed)
             {
-                if (selectedRes.SelectedItem.AppLaunchArgument == "more")
+                if (selectedRes.SelectedItem.AppLaunchArgument == MoreAppLaunchArgument)
                 {
 
                     await CortanaList(destinationContentTiles, cmdList, cmtList,commandsTook,commandsCountingNo);
 
-                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
-                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
+                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please speak to Cortana to select voice command.";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please speak to Cortana to select voice command.";
                     response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
                     return response;
                 }
-
-                msgback.DisplayMessage = msgback.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
-                msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please use Cortana to select voice command {selectedRes.SelectedItem.Title}";
-                response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+                else
+                {
+                    msgback.DisplayMessage = msgback.SpokenMessage = $"Please speak to Cortana to select voice command.";
+                    msgRepeat.DisplayMessage = msgRepeat.SpokenMessage = $"Please speak to Cortana to select voice command.";
+                    response = VoiceCommandResponse.CreateResponseForPrompt(msgback, msgRepeat);
+                    return response;
+                }
             }
             else
             {
