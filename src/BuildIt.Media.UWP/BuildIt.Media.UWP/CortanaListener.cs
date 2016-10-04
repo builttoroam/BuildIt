@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
@@ -24,13 +25,13 @@ namespace BuildIt.Media
             public static XName VoiceCommands => VoiceCommandNameSpace.GetName("VoiceCommands");
             public static XName VoiceCommandService => VoiceCommandNameSpace.GetName("VoiceCommandService");
             public static XName Command => VoiceCommandNameSpace.GetName("Command");
-            //public static XName Target = "Target";
+            public static readonly XName Target = "Target";
             public static XName Lang => XmlNameSpace.GetName("lang");
 
-            
+
             public static class CommandSetElement
             {
-                
+
                 public static XName AppName => VoiceCommandNameSpace.GetName("AppName");
             }
         }
@@ -38,7 +39,7 @@ namespace BuildIt.Media
         private const string LaunchContext = "LaunchContext";
 
         private const string BuildItVoiceCommandFileName = "Voices.xml";
-        private static XNamespace VoiceCommandNameSpace { get; }= XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+        private static XNamespace VoiceCommandNameSpace { get; } = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
         private static XNamespace XmlNameSpace { get; } = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
 
         public static async Task RegisterMediaElementVoiceCommands(string customVoiceCommandFileName = null, bool registerMissingLocales = true)
@@ -66,29 +67,29 @@ namespace BuildIt.Media
 
 
                         var buildItCommandSets = (from c in defaultXml.Descendants()
-                                              where VoiceCommandNameSpace.GetName("CommandSet") == c.Name
-                                              select c).ToList();
+                                                  where VoiceCommandSchema.CommandSet == c.Name
+                                                  select c).ToList();
                         var customCommandSets = (from c in customXml.Descendants()
-                                                    where VoiceCommandNameSpace.GetName("CommandSet") == c.Name
-                                                    select c).ToList();
+                                                 where VoiceCommandSchema.CommandSet == c.Name
+                                                 select c).ToList();
 
-                        
+
                         //var commandList = (from c in defaultXml.Descendants()
-                        //    where VoiceCommandNameSpace.GetName("Command") == c.Name
+                        //    where VoiceCommandSchema.Command == c.Name
                         //    select c).ToList();
 
                         //var cutomCommandList = (from c in customXml.Descendants()
-                        //    where VoiceCommandNameSpace.GetName("Command") == c.Name
+                        //    where VoiceCommandSchema.Command == c.Name
                         //    select c).ToList();
 
                         //var commandWithServiceList = (from c in commandList.Descendants()
-                        //    where VoiceCommandNameSpace.GetName("VoiceCommandService") == c.Name
+                        //    where VoiceCommandSchema.VoiceCommandService == c.Name
                         //    select c).ToList();
 
                         //var customCommandWithService = (from c in cutomCommandList.Descendants()
-                        //    where VoiceCommandNameSpace.GetName("VoiceCommandService") == c.Name
+                        //    where VoiceCommandSchema.VoiceCommandService == c.Name
                         //    select c).FirstOrDefault();
-                        
+
                         //if (!string.IsNullOrEmpty(appServiceName))
                         //{
                         //    foreach (var command in commandWithServiceList)
@@ -108,7 +109,7 @@ namespace BuildIt.Media
 
 
                         //var appName = (from c in customXml.Descendants()
-                        //    where VoiceCommandNameSpace.GetName("CommandSet") == c.Name
+                        //    where VoiceCommandSchema.CommandSet == c.Name
                         //    where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
                         //    let appNameCommandSetDesc = c.Descendants()
                         //    from ac in appNameCommandSetDesc
@@ -121,7 +122,7 @@ namespace BuildIt.Media
                         //{
                         //    appName = Package.Current.DisplayName;
 
-                            
+
                         //    foreach (var command in buildItCommandSets)
                         //    {
                         //        var appNameNode = (from c in command.Descendants()
@@ -136,7 +137,7 @@ namespace BuildIt.Media
                         var rootVoiceCommandsNode = customXml.FirstNode as XElement;
                         if (rootVoiceCommandsNode == null)
                         {
-                            rootVoiceCommandsNode = new XElement(VoiceCommandNameSpace.GetName("VoiceCommands"));
+                            rootVoiceCommandsNode = new XElement(VoiceCommandSchema.VoiceCommands);
                             customXml.Add(rootVoiceCommandsNode);
                         }
 
@@ -146,14 +147,14 @@ namespace BuildIt.Media
                             foreach (var customElement in customCommandSets)
                             {
                                 //add command nodes if the commandSet is existing
-                                if (element.Attribute(XmlNameSpace.GetName("lang")).Value !=
-                                    customElement.Attribute(XmlNameSpace.GetName("lang")).Value) continue;
+                                if (element.Attribute(VoiceCommandSchema.Lang).Value !=
+                                    customElement.Attribute(VoiceCommandSchema.Lang).Value) continue;
 
                                 var commandNodes = (from c in element.Descendants()
-                                                    where VoiceCommandNameSpace.GetName("Command") == c.Name
+                                                    where VoiceCommandSchema.Command == c.Name
                                                     select c).ToList();
                                 var lastCommand = (from c in customElement.Descendants()
-                                                   where VoiceCommandNameSpace.GetName("Command") == c.Name
+                                                   where VoiceCommandSchema.Command == c.Name
                                                    select c).LastOrDefault();
                                 if (lastCommand != null)
                                 {
@@ -174,7 +175,7 @@ namespace BuildIt.Media
                         }
 
 
-                        var allVoiceCommands = (from command in customXml.Descendants(VoiceCommandNameSpace.GetName("Command"))
+                        var allVoiceCommands = (from command in customXml.Descendants(VoiceCommandSchema.Command)
                                                 select command.SafeAttributeValue("Name")
                             ).Distinct().ToList();
                         foreach (var commandName in allVoiceCommands)
@@ -188,18 +189,35 @@ namespace BuildIt.Media
 
                         // Get the name of the registered background app service for the app
                         // The BuildIt background taks has to be registered with this name
+
+
+
+
                         var inventoryService = new AppServiceConnection();
                         var appServiceName = inventoryService.AppServiceName;
 
                         var voiceCommandServiceNodes = (from c in customXml.Descendants()
-                                                        where VoiceCommandNameSpace.GetName("VoiceCommandService") == c.Name
+                                                        where VoiceCommandSchema.VoiceCommandService == c.Name
                                                         select c).ToList();
+
+                        var cutomCommandList = (from c in customXml.Descendants()
+                                                where VoiceCommandSchema.Command == c.Name
+                                                select c).ToList();
+                        var customCommandWithService = (from c in cutomCommandList.Descendants()
+                                                        where VoiceCommandSchema.VoiceCommandService == c.Name
+                                                        select c).FirstOrDefault();
+
+                        if (string.IsNullOrEmpty(appServiceName))
+                        {
+                            appServiceName = customCommandWithService.Attribute("Target").Value;
+                        }
+
                         voiceCommandServiceNodes.DoForEach(node =>
                         {
-                            var attribute = node.Attribute("Target");
+                            var attribute = node.Attribute(VoiceCommandSchema.Target);
                             if (attribute == null)
                             {
-                                attribute = new XAttribute("Target", appServiceName);
+                                attribute = new XAttribute(VoiceCommandSchema.Target, appServiceName);
                                 node.Add(attribute);
                             }
                             else
