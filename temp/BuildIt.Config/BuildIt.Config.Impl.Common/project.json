@@ -1,14 +1,14 @@
-﻿{
+{
   "supports": {},
   "dependencies": {
     "Acr.UserDialogs": "6.2.3",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-    "NETStandard.Library": "1.6.0",
     "PCLStorage": "1.0.2",
-    "Xam.Plugin.Connectivity": "2.2.12"
+    "Xam.Plugin.Connectivity": "2.2.12",
+    "NETStandard.Library": "1.6.0",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
   },
   "frameworks": {
-    "netstandard1.3": {
+    "netstandard1.4": {
       "imports": [
         "portable-net45+wp80+win8+wpa81"
       ]

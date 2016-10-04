@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -7,14 +8,10 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media.Imaging;
-using BuildIt.General.UI;
-using Buffer = System.Buffer;
 
 namespace BuildIt.Media
 {
@@ -69,13 +66,50 @@ namespace BuildIt.Media
                                        select c;*/
                         var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
                         var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
-                        var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
+                        //var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
                         var commandSetList = (from c in defaultXml.Descendants()
                                               where ns.GetName("CommandSet") == c.Name
                                               select c).ToList();
                         var customCommandSetList = (from c in customXml.Descendants()
                                                     where ns.GetName("CommandSet") == c.Name
                                                     select c).ToList();
+                        //Get voiceCommandService
+                        var inventoryService = new AppServiceConnection();
+                        var appServiceName = inventoryService.AppServiceName;
+                        
+                        var commandList = (from c in defaultXml.Descendants()
+                            where ns.GetName("Command") == c.Name
+                            select c).ToList();
+
+                        var cutomCommandList = (from c in customXml.Descendants()
+                            where ns.GetName("Command") == c.Name
+                            select c).ToList();
+
+                        var commandWithServiceList = (from c in commandList.Descendants()
+                            where ns.GetName("VoiceCommandService") == c.Name
+                            select c).ToList();
+
+                        var customCommandWithService = (from c in cutomCommandList.Descendants()
+                            where ns.GetName("VoiceCommandService") == c.Name
+                            select c).FirstOrDefault();
+                        
+                        if (!string.IsNullOrEmpty(appServiceName))
+                        {
+                            foreach (var command in commandWithServiceList)
+                            {
+                                command.Attribute("Target").Value = appServiceName;
+                            }
+                        }
+                        else
+                        {
+                            appServiceName = customCommandWithService.Attribute("Target").Value;
+
+                            foreach (var command in commandWithServiceList)
+                            {
+                                command.Attribute("Target").Value = appServiceName;
+                            }
+                        }
+
 
                         //var appName = (from c in customXml.Descendants()
                         //    where ns.GetName("CommandSet") == c.Name
@@ -84,7 +118,7 @@ namespace BuildIt.Media
                         //    from ac in appNameCommandSetDesc
                         //    where ns.GetName("AppName") == ac.Name
                         //    select ac.Value).FirstOrDefault();
-                        
+
                         //set commandSetList AppName to be appname if appname is not null 
                         var appName = Package.Current.DisplayName;
                         if (!string.IsNullOrEmpty(appName))

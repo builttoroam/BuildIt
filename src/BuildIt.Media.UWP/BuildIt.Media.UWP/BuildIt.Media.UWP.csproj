@@ -122,7 +122,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\artwork.jpg" />
+    <EmbeddedResource Include="Images\buildit_customTile.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\buildit_back.png" />
@@ -132,13 +132,8 @@
     <EmbeddedResource Include="Images\buildit_pause.png" />
     <EmbeddedResource Include="Images\buildit_play.png" />
     <EmbeddedResource Include="Images\buildit_unmute.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Images\buildit_volumeDown.png" />
     <EmbeddedResource Include="Images\buildit_volumeUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Images\buildit_customTile.png" />
   </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
