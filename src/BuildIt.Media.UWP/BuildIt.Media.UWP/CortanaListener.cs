@@ -21,6 +21,13 @@ namespace BuildIt.Media
         private static class VoiceCommandSchema
         {
             public static XName CommandSet => VoiceCommandNameSpace.GetName("CommandSet");
+            public static XName VoiceCommands => VoiceCommandNameSpace.GetName("VoiceCommands");
+            public static XName VoiceCommandService => VoiceCommandNameSpace.GetName("VoiceCommandService");
+            public static XName Command => VoiceCommandNameSpace.GetName("Command");
+            //public static XName Target = "Target";
+            public static XName Lang => XmlNameSpace.GetName("lang");
+
+            
             public static class CommandSetElement
             {
                 
@@ -59,10 +66,10 @@ namespace BuildIt.Media
 
 
                         var buildItCommandSets = (from c in defaultXml.Descendants()
-                                              where VoiceCommandSchema.CommandSet == c.Name
+                                              where VoiceCommandNameSpace.GetName("CommandSet") == c.Name
                                               select c).ToList();
                         var customCommandSets = (from c in customXml.Descendants()
-                                                    where VoiceCommandSchema.CommandSet == c.Name
+                                                    where VoiceCommandNameSpace.GetName("CommandSet") == c.Name
                                                     select c).ToList();
 
                         
@@ -146,7 +153,7 @@ namespace BuildIt.Media
                                                     where VoiceCommandNameSpace.GetName("Command") == c.Name
                                                     select c).ToList();
                                 var lastCommand = (from c in customElement.Descendants()
-                                                   where ns.GetName("Command") == c.Name
+                                                   where VoiceCommandNameSpace.GetName("Command") == c.Name
                                                    select c).LastOrDefault();
                                 if (lastCommand != null)
                                 {
@@ -207,7 +214,7 @@ namespace BuildIt.Media
 
                     var appName = Package.Current.DisplayName;
                     var appNameNodes = (from c in defaultXml.Descendants()
-                                        where VoiceCommandSchema.CommandSetElement.AppName == c.Name
+                                        where VoiceCommandNameSpace.GetName("AppName") == c.Name
                                         select c).ToList();
                     appNameNodes.DoForEach(appNameNode => appNameNode.Value = appName);
 
