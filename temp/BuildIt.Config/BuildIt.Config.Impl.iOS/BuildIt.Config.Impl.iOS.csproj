@@ -8,9 +8,9 @@
     <ProjectGuid>{35814764-6E47-4B95-AE23-7314EF61884B}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Client.iOS.Impl</RootNamespace>
+    <RootNamespace>BuildIt.Config.Impl.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Client.iOS.Impl</AssemblyName>
+    <AssemblyName>BuildIt.Config.Impl.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

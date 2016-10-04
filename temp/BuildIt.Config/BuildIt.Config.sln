@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Core", "Client.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config.Core\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Universal.Impl", "Client.Universal.impl\Client.Universal.Impl.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Win", "BuildIt.Config.Impl.Win\BuildIt.Config.Impl.Win.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.iOS.Impl", "Client.iOS.Impl\Client.iOS.Impl.csproj", "{35814764-6E47-4B95-AE23-7314EF61884B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.iOS", "BuildIt.Config.Impl.iOS\BuildIt.Config.Impl.iOS.csproj", "{35814764-6E47-4B95-AE23-7314EF61884B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.iOS.UI.Test", "Client.iOS.UI.Test\Client.iOS.UI.Test.csproj", "{DAAF66FA-C832-4898-ADD3-B80A7BF7F101}"
 EndProject

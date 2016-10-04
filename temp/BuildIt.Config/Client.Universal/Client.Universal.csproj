@@ -140,9 +140,9 @@
       <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>
       <Name>Client.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Client.Universal.impl\Client.Universal.Impl.csproj">
+    <ProjectReference Include="..\BuildIt.Config.Impl.Win\BuildIt.Config.Impl.Win.csproj">
       <Project>{29ea096d-df83-484e-99a3-8c74ba10e65c}</Project>
-      <Name>Client.Universal.Impl</Name>
+      <Name>BuildIt.Config.Impl.Win</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using BuildIt.Config.Core.Services.Interfaces;
 using Foundation;
 
-namespace Client.iOS.Impl
+namespace BuildIt.Config.Impl.iOS
 {
+    // ReSharper disable once InconsistentNaming
     public class iOSVersionService : IVersionService
     {
         public Version GetVersion()

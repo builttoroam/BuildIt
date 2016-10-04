@@ -2,9 +2,9 @@
 using Windows.ApplicationModel;
 using BuildIt.Config.Core.Services.Interfaces;
 
-namespace Client.Universal.Impl
+namespace BuildIt.Config.Impl.Win
 {
-    public class UWPVersionService : IVersionService
+    public class VersionService : IVersionService
     {
         public Version GetVersion()
         {

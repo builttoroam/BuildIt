@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.UI.Core;
 
-namespace Client.Universal.Impl.Extensions
+namespace BuildIt.Config.Impl.Droid.Extensions
 {
     public static class DispatcherTaskExtensions
     {

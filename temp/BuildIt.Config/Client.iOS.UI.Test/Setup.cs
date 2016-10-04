@@ -1,5 +1,6 @@
 using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Impl.Common;
+using BuildIt.Config.Impl.iOS;
 using Client.Core;
 using Client.iOS.Impl;
 using MvvmCross.Core.ViewModels;
