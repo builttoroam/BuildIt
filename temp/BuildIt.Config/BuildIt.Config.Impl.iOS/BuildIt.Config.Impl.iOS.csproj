@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="iOSVersionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserDialogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.Config.Core\BuildIt.Config.Core.csproj">
