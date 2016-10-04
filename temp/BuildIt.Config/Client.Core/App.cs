@@ -26,6 +26,7 @@ namespace Client.Core
                 Controller = "configuration"
             }));
             Mvx.LazyConstructAndRegisterSingleton<INetworkService, NetworkService>();
+            Mvx.LazyConstructAndRegisterSingleton<IFileCacheService, FileCacheService>();
             Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
             Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationServiceSetup>(() => new AppConfigurationServiceSetup()
             {
@@ -47,7 +48,7 @@ namespace Client.Core
             if (appConfigService == null) return;
 
             appConfigService.AdditionalHeaders.Add(new KeyValuePair<string, string>(Strings.ApiKey, Constants.AppConfigurationApiKey));
-            appConfigService.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
+            //appConfigService.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
 
             //await appConfigService.LoadAppConfig();
 
