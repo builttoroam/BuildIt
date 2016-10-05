@@ -17,9 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.dll" target="lib\net45" />    
-    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.pdb" target="lib\net45" />    
-    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.xml" target="lib\net45" />    
     <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.dll" target="lib\netstandard1.0" />    
     <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.pdb" target="lib\netstandard1.0" />    
     <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.xml" target="lib\netstandard1.0" />    
