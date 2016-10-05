@@ -153,9 +153,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.WP8x", "B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Config", "BuildIt.Config", "{C57DD687-4E64-4DD6-9365-6471C90E06EB}"
 	ProjectSection(SolutionItems) = preProject
-		BuildIt.Config\BuildIt.Config.Core.Api\BuildIt.Config.Core.Api.nuspec = BuildIt.Config\BuildIt.Config.Core.Api\BuildIt.Config.Core.Api.nuspec
-		BuildIt.Config\BuildIt.Config.Core\BuildIt.Config.Core.nuspec = BuildIt.Config\BuildIt.Config.Core\BuildIt.Config.Core.nuspec
-		BuildIt.Config\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.nuspec = BuildIt.Config\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.nuspec
+		BuildIt.Config\BuildIt.Config.Core.Api.nuspec = BuildIt.Config\BuildIt.Config.Core.Api.nuspec
+		BuildIt.Config\BuildIt.Config.Core.nuspec = BuildIt.Config\BuildIt.Config.Core.nuspec
+		BuildIt.Config\BuildIt.Config.Impl.nuspec = BuildIt.Config\BuildIt.Config.Impl.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{52BE314B-45A5-4792-90A5-FF44981D752B}"

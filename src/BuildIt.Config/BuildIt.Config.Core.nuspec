@@ -2,23 +2,29 @@
 <package >
   <metadata>
     <id>BuildIt.Config.Core</id>
-    <version>1.0.0</version>
+    <version>$version$</version>
     <title>BuildIt.Config.Core</title>
-    <authors>BtR</authors>
-    <owners>BtR</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>App Config Core</description>
-    <releaseNotes>Init</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions that work with app configuration easier</description>
+    <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>      
       <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
   </metadata>
   <files>
-    <file src="lib\**" target="lib" />
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.dll" target="lib\net45" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.pdb" target="lib\net45" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.xml" target="lib\net45" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.dll" target="lib\netstandard1.0" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.pdb" target="lib\netstandard1.0" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.xml" target="lib\netstandard1.0" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    <file src="BuildIt.Config.Core\bin\Release\BuildIt.Config.Core.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />    
   </files>
 </package>
