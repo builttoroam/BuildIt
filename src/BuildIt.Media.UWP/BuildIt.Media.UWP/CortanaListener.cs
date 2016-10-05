@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.AppService;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
@@ -18,145 +19,151 @@ namespace BuildIt.Media
 
     public static class CortanaListener
     {
+        private static class VoiceCommandSchema
+        {
+            public static XName CommandSet => VoiceCommandNameSpace.GetName("CommandSet");
+            public static XName VoiceCommands => VoiceCommandNameSpace.GetName("VoiceCommands");
+            public static XName VoiceCommandService => VoiceCommandNameSpace.GetName("VoiceCommandService");
+            public static XName Command => VoiceCommandNameSpace.GetName("Command");
+            public static readonly XName Target = "Target";
+            public static XName Lang => XmlNameSpace.GetName("lang");
+
+
+            public static class CommandSetElement
+            {
+
+                public static XName AppName => VoiceCommandNameSpace.GetName("AppName");
+            }
+        }
+
         private const string LaunchContext = "LaunchContext";
 
-        public static async Task RegisterMediaElementVoiceCommands(string voiceCommandFileName = null, bool registerMissingLocales = true)
+        private const string BuildItVoiceCommandFileName = "Voices.xml";
+        private static XNamespace VoiceCommandNameSpace { get; } = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
+        private static XNamespace XmlNameSpace { get; } = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
+
+        public static async Task RegisterMediaElementVoiceCommands(string customVoiceCommandFileName = null, bool registerMissingLocales = true)
         {
             try
             {
+                // Define a temporary voice file into which the BuildIt voice command will be copied
+                // If a custom voice command file is specified, it will be merged with the BuildIt voice command before 
+                // being written into the temporary voice file
+                var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(BuildItVoiceCommandFileName, CreationCollisionOption.ReplaceExisting);
+
+
                 var assembly = typeof(CortanaListener).GetTypeInfo().Assembly;
-                var tempVoiceFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("_voices.xml", CreationCollisionOption.ReplaceExisting);
-
-
-                using (
-                    var stream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + ".Voices.xml"))
+                using (var stream = assembly.GetManifestResourceStream(typeof(CortanaListener).Namespace + "." + BuildItVoiceCommandFileName))
                 using (var outStream = await tempVoiceFile.OpenStreamForWriteAsync())
                 {
-                    if (string.IsNullOrWhiteSpace(voiceCommandFileName))
+                    var defaultXml = XDocument.Load(stream);
+                    var customXml = defaultXml;
+                    if (!string.IsNullOrWhiteSpace(customVoiceCommandFileName))
                     {
-                        var defaultXml = XDocument.Load(stream);
-                        var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
-                        var commandSetList = (from c in defaultXml.Descendants()
-                                              where ns.GetName("CommandSet") == c.Name
-                                              select c).ToList();
-                        var appName = Package.Current.DisplayName;
-                        if (!string.IsNullOrEmpty(appName))
-                        {
-                            appName = Package.Current.DisplayName;
+                        // A custom voice command file has been provided, so need to combine the commands
+
+                        // Load the custom voice commands
+                        customXml = XDocument.Load(customVoiceCommandFileName);
 
 
-                            foreach (var command in commandSetList)
-                            {
-                                var appNameNode = (from c in command.Descendants()
-                                                   where ns.GetName("AppName") == c.Name
-                                                   select c).FirstOrDefault();
-                                appNameNode.Value = appName;
-                            }
-                        }
-                        defaultXml.Save(outStream);
-                        await stream.CopyToAsync(outStream);
-                    }
-                    else
-                    {
-                        // TODO: Combine commands in the resources voice file with the file supplied as a parameter
-                        var defaultXml = XDocument.Load(stream);
-                        var customXml = XDocument.Load(voiceCommandFileName);
-                        /*var elements = from c in customXml.Descendants()
-                                       where  c.Name.LocalName == "Command"
-                                       select c;*/
-                        var ns = XNamespace.Get("http://schemas.microsoft.com/voicecommands/1.2");
-                        var xmlns = XNamespace.Get("http://www.w3.org/XML/1998/namespace");
-                        //var currentLocation = CultureInfo.CurrentCulture.Name.ToLower();
-                        var commandSetList = (from c in defaultXml.Descendants()
-                                              where ns.GetName("CommandSet") == c.Name
-                                              select c).ToList();
-                        var customCommandSetList = (from c in customXml.Descendants()
-                                                    where ns.GetName("CommandSet") == c.Name
-                                                    select c).ToList();
-                        //Get voiceCommandService
-                        var inventoryService = new AppServiceConnection();
-                        var appServiceName = inventoryService.AppServiceName;
-                        
-                        var commandList = (from c in defaultXml.Descendants()
-                            where ns.GetName("Command") == c.Name
-                            select c).ToList();
+                        var buildItCommandSets = (from c in defaultXml.Descendants()
+                                                  where VoiceCommandSchema.CommandSet == c.Name
+                                                  select c).ToList();
+                        var customCommandSets = (from c in customXml.Descendants()
+                                                 where VoiceCommandSchema.CommandSet == c.Name
+                                                 select c).ToList();
 
-                        var cutomCommandList = (from c in customXml.Descendants()
-                            where ns.GetName("Command") == c.Name
-                            select c).ToList();
 
-                        var commandWithServiceList = (from c in commandList.Descendants()
-                            where ns.GetName("VoiceCommandService") == c.Name
-                            select c).ToList();
+                        //var commandList = (from c in defaultXml.Descendants()
+                        //    where VoiceCommandSchema.Command == c.Name
+                        //    select c).ToList();
 
-                        var customCommandWithService = (from c in cutomCommandList.Descendants()
-                            where ns.GetName("VoiceCommandService") == c.Name
-                            select c).FirstOrDefault();
-                        
-                        if (!string.IsNullOrEmpty(appServiceName))
-                        {
-                            foreach (var command in commandWithServiceList)
-                            {
-                                command.Attribute("Target").Value = appServiceName;
-                            }
-                        }
-                        else
-                        {
-                            appServiceName = customCommandWithService.Attribute("Target").Value;
+                        //var cutomCommandList = (from c in customXml.Descendants()
+                        //    where VoiceCommandSchema.Command == c.Name
+                        //    select c).ToList();
 
-                            foreach (var command in commandWithServiceList)
-                            {
-                                command.Attribute("Target").Value = appServiceName;
-                            }
-                        }
+                        //var commandWithServiceList = (from c in commandList.Descendants()
+                        //    where VoiceCommandSchema.VoiceCommandService == c.Name
+                        //    select c).ToList();
+
+                        //var customCommandWithService = (from c in cutomCommandList.Descendants()
+                        //    where VoiceCommandSchema.VoiceCommandService == c.Name
+                        //    select c).FirstOrDefault();
+
+                        //if (!string.IsNullOrEmpty(appServiceName))
+                        //{
+                        //    foreach (var command in commandWithServiceList)
+                        //    {
+                        //        command.Attribute("Target").Value = appServiceName;
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    appServiceName = customCommandWithService.Attribute("Target").Value;
+
+                        //    foreach (var command in commandWithServiceList)
+                        //    {
+                        //        command.Attribute("Target").Value = appServiceName;
+                        //    }
+                        //}
 
 
                         //var appName = (from c in customXml.Descendants()
-                        //    where ns.GetName("CommandSet") == c.Name
+                        //    where VoiceCommandSchema.CommandSet == c.Name
                         //    where c.Attribute(xmlns.GetName("lang")).Value == currentLocation
                         //    let appNameCommandSetDesc = c.Descendants()
                         //    from ac in appNameCommandSetDesc
-                        //    where ns.GetName("AppName") == ac.Name
+                        //    where VoiceCommandNameSpace.GetName("AppName") == ac.Name
                         //    select ac.Value).FirstOrDefault();
 
                         //set commandSetList AppName to be appname if appname is not null 
-                        var appName = Package.Current.DisplayName;
-                        if (!string.IsNullOrEmpty(appName))
-                        {
-                            appName = Package.Current.DisplayName;
+                        //var appName = Package.Current.DisplayName;
+                        //if (!string.IsNullOrEmpty(appName))
+                        //{
+                        //    appName = Package.Current.DisplayName;
 
-                            
-                            foreach (var command in commandSetList)
-                            {
-                                var appNameNode = (from c in command.Descendants()
-                                                   where ns.GetName("AppName") == c.Name
-                                                   select c).FirstOrDefault();
-                                appNameNode.Value = appName;
-                            }
-                        }
+
+                        //    foreach (var command in buildItCommandSets)
+                        //    {
+                        //        var appNameNode = (from c in command.Descendants()
+                        //                           where VoiceCommandNameSpace.GetName("AppName") == c.Name
+                        //                           select c).FirstOrDefault();
+                        //        appNameNode.Value = appName;
+                        //    }
+                        //}
 
 
 
                         var rootVoiceCommandsNode = customXml.FirstNode as XElement;
                         if (rootVoiceCommandsNode == null)
                         {
-                            rootVoiceCommandsNode = new XElement(ns.GetName("VoiceCommands"));
+                            rootVoiceCommandsNode = new XElement(VoiceCommandSchema.VoiceCommands);
                             customXml.Add(rootVoiceCommandsNode);
                         }
 
-                        foreach (var element in commandSetList)
+                        foreach (var element in buildItCommandSets)
                         {
                             var matchFound = false;
-                            foreach (var customElement in customCommandSetList)
+                            foreach (var customElement in customCommandSets)
                             {
                                 //add command nodes if the commandSet is existing
-                                if (element.Attribute(xmlns.GetName("lang")).Value !=
-                                    customElement.Attribute(xmlns.GetName("lang")).Value) continue;
+                                if (element.Attribute(VoiceCommandSchema.Lang).Value !=
+                                    customElement.Attribute(VoiceCommandSchema.Lang).Value) continue;
 
                                 var commandNodes = (from c in element.Descendants()
-                                                    where ns.GetName("Command") == c.Name
+                                                    where VoiceCommandSchema.Command == c.Name
                                                     select c).ToList();
-                                customElement.Add(commandNodes);
+                                var lastCommand = (from c in customElement.Descendants()
+                                                   where VoiceCommandSchema.Command == c.Name
+                                                   select c).LastOrDefault();
+                                if (lastCommand != null)
+                                {
+                                    lastCommand.AddAfterSelf(commandNodes);
+                                }
+                                else
+                                {
+                                    customElement.Add(commandNodes);
+                                }
                                 matchFound = true;
                                 break;
                             }
@@ -168,7 +175,7 @@ namespace BuildIt.Media
                         }
 
 
-                        var allVoiceCommands = (from command in customXml.Descendants(ns.GetName("Command"))
+                        var allVoiceCommands = (from command in customXml.Descendants(VoiceCommandSchema.Command)
                                                 select command.SafeAttributeValue("Name")
                             ).Distinct().ToList();
                         foreach (var commandName in allVoiceCommands)
@@ -179,9 +186,59 @@ namespace BuildIt.Media
                         await CopyActionIconsToTempFolder("buildit_customTile.png");
 
 
-                        //save customXml 
-                        customXml.Save(outStream);
+
+                        // Get the name of the registered background app service for the app
+                        // The BuildIt background taks has to be registered with this name
+
+
+
+
+                        var inventoryService = new AppServiceConnection();
+                        var appServiceName = inventoryService.AppServiceName;
+
+                        var voiceCommandServiceNodes = (from c in customXml.Descendants()
+                                                        where VoiceCommandSchema.VoiceCommandService == c.Name
+                                                        select c).ToList();
+
+                        var cutomCommandList = (from c in customXml.Descendants()
+                                                where VoiceCommandSchema.Command == c.Name
+                                                select c).ToList();
+                        var customCommandWithService = (from c in cutomCommandList.Descendants()
+                                                        where VoiceCommandSchema.VoiceCommandService == c.Name
+                                                        select c).FirstOrDefault();
+
+                        if (string.IsNullOrEmpty(appServiceName))
+                        {
+                            appServiceName = customCommandWithService.Attribute("Target").Value;
+                        }
+
+                        voiceCommandServiceNodes.DoForEach(node =>
+                        {
+                            var attribute = node.Attribute(VoiceCommandSchema.Target);
+                            if (attribute == null)
+                            {
+                                attribute = new XAttribute(VoiceCommandSchema.Target, appServiceName);
+                                node.Add(attribute);
+                            }
+                            else
+                            {
+                                attribute.Value = appServiceName;
+                            }
+                        });
                     }
+
+                    // We need to make sure the app name
+                    // element is updated with the name of the app (ie display name in the package)
+
+                    var appName = Package.Current.DisplayName;
+                    var appNameNodes = (from c in defaultXml.Descendants()
+                                        where VoiceCommandNameSpace.GetName("AppName") == c.Name
+                                        select c).ToList();
+                    appNameNodes.DoForEach(appNameNode => appNameNode.Value = appName);
+
+                    //save customXml 
+                    customXml.Save(outStream);
+
                 }
                 await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(tempVoiceFile);
             }
