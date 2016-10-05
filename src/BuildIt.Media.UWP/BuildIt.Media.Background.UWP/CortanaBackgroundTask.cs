@@ -1,4 +1,7 @@
-﻿using Windows.ApplicationModel.Background;
+﻿using System;
+using Windows.ApplicationModel.AppService;
+using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.VoiceCommands;
 
 namespace BuildIt.Media.Background
 {
@@ -9,7 +12,23 @@ namespace BuildIt.Media.Background
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            await BackgroundTaskImplement.Run(taskInstance);
+
+            var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
+
+            if (triggerDetails == null)
+            {
+                
+                return;
+            }
+            try
+            {
+                var voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
+                await BackgroundTaskImplement.Run(taskInstance, voiceServiceConnection);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
     }
 }
