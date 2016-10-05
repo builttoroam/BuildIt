@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="BuildIt.Config.Impl.Common.nuspec" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
