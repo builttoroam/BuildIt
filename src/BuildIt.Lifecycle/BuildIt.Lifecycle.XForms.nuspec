@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BuildIt.Lifecycle.XForms</id>
+    <version>$version$</version>
+    <title>BuildIt.Lifecycle.XForms</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains lifecycle patterns for navigation and state management for Xamarin Forms applications</description>
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+      <dependency id="BuildIt.States" version="0.1.5.5-beta" />
+      <dependency id="NETStandard.Library" version="1.6.0" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
+      <dependency id="Xamarin.Forms" version="2.3.2.127" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\BuildIt.Lifecycle.XForms.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\BuildIt.Lifecycle.XForms.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\BuildIt.Lifecycle.XForms.xml" target="lib\netstandard1.0" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\BuildIt.Lifecycle.XForms.dll" target="lib\portable-net45+win8+wpa81+wp8" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\BuildIt.Lifecycle.XForms.pdb" target="lib\portable-net45+win8+wpa81+wp8" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\BuildIt.Lifecycle.XForms.xml" target="lib\portable-net45+win8+wpa81+wp8" />
+  </files>
+</package>
