@@ -13,13 +13,44 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="NETStandard.Library" version="1.6.0" />
-      <dependency id="BuildIt.General" version="0.1.4" />
-      <dependency id="MvvmCross" version="4.3.0" />
-      <dependency id="MvvmCross.Binding" version="4.3.0" />
-      <dependency id="MvvmCross.Core" version="4.3.0" />
-      <dependency id="MvvmCross.Platform" version="4.3.0" />
-      <dependency id="Newtonsoft.Json" version="8.0.3" />
+      <group targetFramework="netstandard1.0">
+        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="NETStandard.Library" version="1.6.0" />        
+        <dependency id="MvvmCross" version="4.2.3" />
+        <dependency id="MvvmCross.Binding" version="4.2.3" />
+        <dependency id="MvvmCross.Core" version="4.2.3" />
+        <dependency id="MvvmCross.Platform" version="4.2.3" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
+      </group>
+      <group targetFramework="uap">
+        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="MvvmCross" version="4.2.3" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="4.2.3" />
+      </group>
+      <group targetFramework="win81">
+        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="MvvmCross" version="4.2.3" />
+        <dependency id="MvvmCross.Binding" version="4.2.3" />
+        <dependency id="MvvmCross.Core" version="4.2.3" />
+        <dependency id="MvvmCross.Platform" version="4.2.3" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+        <dependency id="Microsoft.Bcl" version="1.1.10" />
+        <dependency id="Microsoft.NETCore.Platforms" version="1.0.1" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
+      </group>
+      <group targetFramework="wp81">
+        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="MvvmCross" version="4.2.3" />
+        <dependency id="MvvmCross.Binding" version="4.2.3" />
+        <dependency id="MvvmCross.Core" version="4.2.3" />
+        <dependency id="MvvmCross.Platform" version="4.2.3" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+        <dependency id="Microsoft.Bcl" version="1.1.10" />
+        <dependency id="Microsoft.NETCore.Platforms" version="1.0.1" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
+      </group>
     </dependencies>
   </metadata>
   <files>
@@ -32,7 +63,28 @@
     <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
     <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />    
     <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />    
-    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />   
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\uap" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\uap" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\uap" />
+    <file src="BuildIt.MvvmCross.UI.UWP\bin\Release\BuildIt.MvvmCross.UI.UWP.dll" target="lib\uap" />    
+    <file src="BuildIt.MvvmCross.UI.UWP\bin\Release\BuildIt.MvvmCross.UI.UWP.pdb" target="lib\uap" />    
+    <file src="BuildIt.MvvmCross.UI.UWP\bin\Release\BuildIt.MvvmCross.UI.UWP.xml" target="lib\uap" />
+    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\win81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\win81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\win81" />
+    <file src="BuildIt.MvvmCross.UI.Win\bin\Release\BuildIt.MvvmCross.UI.Win.dll" target="lib\win81" />    
+    <file src="BuildIt.MvvmCross.UI.Win\bin\Release\BuildIt.MvvmCross.UI.Win.pdb" target="lib\win81" />    
+    <file src="BuildIt.MvvmCross.UI.Win\bin\Release\BuildIt.MvvmCross.UI.Win.xml" target="lib\win81" />
+    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\wp81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\wp81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\wp81" />
+    <file src="BuildIt.MvvmCross.UI.WP\bin\Release\BuildIt.MvvmCross.UI.WP.dll" target="lib\wp81" />    
+    <file src="BuildIt.MvvmCross.UI.WP\bin\Release\BuildIt.MvvmCross.UI.WP.pdb" target="lib\wp81" />    
+    <file src="BuildIt.MvvmCross.UI.WP\bin\Release\BuildIt.MvvmCross.UI.WP.xml" target="lib\wp81" />
     
   </files>
 </package>

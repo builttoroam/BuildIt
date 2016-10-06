@@ -17,6 +17,7 @@ using BuildItArSample.Android.Controls;
 using Java.Lang;
 using Debug = System.Diagnostics.Debug;
 using Location = BuildIt.AR.Location;
+using BuildItArSample.Core;
 
 namespace BuildItArSample.Android
 {
@@ -367,12 +368,6 @@ namespace BuildItArSample.Android
         {
   
         }
-    }
-
-    public class POI : ILocationBasedMarker
-    {
-        public Location GeoLocation { get; set; }
-        public double Distance { get; set; }
     }
 }
 

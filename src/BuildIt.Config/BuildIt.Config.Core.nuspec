@@ -12,7 +12,8 @@
     <description>This library contains a number of helper methods and functions that work with app configuration easier</description>
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
-    <dependencies>      
+    <dependencies>
+      <dependency id="BuildIt.General" version="0.1.5.6-beta" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
   </metadata>
