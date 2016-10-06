@@ -21,10 +21,10 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\BuildIt.Media.UWP.xml" target="lib\uap10" />
-    <file src="bin\Release\BuildIt.Media.UWP.dll" target="lib\uap10" />
-    <file src="..\BuildIt.Media.Background.UWP\bin\Release\BuildIt.Media.Background.winmd" target="lib\uap10" />
-    <file src="..\BuildIt.Media.Background.UWP\bin\Release\BuildIt.Media.Background.pri" target="lib\uap10" />
-    <file src="..\BuildIt.Media.Background.UWP\bin\Release\BuildIt.Media.Background.xml" target="lib\uap10" />
+    <file src="BuildIt.Media.UWP\bin\Release\BuildIt.Media.UWP.dll" target="lib\uap10" />
+    <file src="BuildIt.Media.UWP\bin\Release\BuildIt.Media.UWP.xml" target="lib\uap10" />
+    <file src="BuildIt.Media.Background.UWP\bin\Release\BuildIt.Media.Background.winmd" target="lib\uap10" />
+    <file src="BuildIt.Media.Background.UWP\bin\Release\BuildIt.Media.Background.pri" target="lib\uap10" />
+    <file src="BuildIt.Media.Background.UWP\bin\Release\BuildIt.Media.Background.xml" target="lib\uap10" />
   </files>
 </package>
