@@ -1,18 +1,30 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>BuildIt.Lifecycle.Autofac</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>BuildIt.Config.Core</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://www.builttoroam.com</projectUrl>
-    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>$copyright$</copyright>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions that work with app configuration easier</description>
+    <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="Autofac" version="4.1.0" />
+      <!-- need release  BuildIt.Autofac first. Otherwise version will be 0.1.5.5 beta-->
+      <dependency id="BuildIt.Autofac" version="0.1.4" />
+      <dependency id="BuildIt.General" version="0.1.4" />
+      <dependency id="BuildIt.States" version="0.1.4" />
+      <dependency id="NETStandard.Library" version="1.6.0" />
+      <dependency id="Newtonsoft.Json" version="8.0.3" />
+    </dependencies>
   </metadata>
+  <files>
+    <file src="BuildIt.Lifecycle.Autofac\bin\Release\BuildIt.Lifecycle.Autofac.dll" target="lib\netstandard1.1" />
+    <file src="BuildIt.Lifecycle.Autofac\bin\Release\BuildIt.Lifecycle.Autofac.pdb" target="lib\netstandard1.1" />
+    <file src="BuildIt.Lifecycle.Autofac\bin\Release\BuildIt.Lifecycle.Autofac.xml" target="lib\netstandard1.1" />
+  </files>
 </package>

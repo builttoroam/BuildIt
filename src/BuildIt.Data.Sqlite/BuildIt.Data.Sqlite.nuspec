@@ -1,21 +1,31 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>BuildIt.Data.Sqlite</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>BuildIt.Data.Sqlite</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://www.builttoroam.com</projectUrl>
-    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>$copyright$</copyright>
-    <tags>BuildIt SQLite SQLiteWrapper UWP Windows10 UniversalApps Universal </tags>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions to make working with sql data query easier</description>
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="SQLiteNetExtensions" version="[1.3.0]" />
+      <dependency id="BuildIt.General" version="0.1.4" />
+      <dependency id="NETStandard.Library" version="1.6.0" />
+      <dependency id="Newtonsoft.Json" version ="9.0.1" />
+      <dependency id="SQLite.Net-PCL" version ="3.1.1" />
+      <dependency id="SQLiteNetExtensions" version ="1.3.0" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="BuildIt.Data.Sqlite\bin\Release\BuildIt.Data.Sqlite.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.Data.Sqlite\bin\Release\BuildIt.Data.Sqlite.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.Data.Sqlite\bin\Release\BuildIt.Data.Sqlite.xml" target="lib\netstandard1.0" />
+    <file src="BuildIt.Data.Sqlite\bin\Release\BuildIt.Data.Sqlite.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.Data.Sqlite\bin\Release\BuildIt.Data.Sqlite.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.Data.Sqlite\bin\Release\BuildIt.Data.Sqlite.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
+  </files>
 </package>
