@@ -1,18 +1,38 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>BuildIt.MvvmCross</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>BuildIt.MvvmCross</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://www.builttoroam.com</projectUrl>
-    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions that make working with MvvmCross framework easier</description>
+    <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="NETStandard.Library" version="1.6.0" />
+      <dependency id="BuildIt.General" version="0.1.4" />
+      <dependency id="MvvmCross" version="4.3.0" />
+      <dependency id="MvvmCross.Binding" version="4.3.0" />
+      <dependency id="MvvmCross.Core" version="4.3.0" />
+      <dependency id="MvvmCross.Platform" version="4.3.0" />
+      <dependency id="Newtonsoft.Json" version="8.0.3" />
+    </dependencies>
   </metadata>
+  <files>
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\netstandard1.0" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\netstandard1.0" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\netstandard1.0" />          
+    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.MvvmCross.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />   
+    
+  </files>
 </package>
