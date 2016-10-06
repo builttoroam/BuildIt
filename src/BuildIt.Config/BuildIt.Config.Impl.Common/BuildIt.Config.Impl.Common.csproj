@@ -33,10 +33,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\BuildIt.Config.Impl.Common.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="BuildIt.Config.Impl.Common.nuspec" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -54,12 +54,8 @@
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-xcopy $(TargetPath) $(ProjectDir)lib\portable-win+net45+wp8+win8+wpa81\
-xcopy $(TargetPath) $(ProjectDir)lib\net45\
-xcopy $(TargetPath) $(ProjectDir)lib\netstandard1.0\
-$(SolutionDir).nuget\nuget.exe pack $(ProjectDir)BuildIt.Config.Impl.Common.nuspec -outputdirectory $(ProjectDir)
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

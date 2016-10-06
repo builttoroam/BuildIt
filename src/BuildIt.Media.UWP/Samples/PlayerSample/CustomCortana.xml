@@ -27,12 +27,6 @@
       <Feedback> Testing... </Feedback>
       <Navigate />
     </Command>
-    <Command Name="helpList">
-      <Example> Test </Example>
-      <ListenFor> test </ListenFor>
-      <Feedback> Testing... </Feedback>
-      <VoiceCommandService Target="CortanaBackgroundTask"/>
-    </Command>
   </CommandSet>
   <CommandSet xml:lang="en-us" Name="PlayerCommandset_en-us">
     <AppName> en-us </AppName>

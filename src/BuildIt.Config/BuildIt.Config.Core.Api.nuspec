@@ -2,20 +2,19 @@
 <package >
   <metadata>
     <id>BuildIt.Config.Api</id>
-    <version>1.0.0</version>
+    <version>$version$</version>
     <title>BuildIt.Config.Api</title>
-    <authors>BtR</authors>
-    <owners>BtR</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>App Config Api</description>
-    <releaseNotes>Init</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions that work with app configuration easier</description>
+    <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework="netstandard1.6">
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
@@ -24,6 +23,7 @@
         <dependency id="Microsoft.AspNetCore.Mvc" version="1.0.0" />
       </group>
       <group targetFramework="net452">
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
@@ -41,6 +41,11 @@
   </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="lib\**" target="lib" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\net452\BuildIt.Config.Core.Api.dll" target="lib\net45" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\net452\BuildIt.Config.Core.Api.pdb" target="lib\net45" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\net452\BuildIt.Config.Core.Api.xml" target="lib\net45" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.dll" target="lib\netstandard1.6" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.pdb" target="lib\netstandard1.6" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.xml" target="lib\netstandard1.6" />
   </files> 
 </package>

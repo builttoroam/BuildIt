@@ -1,18 +1,43 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>BuildIt.States</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>BuildIt.States</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://www.builttoroam.com</projectUrl>
-    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
-    <copyright>$copyright$</copyright>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions to make working with visual states easier</description>
+    <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
+    <dependencies>
+      <group targetFramework="netstandard1.0">
+        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="uap">
+        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.1.0" />
+      </group>
+    </dependencies>
   </metadata>
+  <files>
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.0" />
+    
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\uap" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\uap" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\uap" />
+    <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.dll" target="lib\uap" />
+    <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.pdb" target="lib\uap" />
+    <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.xml" target="lib\uap" />
+    
+  </files>
 </package>

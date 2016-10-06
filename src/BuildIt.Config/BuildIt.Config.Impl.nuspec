@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BuildIt.Config.Impl</id>
+    <version>$version$</version>
+    <title>BuildIt.Config.Impl</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library consists of required implementations for BuildIt.Config libraries</description>    
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="BuildIt.Config.Core" version="1.0.0" />
+      <dependency id="Acr.UserDialogs" version="6.2.3" />
+      <dependency id="PCLStorage" version="1.0.2" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />    
+    
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.dll" target="lib\monoandroid" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.pdb" target="lib\monoandroid" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.xml" target="lib\monoandroid" />
+    <file src="BuildIt.Config.Impl.Droid\bin\Release\BuildIt.Config.Impl.Droid.dll" target="lib\monoandroid" />
+    <file src="BuildIt.Config.Impl.Droid\bin\Release\BuildIt.Config.Impl.Droid.pdb" target="lib\monoandroid" />
+    <file src="BuildIt.Config.Impl.Droid\bin\Release\BuildIt.Config.Impl.Droid.xml" target="lib\monoandroid" />
+    
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.dll" target="lib\xamarinios" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.pdb" target="lib\xamarinios" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.xml" target="lib\xamarinios" />
+    <file src="BuildIt.Config.Impl.iOS\bin\Release\BuildIt.Config.Impl.iOS.dll" target="lib\xamarinios" />
+    <file src="BuildIt.Config.Impl.iOS\bin\Release\BuildIt.Config.Impl.iOS.pdb" target="lib\xamarinios" />
+    <file src="BuildIt.Config.Impl.iOS\bin\Release\BuildIt.Config.Impl.iOS.xml" target="lib\xamarinios" />
+    
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.dll" target="lib\uap" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.pdb" target="lib\uap" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.xml" target="lib\uap" />
+    <file src="BuildIt.Config.Impl.Win\bin\Release\BuildIt.Config.Impl.Win.dll" target="lib\uap" />
+    <file src="BuildIt.Config.Impl.Win\bin\Release\BuildIt.Config.Impl.Win.pdb" target="lib\uap" />
+    <file src="BuildIt.Config.Impl.Win\bin\Release\BuildIt.Config.Impl.Win.xml" target="lib\uap" />
+  </files>
+</package>

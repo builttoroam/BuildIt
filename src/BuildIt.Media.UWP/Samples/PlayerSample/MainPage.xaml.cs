@@ -174,153 +174,153 @@ namespace PlayerSample
         }
     }
 
-    public class CortanaMediaElementControls : Behavior<MediaElement>
-    {
-        protected double forwordTime = 10;
-        protected double backwordTime = -10;
-        protected double volumeUp = 0.1;
-        protected double volumeDown = -0.1;
+//    public class CortanaMediaElementControls : Behavior<MediaElement>
+//    {
+//        protected double forwordTime = 10;
+//        protected double backwordTime = -10;
+//        protected double volumeUp = 0.1;
+//        protected double volumeDown = -0.1;
 
-        protected override void OnAttached()
-        {
-            base.OnAttached();
+//        protected override void OnAttached()
+//        {
+//            base.OnAttached();
 
-            PlayerControls.Pause += MyMediaElement_Pause;
-            PlayerControls.Play += MyMediaElement_Play;
-            PlayerControls.Forward += MyMediaElement_Forward;
-            PlayerControls.Backward += MyMediaElement_Backward;
-            PlayerControls.VolumeUp += MyMediaElement_VolumeUp;
-            PlayerControls.VolumeDown += MyMediaElement_VolumeDown;
-            PlayerControls.Mute += MyMediaElement_Mute;
-            PlayerControls.Unmute += MyMediaElement_Unmute;
-            PlayerControls.Help += MyMediaElement_Help;
-        }
-
-
-        protected override void OnDetaching()
-        {
-
-            PlayerControls.Pause -= MyMediaElement_Pause;
-            PlayerControls.Play -= MyMediaElement_Pause;
-            PlayerControls.Forward -= MyMediaElement_Forward;
-            PlayerControls.Backward -= MyMediaElement_Backward;
-            PlayerControls.VolumeUp -= MyMediaElement_VolumeUp;
-            PlayerControls.VolumeDown -= MyMediaElement_VolumeDown;
-            PlayerControls.Mute -= MyMediaElement_Mute;
-            PlayerControls.Unmute -= MyMediaElement_Unmute;
-            PlayerControls.Help -= MyMediaElement_Help;
-
-            base.OnDetaching();
-        }
-
-        private MediaElement MediaElement => AssociatedObject;
+//            PlayerControls.Pause += MyMediaElement_Pause;
+//            PlayerControls.Play += MyMediaElement_Play;
+//            PlayerControls.Forward += MyMediaElement_Forward;
+//            PlayerControls.Backward += MyMediaElement_Backward;
+//            PlayerControls.VolumeUp += MyMediaElement_VolumeUp;
+//            PlayerControls.VolumeDown += MyMediaElement_VolumeDown;
+//            PlayerControls.Mute += MyMediaElement_Mute;
+//            PlayerControls.Unmute += MyMediaElement_Unmute;
+//            PlayerControls.Help += MyMediaElement_Help;
+//        }
 
 
-        private async void MyMediaElement_Pause(object sender, EventArgs e)
-        {
-            await OnMediaElementPause();
-        }
+//        protected override void OnDetaching()
+//        {
 
-#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
-        protected virtual async Task OnMediaElementPause()
-#pragma warning restore CS1998 
+//            PlayerControls.Pause -= MyMediaElement_Pause;
+//            PlayerControls.Play -= MyMediaElement_Pause;
+//            PlayerControls.Forward -= MyMediaElement_Forward;
+//            PlayerControls.Backward -= MyMediaElement_Backward;
+//            PlayerControls.VolumeUp -= MyMediaElement_VolumeUp;
+//            PlayerControls.VolumeDown -= MyMediaElement_VolumeDown;
+//            PlayerControls.Mute -= MyMediaElement_Mute;
+//            PlayerControls.Unmute -= MyMediaElement_Unmute;
+//            PlayerControls.Help -= MyMediaElement_Help;
 
-        {
-            MediaElement.Pause();
-        }
+//            base.OnDetaching();
+//        }
 
-        private async void MyMediaElement_Play(object sender, EventArgs e)
-        {
-            await OnMediaElementPlay();
-        }
+//        private MediaElement MediaElement => AssociatedObject;
 
-#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
-        protected virtual async Task OnMediaElementPlay()
-#pragma warning restore CS1998 
 
-        {
-            MediaElement.Play();
-        }
+//        private async void MyMediaElement_Pause(object sender, EventArgs e)
+//        {
+//            await OnMediaElementPause();
+//        }
 
-        private async void MyMediaElement_Forward(object sender, EventArgs e)
-        {
-            await OnMediaElementForward();
-        }
+//#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
+//        protected virtual async Task OnMediaElementPause()
+//#pragma warning restore CS1998 
 
-        protected virtual Task OnMediaElementForward()
-        {
-            //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(forwordTime)));
-            MediaElement.Position += TimeSpan.FromSeconds(forwordTime);
-            return Task.FromResult(true);
-        }
+//        {
+//            MediaElement.Pause();
+//        }
 
-        private async void MyMediaElement_Backward(object sender, EventArgs e)
-        {
-            await OnMediaElementBackward();
-        }
+//        private async void MyMediaElement_Play(object sender, EventArgs e)
+//        {
+//            await OnMediaElementPlay();
+//        }
 
-        protected virtual Task OnMediaElementBackward()
-        {
-            //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(backwordTime)));
-            MediaElement.Position = TimeSpan.FromSeconds(backwordTime);
-            return Task.FromResult(true);
-        }
+//#pragma warning disable CS1998 // This is async because it may be overrridden and want to allow for async methods
+//        protected virtual async Task OnMediaElementPlay()
+//#pragma warning restore CS1998 
 
-        private async void MyMediaElement_VolumeUp(object sender, EventArgs e)
-        {
-            await OnMediaElementVolumeUp();
-        }
+//        {
+//            MediaElement.Play();
+//        }
 
-        protected virtual Task OnMediaElementVolumeUp()
-        {
-            if (volumeUp == 0) return Task.FromResult(true);
-            MediaElement.Volume += volumeUp;
-            return Task.FromResult(true);
-        }
+//        private async void MyMediaElement_Forward(object sender, EventArgs e)
+//        {
+//            await OnMediaElementForward();
+//        }
 
-        private async void MyMediaElement_VolumeDown(object sender, EventArgs e)
-        {
-            await OnMediaElementVolumeDown();
-        }
+//        protected virtual Task OnMediaElementForward()
+//        {
+//            //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(forwordTime)));
+//            MediaElement.Position += TimeSpan.FromSeconds(forwordTime);
+//            return Task.FromResult(true);
+//        }
 
-        protected virtual Task OnMediaElementVolumeDown()
-        {
-            if (volumeDown == 0) return Task.FromResult(true);
-            MediaElement.Volume += volumeDown;
-            return Task.FromResult(true);
-        }
-        private async void MyMediaElement_Mute(object sender, EventArgs e)
-        {
-            await OnMediaElementMute();
-        }
+//        private async void MyMediaElement_Backward(object sender, EventArgs e)
+//        {
+//            await OnMediaElementBackward();
+//        }
 
-        protected virtual Task OnMediaElementMute()
-        {
-            MediaElement.IsMuted = true;
-            return Task.FromResult(true);
-        }
+//        protected virtual Task OnMediaElementBackward()
+//        {
+//            //await Player.SeekAsync(Player.Position.Add(TimeSpan.FromSeconds(backwordTime)));
+//            MediaElement.Position = TimeSpan.FromSeconds(backwordTime);
+//            return Task.FromResult(true);
+//        }
 
-        private async void MyMediaElement_Unmute(object sender, EventArgs e)
-        {
-            await OnMediaElementMute();
-        }
+//        private async void MyMediaElement_VolumeUp(object sender, EventArgs e)
+//        {
+//            await OnMediaElementVolumeUp();
+//        }
 
-        protected virtual Task OnMediaElementUnmute()
-        {
-            MediaElement.IsMuted = false;
-            return Task.FromResult(true);
-        }
+//        protected virtual Task OnMediaElementVolumeUp()
+//        {
+//            if (volumeUp == 0) return Task.FromResult(true);
+//            MediaElement.Volume += volumeUp;
+//            return Task.FromResult(true);
+//        }
 
-        private async void MyMediaElement_Help(object sender, EventArgs e)
-        {
-            await OnMediaElementMute();
-        }
+//        private async void MyMediaElement_VolumeDown(object sender, EventArgs e)
+//        {
+//            await OnMediaElementVolumeDown();
+//        }
 
-        protected virtual Task OnMediaElementHelp()
-        {
-            return Task.FromResult(true);
-        }
-    }
+//        protected virtual Task OnMediaElementVolumeDown()
+//        {
+//            if (volumeDown == 0) return Task.FromResult(true);
+//            MediaElement.Volume += volumeDown;
+//            return Task.FromResult(true);
+//        }
+//        private async void MyMediaElement_Mute(object sender, EventArgs e)
+//        {
+//            await OnMediaElementMute();
+//        }
+
+//        protected virtual Task OnMediaElementMute()
+//        {
+//            MediaElement.IsMuted = true;
+//            return Task.FromResult(true);
+//        }
+
+//        private async void MyMediaElement_Unmute(object sender, EventArgs e)
+//        {
+//            await OnMediaElementMute();
+//        }
+
+//        protected virtual Task OnMediaElementUnmute()
+//        {
+//            MediaElement.IsMuted = false;
+//            return Task.FromResult(true);
+//        }
+
+//        private async void MyMediaElement_Help(object sender, EventArgs e)
+//        {
+//            await OnMediaElementMute();
+//        }
+
+//        protected virtual Task OnMediaElementHelp()
+//        {
+//            return Task.FromResult(true);
+//        }
+//    }
 
 
     #region For playerFramework
