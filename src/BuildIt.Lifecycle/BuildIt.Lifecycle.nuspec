@@ -14,14 +14,14 @@
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework="netstandard1.0">
-        <dependency id="BuildIt.General" version="0.1.4" />
-        <dependency id="BuildIt.States" version="0.1.4" />
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+        <dependency id="BuildIt.States" version="0.1.5.5-beta" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
       <group targetFramework="uap">
-        <dependency id="BuildIt.General" version="0.1.4" />
-        <dependency id="BuildIt.States" version="0.1.4" />
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+        <dependency id="BuildIt.States" version="0.1.5.5-beta" />
         <dependency id="Microsoft.Bcl" version="1.1.10" />
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
@@ -29,7 +29,7 @@
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
       <group targetFramework="win81">
-        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
         <dependency id="Microsoft.Bcl" version="1.1.10" />
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
@@ -38,7 +38,7 @@
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
       <group targetFramework="wp81">
-        <dependency id="BuildIt.General" version="0.1.4" />
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
         <dependency id="Microsoft.NETCore.Platforms" version ="1.0.1" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
@@ -50,7 +50,6 @@
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.dll" target="lib\netstandard1.0" />
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.pdb" target="lib\netstandard1.0" />
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.xml" target="lib\netstandard1.0" />
-
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
