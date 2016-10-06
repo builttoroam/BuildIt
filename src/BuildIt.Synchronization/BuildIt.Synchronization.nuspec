@@ -12,12 +12,15 @@
     <description>This library contains a number of helper methods and functions that make building applications on a variety of platforms easier</description>
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
-    <dependencies>
-      <group targetFramework="uap10">
+    <dependencies>      
         <dependency id="BuildIt.General" version="0.1.4" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Newtonsoft.Json" version="8.0.3"/>
-      </group>
     </dependencies>
   </metadata>
+  <files>
+    <file src="BuildIt.Synchronization\bin\Release\BuildIt.Synchronization.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.Synchronization\bin\Release\BuildIt.Synchronization.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.Synchronization\bin\Release\BuildIt.Synchronization.xml" target="lib\netstandard1.0" />
+  </files>
 </package>
