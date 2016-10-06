@@ -91,6 +91,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UIInterfaceInterfaceOrientationExtensions.cs" />
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
@@ -111,6 +112,10 @@
     <ProjectReference Include="..\BuildIt.AR\BuildIt.AR.csproj">
       <Project>{5eebff53-3f5c-468f-b369-2e6c9cfb352c}</Project>
       <Name>BuildIt.AR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuildItArSample.Core\BuildItArSample.Core.csproj">
+      <Project>{67a43cc1-0590-40c7-8860-2767218ff5cf}</Project>
+      <Name>BuildItArSample.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
