@@ -16,22 +16,13 @@ namespace BuildItArSample.iOS
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView CameraFeedView { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView MarkerView { get; set; }
+        UIKit.UIView CameraView { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
-            if (CameraFeedView != null) {
-                CameraFeedView.Dispose ();
-                CameraFeedView = null;
-            }
-
-            if (MarkerView != null) {
-                MarkerView.Dispose ();
-                MarkerView = null;
+            if (CameraView != null) {
+                CameraView.Dispose ();
+                CameraView = null;
             }
         }
     }
