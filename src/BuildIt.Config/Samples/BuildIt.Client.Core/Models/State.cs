@@ -1,4 +1,4 @@
-﻿namespace Client.Core.Models
+﻿namespace BuildIt.Client.Core.Models
 {
     public class State
     {

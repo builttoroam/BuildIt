@@ -1,12 +1,12 @@
 using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Impl.iOS;
-using Client.Core;
+using BuildIt.Client.Core;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 
-namespace Client.iOS.UI.Test
+namespace BuildIt.Client.iOS.UI.Test
 {
     public class Setup : MvxIosSetup
     {

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using Acr.UserDialogs;
+using BuildIt.Client.Core.ViewModels;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services;
 using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Core.Utilities;
 using BuildIt.Config.Impl.Common;
-using Client.Core.Services;
-using Client.Core.ViewModels;
+using BuildIt.Client.Core.Services;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 
-namespace Client.Core
+namespace BuildIt.Client.Core
 {
     public class App : MvxApplication
     {

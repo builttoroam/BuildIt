@@ -6,7 +6,7 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.WindowsUWP.Platform;
 
-namespace Client.Universal
+namespace BuildIt.Client.Universal
 {
     public class Setup : MvxWindowsSetup
     {
@@ -23,7 +23,7 @@ namespace Client.Universal
 
         protected override IMvxApplication CreateApp()
         {
-            return new Client.Core.App();
+            return new BuildIt.Client.Core.App();
         }
     }
 }

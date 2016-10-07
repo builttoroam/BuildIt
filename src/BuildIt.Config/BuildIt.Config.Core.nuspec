@@ -9,7 +9,7 @@
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
-    <description>This library contains a number of helper methods and functions that work with app configuration easier</description>
+    <description>This library contains a number of helper methods and functions that makes work with app configuration easier</description>
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>

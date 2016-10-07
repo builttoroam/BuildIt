@@ -9,7 +9,7 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-namespace Client.iOS.UI.Test.View
+namespace BuildIt.Client.iOS.UI.Test.View
 {
     [Register ("ConfigViewController")]
     partial class ConfigViewController

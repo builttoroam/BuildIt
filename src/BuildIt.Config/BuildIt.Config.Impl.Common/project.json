@@ -1,12 +1,16 @@
 {
   "supports": {},
-  "dependencies": {
-    "Acr.UserDialogs": "6.2.3",
-    "PCLStorage": "1.0.2",
-    "Xam.Plugin.Connectivity": "2.2.12",
-    "NETStandard.Library": "1.6.0",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
-  },
+    "dependencies": {
+        "BuildIt.General": {
+            "target": "package",
+            "version": "0.1.5.6-beta"
+        },
+        "Acr.UserDialogs": "6.2.3",
+        "PCLStorage": "1.0.2",
+        "Xam.Plugin.Connectivity": "2.2.12",
+        "NETStandard.Library": "1.6.0",
+        "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
+    },
   "frameworks": {
     "netstandard1.3": {
       "imports": [
