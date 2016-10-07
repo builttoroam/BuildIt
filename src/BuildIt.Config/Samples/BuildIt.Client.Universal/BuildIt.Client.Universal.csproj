@@ -7,8 +7,8 @@
     <ProjectGuid>{268EFE64-826C-4AF6-8E90-06CB974E7C2A}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Client.Universal</RootNamespace>
-    <AssemblyName>Client.Universal</AssemblyName>
+    <RootNamespace>BuildIt.Client.Universal</RootNamespace>
+    <AssemblyName>BuildIt.Client.Universal</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -136,9 +136,9 @@
       <Project>{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}</Project>
       <Name>BuildIt.Config.Impl.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Client.Core\Client.Core.csproj">
+    <ProjectReference Include="..\BuildIt.Client.Core\BuildIt.Client.Core.csproj">
       <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>
-      <Name>Client.Core</Name>
+      <Name>BuildIt.Client.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Config.Impl.Win\BuildIt.Config.Impl.Win.csproj">
       <Project>{29ea096d-df83-484e-99a3-8c74ba10e65c}</Project>

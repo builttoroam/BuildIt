@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 
-namespace Client.Universal
+namespace BuildIt.Client.Universal
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

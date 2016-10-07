@@ -1,8 +1,8 @@
 ﻿using Windows.UI.Xaml.Controls;
-using Client.Core.ViewModels;
+using BuildIt.Client.Core.ViewModels;
 using MvvmCross.WindowsUWP.Views;
 
-namespace Client.Universal.Views
+namespace BuildIt.Client.Universal.Views
 {
     public sealed partial class MainView : MvxWindowsPage
     {

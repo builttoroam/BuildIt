@@ -1,10 +1,10 @@
 using System;
-using Client.Core.ViewModels;
+using BuildIt.Client.Core.ViewModels;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using UIKit;
 
-namespace Client.iOS.UI.Test.View
+namespace BuildIt.Client.iOS.UI.Test.View
 {
     public partial class ConfigViewController : MvxViewController<MainViewModel>
     {

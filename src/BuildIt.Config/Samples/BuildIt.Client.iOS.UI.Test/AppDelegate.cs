@@ -5,7 +5,7 @@ using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 using UIKit;
 
-namespace Client.iOS.UI.Test
+namespace BuildIt.Client.iOS.UI.Test
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
     // User Interface of the application, as well as listening (and optionally responding) to 
