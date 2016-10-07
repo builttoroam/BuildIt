@@ -103,12 +103,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj">
-      <Project>{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}</Project>
-      <Name>BuildIt.Config.Impl.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
