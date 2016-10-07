@@ -43,5 +43,13 @@
 	</array>
 	<key>CFBundleName</key>
 	<string>BuildItArSample.iOS</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+  <key>NSCameraUsageDescription</key>
+  <string>Sample needs access to the camera display the camera feed</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Needs to access location to show points of interest</string>
 </dict>
 </plist>

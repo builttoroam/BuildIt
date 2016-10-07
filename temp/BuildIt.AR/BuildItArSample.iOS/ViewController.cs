@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using AVFoundation;
 using BuildIt.AR;
 using BuildItArSample.Core;
@@ -37,33 +38,70 @@ namespace BuildItArSample.iOS
         {
         }
 
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidChangeStatusBarOrientationNotification, RotationChanged);
+        }
 
+        public override void ViewDidUnload()
+        {
+            base.ViewDidUnload();
 
+            NSNotificationCenter.DefaultCenter.RemoveObserver(UIApplication.DidChangeStatusBarOrientationNotification);
+        }
+
+        private void RotationChanged(NSNotification notification)
+        {
+            //Reset the world
+            var currentOrientation = UIApplication.SharedApplication.StatusBarOrientation;
+
+            //if (motion != null)
+            //{
+            //	motion.StopDeviceMotionUpdates();
+
+            //	ViewModel.InitializeWorld(WorldConfiguration.iOS, currentOrientation);
+            //	ViewModel.UpdateWorld(View.Bounds.Width, View.Bounds.Height);
+
+            //	motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
+            //}
+
+            world = new ScreenWorld(WorldConfiguration.iOS, currentOrientation.ToRotationEnum());
+            world.Initialize(View.Bounds.Width, View.Bounds.Height);
+
+            //Re-size camera feed based on orientation
+            cameraBounds = CameraView.Bounds;
+            if (previewLayer != null)
+            {
+                previewLayer.Orientation = configDicByRotationChanged[currentOrientation];
+                previewLayer.Frame = cameraBounds;
+            }
+        }
         public override void ViewDidAppear(bool animated)
         {
-            base.ViewDidAppear(animated);
-            InitCamera();
-            InitializeWorld();
-            motion = new CMMotionManager();
-            motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
-            
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+            try
             {
-                locationManager.RequestAlwaysAuthorization(); // works in background
-                                                     //locMgr.RequestWhenInUseAuthorization (); // only in foreground
-            }
+                base.ViewDidAppear(animated);
+                cameraBounds = CameraView.Bounds;
+                InitCamera();
+                /*InitializeWorld();
+                motion = new CMMotionManager();
+                motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
 
-            if (UIDevice.CurrentDevice.CheckSystemVersion(9, 0))
+
+                locationManager.LocationsUpdated += LocationManager_LocationsUpdated;
+                locationManager.StartUpdatingLocation();
+
+
+                PopulateWorld();
+                world.UpdateRangeOfWorld(50);*/
+            }
+            catch (Exception ex)
             {
-                locationManager.AllowsBackgroundLocationUpdates = true;
+                
             }
-            locationManager.LocationsUpdated += LocationManager_LocationsUpdated;
-            locationManager.StartUpdatingLocation();
-
-
-            PopulateWorld();
-            world.UpdateRangeOfWorld(50);
         }
+
 
         private void PopulateWorld()
         {
@@ -144,8 +182,7 @@ namespace BuildItArSample.iOS
                 if (offset == null || element.Element == null) continue;
                 var offsetScale = world.CalculateScale(element.Element.Distance);
 
-                var tf =
-                    CGAffineTransform.MakeTranslation((float)offset.TranslateX, 0);
+                var tf = CGAffineTransform.MakeTranslation((float)offset.TranslateX, 0);
                 if (offsetScale > 0)
                 {
                     tf.Scale((float)offsetScale, (float)offsetScale);
@@ -173,16 +210,16 @@ namespace BuildItArSample.iOS
 
             previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];//AVCaptureVideoOrientation.LandscapeRight;
             previewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
-            CameraFeedView.Layer.AddSublayer(previewLayer);
+            CameraView.Layer.AddSublayer(previewLayer);
             session.StartRunning();
         }
 
         public override void ViewDidDisappear(bool animated)
         {
             session?.StopRunning();
-            motion?.StopDeviceMotionUpdates();
+            /*motion?.StopDeviceMotionUpdates();
             locationManager.LocationsUpdated -= LocationManager_LocationsUpdated;
-            locationManager.StopUpdatingLocation();
+            locationManager.StopUpdatingLocation();*/
             base.ViewDidDisappear(animated);
         }
     }
