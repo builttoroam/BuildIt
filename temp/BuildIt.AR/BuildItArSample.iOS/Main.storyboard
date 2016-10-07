@@ -17,30 +17,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="3" translatesAutoresizingMaskIntoConstraints="NO">
+                            <view contentMode="scaleToFill" id="21" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <subviews/>
                             </view>
-                            <view contentMode="scaleToFill" id="13" translatesAutoresizingMaskIntoConstraints="NO">
+                            <view contentMode="scaleToFill" id="26" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint id="4" firstItem="3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom"/>
-                            <constraint id="5" firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="3" secondAttribute="trailing"/>
-                            <constraint id="6" firstItem="wfy-db-euE" firstAttribute="top" secondItem="3" secondAttribute="bottom"/>
-                            <constraint id="7" firstItem="3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading"/>
-                            <constraint id="14" firstItem="13" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom"/>
-                            <constraint id="15" firstItem="13" firstAttribute="leading" secondItem="3" secondAttribute="leading"/>
-                            <constraint id="16" firstItem="wfy-db-euE" firstAttribute="top" secondItem="13" secondAttribute="bottom"/>
-                            <constraint id="17" firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="13" secondAttribute="trailing"/>
+                            <constraint id="22" firstItem="21" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom"/>
+                            <constraint id="23" firstItem="21" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading"/>
+                            <constraint id="24" firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="21" secondAttribute="trailing"/>
+                            <constraint id="25" firstItem="wfy-db-euE" firstAttribute="top" secondItem="21" secondAttribute="bottom"/>
+                            <constraint id="27" firstItem="26" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom"/>
+                            <constraint id="29" firstItem="26" firstAttribute="leading" secondItem="21" secondAttribute="leading"/>
+                            <constraint id="30" firstItem="wfy-db-euE" firstAttribute="top" secondItem="26" secondAttribute="bottom"/>
+                            <constraint id="31" firstItem="21" firstAttribute="trailing" secondItem="26" secondAttribute="trailing"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property=" CameraView" destination="3" id="name-outlet-3"/>
-                        <outlet property="MarkerView" destination="13" id="name-outlet-13"/>
+                        <outlet property="CameraFeedView" destination="21" id="name-outlet-21"/>
+                        <outlet property="MarkerView" destination="26" id="name-outlet-26"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

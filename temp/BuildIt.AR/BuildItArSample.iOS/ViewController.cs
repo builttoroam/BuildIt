@@ -173,7 +173,7 @@ namespace BuildItArSample.iOS
 
             previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];//AVCaptureVideoOrientation.LandscapeRight;
             previewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
-            CameraView.Layer.AddSublayer(previewLayer);
+            CameraFeedView.Layer.AddSublayer(previewLayer);
             session.StartRunning();
         }
 
