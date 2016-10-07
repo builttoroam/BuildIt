@@ -8,8 +8,7 @@
         "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
         "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
         "Microsoft.Extensions.Logging.Console": "1.0.0",        
-        "Microsoft.AspNetCore.Mvc": "1.0.0",
-        "BuildIt.Config.Core.Api": "1.0.0-*",
+        "Microsoft.AspNetCore.Mvc": "1.0.0",        
         "Newtonsoft.Json": "9.0.1"
     },
 
@@ -21,6 +20,9 @@
         "netcoreapp1.0": {
             "dependencies": {
                 "BuildIt.Config.Core": {
+                    "target": "project"
+                },
+                "BuildIt.Config.Core.Api": {
                     "target": "project"
                 }
             },
