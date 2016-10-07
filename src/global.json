@@ -1,5 +1,12 @@
 {
-    "projects": [        
-        "BuildIt.Config"
+    "projects": [
+        "BuildIt.Config",
+        "BuildIt.Autofac",
+        "BuildIt.Data.Sqlite",
+        "BuildIt.General",
+        "BuildIt.Lifecycle",
+        "BuildIt.Media.UWP",
+        "BuildIt.MvvmCross",
+        "BuildIt.Synchronization"
     ]
 }
