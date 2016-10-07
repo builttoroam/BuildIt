@@ -6,10 +6,10 @@ using BuildIt.Config.Core.Extensions;
 using BuildIt.Config.Core.Models;
 using BuildIt.Config.Core.Services;
 using BuildIt.Config.Core.Services.Interfaces;
-using Client.Core.Models;
+using BuildIt.Client.Core.Models;
 using MvvmCross.Core.ViewModels;
 
-namespace Client.Core.ViewModels
+namespace BuildIt.Client.Core.ViewModels
 {
     public class MainViewModel : MvxViewModel
     {

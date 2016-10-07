@@ -1,6 +1,6 @@
 ﻿using BuildIt.Config.Core.Services.Interfaces;
 
-namespace Client.Core.Services
+namespace BuildIt.Client.Core.Services
 {
     public class AppConfigurationServiceEndpoint : IAppConfigurationEndpointService
     {

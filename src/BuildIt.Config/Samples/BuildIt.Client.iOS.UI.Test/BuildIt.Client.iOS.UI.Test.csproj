@@ -6,9 +6,9 @@
     <ProjectGuid>{DAAF66FA-C832-4898-ADD3-B80A7BF7F101}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Client.iOS.UI.Test</RootNamespace>
+    <RootNamespace>BuildIt.Client.iOS.UI.Test</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Client.iOS.UI.Test</AssemblyName>
+    <AssemblyName>BuildIt.Client.iOS.UI.Test</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -179,9 +179,9 @@
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
-    <ProjectReference Include="..\Client.Core\Client.Core.csproj">
+    <ProjectReference Include="..\BuildIt.Client.Core\BuildIt.Client.Core.csproj">
       <Project>{600cabec-1acc-4d2b-b2fc-c6f4b3f5796c}</Project>
-      <Name>Client.Core</Name>
+      <Name>BuildIt.Client.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
