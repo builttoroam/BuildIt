@@ -221,6 +221,8 @@ namespace BuildIt.AR
 
     public interface ILocationBasedMarker
     {
+        int Id { get; set; }
+
         Location GeoLocation { get; set; }
 
         double Distance { get; set; }

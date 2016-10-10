@@ -17,16 +17,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="54" translatesAutoresizingMaskIntoConstraints="NO">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" colorSpace="calibratedWhite" white="0" alpha="0"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                         <constraints>
-                            <constraint id="55" firstItem="54" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom"/>
                             <constraint id="56" firstItem="54" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading"/>
                             <constraint id="57" firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="54" secondAttribute="trailing"/>
-                            <constraint id="58" firstItem="wfy-db-euE" firstAttribute="top" secondItem="54" secondAttribute="bottom"/>
+                            <constraint id="62" firstItem="54" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top"/>
+                            <constraint id="63" firstItem="54" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom"/>
                         </constraints>
                     </view>
                     <connections>
