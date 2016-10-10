@@ -42,14 +42,28 @@
       <HintPath>..\..\packages\AndHUD.1.2.0\lib\MonoAndroid\AndHUD.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BuildIt.Config.Core, Version=0.1.5.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.Config.Core.0.1.0-beta\lib\portable-net45+netcore45+wpa81+wp8\BuildIt.Config.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BuildIt.General, Version=0.1.5.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.General.0.1.5.6-beta\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Splat.1.6.2\lib\monoandroid\Splat.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Android.Support.Animated.Vector.Drawable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -88,16 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Config.Core\BuildIt.Config.Core.csproj">
-      <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
-      <Name>BuildIt.Config.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj">
-      <Project>{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}</Project>
-      <Name>BuildIt.Config.Impl.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

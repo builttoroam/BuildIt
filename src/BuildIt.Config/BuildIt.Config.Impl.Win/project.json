@@ -1,5 +1,7 @@
 ﻿{
   "dependencies": {
+    "BuildIt.Config.Core": "0.1.0-beta",
+    "BuildIt.General": "0.1.5.6-beta",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
   },
   "frameworks": {
