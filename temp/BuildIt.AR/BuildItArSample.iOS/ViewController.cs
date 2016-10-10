@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AVFoundation;
@@ -31,6 +33,27 @@ namespace BuildItArSample.iOS
         private ScreenWorld world;
         private int updating;
         private IDictionary<UIView, IWorldElement<POI>> events = new Dictionary<UIView, IWorldElement<POI>>();
+        List<POI> pois = new List<POI>
+            {
+                new POI {GeoLocation = new Location {Latitude = -33.832855, Longitude = 151.211989}, Id = 1}, new POI {GeoLocation = new Location {Latitude = -33.848870, Longitude = 151.212342}, Id = 2}, new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.861499,
+                        Longitude = 150.858273
+                    },
+                    Id = 3
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.863479,
+                        Longitude = 150.923031
+                    },
+                    Id = 4
+                }
+            };
 
         private CLLocationManager locationManager = new CLLocationManager { PausesLocationUpdatesAutomatically = false };
 
@@ -66,16 +89,13 @@ namespace BuildItArSample.iOS
             //	motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
             //}
 
-            world = new ScreenWorld(WorldConfiguration.iOS, currentOrientation.ToRotationEnum());
-            world.Initialize(View.Bounds.Width, View.Bounds.Height);
-
+            InitializeWorld();
+            PopulateWorld();
             //Re-size camera feed based on orientation
             cameraBounds = CameraView.Bounds;
-            if (previewLayer != null)
-            {
-                previewLayer.Orientation = configDicByRotationChanged[currentOrientation];
-                previewLayer.Frame = cameraBounds;
-            }
+            if (previewLayer == null) return;
+            previewLayer.Orientation = configDicByRotationChanged[currentOrientation];
+            previewLayer.Frame = cameraBounds;
         }
         public override void ViewDidAppear(bool animated)
         {
@@ -84,7 +104,11 @@ namespace BuildItArSample.iOS
                 base.ViewDidAppear(animated);
                 cameraBounds = CameraView.Bounds;
                 InitCamera();
-                /*InitializeWorld();
+                if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+                {
+                    locationManager.RequestWhenInUseAuthorization();
+                }
+
                 motion = new CMMotionManager();
                 motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
 
@@ -92,28 +116,87 @@ namespace BuildItArSample.iOS
                 locationManager.LocationsUpdated += LocationManager_LocationsUpdated;
                 locationManager.StartUpdatingLocation();
 
-
+                InitializeWorld();
                 PopulateWorld();
-                world.UpdateRangeOfWorld(50);*/
+                world.UpdateRangeOfWorld(50);
             }
             catch (Exception ex)
             {
-                
+                Debug.WriteLine(ex.Message);
             }
         }
 
 
         private void PopulateWorld()
         {
-            foreach (var evt in world.ElementsInWorld<POI>())
+            try
             {
-                
+                foreach (var view in events.Keys)
+                {
+                    view.RemoveFromSuperview();
+                }
+                foreach (var evt in world.ElementsInWorld<POI>())
+                {
+                    if (evt?.Element == null) continue;
+
+                    var poiView = new UIView
+                    {
+                        Tag = evt.Element.Id,
+                        Bounds = new CGRect(0, 0, 50, 50),
+                        Center = new CGPoint(0, View.Bounds.Height/2)
+                    };
+
+                    var distanceLabel = new UILabel
+                    {
+                        Text = evt.Element.DistanceAway,
+                        TextColor = UIColor.White,
+                        BackgroundColor = UIColor.Black,
+                        TextAlignment = UITextAlignment.Center,
+                        Alpha = 0.8f
+                    };
+
+                    var frameWidth = distanceLabel.IntrinsicContentSize.Width;
+                    distanceLabel.Frame = new CGRect(0,0, frameWidth, 15);
+                    poiView.Bounds = new CGRect(0,0, frameWidth, 50);
+                    poiView.AddSubview(distanceLabel);
+                    CameraView.AddSubview(poiView);
+                    events[poiView] = evt;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
         }
 
         private void LocationManager_LocationsUpdated(object sender, CLLocationsUpdatedEventArgs e)
         {
-          
+            try
+            {
+                var position = e.Locations?.FirstOrDefault();
+                if (position == null)
+                {
+                    return;
+                }
+                var currentLocation = new Location {Latitude = position.Coordinate.Latitude, Longitude = position.Coordinate.Longitude};
+                world.UpdateCentre(currentLocation);
+                foreach (var view in events.Keys)
+                {
+                    var poi = events[view];
+                    poi.Element.Distance = currentLocation.DistanceInMetres(poi.Element.GeoLocation);
+                    var distanceLabel = view.Subviews?.FirstOrDefault(v => v is UILabel) as UILabel;
+                    if (distanceLabel == null) continue;
+                    var distance = events[view].Element.DistanceAway;
+                    distanceLabel.Text = distance;
+                    var frameWidth = distanceLabel.IntrinsicContentSize.Width;
+                    distanceLabel.Frame = new CGRect(0, 0, frameWidth, 15);
+                    view.Bounds = new CGRect(0, 0, frameWidth, 50);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void InitializeWorld()
@@ -121,24 +204,10 @@ namespace BuildItArSample.iOS
             var rotation = UIApplication.SharedApplication.StatusBarOrientation.ToRotationEnum();
             world = new ScreenWorld(WorldConfiguration.iOS, rotation);
             world.Initialize(View.Bounds.Width, View.Bounds.Height);
-            world.AddElementToWorld(new POI() {GeoLocation = new Location() {Latitude = -33.832855, Longitude = 151.211989}});
-            world.AddElementToWorld(new POI() {GeoLocation = new Location() {Latitude = -33.848870, Longitude = 151.212342}});
-            world.AddElementToWorld(new POI()
+            foreach (var poi in pois)
             {
-                GeoLocation = new Location()
-                {
-                    Latitude = -33.861499,
-                    Longitude = 150.858273
-                }
-            });
-            world.AddElementToWorld(new POI()
-            {
-                GeoLocation = new Location()
-                {
-                    Latitude = -33.863479,
-                    Longitude = 150.923031
-                }
-            });
+                world.AddElementToWorld(poi);
+            }
         }
 
         private void MotionHandler(CMDeviceMotion data, NSError error)
@@ -207,7 +276,6 @@ namespace BuildItArSample.iOS
             if (videoInput == null || !session.CanAddInput(videoInput)) return;
             session.AddInput(videoInput);
             previewLayer = new AVCaptureVideoPreviewLayer(session) {Frame = cameraBounds};
-
             previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];//AVCaptureVideoOrientation.LandscapeRight;
             previewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
             CameraView.Layer.AddSublayer(previewLayer);
@@ -217,9 +285,9 @@ namespace BuildItArSample.iOS
         public override void ViewDidDisappear(bool animated)
         {
             session?.StopRunning();
-            /*motion?.StopDeviceMotionUpdates();
+            motion?.StopDeviceMotionUpdates();
             locationManager.LocationsUpdated -= LocationManager_LocationsUpdated;
-            locationManager.StopUpdatingLocation();*/
+            locationManager.StopUpdatingLocation();
             base.ViewDidDisappear(animated);
         }
     }
