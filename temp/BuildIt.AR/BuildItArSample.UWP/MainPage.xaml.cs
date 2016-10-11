@@ -37,12 +37,14 @@ namespace BuildItArSample.UWP
         private int updating;
         List<POI> pois = new List<POI>
             {
-                new POI {GeoLocation = new Location {Latitude = -33.832855, Longitude = 151.211989}, Id = 1}, new POI {GeoLocation = new Location {Latitude = -33.848870, Longitude = 151.212342}, Id = 2}, new POI
+                new POI {GeoLocation = new Location {Latitude = -33.832855,
+                    Longitude = 151.211989}, Id = 1}, new POI {GeoLocation = new Location {Latitude = -33.839878,
+                    Longitude = 151.220633}, Id = 2}, new POI
                 {
                     GeoLocation = new Location
                     {
-                        Latitude = -33.861499,
-                        Longitude = 150.858273
+                        Latitude = -33.839309,
+                    Longitude = 151.195384
                     },
                     Id = 3
                 },
@@ -50,8 +52,8 @@ namespace BuildItArSample.UWP
                 {
                     GeoLocation = new Location
                     {
-                        Latitude = -33.863479,
-                        Longitude = 150.923031
+                        Latitude = -33.848870,
+                    Longitude = 151.212342
                     },
                     Id = 4
                 }
@@ -208,6 +210,7 @@ namespace BuildItArSample.UWP
             {
                 world.AddElementToWorld(poi);
             }
+            world.UpdateRangeOfWorld(50);
         }
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -243,6 +246,10 @@ namespace BuildItArSample.UWP
                 if (element == null) continue;
 
                 var offset = world.Offset(element, new Rectangle(0, 0, (int)fe.ActualWidth, (int)fe.ActualHeight), roll, pitch, yaw);
+                if (offset == null)
+                {
+                    continue;
+                }
                 if (offset.TranslateX < -ActualWidth)
                 {
                     offset.TranslateX = -ActualWidth;
@@ -264,6 +271,8 @@ namespace BuildItArSample.UWP
                 {
                     TranslateX = offset.TranslateX,
                     TranslateY = offset.TranslateY,
+                    ScaleY = scale,
+                    ScaleX = scale
                 };
             }
         }

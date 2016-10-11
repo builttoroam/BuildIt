@@ -32,6 +32,15 @@ namespace BuildIt.AR
 					{Rotation.Rotation90, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(180))},
 					{Rotation.Rotation270, Matrix.CreateRotationZ(MathHelper.ToRadians(-90))}
                 }
+            },
+            {
+                WorldConfiguration.WindowsMobile, new Dictionary<Rotation, Matrix>()
+                {
+                    {Rotation.Rotation0, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
+                    {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
+                    {Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
+                    {Rotation.Rotation270, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)}
+                }
             }
         };
 
