@@ -39,7 +39,7 @@ namespace BuildIt.AR
                     {Rotation.Rotation0, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
                     {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
                     {Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
-                    {Rotation.Rotation270, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)}
+                    {Rotation.Rotation270, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2)}
                 }
             }
         };

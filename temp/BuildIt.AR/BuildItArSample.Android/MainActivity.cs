@@ -210,6 +210,7 @@ namespace BuildItArSample.Android
                     rotation = Rotation.Rotation270;
                     break;
             }
+            Debug.WriteLine($"rotation {rotation}");
         }
 
 

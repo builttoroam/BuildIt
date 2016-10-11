@@ -38,15 +38,16 @@ namespace BuildItArSample.UWP
         List<POI> pois = new List<POI>
             {
                 new POI {GeoLocation = new Location {Latitude = -33.832855,
-                    Longitude = 151.211989}, Id = 1}, new POI {GeoLocation = new Location {Latitude = -33.839878,
-                    Longitude = 151.220633}, Id = 2}, new POI
+                    Longitude = 151.211989}, Id = 1, Name = "North"}, new POI {GeoLocation = new Location {Latitude = -33.839878,
+                    Longitude = 151.220633}, Id = 2, Name = "East"}, new POI
                 {
                     GeoLocation = new Location
                     {
                         Latitude = -33.839309,
                     Longitude = 151.195384
                     },
-                    Id = 3
+                    Id = 3,
+                    Name = "West"
                 },
                 new POI
                 {
@@ -55,6 +56,7 @@ namespace BuildItArSample.UWP
                         Latitude = -33.848870,
                     Longitude = 151.212342
                     },
+                    Name = "South",
                     Id = 4
                 }
             };
@@ -117,6 +119,7 @@ namespace BuildItArSample.UWP
         private static VideoRotation CalculateVideoRotation()
         {
             var orientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
+            Debug.WriteLine($"orientation {orientation}");
             var videoRotation = VideoRotation.None;
             switch (orientation)
             {
@@ -193,7 +196,7 @@ namespace BuildItArSample.UWP
             {
                 var tb = new TextBlock
                 {
-                    Text = evt.Element.DistanceAway,
+                    Text = evt.Element.Name,
                     DataContext = evt
                 };
                 markers[evt.Element] = tb;
@@ -204,7 +207,8 @@ namespace BuildItArSample.UWP
 
         private void InitializeWorld()
         {
-            world = new ScreenWorld(WorldConfiguration.WindowsMobile, Rotation.Rotation0);
+            var rotation = CalculateDisplayRotation();
+            world = new ScreenWorld(WorldConfiguration.WindowsMobile, rotation);
             world.Initialize(ActualWidth, ActualHeight);
             foreach (var poi in pois)
             {
@@ -212,6 +216,31 @@ namespace BuildItArSample.UWP
             }
             world.UpdateRangeOfWorld(50);
         }
+
+        private static Rotation CalculateDisplayRotation()
+        {
+            var orientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
+            var rotation = Rotation.Rotation0;
+            switch (orientation)
+            {
+                case DisplayOrientations.None:
+                    break;
+                case DisplayOrientations.Landscape:
+                    rotation = Rotation.Rotation90;
+                    break;
+                case DisplayOrientations.Portrait:
+                    break;
+                case DisplayOrientations.LandscapeFlipped:
+                    rotation = Rotation.Rotation270;
+                    break;
+                case DisplayOrientations.PortraitFlipped:
+                    rotation = Rotation.Rotation180;
+                    break;
+            }
+            Debug.WriteLine($"orientation {orientation}, rotation {rotation}");
+            return rotation;
+        }
+
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             world?.Initialize(ActualWidth, ActualHeight);
@@ -234,9 +263,9 @@ namespace BuildItArSample.UWP
                 return;
             }
 
-            var roll = reading.RollDegrees * Math.PI / 180.0;
-            var pitch = reading.PitchDegrees * Math.PI / 180.0;
-            var yaw = reading.YawDegrees * Math.PI / 180.0;
+            var roll = reading.RollDegrees*Math.PI/180.0;
+            var pitch = reading.PitchDegrees*Math.PI/180.0;
+            var yaw = reading.YawDegrees*Math.PI/180.0;
 
             foreach (var child in LayoutRoot.Children)
             {
@@ -245,7 +274,7 @@ namespace BuildItArSample.UWP
                 var element = fe.DataContext as IWorldElement<POI>;
                 if (element == null) continue;
 
-                var offset = world.Offset(element, new Rectangle(0, 0, (int)fe.ActualWidth, (int)fe.ActualHeight), roll, pitch, yaw);
+                var offset = world.Offset(element, new Rectangle(0, 0, (int) fe.ActualWidth, (int) fe.ActualHeight), roll, pitch, yaw);
                 if (offset == null)
                 {
                     continue;
@@ -254,25 +283,22 @@ namespace BuildItArSample.UWP
                 {
                     offset.TranslateX = -ActualWidth;
                 }
-                if (offset.TranslateX > ActualWidth * 2)
+                if (offset.TranslateX > ActualWidth*2)
                 {
-                    offset.TranslateX = ActualWidth * 2;
+                    offset.TranslateX = ActualWidth*2;
                 }
                 if (offset.TranslateY < -ActualHeight)
                 {
                     offset.TranslateY = -ActualHeight;
                 }
-                if (offset.TranslateY > ActualHeight * 2)
+                if (offset.TranslateY > ActualHeight*2)
                 {
-                    offset.TranslateY = ActualHeight * 2;
+                    offset.TranslateY = ActualHeight*2;
                 }
                 var scale = world.CalculateScale(element.Element.Distance);
                 fe.RenderTransform = new CompositeTransform
                 {
-                    TranslateX = offset.TranslateX,
-                    TranslateY = offset.TranslateY,
-                    ScaleY = scale,
-                    ScaleX = scale
+                    TranslateX = offset.TranslateX, TranslateY = offset.TranslateY, ScaleY = scale, ScaleX = scale
                 };
             }
         }
@@ -294,7 +320,7 @@ namespace BuildItArSample.UWP
                 if (markers.ContainsKey(poi.Element))
                 {
                     Debug.WriteLine($"distance away {poi.Element.DistanceAway}");
-                    markers[poi.Element].Text = poi.Element.DistanceAway;
+                    markers[poi.Element].Text = poi.Element.Name;
                 }
             }
         }
@@ -310,6 +336,8 @@ namespace BuildItArSample.UWP
             {
                 var videoRotation = CalculateVideoRotation();
                 mediaCapture?.SetPreviewRotation(videoRotation);
+                var displayRotation = CalculateDisplayRotation();
+                world?.UpdateWorldAdjustment(displayRotation);
             }
         }
 
