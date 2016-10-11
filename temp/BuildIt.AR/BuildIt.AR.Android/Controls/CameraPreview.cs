@@ -6,7 +6,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 
-namespace BuildItArSample.Android.Controls
+namespace BuildIt.AR.Android.Controls
 {
     [Preserve(AllMembers = true)]
     public class CameraPreview : ViewGroup, ISurfaceHolderCallback

@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Views;
 using BuildIt.AR;
+using BuildIt.AR.Android.Controls;
 using BuildIt.AR.Helpers;
 using BuildItArSample.Android.Controls;
 using Java.Lang;
@@ -56,6 +57,7 @@ namespace BuildItArSample.Android
             RequestWindowFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.Main);
             
+            // TODO: need to pass the relative layout to the helper method
             arMarkerLayout = FindViewById<RelativeLayout>(Resource.Id.arMarkerOverlay);
             CalculateRotation();
             InitializeWorld();
@@ -97,23 +99,45 @@ namespace BuildItArSample.Android
         {
             world = new ScreenWorld(WorldConfiguration.Android, rotation);
             world.Initialize(Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
-            world.AddElementToWorld(new POI() {GeoLocation = new Location() {Latitude = -33.832855, Longitude = 151.211989}});
-            world.AddElementToWorld(new POI() {GeoLocation = new Location() {Latitude = -33.848870, Longitude = 151.212342}});
-            world.AddElementToWorld(new POI()
+            world.AddElementToWorld(new POI
             {
-                GeoLocation = new Location()
+                GeoLocation = new Location
                 {
-                    Latitude = -33.861499,
-                    Longitude = 150.858273
-                }
+                    Latitude = -33.832855,
+                    Longitude = 151.211989
+                },
+                Id = 1,
+                Name = "North"
             });
-            world.AddElementToWorld(new POI()
+            world.AddElementToWorld(new POI
             {
-                GeoLocation = new Location()
+                GeoLocation = new Location
                 {
-                    Latitude = -33.863479,
-                    Longitude = 150.923031
-                }
+                    Latitude = -33.839878,
+                    Longitude = 151.220633
+                },
+                Id = 2,
+                Name = "East"
+            });
+            world.AddElementToWorld(new POI
+            {
+                GeoLocation = new Location
+                {
+                    Latitude = -33.839309,
+                    Longitude = 151.195384
+                },
+                Id = 3,
+                Name = "West"
+            });
+            world.AddElementToWorld(new POI
+            {
+                GeoLocation = new Location
+                {
+                    Latitude = -33.848870,
+                    Longitude = 151.212342
+                },
+                Name = "South",
+                Id = 4
             });
         }
 
@@ -321,6 +345,7 @@ namespace BuildItArSample.Android
                     {
                         
                         fe.DistanceText.Text = element.Element.Distance.ToString();
+                        fe.TitleText.Text = element.Element.Name;
                         fe.TranslationX = (float)offset.TranslateX;
                         fe.SetY(Resources.DisplayMetrics.HeightPixels / 2);
                         fe.Visibility = ViewStates.Visible;

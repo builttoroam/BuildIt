@@ -26,6 +26,8 @@ namespace BuildItArSample.Android
 		
 		public static void UpdateIdValues()
 		{
+			global::BuildIt.AR.Android.Resource.String.ApplicationName = global::BuildItArSample.Android.Resource.String.ApplicationName;
+			global::BuildIt.AR.Android.Resource.String.Hello = global::BuildItArSample.Android.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
