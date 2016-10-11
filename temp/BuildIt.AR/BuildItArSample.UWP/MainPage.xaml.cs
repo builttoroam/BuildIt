@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
@@ -11,6 +12,7 @@ using Windows.Graphics.Display;
 using Windows.Media.Capture;
 using Windows.System.Display;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -30,6 +32,7 @@ namespace BuildItArSample.UWP
         MediaCapture mediaCapture;
         bool isPreviewing;
         DisplayRequest displayRequest = new DisplayRequest();
+        private readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
         private Geolocator geolocator;
         private Inclinometer inclinometer;
         private ScreenWorld world;
@@ -67,6 +70,32 @@ namespace BuildItArSample.UWP
         public MainPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
+            Application.Current.Suspending += Application_Suspending;
+            Application.Current.Resuming += Application_Resuming;
+        }
+
+        private async void Application_Resuming(object sender, object e)
+        {
+            await ActivateSensors();
+        }
+
+        private async void Application_Suspending(object sender, SuspendingEventArgs e)
+        {
+            var deferral = e.SuspendingOperation.GetDeferral();
+            try
+            {
+                await DeactivateSensors();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                deferral.Complete();
+            }
+
         }
 
         private async Task StartPreviewAsync()
@@ -141,10 +170,8 @@ namespace BuildItArSample.UWP
         {
             if (mediaCapture != null)
             {
-                if (isPreviewing)
-                {
-                    await mediaCapture.StopPreviewAsync();
-                }
+                isPreviewing = false;
+                await mediaCapture.StopPreviewAsync();
 
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
@@ -163,31 +190,36 @@ namespace BuildItArSample.UWP
             try
             {
                 base.OnNavigatedTo(e);
-                SizeChanged += MainPage_SizeChanged;
-                DisplayInformation.GetForCurrentView().OrientationChanged += MainPage_OrientationChanged;
-                await StartPreviewAsync();
-                var accessStatus = await Geolocator.RequestAccessAsync();
-                geolocator = new Geolocator();
-                var position = await geolocator.GetGeopositionAsync();
-                UpdateLocation(position);
-                geolocator.PositionChanged += Geolocator_PositionChanged;
-                inclinometer = Inclinometer.GetDefault();
-                if (inclinometer != null)
-                {
-                    inclinometer.ReadingChanged += Inclinometer_ReadingChanged;
-                    inclinometer.ReportInterval = 1;
-                }
+                await ActivateSensors();
                 if (world == null)
                 {
                     InitializeWorld();
                     PopulateWorld();
                 }
+                var position = await geolocator.GetGeopositionAsync();
+                UpdateLocation(position);
                 // 
                 //UpdateElementsOnScreen(inclination);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task ActivateSensors()
+        {
+            SizeChanged += MainPage_SizeChanged;
+            displayInformation.OrientationChanged += MainPage_OrientationChanged;
+            await StartPreviewAsync();
+            var accessStatus = await Geolocator.RequestAccessAsync();
+            geolocator = new Geolocator();
+            geolocator.PositionChanged += Geolocator_PositionChanged;
+            inclinometer = Inclinometer.GetDefault();
+            if (inclinometer != null)
+            {
+                inclinometer.ReadingChanged += Inclinometer_ReadingChanged;
+                inclinometer.ReportInterval = 1;
             }
         }
 
@@ -346,8 +378,14 @@ namespace BuildItArSample.UWP
         protected override async void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            DisplayInformation.GetForCurrentView().OrientationChanged -= MainPage_OrientationChanged;
+            await DeactivateSensors();
+        }
+
+        private async Task DeactivateSensors()
+        {
+            displayInformation.OrientationChanged -= MainPage_OrientationChanged;
             await CleanupCameraAsync();
+            isPreviewing = false;
             geolocator.PositionChanged -= Geolocator_PositionChanged;
             SizeChanged -= MainPage_SizeChanged;
             if (inclinometer != null)
