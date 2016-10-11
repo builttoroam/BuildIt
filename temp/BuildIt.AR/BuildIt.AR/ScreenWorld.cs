@@ -36,8 +36,8 @@ namespace BuildIt.AR
             {
                 WorldConfiguration.WindowsMobile, new Dictionary<Rotation, Matrix>()
                 {
-                    {Rotation.Rotation0, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
-                    {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
+                    {Rotation.Rotation0, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2) * Matrix.CreateRotationX(MathHelper.ToRadians(-90))},
+                    {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.ToRadians(90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(-90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
                     {Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
                     {Rotation.Rotation270, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2)}
                 }

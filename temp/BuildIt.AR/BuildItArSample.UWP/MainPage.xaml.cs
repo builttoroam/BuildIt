@@ -61,6 +61,7 @@ namespace BuildItArSample.UWP
                 }
             };
 
+        private Rotation displayRotation;
 
 
         public MainPage()
@@ -207,8 +208,8 @@ namespace BuildItArSample.UWP
 
         private void InitializeWorld()
         {
-            var rotation = CalculateDisplayRotation();
-            world = new ScreenWorld(WorldConfiguration.WindowsMobile, rotation);
+            CalculateDisplayRotation();
+            world = new ScreenWorld(WorldConfiguration.WindowsMobile, displayRotation);
             world.Initialize(ActualWidth, ActualHeight);
             foreach (var poi in pois)
             {
@@ -217,28 +218,28 @@ namespace BuildItArSample.UWP
             world.UpdateRangeOfWorld(50);
         }
 
-        private static Rotation CalculateDisplayRotation()
+        private void CalculateDisplayRotation()
         {
             var orientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
-            var rotation = Rotation.Rotation0;
+            displayRotation = Rotation.Rotation0;
             switch (orientation)
             {
                 case DisplayOrientations.None:
                     break;
                 case DisplayOrientations.Landscape:
-                    rotation = Rotation.Rotation90;
+                    displayRotation = Rotation.Rotation90;
                     break;
                 case DisplayOrientations.Portrait:
                     break;
                 case DisplayOrientations.LandscapeFlipped:
-                    rotation = Rotation.Rotation270;
+                    displayRotation = Rotation.Rotation270;
                     break;
                 case DisplayOrientations.PortraitFlipped:
-                    rotation = Rotation.Rotation180;
+                    displayRotation = Rotation.Rotation180;
                     break;
             }
-            Debug.WriteLine($"orientation {orientation}, rotation {rotation}");
-            return rotation;
+            Debug.WriteLine($"orientation {orientation}, rotation {displayRotation}");
+ 
         }
 
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -274,7 +275,7 @@ namespace BuildItArSample.UWP
                 var element = fe.DataContext as IWorldElement<POI>;
                 if (element == null) continue;
 
-                var offset = world.Offset(element, new Rectangle(0, 0, (int) fe.ActualWidth, (int) fe.ActualHeight), roll, pitch, yaw);
+                var offset = (displayRotation == Rotation.Rotation90 || displayRotation == Rotation.Rotation270) ? world.Offset(element, new Rectangle(0, 0, (int) fe.ActualWidth, (int) fe.ActualHeight), roll, pitch, yaw) : world.Offset(element, new Rectangle(0, 0, (int)fe.ActualWidth, (int)fe.ActualHeight), pitch, roll, yaw);
                 if (offset == null)
                 {
                     continue;
@@ -287,14 +288,15 @@ namespace BuildItArSample.UWP
                 {
                     offset.TranslateX = ActualWidth*2;
                 }
-                if (offset.TranslateY < -ActualHeight)
+                /*if (offset.TranslateY < -ActualHeight)
                 {
                     offset.TranslateY = -ActualHeight;
                 }
                 if (offset.TranslateY > ActualHeight*2)
                 {
                     offset.TranslateY = ActualHeight*2;
-                }
+                }*/
+                offset.TranslateY = ActualHeight/2;
                 var scale = world.CalculateScale(element.Element.Distance);
                 fe.RenderTransform = new CompositeTransform
                 {
@@ -336,7 +338,7 @@ namespace BuildItArSample.UWP
             {
                 var videoRotation = CalculateVideoRotation();
                 mediaCapture?.SetPreviewRotation(videoRotation);
-                var displayRotation = CalculateDisplayRotation();
+                CalculateDisplayRotation();
                 world?.UpdateWorldAdjustment(displayRotation);
             }
         }
