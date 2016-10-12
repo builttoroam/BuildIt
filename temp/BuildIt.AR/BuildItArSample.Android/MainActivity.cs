@@ -60,7 +60,7 @@ namespace BuildItArSample.Android
 
 
             arMarkerLayout = FindViewById<RelativeLayout>(Resource.Id.arMarkerOverlay);
-            world = new ARWorld<POI>(this, arMarkerLayout, 0.1f);
+            world = new ARWorld<POI>(this, 0.1f, 50, UpdateElementsOnScreen);
             pois = new List<POI>()
             {
                 new POI
@@ -114,8 +114,6 @@ namespace BuildItArSample.Android
             cameraPreview = FindViewById<CameraPreview>(Resource.Id.texture);
             cameraPreview?.InitPreview(this);
             OpenCamera();
-            
-            
             InitSensors();
         }
 
@@ -132,51 +130,6 @@ namespace BuildItArSample.Android
             world.StartSensors();
         }
 
-        /*private void InitializeWorld()
-        {
-            world = new ScreenWorld(WorldConfiguration.Android, rotation);
-            world.Initialize(Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
-            world.AddElementToWorld(new POI
-            {
-                GeoLocation = new Location
-                {
-                    Latitude = -33.832855,
-                    Longitude = 151.211989
-                },
-                Id = 1,
-                Name = "North"
-            });
-            world.AddElementToWorld(new POI
-            {
-                GeoLocation = new Location
-                {
-                    Latitude = -33.839878,
-                    Longitude = 151.220633
-                },
-                Id = 2,
-                Name = "East"
-            });
-            world.AddElementToWorld(new POI
-            {
-                GeoLocation = new Location
-                {
-                    Latitude = -33.839309,
-                    Longitude = 151.195384
-                },
-                Id = 3,
-                Name = "West"
-            });
-            world.AddElementToWorld(new POI
-            {
-                GeoLocation = new Location
-                {
-                    Latitude = -33.848870,
-                    Longitude = 151.212342
-                },
-                Name = "South",
-                Id = 4
-            });
-        }*/
 
         private void PopulateWorld()
         {
@@ -295,81 +248,56 @@ namespace BuildItArSample.Android
         {
             try
             {
-                foreach (var poi in pois)
-                {
-                    var marker = poiMarkers[poi];
-
-                }
-                /*if (arMarkerLayout == null)
+                if (world?.Elements == null)
                 {
                     return;
                 }
 
-                var cnt = arMarkerLayout.ChildCount;
-                for (int i = 0; i < cnt; i++)
+                foreach (var element in world.Elements)
                 {
-                    var fe = arMarkerLayout.GetChildAt(i) as ArMarker;
-                    if (fe == null)
-                        continue;
-                    if (!events.ContainsKey(fe))
+                    var poiMarker = poiMarkers[element.Element];
+                    if (element.Element.DistanceKm > world.VisualRangeKm)
                     {
-                        continue;
-                    }
-                    var element = events[fe];
-                    if (element == null)
-                    {
-                        continue;
-                    }
-                    if (fe.POI.Distance > world.VisualRangeKm * 1000)
-                    {
+                        poiMarker.Visibility = ViewStates.Gone;
                         continue;
                     }
 
-                    var offset = world.Offset(element, new Rectangle(0, 0, fe.Width, fe.Height), roll, pitch, yaw);
+                    var offset = world.CalculateOffset(element, poiMarker.Width, poiMarker.Height, roll, pitch, yaw);
                     if (offset == null)
                     {
                         continue;
                     }
-                    var finalX = (int)offset.TranslateX + fe.Left;
-                    var finalY = (int)offset.TranslateY + fe.Top;
+                    var finalX = (int)offset.TranslateX + poiMarker.Left;
+                    var finalY = (int)offset.TranslateY + poiMarker.Top;
                     if (finalX >= 0 && finalX < arMarkerLayout.Width && finalY >= 0 && finalY < arMarkerLayout.Height)
                     {
-                        
-                        fe.DistanceText.Text = element.Element.Distance.ToString();
-                        fe.TitleText.Text = element.Element.Name;
-                        fe.TranslationX = (float)offset.TranslateX;
-                        fe.SetY(Resources.DisplayMetrics.HeightPixels / 2);
-                        fe.Visibility = ViewStates.Visible;
+
+                        poiMarker.DistanceText.Text = element.Element.DistanceMetres.ToString();
+                        poiMarker.TitleText.Text = element.Element.Name;
+                        poiMarker.TranslationX = (float)offset.TranslateX;
+                        poiMarker.SetY(Resources.DisplayMetrics.HeightPixels / 2);
+                        poiMarker.Visibility = ViewStates.Visible;
                     }
                     else
                     {
-                        fe.Visibility = ViewStates.Gone;
+                        poiMarker.Visibility = ViewStates.Gone;
                     }
 
-                    var scale = world.CalculateScale(element.Element.Distance);
-                    fe.ScaleX = (float)scale;
-                    fe.ScaleY = (float)scale;
-                }*/
+
+                    poiMarker.ScaleX = (float)offset.Scale;
+                    poiMarker.ScaleY = (float)offset.Scale;
+                }
 
             }
             catch (System.Exception ex)
             {
+                Debug.WriteLine(ex.Message);
             }
         }
 
         public void OnLocationChanged(global::Android.Locations.Location location)
         {
             var position = new Location {Latitude = location.Latitude, Longitude = location.Longitude};
-            /*world?.UpdateCentre(position);
-            if (world == null)
-            {
-                return;
-            }
-            foreach (var worldElement in world.ElementsInWorld<POI>())
-            {
-                worldElement.Element.Distance = worldElement.Element.GeoLocation.DistanceInMetres(position);
-                Debug.WriteLine($"distance {worldElement.Element.Distance}");
-            }*/
             world?.UpdateLocation(position);
         }
 

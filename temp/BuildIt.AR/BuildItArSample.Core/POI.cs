@@ -8,9 +8,12 @@ namespace BuildItArSample.Core
 
         public Location GeoLocation { get; set; }
 
-        public double Distance { get; set; }
+        public double DistanceMetres { get; set; }
 
-        public string DistanceAway => Distance < 1000 ? $"{(int)Distance} m" : $"{(int)(Distance / 1000.0)} km";
+        public double DistanceKm => DistanceMetres/1000.0;
+
+
+        public string DistanceAway => DistanceMetres < 1000 ? $"{(int)DistanceMetres} m" : $"{(int)DistanceKm} km";
 
         public string Name { get; set; }
     }

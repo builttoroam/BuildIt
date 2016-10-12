@@ -26,17 +26,22 @@ namespace BuildIt.AR.Android
         private int updating;
         private Rotation rotation;
         private ScreenWorld world;
-        private RelativeLayout markerLayout;
         private LocationManager locationManager;
+        private readonly Action<float, float, float> updateElementsOnScreen;
 
+        public double VisualRangeKm { get; }
 
+        public IEnumerable<IWorldElement<T>> Elements => world?.ElementsInWorld<T>();
 
-        public ARWorld(Activity activity, RelativeLayout markerLayout, float lowPassFilterThreshold)
+        public ARWorld(Activity activity, float lowPassFilterThreshold, double visualRangeKm, Action<float, float, float> updateElementsOnScreen)
         {
             this.activity = activity;
             this.lowPassFilterThreshold = lowPassFilterThreshold;
-            this.markerLayout = markerLayout;
+            VisualRangeKm = visualRangeKm;
+            this.updateElementsOnScreen = updateElementsOnScreen;
         }
+
+        
 
         public void Initialize(List<T> elements)
         {
@@ -50,6 +55,17 @@ namespace BuildIt.AR.Android
                     world.AddElementToWorld(element);
                 }
             }
+            world.UpdateRangeOfWorld(VisualRangeKm);
+        }
+
+        public ScreenOffset CalculateOffset(IWorldElement<T> element, int markerWidth, int markerHeight, double roll, double pitch, double yaw)
+        {
+            var offset = world.Offset(element, new Rectangle(0, 0, markerWidth, markerHeight), roll, pitch, yaw);
+            if (offset != null)
+            {
+                offset.Scale = world.CalculateScale(element.Element.DistanceMetres);
+            }
+            return offset;
         }
 
         public void StartSensors()
@@ -102,14 +118,13 @@ namespace BuildIt.AR.Android
                 if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
                 activity.RunOnUiThread(() =>
                 {
-                    //Debug.WriteLine($"roll {orientation[0]}, pitch {orientation[1]}, yaw {orientation[2]}");
                     if (rotation == Rotation.Rotation90 || rotation == Rotation.Rotation270)
                     {
-                        //UpdateElementsOnScreen(orientation[2], orientation[1], orientation[0]);
+                        updateElementsOnScreen?.Invoke(orientation[2], orientation[1], orientation[0]);
                     }
                     else
                     {
-                        //UpdateElementsOnScreen(orientation[1], orientation[2], orientation[0]);
+                        updateElementsOnScreen?.Invoke(orientation[1], orientation[2], orientation[0]);
                     }
                     Interlocked.Exchange(ref updating, 0);
                 });
@@ -132,66 +147,9 @@ namespace BuildIt.AR.Android
             world.UpdateCentre(location);
             foreach (var worldElement in world.ElementsInWorld<T>())
             {
-                worldElement.Element.Distance = worldElement.Element.GeoLocation.DistanceInMetres(location);
+                worldElement.Element.DistanceMetres = worldElement.Element.GeoLocation.DistanceInMetres(location);
             }
         }
-
-        /*private void UpdateElementsOnScreen(float roll, float pitch, float yaw)
-        {
-            try
-            {
-
-
-                var cnt = markerLayout.ChildCount;
-                for (int i = 0; i < cnt; i++)
-                {
-                    var fe = markerLayout.GetChildAt(i) as T;
-                    if (fe == null)
-                        continue;
-                    if (!events.ContainsKey(fe))
-                    {
-                        continue;
-                    }
-                    var element = events[fe];
-                    if (element == null)
-                    {
-                        continue;
-                    }
-                    if (fe.POI.Distance > world.VisualRangeKm * 1000)
-                    {
-                        continue;
-                    }
-
-                    var offset = world.Offset(element, new Rectangle(0, 0, fe.Width, fe.Height), roll, pitch, yaw);
-                    if (offset == null)
-                    {
-                        continue;
-                    }
-                    var finalX = (int)offset.TranslateX + fe.Left;
-                    var finalY = (int)offset.TranslateY + fe.Top;
-                    if (finalX >= 0 && finalX < arMarkerLayout.Width && finalY >= 0 && finalY < arMarkerLayout.Height)
-                    {
-
-                        fe.DistanceText.Text = element.Element.Distance.ToString();
-                        fe.TitleText.Text = element.Element.Name;
-                        fe.TranslationX = (float)offset.TranslateX;
-                        fe.SetY(activity.Resources.DisplayMetrics.HeightPixels / 2);
-                        fe.Visibility = ViewStates.Visible;
-                    }
-                    else
-                    {
-                        fe.Visibility = ViewStates.Gone;
-                    }
-
-                    var scale = world.CalculateScale(element.Element.Distance);
-                    fe.ScaleX = (float)scale;
-                    fe.ScaleY = (float)scale;
-                }
-            }
-            catch (System.Exception ex)
-            {
-            }
-        }*/
 
         private void CalculateRotation()
         {

@@ -234,7 +234,7 @@ namespace BuildIt.AR
 
         Location GeoLocation { get; set; }
 
-        double Distance { get; set; }
+        double DistanceMetres { get; set; }
     }
 
     public interface IWorldElement<TElement> where TElement : ILocationBasedMarker

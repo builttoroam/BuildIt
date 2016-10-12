@@ -183,7 +183,7 @@ namespace BuildItArSample.iOS
                 foreach (var view in events.Keys)
                 {
                     var poi = events[view];
-                    poi.Element.Distance = currentLocation.DistanceInMetres(poi.Element.GeoLocation);
+                    poi.Element.DistanceMetres = currentLocation.DistanceInMetres(poi.Element.GeoLocation);
                     var distanceLabel = view.Subviews?.FirstOrDefault(v => v is UILabel) as UILabel;
                     if (distanceLabel == null) continue;
                     var distance = events[view].Element.DistanceAway;
@@ -249,7 +249,7 @@ namespace BuildItArSample.iOS
                 fe.Hidden = true;
 
                 if (offset == null || element.Element == null) continue;
-                var offsetScale = world.CalculateScale(element.Element.Distance);
+                var offsetScale = world.CalculateScale(element.Element.DistanceMetres);
 
                 var tf = CGAffineTransform.MakeTranslation((float)offset.TranslateX, 0);
                 if (offsetScale > 0)

@@ -329,7 +329,7 @@ namespace BuildItArSample.UWP
                     offset.TranslateY = ActualHeight*2;
                 }*/
                 offset.TranslateY = ActualHeight/2;
-                var scale = world.CalculateScale(element.Element.Distance);
+                var scale = world.CalculateScale(element.Element.DistanceMetres);
                 fe.RenderTransform = new CompositeTransform
                 {
                     TranslateX = offset.TranslateX, TranslateY = offset.TranslateY, ScaleY = scale, ScaleX = scale
@@ -350,7 +350,7 @@ namespace BuildItArSample.UWP
             {
                 var distance = poi.Element.GeoLocation.DistanceInMetres(currentLocation);
                 Debug.WriteLine($"distance {distance}");
-                poi.Element.Distance = poi.Element.GeoLocation.DistanceInMetres(currentLocation);
+                poi.Element.DistanceMetres = poi.Element.GeoLocation.DistanceInMetres(currentLocation);
                 if (markers.ContainsKey(poi.Element))
                 {
                     Debug.WriteLine($"distance away {poi.Element.DistanceAway}");
