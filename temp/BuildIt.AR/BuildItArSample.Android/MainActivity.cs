@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Views;
 using BuildIt.AR;
+using BuildIt.AR.Android;
 using BuildIt.AR.Android.Controls;
 using BuildIt.AR.Helpers;
 using BuildItArSample.Android.Controls;
@@ -23,14 +24,15 @@ using BuildItArSample.Core;
 namespace BuildItArSample.Android
 {
     [Activity(Label = "BuildItArSample.Android", MainLauncher = true, Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
-    public class MainActivity : Activity, ISensorEventListener, ILocationListener
+    public class MainActivity : Activity, ILocationListener
     {
         private int numberOfCameras;
         private RelativeLayout arMarkerLayout;
         private Camera camera;
         private CameraPreview cameraPreview;
         private Rotation rotation;
-        private ScreenWorld world;
+        //private ScreenWorld world;
+        private ARWorld<POI> world;
         private SensorManager sensorManager;
         private Sensor accelerometer;
         private Sensor magnetometer;
@@ -39,16 +41,15 @@ namespace BuildItArSample.Android
         private int updating;
         private float filterThreshold = 0.1f;
         private LocationManager locationManager;
-        private readonly IDictionary<ArMarker, IWorldElement<POI>> events = new Dictionary<ArMarker, IWorldElement<POI>>();
+        //private readonly IDictionary<ArMarker, POI> events = new Dictionary<ArMarker, POI>();
+        private readonly IDictionary<POI, ArMarker> poiMarkers = new Dictionary<POI, ArMarker>();
+        private List<POI> pois;
 
         public override void OnConfigurationChanged(Configuration newConfig)
         {
             base.OnConfigurationChanged(newConfig);
-
-            CalculateRotation();
-            world.UpdateWorldAdjustment(rotation);
             UpdateCameraDisplayOrientation();
-            world.Initialize(Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
+            world.UpdateRotation();
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -56,13 +57,55 @@ namespace BuildItArSample.Android
             base.OnCreate(bundle);
             RequestWindowFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.Main);
-            
-            // TODO: need to pass the relative layout to the helper method
+
+
             arMarkerLayout = FindViewById<RelativeLayout>(Resource.Id.arMarkerOverlay);
-            CalculateRotation();
-            InitializeWorld();
+            world = new ARWorld<POI>(this, arMarkerLayout, 0.1f);
+            pois = new List<POI>()
+            {
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.832855,
+                        Longitude = 151.211989
+                    },
+                    Id = 1,
+                    Name = "North"
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.839878,
+                        Longitude = 151.220633
+                    },
+                    Id = 2,
+                    Name = "East"
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.839309,
+                        Longitude = 151.195384
+                    },
+                    Id = 3,
+                    Name = "West"
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.848870,
+                        Longitude = 151.212342
+                    },
+                    Name = "South",
+                    Id = 4
+                }
+            };
+            world.Initialize(pois);
             PopulateWorld();
-            world.UpdateRangeOfWorld(50);
         }
 
         protected override void OnResume()
@@ -71,31 +114,25 @@ namespace BuildItArSample.Android
             cameraPreview = FindViewById<CameraPreview>(Resource.Id.texture);
             cameraPreview?.InitPreview(this);
             OpenCamera();
+            
+            
             InitSensors();
         }
 
         private void InitSensors()
         {
             locationManager = GetSystemService(LocationService) as LocationManager;
-            sensorManager = GetSystemService(SensorService) as SensorManager;
-            accelerometer = sensorManager?.GetDefaultSensor(SensorType.Accelerometer);
-            magnetometer = sensorManager?.GetDefaultSensor(SensorType.MagneticField);
-            if (accelerometer != null)
-            {
-                sensorManager?.RegisterListener(this, accelerometer, SensorDelay.Ui);
-            }
-            if (magnetometer != null)
-            {
-                sensorManager?.RegisterListener(this, magnetometer, SensorDelay.Ui);
-            }
+            
             if (locationManager != null)
             {
                 var provider = locationManager.GetBestProvider(new Criteria(), true);
                 locationManager.RequestLocationUpdates(provider, 50, 0, this);
             }
+
+            world.StartSensors();
         }
 
-        private void InitializeWorld()
+        /*private void InitializeWorld()
         {
             world = new ScreenWorld(WorldConfiguration.Android, rotation);
             world.Initialize(Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
@@ -139,17 +176,17 @@ namespace BuildItArSample.Android
                 Name = "South",
                 Id = 4
             });
-        }
+        }*/
 
         private void PopulateWorld()
         {
-            foreach (var evt in world.ElementsInWorld<POI>())
+            foreach (var poi in pois)
             {
-                var arMarker = new ArMarker(this, evt.Element)
+                var arMarker = new ArMarker(this, poi)
                 {
                     Visibility = ViewStates.Gone
                 };
-                events[arMarker] = evt;
+                poiMarkers[poi] = arMarker;
                 arMarkerLayout.AddView(arMarker); 
             }
         }
@@ -167,14 +204,7 @@ namespace BuildItArSample.Android
                 camera.Release();
                 camera = null;
             }
-            if (magnetometer != null)
-            {
-                sensorManager?.UnregisterListener(this, magnetometer);
-            }
-            if (accelerometer != null)
-            {
-                sensorManager?.UnregisterListener(this, accelerometer);
-            }
+            world?.StopSensors();
             locationManager?.RemoveUpdates(this);
         }
 
@@ -260,56 +290,17 @@ namespace BuildItArSample.Android
             camera?.SetDisplayOrientation(angle);
         }
 
-        public void OnAccuracyChanged(Sensor sensor, SensorStatus accuracy)
-        {
 
-        }
-
-        public void OnSensorChanged(SensorEvent evt)
+        private void UpdateElementsOnScreen(float roll, float pitch, float yaw)
         {
             try
             {
-                if (evt.Sensor.Type == SensorType.Accelerometer)
-                    gravity = FilterHelper.LowPassFilter(filterThreshold, evt.Values.ToArray(), gravity);
-                if (evt.Sensor.Type == SensorType.MagneticField)
-                    geomagnetic = FilterHelper.LowPassFilter(filterThreshold, evt.Values.ToArray(), geomagnetic);
-                if (gravity != null && geomagnetic != null && camera != null)
+                foreach (var poi in pois)
                 {
-                    var rotationMatrix = new float[16];
-                    var success = SensorManager.GetRotationMatrix(rotationMatrix, null, gravity, geomagnetic);
-                    if (success)
-                    {
-                        var orientation = new float[3];
-                        SensorManager.GetOrientation(rotationMatrix, orientation);
+                    var marker = poiMarkers[poi];
 
-                        if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
-                        RunOnUiThread(() =>
-                        {
-                            //Debug.WriteLine($"roll {orientation[0]}, pitch {orientation[1]}, yaw {orientation[2]}");
-                            if (rotation == Rotation.Rotation90 || rotation == Rotation.Rotation270)
-                            {
-                                UpdateElementsOnScreen(arMarkerLayout, orientation[2], orientation[1], orientation[0]);
-                            }
-                            else
-                            {
-                                UpdateElementsOnScreen(arMarkerLayout, orientation[1], orientation[2], orientation[0]);
-                            }
-                            Interlocked.Exchange(ref updating, 0);
-                        });
-                    }
                 }
-            }
-            catch (System.Exception ex)
-            {
-
-            }
-        }
-
-        private void UpdateElementsOnScreen(RelativeLayout arMarkerLayout, float roll, float pitch, float yaw)
-        {
-            try
-            {
-                if (arMarkerLayout == null)
+                /*if (arMarkerLayout == null)
                 {
                     return;
                 }
@@ -358,7 +349,8 @@ namespace BuildItArSample.Android
                     var scale = world.CalculateScale(element.Element.Distance);
                     fe.ScaleX = (float)scale;
                     fe.ScaleY = (float)scale;
-                }
+                }*/
+
             }
             catch (System.Exception ex)
             {
@@ -368,7 +360,7 @@ namespace BuildItArSample.Android
         public void OnLocationChanged(global::Android.Locations.Location location)
         {
             var position = new Location {Latitude = location.Latitude, Longitude = location.Longitude};
-            world?.UpdateCentre(position);
+            /*world?.UpdateCentre(position);
             if (world == null)
             {
                 return;
@@ -377,7 +369,8 @@ namespace BuildItArSample.Android
             {
                 worldElement.Element.Distance = worldElement.Element.GeoLocation.DistanceInMetres(position);
                 Debug.WriteLine($"distance {worldElement.Element.Distance}");
-            }
+            }*/
+            world?.UpdateLocation(position);
         }
 
         public void OnProviderDisabled(string provider)
