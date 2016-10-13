@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Threading;
 using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using BuildIt.AR.Helpers;
 
 namespace BuildIt.AR.UWP
 {
     public class ARWorld<T> where T : ILocationBasedMarker
     {
-        private readonly float lowPassFilterThreshold;
         private readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
         private int updating;
 
         private ScreenWorld world;
         private Inclinometer inclinometer;
-        private readonly Action<float, float, float> updateElementsOnScreen;
+        private readonly Action<double, double, double> updateElementsOnScreen;
         private readonly Page page;
 
         public Rotation Rotation { get; private set; }
@@ -25,10 +24,9 @@ namespace BuildIt.AR.UWP
 
         public IEnumerable<IWorldElement<T>> Elements => world?.ElementsInWorld<T>();
 
-        public ARWorld(Page page, float lowPassFilterThreshold, double visualRangeKm, Action<float, float, float> updateElementsOnScreen)
+        public ARWorld(Page page, double visualRangeKm, Action<double, double, double> updateElementsOnScreen)
         {
             this.page = page;
-            this.lowPassFilterThreshold = lowPassFilterThreshold;
             VisualRangeKm = visualRangeKm;
             this.updateElementsOnScreen = updateElementsOnScreen;
         }
@@ -76,7 +74,17 @@ namespace BuildIt.AR.UWP
 
         private void Inclinometer_ReadingChanged(Inclinometer sender, InclinometerReadingChangedEventArgs args)
         {
-
+            if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            page.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                var roll = args.Reading.RollDegrees * Math.PI / 180.0;
+                var pitch = args.Reading.PitchDegrees * Math.PI / 180.0;
+                var yaw = args.Reading.YawDegrees * Math.PI / 180.0;
+                updateElementsOnScreen?.Invoke(roll, pitch, yaw);
+                Interlocked.Exchange(ref updating, 0);
+            });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         public void StopSensors()

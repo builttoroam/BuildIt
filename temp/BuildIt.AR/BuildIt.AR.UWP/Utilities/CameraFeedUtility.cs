@@ -27,7 +27,7 @@ namespace BuildIt.AR.UWP.Utilities
             this.dispatcher = dispatcher;
         }
 
-        private async Task StartPreviewAsync(VideoRotation videoRotation)
+        public async Task StartPreviewAsync(VideoRotation videoRotation)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace BuildIt.AR.UWP.Utilities
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
         }
 
-        private async Task CleanupCameraAsync()
+        public async Task CleanupCameraAsync()
         {
             if (mediaCapture != null)
             {
