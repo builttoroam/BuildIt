@@ -81,7 +81,14 @@ namespace BuildIt.AR.UWP
                 var roll = args.Reading.RollDegrees * Math.PI / 180.0;
                 var pitch = args.Reading.PitchDegrees * Math.PI / 180.0;
                 var yaw = args.Reading.YawDegrees * Math.PI / 180.0;
-                updateElementsOnScreen?.Invoke(roll, pitch, yaw);
+                if (Rotation == Rotation.Rotation90 || Rotation == Rotation.Rotation270)
+                {
+                    updateElementsOnScreen?.Invoke(roll, pitch, yaw);
+                }
+                else
+                {
+                    updateElementsOnScreen?.Invoke(pitch, roll, yaw);
+                }
                 Interlocked.Exchange(ref updating, 0);
             });
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed

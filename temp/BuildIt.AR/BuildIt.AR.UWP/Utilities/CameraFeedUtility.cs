@@ -9,6 +9,7 @@ using Windows.Media.Capture;
 using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using BuildIt.AR.UWP.Extensions;
 using Panel = Windows.Devices.Enumeration.Panel;
 
 namespace BuildIt.AR.UWP.Utilities
@@ -72,6 +73,11 @@ namespace BuildIt.AR.UWP.Utilities
 
             // If there is no device mounted on the desired panel, return the first device found
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
+        }
+
+        public void UpdatePreviewRotation(Rotation rotation)
+        {
+            mediaCapture?.SetPreviewRotation(rotation.ToVideoRotation());
         }
 
         public async Task CleanupCameraAsync()

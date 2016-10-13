@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
+using Windows.Graphics.Display;
 using Windows.Media.Capture;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -24,11 +25,11 @@ namespace BuildItArSample.UWP
     /// </summary>
     public sealed partial class MainPage
     {
-        MediaCapture mediaCapture;
         bool isPreviewing;
         private Geolocator geolocator;
         private Inclinometer inclinometer;
         private ARWorld<POI> world;
+        private readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
         private IDictionary<POI, TextBlock> poiMarkers = new Dictionary<POI, TextBlock>();
         private int updating;
         private CameraFeedUtility cameraFeedUtility;
@@ -96,7 +97,7 @@ namespace BuildItArSample.UWP
             try
             {
                 base.OnNavigatedTo(e);
-
+                displayInformation.OrientationChanged += DisplayInformation_OrientationChanged;
                 if (world == null)
                 {
                     InitializeWorld();
@@ -110,7 +111,10 @@ namespace BuildItArSample.UWP
                 if (world != null)
                 {
                     world.StartSensors();
+                    
                     await cameraFeedUtility.StartPreviewAsync(world.Rotation.ToVideoRotation());
+                    world.UpdateRotation();
+                    cameraFeedUtility.UpdatePreviewRotation(world.Rotation);
                 }
                 geolocator = new Geolocator();
                 geolocator.PositionChanged += Geolocator_PositionChanged;
@@ -123,6 +127,16 @@ namespace BuildItArSample.UWP
             }
         }
 
+        private void DisplayInformation_OrientationChanged(DisplayInformation sender, object args)
+        {
+            if (world == null)
+            {
+                return;
+            }
+
+            world.UpdateRotation();
+            cameraFeedUtility?.UpdatePreviewRotation(world.Rotation);
+        }
 
         private void PopulateWorld()
         {
@@ -130,8 +144,7 @@ namespace BuildItArSample.UWP
             {
                 var tb = new TextBlock
                 {
-                    Text = evt.Element.Name,
-                    Visibility = Visibility.Collapsed
+                    Text = evt.Element.Name
                 };
                 poiMarkers[evt.Element] = tb;
                 LayoutRoot.Children.Add(tb);
@@ -155,9 +168,9 @@ namespace BuildItArSample.UWP
                     var offset = world.CalculateOffset(element, (int)poiMarker.ActualWidth, (int)poiMarker.ActualHeight, roll, pitch, yaw);
                     if (offset == null)
                     {
-                        poiMarker.Visibility = Visibility.Collapsed;
                         continue;
                     }
+                    poiMarker.Text = element.Element.DistanceAway;
                     if (offset.TranslateX < -ActualWidth)
                     {
                         offset.TranslateX = -ActualWidth;
@@ -204,6 +217,7 @@ namespace BuildItArSample.UWP
         protected override async void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            displayInformation.OrientationChanged -= DisplayInformation_OrientationChanged;
             world.StopSensors();
             await cameraFeedUtility.CleanupCameraAsync();
             if (geolocator != null)
