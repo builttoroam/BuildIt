@@ -4,7 +4,7 @@
     {
         Android,
         iOS,
-        WindowsMobile
+        UWP
     }
 
     public enum Rotation

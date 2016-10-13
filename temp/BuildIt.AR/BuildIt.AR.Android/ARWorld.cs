@@ -24,11 +24,12 @@ namespace BuildIt.AR.Android
         private float[] gravity;
         private float[] geomagnetic;
         private int updating;
-        private Rotation rotation;
+        
         private ScreenWorld world;
         private LocationManager locationManager;
         private readonly Action<float, float, float> updateElementsOnScreen;
 
+        public Rotation Rotation { get; private set; }
         public double VisualRangeKm { get; }
 
         public IEnumerable<IWorldElement<T>> Elements => world?.ElementsInWorld<T>();
@@ -41,12 +42,10 @@ namespace BuildIt.AR.Android
             this.updateElementsOnScreen = updateElementsOnScreen;
         }
 
-        
-
         public void Initialize(List<T> elements)
         {
             CalculateRotation();
-            world = new ScreenWorld(WorldConfiguration.Android, rotation);
+            world = new ScreenWorld(WorldConfiguration.Android, Rotation);
             world.Initialize(activity.Resources.DisplayMetrics.WidthPixels, activity.Resources.DisplayMetrics.HeightPixels);
             if (elements != null)
             {
@@ -118,7 +117,7 @@ namespace BuildIt.AR.Android
                 if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
                 activity.RunOnUiThread(() =>
                 {
-                    if (rotation == Rotation.Rotation90 || rotation == Rotation.Rotation270)
+                    if (Rotation == Rotation.Rotation90 || Rotation == Rotation.Rotation270)
                     {
                         updateElementsOnScreen?.Invoke(orientation[2], orientation[1], orientation[0]);
                     }
@@ -138,7 +137,7 @@ namespace BuildIt.AR.Android
         public void UpdateRotation()
         {
             CalculateRotation();
-            world.UpdateWorldAdjustment(rotation);
+            world.UpdateWorldAdjustment(Rotation);
             world.Initialize(activity.Resources.DisplayMetrics.WidthPixels, activity.Resources.DisplayMetrics.HeightPixels);
         }
 
@@ -153,21 +152,21 @@ namespace BuildIt.AR.Android
 
         private void CalculateRotation()
         {
-            rotation = Rotation.Rotation0;
+            Rotation = Rotation.Rotation0;
 
             switch (activity.WindowManager.DefaultDisplay.Rotation)
             {
                 case SurfaceOrientation.Rotation0:
-                    rotation = Rotation.Rotation0;
+                    Rotation = Rotation.Rotation0;
                     break;
                 case SurfaceOrientation.Rotation90:
-                    rotation = Rotation.Rotation90;
+                    Rotation = Rotation.Rotation90;
                     break;
                 case SurfaceOrientation.Rotation180:
-                    rotation = Rotation.Rotation180;
+                    Rotation = Rotation.Rotation180;
                     break;
                 case SurfaceOrientation.Rotation270:
-                    rotation = Rotation.Rotation270;
+                    Rotation = Rotation.Rotation270;
                     break;
             }
         }

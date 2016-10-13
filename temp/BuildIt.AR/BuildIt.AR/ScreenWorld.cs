@@ -10,7 +10,7 @@ namespace BuildIt.AR
         {
             {WorldConfiguration.Android, Vector3.Up},
             {WorldConfiguration.iOS, Vector3.Down},
-            {WorldConfiguration.WindowsMobile, Vector3.Down}
+            {WorldConfiguration.UWP, Vector3.Down}
         };
 
         public static IDictionary<WorldConfiguration, IDictionary<Rotation, Matrix>> OrientationMatrixConfigurations = new Dictionary<WorldConfiguration, IDictionary<Rotation, Matrix>>
@@ -34,7 +34,7 @@ namespace BuildIt.AR
                 }
             },
             {
-                WorldConfiguration.WindowsMobile, new Dictionary<Rotation, Matrix>()
+                WorldConfiguration.UWP, new Dictionary<Rotation, Matrix>()
                 {
                     {Rotation.Rotation0, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2) * Matrix.CreateRotationX(MathHelper.ToRadians(-90))},
                     {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.ToRadians(90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(-90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},

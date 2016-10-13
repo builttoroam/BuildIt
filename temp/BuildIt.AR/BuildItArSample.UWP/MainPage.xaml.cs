@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BuildIt.AR;
+using BuildIt.AR.UWP;
+using BuildIt.AR.UWP.Extensions;
 using BuildItArSample.Core;
 using Panel = Windows.Devices.Enumeration.Panel;
 
@@ -32,10 +34,10 @@ namespace BuildItArSample.UWP
         MediaCapture mediaCapture;
         bool isPreviewing;
         DisplayRequest displayRequest = new DisplayRequest();
-        private readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
         private Geolocator geolocator;
         private Inclinometer inclinometer;
-        private ScreenWorld world;
+        //private ScreenWorld world;
+        private ARWorld<POI> world;
         private IDictionary<POI, TextBlock> markers = new Dictionary<POI, TextBlock>();
         private int updating;
         List<POI> pois = new List<POI>
@@ -75,17 +77,17 @@ namespace BuildItArSample.UWP
             Application.Current.Resuming += Application_Resuming;
         }
 
-        private async void Application_Resuming(object sender, object e)
+        private void Application_Resuming(object sender, object e)
         {
-            await ActivateSensors();
+            world?.StartSensors();
         }
 
-        private async void Application_Suspending(object sender, SuspendingEventArgs e)
+        private void Application_Suspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             try
             {
-                await DeactivateSensors();
+                world?.StopSensors();
             }
             catch (Exception ex)
             {
@@ -95,38 +97,9 @@ namespace BuildItArSample.UWP
             {
                 deferral.Complete();
             }
-
         }
 
-        private async Task StartPreviewAsync()
-        {
-            try
-            {
-                if (mediaCapture == null)
-                {
-                    var cameraDevice = await FindCameraDeviceByPanelAsync(Panel.Back);
-                    mediaCapture = new MediaCapture();
-                    var settings = new MediaCaptureInitializationSettings {VideoDeviceId = cameraDevice.Id};
-                    await mediaCapture.InitializeAsync(settings);
-                    CameraPreview.Source = mediaCapture;
-                    await mediaCapture.StartPreviewAsync();
-                    isPreviewing = true;
-                    var videoRotation = CalculateVideoRotation();
-                    mediaCapture.SetPreviewRotation(videoRotation);
-                    displayRequest.RequestActive();
-                }
-                //DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
-            }
-            catch (UnauthorizedAccessException)
-            {
-                // This will be thrown if the user denied access to the camera in privacy settings
-                Debug.WriteLine("The app was denied access to the camera");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("MediaCapture initialization failed. {0}", ex.Message);
-            }
-        }
+        
 
         /// <summary>
         /// Queries the available video capture devices to try and find one mounted on the desired panel
@@ -146,60 +119,22 @@ namespace BuildItArSample.UWP
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
         }
 
-        private static VideoRotation CalculateVideoRotation()
-        {
-            var orientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
-            Debug.WriteLine($"orientation {orientation}");
-            var videoRotation = VideoRotation.None;
-            switch (orientation)
-            {
-                case DisplayOrientations.Portrait:
-                    videoRotation = VideoRotation.Clockwise90Degrees;
-                    break;
-                case DisplayOrientations.LandscapeFlipped:
-                    videoRotation = VideoRotation.Clockwise180Degrees;
-                    break;
-                case DisplayOrientations.PortraitFlipped:
-                    videoRotation = VideoRotation.Clockwise270Degrees;
-                    break;
-            }
-            return videoRotation;
-        }
-
-        private async Task CleanupCameraAsync()
-        {
-            if (mediaCapture != null)
-            {
-                isPreviewing = false;
-                await mediaCapture.StopPreviewAsync();
-
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    CameraPreview.Source = null;
-                    displayRequest?.RequestRelease();
-                });
-
-                mediaCapture.Dispose();
-                mediaCapture = null;
-            }
-
-        }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             try
             {
                 base.OnNavigatedTo(e);
-                await ActivateSensors();
+
                 if (world == null)
                 {
                     InitializeWorld();
                     PopulateWorld();
                 }
+                world?.StartSensors();
+
                 var position = await geolocator.GetGeopositionAsync();
                 UpdateLocation(position);
-                // 
-                //UpdateElementsOnScreen(inclination);
             }
             catch (Exception ex)
             {
@@ -207,79 +142,33 @@ namespace BuildItArSample.UWP
             }
         }
 
-        private async Task ActivateSensors()
-        {
-            SizeChanged += MainPage_SizeChanged;
-            displayInformation.OrientationChanged += MainPage_OrientationChanged;
-            await StartPreviewAsync();
-            var accessStatus = await Geolocator.RequestAccessAsync();
-            geolocator = new Geolocator();
-            geolocator.PositionChanged += Geolocator_PositionChanged;
-            inclinometer = Inclinometer.GetDefault();
-            if (inclinometer != null)
-            {
-                inclinometer.ReadingChanged += Inclinometer_ReadingChanged;
-                inclinometer.ReportInterval = 1;
-            }
-        }
 
         private void PopulateWorld()
         {
-            foreach (var evt in world.ElementsInWorld<POI>())
+            foreach (var evt in world.Elements)
             {
                 var tb = new TextBlock
                 {
-                    Text = evt.Element.Name,
-                    DataContext = evt
+                    Text = evt.Element.Name, DataContext = evt
                 };
                 markers[evt.Element] = tb;
                 LayoutRoot.Children.Add(tb);
             }
-
         }
 
         private void InitializeWorld()
         {
-            CalculateDisplayRotation();
-            world = new ScreenWorld(WorldConfiguration.WindowsMobile, displayRotation);
-            world.Initialize(ActualWidth, ActualHeight);
-            foreach (var poi in pois)
-            {
-                world.AddElementToWorld(poi);
-            }
-            world.UpdateRangeOfWorld(50);
+            world = new ARWorld<POI>(this, 0.1f, 50, null);
+            world.Initialize(pois);
         }
 
-        private void CalculateDisplayRotation()
-        {
-            var orientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
-            displayRotation = Rotation.Rotation0;
-            switch (orientation)
-            {
-                case DisplayOrientations.None:
-                    break;
-                case DisplayOrientations.Landscape:
-                    displayRotation = Rotation.Rotation90;
-                    break;
-                case DisplayOrientations.Portrait:
-                    break;
-                case DisplayOrientations.LandscapeFlipped:
-                    displayRotation = Rotation.Rotation270;
-                    break;
-                case DisplayOrientations.PortraitFlipped:
-                    displayRotation = Rotation.Rotation180;
-                    break;
-            }
-            Debug.WriteLine($"orientation {orientation}, rotation {displayRotation}");
- 
-        }
 
-        private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        /*private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             world?.Initialize(ActualWidth, ActualHeight);
-        }
+        }*/
 
-        private void Inclinometer_ReadingChanged(Inclinometer sender, InclinometerReadingChangedEventArgs args)
+        /*private void Inclinometer_ReadingChanged(Inclinometer sender, InclinometerReadingChangedEventArgs args)
         {
             if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -287,9 +176,9 @@ namespace BuildItArSample.UWP
                 UpdateElementsOnScreen(args.Reading);
                 Interlocked.Exchange(ref updating, 0);
             });
-        }
+        }*/
 
-        private void UpdateElementsOnScreen(InclinometerReading reading)
+        /*private void UpdateElementsOnScreen(InclinometerReading reading)
         {
             if (world == null)
             {
@@ -320,14 +209,6 @@ namespace BuildItArSample.UWP
                 {
                     offset.TranslateX = ActualWidth*2;
                 }
-                /*if (offset.TranslateY < -ActualHeight)
-                {
-                    offset.TranslateY = -ActualHeight;
-                }
-                if (offset.TranslateY > ActualHeight*2)
-                {
-                    offset.TranslateY = ActualHeight*2;
-                }*/
                 offset.TranslateY = ActualHeight/2;
                 var scale = world.CalculateScale(element.Element.DistanceMetres);
                 fe.RenderTransform = new CompositeTransform
@@ -335,6 +216,10 @@ namespace BuildItArSample.UWP
                     TranslateX = offset.TranslateX, TranslateY = offset.TranslateY, ScaleY = scale, ScaleX = scale
                 };
             }
+        }*/
+
+        private void UpdateElementsOnScreen(double roll, double pitch, double yaw)
+        {
         }
 
         private void UpdateLocation(Geoposition position)
@@ -345,7 +230,7 @@ namespace BuildItArSample.UWP
             }
 
             var currentLocation = new Location {Latitude = position.Coordinate.Point.Position.Latitude, Longitude = position.Coordinate.Point.Position.Longitude};
-            world.UpdateCentre(currentLocation);
+            /*world.UpdateCentre(currentLocation);
             foreach (var poi in world.ElementsInWorld<POI>())
             {
                 var distance = poi.Element.GeoLocation.DistanceInMetres(currentLocation);
@@ -356,7 +241,8 @@ namespace BuildItArSample.UWP
                     Debug.WriteLine($"distance away {poi.Element.DistanceAway}");
                     markers[poi.Element].Text = poi.Element.Name;
                 }
-            }
+            }*/
+            world.UpdateLocation(currentLocation);
         }
 
         private void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
@@ -364,34 +250,23 @@ namespace BuildItArSample.UWP
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => UpdateLocation(args.Position));
         }
 
-        private void MainPage_OrientationChanged(DisplayInformation sender, object args)
-        {
-            if (isPreviewing)
-            {
-                var videoRotation = CalculateVideoRotation();
-                mediaCapture?.SetPreviewRotation(videoRotation);
-                CalculateDisplayRotation();
-                world?.UpdateWorldAdjustment(displayRotation);
-            }
-        }
 
-        protected override async void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            await DeactivateSensors();
+            world.StopSensors();
         }
 
-        private async Task DeactivateSensors()
+        /*private async Task DeactivateSensors()
         {
             displayInformation.OrientationChanged -= MainPage_OrientationChanged;
             await CleanupCameraAsync();
             isPreviewing = false;
             geolocator.PositionChanged -= Geolocator_PositionChanged;
-            SizeChanged -= MainPage_SizeChanged;
             if (inclinometer != null)
             {
                 inclinometer.ReadingChanged -= Inclinometer_ReadingChanged;
             }
-        }
+        }*/
     }
 }

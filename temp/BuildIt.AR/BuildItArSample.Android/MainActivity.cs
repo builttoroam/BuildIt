@@ -31,7 +31,6 @@ namespace BuildItArSample.Android
         private Camera camera;
         private CameraPreview cameraPreview;
         private Rotation rotation;
-        //private ScreenWorld world;
         private ARWorld<POI> world;
         private SensorManager sensorManager;
         private Sensor accelerometer;
@@ -41,15 +40,14 @@ namespace BuildItArSample.Android
         private int updating;
         private float filterThreshold = 0.1f;
         private LocationManager locationManager;
-        //private readonly IDictionary<ArMarker, POI> events = new Dictionary<ArMarker, POI>();
         private readonly IDictionary<POI, ArMarker> poiMarkers = new Dictionary<POI, ArMarker>();
         private List<POI> pois;
 
         public override void OnConfigurationChanged(Configuration newConfig)
         {
             base.OnConfigurationChanged(newConfig);
-            UpdateCameraDisplayOrientation();
             world.UpdateRotation();
+            UpdateCameraDisplayOrientation();
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -198,34 +196,12 @@ namespace BuildItArSample.Android
             }
         }
 
-        private void CalculateRotation()
-        {
-            rotation = Rotation.Rotation0;
-
-            switch (WindowManager.DefaultDisplay.Rotation)
-            {
-                case SurfaceOrientation.Rotation0:
-                    rotation = Rotation.Rotation0;
-                    break;
-                case SurfaceOrientation.Rotation90:
-                    rotation = Rotation.Rotation90;
-                    break;
-                case SurfaceOrientation.Rotation180:
-                    rotation = Rotation.Rotation180;
-                    break;
-                case SurfaceOrientation.Rotation270:
-                    rotation = Rotation.Rotation270;
-                    break;
-            }
-            Debug.WriteLine($"rotation {rotation}");
-        }
-
+       
 
         private void UpdateCameraDisplayOrientation()
         {
-            CalculateRotation();
             var angle = 0;
-            switch (rotation)
+            switch (world.Rotation)
             {
                 case Rotation.Rotation0:
                     angle = 90;
