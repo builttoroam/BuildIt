@@ -29,28 +29,50 @@ namespace BuildItArSample.iOS
         private AVCaptureSession session;
         private AVCaptureVideoPreviewLayer previewLayer;
         private CMMotionManager motion;
-        CGRect cameraBounds;
         private ScreenWorld world;
         private int updating;
         private IDictionary<UIView, IWorldElement<POI>> events = new Dictionary<UIView, IWorldElement<POI>>();
-        List<POI> pois = new List<POI>
+
+        private readonly List<POI> pois = new List<POI>()
             {
-                new POI {GeoLocation = new Location {Latitude = -33.832855, Longitude = 151.211989}, Id = 1}, new POI {GeoLocation = new Location {Latitude = -33.848870, Longitude = 151.212342}, Id = 2}, new POI
+                new POI
                 {
                     GeoLocation = new Location
                     {
-                        Latitude = -33.861499,
-                        Longitude = 150.858273
+                        Latitude = -33.832855,
+                        Longitude = 151.211989
                     },
-                    Id = 3
+                    Id = 1,
+                    Name = "North"
                 },
                 new POI
                 {
                     GeoLocation = new Location
                     {
-                        Latitude = -33.863479,
-                        Longitude = 150.923031
+                        Latitude = -33.839878,
+                        Longitude = 151.220633
                     },
+                    Id = 2,
+                    Name = "East"
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.839309,
+                        Longitude = 151.195384
+                    },
+                    Id = 3,
+                    Name = "West"
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.848870,
+                        Longitude = 151.212342
+                    },
+                    Name = "South",
                     Id = 4
                 }
             };
@@ -78,31 +100,19 @@ namespace BuildItArSample.iOS
         {
             //Reset the world
             var currentOrientation = UIApplication.SharedApplication.StatusBarOrientation;
-
-            //if (motion != null)
-            //{
-            //	motion.StopDeviceMotionUpdates();
-
-            //	ViewModel.InitializeWorld(WorldConfiguration.iOS, currentOrientation);
-            //	ViewModel.UpdateWorld(View.Bounds.Width, View.Bounds.Height);
-
-            //	motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
-            //}
-
             InitializeWorld();
-            PopulateWorld();
+            //PopulateWorld();
+ 
             //Re-size camera feed based on orientation
-            cameraBounds = CameraView.Bounds;
             if (previewLayer == null) return;
-            previewLayer.Orientation = configDicByRotationChanged[currentOrientation];
-            previewLayer.Frame = cameraBounds;
+            previewLayer.Connection.VideoOrientation = configDicByRotationChanged[currentOrientation];
+            previewLayer.Frame = View.Bounds;
         }
         public override void ViewDidAppear(bool animated)
         {
             try
             {
                 base.ViewDidAppear(animated);
-                cameraBounds = CameraView.Bounds;
                 InitCamera();
                 if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
                 {
@@ -118,7 +128,6 @@ namespace BuildItArSample.iOS
 
                 InitializeWorld();
                 PopulateWorld();
-                world.UpdateRangeOfWorld(50);
             }
             catch (Exception ex)
             {
@@ -204,6 +213,7 @@ namespace BuildItArSample.iOS
             var rotation = UIApplication.SharedApplication.StatusBarOrientation.ToRotationEnum();
             world = new ScreenWorld(WorldConfiguration.iOS, rotation);
             world.Initialize(View.Bounds.Width, View.Bounds.Height);
+            world.UpdateRangeOfWorld(50);
             foreach (var poi in pois)
             {
                 world.AddElementToWorld(poi);
@@ -275,8 +285,8 @@ namespace BuildItArSample.iOS
 
             if (videoInput == null || !session.CanAddInput(videoInput)) return;
             session.AddInput(videoInput);
-            previewLayer = new AVCaptureVideoPreviewLayer(session) {Frame = cameraBounds};
-            previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];//AVCaptureVideoOrientation.LandscapeRight;
+            previewLayer = new AVCaptureVideoPreviewLayer(session) {Frame = View.Bounds};
+            previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];
             previewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
             CameraView.Layer.AddSublayer(previewLayer);
             session.StartRunning();
