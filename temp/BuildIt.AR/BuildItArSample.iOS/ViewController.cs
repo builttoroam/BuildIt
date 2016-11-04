@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using AVFoundation;
 using BuildIt.AR;
+using BuildIt.AR.iOS;
 using BuildItArSample.Core;
 using CoreGraphics;
 using CoreLocation;
@@ -28,8 +28,8 @@ namespace BuildItArSample.iOS
 
         private AVCaptureSession session;
         private AVCaptureVideoPreviewLayer previewLayer;
-        private CMMotionManager motion;
-        private ScreenWorld world;
+        
+        private ARWorld<POI> world;
         private int updating;
         private IDictionary<UIView, IWorldElement<POI>> events = new Dictionary<UIView, IWorldElement<POI>>();
 
@@ -100,14 +100,14 @@ namespace BuildItArSample.iOS
         {
             //Reset the world
             var currentOrientation = UIApplication.SharedApplication.StatusBarOrientation;
-            InitializeWorld();
-            //PopulateWorld();
+            world.Initialize(pois);
  
             //Re-size camera feed based on orientation
             if (previewLayer == null) return;
             previewLayer.Connection.VideoOrientation = configDicByRotationChanged[currentOrientation];
             previewLayer.Frame = View.Bounds;
         }
+
         public override void ViewDidAppear(bool animated)
         {
             try
@@ -119,15 +119,14 @@ namespace BuildItArSample.iOS
                     locationManager.RequestWhenInUseAuthorization();
                 }
 
-                motion = new CMMotionManager();
-                motion.StartDeviceMotionUpdates(CMAttitudeReferenceFrame.XMagneticNorthZVertical, NSOperationQueue.CurrentQueue, MotionHandler);
-
-
+                world = new ARWorld<POI>(View, 50, UpdateElementsOnScreen);
+                world.Initialize(pois);
+                PopulateWorld();
+                world.StartSensors();
                 locationManager.LocationsUpdated += LocationManager_LocationsUpdated;
                 locationManager.StartUpdatingLocation();
 
-                InitializeWorld();
-                PopulateWorld();
+                
             }
             catch (Exception ex)
             {
@@ -144,7 +143,7 @@ namespace BuildItArSample.iOS
                 {
                     view.RemoveFromSuperview();
                 }
-                foreach (var evt in world.ElementsInWorld<POI>())
+                foreach (var evt in world.Elements)
                 {
                     if (evt?.Element == null) continue;
 
@@ -188,7 +187,7 @@ namespace BuildItArSample.iOS
                     return;
                 }
                 var currentLocation = new Location {Latitude = position.Coordinate.Latitude, Longitude = position.Coordinate.Longitude};
-                world.UpdateCentre(currentLocation);
+                world.UpdateLocation(currentLocation);
                 foreach (var view in events.Keys)
                 {
                     var poi = events[view];
@@ -205,18 +204,6 @@ namespace BuildItArSample.iOS
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-            }
-        }
-
-        private void InitializeWorld()
-        {
-            var rotation = UIApplication.SharedApplication.StatusBarOrientation.ToRotationEnum();
-            world = new ScreenWorld(WorldConfiguration.iOS, rotation);
-            world.Initialize(View.Bounds.Width, View.Bounds.Height);
-            world.UpdateRangeOfWorld(50);
-            foreach (var poi in pois)
-            {
-                world.AddElementToWorld(poi);
             }
         }
 
@@ -241,8 +228,6 @@ namespace BuildItArSample.iOS
 
         private void UpdateElementsOnScreen(float roll, float pitch, float yaw)
         {
-            var currentOrientation = UIApplication.SharedApplication.StatusBarOrientation;
-
             foreach (var evt in events)
             {
                 var fe = evt.Key;
@@ -252,19 +237,17 @@ namespace BuildItArSample.iOS
                 if (element == null) continue;
 
                 //Swap pitch & roll value in Portrait
-                var offset = currentOrientation.IsLandscape() ?
-                           world.Offset(element, new Rectangle(0,0, (int)fe.Bounds.Width, (int)fe.Bounds.Height), roll, pitch, yaw)
-                         : world.Offset(element, new Rectangle(0, 0, (int)fe.Bounds.Width, (int)fe.Bounds.Height), pitch, roll, yaw);
+
+                var offset = world.CalculateOffset(element, (int) fe.Bounds.Width, (int) fe.Bounds.Height, roll, pitch, yaw);
 
                 fe.Hidden = true;
 
                 if (offset == null || element.Element == null) continue;
-                var offsetScale = world.CalculateScale(element.Element.DistanceMetres);
 
                 var tf = CGAffineTransform.MakeTranslation((float)offset.TranslateX, 0);
-                if (offsetScale > 0)
+                if (offset.Scale > 0)
                 {
-                    tf.Scale((float)offsetScale, (float)offsetScale);
+                    tf.Scale((float)offset.Scale, (float)offset.Scale);
                     fe.Center = new CGPoint(0, View.Bounds.Height / 2);
                     fe.Transform = tf;
                     fe.Hidden = false;
@@ -295,7 +278,7 @@ namespace BuildItArSample.iOS
         public override void ViewDidDisappear(bool animated)
         {
             session?.StopRunning();
-            motion?.StopDeviceMotionUpdates();
+            world?.StopSensors();
             locationManager.LocationsUpdated -= LocationManager_LocationsUpdated;
             locationManager.StopUpdatingLocation();
             base.ViewDidDisappear(animated);

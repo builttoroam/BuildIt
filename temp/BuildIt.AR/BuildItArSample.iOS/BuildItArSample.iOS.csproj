@@ -112,6 +112,12 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuildIt.AR.iOS\BuildIt.AR.iOS.csproj">
+      <Project>{9346d081-8523-47df-939f-f0b33474af7e}</Project>
+      <Name>BuildIt.AR.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\BuildIt.AR\BuildIt.AR.csproj">
       <Project>{5eebff53-3f5c-468f-b369-2e6c9cfb352c}</Project>
       <Name>BuildIt.AR</Name>
