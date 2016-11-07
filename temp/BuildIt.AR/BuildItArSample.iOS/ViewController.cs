@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using AVFoundation;
 using BuildIt.AR;
 using BuildIt.AR.iOS;
+using BuildIt.AR.iOS.Utilities;
 using BuildItArSample.Core;
 using CoreGraphics;
 using CoreLocation;
-using CoreMotion;
 using Foundation;
 using UIKit;
 
@@ -26,12 +25,9 @@ namespace BuildItArSample.iOS
             {UIInterfaceOrientation.Unknown, AVCaptureVideoOrientation.Portrait}
         };
 
-        private AVCaptureSession session;
-        private AVCaptureVideoPreviewLayer previewLayer;
-        
         private ARWorld<POI> world;
-        private int updating;
-        private IDictionary<UIView, IWorldElement<POI>> events = new Dictionary<UIView, IWorldElement<POI>>();
+        private readonly IDictionary<UIView, IWorldElement<POI>> events = new Dictionary<UIView, IWorldElement<POI>>();
+        private CameraFeedUtility cameraFeedUtility;
 
         private readonly List<POI> pois = new List<POI>()
             {
@@ -77,7 +73,10 @@ namespace BuildItArSample.iOS
                 }
             };
 
-        private CLLocationManager locationManager = new CLLocationManager { PausesLocationUpdatesAutomatically = false };
+        private readonly CLLocationManager locationManager = new CLLocationManager
+        {
+            PausesLocationUpdatesAutomatically = false
+        };
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -86,6 +85,7 @@ namespace BuildItArSample.iOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            cameraFeedUtility = new CameraFeedUtility(View, CameraView);
             NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidChangeStatusBarOrientationNotification, RotationChanged);
         }
 
@@ -101,11 +101,7 @@ namespace BuildItArSample.iOS
             //Reset the world
             var currentOrientation = UIApplication.SharedApplication.StatusBarOrientation;
             world.Initialize(pois);
- 
-            //Re-size camera feed based on orientation
-            if (previewLayer == null) return;
-            previewLayer.Connection.VideoOrientation = configDicByRotationChanged[currentOrientation];
-            previewLayer.Frame = View.Bounds;
+            cameraFeedUtility?.UpdatePreviewRotation(currentOrientation);
         }
 
         public override void ViewDidAppear(bool animated)
@@ -113,7 +109,7 @@ namespace BuildItArSample.iOS
             try
             {
                 base.ViewDidAppear(animated);
-                InitCamera();
+                cameraFeedUtility.InitAndStartCamera();
                 if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
                 {
                     locationManager.RequestWhenInUseAuthorization();
@@ -207,25 +203,6 @@ namespace BuildItArSample.iOS
             }
         }
 
-        private void MotionHandler(CMDeviceMotion data, NSError error)
-        {
-            try
-            {
-                if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
-                InvokeOnMainThread(() =>
-                {
-                    if (data != null)
-                    {
-                        UpdateElementsOnScreen((float)data.Attitude.Roll, (float)data.Attitude.Pitch, (float)data.Attitude.Yaw);
-                        Interlocked.Exchange(ref updating, 0);
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
         private void UpdateElementsOnScreen(float roll, float pitch, float yaw)
         {
             foreach (var evt in events)
@@ -255,29 +232,9 @@ namespace BuildItArSample.iOS
             }
         }
 
-        private void InitCamera()
-        {
-            session = new AVCaptureSession
-            {
-                SessionPreset = AVCaptureSession.PresetMedium
-            };
-            var captureDevice = AVCaptureDevice.DefaultDeviceWithMediaType(AVMediaType.Video);
-
-            NSError error;
-            var videoInput = AVCaptureDeviceInput.FromDevice(captureDevice, out error);
-
-            if (videoInput == null || !session.CanAddInput(videoInput)) return;
-            session.AddInput(videoInput);
-            previewLayer = new AVCaptureVideoPreviewLayer(session) {Frame = View.Bounds};
-            previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];
-            previewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
-            CameraView.Layer.AddSublayer(previewLayer);
-            session.StartRunning();
-        }
-
         public override void ViewDidDisappear(bool animated)
         {
-            session?.StopRunning();
+            cameraFeedUtility?.StopCamera();
             world?.StopSensors();
             locationManager.LocationsUpdated -= LocationManager_LocationsUpdated;
             locationManager.StopUpdatingLocation();
