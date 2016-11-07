@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>BuildIt.Client.iOS.UI.Test</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>BuildItClientiOSUITest</AssemblyName>
+    <AssemblyName>BuildIt.Client.iOS.UI.Test</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

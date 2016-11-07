@@ -185,12 +185,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Client.Universal", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Web", "BuildIt.Web", "{3A895C71-D91A-4B84-8213-2E19C3B550DA}"
 	ProjectSection(SolutionItems) = preProject
-		BuildIt.Web.nuspec = BuildIt.Web.nuspec
+		BuildIt.Web\BuildIt.Web.nuspec = BuildIt.Web\BuildIt.Web.nuspec
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BuildIt.Web", "BuildIt.Web\BuildIt.Web\BuildIt.Web.xproj", "{8A55B873-880A-48CB-BCC4-5A414886346F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Web.Core", "BuildIt.Web.Core\BuildIt.Web.Core.csproj", "{12529926-84CD-49A5-82D6-CB59326DB174}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Web.Core", "BuildIt.Web\BuildIt.Web.Core\BuildIt.Web.Core.csproj", "{12529926-84CD-49A5-82D6-CB59326DB174}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
