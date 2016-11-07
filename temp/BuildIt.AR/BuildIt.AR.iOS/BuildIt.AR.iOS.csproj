@@ -43,6 +43,7 @@
     <Compile Include="ARWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIInterfaceInterfaceOrientationExtensions.cs" />
+    <Compile Include="Utilities\CameraFeedUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.AR\BuildIt.AR.csproj">
