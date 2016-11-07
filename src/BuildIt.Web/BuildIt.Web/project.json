@@ -15,7 +15,6 @@
     "frameworks": {
         "netstandard1.1": {
             "dependencies": {
-
             },
             "buildOptions": {
                 "define": [ "NETStandard11" ]
@@ -29,5 +28,8 @@
                 "define": [ "NET45" ]
             }
         }
+    },
+    "buildOptions": {
+        "xmlDoc": true
     }
 }
