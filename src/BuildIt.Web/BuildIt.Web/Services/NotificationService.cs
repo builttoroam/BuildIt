@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !NETStandard11
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -6,9 +8,7 @@ using System.Threading.Tasks;
 using BuildIt.Web.Models;
 using BuildIt.Web.Utilities;
 using BuildIt.Web.Extensions;
-
-#if !NETStandard11
-
+using BuildIt.Web.Interfaces;
 using Microsoft.Azure.NotificationHubs;
 
 namespace BuildIt.Web.Services
