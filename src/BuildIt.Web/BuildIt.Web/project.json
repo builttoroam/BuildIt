@@ -14,14 +14,14 @@
     },
     "frameworks": {
         "netstandard1.1": {
-            "dependencies": {                
+            "dependencies": {
             },
             "buildOptions": {
                 "define": [ "NETStandard11" ]
             }
         },
         "net45": {
-            "dependencies": {                
+            "dependencies": {
                 "Microsoft.Azure.NotificationHubs": "1.0.7"
             },
             "buildOptions": {
