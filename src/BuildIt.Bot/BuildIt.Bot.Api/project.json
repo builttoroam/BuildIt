@@ -14,6 +14,7 @@
                 "BuildIt.Web.General": {
                     "target": "project"
                 },
+                "Microsoft.AspNet.WebApi.Client": "5.2.3",
                 "Microsoft.Bot.Builder": "3.3.1"
             },
             "frameworkAssemblies": {
