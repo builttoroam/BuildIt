@@ -1,4 +1,6 @@
-﻿namespace BuildIt.Web.Core.Models
+﻿using BuildIt.Web.Utilities;
+
+namespace BuildIt.Web.Models
 {
     public class PushRegistration
     {

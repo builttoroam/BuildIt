@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using BuildIt.Web.Core.Models;
+using BuildIt.Web.Models;
 
 namespace BuildIt.Web.Services.Interfaces
 {

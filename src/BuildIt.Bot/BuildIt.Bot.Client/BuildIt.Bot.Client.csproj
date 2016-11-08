@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{296AB37C-EA12-4B82-8AD4-6084D21044BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BuildIt.Bot.Client</RootNamespace>
+    <AssemblyName>BuildIt.Bot.Client</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\BuildIt.Bot.Client.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\BuildIt.Bot.Client.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DirectLinkApi\Conversations.cs" />
+    <Compile Include="DirectLinkApi\DirectLinkApiClient.cs" />
+    <Compile Include="DirectLinkApi\Extensions\ConversationsExtensions.cs" />
+    <Compile Include="DirectLinkApi\Extensions\DirectLinkApiClientExtensions.cs" />
+    <Compile Include="DirectLinkApi\Extensions\TokensExtensions.cs" />
+    <Compile Include="DirectLinkApi\Interfaces\IConversations.cs" />
+    <Compile Include="DirectLinkApi\Interfaces\IDirectLineApiConversationProvider.cs" />
+    <Compile Include="DirectLinkApi\Interfaces\IDirectLineApiService.cs" />
+    <Compile Include="DirectLinkApi\Interfaces\IDirectLinkApiClient.cs" />
+    <Compile Include="DirectLinkApi\Interfaces\IMessageManager.cs" />
+    <Compile Include="DirectLinkApi\Interfaces\ITokens.cs" />
+    <Compile Include="DirectLinkApi\Managers\MessageManager.cs" />
+    <Compile Include="DirectLinkApi\Models\Attachment.cs" />
+    <Compile Include="DirectLinkApi\Models\ChannelAccount.cs" />
+    <Compile Include="DirectLinkApi\Models\Conversation.cs" />
+    <Compile Include="DirectLinkApi\Models\Error.cs" />
+    <Compile Include="DirectLinkApi\Models\ErrorMessage.cs" />
+    <Compile Include="DirectLinkApi\Models\Message.cs" />
+    <Compile Include="DirectLinkApi\Models\MessageSet.cs" />
+    <Compile Include="DirectLinkApi\Services\DirectLineApiService.cs" />
+    <Compile Include="DirectLinkApi\Tokens.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BotClientMobileAppClient.cs" />
+    <Compile Include="Services\Interface\IBotClientMobileAppClient.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildIt.Web\BuildIt.Web.General\BuildIt.Web.General.csproj">
+      <Project>{12529926-84cd-49a5-82d6-cb59326db174}</Project>
+      <Name>BuildIt.Web.General</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

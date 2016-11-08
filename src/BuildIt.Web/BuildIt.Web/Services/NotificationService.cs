@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
-using BuildIt.Web.Core;
-using BuildIt.Web.Core.Models;
 using BuildIt.Web.Services.Interfaces;
-using BuildIt.Web.Core.Extensions;
+using BuildIt.Web.Models;
+using BuildIt.Web.Utilities;
+using BuildIt.Web.Extensions;
 
 #if !NETStandard11
 

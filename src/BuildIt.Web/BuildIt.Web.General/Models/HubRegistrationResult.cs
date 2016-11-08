@@ -1,6 +1,6 @@
 ﻿namespace BuildIt.Web.Models
 {
-    public class UserRegistrationResult
+    public class HubRegistrationResult
     {
         public string RegistrationId { get; set; }
     }

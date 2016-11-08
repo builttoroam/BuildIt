@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BuildIt.Web.Core.Extensions
+namespace BuildIt.Web.Extensions
 {
     public static class EnumExtensions
     {

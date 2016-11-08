@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace BuildIt.Web.Core
+namespace BuildIt.Web.Utilities
 {
     [Flags]
     public enum PushPlatform
