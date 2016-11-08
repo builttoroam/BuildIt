@@ -9,6 +9,6 @@
         "BuildIt.MvvmCross",
         "BuildIt.Synchronization",
         "BuildIt.Web",
-        "BuildIt.Web.General"
+		"BuildIt.Bot"        
     ]
 }

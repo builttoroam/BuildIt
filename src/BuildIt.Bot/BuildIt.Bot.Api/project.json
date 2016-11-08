@@ -1,7 +1,7 @@
 {
     "version": "1.0.0-*",
     "dependencies": {
-        "NETStandard.Library": "1.6.0"        
+        "NETStandard.Library": "1.6.0"
     },
     "frameworks": {
         "netstandard1.1": {
@@ -14,8 +14,7 @@
                 "BuildIt.Web.General": {
                     "target": "project"
                 },
-                "Microsoft.AspNet.WebApi.Client": "5.2.3",
-                "Microsoft.Bot.Builder": "3.3.1"
+                "Microsoft.Bot.Builder": "3.3.1"                
             },
             "frameworkAssemblies": {
                 "System": "4.0.0.0"
