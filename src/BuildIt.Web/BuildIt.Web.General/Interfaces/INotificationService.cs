@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BuildIt.Web.Models;
 
-namespace BuildIt.Web.Services.Interfaces
+namespace BuildIt.Web.Interfaces
 {
     /// <summary>
     /// 

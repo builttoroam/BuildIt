@@ -1,0 +1,29 @@
+﻿{
+    "version": "1.0.0-*",
+
+    "dependencies": {
+        "NETStandard.Library": "1.6.0"        
+    },
+
+    "frameworks": {
+        "netstandard1.1": {            
+            "buildOptions": {
+                "define": [ "NETStandard11" ]
+            }
+        },
+        "net46": {
+            "dependencies": {
+                "BuildIt.Web.General": {
+                    "target": "project"
+                },
+                "Microsoft.Bot.Builder": "3.3.1"
+            },
+            "frameworkAssemblies": {
+                "System": "4.0.0.0"                
+            },
+            "buildOptions": {
+                "define": [ "NET46" ]
+            }
+        }
+    }
+}
