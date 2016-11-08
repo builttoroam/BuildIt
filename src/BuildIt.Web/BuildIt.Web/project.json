@@ -1,4 +1,4 @@
-﻿{
+{
     "version": "1.0.0-*",
     "dependencies": {
         "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
@@ -8,20 +8,20 @@
             "target": "package",
             "version": "0.1.5.6-beta"
         },
-        "BuildIt.Web.Core": {
+        "BuildIt.Web.General": {
             "target": "project"
         }
     },
     "frameworks": {
         "netstandard1.1": {
-            "dependencies": {
+            "dependencies": {                
             },
             "buildOptions": {
                 "define": [ "NETStandard11" ]
             }
         },
         "net45": {
-            "dependencies": {
+            "dependencies": {                
                 "Microsoft.Azure.NotificationHubs": "1.0.7"
             },
             "buildOptions": {
