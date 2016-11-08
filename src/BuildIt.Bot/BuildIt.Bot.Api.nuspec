@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BuildIt.Bot.Api</id>
+    <version>$version$</version>
+    <title>BuildIt.Bot.Api</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions that makes work Bot Framework and Push Notifications easier</description>
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
+    <dependencies>
+      <group targetFramework="netstandard1.1">        
+      </group>
+      <group targetFramework="net46">
+        <dependency id="Microsoft.Bot.Builder" version="3.3.1" />        
+      </group>
+    </dependencies>   
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net46" />    
+  </frameworkAssemblies>
+  </metadata>
+  <files>   
+    <file src="BuildIt.Bot.Api\bin\Release\net46\BuildIt.Bot.Api.dll" target="lib\net46" />
+    <file src="BuildIt.Bot.Api\bin\Release\net46\BuildIt.Bot.Api.xml" target="lib\net46" />
+    <file src="BuildIt.Bot.Api\bin\Release\net46\BuildIt.Bot.Api.pdb" target="lib\net46" />
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\net46" />    
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\net46" />    
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\net46" />
+  </files>
+</package>
