@@ -14,6 +14,9 @@ using Microsoft.Azure.NotificationHubs;
 
 namespace BuildIt.Web.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class NotificationService : INotificationService
     {
@@ -37,12 +40,22 @@ namespace BuildIt.Web.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hubConnectionString"></param>
+        /// <param name="hubName"></param>
         public NotificationService(string hubConnectionString, string hubName)
         {
             this.hubConnectionString = hubConnectionString;
             this.hubName = hubName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pushRegistration"></param>
+        /// <returns></returns>
         public async Task<string> CreateOrUpdateRegistrationAsync(PushRegistration pushRegistration)
         {
             UserRegistrationResult userRegistrationResult = await RegisterUserAsync(pushRegistration);
@@ -88,6 +101,11 @@ namespace BuildIt.Web.Services
             return registration.RegistrationId;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pushRegistration"></param>
+        /// <returns></returns>
         public async Task DeleteRegistrationAsync(PushRegistration pushRegistration)
         {
             try
@@ -110,6 +128,12 @@ namespace BuildIt.Web.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pushNotification"></param>
+        /// <param name="tags"></param>
+        /// <returns></returns>
         public async Task SendPushNotificationAsync(PushNotification pushNotification, params string[] tags)
         {
             if (string.IsNullOrWhiteSpace(pushNotification?.Title)) return;
