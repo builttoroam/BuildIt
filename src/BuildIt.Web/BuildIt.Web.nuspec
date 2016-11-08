@@ -23,18 +23,18 @@
     </dependencies>      
   </metadata>
   <files>
-    <file src="BuildIt.Web\bin\Release\BuildIt.Web.dll" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Web\bin\Release\BuildIt.Web.pdb" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Web\bin\Release\BuildIt.Web.xml" target="lib\netstandard1.1" />
-    <file src="BuildIt.Web.Core\bin\Release\BuildIt.Web.Core.dll" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Web.Core\bin\Release\BuildIt.Web.Core.pdb" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Web.Core\bin\Release\BuildIt.Web.Core.xml" target="lib\netstandard1.1" />
+    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.dll" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.pdb" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.xml" target="lib\netstandard1.1" />
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\netstandard1.1" />
     
-    <file src="BuildIt.Web\bin\Release\BuildIt.Web.dll" target="lib\net45" />    
-    <file src="BuildIt.Web\bin\Release\BuildIt.Web.pdb" target="lib\net45" />    
-    <file src="BuildIt.Web\bin\Release\BuildIt.Web.xml" target="lib\net45" />
-    <file src="BuildIt.Web.Core\bin\Release\BuildIt.Web.Core.dll" target="lib\net45" />    
-    <file src="BuildIt.Web.Core\bin\Release\BuildIt.Web.Core.pdb" target="lib\net45" />    
-    <file src="BuildIt.Web.Core\bin\Release\BuildIt.Web.Core.xml" target="lib\net45" />
+    <file src="BuildIt.Web\bin\Release\net45\BuildIt.Web.dll" target="lib\net45" />    
+    <file src="BuildIt.Web\bin\Release\net45\BuildIt.Web.pdb" target="lib\net45" />    
+    <file src="BuildIt.Web\bin\Release\net45\BuildIt.Web.xml" target="lib\net45" />
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\net45" />    
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\net45" />    
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\net45" />
   </files>
 </package>
