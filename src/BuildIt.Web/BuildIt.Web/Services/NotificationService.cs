@@ -84,18 +84,7 @@ namespace BuildIt.Web.Services
 
             registration.Tags = new HashSet<string>() { pushRegistration.UserId };
 
-            switch (pushRegistration.Platform)
-            {
-                case PushPlatform.APNS:
-                    break;
-                case PushPlatform.GCM:
-                    break;
-                case PushPlatform.WNS:
-                    await notificationHub.CreateOrUpdateRegistrationAsync(registration);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            await notificationHub.CreateOrUpdateRegistrationAsync(registration);            
 
             return registration.RegistrationId;
         }
@@ -147,6 +136,13 @@ namespace BuildIt.Web.Services
                         case PushPlatform.APNS:
                             break;
                         case PushPlatform.GCM:
+                            var simplePushNotificationMessage = new
+                            {
+                               Title = pushNotification.Title,
+                               Body = pushNotification.Body
+                            };
+                            var gcmAlert = $"{{ \"data\" : {simplePushNotificationMessage} }}";
+                            await notificationHub.SendGcmNativeNotificationAsync(gcmAlert, tags);
                             break;
                         case PushPlatform.WNS:
                             var toast = $"<toast><visual><binding template=\"ToastText02\"><text id=\"1\">{pushNotification.Title }</text><text id=\"2\">{ pushNotification.Body }</text></binding></visual></toast>";
