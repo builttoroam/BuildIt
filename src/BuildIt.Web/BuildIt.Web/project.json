@@ -22,7 +22,8 @@
         },
         "net45": {
             "dependencies": {
-                "Microsoft.Azure.NotificationHubs": "1.0.7"
+                "Microsoft.Azure.NotificationHubs": "1.0.7",
+                "Microsoft.AspNet.WebApi.Core":  "5.2.3"
             },
             "buildOptions": {
                 "define": [ "NET45" ]
