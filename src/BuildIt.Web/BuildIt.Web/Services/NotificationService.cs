@@ -10,6 +10,7 @@ using BuildIt.Web.Utilities;
 using BuildIt.Web.Extensions;
 using BuildIt.Web.Interfaces;
 using Microsoft.Azure.NotificationHubs;
+using Newtonsoft.Json;
 
 namespace BuildIt.Web.Services
 {
@@ -98,16 +99,7 @@ namespace BuildIt.Web.Services
         {
             try
             {
-                switch (pushRegistration.Platform)
-                {
-                    case PushPlatform.APNS:
-                        break;
-                    case PushPlatform.GCM:
-                        break;
-                    case PushPlatform.WNS:
-                        await notificationHub.DeleteRegistrationAsync(pushRegistration.RegistrationId);
-                        break;
-                }
+                await notificationHub.DeleteRegistrationAsync(pushRegistration.RegistrationId);                
             }
             catch (Exception ex)
             {
@@ -141,7 +133,7 @@ namespace BuildIt.Web.Services
                                Title = pushNotification.Title,
                                Body = pushNotification.Body
                             };
-                            var gcmAlert = $"{{ \"data\" : {simplePushNotificationMessage} }}";
+                            var gcmAlert = $"{{ \"data\" : {JsonConvert.SerializeObject(simplePushNotificationMessage)} }}";
                             await notificationHub.SendGcmNativeNotificationAsync(gcmAlert, tags);
                             break;
                         case PushPlatform.WNS:
