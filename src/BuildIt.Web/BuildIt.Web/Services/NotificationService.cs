@@ -84,7 +84,10 @@ namespace BuildIt.Web.Services
             }
 
             registration.RegistrationId = userRegistrationResult.RegistrationId;
-            registration.Tags = new HashSet<string>(pushRegistration.Tags ?? Enumerable.Empty<string>());
+            if (pushRegistration.Tags?.Any() ?? false)
+            {
+                registration.Tags = new HashSet<string>(pushRegistration.Tags);
+            }
 
             await notificationHub.CreateOrUpdateRegistrationAsync(registration);
 
