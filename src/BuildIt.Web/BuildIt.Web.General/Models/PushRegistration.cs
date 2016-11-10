@@ -1,4 +1,5 @@
-﻿using BuildIt.Web.Utilities;
+﻿using System.Collections.Generic;
+using BuildIt.Web.Utilities;
 
 namespace BuildIt.Web.Models
 {
@@ -10,6 +11,6 @@ namespace BuildIt.Web.Models
 
         public PushPlatform Platform { get; set; }
 
-        public string UserId { get; set; }
+        public IEnumerable<string> Tags { get; set; }
     }
 }
