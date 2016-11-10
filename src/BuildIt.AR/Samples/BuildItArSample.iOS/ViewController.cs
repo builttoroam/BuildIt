@@ -16,15 +16,6 @@ namespace BuildItArSample.iOS
 {
     public partial class ViewController : UIViewController
     {
-        private readonly IDictionary<UIInterfaceOrientation, AVCaptureVideoOrientation> configDicByRotationChanged = new Dictionary<UIInterfaceOrientation, AVCaptureVideoOrientation>
-        {
-            {UIInterfaceOrientation.LandscapeLeft, AVCaptureVideoOrientation.LandscapeLeft},
-            {UIInterfaceOrientation.LandscapeRight, AVCaptureVideoOrientation.LandscapeRight},
-            {UIInterfaceOrientation.Portrait, AVCaptureVideoOrientation.Portrait},
-            {UIInterfaceOrientation.PortraitUpsideDown, AVCaptureVideoOrientation.PortraitUpsideDown},
-            {UIInterfaceOrientation.Unknown, AVCaptureVideoOrientation.Portrait}
-        };
-
         private ARWorld<POI> world;
         private readonly IDictionary<UIView, IWorldElement<POI>> events = new Dictionary<UIView, IWorldElement<POI>>();
         private CameraFeedUtility cameraFeedUtility;
