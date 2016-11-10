@@ -11,6 +11,7 @@ using BuildIt.Web.Extensions;
 using BuildIt.Web.Interfaces;
 using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json;
+using BuildIt.Web.Utitlites;
 
 namespace BuildIt.Web.Services
 {
@@ -85,7 +86,7 @@ namespace BuildIt.Web.Services
 
             registration.Tags = new HashSet<string>() { pushRegistration.UserId };
 
-            await notificationHub.CreateOrUpdateRegistrationAsync(registration);            
+            await notificationHub.CreateOrUpdateRegistrationAsync(registration);
 
             return registration.RegistrationId;
         }
@@ -99,7 +100,7 @@ namespace BuildIt.Web.Services
         {
             try
             {
-                await notificationHub.DeleteRegistrationAsync(pushRegistration.RegistrationId);                
+                await notificationHub.DeleteRegistrationAsync(pushRegistration.RegistrationId);
             }
             catch (Exception ex)
             {
@@ -120,6 +121,7 @@ namespace BuildIt.Web.Services
 
             try
             {
+                var settings = new JsonSerializerSettings { ContractResolver = new LowerCaseContractResolver() };
                 var platforms = pushNotification.Platforms.GetFlags<PushPlatform>();
                 foreach (var platform in platforms)
                 {
@@ -130,10 +132,10 @@ namespace BuildIt.Web.Services
                         case PushPlatform.GCM:
                             var simplePushNotificationMessage = new
                             {
-                               Title = pushNotification.Title,
-                               Body = pushNotification.Body
+                                Title = pushNotification.Title,
+                                Body = pushNotification.Body
                             };
-                            var gcmAlert = $"{{ \"data\" : {JsonConvert.SerializeObject(simplePushNotificationMessage)} }}";
+                            var gcmAlert = $"{{ \"data\" : {JsonConvert.SerializeObject(simplePushNotificationMessage, settings)} }}";
                             await notificationHub.SendGcmNativeNotificationAsync(gcmAlert, tags);
                             break;
                         case PushPlatform.WNS:
