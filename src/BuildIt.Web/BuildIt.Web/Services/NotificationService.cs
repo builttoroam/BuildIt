@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BuildIt.Web.Models;
@@ -83,8 +84,7 @@ namespace BuildIt.Web.Services
             }
 
             registration.RegistrationId = userRegistrationResult.RegistrationId;
-
-            registration.Tags = new HashSet<string>() { pushRegistration.UserId };
+            registration.Tags = new HashSet<string>(pushRegistration.Tags ?? Enumerable.Empty<string>());
 
             await notificationHub.CreateOrUpdateRegistrationAsync(registration);
 
