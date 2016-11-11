@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using BuildIt.Bot.Client.Services.Interface;
 using BuildIt.Web;
 using BuildIt.Web.Models;
+using BuildIt.Web.Models.PushNotifications;
 using BuildIt.Web.Utilities;
 using Newtonsoft.Json;
 
 namespace BuildIt.Bot.Client.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BotClientMobileAppClient : IBotClientMobileAppClient
     {
         private readonly string baseServiceUrl;
@@ -18,8 +22,18 @@ namespace BuildIt.Bot.Client.Services
         private readonly string registerPushRoute;
         private readonly string deregisterPushRoute;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsMobileService { get; set; } = true;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="baseServiceUrl"></param>
+        /// <param name="serviceAffix"></param>
+        /// <param name="registerPushRoute"></param>
+        /// <param name="deregisterPushRoute"></param>
         public BotClientMobileAppClient(string baseServiceUrl, string serviceAffix = "api", string registerPushRoute = "registerpush", string deregisterPushRoute = "deregisterpush")
         {
             this.baseServiceUrl = baseServiceUrl;
@@ -62,6 +76,11 @@ namespace BuildIt.Bot.Client.Services
             return hubRegistrationResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pushRegistration"></param>
+        /// <returns></returns>
         public async Task DeregisterPushAsync(PushRegistration pushRegistration)
         {
             try
