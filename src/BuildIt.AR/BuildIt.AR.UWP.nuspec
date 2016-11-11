@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>BuildIt.AR.iOS</id>
+    <id>BuildIt.AR.UWP</id>
     <version>$version$</version>
-    <title>BuildIt.AR.iOS</title>
+    <title>BuildIt.AR.UWP</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
@@ -14,11 +14,11 @@
     <tags>BuildIt</tags>
   </metadata>
   <files>
-    <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\xamarinios" />
-    <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\xamarinios" />
-    <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\xamarinios" />
-    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.dll" target="lib\xamarinios" />
-    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.pdb" target="lib\xamarinios" />
-    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.xml" target="lib\xamarinios" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\uap" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\uap" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\uap" />
+    <file src="BuildIt.AR.UWP\bin\Release\BuildIt.AR.UWP.dll" target="lib\uap" />
+    <file src="BuildIt.AR.UWP\bin\Release\BuildIt.AR.UWP.pdb" target="lib\uap" />
+    <file src="BuildIt.AR.UWP\bin\Release\BuildIt.AR.UWP.xml" target="lib\uap" />
   </files>
 </package>
