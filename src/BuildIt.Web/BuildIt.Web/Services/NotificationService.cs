@@ -1,4 +1,4 @@
-﻿#if NET45
+﻿
 
 using System;
 using System.Collections.Generic;
@@ -132,6 +132,8 @@ namespace BuildIt.Web.Services
                     switch (platform)
                     {
                         case PushPlatform.APNS:
+                            var apnsAlert = $"{{ \"aps\" : {{ \"alert\" : {{ \"title\" : \"{pushNotification.Title}\", \"body\" : \"{pushNotification?.Body}\" }}}}}}";
+                            await notificationHub.SendAppleNativeNotificationAsync(apnsAlert, tags);
                             break;
                         case PushPlatform.GCM:
                             var simplePushNotificationMessage = new
