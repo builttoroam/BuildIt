@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BuildIt.Web.Models;
+using BuildIt.Web.Models.PushNotifications;
 
 namespace BuildIt.Web.Interfaces
 {

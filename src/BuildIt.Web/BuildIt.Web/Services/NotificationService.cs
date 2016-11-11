@@ -1,4 +1,4 @@
-﻿#if !NETStandard11
+﻿#if NET45
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using BuildIt.Web.Interfaces;
 using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json;
 using BuildIt.Web.Utitlites;
+using BuildIt.Web.Models.PushNotifications;
 
 namespace BuildIt.Web.Services
 {

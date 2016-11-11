@@ -1,4 +1,5 @@
-﻿#if NET45
+﻿
+#if NET45
 
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,18 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using BuildIt.Web.Interfaces;
 using BuildIt.Web.Models;
+using BuildIt.Web.Models.PushNotifications;
+using BuildIt.Web.Models.Routing;
+using Microsoft.Azure.Mobile.Server.Config;
 using Microsoft.Azure.NotificationHubs.Messaging;
 
 namespace BuildIt.Web.Controller
 {
     /// <summary>
     /// 
-    /// </summary>
-    public class RegisterPushController : ApiController
+    /// </summary>        
+    //public class RegisterPushController : ApiController
+    public class RegisterPushController : System.Web.Mvc.Controller
     {
         private readonly INotificationService notificationService;
 
@@ -55,16 +60,23 @@ namespace BuildIt.Web.Controller
             }
             catch (Exception ex)
             {
-                return InternalServerError(ex);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
-            if (registrationId != null)
-            {
-                return Ok(new HubRegistrationResult()
-                {
-                    RegistrationId = registrationId
-                });
-            }
-            return BadRequest("Could not register user for push notifications");
+
+            return null;
+
+            //catch (Exception ex)
+            //{
+            //    return InternalServerError(ex);
+            //}
+            //if (registrationId != null)
+            //{
+            //    return Ok(new HubRegistrationResult()
+            //    {
+            //        RegistrationId = registrationId
+            //    });
+            //}
+            //return BadRequest("Could not register user for push notifications");
         }
     }
 }

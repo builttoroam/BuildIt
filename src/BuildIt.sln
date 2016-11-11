@@ -203,6 +203,9 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BuildIt.Bot.Api", "BuildIt.Bot\BuildIt.Bot.Api\BuildIt.Bot.Api.xproj", "{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.AR", "BuildIt.AR", "{1A8BB5C9-4935-4D71-97F0-834EA8311651}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.AR\BuildIt.AR.nuspec = BuildIt.AR\BuildIt.AR.nuspec
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.AR", "BuildIt.AR\BuildIt.AR\BuildIt.AR.csproj", "{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}"
 EndProject

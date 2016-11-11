@@ -19,12 +19,19 @@
       <group targetFramework="net45">
         <dependency id="Newtonsoft.Json" version="9.0.1" />
         <dependency id="Microsoft.Azure.NotificationHubs" version="1.0.7" />
+        <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
+        <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
+        <dependency id="Microsoft.Azure.Mobile.Server" version="1.1.157.1" />
       </group>
-    </dependencies>      
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web.Routing" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net45" />
+  </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.dll" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.pdb" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.dll" target="lib\netstandard1.1" />
+    <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.pdb" target="lib\netstandard1.1" />
     <file src="BuildIt.Web\bin\Release\netstandard1.1\BuildIt.Web.xml" target="lib\netstandard1.1" />
     <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\netstandard1.1" />    
     <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\netstandard1.1" />    
