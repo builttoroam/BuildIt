@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BuildIt.AR.iOS</id>
+    <version>$version$</version>
+    <title>BuildIt.AR.iOS</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>Helper libraries to build applications </description>
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
+  </metadata>
+  <files>
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\xamarinios" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\xamarinios" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\xamarinios" />
+    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.dll" target="lib\xamarinios" />
+    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.pdb" target="lib\xamarinios" />
+    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.xml" target="lib\xamarinios" />
+  </files>
+</package>
