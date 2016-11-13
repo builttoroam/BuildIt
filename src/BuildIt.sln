@@ -3782,6 +3782,7 @@ Global
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.Release|x86.ActiveCfg = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.Release|x86.Build.0 = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU
