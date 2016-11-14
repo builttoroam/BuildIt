@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.Devices.Geolocation;
-using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
-using Windows.Media.Capture;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,19 +23,33 @@ namespace BuildItArSample.UWP
     /// </summary>
     public sealed partial class MainPage
     {
-        bool isPreviewing;
         private Geolocator geolocator;
-        private Inclinometer inclinometer;
         private ARWorld<POI> world;
         private readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
         private IDictionary<POI, TextBlock> poiMarkers = new Dictionary<POI, TextBlock>();
-        private int updating;
         private CameraFeedUtility cameraFeedUtility;
         List<POI> pois = new List<POI>
             {
-                new POI {GeoLocation = new Location {Latitude = -33.832855,
-                    Longitude = 151.211989}, Id = 1, Name = "North"}, new POI {GeoLocation = new Location {Latitude = -33.839878,
-                    Longitude = 151.220633}, Id = 2, Name = "East"}, new POI
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.832855,
+                        Longitude = 151.211989
+                    },
+                    Id = 1,
+                    Name = "North"
+                },
+                new POI
+                {
+                    GeoLocation = new Location
+                    {
+                        Latitude = -33.839878,
+                        Longitude = 151.220633
+                    },
+                    Id = 2,
+                    Name = "East"},
+                new POI
                 {
                     GeoLocation = new Location
                     {
