@@ -14,5 +14,10 @@
         /// 
         /// </summary>
         public const string DefaultAppConfigurationControllerPrefix = "api";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string NotificationLaunchArgument = "bot-conversation-update-toast";
     }
 }
