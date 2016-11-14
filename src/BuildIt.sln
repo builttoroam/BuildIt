@@ -204,7 +204,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BuildIt.Bot.Api", "BuildIt.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.AR", "BuildIt.AR", "{1A8BB5C9-4935-4D71-97F0-834EA8311651}"
 	ProjectSection(SolutionItems) = preProject
+		BuildIt.AR\BuildIt.AR.Android.nuspec = BuildIt.AR\BuildIt.AR.Android.nuspec
+		BuildIt.AR\BuildIt.AR.iOS.nuspec = BuildIt.AR\BuildIt.AR.iOS.nuspec
 		BuildIt.AR\BuildIt.AR.nuspec = BuildIt.AR\BuildIt.AR.nuspec
+		BuildIt.AR\BuildIt.AR.UWP.nuspec = BuildIt.AR\BuildIt.AR.UWP.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.AR", "BuildIt.AR\BuildIt.AR\BuildIt.AR.csproj", "{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}"
@@ -3780,6 +3783,7 @@ Global
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.Release|x86.ActiveCfg = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.Release|x86.Build.0 = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU
@@ -3839,6 +3843,7 @@ Global
 		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.Release|x86.ActiveCfg = Release|Any CPU
 		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.Release|x86.Build.0 = Release|Any CPU
 		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{2684CA7A-0BCA-444C-A40F-78116A05C3E0}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU
@@ -3898,6 +3903,7 @@ Global
 		{9346D081-8523-47DF-939F-F0B33474AF7E}.Release|x86.ActiveCfg = Release|Any CPU
 		{9346D081-8523-47DF-939F-F0B33474AF7E}.Release|x86.Build.0 = Release|Any CPU
 		{9346D081-8523-47DF-939F-F0B33474AF7E}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{9346D081-8523-47DF-939F-F0B33474AF7E}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{9346D081-8523-47DF-939F-F0B33474AF7E}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{9346D081-8523-47DF-939F-F0B33474AF7E}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{9346D081-8523-47DF-939F-F0B33474AF7E}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU
@@ -3957,6 +3963,7 @@ Global
 		{49A47F30-57D7-4649-A290-74883FF707E9}.Release|x86.ActiveCfg = Release|x86
 		{49A47F30-57D7-4649-A290-74883FF707E9}.Release|x86.Build.0 = Release|x86
 		{49A47F30-57D7-4649-A290-74883FF707E9}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{49A47F30-57D7-4649-A290-74883FF707E9}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{49A47F30-57D7-4649-A290-74883FF707E9}.ReleaseLibraries|ARM.ActiveCfg = Release|ARM
 		{49A47F30-57D7-4649-A290-74883FF707E9}.ReleaseLibraries|ARM.Build.0 = Release|ARM
 		{49A47F30-57D7-4649-A290-74883FF707E9}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU
