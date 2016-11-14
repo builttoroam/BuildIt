@@ -1,25 +1,25 @@
-﻿using BuildIt.Web.Utilities;
+﻿#if NET46
 
-namespace BuildIt.Web.Models.PushNotifications
+using System;
+using BuildIt.Web.Utilities;
+
+namespace BuildIt.Bot.Api.Models
 {
     /// <summary>
     /// 
     /// </summary>
-    public class PushNotification
+    [Serializable]
+    public class PushNotificationDetails
     {
         /// <summary>
         /// 
         /// </summary>
-        public string Title { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Body { get; set; }
+        public string PushNotificationTitle { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public PushPlatform Platforms { get; set; }
+        public PushPlatform SupportedPushPlatforms { get; set; }
 
         /// <summary>
         /// 
@@ -27,3 +27,5 @@ namespace BuildIt.Web.Models.PushNotifications
         public string PushNotificationLaunchArgument { get; set; }
     }
 }
+
+#endif
