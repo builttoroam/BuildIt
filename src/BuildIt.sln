@@ -206,6 +206,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.AR", "BuildIt.AR", 
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.AR\BuildIt.AR.Android.nuspec = BuildIt.AR\BuildIt.AR.Android.nuspec
 		BuildIt.AR\BuildIt.AR.iOS.nuspec = BuildIt.AR\BuildIt.AR.iOS.nuspec
+		BuildIt.AR\BuildIt.AR.nuspec = BuildIt.AR\BuildIt.AR.nuspec
 		BuildIt.AR\BuildIt.AR.UWP.nuspec = BuildIt.AR\BuildIt.AR.UWP.nuspec
 	EndProjectSection
 EndProject
