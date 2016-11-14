@@ -8,6 +8,9 @@ using Microsoft.Rest;
 
 namespace BuildIt.Bot.Client.DirectLinkApi.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial interface IConversations
     {
         /// <param name='conversationId'>

@@ -8,6 +8,9 @@ using BuildIt.Bot.Client.DirectLinkApi.Models;
 
 namespace BuildIt.Bot.Client.DirectLinkApi.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static partial class ConversationsExtensions
     {
         /// <param name='operations'>

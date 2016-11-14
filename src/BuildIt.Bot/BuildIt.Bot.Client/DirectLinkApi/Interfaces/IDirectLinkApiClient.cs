@@ -6,6 +6,9 @@ using Microsoft.Rest;
 
 namespace BuildIt.Bot.Client.DirectLinkApi.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial interface IDirectLinkApiClient : IDisposable
     {
         /// <summary>
@@ -24,11 +27,17 @@ namespace BuildIt.Bot.Client.DirectLinkApi.Interfaces
             get; set; 
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         IConversations Conversations
         {
             get; 
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         ITokens Tokens
         {
             get; 

@@ -3,6 +3,9 @@
 
 namespace BuildIt.Bot.Client.DirectLinkApi.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class ErrorMessage
     {
         /// <summary>
