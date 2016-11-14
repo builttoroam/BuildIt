@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "BuildIt.Bot.Client": "0.1.6.57-beta",
+    "BuildIt.Bot.Client": "0.1.6.59-beta",
     "BuildIt.General": "0.1.6.35-beta",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
   },

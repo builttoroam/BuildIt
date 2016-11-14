@@ -111,6 +111,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\BuildIt.Bot.Client.Impl.UWP.rd.xml" />
   </ItemGroup>
+  <Import Project="..\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
