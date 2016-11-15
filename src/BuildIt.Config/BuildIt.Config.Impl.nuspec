@@ -13,7 +13,7 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="BuildIt.Config.Core" version="0.1.0-beta" />
+      <dependency id="BuildIt.Config.Core" version="0.1.6.30-beta" />
       <dependency id="Acr.UserDialogs" version="6.2.3" />
       <dependency id="PCLStorage" version="1.0.2" />
     </dependencies>

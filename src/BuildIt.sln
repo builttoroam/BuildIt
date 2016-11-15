@@ -195,6 +195,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Bot", "BuildIt.Bot", "{A651744C-6719-4079-8AB2-F5A50DE11300}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.Bot\BuildIt.Bot.Api.nuspec = BuildIt.Bot\BuildIt.Bot.Api.nuspec
+		BuildIt.Bot\BuildIt.Bot.Client.Impl.nuspec = BuildIt.Bot\BuildIt.Bot.Client.Impl.nuspec
 		BuildIt.Bot\BuildIt.Bot.Client.nuspec = BuildIt.Bot\BuildIt.Bot.Client.nuspec
 	EndProjectSection
 EndProject
