@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BuildIt.Web.Models;
 using BuildIt.Web.Models.PushNotifications;
+using BuildIt.Web.Models.Results;
 
 namespace BuildIt.Bot.Client.Services.Interface
 {

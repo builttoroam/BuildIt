@@ -13,25 +13,49 @@ using BuildIt.Web.Utilities;
 
 namespace BuildIt.Bot.Client.Impl.UWP
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BotClientApplicationBase : Application, IPushRegistrationService
     {
         private readonly EndpointRouteDetails endpointRouteDetails;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Func<string> RetrieveCurrentRegistrationId { private get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<string> RegistrationSuccessful { private get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<Exception> RegistrationFailure { private get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="endpointRouteDetails"></param>
         public BotClientApplicationBase(EndpointRouteDetails endpointRouteDetails)
         {
             this.endpointRouteDetails = endpointRouteDetails;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             TryCleaningToastNotificationHistory();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected async Task InitNotificationsAsync()
         {
             // Get a channel URI from WNS.
@@ -61,6 +85,10 @@ namespace BuildIt.Bot.Client.Impl.UWP
                 if (hubRegistrationResult != null)
                 {
                     RegistrationSuccessful?.Invoke(hubRegistrationResult.RegistrationId);
+                }
+                else
+                {
+                    RegistrationFailure?.Invoke(new Exception("Registration Failure"));
                 }
             }
             catch (Exception ex)

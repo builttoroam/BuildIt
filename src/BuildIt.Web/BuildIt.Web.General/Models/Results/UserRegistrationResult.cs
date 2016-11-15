@@ -1,4 +1,4 @@
-﻿namespace BuildIt.Web.Models.PushNotifications
+﻿namespace BuildIt.Web.Models.Results
 {
     /// <summary>
     /// 

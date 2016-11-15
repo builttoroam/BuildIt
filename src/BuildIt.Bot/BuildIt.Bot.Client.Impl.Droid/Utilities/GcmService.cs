@@ -12,16 +12,31 @@ using Gcm.Client;
 
 namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Service] //Must use the service tag
     public class GcmService : GcmServiceBase, IPushRegistrationService
     {
         private readonly BotClientMobileAppClient botClientMobileApp;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Func<string> RetrieveCurrentRegistrationId { private get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<string> RegistrationSuccessful { private get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<Exception> RegistrationFailure { private get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public GcmService()
             : base(PushHandlerBroadcastReceiver.GoogleApiConsoleAppProjectNumber)
         {
@@ -34,6 +49,11 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.EndpointRouteDetails);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="deviceToken"></param>
         protected override async void OnRegistered(Context context, string deviceToken)
         {
             //Receive registration Id for sending GCM Push Notifications to
@@ -48,11 +68,21 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="registrationId"></param>
         protected override void OnUnRegistered(Context context, string registrationId)
         {
             //Receive notice that the app no longer wants notifications
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="intent"></param>
         protected override void OnMessage(Context context, Intent intent)
         {
             try
@@ -75,6 +105,12 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="errorId"></param>
+        /// <returns></returns>
         protected override bool OnRecoverableError(Context context, string errorId)
         {
             //Some recoverable error happened
@@ -83,6 +119,11 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             return base.OnRecoverableError(context, errorId);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="errorId"></param>
         protected override void OnError(Context context, string errorId)
         {
             RegistrationFailure?.Invoke(new Exception(errorId));

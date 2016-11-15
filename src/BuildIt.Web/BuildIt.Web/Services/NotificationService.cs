@@ -14,6 +14,7 @@ using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json;
 using BuildIt.Web.Utitlites;
 using BuildIt.Web.Models.PushNotifications;
+using BuildIt.Web.Models.Results;
 
 namespace BuildIt.Web.Services
 {

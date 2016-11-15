@@ -11,20 +11,40 @@ using UIKit;
 
 namespace BuildIt.Bot.Client.Impl.iOS
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class BotClientAppDelegateBase : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IPushRegistrationService
     {
         private readonly EndpointRouteDetails endpointRouteDetails;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Func<string> RetrieveCurrentRegistrationId { private get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<string> RegistrationSuccessful { private get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Action<Exception> RegistrationFailure { private get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="endpointRouteDetails"></param>
         protected BotClientAppDelegateBase(EndpointRouteDetails endpointRouteDetails)
         {
             this.endpointRouteDetails = endpointRouteDetails;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="googleApiConsoleAppProjectNumber"></param>
         protected void InitNotificationsAsync(string googleApiConsoleAppProjectNumber)
         {
             RegisterForPushNotifications();
@@ -32,6 +52,11 @@ namespace BuildIt.Bot.Client.Impl.iOS
             TryCleaningToastNotificationHistory();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="deviceToken"></param>
         public override async void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
             var trimmedDeviceToken = deviceToken?.Description;
@@ -42,12 +67,23 @@ namespace BuildIt.Bot.Client.Impl.iOS
 
             await RegisterForPushNotifications(trimmedDeviceToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="error"></param>
         public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
         {
             //base.FailedToRegisterForRemoteNotifications(application, error);
             RegistrationFailure?.Invoke(new Exception(error.ToString()));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="userInfo"></param>
+        /// <param name="completionHandler"></param>
         public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
         {
             TryCleaningToastNotificationHistory();            

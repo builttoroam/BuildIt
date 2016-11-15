@@ -41,14 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\INotificationService.cs" />
+    <Compile Include="Models\Results\ResultBase.cs" />
     <Compile Include="Models\Routing\CustomControllerRoutingModel.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Models\PushNotifications\HubRegistrationResult.cs" />
+    <Compile Include="Models\Results\HubRegistrationResult.cs" />
     <Compile Include="Models\PushNotifications\PushNotification.cs" />
     <Compile Include="Models\PushNotifications\PushRegistration.cs" />
-    <Compile Include="Models\PushNotifications\UserRegistrationResult.cs" />
+    <Compile Include="Models\Results\UserRegistrationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\LoggingHttpHandler.cs" />
   </ItemGroup>

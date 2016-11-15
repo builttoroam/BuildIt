@@ -1,9 +1,9 @@
-﻿namespace BuildIt.Web.Models.PushNotifications
+﻿namespace BuildIt.Web.Models.Results
 {
     /// <summary>
     /// 
     /// </summary>
-    public class HubRegistrationResult
+    public class HubRegistrationResult : ResultBase
     {
         /// <summary>
         /// 

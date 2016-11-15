@@ -8,6 +8,7 @@ using BuildIt.Bot.Client.Services.Interface;
 using BuildIt.Web;
 using BuildIt.Web.Models;
 using BuildIt.Web.Models.PushNotifications;
+using BuildIt.Web.Models.Results;
 using BuildIt.Web.Utilities;
 using Newtonsoft.Json;
 
