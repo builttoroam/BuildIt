@@ -76,7 +76,7 @@ namespace BuildItArSample.iOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            cameraFeedUtility = new CameraFeedUtility(View, CameraView);
+            
             NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidChangeStatusBarOrientationNotification, RotationChanged);
         }
 
@@ -100,6 +100,10 @@ namespace BuildItArSample.iOS
             try
             {
                 base.ViewDidAppear(animated);
+                if (cameraFeedUtility == null)
+                {
+                    cameraFeedUtility = new CameraFeedUtility(View, CameraView);
+                }
                 cameraFeedUtility.InitAndStartCamera();
                 if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
                 {
@@ -126,6 +130,7 @@ namespace BuildItArSample.iOS
         {
             try
             {
+                // remove any subviews if they exist
                 foreach (var view in events.Keys)
                 {
                     view.RemoveFromSuperview();
@@ -203,8 +208,6 @@ namespace BuildItArSample.iOS
 
                 var element = events[fe];
                 if (element == null) continue;
-
-                //Swap pitch & roll value in Portrait
 
                 var offset = world.CalculateOffset(element, (int) fe.Bounds.Width, (int) fe.Bounds.Height, roll, pitch, yaw);
 
