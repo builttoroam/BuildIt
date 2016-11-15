@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using BuildIt.Bot.Client.Impl.Droid.Utilities;
+using BuildIt.Bot.Client.Interfaces;
 using Gcm.Client;
 using Constants = BuildIt.Bot.Client.Impl.Droid.Utilities.Constants;
 

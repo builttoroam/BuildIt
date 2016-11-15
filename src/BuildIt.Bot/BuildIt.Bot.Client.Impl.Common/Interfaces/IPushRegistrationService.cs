@@ -19,6 +19,6 @@ namespace BuildIt.Bot.Client.Interfaces
         /// <summary>
         /// 
         /// </summary>
-        Action<Exception> RegistrationFailure { set; }
+        Action<Exception> RegistrationFailure { set; }        
     }
 }
