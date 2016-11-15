@@ -9,6 +9,8 @@ using BuildIt.Bot.Client.Services;
 using BuildIt.Web.Models.PushNotifications;
 using BuildIt.Web.Utilities;
 using Gcm.Client;
+using Xamarin.Forms;
+using Application = Android.App.Application;
 
 namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 {
@@ -16,23 +18,9 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
     /// 
     /// </summary>
     [Service] //Must use the service tag
-    public class GcmService : GcmServiceBase, IPushRegistrationService
+    public class GcmService : GcmServiceBase
     {
         private readonly BotClientMobileAppClient botClientMobileApp;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Func<string> RetrieveCurrentRegistrationId { private get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Action<string> RegistrationSuccessful { private get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public Action<Exception> RegistrationFailure { private get; set; }
 
         /// <summary>
         /// 
@@ -64,7 +52,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                RegistrationFailure?.Invoke(ex);
+                MessagingCenter.Send(this, null, ex);
             }
         }
 
@@ -114,7 +102,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         protected override bool OnRecoverableError(Context context, string errorId)
         {
             //Some recoverable error happened
-            RegistrationFailure?.Invoke(new Exception(errorId));
+            MessagingCenter.Send(this, null, new Exception(errorId));
 
             return base.OnRecoverableError(context, errorId);
         }
@@ -125,8 +113,8 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         /// <param name="context"></param>
         /// <param name="errorId"></param>
         protected override void OnError(Context context, string errorId)
-        {
-            RegistrationFailure?.Invoke(new Exception(errorId));
+        {            
+            MessagingCenter.Send(this, null, new Exception(errorId));
             //Some more serious error happened
         }
 
@@ -137,19 +125,23 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
                 var registration = new PushRegistration()
                 {
                     Handle = deviceToken,
-                    RegistrationId = RetrieveCurrentRegistrationId?.Invoke(),
+                    RegistrationId = Settings.Instance.RegistrationId,
                     Platform = PushPlatform.GCM
                 };
                 var hubRegistrationResult = await botClientMobileApp.RegisterPushAsync(registration);
                 if (hubRegistrationResult != null)
                 {
-                    RegistrationSuccessful?.Invoke(hubRegistrationResult.RegistrationId);
+                    MessagingCenter.Send(this, null, hubRegistrationResult.RegistrationId);
+                }
+                else
+                {
+                    MessagingCenter.Send(this, null, new Exception("Registration Failure"));
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                RegistrationFailure?.Invoke(ex);
+                Debug.WriteLine(ex.Message);
+                MessagingCenter.Send(this, null, ex);
             }
         }
 
