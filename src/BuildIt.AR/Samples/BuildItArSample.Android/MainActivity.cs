@@ -14,6 +14,7 @@ using Android.Views;
 using BuildIt.AR;
 using BuildIt.AR.Android;
 using BuildIt.AR.Android.Controls;
+using BuildIt.AR.Android.Utilities;
 using BuildIt.AR.Helpers;
 using BuildItArSample.Android.Controls;
 using Java.Lang;
@@ -28,7 +29,7 @@ namespace BuildItArSample.Android
     {
         private int numberOfCameras;
         private RelativeLayout arMarkerLayout;
-        private Camera camera;
+        //private Camera camera;
         private CameraPreview cameraPreview;
         private Rotation rotation;
         private ARWorld<POI> world;
@@ -42,12 +43,17 @@ namespace BuildItArSample.Android
         private LocationManager locationManager;
         private readonly IDictionary<POI, ArMarker> poiMarkers = new Dictionary<POI, ArMarker>();
         private List<POI> pois;
+        private CameraFeedUtility cameraFeedUtility;
 
         public override void OnConfigurationChanged(Configuration newConfig)
         {
             base.OnConfigurationChanged(newConfig);
             world.UpdateRotation();
-            UpdateCameraDisplayOrientation();
+            if (world != null)
+            {
+                cameraFeedUtility?.UpdatePreviewRotation(world.Rotation);
+            }
+            //UpdateCameraDisplayOrientation();
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -110,8 +116,13 @@ namespace BuildItArSample.Android
         {
             base.OnResume();
             cameraPreview = FindViewById<CameraPreview>(Resource.Id.texture);
-            cameraPreview?.InitPreview(this);
-            OpenCamera();
+            cameraPreview.InitPreview(this);
+            if (cameraFeedUtility == null)
+            {
+                cameraFeedUtility = new CameraFeedUtility(cameraPreview);
+            }
+            cameraFeedUtility.StartPreview();
+            cameraFeedUtility.UpdatePreviewRotation(world.Rotation);
             InitSensors();
         }
 
@@ -145,7 +156,7 @@ namespace BuildItArSample.Android
         protected override void OnPause()
         {
             base.OnPause();
-            if (camera != null)
+            /*if (camera != null)
             {
                 camera.StopPreview();
                 if (cameraPreview != null)
@@ -154,12 +165,13 @@ namespace BuildItArSample.Android
                 }
                 camera.Release();
                 camera = null;
-            }
+            }*/
+            cameraFeedUtility?.CleanUpCamera();
             world?.StopSensors();
             locationManager?.RemoveUpdates(this);
         }
 
-        private void OpenCamera()
+        /*private void OpenCamera()
         {
             try
             {
@@ -194,11 +206,11 @@ namespace BuildItArSample.Android
             catch (System.Exception ex)
             {
             }
-        }
+        }*/
 
        
 
-        private void UpdateCameraDisplayOrientation()
+        /*private void UpdateCameraDisplayOrientation()
         {
             var angle = 0;
             switch (world.Rotation)
@@ -217,7 +229,7 @@ namespace BuildItArSample.Android
             }
 
             camera?.SetDisplayOrientation(angle);
-        }
+        }*/
 
 
         private void UpdateElementsOnScreen(float roll, float pitch, float yaw)
