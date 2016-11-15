@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using BuildIt.Bot.Client.Models;
 using BuildIt.Bot.Client.Services.Interface;
 using BuildIt.Web;
 using BuildIt.Web.Models;
@@ -17,10 +18,7 @@ namespace BuildIt.Bot.Client.Services
     /// </summary>
     public class BotClientMobileAppClient : IBotClientMobileAppClient
     {
-        private readonly string baseServiceUrl;
-        private readonly string serviceAffix;
-        private readonly string registerPushRoute;
-        private readonly string deregisterPushRoute;
+        private readonly EndpointRouteDetails endpointRouteDetails;
 
         /// <summary>
         /// 
@@ -28,36 +26,31 @@ namespace BuildIt.Bot.Client.Services
         public bool IsMobileService { get; set; } = true;
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="baseServiceUrl"></param>
-        /// <param name="serviceAffix"></param>
-        /// <param name="registerPushRoute"></param>
-        /// <param name="deregisterPushRoute"></param>
-        public BotClientMobileAppClient(string baseServiceUrl, string serviceAffix = "api", string registerPushRoute = "registerpush", string deregisterPushRoute = "deregisterpush")
+        /// Route to the server is build from BaseServiceUrl, ServiceAffix and registerPushRoute variables, specified in the constructor.
+        /// The route by default could look like this: [your_base_url]/api/registerpush
+        /// </summary>        
+        /// <param name="endpointRouteDetails"></param>
+        public BotClientMobileAppClient(EndpointRouteDetails endpointRouteDetails)
         {
-            this.baseServiceUrl = baseServiceUrl;
-            this.serviceAffix = serviceAffix;
-            this.registerPushRoute = registerPushRoute;
-            this.deregisterPushRoute = deregisterPushRoute;
+            this.endpointRouteDetails = endpointRouteDetails;
         }
 
         /// <summary>
-        /// Method which, by making a call to the service, registers your device to push notifications.
-        /// Route to the server is build from baseServiceUrl, serviceAffix and registerPushRoute variables, specified in the constructor.
-        /// The route by default could look like this: <your_base_url>/api/registerpush
+        /// Method which, by making a call to the service, registers your device to push notifications hub.        
         /// </summary>
         /// <param name="pushRegistration"></param>
         /// <returns></returns>
         public async Task<HubRegistrationResult> RegisterPushAsync(PushRegistration pushRegistration)
         {
+            if (endpointRouteDetails?.BaseServiceUrl == null) return null;
+
             HubRegistrationResult hubRegistrationResult = null;
             try
             {
                 var json = JsonConvert.SerializeObject(pushRegistration);
                 using (var client = new HttpClient())
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Post, $"{baseServiceUrl}/{serviceAffix}/{registerPushRoute}");
+                    var request = new HttpRequestMessage(HttpMethod.Post, $"{endpointRouteDetails.BaseServiceUrl}/{endpointRouteDetails.ServiceAffix}/{endpointRouteDetails.RegisterPushRoute}");
                     request.Content = new StringContent(json);
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue(Constants.JsonMimeType);
                     if (IsMobileService) request.Content.Headers.Add("ZUMO-API-VERSION", "2.0.0");
@@ -88,7 +81,7 @@ namespace BuildIt.Bot.Client.Services
                 using (var client = new HttpClient())
                 {
                     var json = JsonConvert.SerializeObject(pushRegistration);
-                    var request = new HttpRequestMessage(HttpMethod.Post, $"{baseServiceUrl}/{serviceAffix}/{deregisterPushRoute}");
+                    var request = new HttpRequestMessage(HttpMethod.Post, $"{endpointRouteDetails.BaseServiceUrl}/{endpointRouteDetails.ServiceAffix}/{endpointRouteDetails.DeregisterPushRoute}");
                     request.Content = new StringContent(json);
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue(Constants.JsonMimeType);
                     if (IsMobileService) request.Content.Headers.Add("ZUMO-API-VERSION", "2.0.0");

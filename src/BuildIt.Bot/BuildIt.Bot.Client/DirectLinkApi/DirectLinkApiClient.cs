@@ -8,6 +8,9 @@ using Microsoft.Rest;
 
 namespace BuildIt.Bot.Client.DirectLinkApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class DirectLinkApiClient : ServiceClient<DirectLinkApiClient>, IDirectLinkApiClient
     {
         /// <summary>
@@ -19,8 +22,14 @@ namespace BuildIt.Bot.Client.DirectLinkApi
         /// Credentials for authenticating with the service.
         /// </summary>
         public ServiceClientCredentials Credentials { get; set; }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual IConversations Conversations { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual ITokens Tokens { get; }
 
         /// <summary>

@@ -7,6 +7,9 @@ using BuildIt.Bot.Client.DirectLinkApi.Interfaces;
 
 namespace BuildIt.Bot.Client.DirectLinkApi.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static partial class TokensExtensions
     {
         /// <param name='operations'>

@@ -12,6 +12,9 @@ using Microsoft.Rest;
 
 namespace BuildIt.Bot.Client.DirectLinkApi.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DirectLineApiService : IDirectLineApiService
     {
         //
@@ -25,16 +28,32 @@ namespace BuildIt.Bot.Client.DirectLinkApi.Services
 
         private DateTimeOffset convoTokenExpirationDate;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public const string TenantId = "BotConnector";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DirectLinkApiClient ConversationClient { get; private set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string ConversationId { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="masterClient"></param>
         public DirectLineApiService(IDirectLinkApiClient masterClient)
         {
             this.masterClient = masterClient;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> StartConversation()
         {
             if (string.IsNullOrWhiteSpace(ConversationId))
@@ -44,11 +63,19 @@ namespace BuildIt.Bot.Client.DirectLinkApi.Services
 
             return ConversationId;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void EndConversation()
         {
             ConversationId = null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task<bool> SendMessage(Message message)
         {
             var res = false;
