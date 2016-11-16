@@ -17,9 +17,6 @@ namespace BuildIt.Bot.Client.Impl.Droid
     /// </summary>
     public abstract class BotClientActivityBase : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IPushRegistrationService
     {
-        private const string SuccessSubscriptionMsg = "success";
-        private const string FailureSubscriptionMsg = "success";
-
         /// <summary>
         /// 
         /// </summary>
@@ -54,8 +51,8 @@ namespace BuildIt.Bot.Client.Impl.Droid
 
             try
             {
-                MessagingCenter.Subscribe<GcmService, string>(this, SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
-                MessagingCenter.Subscribe<GcmService, Exception>(this, FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
+                MessagingCenter.Subscribe<GcmService, string>(this, Constants.SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
+                MessagingCenter.Subscribe<GcmService, Exception>(this, Constants.FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
 
                 Settings.Instance.IsAppInForeground = true;
             }
@@ -74,8 +71,8 @@ namespace BuildIt.Bot.Client.Impl.Droid
 
             try
             {
-                MessagingCenter.Unsubscribe<GcmService, string>(this, SuccessSubscriptionMsg);
-                MessagingCenter.Unsubscribe<GcmService, Exception>(this, FailureSubscriptionMsg);
+                MessagingCenter.Unsubscribe<GcmService, string>(this, Constants.SuccessSubscriptionMsg);
+                MessagingCenter.Unsubscribe<GcmService, Exception>(this, Constants.FailureSubscriptionMsg);
 
                 Settings.Instance.IsAppInForeground = false;
             }

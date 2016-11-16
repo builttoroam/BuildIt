@@ -52,7 +52,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                MessagingCenter.Send(this, null, ex);
+                MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, ex);
             }
         }
 
@@ -75,6 +75,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         {
             try
             {
+                Debug.WriteLine("Push Notification received!");
                 if (!Settings.Instance.IsAppInForeground)
                 {
                     var contentAvailable = intent?.Extras.GetString(Constants.ContentAvailable);
@@ -102,7 +103,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         protected override bool OnRecoverableError(Context context, string errorId)
         {
             //Some recoverable error happened
-            MessagingCenter.Send(this, null, new Exception(errorId));
+            MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception(errorId));
 
             return base.OnRecoverableError(context, errorId);
         }
@@ -114,7 +115,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         /// <param name="errorId"></param>
         protected override void OnError(Context context, string errorId)
         {            
-            MessagingCenter.Send(this, null, new Exception(errorId));
+            MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception(errorId));
             //Some more serious error happened
         }
 
@@ -131,17 +132,17 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
                 var hubRegistrationResult = await botClientMobileApp.RegisterPushAsync(registration);
                 if (hubRegistrationResult != null)
                 {
-                    MessagingCenter.Send(this, null, hubRegistrationResult.RegistrationId);
+                    MessagingCenter.Send(this, Constants.SuccessSubscriptionMsg, hubRegistrationResult.RegistrationId);
                 }
                 else
                 {
-                    MessagingCenter.Send(this, null, new Exception("Registration Failure"));
+                    MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception("Registration Failure"));
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                MessagingCenter.Send(this, null, ex);
+                MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, ex);
             }
         }
 
