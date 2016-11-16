@@ -52,10 +52,17 @@ namespace BuildIt.Bot.Client.Impl.Droid
         {
             base.OnResume();
 
-            MessagingCenter.Subscribe<GcmService, string>(this, SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
-            MessagingCenter.Subscribe<GcmService, Exception>(this, FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
+            try
+            {
+                MessagingCenter.Subscribe<GcmService, string>(this, SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
+                MessagingCenter.Subscribe<GcmService, Exception>(this, FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
 
-            Settings.Instance.IsAppInForeground = true;
+                Settings.Instance.IsAppInForeground = true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         /// <summary>
@@ -65,10 +72,17 @@ namespace BuildIt.Bot.Client.Impl.Droid
         {
             base.OnPause();
 
-            MessagingCenter.Unsubscribe<GcmService, string>(this, SuccessSubscriptionMsg);
-            MessagingCenter.Unsubscribe<GcmService, Exception>(this, FailureSubscriptionMsg);
+            try
+            {
+                MessagingCenter.Unsubscribe<GcmService, string>(this, SuccessSubscriptionMsg);
+                MessagingCenter.Unsubscribe<GcmService, Exception>(this, FailureSubscriptionMsg);
 
-            Settings.Instance.IsAppInForeground = false;
+                Settings.Instance.IsAppInForeground = false;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         /// <summary>
