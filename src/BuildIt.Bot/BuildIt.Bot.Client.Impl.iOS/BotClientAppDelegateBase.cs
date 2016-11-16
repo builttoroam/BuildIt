@@ -43,9 +43,8 @@ namespace BuildIt.Bot.Client.Impl.iOS
 
         /// <summary>
         /// 
-        /// </summary>
-        /// <param name="googleApiConsoleAppProjectNumber"></param>
-        protected void InitNotificationsAsync(string googleApiConsoleAppProjectNumber)
+        /// </summary>        
+        protected void InitNotifications()
         {
             RegisterForPushNotifications();
 
