@@ -5,6 +5,7 @@ using BuildIt.Bot.Client.Interfaces;
 using BuildIt.Bot.Client.Models;
 using BuildIt.Bot.Client.Services;
 using BuildIt.Web.Models.PushNotifications;
+using BuildIt.Web.Models.Results;
 using BuildIt.Web.Utilities;
 using Foundation;
 using UIKit;

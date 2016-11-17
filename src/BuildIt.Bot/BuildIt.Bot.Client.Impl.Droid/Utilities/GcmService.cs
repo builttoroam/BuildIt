@@ -28,13 +28,16 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         public GcmService()
             : base(PushHandlerBroadcastReceiver.GoogleApiConsoleAppProjectNumber)
         {
-#if DEBUG
-            if (string.IsNullOrWhiteSpace(Settings.Instance.PushNotificationSettings.EndpointRouteDetails?.BaseServiceUrl))
+            if (string.IsNullOrWhiteSpace(Settings.Instance.PushNotificationSettings?.EndpointRouteDetails?.BaseServiceUrl))
             {
+#if DEBUG
                 throw new Exception("You need to set the BaseServiceUrl, in Settings.Instance.EndpointRouteDetails, before working with Push Notifications");
-            }
 #endif
-            this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.PushNotificationSettings.EndpointRouteDetails);
+            }
+            else
+            {
+                this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.PushNotificationSettings.EndpointRouteDetails);
+            }
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             //Receive registration Id for sending GCM Push Notifications to
             try
             {
-                await RegisterPushNotifications(deviceToken);
+                RegisterPushNotifications(deviceToken);
             }
             catch (Exception ex)
             {
@@ -119,7 +122,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             //Some more serious error happened
         }
 
-        private async Task RegisterPushNotifications(string deviceToken)
+        private async void RegisterPushNotifications(string deviceToken)
         {
             try
             {
