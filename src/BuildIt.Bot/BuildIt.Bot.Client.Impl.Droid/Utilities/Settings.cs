@@ -7,29 +7,19 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
     /// <summary>
     /// 
     /// </summary>
-    public sealed class Settings
+    internal sealed class Settings
     {
         internal bool IsAppInForeground { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public EndpointRouteDetails EndpointRouteDetails { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Type MainActivityType { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public PushNotificationDetails PushNotificationDetails { get; set; } = new PushNotificationDetails();
-
-        /// <summary>
-        /// 
+        /// Already existing push notification registration
         /// </summary>
         public string RegistrationId { get; set; }
+
+        /// <summary>
+        /// All the necessary settings for push notifications to work
+        /// </summary>
+        public PushNotificationSettings PushNotificationSettings { get; set; }
 
         private static volatile Settings instance;
         private static object syncRoot = new Object();
@@ -39,7 +29,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         /// <summary>
         /// 
         /// </summary>
-        public static Settings Instance
+        internal static Settings Instance
         {
             get
             {
@@ -56,6 +46,6 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 
                 return instance;
             }
-        }        
+        }
     }
 }

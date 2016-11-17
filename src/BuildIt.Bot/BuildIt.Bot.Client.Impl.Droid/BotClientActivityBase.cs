@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using BuildIt.Bot.Client.Impl.Droid.Models;
 using BuildIt.Bot.Client.Impl.Droid.Utilities;
 using BuildIt.Bot.Client.Interfaces;
 using Gcm.Client;
@@ -85,18 +86,27 @@ namespace BuildIt.Bot.Client.Impl.Droid
         /// <summary>
         /// 
         /// </summary>
-        protected void InitNotifications(string googleApiConsoleAppProjectNumber)
+        protected void InitNotifications(PushNotificationSettings settings)
         {
+            if (string.IsNullOrWhiteSpace(settings?.EndpointRouteDetails?.BaseServiceUrl) || string.IsNullOrWhiteSpace(settings.GoogleApiConsoleAppProjectNumber) || settings.MainActivityType == null)
+            {
+#if DEBUG
+                Debug.WriteLine("You need to specify all the necessary settings before you initializing push notifications");
+#endif
+                return;
+            }
+
             try
             {
                 Settings.Instance.RegistrationId = RetrieveCurrentRegistrationId?.Invoke();
+                Settings.Instance.PushNotificationSettings = settings;
 
                 //Check to see that GCM is supported and that the manifest has the correct information
                 GcmClient.CheckDevice(this);
                 GcmClient.CheckManifest(this);
 
                 //Call to Register the device for Push Notifications
-                GcmClient.Register(this, googleApiConsoleAppProjectNumber);
+                GcmClient.Register(this, settings.GoogleApiConsoleAppProjectNumber);
             }
             catch (Exception ex)
             {

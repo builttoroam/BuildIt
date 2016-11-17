@@ -29,12 +29,12 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             : base(PushHandlerBroadcastReceiver.GoogleApiConsoleAppProjectNumber)
         {
 #if DEBUG
-            if (string.IsNullOrWhiteSpace(Settings.Instance.EndpointRouteDetails?.BaseServiceUrl)))
+            if (string.IsNullOrWhiteSpace(Settings.Instance.EndpointRouteDetails?.BaseServiceUrl))
             {
                 throw new Exception("You need to set the BaseServiceUrl, in Settings.Instance.EndpointRouteDetails, before working with Push Notifications");
             }
 #endif
-            this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.EndpointRouteDetails);
+            this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.PushNotificationSettings.EndpointRouteDetails);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         /// <param name="context"></param>
         /// <param name="errorId"></param>
         protected override void OnError(Context context, string errorId)
-        {            
+        {
             MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception(errorId));
             //Some more serious error happened
         }
@@ -158,9 +158,9 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 
         private void DisplayPushNotification(string title, string body)
         {
-            Intent intent = new Intent(Application.Context, Settings.Instance.MainActivityType);
+            Intent intent = new Intent(Application.Context, Settings.Instance.PushNotificationSettings.MainActivityType);
             intent.PutExtra(Constants.PushNotificationExtra, true);
-            intent.SetFlags(Settings.Instance.PushNotificationDetails.ActivityFlags);
+            intent.SetFlags(Settings.Instance.PushNotificationSettings.ActivityFlags);
             // Create a PendingIntent; we're only using one PendingIntent (ID = 0):
             const int pendingIntentId = 0;
             PendingIntent pendingIntent = PendingIntent.GetActivity(this, pendingIntentId, intent, PendingIntentFlags.OneShot);
@@ -168,9 +168,9 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
                                                                     .SetContentText(body)
                                                                     .SetAutoCancel(true)
                                                                     .SetContentIntent(pendingIntent);
-            if (Settings.Instance.PushNotificationDetails?.SmallIcon.HasValue ?? false)
+            if (Settings.Instance.PushNotificationSettings?.SmallIcon.HasValue ?? false)
             {
-                notificationBuilder.SetSmallIcon(Settings.Instance.PushNotificationDetails.SmallIcon.Value);
+                notificationBuilder.SetSmallIcon(Settings.Instance.PushNotificationSettings.SmallIcon.Value);
             }
 
             var notificationManager = GetSystemService(NotificationService) as NotificationManager;

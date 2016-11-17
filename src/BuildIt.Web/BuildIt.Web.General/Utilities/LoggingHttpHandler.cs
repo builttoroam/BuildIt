@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace BuildIt.Web.Utilities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class LoggingHttpHandler : DelegatingHandler
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             try

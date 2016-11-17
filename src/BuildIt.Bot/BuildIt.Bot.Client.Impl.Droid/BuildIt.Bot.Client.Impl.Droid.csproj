@@ -126,9 +126,8 @@
   <ItemGroup>
     <Compile Include="BotClientActivityBase.cs" />
     <Compile Include="Extensions\BundleExtensions.cs" />
-    <Compile Include="Models\PushNotificationDetails.cs" />
+    <Compile Include="Models\PushNotificationSettings.cs" />
     <Compile Include="PushHandlerBroadcastReceiver.cs" />
-    <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Constants.cs" />
@@ -136,14 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\Values\Strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Drawable\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <XamarinComponentReference Include="GCMClient">
       <Visible>False</Visible>
