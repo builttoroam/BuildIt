@@ -29,7 +29,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             : base(PushHandlerBroadcastReceiver.GoogleApiConsoleAppProjectNumber)
         {
 #if DEBUG
-            if (string.IsNullOrWhiteSpace(Settings.Instance.EndpointRouteDetails?.BaseServiceUrl))
+            if (string.IsNullOrWhiteSpace(Settings.Instance.PushNotificationSettings.EndpointRouteDetails?.BaseServiceUrl))
             {
                 throw new Exception("You need to set the BaseServiceUrl, in Settings.Instance.EndpointRouteDetails, before working with Push Notifications");
             }
