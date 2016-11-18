@@ -4,12 +4,23 @@ using System.Threading.Tasks;
 
 namespace BuildIt.Config.Core.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AppConfigurationMapper
     {
         private readonly Dictionary<string, AppConfigurationMapperAttributes> configMap = new Dictionary<string, AppConfigurationMapperAttributes>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<AppConfigurationMapperAttributes> MappedValues => new List<AppConfigurationMapperAttributes>(configMap.Values);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mappedConfigKey"></param>
+        /// <returns></returns>
         public AppConfigurationMapperAttributes Map(string mappedConfigKey)
         {
             if (string.IsNullOrEmpty(mappedConfigKey)) return null;
@@ -21,6 +32,13 @@ namespace BuildIt.Config.Core.Models
             return configValue;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mappedConfigKey"></param>
+        /// <param name="isBlocking"></param>
+        /// <param name="failureHandler"></param>
+        /// <returns></returns>
         public AppConfigurationMapper EnsurePresence(string mappedConfigKey, bool isBlocking = false, Func<AppConfigurationValue, Task> failureHandler = null)
         {
             //TODO: not sure if we should return 'null' if failure or just make it safe to use no matter what and return 'this'

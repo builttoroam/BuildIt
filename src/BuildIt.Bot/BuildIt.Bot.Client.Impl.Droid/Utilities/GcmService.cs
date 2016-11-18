@@ -9,30 +9,18 @@ using BuildIt.Bot.Client.Services;
 using BuildIt.Web.Models.PushNotifications;
 using BuildIt.Web.Utilities;
 using Gcm.Client;
+using Xamarin.Forms;
+using Application = Android.App.Application;
 
 namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 {
     /// <summary>
     /// 
     /// </summary>
-    [Service] //Must use the service tag
-    public class GcmService : GcmServiceBase, IPushRegistrationService
+    [Service] //Must use the service tag    
+    public class GcmService : GcmServiceBase
     {
         private readonly BotClientMobileAppClient botClientMobileApp;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Func<string> RetrieveCurrentRegistrationId { private get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Action<string> RegistrationSuccessful { private get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public Action<Exception> RegistrationFailure { private get; set; }
 
         /// <summary>
         /// 
@@ -40,13 +28,16 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         public GcmService()
             : base(PushHandlerBroadcastReceiver.GoogleApiConsoleAppProjectNumber)
         {
-#if DEBUG
-            if (string.IsNullOrWhiteSpace(Settings.Instance.EndpointRouteDetails?.BaseServiceUrl)))
+            if (string.IsNullOrWhiteSpace(Settings.Instance.PushNotificationSettings?.EndpointRouteDetails?.BaseServiceUrl))
             {
+#if DEBUG
                 throw new Exception("You need to set the BaseServiceUrl, in Settings.Instance.EndpointRouteDetails, before working with Push Notifications");
-            }
 #endif
-            this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.EndpointRouteDetails);
+            }
+            else
+            {
+                this.botClientMobileApp = new BotClientMobileAppClient(Settings.Instance.PushNotificationSettings.EndpointRouteDetails);
+            }
         }
 
         /// <summary>
@@ -64,7 +55,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                RegistrationFailure?.Invoke(ex);
+                MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, ex);
             }
         }
 
@@ -87,6 +78,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         {
             try
             {
+                Debug.WriteLine("Push Notification received!");
                 if (!Settings.Instance.IsAppInForeground)
                 {
                     var contentAvailable = intent?.Extras.GetString(Constants.ContentAvailable);
@@ -114,7 +106,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         protected override bool OnRecoverableError(Context context, string errorId)
         {
             //Some recoverable error happened
-            RegistrationFailure?.Invoke(new Exception(errorId));
+            MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception(errorId));
 
             return base.OnRecoverableError(context, errorId);
         }
@@ -126,7 +118,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
         /// <param name="errorId"></param>
         protected override void OnError(Context context, string errorId)
         {
-            RegistrationFailure?.Invoke(new Exception(errorId));
+            MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception(errorId));
             //Some more serious error happened
         }
 
@@ -137,19 +129,23 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
                 var registration = new PushRegistration()
                 {
                     Handle = deviceToken,
-                    RegistrationId = RetrieveCurrentRegistrationId?.Invoke(),
+                    RegistrationId = Settings.Instance.RegistrationId,
                     Platform = PushPlatform.GCM
                 };
                 var hubRegistrationResult = await botClientMobileApp.RegisterPushAsync(registration);
                 if (hubRegistrationResult != null)
                 {
-                    RegistrationSuccessful?.Invoke(hubRegistrationResult.RegistrationId);
+                    MessagingCenter.Send(this, Constants.SuccessSubscriptionMsg, hubRegistrationResult.RegistrationId);
+                }
+                else
+                {
+                    MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, new Exception("Registration Failure"));
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                RegistrationFailure?.Invoke(ex);
+                Debug.WriteLine(ex.Message);
+                MessagingCenter.Send(this, Constants.FailureSubscriptionMsg, ex);
             }
         }
 
@@ -165,9 +161,9 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 
         private void DisplayPushNotification(string title, string body)
         {
-            Intent intent = new Intent(Application.Context, Settings.Instance.MainActivityType);
+            Intent intent = new Intent(Application.Context, Settings.Instance.PushNotificationSettings.MainActivityType);
             intent.PutExtra(Constants.PushNotificationExtra, true);
-            intent.SetFlags(Settings.Instance.PushNotificationDetails.ActivityFlags);
+            intent.SetFlags(Settings.Instance.PushNotificationSettings.ActivityFlags);
             // Create a PendingIntent; we're only using one PendingIntent (ID = 0):
             const int pendingIntentId = 0;
             PendingIntent pendingIntent = PendingIntent.GetActivity(this, pendingIntentId, intent, PendingIntentFlags.OneShot);
@@ -175,9 +171,9 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
                                                                     .SetContentText(body)
                                                                     .SetAutoCancel(true)
                                                                     .SetContentIntent(pendingIntent);
-            if (Settings.Instance.PushNotificationDetails?.SmallIcon.HasValue ?? false)
+            if (Settings.Instance.PushNotificationSettings?.SmallIcon.HasValue ?? false)
             {
-                notificationBuilder.SetSmallIcon(Settings.Instance.PushNotificationDetails.SmallIcon.Value);
+                notificationBuilder.SetSmallIcon(Settings.Instance.PushNotificationSettings.SmallIcon.Value);
             }
 
             var notificationManager = GetSystemService(NotificationService) as NotificationManager;

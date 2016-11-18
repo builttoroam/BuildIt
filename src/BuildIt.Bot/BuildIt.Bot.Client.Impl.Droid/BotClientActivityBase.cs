@@ -1,19 +1,41 @@
 using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using BuildIt.Bot.Client.Impl.Droid.Models;
 using BuildIt.Bot.Client.Impl.Droid.Utilities;
 using BuildIt.Bot.Client.Interfaces;
 using Gcm.Client;
+using Xamarin.Forms;
 using Constants = BuildIt.Bot.Client.Impl.Droid.Utilities.Constants;
+using Debug = System.Diagnostics.Debug;
 
 namespace BuildIt.Bot.Client.Impl.Droid
 {
     /// <summary>
     /// All of the activities MUST derive from this class
     /// </summary>
-    public abstract class BotClientActivityBase : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public abstract class BotClientActivityBase : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IPushRegistrationService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Func<string> RetrieveCurrentRegistrationId { private get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Action<string> RegistrationSuccessful { private get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Action<Exception> RegistrationFailure { private get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bundle"></param>
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -21,37 +43,74 @@ namespace BuildIt.Bot.Client.Impl.Droid
             TryCleaningToastNotificationHistory();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnResume()
         {
             base.OnResume();
 
-            Settings.Instance.IsAppInForeground = true;
-        }
+            try
+            {
+                MessagingCenter.Subscribe<GcmService, string>(this, Constants.SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
+                MessagingCenter.Subscribe<GcmService, Exception>(this, Constants.FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
 
-        protected override void OnPause()
-        {
-            base.OnPause();
-
-            Settings.Instance.IsAppInForeground = false;
+                Settings.Instance.IsAppInForeground = true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        protected void InitNotificationsAsync(string googleApiConsoleAppProjectNumber)
+        protected override void OnPause()
         {
+            base.OnPause();
+
             try
             {
+                MessagingCenter.Unsubscribe<GcmService, string>(this, Constants.SuccessSubscriptionMsg);
+                MessagingCenter.Unsubscribe<GcmService, Exception>(this, Constants.FailureSubscriptionMsg);
+
+                Settings.Instance.IsAppInForeground = false;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected void InitNotifications(PushNotificationSettings settings)
+        {
+            if (string.IsNullOrWhiteSpace(settings?.EndpointRouteDetails?.BaseServiceUrl) || string.IsNullOrWhiteSpace(settings.GoogleApiConsoleAppProjectNumber) || settings.MainActivityType == null)
+            {
+#if DEBUG
+                Debug.WriteLine("You need to specify all the necessary settings before you initializing push notifications");
+#endif
+                return;
+            }
+
+            try
+            {
+                Settings.Instance.RegistrationId = RetrieveCurrentRegistrationId?.Invoke();
+                Settings.Instance.PushNotificationSettings = settings;
+
                 //Check to see that GCM is supported and that the manifest has the correct information
                 GcmClient.CheckDevice(this);
                 GcmClient.CheckManifest(this);
 
                 //Call to Register the device for Push Notifications
-                GcmClient.Register(this, googleApiConsoleAppProjectNumber);
+                GcmClient.Register(this, settings.GoogleApiConsoleAppProjectNumber);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -73,7 +132,7 @@ namespace BuildIt.Bot.Client.Impl.Droid
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                Debug.WriteLine(e);
             }
 
             return false;

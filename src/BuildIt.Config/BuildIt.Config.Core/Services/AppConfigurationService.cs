@@ -13,6 +13,9 @@ using Newtonsoft.Json;
 
 namespace BuildIt.Config.Core.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AppConfigurationService : IAppConfigurationService
     {
         private readonly IAppConfigurationServiceSetup serviceSetup;
@@ -24,14 +27,32 @@ namespace BuildIt.Config.Core.Services
 
         private string currentAppConfigurationMd5Hash;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IUserDialogService UserDialogService { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public IVersionService VersionService { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AppConfigurationMapper Mapper { get; } = new AppConfigurationMapper();
+        /// <summary>
+        /// 
+        /// </summary>
         public AppConfiguration AppConfig { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<KeyValuePair<string, string>> AdditionalHeaders { get; set; } = new List<KeyValuePair<string, string>>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AppConfigurationService(IAppConfigurationRequiredServices requiredSerives)
         {
             this.serviceSetup = requiredSerives.ServiceSetup;
@@ -44,6 +65,9 @@ namespace BuildIt.Config.Core.Services
             this.fileCacheService.CacheExpired += OnCacheExpired;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<AppConfiguration> LoadAppConfig(bool handleLoadValidation = true, bool retrieveCachedVersion = true)
         {
             if (AppConfig != null) return AppConfig;

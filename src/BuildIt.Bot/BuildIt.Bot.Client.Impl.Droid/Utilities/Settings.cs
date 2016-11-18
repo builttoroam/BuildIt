@@ -4,22 +4,32 @@ using BuildIt.Bot.Client.Models;
 
 namespace BuildIt.Bot.Client.Impl.Droid.Utilities
 {
-    public sealed class Settings
+    /// <summary>
+    /// 
+    /// </summary>
+    internal sealed class Settings
     {
         internal bool IsAppInForeground { get; set; }
 
-        public EndpointRouteDetails EndpointRouteDetails { get; set; }
+        /// <summary>
+        /// Already existing push notification registration
+        /// </summary>
+        public string RegistrationId { get; set; }
 
-        public Type MainActivityType { get; set; }
-
-        public PushNotificationDetails PushNotificationDetails { get; set; } = new PushNotificationDetails();
+        /// <summary>
+        /// All the necessary settings for push notifications to work
+        /// </summary>
+        public PushNotificationSettings PushNotificationSettings { get; set; }
 
         private static volatile Settings instance;
         private static object syncRoot = new Object();
 
         private Settings() { }
 
-        public static Settings Instance
+        /// <summary>
+        /// 
+        /// </summary>
+        internal static Settings Instance
         {
             get
             {

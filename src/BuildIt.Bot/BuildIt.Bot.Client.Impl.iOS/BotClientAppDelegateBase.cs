@@ -5,6 +5,7 @@ using BuildIt.Bot.Client.Interfaces;
 using BuildIt.Bot.Client.Models;
 using BuildIt.Bot.Client.Services;
 using BuildIt.Web.Models.PushNotifications;
+using BuildIt.Web.Models.Results;
 using BuildIt.Web.Utilities;
 using Foundation;
 using UIKit;
@@ -16,7 +17,8 @@ namespace BuildIt.Bot.Client.Impl.iOS
     /// </summary>
     public abstract class BotClientAppDelegateBase : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IPushRegistrationService
     {
-        private readonly EndpointRouteDetails endpointRouteDetails;
+
+        private EndpointRouteDetails endpointRouteDetails;
 
         /// <summary>
         /// 
@@ -34,19 +36,26 @@ namespace BuildIt.Bot.Client.Impl.iOS
 
         /// <summary>
         /// 
-        /// </summary>
-        /// <param name="endpointRouteDetails"></param>
-        protected BotClientAppDelegateBase(EndpointRouteDetails endpointRouteDetails)
+        /// </summary>        
+        protected BotClientAppDelegateBase()
         {
-            this.endpointRouteDetails = endpointRouteDetails;
         }
 
         /// <summary>
         /// 
-        /// </summary>
-        /// <param name="googleApiConsoleAppProjectNumber"></param>
-        protected void InitNotificationsAsync(string googleApiConsoleAppProjectNumber)
+        /// </summary>        
+        // ReSharper disable once ParameterHidesMember
+        protected void InitNotifications(EndpointRouteDetails endpointRouteDetails)
         {
+            this.endpointRouteDetails = endpointRouteDetails;
+            if (string.IsNullOrWhiteSpace(this.endpointRouteDetails?.BaseServiceUrl))
+            {
+#if DEBUG
+                Debug.WriteLine("You need to specify base service url before you initializing push notifications");
+#endif
+                return;
+            }
+
             RegisterForPushNotifications();
 
             TryCleaningToastNotificationHistory();
@@ -86,7 +95,7 @@ namespace BuildIt.Bot.Client.Impl.iOS
         /// <param name="completionHandler"></param>
         public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
         {
-            TryCleaningToastNotificationHistory();            
+            TryCleaningToastNotificationHistory();
         }
 
         private void RegisterForPushNotifications()

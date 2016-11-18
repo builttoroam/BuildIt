@@ -6,7 +6,7 @@
         "BuildIt.General": {
             "target": "package",
             "version": "0.1.5.6-beta"
-        }
+        }        
     },
   "frameworks": {
     "netstandard1.1": {      

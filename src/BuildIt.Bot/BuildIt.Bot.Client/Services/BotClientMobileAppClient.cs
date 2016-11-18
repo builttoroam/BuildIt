@@ -41,11 +41,11 @@ namespace BuildIt.Bot.Client.Services
         /// </summary>
         /// <param name="pushRegistration"></param>
         /// <returns></returns>
-        public async Task<HubRegistrationResult> RegisterPushAsync(PushRegistration pushRegistration)
+        public async Task<BuildIt.Web.Models.Results.HubRegistrationResult> RegisterPushAsync(PushRegistration pushRegistration)
         {
             if (endpointRouteDetails?.BaseServiceUrl == null) return null;
 
-            HubRegistrationResult hubRegistrationResult = null;
+            BuildIt.Web.Models.Results.HubRegistrationResult hubRegistrationResult = null;
             try
             {
                 var json = JsonConvert.SerializeObject(pushRegistration);
@@ -59,7 +59,7 @@ namespace BuildIt.Bot.Client.Services
                     if (response.IsSuccessStatusCode)
                     {
                         var contentJson = await response.Content.ReadAsStringAsync();
-                        hubRegistrationResult = JsonConvert.DeserializeObject<HubRegistrationResult>(contentJson);
+                        hubRegistrationResult = JsonConvert.DeserializeObject<BuildIt.Web.Models.Results.HubRegistrationResult>(contentJson);
                     }
                 }
             }
