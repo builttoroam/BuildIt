@@ -17,7 +17,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
     /// <summary>
     /// 
     /// </summary>
-    [Service] //Must use the service tag
+    [Service] //Must use the service tag    
     public class GcmService : GcmServiceBase
     {
         private readonly BotClientMobileAppClient botClientMobileApp;
@@ -50,7 +50,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             //Receive registration Id for sending GCM Push Notifications to
             try
             {
-                RegisterPushNotifications(deviceToken);
+                await RegisterPushNotifications(deviceToken);
             }
             catch (Exception ex)
             {
@@ -122,7 +122,7 @@ namespace BuildIt.Bot.Client.Impl.Droid.Utilities
             //Some more serious error happened
         }
 
-        private async void RegisterPushNotifications(string deviceToken)
+        private async Task RegisterPushNotifications(string deviceToken)
         {
             try
             {

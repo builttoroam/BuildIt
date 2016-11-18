@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BuildIt.Bot.Client</id>
+    <version>$version$</version>
+    <title>BuildIt.Bot.Client</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>This library contains a number of helper methods and functions that makes work Bot Framework and Push Notifications easier</description>
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
+    <dependencies>      
+        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+        <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
+    </dependencies>      
+  </metadata>
+  <files>
+    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\netstandard1.1" />    
+    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\netstandard1.1" />
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\netstandard1.1" />    
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\netstandard1.1" />    
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\netstandard1.1" />
+    
+    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />    
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />    
+    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
+  </files>
+</package>

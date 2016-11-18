@@ -12,64 +12,38 @@
     <description>This library contains a number of helper methods and functions that makes work Bot Framework and Push Notifications easier</description>
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
-    <dependencies>
-      <group targetFramework="netstandard1.1">
-        <dependency id="BuildIt.General" version="0.1.6.35-beta" />
-        <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
-      </group>
+    <dependencies>      
       <group targetFramework="monoandroid">
-        <dependency id="BuildIt.General" version="0.1.6.35-beta" />        
+        <dependency id="BuildIt.General" version="0.1.6.35-beta" />  
+        <dependency id="BuildIt.Bot.Client" version="0.1.6.63-beta" />
         <dependency id="Xamarin.Forms" version="2.3.2.127" />        
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
       </group>
       <group targetFramework="xamarinios">
         <dependency id="BuildIt.General" version="0.1.6.35-beta" />        
+        <dependency id="BuildIt.Bot.Client" version="0.1.6.63-beta" />
         <dependency id="Xamarin.Forms" version="2.3.2.127" />
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
       </group>
       <group targetFramework="uap">
-        <dependency id="BuildIt.General" version="0.1.6.35-beta" />     
+        <dependency id="BuildIt.General" version="0.1.6.35-beta" />   
+        <dependency id="BuildIt.Bot.Client" version="0.1.6.63-beta" />
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
       </group>
     </dependencies>    
   </metadata>
   <files>
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\netstandard1.1" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\netstandard1.1" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\netstandard1.1" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\netstandard1.1" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\netstandard1.1" />
-    
-    <file src="BuildIt.Bot.Client.Impl.Droid\bin\Release\BuildIt.Bot.Client.Impl.Droid.dll" target="lib\monoandroid60" />
-    <file src="BuildIt.Bot.Client.Impl.Droid\bin\Release\BuildIt.Bot.Client.Impl.Droid.xml" target="lib\monoandroid60" />
-    <file src="BuildIt.Bot.Client.Impl.Droid\bin\Release\BuildIt.Bot.Client.Impl.Droid.pdb" target="lib\monoandroid60" />
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\monoandroid60" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\monoandroid60" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\monoandroid60" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\monoandroid60" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\monoandroid60" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\monoandroid60" />    
+    <file src="BuildIt.Bot.Client.Impl.Droid\bin\Release\BuildIt.Bot.Client.Impl.Droid.dll" target="lib\monoandroid" />
+    <file src="BuildIt.Bot.Client.Impl.Droid\bin\Release\BuildIt.Bot.Client.Impl.Droid.xml" target="lib\monoandroid" />
+    <file src="BuildIt.Bot.Client.Impl.Droid\bin\Release\BuildIt.Bot.Client.Impl.Droid.pdb" target="lib\monoandroid" />    
     
     <file src="BuildIt.Bot.Client.Impl.iOS\bin\Release\BuildIt.Bot.Client.Impl.iOS.dll" target="lib\xamarinios10" />
     <file src="BuildIt.Bot.Client.Impl.iOS\bin\Release\BuildIt.Bot.Client.Impl.iOS.xml" target="lib\xamarinios10" />
     <file src="BuildIt.Bot.Client.Impl.iOS\bin\Release\BuildIt.Bot.Client.Impl.iOS.pdb" target="lib\xamarinios10" />
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\xamarinios10" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\xamarinios10" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\xamarinios10" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\xamarinios10" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\xamarinios10" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\xamarinios10" />    
     
     <file src="BuildIt.Bot.Client.Impl.UWP\bin\Release\BuildIt.Bot.Client.Impl.UWP.dll" target="lib\uap" />
     <file src="BuildIt.Bot.Client.Impl.UWP\bin\Release\BuildIt.Bot.Client.Impl.UWP.xml" target="lib\uap" />
-    <file src="BuildIt.Bot.Client.Impl.UWP\bin\Release\BuildIt.Bot.Client.Impl.UWP.pdb" target="lib\uap" />
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\uap" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\uap" />    
-    <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\uap" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\uap" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\uap" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\uap" />
+    <file src="BuildIt.Bot.Client.Impl.UWP\bin\Release\BuildIt.Bot.Client.Impl.UWP.pdb" target="lib\uap" />    
        
   </files>
 </package>
