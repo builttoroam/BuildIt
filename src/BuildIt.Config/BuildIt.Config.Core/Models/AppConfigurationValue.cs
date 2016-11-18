@@ -5,12 +5,24 @@ using Newtonsoft.Json;
 
 namespace BuildIt.Config.Core.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AppConfigurationValue
-    {        
+    {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Value { get; set; }
 
-        public AppConfigurationMapperAttributes Attributes { get; set; }  
+        /// <summary>
+        /// 
+        /// </summary>
+        public AppConfigurationMapperAttributes Attributes { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public T GetValue<T>()
         {
             if (Attributes == null) return default(T);
