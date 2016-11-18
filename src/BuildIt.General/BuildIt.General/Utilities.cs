@@ -197,13 +197,13 @@ namespace BuildIt
         }
 
 
-        public static string SafeDecendentValue(this XElement element, string name)
+        public static string SafeDescendentValue(this XElement element, string name)
         {
             var dec = element?.Descendants(name).FirstOrDefault();
             return dec?.Value ?? string.Empty;
         }
 
-        public static string SafeDecendentValue(this XElement element, XName name)
+        public static string SafeDescendentValue(this XElement element, XName name)
         {
             var dec = element?.Descendants(name).FirstOrDefault();
             return dec?.Value ?? string.Empty;
