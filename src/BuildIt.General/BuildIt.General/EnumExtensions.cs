@@ -16,7 +16,7 @@ namespace BuildIt
             return typeInfo.GetDeclaredField(name)
                 .GetCustomAttributes(false)
                 .OfType<TAttribute>()
-                .SingleOrDefault();
+                .FirstOrDefault();
         }
     }
 }

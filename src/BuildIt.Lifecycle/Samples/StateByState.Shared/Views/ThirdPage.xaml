@@ -8,34 +8,34 @@
                     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--<VisualStateManager.VisualStateGroups>
+        <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ThirdVS">
                 <VisualState x:Name="One">
-                    <VisualState.Setters>
+                    <!--<VisualState.Setters>
                         <Setter Target="button.(Control.IsEnabled)"
                                 Value="True" />
-                    </VisualState.Setters>
+                    </VisualState.Setters>-->
                 </VisualState>
                 <VisualState x:Name="Two">
-                    <VisualState.Setters>
+                    <!--<VisualState.Setters>
                         <Setter Target="button1.(Control.IsEnabled)"
                                 Value="True" />
-                    </VisualState.Setters>
+                    </VisualState.Setters>-->
                 </VisualState>
                 <VisualState x:Name="Three">
-                    <VisualState.Setters>
+                    <!--<VisualState.Setters>
                         <Setter Target="button2.(Control.IsEnabled)"
                                 Value="True" />
-                    </VisualState.Setters>
+                    </VisualState.Setters>-->
                 </VisualState>
                 <VisualState x:Name="Four">
-                    <VisualState.Setters>
+                    <!--<VisualState.Setters>
                         <Setter Target="button3.(Control.IsEnabled)"
                                 Value="True" />
-                    </VisualState.Setters>
+                    </VisualState.Setters>-->
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>-->
+        </VisualStateManager.VisualStateGroups>
         <local:CustomSplitView DisplayMode="Inline"
                                IsPaneOpen="True"
                                OpenPaneLength="400"

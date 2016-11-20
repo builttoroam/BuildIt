@@ -1108,6 +1108,43 @@ where TStateData : INotifyPropertyChanged
         //        TElement>(vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, element);
         //}
 
+        public static
+       IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
+       Change<TState, TElement, TPropertyValue>(
+       this IStateDefinitionValueTargetBuilder<TState, TElement> vsmGroup,
+       Expression<Func< TPropertyValue>> getter,
+       Action<TElement, TPropertyValue> setter = null) where TState : struct
+        {
+            if (vsmGroup == null || getter == null) return null;
+
+            if (setter == null)
+            {
+                var propertyName = (getter.Body as MemberExpression)?.Member.Name;
+                var pinfo = vsmGroup.Target.GetType().GetRuntimeProperty(propertyName);
+                setter = (element, value) =>
+                {
+                    pinfo.SetValue(element, value);
+                };
+            }
+
+            var vsv = new StateValue<TElement, TPropertyValue>
+            {
+                Key = new Tuple<object, string>(vsmGroup.Target, (getter.Body as MemberExpression)?.Member.Name),
+                Element = vsmGroup.Target,
+                Getter = (vm)=> getter.Compile().Invoke(),
+                Setter = setter
+            };
+            return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
+            {
+                StateManager = vsmGroup.StateManager,
+                StateGroup = vsmGroup.StateGroup,
+                State = vsmGroup.State,
+                Value = vsv
+            };
+            //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>, StateValue<TElement, TPropertyValue>>(
+            //    vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, vsv);
+        }
+
 
         public static
             IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
@@ -1164,6 +1201,22 @@ where TStateData : INotifyPropertyChanged
             //vsmGroup.Item3.Values.Add(vsmGroup.Item4);
             return vsmGroup;
         }
+
+        public static
+          IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
+          this IStateDefinitionBuilder<TState> vsmGroup,
+          Expression<Func<TPropertyValue>> getter,
+          TPropertyValue value) where TState : struct
+        {
+            var property = (getter.Body as MemberExpression)?.Expression as ConstantExpression;
+            var element = property?.Value;
+
+            return vsmGroup
+                .Target(element)
+                .Change(getter)
+                .ToValue(value);
+        }
+
 
         public static
             IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TElement, TPropertyValue>(

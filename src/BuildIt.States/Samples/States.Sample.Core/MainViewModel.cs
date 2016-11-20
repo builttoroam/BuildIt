@@ -46,7 +46,7 @@ namespace States.Sample.Core
 
             StateManager.Group<SizeStates>()
                 .DefineState(SizeStates.Narrow)
-                .ChangePropertyValue(vm => CurrentStateName, "Narrow")
+                .ChangePropertyValue(() => CurrentStateName, "Narrow")
                 .DefineState(SizeStates.Normal)
                 .ChangePropertyValue(vm => CurrentStateName, "Normal")
                 .DefineState(SizeStates.Large)
