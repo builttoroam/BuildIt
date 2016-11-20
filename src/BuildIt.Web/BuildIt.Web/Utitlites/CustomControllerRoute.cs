@@ -19,18 +19,15 @@ namespace BuildIt.Web.Utitlites
     /// </summary>
     public class CustomControllerRoute<T> : RouteBase where T : System.Web.Mvc.Controller
     {
-        private readonly CustomControllerRoutingModel<T> routingModel;
-        private readonly object[] constructorParameters;
+        private readonly CustomControllerRoutingModel<T> routingModel;        
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="routingModel"></param>
-        /// <param name="constructorParameters"></param>
-        public CustomControllerRoute(CustomControllerRoutingModel<T> routingModel = null, params object[] constructorParameters)
+        /// <param name="routingModel"></param>        
+        public CustomControllerRoute(CustomControllerRoutingModel<T> routingModel = null)
         {
-            this.routingModel = routingModel ?? CustomControllerRoutingModel<T>.Default;
-            this.constructorParameters = constructorParameters;
+            this.routingModel = routingModel ?? CustomControllerRoutingModel<T>.Default;            
         }
 
         /// <summary>
