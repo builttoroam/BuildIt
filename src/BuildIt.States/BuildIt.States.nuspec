@@ -15,7 +15,6 @@
     <dependencies>
       <group targetFramework="netstandard1.0">
         <dependency id="BuildIt.General" version="1.0.0" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
       </group>
       <group targetFramework="uap">
         <dependency id="BuildIt.General" version="1.0.0" />

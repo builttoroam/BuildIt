@@ -203,3 +203,6 @@ FakesAssemblies/
 /src/Samples/StateByState/StateByState.Android/StateByState.Android.csproj.bak
 /src/Samples/StateByState/StateByState.XForms/Droid/StateByState.XForms.Droid.csproj.bak
 /src/**/lib
+
+# Visual Studio project file backups
+*.csproj.bak
