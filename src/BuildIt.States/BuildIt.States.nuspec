@@ -14,10 +14,10 @@
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework="netstandard1.0">
-        <dependency id="BuildIt.General" version="1.0.0" />
+        <dependency id="BuildIt.General" version="0.9.0" />
       </group>
       <group targetFramework="uap">
-        <dependency id="BuildIt.General" version="1.0.0" />
+        <dependency id="BuildIt.General" version="0.9.0" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2" />
       </group>
     </dependencies>
