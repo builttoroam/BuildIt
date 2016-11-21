@@ -4,8 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using BuildIt.Autofac;
+using BuildIt.Lifecycle;
+using BuildIt.ServiceLocation;
 using BuildIt.States.Completion;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BuildIt.States.Tests
 {
@@ -24,10 +28,10 @@ namespace BuildIt.States.Tests
         {
             public string InitValue1 { get; set; }
         }
-        public class State1Data : NotifyBase, 
+        public class State1Data : NotifyBase,
             ICompletion<DefaultCompletion>,
             ICompletion<TestCompletion>,
-            ICompletionWithData<TestCompletion,int>
+            ICompletionWithData<TestCompletion, int>
         {
             private event EventHandler<CompletionEventArgs<TestCompletion>> TestComplete;
 
@@ -36,22 +40,22 @@ namespace BuildIt.States.Tests
             public event EventHandler<CompletionEventArgs<DefaultCompletion>> Complete;
 
             public event EventHandler CustomEvent1;
-            public event EventHandler<ParameterEventArgs<bool>>  CustomEvent2;
+            public event EventHandler<ParameterEventArgs<bool>> CustomEvent2;
 
             public void RaiseCustomEvent1()
             {
-                CustomEvent1?.Invoke(this,EventArgs.Empty);
+                CustomEvent1?.Invoke(this, EventArgs.Empty);
             }
 
             public void RaiseCustomEvent2(bool val)
             {
-                CustomEvent2?.Invoke(this,val);
+                CustomEvent2?.Invoke(this, val);
             }
 
             public void RaiseComplete()
             {
                 Complete?.Invoke(this,
-                    new CompletionEventArgs<DefaultCompletion> {Completion = DefaultCompletion.Complete});
+                    new CompletionEventArgs<DefaultCompletion> { Completion = DefaultCompletion.Complete });
             }
 
             public bool HasCustomEvent1Handlers => CustomEvent1 != null;
@@ -59,12 +63,12 @@ namespace BuildIt.States.Tests
 
             public void RaiseTestComplete(TestCompletion completion)
             {
-                TestComplete?.Invoke(this, new CompletionEventArgs<TestCompletion> {Completion = completion});
+                TestComplete?.Invoke(this, new CompletionEventArgs<TestCompletion> { Completion = completion });
             }
 
             public void RaiseTestCompleteWithData(TestCompletion completion)
             {
-                CompleteWithData?.Invoke(this, new CompletionWithDataEventArgs<TestCompletion,int> { Completion = completion, Data=TestBoolValue?1:0 });
+                CompleteWithData?.Invoke(this, new CompletionWithDataEventArgs<TestCompletion, int> { Completion = completion, Data = TestBoolValue ? 1 : 0 });
             }
 
             event EventHandler<CompletionEventArgs<TestCompletion>> ICompletion<TestCompletion>.Complete
@@ -97,11 +101,20 @@ namespace BuildIt.States.Tests
         [TestInitialize]
         public void TestInit()
         {
+            var build = new ContainerBuilder();
+            var container = build.Build();
+            var csl = new AutofacServiceLocator(container);
+            Container = new AutofacDependencyContainer(container);
+            using (Container.StartUpdate())
+            {
+                Container.Register<BasicDebugLogger, ILogService>();
+            }
             //var build = new ContainerBuilder();
             //var container = build.Build();
             //var csl = new AutofacServiceLocator(container);
-            //ServiceLocator.SetLocatorProvider(() => csl);
+            ServiceLocator.SetLocatorProvider(() => csl);
         }
+
 
         [TestMethod]
         public void TestNullBuilder()
@@ -141,9 +154,9 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
             Assert.AreEqual(1, sm.StateGroups.Count);
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             Assert.IsNotNull(grp);
-            Assert.IsInstanceOfType(builder, typeof (IStateGroupBuilder<TestStates>));
+            Assert.IsInstanceOfType(builder, typeof(IStateGroupBuilder<TestStates>));
         }
 
         [TestMethod]
@@ -157,9 +170,9 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(2, sm.StateGroups.Count);
             Assert.AreNotEqual(builder, builder2);
 
-            var grp = sm.StateGroups[typeof (MoreStates)] as StateGroup<MoreStates>;
+            var grp = sm.StateGroups[typeof(MoreStates)] as StateGroup<MoreStates>;
             Assert.IsNotNull(grp);
-            Assert.IsInstanceOfType(builder2, typeof (IStateGroupBuilder<MoreStates>));
+            Assert.IsInstanceOfType(builder2, typeof(IStateGroupBuilder<MoreStates>));
         }
 
 
@@ -171,7 +184,7 @@ namespace BuildIt.States.Tests
             var builder = sm.Group<TestStates>()
                 .WithHistory();
             Assert.AreEqual(1, sm.StateGroups.Count);
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             Assert.AreEqual(true, grp.TrackHistory);
         }
 
@@ -182,13 +195,13 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             Assert.AreEqual(0, grp.States.Count);
             builder = builder.DefineAllStates();
 
             // Note: There is no state defined for the first, or default, value of an enum
             Assert.AreEqual(
-                typeof (TestStates).GetRuntimeFields().Count(f => (f.Attributes & FieldAttributes.Literal) > 0) - 1,
+                typeof(TestStates).GetRuntimeFields().Count(f => (f.Attributes & FieldAttributes.Literal) > 0) - 1,
                 grp.States.Count);
         }
 
@@ -198,7 +211,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             Assert.AreEqual(0, grp.States.Count);
             builder.DefineState(TestStates.Base);
             Assert.AreEqual(0, grp.States.Count);
@@ -219,7 +232,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var st = builder.DefineState(TestStates.State1);
             Assert.AreEqual(0, st.State.Triggers.Count);
@@ -258,10 +271,10 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var st = builder.DefineState(TestStates.State1).OnComplete(TestCompletion.Complete1);
-            Assert.IsInstanceOfType(st, typeof (IStateCompletionBuilder<TestStates, TestCompletion>));
+            Assert.IsInstanceOfType(st, typeof(IStateCompletionBuilder<TestStates, TestCompletion>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -275,10 +288,10 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var st = builder.DefineState(TestStates.State1).OnDefaultComplete();
-            Assert.IsInstanceOfType(st, typeof (IStateCompletionBuilder<TestStates, DefaultCompletion>));
+            Assert.IsInstanceOfType(st, typeof(IStateCompletionBuilder<TestStates, DefaultCompletion>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -292,12 +305,12 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var st =
                 builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
                     .OnComplete(TestCompletion.Complete1);
-            Assert.IsInstanceOfType(st, typeof (IStateWithDataCompletionBuilder<TestStates, State1Data, TestCompletion>));
+            Assert.IsInstanceOfType(st, typeof(IStateWithDataCompletionBuilder<TestStates, State1Data, TestCompletion>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -312,11 +325,11 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var st = builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1).OnDefaultComplete();
             Assert.IsInstanceOfType(st,
-                typeof (IStateWithDataCompletionBuilder<TestStates, State1Data, DefaultCompletion>));
+                typeof(IStateWithDataCompletionBuilder<TestStates, State1Data, DefaultCompletion>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -331,10 +344,10 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             var complete = false;
             var st = builder.DefineState(TestStates.State1).OnCompleteWithData(TestCompletion.Complete1, () => complete);
-            Assert.IsInstanceOfType(st, typeof (IStateCompletionWithDataBuilder<TestStates, TestCompletion, bool>));
+            Assert.IsInstanceOfType(st, typeof(IStateCompletionWithDataBuilder<TestStates, TestCompletion, bool>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -352,10 +365,10 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             var complete = false;
             var st = builder.DefineState(TestStates.State1).OnDefaultCompleteWithData(() => complete);
-            Assert.IsInstanceOfType(st, typeof (IStateCompletionWithDataBuilder<TestStates, DefaultCompletion, bool>));
+            Assert.IsInstanceOfType(st, typeof(IStateCompletionWithDataBuilder<TestStates, DefaultCompletion, bool>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -375,12 +388,12 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
             var st =
                 builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
                     .OnCompleteWithData(TestCompletion.Complete1, (sd) => sd.TestBoolValue);
             Assert.IsInstanceOfType(st,
-                typeof (IStateWithDataCompletionWithDataBuilder<TestStates, State1Data, TestCompletion, bool>));
+                typeof(IStateWithDataCompletionWithDataBuilder<TestStates, State1Data, TestCompletion, bool>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -402,13 +415,13 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var st =
                 builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
                     .OnDefaultCompleteWithData((sd) => sd.TestBoolValue);
             Assert.IsInstanceOfType(st,
-                typeof (IStateWithDataCompletionWithDataBuilder<TestStates, State1Data, DefaultCompletion, bool>));
+                typeof(IStateWithDataCompletionWithDataBuilder<TestStates, State1Data, DefaultCompletion, bool>));
 
             Assert.IsNotNull(st.StateManager);
             Assert.IsNotNull(st.StateGroup);
@@ -430,7 +443,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -458,7 +471,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof (TestStates)] as StateGroup<TestStates>;
+            var grp = sm.StateGroups[typeof(TestStates)] as StateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -471,12 +484,12 @@ namespace BuildIt.States.Tests
             grp.RegisterDependencies(Container);
 
             Assert.AreEqual(TestStates.Base, sm.CurrentState<TestStates>());
-            var data= (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
             Assert.IsNull(data);
 
             await sm.GoToState(TestStates.State1);
             Assert.AreEqual(TestStates.State1, sm.CurrentState<TestStates>());
-            data=(sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
             Assert.IsNotNull(data);
             Assert.IsTrue(data.HasCustomEvent1Handlers);
 
@@ -486,12 +499,6 @@ namespace BuildIt.States.Tests
             var newdata = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
             Assert.IsNull(newdata);
             Assert.IsFalse(data.HasCustomEvent1Handlers);
-
-
-
-
-
-
         }
 
 
@@ -539,10 +546,10 @@ namespace BuildIt.States.Tests
             var sd = new State1Data();
 
             builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
-                .OnCompleteWithData(TestCompletion.Complete1,vm=>vm.TestBoolValue)
+                .OnCompleteWithData(TestCompletion.Complete1, vm => vm.TestBoolValue)
                 .ChangeState(TestStates.State2);
             builder.DefineStateWithData<TestStates, State2Data>(TestStates.State2)
-                .WhenChangedToWithData((State2Data vm,  int d) => vm.InitValue1 = $"Input: {d}");
+                .WhenChangedToWithData((State2Data vm, int d) => vm.InitValue1 = $"Input: {d}");
 
             grp.RegisterDependencies(Container);
 
@@ -581,7 +588,7 @@ namespace BuildIt.States.Tests
                             .InitializeNewState<TestStates, State1Data, State2Data, int>(
                                 (vm, d) => vm.InitValue1 = $"Custom init {d}")
                 .DefineStateWithData<TestStates, State2Data>(TestStates.State2);
-                    //.WhenChangedToWithData((State2Data vm, int d) => vm.InitValue1 = $"Input: {d}");
+            //.WhenChangedToWithData((State2Data vm, int d) => vm.InitValue1 = $"Input: {d}");
 
             grp.RegisterDependencies(Container);
 
