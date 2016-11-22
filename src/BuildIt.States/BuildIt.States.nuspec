@@ -20,14 +20,45 @@
       <group targetFramework="netstandard1.0">
         <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
         <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="netstandard1.1">
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="netstandard1.2">
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="netstandard1.3">
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="netstandard1.4">
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="netstandard1.5">
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+      </group>
+      <group targetFramework="netstandard1.6">
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
       </group>
       <group targetFramework="monoandroid">
         <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
         <dependency id="BuildIt.General" version="1.0.0.1" />
       </group>
       <group targetFramework="xamarinios">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->  
-        <dependency id="BuildIt.General" version="1.0.0.1" />     
+        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
+        <dependency id="BuildIt.General" version="1.0.0.1" />
       </group>
       <group targetFramework="uap">
         <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
@@ -40,25 +71,25 @@
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.0" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.0" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.0" />
-    
+
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\monoandroid" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\monoandroid" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\monoandroid" />
-    
+
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\xamarinios10" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\xamarinios10" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\xamarinios10" />
-    
+
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\portable-win+net45+wp8+win8+wpa81" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\portable-win+net45+wp8+win8+wpa81" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\portable-win+net45+wp8+win8+wpa81" />
-    
+
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\uap" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\uap" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.dll" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.pdb" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.xml" target="lib\uap" />
-    
+
   </files>
 </package>
