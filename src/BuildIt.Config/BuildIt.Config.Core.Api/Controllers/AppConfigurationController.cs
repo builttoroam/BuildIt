@@ -13,6 +13,7 @@ using System.Web.Http;
 
 namespace BuildIt.Config.Core.Api.Controllers
 {
+
 #if NETStandard16
     public class AppConfigurationController : Controller
 #elif NET452    
@@ -20,6 +21,7 @@ namespace BuildIt.Config.Core.Api.Controllers
 #endif
     {
 
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
 #if NETStandard16
         public AppConfigurationServerResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #elif NET452
