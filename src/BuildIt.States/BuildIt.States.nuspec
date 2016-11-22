@@ -72,6 +72,30 @@
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.0" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.0" />
 
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.1" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.1" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.1" />
+
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.2" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.2" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.2" />
+
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.3" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.3" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.3" />
+
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.4" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.4" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.4" />
+
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.5" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.5" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.5" />
+
+    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.6" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.6" />
+    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.6" />
+
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\monoandroid" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\monoandroid" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\monoandroid" />
