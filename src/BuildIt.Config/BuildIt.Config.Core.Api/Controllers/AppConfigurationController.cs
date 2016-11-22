@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Web.UI;
 using BuildIt.Config.Core;
 using BuildIt.Config.Core.Models;
 #if NETStandard16
@@ -21,10 +22,12 @@ namespace BuildIt.Config.Core.Api.Controllers
 #endif
     {
 
-        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+
 #if NETStandard16
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public AppConfigurationServerResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #elif NET452
+        [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
         public JsonResult Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, string hash = null)
 #endif
         {
