@@ -13,7 +13,8 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="BuildIt.General" version="1.0.0.1" />
+      <dependency id="BuildIt.General" version="1.0.0.20" />
+      <dependency id="BuildIt.Config.Core" version="1.0.0.20-beta" />
       <dependency id="Acr.UserDialogs" version="6.2.3" />
       <dependency id="PCLStorage" version="1.0.2" />
       <dependency id="Xam.Plugin.Connectivity" version="2.2.12" />
