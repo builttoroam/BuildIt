@@ -22,36 +22,6 @@
         <dependency id="BuildIt.General" version="1.0.0.1" />
         <dependency id="NETStandard.Library" version="1.6.0" />
       </group>
-      <group targetFramework="netstandard1.1">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-      </group>
-      <group targetFramework="netstandard1.2">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-      </group>
-      <group targetFramework="netstandard1.3">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-      </group>
-      <group targetFramework="netstandard1.4">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-      </group>
-      <group targetFramework="netstandard1.5">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-      </group>
-      <group targetFramework="netstandard1.6">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
-      </group>
       <group targetFramework="monoandroid">
         <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
         <dependency id="BuildIt.General" version="1.0.0.1" />
@@ -72,29 +42,6 @@
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.0" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.0" />
 
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.1" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.1" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.1" />
-
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.2" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.2" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.2" />
-
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.3" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.3" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.3" />
-
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.4" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.4" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.4" />
-
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.5" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.5" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.5" />
-
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.6" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.6" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.6" />
 
     <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\monoandroid" />
     <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\monoandroid" />
