@@ -15,7 +15,7 @@
     <dependencies>
       <group targetFramework="netstandard1.6">
         <dependency id="BuildIt.General" version="1.0.0.20" />
-        <dependency id="BuildIt.Config.Core" version="1.0.0.22-beta" />
+        <dependency id="BuildIt.Config.Core" version="$version$" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
@@ -24,7 +24,7 @@
       </group>
       <group targetFramework="net452">
         <dependency id="BuildIt.General" version="1.0.0.20" />
-        <dependency id="BuildIt.Config.Core" version="1.0.0.22-beta" />
+        <dependency id="BuildIt.Config.Core" version="$version$" />
         <dependency id="NETStandard.Library" version="1.6.0" />
         <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
