@@ -23,6 +23,10 @@
   </metadata>
   <files>
     
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.xml" target="lib\netstandard1.0" />
+    
     <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.dll" target="lib\monoandroid" />
     <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.pdb" target="lib\monoandroid" />
     <file src="BuildIt.Config.Impl.Common\bin\Release\BuildIt.Config.Impl.Common.xml" target="lib\monoandroid" />
