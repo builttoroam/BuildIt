@@ -70,22 +70,26 @@ namespace BuildIt.Config.Impl.Common
                 var folder = await CreateFolderToSaveAsync();
                 if (folder == null) return null;
 
-                var file = await folder.GetFileAsync(FileName);
-                if (file == null) return null;
-
-                var jsonData = await file.ReadAllTextAsync();
-                if (string.IsNullOrEmpty(jsonData)) return null;
-
-                var dic = JsonConvert.DeserializeObject<Dictionary<string, AppConfigurationValue>>(jsonData);
-
-                var appConfig = new AppConfiguration();
-                foreach (var value in dic.Values)
+                var fileExists = await folder.CheckExistsAsync(FileName);
+                if (fileExists == ExistenceCheckResult.FileExists)
                 {
-                    if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
-                    appConfig[value.Attributes.Name] = value;
-                }
+                    var file = await folder.GetFileAsync(FileName);
+                    if (file == null) return null;
 
-                return appConfig;
+                    var jsonData = await file.ReadAllTextAsync();
+                    if (string.IsNullOrEmpty(jsonData)) return null;
+
+                    var dic = JsonConvert.DeserializeObject<Dictionary<string, AppConfigurationValue>>(jsonData);
+
+                    var appConfig = new AppConfiguration();
+                    foreach (var value in dic.Values)
+                    {
+                        if (string.IsNullOrEmpty(value?.Attributes?.Name)) continue;
+                        appConfig[value.Attributes.Name] = value;
+                    }
+
+                    return appConfig;
+                }
             }
             catch (Exception ex)
             {
@@ -104,10 +108,14 @@ namespace BuildIt.Config.Impl.Common
                 var folder = await CreateFolderToSaveAsync();
                 if (folder == null) return;
 
-                var file = await folder.GetFileAsync(FileName);
-                if (file == null) return;
+                var fileExists = await folder.CheckExistsAsync(FileName);
+                if (fileExists == ExistenceCheckResult.FileExists)
+                {
+                    var file = await folder.GetFileAsync(FileName);
+                    if (file == null) return;
 
-                await file.DeleteAsync();
+                    await file.DeleteAsync();
+                }
             }
             catch (Exception ex)
             {
