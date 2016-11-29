@@ -24,7 +24,7 @@ namespace BuildItConfigSample
             Mvx.RegisterSingleton(() => UserDialogs.Instance);
             Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationEndpointService>(() => new AppConfigurationEndpointService(new AppConfigurationRoutingModel()
             {
-                BaseUrl = "http://YOUR_SERVER_ADDRESS",
+                BaseUrl = "http://localhost:1600/",
                 Prefix = "test1",
                 Controller = "configuration"
             }));
