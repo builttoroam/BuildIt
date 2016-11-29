@@ -28,6 +28,7 @@ namespace BuildItConfigSample
                 Prefix = "test1",
                 Controller = "configuration"
             }));
+            Mvx.LazyConstructAndRegisterSingleton<IVersionService, VersionService>();
             Mvx.LazyConstructAndRegisterSingleton<INetworkService, NetworkService>();
             Mvx.LazyConstructAndRegisterSingleton<IFileCacheService, FileCacheService>();
             Mvx.LazyConstructAndRegisterSingleton<IUserDialogService, UserDialogService>();
@@ -39,7 +40,7 @@ namespace BuildItConfigSample
             Mvx.LazyConstructAndRegisterSingleton<IAppConfigurationRequiredServices, AppConfigurationRequiredServices>();
 
             InitAppConfig();
-
+            //RegisterAppStart<FirstViewModel>();
             Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<FirstViewModel>());
         }
 

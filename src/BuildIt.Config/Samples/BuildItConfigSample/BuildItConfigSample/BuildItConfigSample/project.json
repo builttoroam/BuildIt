@@ -2,6 +2,8 @@
   "supports": {},
   "dependencies": {
     "BuildIt.Config.Impl": "1.0.0.26",
+    "BuildIt.Config.Core": "1.0.0.26",
+    "BuildIt.General": "1.0.0.20",
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "MvvmCross": "4.4.0",
     "NETStandard.Library": "1.6.0"
