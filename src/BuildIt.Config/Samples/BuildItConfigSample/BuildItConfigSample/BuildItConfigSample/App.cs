@@ -57,7 +57,7 @@ namespace BuildItConfigSample
             //await appConfigService.LoadAppConfig();
 
             // Step 2: Check the minimum version & block the app from running if it's not met
-            await appConfigService.NotifyUserWhenNotMetAppMinVer();
+            //await appConfigService.NotifyUserWhenNotMetAppMinVer();
             // Step 3: Check the recommended version & alert users if it's not met
             //await appConfigService.CheckRecommendedVersion();
         }

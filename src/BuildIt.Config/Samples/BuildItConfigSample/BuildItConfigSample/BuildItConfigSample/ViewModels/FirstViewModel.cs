@@ -16,17 +16,8 @@ namespace BuildItConfigSample.ViewModels
         private ICommand getAppConfigCommand;
         public ICommand GetAppConfigCommand => getAppConfigCommand ?? (getAppConfigCommand = new MvxCommand(async () => await GetAppConfig()));
 
-        private ObservableCollection<AppConfigurationValue> configValues = new ObservableCollection<AppConfigurationValue>();
-        public ObservableCollection<AppConfigurationValue> ConfigValues
-        {
-            get { return configValues; }
-            set
-            {
-                configValues = value;
-                RaisePropertyChanged();
-            }
-        }
 
+        public ObservableCollection<AppConfigurationValue> ConfigValues { get; } = new ObservableCollection<AppConfigurationValue>();
         public FirstViewModel(IAppConfigurationService appConfigurationService)
         {
             this.appConfigurationService = appConfigurationService;
@@ -42,6 +33,9 @@ namespace BuildItConfigSample.ViewModels
 
         private void MapConfig()
         {
+            appConfigurationService.Mapper.Map("App_VersionInfo_MinimumAppVersion")
+                                          .IsRequired();
+
             appConfigurationService.Mapper.Map("App_VersionInfo_CurrentAppVersion")
                                           .IsRequired();
 
@@ -61,8 +55,7 @@ namespace BuildItConfigSample.ViewModels
                 ConfigValues.Add(value);
             }
 
-            await appConfigurationService.CheckMinimumVersion();
-            //var states = config?["App_States"]?.GetValue<IEnumerable<State>>();
+            //await appConfigurationService.CheckMinimumVersion();
         }
     }
 }
