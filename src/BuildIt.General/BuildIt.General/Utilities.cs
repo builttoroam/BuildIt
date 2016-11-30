@@ -368,10 +368,15 @@ namespace BuildIt
         {
             
             var queryString = string.Empty;
-            var properties = typeof(T).GetTypeInfo().DeclaredProperties;
+            var properties = typeof(T).GetTypeInfo().DeclaredProperties.OrderBy(p => p.Name).ToList();
             foreach (var property in properties)
             {
                 var propertyValue = property.GetValue(obj);
+                if (propertyValue == null)
+                {
+                    continue;
+                }
+
                 queryString = $"{queryString}{(!string.IsNullOrWhiteSpace(queryString) ? "&" : string.Empty)}{(applyLowerCaseParameters ? property.Name.ToLower() : property.Name)}={propertyValue}";
             }
             return queryString;

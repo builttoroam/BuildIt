@@ -34,8 +34,8 @@ namespace BuildIt.CognitiveServices
                 var client = new HttpClient();
 
                 //request header
-                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, academicParameters.subscriptionKey);
-                var queryString = $"query={academicParameters.content}&offset={academicParameters.offset}&attributes={academicParameters.attributes}&count={academicParameters.count}&model={academicParameters.model}&complete={academicParameters.complete}&timeout={academicParameters.timeout}";
+                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, academicParameters.SubscriptionKey);
+                var queryString = $"query={academicParameters.Query}&offset={academicParameters.Offset}&count={academicParameters.Count}&model={academicParameters.Model}&complete={academicParameters.Complete}&timeout={academicParameters.Timeout}";
                 var url = Constants.AcademicInterpretApi + queryString;
 
                 var jsonResult = await client.GetStringAsync(url);
@@ -304,7 +304,7 @@ namespace BuildIt.CognitiveServices
 
         /// <summary>
         ///     Extract rich information from images to categorize and process visual data—and protect your users from unwanted
-        ///     content.
+        ///     Query.
         /// </summary>
         /// <returns>
         ///     Computer vision analysis result
