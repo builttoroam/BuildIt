@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -37,7 +38,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex}");
             }
             return resultDto;
         }
@@ -81,7 +82,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex}");
             }
             return resultDto;
         }
@@ -120,7 +121,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex}");
 
             }
             return resultDto;
@@ -159,7 +160,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex}");
             }
             return resultDto;
         }
@@ -199,7 +200,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"{ex}");
+                Debug.WriteLine($"{ex}");
             }
             return resultDto;
         }

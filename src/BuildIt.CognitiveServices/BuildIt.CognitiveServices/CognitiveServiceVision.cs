@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using BuildIt.CognitiveServices.Models;
 using Microsoft.ProjectOxford.Emotion;
 using Microsoft.ProjectOxford.Emotion.Contract;
 using Microsoft.ProjectOxford.Face;
@@ -8,8 +11,6 @@ using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 using PCLStorage;
 using FileAccess = PCLStorage.FileAccess;
-using System.Linq;
-using BuildIt.CognitiveServices.Models;
 using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 
 namespace BuildIt.CognitiveServices
@@ -38,7 +39,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex}");
                 
             }
             return resultDto;
@@ -62,7 +63,7 @@ namespace BuildIt.CognitiveServices
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex}");
+                Debug.WriteLine($"{ex}");
                 return null;
             }
 
@@ -80,7 +81,7 @@ namespace BuildIt.CognitiveServices
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Something went wrong with image streaming. {ex}");
+                Debug.WriteLine($"Something went wrong with image streaming. {ex}");
                 return null;
             }
         }
@@ -107,7 +108,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"{ex}");
+                Debug.WriteLine($"{ex}");
                 
             }
             return resultDto;
@@ -124,7 +125,7 @@ namespace BuildIt.CognitiveServices
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error {ex}");
+                Debug.WriteLine($"Error {ex}");
                 return null;
             }
         }
@@ -144,7 +145,7 @@ namespace BuildIt.CognitiveServices
             catch (Exception ex)
             {
                 resultDto.ErrorMessage = ex.Message;
-                Console.WriteLine($"Error: {ex}");
+                Debug.WriteLine($"Error: {ex}");
             }
             return resultDto;
         }
@@ -160,7 +161,7 @@ namespace BuildIt.CognitiveServices
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error : {ex}");
+                Debug.WriteLine($"Error : {ex}");
                 return new FaceRectangle[0];
             }
         }

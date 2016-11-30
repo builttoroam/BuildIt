@@ -8,8 +8,8 @@
     <ProjectGuid>{94BC79A7-6D56-4A50-A9E3-9B452EC3011C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt.CognitiveServicesClient</RootNamespace>
-    <AssemblyName>BuildIt.CognitiveServicesClient</AssemblyName>
+    <RootNamespace>BuildIt.CognitiveServices</RootNamespace>
+    <AssemblyName>BuildIt.CognitiveServices</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

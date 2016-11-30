@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BuildIt.CognitiveServices.Common;
@@ -35,7 +36,7 @@ namespace BuildIt.CognitiveServices
             {
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
-                Console.WriteLine($"{ex}");
+                Debug.WriteLine($"{ex}");
             }
             return resultDto;
         }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace BuildIt.CognitiveServices.XForms
+namespace BuildIt.CognitiveServices.XForms.UserControls
 {
-    public partial class CustomResultLayout : ContentView
+    public partial class FacialRecognitionImage
     {
-        public CustomResultLayout()
+        public FacialRecognitionImage()
         {
             InitializeComponent();
         }
@@ -29,11 +27,6 @@ namespace BuildIt.CognitiveServices.XForms
             {
                 ResultRelativeLayout.Children.Add(frame, Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.X / imageWidth * this.DisplayImage.Width), Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.Y / imageHeight * this.DisplayImage.Height), Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.Width / imageWidth * this.DisplayImage.Width), Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.Height / imageHeight * this.DisplayImage.Height));
             }
-        }
-
-        private void DisplayImage_OnSizeChanged(object sender, EventArgs e)
-        {
-            Debug.WriteLine($"size changed {DisplayImage.Width} {DisplayImage.Height}" );
         }
     }
 }
