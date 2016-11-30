@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
@@ -364,7 +365,7 @@ namespace BuildIt
             return dictionary;
         }
 
-        public static string ToQueryString<T>(T obj, bool applyLowerCaseParameters = true)
+        public static string ToQueryString<T>(T obj, bool applyLowerCaseParameters = true, bool applyUrlEncoding = true)
         {
             
             var queryString = string.Empty;
@@ -376,9 +377,23 @@ namespace BuildIt
                 {
                     continue;
                 }
+                var propertyStringValue = propertyValue.ToString();
+                if (propertyValue is string)
+                {
+                    if (string.IsNullOrWhiteSpace(propertyStringValue))
+                    {
+                        continue;
+                    }
+                    if (applyUrlEncoding)
+                    {
+                        propertyStringValue = WebUtility.UrlEncode(propertyStringValue);
+                    }
+                }
 
-                queryString = $"{queryString}{(!string.IsNullOrWhiteSpace(queryString) ? "&" : string.Empty)}{(applyLowerCaseParameters ? property.Name.ToLower() : property.Name)}={propertyValue}";
+
+                queryString = $"{queryString}{(!string.IsNullOrWhiteSpace(queryString) ? "&" : string.Empty)}{(applyLowerCaseParameters ? property.Name.ToLower() : property.Name)}={propertyStringValue}";
             }
+
             return queryString;
         }
       
