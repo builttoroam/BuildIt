@@ -47,7 +47,7 @@ namespace BuildIt.Client.Core
             // Step 1: Retrieve App config from Azure
             if (appConfigService == null) return;
 
-            appConfigService.AdditionalHeaders.Add(new KeyValuePair<string, string>(Strings.ApiKey, Constants.AppConfigurationApiKey));
+            appConfigService.AdditionalHeaders.Add(new KeyValuePair<string, string>(Strings.ApiKey, Config.Core.Constants.AppConfigurationApiKey));
             //appConfigService.Mapper.EnsurePresence("App_VersionInfo_CurrentAppVersion", true);
 
             //await appConfigService.LoadAppConfig();
