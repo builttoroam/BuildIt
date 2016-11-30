@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -363,7 +364,18 @@ namespace BuildIt
             return dictionary;
         }
 
-
+        public static string ToQueryString<T>(T obj, bool applyLowerCaseParameters = true)
+        {
+            
+            var queryString = string.Empty;
+            var properties = typeof(T).GetTypeInfo().DeclaredProperties;
+            foreach (var property in properties)
+            {
+                var propertyValue = property.GetValue(obj);
+                queryString = $"{queryString}{(!string.IsNullOrWhiteSpace(queryString) ? "&" : string.Empty)}{(applyLowerCaseParameters ? property.Name.ToLower() : property.Name)}={propertyValue}";
+            }
+            return queryString;
+        }
       
 
         private static DateTime Epoch => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
