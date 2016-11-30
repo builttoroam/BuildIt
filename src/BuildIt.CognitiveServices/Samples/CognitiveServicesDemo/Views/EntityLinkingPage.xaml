@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CognitiveServicesDemo.Model;assembly=CognitiveServicesDemo"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="CognitiveServicesDemo.Views.EntityLinkingPage">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    
+    
+    <Label Text="Welcome to Entity Linking preview" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Editor x:Name="Editor" Grid.Row="1" Text="{Binding InputText}" HeightRequest="70"></Editor>
+    <Button Grid.Row="2" Text="Check" Clicked="CheckEntityLinking_OnClicked"></Button>
+    <!--<Label x:Name="OutputLabel" Text="{Binding OutputText}" Grid.Row="3"></Label>-->
+  <ListView x:Name="EntityListView" ItemsSource="{Binding EntityLinkings}" ItemSelected="EntityListView_OnItemSelected"  Grid.Row="4">
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <TextCell TextColor="Red" Text="{Binding Result}" ></TextCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+  </Grid>
+</ContentPage>

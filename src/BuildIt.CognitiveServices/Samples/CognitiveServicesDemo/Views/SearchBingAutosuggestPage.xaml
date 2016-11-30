@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CognitiveServicesDemo.Views.SearchBingAutosuggestPage">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Label Text="Bing auto sugeest" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Editor x:Name="Editor" Grid.Row="1" Text="{Binding InputText}"></Editor>
+    <Button Grid.Row="2" Text="Check" HorizontalOptions="Center" VerticalOptions="Start" Clicked="Search_OnClicked"></Button>
+    <ListView Grid.Row="3" x:Name="AutosuggestPage" ItemsSource="{Binding BingAutoSuggest}" ItemSelected="AutosuggestPage_OnItemSelected">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <TextCell TextColor="Red" Text="{Binding displayText}"></TextCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
+
+</ContentPage>

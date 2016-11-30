@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CognitiveServicesDemo.Views.AcademicPage">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Label Text="Academic page" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Editor Grid.Row="1" Text="{Binding InputText}" HeightRequest="70" VerticalOptions="Start" ></Editor>
+    <Label Grid.Row="2" Text="{Binding WarningText}" HorizontalOptions="Center" VerticalOptions="Start"></Label>
+    <Button Grid.Row="3" BackgroundColor="Silver" Text="Click" Clicked="Check_OnClicked"></Button>
+    <ListView Grid.Row="4" ItemsSource="{Binding InterpretationParse}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <TextCell TextColor="Red" Text="{Binding parse}"></TextCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
+
+</ContentPage>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CognitiveServicesDemo.Views.VisionEmotion">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Label Text="Vision Emotion" VerticalOptions="Start" HorizontalOptions="Center" />
+    <StackLayout Grid.Row="2" VerticalOptions="Center" HorizontalOptions="Center">
+      <Label Text="ImageSource.FromFile" />
+      <!--<Image Source="tmrIsMon.jpg" />-->
+      <Image Source="Assets/tmrIsMon.jpg"></Image>
+      <Label Text="'waterfront.jpg' is referenced in Xaml" />
+    </StackLayout>
+  </Grid>
+
+
+</ContentPage>
