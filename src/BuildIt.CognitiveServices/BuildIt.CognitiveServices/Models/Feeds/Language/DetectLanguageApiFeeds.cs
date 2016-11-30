@@ -9,6 +9,7 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Language
         public int statusCode { get; set; }
         public string message { get; set; }
     }
+
     public class DetectedLanguage
     {
         public string name { get; set; }

@@ -6,8 +6,8 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Language
     {
         public List<Candidate> candidates { get; set; }
         public BreakIntoWordsError error { get; set; }
-
     }
+
     public class Candidate
     {
         public string words { get; set; }

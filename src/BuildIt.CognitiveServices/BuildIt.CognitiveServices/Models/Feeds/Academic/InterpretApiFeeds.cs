@@ -8,6 +8,7 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Academic
         public List<Interpretation> interpretations { get; set; }
         public InterpretError error { get; set; }
     }
+
     public class InterpretError
     {
         public string code { get; set; }

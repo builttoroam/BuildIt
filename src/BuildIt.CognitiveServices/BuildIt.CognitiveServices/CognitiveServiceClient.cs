@@ -104,7 +104,7 @@ namespace BuildIt.CognitiveServices
                     content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                     response = await client.PostAsync(url, content);
                 }
-                if (!response.IsSuccessStatusCode || response.Content == null) return null;
+                if (!response.IsSuccessStatusCode || (response.Content == null)) return null;
                 var jsonResult = await response.Content.ReadAsStringAsync();
                 var feed = JsonConvert.DeserializeObject<DetectLanguageApiFeeds>(jsonResult);
 
@@ -144,7 +144,7 @@ namespace BuildIt.CognitiveServices
                     content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                     response = await client.PostAsync(Constants.KeyPhrasesApi, content);
                 }
-                if (!response.IsSuccessStatusCode || response.Content == null) return null;
+                if (!response.IsSuccessStatusCode || (response.Content == null)) return null;
                 var jsonResult2 = await response.Content.ReadAsStringAsync();
                 var feed = JsonConvert.DeserializeObject<KeyPhrasesApiFeeds>(jsonResult2);
 
@@ -163,7 +163,6 @@ namespace BuildIt.CognitiveServices
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
                 Debug.WriteLine($"Error: {ex}");
-
             }
             return resultDto;
         }
@@ -271,7 +270,6 @@ namespace BuildIt.CognitiveServices
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
                 Debug.WriteLine($"{ex}");
-
             }
             return resultDto;
         }
@@ -305,10 +303,11 @@ namespace BuildIt.CognitiveServices
         }
 
         /// <summary>
-        /// Extract rich information from images to categorize and process visual data—and protect your users from unwanted content.
+        ///     Extract rich information from images to categorize and process visual data—and protect your users from unwanted
+        ///     content.
         /// </summary>
         /// <returns>
-        /// Computer vision analysis result
+        ///     Computer vision analysis result
         /// </returns>
         public async Task<ResultDto<AnalysisResult>> ComputerVisionApiRequestAsync(string subscriptionKey, string photoUri)
         {
@@ -326,57 +325,15 @@ namespace BuildIt.CognitiveServices
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
                 Debug.WriteLine($"Error: {ex}");
-
             }
             return resultDto;
         }
 
-        private async Task<AnalysisResult> UploadAndAnalyzeImage(string subscriptionKey, Stream imageStream)
-        {
-            try
-            {
-                var visionServiceClient = new VisionServiceClient(subscriptionKey);
-                using (var imageFileStream = imageStream)
-                {
-                    var visualFeatures = new VisualFeature[]
-                    {
-                        VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.Description,
-                        VisualFeature.Faces, VisualFeature.ImageType, VisualFeature.Tags
-                    };
-                    var analysisResult = await visionServiceClient.AnalyzeImageAsync(imageFileStream, visualFeatures);
-                    return analysisResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{ex}");
-                return null;
-            }
-
-
-        }
-
-        private async Task<Stream> PclStorageStreamAsync(string uri)
-        {
-            try
-            {
-                var imageFile = await FileSystem.Current.GetFileFromPathAsync(uri);
-
-                var photoStream = imageFile.OpenAsync(FileAccess.Read).Result;
-                return photoStream;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Something went wrong with image streaming. {ex}");
-                return null;
-            }
-        }
-
         /// <summary>
-        /// Analyze faces to detect a range of feelings and personalize your app's responses.
+        ///     Analyze faces to detect a range of feelings and personalize your app's responses.
         /// </summary>
         /// <returns>
-        /// Return emptionRects
+        ///     Return emptionRects
         /// </returns>
         public async Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, string photoUri)
         {
@@ -395,25 +352,8 @@ namespace BuildIt.CognitiveServices
                 resultDto.ErrorMessage = ex.Message;
                 resultDto.Exception = ex;
                 Debug.WriteLine($"{ex}");
-
             }
             return resultDto;
-        }
-
-        private async Task<Emotion[]> UploadAndDetectEmotion(string subscriptionKey, Stream imageStream)
-        {
-            try
-            {
-                var emotionServiceClient = new EmotionServiceClient(subscriptionKey);
-
-                var emotionResult = await emotionServiceClient.RecognizeAsync(imageStream);
-                return emotionResult;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error {ex}");
-                return null;
-            }
         }
 
         public async Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, string photoUri)
@@ -436,6 +376,61 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        private async Task<AnalysisResult> UploadAndAnalyzeImage(string subscriptionKey, Stream imageStream)
+        {
+            try
+            {
+                var visionServiceClient = new VisionServiceClient(subscriptionKey);
+                using (var imageFileStream = imageStream)
+                {
+                    var visualFeatures = new[]
+                    {
+                        VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.Description,
+                        VisualFeature.Faces, VisualFeature.ImageType, VisualFeature.Tags
+                    };
+                    var analysisResult = await visionServiceClient.AnalyzeImageAsync(imageFileStream, visualFeatures);
+                    return analysisResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{ex}");
+                return null;
+            }
+        }
+
+        private async Task<Stream> PclStorageStreamAsync(string uri)
+        {
+            try
+            {
+                var imageFile = await FileSystem.Current.GetFileFromPathAsync(uri);
+
+                var photoStream = imageFile.OpenAsync(FileAccess.Read).Result;
+                return photoStream;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Something went wrong with image streaming. {ex}");
+                return null;
+            }
+        }
+
+        private async Task<Emotion[]> UploadAndDetectEmotion(string subscriptionKey, Stream imageStream)
+        {
+            try
+            {
+                var emotionServiceClient = new EmotionServiceClient(subscriptionKey);
+
+                var emotionResult = await emotionServiceClient.RecognizeAsync(imageStream);
+                return emotionResult;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error {ex}");
+                return null;
+            }
+        }
+
         private async Task<FaceRectangle[]> UploadAndDetectFaces(string subscriptionKey, Stream photoStream)
         {
             try
@@ -451,7 +446,5 @@ namespace BuildIt.CognitiveServices
                 return new FaceRectangle[0];
             }
         }
-
     }
-
 }

@@ -21,5 +21,4 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Language
         public double score { get; set; }
         public string id { get; set; }
     }
-
 }

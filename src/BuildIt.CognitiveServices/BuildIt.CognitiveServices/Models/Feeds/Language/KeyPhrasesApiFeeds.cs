@@ -9,15 +9,16 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Language
         public int statusCode { get; set; }
         public string message { get; set; }
     }
+
     public class KeyPhrasesDoc
     {
         public List<string> keyPhrases { get; set; }
         public string id { get; set; }
     }
+
     public class KeyPhrasesError
     {
         public string id { get; set; }
         public string message { get; set; }
     }
-
 }

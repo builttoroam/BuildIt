@@ -14,6 +14,7 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Academic
         public int statusCode { get; set; }
         public string message { get; set; }
     }
+
     public class About
     {
         public string name { get; set; }
