@@ -365,7 +365,7 @@ namespace BuildIt
             return dictionary;
         }
 
-        public static string ToQueryString<T>(T obj, bool applyLowerCaseParameters = true, bool applyUrlEncoding = true)
+        public static string ToQueryString<T>(T obj, bool applyLowerCaseFirstChar = true, bool applyUrlEncoding = true)
         {
             
             var queryString = string.Empty;
@@ -390,8 +390,13 @@ namespace BuildIt
                     }
                 }
 
+                var propertyName = property.Name;
+                if (applyLowerCaseFirstChar)
+                {
+                    propertyName = $"{char.ToLowerInvariant(propertyName[0])}{propertyName.Substring(1)}";
+                }
 
-                queryString = $"{queryString}{(!string.IsNullOrWhiteSpace(queryString) ? "&" : string.Empty)}{(applyLowerCaseParameters ? property.Name.ToLower() : property.Name)}={propertyStringValue}";
+                queryString = $"{queryString}{(!string.IsNullOrWhiteSpace(queryString) ? "&" : string.Empty)}{propertyName}={propertyStringValue}";
             }
 
             return queryString;
