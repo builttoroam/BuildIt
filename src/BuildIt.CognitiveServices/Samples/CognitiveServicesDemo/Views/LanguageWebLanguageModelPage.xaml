@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CognitiveServicesDemo.Views.LanguageWebLanguageModelPage">
+  
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Label Text="Please input the text on the left and give a hit for submit button" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Editor x:Name="InputEditor" Grid.Row="1" HeightRequest="100" Text="{Binding InputText}"></Editor>
+    <Button Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="Silver" Text="Analyse!" Clicked="Analyse_OnClicked" ></Button>
+    <Label Grid.Row="3" TextColor="Black" Text="{Binding OutputText}"></Label>
+    <Label Grid.Row="4" TextColor="Red" Text="{Binding SpellCheckedText}"></Label>
+  </Grid>
+</ContentPage>

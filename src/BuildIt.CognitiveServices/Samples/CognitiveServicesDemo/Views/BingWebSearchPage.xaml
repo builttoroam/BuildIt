@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CognitiveServicesDemo.Views.BingWebSearchPage">
+  <ScrollView>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Label Text="Bing Web Search" VerticalOptions="Center" HorizontalOptions="Center" />
+      <Editor x:Name="InputEditor" Grid.Row="1" Grid.Column="0" HeightRequest="50" Text="{Binding InputText}"/>
+      <Button Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start" Clicked="Search_OnClicked" Text="Search"></Button>
+      <ListView Grid.Row="3" ItemsSource="{Binding WebSearchResults}" ItemSelected="ListView_OnItemSelected">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell TextColor="Red" Text="{Binding NameSnippet}"></TextCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </Grid>
+
+  </ScrollView>
+</ContentPage>

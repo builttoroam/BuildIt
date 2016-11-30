@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customLayout="clr-namespace:BuildIt.CognitiveServices.XForms.UserControls;assembly=BuildIt.CognitiveServices.XForms"
+             x:Class="CognitiveServicesDemo.Views.VisionFacePage">
+  <ScrollView>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Label Text="Vision Face" VerticalOptions="Start" HorizontalOptions="Center" />
+      <customLayout:FacialRecognitionImage Grid.Row="2" x:Name="Layout"></customLayout:FacialRecognitionImage>
+      <StackLayout Grid.Row="3" Orientation="Vertical"  HorizontalOptions="Center" VerticalOptions="Start">
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Take Photo" Clicked="TakePhoto_Click"></Button>
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Emotion" Clicked="EmotionButton_Click"></Button>
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Computer vision" Clicked="ComputerVisionButton_Click"></Button>
+      </StackLayout>
+      <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
+        <Label Text="Image information"></Label>
+        <Label TextColor="Red"  Text="{Binding Title}"/>
+        <Label Text="Analysis categories" VerticalOptions="Start"/>
+        <Label TextColor="Red" Text="{Binding AnalysisCategories}"></Label>
+
+        <Label Text="Description captions"/>
+        <Label TextColor="Red" Text="{Binding DescriptionCaptions}"></Label>
+
+        <Label Text="Analysis Faces"/>
+        <Label TextColor="Red" Text="{Binding AnalysisFaces}"></Label>
+
+        <Label Text="Analysis Tag"/>
+        <Label TextColor="Red" Text="{Binding AnalysisTag}"></Label>
+      </StackLayout>
+    </Grid>
+  </ScrollView>
+</ContentPage>
