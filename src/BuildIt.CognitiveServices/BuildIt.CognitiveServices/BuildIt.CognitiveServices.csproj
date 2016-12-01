@@ -47,7 +47,6 @@
     <Compile Include="CognitiveServiceClient.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Interfaces\ICognitiveServiceClient.cs" />
-    <Compile Include="ISpellCheckAPIV5.cs" />
     <Compile Include="Models\Feeds\Academic\BingSearchApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\InterpretApiFeeds.cs" />
     <Compile Include="Models\Feeds\InputParameters\AcademicParameters.cs" />
@@ -63,15 +62,15 @@
     <Compile Include="Models\Interfaces\IResultDto.cs" />
     <Compile Include="Models\ResultDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpellCheckAPIV5.cs" />
-    <Compile Include="SpellCheckAPIV5Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoRestClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input "https://dev.cognitive.microsoft.com/docs/services/56e73033cf5ff80c2008c679/export?DocumentFormat=Swagger&amp;ApiName=Spell%2520Check%2520API%2520-%2520V5" -Namespace BuildIt.CognitiveServices</PreBuildEvent>
+    <PreBuildEvent>AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input "https://dev.cognitive.microsoft.com/docs/services/56e73033cf5ff80c2008c679/export?DocumentFormat=Swagger&amp;ApiName=Spell%2520Check%2520API%2520-%2520V5" -Namespace BuildIt.CognitiveServices
+xcopy "$(TargetDir)Generated\*.*" "$(ProjectDir)*.*" /y /r
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

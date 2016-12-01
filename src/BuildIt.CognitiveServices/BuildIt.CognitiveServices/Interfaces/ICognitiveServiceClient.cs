@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using BuildIt.CognitiveServices.Common;
 using BuildIt.CognitiveServices.Models;
 using BuildIt.CognitiveServices.Models.Feeds.Academic;
@@ -29,10 +30,10 @@ namespace BuildIt.CognitiveServices.Interfaces
 
         Task<ResultDto<BingSearchApiFeeds>> BingSearchApiRequestAsync(BingSearchParameters bingSearchParameters);
 
-        Task<ResultDto<AnalysisResult>> ComputerVisionApiRequestAsync(string subscriptionKey, string photoUri);
+        Task<ResultDto<AnalysisResult>> ComputerVisionApiRequestAsync(string subscriptionKey, Stream photoStream);
 
-        Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, string photoUri);
+        Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, Stream photoStream);
 
-        Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, string photoUri);
+        Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, Stream photoStream);
     }
 }

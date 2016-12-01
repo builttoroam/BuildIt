@@ -8,12 +8,11 @@
     "Microsoft.ProjectOxford.Face": "1.2.1.2",
     "Microsoft.ProjectOxford.Vision": "1.0.370",
     "Microsoft.Rest.ClientRuntime": "2.3.4",
-    "NETStandard.Library": "1.6.1",
-    "PCLStorage": "1.0.2"
+    "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
     "netstandard1.1": {
-      "imports": "portable-net45+win8+wpa81+wp8"
+      "imports": "portable-net45+win8+wpa81"
     }
   }
 }

@@ -19,7 +19,6 @@ using Microsoft.ProjectOxford.Face;
 using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 using Newtonsoft.Json;
-using PCLStorage;
 using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 
 namespace BuildIt.CognitiveServices
@@ -309,12 +308,11 @@ namespace BuildIt.CognitiveServices
         /// <returns>
         ///     Computer vision analysis result
         /// </returns>
-        public async Task<ResultDto<AnalysisResult>> ComputerVisionApiRequestAsync(string subscriptionKey, string photoUri)
+        public async Task<ResultDto<AnalysisResult>> ComputerVisionApiRequestAsync(string subscriptionKey, Stream photoStream)
         {
             var resultDto = new ResultDto<AnalysisResult>();
             try
             {
-                var photoStream = await PclStorageStreamAsync(photoUri);
                 var analysisResult = await UploadAndAnalyzeImage(subscriptionKey, photoStream);
 
                 resultDto.Result = analysisResult;
@@ -335,12 +333,12 @@ namespace BuildIt.CognitiveServices
         /// <returns>
         ///     Return emptionRects
         /// </returns>
-        public async Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, string photoUri)
+        public async Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, Stream photoStream)
         {
             var resultDto = new ResultDto<Emotion[]>();
             try
             {
-                using (var photoStream = await PclStorageStreamAsync(photoUri))
+                using (photoStream)
                 {
                     var emotionRects = await UploadAndDetectEmotion(subscriptionKey, photoStream);
                     resultDto.Result = emotionRects;
@@ -356,12 +354,12 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
-        public async Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, string photoUri)
+        public async Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, Stream photoStream)
         {
             var resultDto = new ResultDto<FaceRectangle[]>();
             try
             {
-                using (var photoStream = await PclStorageStreamAsync(photoUri))
+                using (photoStream)
                 {
                     var faceRects = await UploadAndDetectFaces(subscriptionKey, photoStream);
                     resultDto.Result = faceRects;
@@ -395,22 +393,6 @@ namespace BuildIt.CognitiveServices
             catch (Exception ex)
             {
                 Debug.WriteLine($"{ex}");
-                return null;
-            }
-        }
-
-        private async Task<Stream> PclStorageStreamAsync(string uri)
-        {
-            try
-            {
-                var imageFile = await FileSystem.Current.GetFileFromPathAsync(uri);
-
-                var photoStream = imageFile.OpenAsync(FileAccess.Read).Result;
-                return photoStream;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Something went wrong with image streaming. {ex}");
                 return null;
             }
         }

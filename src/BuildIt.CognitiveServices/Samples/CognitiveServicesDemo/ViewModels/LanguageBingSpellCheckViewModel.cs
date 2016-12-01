@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
 using BuildIt.CognitiveServices;
-
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
@@ -73,16 +72,13 @@ namespace CognitiveServicesDemo.ViewModels
                 //queryString["mkt"] = "en-au";
                 var uri = "https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?" + queryString;
 
-                var cognitiveServiceLanguage = new SpellCheckAPIV5();
-                cognitiveServiceLanguage.SpellCheckWithHttpMessagesAsync("spell", queryContext, "5e5b5fe407dd4e76b081b9b344abe3c","");
-                
+                CognitiveServiceClient cognitiveServiceLanguage = new CognitiveServiceClient();
                 //CognitiveServiceLanguage cognitiveServiceLanguage = new CognitiveServiceLanguage();
-                //CognitiveServiceLanguage cognitiveServiceLanguage = new CognitiveServiceLanguage();
-                //var test = await cognitiveServiceLanguage.SpellCheckApiRequestAsync(new SpellCheckParameters()
-                //{
-                //    content = queryContext,
-                //    subscriptionKey = "5e5b5fe407dd4e76b081b9b344abe3c"
-                //});
+                var test = await cognitiveServiceLanguage.SpellCheckApiRequestAsync(new SpellCheckParameters()
+                {
+                    content = queryContext,
+                    subscriptionKey = "5e5b5fe407dd4e76b081b9b344abe3c"
+                });
 
                 var response = await client.GetAsync(uri);
                 var jsonResult = await response.Content.ReadAsStringAsync();
