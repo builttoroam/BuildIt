@@ -118,7 +118,7 @@ namespace CognitiveServicesDemo.Views
                 Debug.WriteLine($"current metadata\n{CurrentViewModel.ImageMetadata}");
 
 
-                //Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidht,imageHeight);
+                Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidht,imageHeight);
                 //string[] xywh = faceMetaData.Split(',');
                 CurrentViewModel.WarningText = "Here is the computer vision results for you";
                 //RectImage.Source = CurrentViewModel.ImageUrl;

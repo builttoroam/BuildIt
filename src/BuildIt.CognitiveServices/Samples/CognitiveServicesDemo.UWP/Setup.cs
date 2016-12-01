@@ -27,12 +27,6 @@ namespace CognitiveServicesDemo.UWP
             return app;
         }
 
-        protected override void InitializeIoC()
-        {
-            base.InitializeIoC();
-            //Mvx.LazyConstructAndRegisterSingleton<IMeetingsService, MeetingsService>();
-            //Mvx.LazyConstructAndRegisterSingleton<IPhotoPropertiesService, PhotoPropertiesService>();
-        }
 
         protected override IMvxWindowsViewPresenter CreateViewPresenter(IMvxWindowsFrame rootFrame)
         {
