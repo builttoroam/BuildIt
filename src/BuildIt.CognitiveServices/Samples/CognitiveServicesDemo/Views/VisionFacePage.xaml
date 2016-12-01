@@ -13,7 +13,7 @@
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
       <Label Text="Vision Face" VerticalOptions="Start" HorizontalOptions="Center" />
-      <customLayout:FacialRecognitionImage Grid.Row="2" x:Name="Layout"></customLayout:FacialRecognitionImage>
+      <!--<customLayout:FacialRecognitionImage Grid.Row="2" x:Name="Layout"></customLayout:FacialRecognitionImage>-->
       <StackLayout Grid.Row="3" Orientation="Vertical"  HorizontalOptions="Center" VerticalOptions="Start">
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Take Photo" Clicked="TakePhoto_Click"></Button>
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>

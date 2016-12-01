@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using CognitiveServicesDemo.ViewModels;
-using Microsoft.ProjectOxford.Face;
-using Microsoft.ProjectOxford.Emotion;
 using Xamarin.Forms;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -13,8 +11,6 @@ namespace CognitiveServicesDemo.Views
     public partial class VisionFacePage : ContentPage
     {
         public VisionFaceViewModel CurrentViewModel => BindingContext as VisionFaceViewModel;
-        private FaceServiceClient FaceServiceClient { get; set; }
-        private EmotionServiceClient EmotionServiceClient { get; set; }
 
         public Xamarin.Forms.Rectangle Rectangle1 { get; set; }
 
@@ -122,7 +118,7 @@ namespace CognitiveServicesDemo.Views
                 Debug.WriteLine($"current metadata\n{CurrentViewModel.ImageMetadata}");
 
 
-                Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidht,imageHeight);
+                //Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidht,imageHeight);
                 //string[] xywh = faceMetaData.Split(',');
                 CurrentViewModel.WarningText = "Here is the computer vision results for you";
                 //RectImage.Source = CurrentViewModel.ImageUrl;

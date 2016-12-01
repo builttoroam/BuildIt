@@ -60,8 +60,8 @@ namespace CognitiveServicesDemo.ViewModels
                 //CognitiveServiceKnowledge co = new CognitiveServiceKnowledge();
                 await co.AcademicInterpretApiRequestAsync(new AcademicParameters()
                 {
-                    subscriptionKey = Constants.AcademicKey,
-                    content = InputText
+                    SubscriptionKey =  Constants.AcademicKey,
+                    Query = InputText,
                 });
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.AcademicKey);

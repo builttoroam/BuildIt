@@ -35,7 +35,6 @@ namespace CognitiveServicesDemo.ViewModels
         private Microsoft.ProjectOxford.Vision.Contract.Face[] faceMetadata;
         private string[] xywh;
 
-        readonly CognitiveServiceClient cognitiveServiceClient = new CognitiveServiceClient();
         //readonly CognitiveServiceVision cognitiveServiceVision = new CognitiveServiceVision();
         private double x = 0.25;
         private double y = 0.28;
