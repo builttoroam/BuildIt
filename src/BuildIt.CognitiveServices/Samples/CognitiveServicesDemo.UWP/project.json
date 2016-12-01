@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "Microsoft.ProjectOxford.Face": "1.2.1.2",
     "MvvmCross": "4.4.0",
     "MvvmCross.Forms.Presenter": "4.4.0",
     "Newtonsoft.Json": "9.0.1",

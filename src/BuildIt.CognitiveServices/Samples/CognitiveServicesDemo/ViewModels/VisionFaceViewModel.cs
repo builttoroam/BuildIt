@@ -173,12 +173,12 @@ namespace CognitiveServicesDemo.ViewModels
         }
 
 
-        public async Task VisionFaceCheckAsync()
+        public async Task VisionFaceCheckAsync(MediaFile file)
         {
             //var filePath = "Assets/tmrIsMon.jpg";
             //var filePath = "CognitiveServicesDemo.Assets.recognition.jpg";
             //Uri fileUri = new Uri(filePath);
-            if (string.IsNullOrEmpty(ImageUrl))
+            if (file !=null)
             {
                 WarningText = "Please take photo first";
             }
@@ -189,12 +189,12 @@ namespace CognitiveServicesDemo.ViewModels
 
                 //await photoPropertiesService.PhotoImageUriAsync(ImageUrl);
 
-                var photoStream = await PclStorageStreamAsync(ImageUrl);
+                //var photoStream = await PclStorageStreamAsync(ImageUrl);
                 var faceNo = 1;
 
                 Title = "Checking image";
                 var value = "";
-                FaceRectangle[] faceRects = await UploadAndDetectFaces(photoStream);
+                FaceRectangle[] faceRects = await UploadAndDetectFaces(file.GetStream());
                 Title = "Here is the result";
                 if (faceRects.Length > 0)
                 {
@@ -265,7 +265,8 @@ namespace CognitiveServicesDemo.ViewModels
 
                 
                 //call from class library
-                //var test = await cognitiveServiceVision.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey,ImageUrl);
+                //var co = new CognitiveServiceClient();
+                //var result = await co.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
 
 
                 //var photoStream = await PclStorageStreamAsync(ImageUrl);

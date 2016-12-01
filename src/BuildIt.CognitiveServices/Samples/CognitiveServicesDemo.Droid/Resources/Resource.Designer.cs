@@ -47,6 +47,8 @@ namespace CognitiveServicesDemo.Droid
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView = global::CognitiveServicesDemo.Droid.Resource.Styleable.MvxListView;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::CognitiveServicesDemo.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::CognitiveServicesDemo.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::PCLStorage.Resource.String.ApplicationName = global::CognitiveServicesDemo.Droid.Resource.String.ApplicationName;
+			global::PCLStorage.Resource.String.Hello = global::CognitiveServicesDemo.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::CognitiveServicesDemo.Droid.Resource.Attribute.actionBarSize;
 		}
 		
@@ -2981,6 +2983,12 @@ namespace CognitiveServicesDemo.Droid
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f080027
+			public const int ApplicationName = 2131230759;
+			
+			// aapt resource value: 0x7f080026
+			public const int Hello = 2131230758;
 			
 			// aapt resource value: 0x7f08000f
 			public const int abc_action_bar_home_description = 2131230735;
