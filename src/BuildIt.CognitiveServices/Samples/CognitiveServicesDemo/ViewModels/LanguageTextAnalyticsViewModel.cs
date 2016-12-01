@@ -11,6 +11,7 @@ using BuildIt.CognitiveServices.Models;
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
+using CognitiveServicesDemo.Common;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -96,16 +97,17 @@ namespace CognitiveServicesDemo.ViewModels
 
             //HTTPClient
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "aec09306bf674ea7a30ad1af7af458c7");
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Constants.TextAnalyticsKey);
 
             //request parameters
             var uri = $"https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/languages?";
 
             HttpResponseMessage response;
 
-            CognitiveServiceClient co = new CognitiveServiceClient();
-            //CognitiveServiceLanguage co = new CognitiveServiceLanguage();
-            //var test = await co.DetectLanguageApiRequestAsync("aec09306bf674ea7a30ad1af7af458c7", detectLanguage);
+            var cognitiveService = new CognitiveServiceClient();
+            var result = await cognitiveService.DetectLanguageApiRequestAsync(Constants.TextAnalyticsKey, detectLanguage);
+
+
 
             // Request body
             byte[] byteData = Encoding.UTF8.GetBytes(detectLanguage);

@@ -11,6 +11,8 @@
         public const string FaceApiKey = "250ba16eb2a444ef917835d47c543963";
         public const string EmotionApiKey = "45164afd5f6f4f22986bfc8052c1e18c";
         public const string CuomputerVisionApiKey = "dd6fccf45760453baa492c3486103a94";
+        public const string SpellCheckKey = "5e5b5fe407dd4e76b081b9b344abe3c4";
+        public const string TextAnalyticsKey = "aec09306bf674ea7a30ad1af7af458c7";
     }
 
     class PreInputText

@@ -83,6 +83,14 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. A total of 120 languages are supported 
+        /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="jsonString">Request body</param>
+        /// <param name="contentType">Media type of the body sent to the API. Default is "application/json"</param>
+        /// <param name="numberofLanguagesToDetect">Format - int32. (Optional) Number of languages to detect. Set to 1 by default.</param>
+        /// <returns></returns>
         public async Task<ResultDto<DetectLanguageApiFeeds>> DetectLanguageApiRequestAsync(string subscriptionKey, string jsonString, string contentType = Constants.DefaultContentType, int numberofLanguagesToDetect = 1)
         {
             var resultDto = new ResultDto<DetectLanguageApiFeeds>();
@@ -300,13 +308,13 @@ namespace BuildIt.CognitiveServices
             }
             return resultDto;
         }
-
         /// <summary>
-        ///     Extract rich information from images to categorize and process visual data—and protect your users from unwanted
-        ///     Query.
+        /// Extract rich information from images to categorize and process visual data—and protect your users from unwanted Query.
         /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="photoStream"></param>
         /// <returns>
-        ///     Computer vision analysis result
+        /// Computer vision analysis result
         /// </returns>
         public async Task<ResultDto<AnalysisResult>> ComputerVisionApiRequestAsync(string subscriptionKey, Stream photoStream)
         {
@@ -328,10 +336,12 @@ namespace BuildIt.CognitiveServices
         }
 
         /// <summary>
-        ///     Analyze faces to detect a range of feelings and personalize your app's responses.
+        /// Analyze faces to detect a range of feelings and personalize your app's responses.
         /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="photoStream"></param>
         /// <returns>
-        ///     Return emptionRects
+        /// Return emptionRects
         /// </returns>
         public async Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, Stream photoStream)
         {
@@ -354,6 +364,12 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// Detect human faces and compare similar ones, organize people into groups according to visual similarity, and identify previously tagged people in images.
+        /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="photoStream"></param>
+        /// <returns></returns>
         public async Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, Stream photoStream)
         {
             var resultDto = new ResultDto<FaceRectangle[]>();
