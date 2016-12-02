@@ -20,7 +20,7 @@ namespace CognitiveServicesDemo.ViewModels
         private string inputText = "I had a wonderful experience! The rooms were wonderful and the staff were helpful.";
         private string warningText;
         private string language;
-        private string isoName;
+        private string isoName = "en";
         private string keyPhrases;
         private string sentimentResult;
 
@@ -104,8 +104,8 @@ namespace CognitiveServicesDemo.ViewModels
 
             HttpResponseMessage response;
 
-            var cognitiveService = new CognitiveServiceClient();
-            var result = await cognitiveService.DetectLanguageApiRequestAsync(Constants.TextAnalyticsKey, detectLanguage);
+            //var cognitiveService = new CognitiveServiceClient();
+            //var result = await cognitiveService.DetectLanguageApiRequestAsync(Constants.TextAnalyticsKey, detectLanguage);
 
 
 
@@ -129,7 +129,8 @@ namespace CognitiveServicesDemo.ViewModels
 
             HttpResponseMessage response2;
 
-            //var test2 = await co.KeyPhrasesApiAsync("aec09306bf674ea7a30ad1af7af458c7", detectkeyPhrases);
+            //var cognitiveService = new CognitiveServiceClient();
+            //var result = await cognitiveService.KeyPhrasesApiRequestAsync(Constants.TextAnalyticsKey, detectkeyPhrases);
 
             // Request body
             byte[] byteData2 = Encoding.UTF8.GetBytes(detectkeyPhrases);
@@ -152,7 +153,8 @@ namespace CognitiveServicesDemo.ViewModels
 
             HttpResponseMessage response3;
 
-            //var sentiment = await co.SentimentApiRequestAsync("aec09306bf674ea7a30ad1af7af458c7", detectSentiment);
+            var cognitiveService = new CognitiveServiceClient();
+            var sentiment = await cognitiveService.SentimentApiRequestAsync(Constants.TextAnalyticsKey, detectSentiment);
             
             // Request body
             byte[] byteData3 = Encoding.UTF8.GetBytes(detectSentiment);

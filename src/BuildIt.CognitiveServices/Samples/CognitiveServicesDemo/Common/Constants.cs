@@ -13,6 +13,7 @@
         public const string CuomputerVisionApiKey = "dd6fccf45760453baa492c3486103a94";
         public const string SpellCheckKey = "5e5b5fe407dd4e76b081b9b344abe3c4";
         public const string TextAnalyticsKey = "aec09306bf674ea7a30ad1af7af458c7";
+        public const string WebLanguageModelKey = "f13480095cdd4c8aad2115993f668a20";
     }
 
     class PreInputText

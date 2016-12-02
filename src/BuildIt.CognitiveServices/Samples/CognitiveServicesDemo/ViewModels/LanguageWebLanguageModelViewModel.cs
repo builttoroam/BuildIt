@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BuildIt.CognitiveServices;
 using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
 using BuildIt.CognitiveServices.Models;
+using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
@@ -56,12 +57,14 @@ namespace CognitiveServicesDemo.ViewModels
             try
             {
                 var client = new HttpClient();
-                
-                //CognitiveServiceLanguage co = new CognitiveServiceLanguage();
-                //await co.BreakIntoWordsApiRequestAsync(new BreakIntoWordsParameters()
-                //{
-                //    subscriptionKey = "f13480095cdd4c8aad2115993f668a20",contentType = InputText
-                //});
+
+                CognitiveServiceClient co = new CognitiveServiceClient();
+                await co.BreakIntoWordsApiRequestAsync(new BreakIntoWordsParameters()
+                {
+                    subscriptionKey = Constants.WebLanguageModelKey,
+                });
+
+
                 //request header
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "f13480095cdd4c8aad2115993f668a20");
                 var queryString = $"model=title&text={context}&order=5&maxNumOfCandidatesReturned=5";

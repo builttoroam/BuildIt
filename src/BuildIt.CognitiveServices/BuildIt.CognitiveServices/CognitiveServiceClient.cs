@@ -135,12 +135,20 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// The API returns a list of strings denoting the key talking points in the input text. We employ techniques from Microsoft Office's sophisticated Natural Language Processing toolkit.
+        /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="jsonString">Request body</param>
+        /// <param name="contentType">Media type of the body sent to the API.</param>
+        /// <returns></returns>
         public async Task<ResultDto<KeyPhrasesApiFeeds>> KeyPhrasesApiRequestAsync(string subscriptionKey, string jsonString, string contentType = Constants.DefaultContentType)
         {
             var resultDto = new ResultDto<KeyPhrasesApiFeeds>();
             try
             {
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, subscriptionKey);
                 HttpResponseMessage response;
 
                 // Request body
@@ -151,9 +159,8 @@ namespace BuildIt.CognitiveServices
                     content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                     response = await client.PostAsync(Constants.KeyPhrasesApi, content);
                 }
-                if (!response.IsSuccessStatusCode || (response.Content == null)) return null;
-                var jsonResult2 = await response.Content.ReadAsStringAsync();
-                var feed = JsonConvert.DeserializeObject<KeyPhrasesApiFeeds>(jsonResult2);
+                var jsonResult = await response.Content.ReadAsStringAsync();
+                var feed = JsonConvert.DeserializeObject<KeyPhrasesApiFeeds>(jsonResult);
 
                 resultDto.Result = feed;
                 resultDto.ErrorMessage = feed.message;
@@ -174,12 +181,20 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// The API returns a numeric score between 0 and 1. Scores close to 1 indicate positive sentiment and scores close to 0 indicate negative sentiment.
+        /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="jsonString">Request body</param>
+        /// <param name="contentType">Media type of the body sent to the API.</param>
+        /// <returns></returns>
         public async Task<ResultDto<SentimentApiFeeds>> SentimentApiRequestAsync(string subscriptionKey, string jsonString, string contentType = Constants.DefaultContentType)
         {
             var resultDto = new ResultDto<SentimentApiFeeds>();
             try
             {
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, subscriptionKey);
                 HttpResponseMessage response;
 
                 // Request body
@@ -211,6 +226,7 @@ namespace BuildIt.CognitiveServices
             }
             return resultDto;
         }
+
 
         public async Task<ResultDto<BreakIntoWordsApiFeeds>> BreakIntoWordsApiRequestAsync(BreakIntoWordsParameters breakIntoWordsParameters)
         {
