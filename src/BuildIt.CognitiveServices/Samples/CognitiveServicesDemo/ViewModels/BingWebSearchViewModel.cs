@@ -6,6 +6,8 @@ using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
+using BuildIt.CognitiveServices;
+using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -41,13 +43,12 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-
-                //CognitiveServiceSearch co = new CognitiveServiceSearch();
-                //var test= await co.BingSearchApiRequestAsync(new BingSearchParameters()
-                //{
-                //    content = InputText,
-                //    subscriptionKey = Constants.BingSearchKey
-                //});
+                var co = new CognitiveServiceClient();
+                var result = await co.BingSearchApiRequestAsync(new BingSearchParameters()
+                {
+                    content = InputText,
+                    subscriptionKey = Constants.BingSearchKey
+                });
 
                 var client = new HttpClient();
 

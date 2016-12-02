@@ -67,8 +67,9 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                //CognitiveServiceSearch co = new CognitiveServiceSearch();
-                //await co.BingAutosuggestApiRequestAsync("bill g", Constants.BingAutosuggestKey);
+
+                var cognitiveService = new CognitiveServiceClient();
+                var result =  await cognitiveService.BingAutosuggestApiRequestAsync(Constants.BingAutosuggestKey, InputText);
 
                 var client = new HttpClient();
 

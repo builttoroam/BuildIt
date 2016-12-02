@@ -281,8 +281,15 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// Empower users to type less and do more with automated and complete search suggestions.
+        /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="context">Query body</param>
+        /// <param name="market">default set en-au</param>
+        /// <returns></returns>
         public async Task<ResultDto<BingAutosuggestApiFeeds>> BingAutosuggestApiRequestAsync(string subscriptionKey,
-            string context)
+            string context, string market= Constants.AuMarket)
         {
             var resultDto = new ResultDto<BingAutosuggestApiFeeds>();
             try
@@ -291,7 +298,7 @@ namespace BuildIt.CognitiveServices
 
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, subscriptionKey);
-                var queryString = $"q={context}";
+                var queryString = $"q={context}&Market={market}";
                 var url = Constants.BingAutosuggestAPi + queryString;
 
                 var jsonResult = await client.GetStringAsync(url);

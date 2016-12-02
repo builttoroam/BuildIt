@@ -4,6 +4,7 @@
     {
         public const string SubscriptionTitle = "Ocp-Apim-Subscription-Key";
         public const string DefaultContentType = "application/json";
+        public const string AuMarket = "en-au";
         public const string AcademicInterpretApi = "https://api.projectoxford.ai/academic/v1.0/interpret?";
         public const string SpellCheckApi = "https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?";
         public const string DetectLanguageApi = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/languages?";

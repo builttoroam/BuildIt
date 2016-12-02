@@ -11,6 +11,21 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Draw rectangle on face
+        /// </summary>
+        /// <param name="rectangle">
+        /// X, Y width and hight value of face
+        /// </param>
+        /// <param name="imageUri">
+        /// Pass imageUri to display image
+        /// </param>
+        /// <param name="imageWidth">
+        /// Width of image
+        /// </param>
+        /// <param name="imageHeight">
+        /// Height of image
+        /// </param>
         public void DrawRectangle(List<Rectangle> rectangle, string imageUri, double imageWidth, double imageHeight)
         {
 
