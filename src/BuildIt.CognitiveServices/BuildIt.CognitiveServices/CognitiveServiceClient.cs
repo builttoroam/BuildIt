@@ -25,7 +25,8 @@ namespace BuildIt.CognitiveServices
 {
     public class CognitiveServiceClient : ICognitiveServiceClient
     {
-        public async Task<ResultDto<InterpretApiFeeds>> AcademicInterpretApiRequestAsync(AcademicParameters academicParameters)
+        public async Task<ResultDto<InterpretApiFeeds>> AcademicInterpretApiRequestAsync(
+            AcademicParameters academicParameters)
         {
             var resultDto = new ResultDto<InterpretApiFeeds>();
             try
@@ -34,7 +35,8 @@ namespace BuildIt.CognitiveServices
 
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, academicParameters.SubscriptionKey);
-                var queryString = $"query={academicParameters.Query}&offset={academicParameters.Offset}&count={academicParameters.Count}&model={academicParameters.Model}&complete={academicParameters.Complete}&timeout={academicParameters.Timeout}";
+                var queryString =
+                    $"query={academicParameters.Query}&offset={academicParameters.Offset}&count={academicParameters.Count}&model={academicParameters.Model}&complete={academicParameters.Complete}&timeout={academicParameters.Timeout}";
                 var url = Constants.AcademicInterpretApi + queryString;
 
                 var jsonResult = await client.GetStringAsync(url);
@@ -54,7 +56,8 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
-        public async Task<ResultDto<SpellCheckApiFeeds>> SpellCheckApiRequestAsync(SpellCheckParameters spellCheckParameters)
+        public async Task<ResultDto<SpellCheckApiFeeds>> SpellCheckApiRequestAsync(
+            SpellCheckParameters spellCheckParameters)
         {
             var resultDto = new ResultDto<SpellCheckApiFeeds>();
             try
@@ -64,7 +67,8 @@ namespace BuildIt.CognitiveServices
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, spellCheckParameters.subscriptionKey);
 
                 // Request parameters
-                var queryString = $"text={spellCheckParameters.content}&mode={spellCheckParameters.mode}&mkt={spellCheckParameters.mkt}";
+                var queryString =
+                    $"text={spellCheckParameters.content}&mode={spellCheckParameters.mode}&mkt={spellCheckParameters.mkt}";
                 var url = Constants.SpellCheckApi + queryString;
 
                 var jsonResult = await client.GetStringAsync(url);
@@ -91,7 +95,8 @@ namespace BuildIt.CognitiveServices
         /// <param name="contentType">Media type of the body sent to the API. Default is "application/json"</param>
         /// <param name="numberofLanguagesToDetect">Format - int32. (Optional) Number of languages to detect. Set to 1 by default.</param>
         /// <returns></returns>
-        public async Task<ResultDto<DetectLanguageApiFeeds>> DetectLanguageApiRequestAsync(string subscriptionKey, string jsonString, string contentType = Constants.DefaultContentType, int numberofLanguagesToDetect = 1)
+        public async Task<ResultDto<DetectLanguageApiFeeds>> DetectLanguageApiRequestAsync(string subscriptionKey,
+            string jsonString, string contentType = Constants.DefaultContentType, int numberofLanguagesToDetect = 1)
         {
             var resultDto = new ResultDto<DetectLanguageApiFeeds>();
             try
@@ -142,7 +147,8 @@ namespace BuildIt.CognitiveServices
         /// <param name="jsonString">Request body</param>
         /// <param name="contentType">Media type of the body sent to the API.</param>
         /// <returns></returns>
-        public async Task<ResultDto<KeyPhrasesApiFeeds>> KeyPhrasesApiRequestAsync(string subscriptionKey, string jsonString, string contentType = Constants.DefaultContentType)
+        public async Task<ResultDto<KeyPhrasesApiFeeds>> KeyPhrasesApiRequestAsync(string subscriptionKey,
+            string jsonString, string contentType = Constants.DefaultContentType)
         {
             var resultDto = new ResultDto<KeyPhrasesApiFeeds>();
             try
@@ -188,7 +194,8 @@ namespace BuildIt.CognitiveServices
         /// <param name="jsonString">Request body</param>
         /// <param name="contentType">Media type of the body sent to the API.</param>
         /// <returns></returns>
-        public async Task<ResultDto<SentimentApiFeeds>> SentimentApiRequestAsync(string subscriptionKey, string jsonString, string contentType = Constants.DefaultContentType)
+        public async Task<ResultDto<SentimentApiFeeds>> SentimentApiRequestAsync(string subscriptionKey,
+            string jsonString, string contentType = Constants.DefaultContentType)
         {
             var resultDto = new ResultDto<SentimentApiFeeds>();
             try
@@ -227,8 +234,13 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
-
-        public async Task<ResultDto<BreakIntoWordsApiFeeds>> BreakIntoWordsApiRequestAsync(BreakIntoWordsParameters breakIntoWordsParameters)
+        /// <summary>
+        /// Insert spaces into a string of words lacking spaces, like a hashtag or part of a URL.
+        /// </summary>
+        /// <param name="breakIntoWordsParameters"></param>
+        /// <returns></returns>
+        public async Task<ResultDto<BreakIntoWordsApiFeeds>> BreakIntoWordsApiRequestAsync(
+            BreakIntoWordsParameters breakIntoWordsParameters)
         {
             var resultDto = new ResultDto<BreakIntoWordsApiFeeds>();
             try
@@ -237,7 +249,8 @@ namespace BuildIt.CognitiveServices
 
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, breakIntoWordsParameters.subscriptionKey);
-                var queryString = $"model={breakIntoWordsParameters.model}&text={breakIntoWordsParameters.text}&order={breakIntoWordsParameters.order}&maxNumOfCandidatesReturned={breakIntoWordsParameters.maxNumOfCandidatesReturned}";
+                var queryString =
+                    $"model={breakIntoWordsParameters.model}&text={breakIntoWordsParameters.text}&order={breakIntoWordsParameters.order}&maxNumOfCandidatesReturned={breakIntoWordsParameters.maxNumOfCandidatesReturned}";
                 var body = string.Empty;
                 var uri = Constants.BreakIntoWordsApi + queryString;
 
@@ -247,7 +260,7 @@ namespace BuildIt.CognitiveServices
 
                 using (var content = new ByteArrayContent(byteData))
                 {
-                    content.Headers.ContentType = new MediaTypeHeaderValue(breakIntoWordsParameters.content);
+                    content.Headers.ContentType = new MediaTypeHeaderValue(breakIntoWordsParameters.contentType);
                     response = await client.PostAsync(uri, content);
                 }
 
@@ -255,8 +268,8 @@ namespace BuildIt.CognitiveServices
                 var feed = JsonConvert.DeserializeObject<BreakIntoWordsApiFeeds>(jsonResult);
 
                 resultDto.Result = feed;
-                resultDto.ErrorMessage = feed.error.message;
-                resultDto.StatusCode = feed.error.code;
+                resultDto.ErrorMessage = feed.error?.message;
+                resultDto.StatusCode = feed.error?.code;
                 resultDto.Success = feed.error == null;
             }
             catch (Exception ex)
@@ -268,7 +281,8 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
-        public async Task<ResultDto<BingAutosuggestApiFeeds>> BingAutosuggestApiRequestAsync(string subscriptionKey, string context)
+        public async Task<ResultDto<BingAutosuggestApiFeeds>> BingAutosuggestApiRequestAsync(string subscriptionKey,
+            string context)
         {
             var resultDto = new ResultDto<BingAutosuggestApiFeeds>();
             try
@@ -294,6 +308,76 @@ namespace BuildIt.CognitiveServices
                 resultDto.Exception = ex;
                 Debug.WriteLine($"{ex}");
             }
+            return resultDto;
+        }
+
+
+        /// <summary>
+        /// Entity Linking is a natural language processing tool to help analyzing text for your application
+        /// </summary>
+        /// <param name="subscriptionKey"></param>
+        /// <param name="requestBody">
+        /// Request body
+        /// </param>
+        /// <param name="contentType">
+        /// Media type of the body sent to the API.
+        /// </param>
+        /// <param name="selection">
+        /// The specific word or phrase within the text that is to be entity linked
+        /// </param>
+        /// <param name="offset">
+        /// The location (in offset by characters) of the selected word or phrase within the input text.
+        /// </param>
+        /// <returns></returns>
+        public async Task<ResultDto<EntityLinkingApiFeeds>> EntityLInkingApiRequestAsync(string subscriptionKey,
+            string requestBody, string contentType = "text/plain",string selection = null,string offset = null)
+        {
+            var resultDto = new ResultDto<EntityLinkingApiFeeds>();
+            try
+            {
+                var client = new HttpClient();
+                //request header
+                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle,subscriptionKey);
+                HttpResponseMessage response;
+                //request body
+                var byteData = Encoding.UTF8.GetBytes(requestBody);
+                var  parameters = string.Empty;
+                var pNo = 0;
+                if (!string.IsNullOrEmpty(selection))
+                {
+                    pNo++;
+                    parameters += $"selection={selection}";
+                }
+                if (!string.IsNullOrEmpty(offset))
+                {
+                    pNo++;
+                    parameters += pNo == 2 ? $"&offset={offset}" : $"offset={offset}";
+                }
+                
+                var requestUrl = Constants.EntityLinkingApi + parameters;
+
+                using (var content = new ByteArrayContent(byteData))
+                {
+                    content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                    response = await client.PostAsync(requestUrl, content);
+                }
+
+                var jsonResult = await response.Content.ReadAsStringAsync();
+
+                var feed = JsonConvert.DeserializeObject<EntityLinkingApiFeeds>(jsonResult);
+
+
+                resultDto.Result = feed;
+                resultDto.ErrorMessage = feed.message;
+                resultDto.StatusCode = feed.statusCode.ToString();
+                resultDto.Success = string.IsNullOrEmpty(feed.message);
+            }
+            catch (Exception ex)
+            {
+                resultDto.ErrorMessage = ex.Message;
+                resultDto.Exception = ex;
+            }
+
             return resultDto;
         }
 

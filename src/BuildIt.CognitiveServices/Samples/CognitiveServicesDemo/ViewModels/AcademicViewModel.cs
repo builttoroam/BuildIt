@@ -56,13 +56,14 @@ namespace CognitiveServicesDemo.ViewModels
                 WarningText = String.Empty;
                 var client = new HttpClient();
 
-                CognitiveServiceClient co = new CognitiveServiceClient();
-                //CognitiveServiceKnowledge co = new CognitiveServiceKnowledge();
-                await co.AcademicInterpretApiRequestAsync(new AcademicParameters()
+                var co = new CognitiveServiceClient();
+                var result = await co.AcademicInterpretApiRequestAsync(new AcademicParameters()
                 {
                     SubscriptionKey =  Constants.AcademicKey,
                     Query = InputText,
                 });
+
+
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.AcademicKey);
                 //var queryString = $"q={context}&count=10&offset=0&mkt=en-us&safesearch=Moderate";

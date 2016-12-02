@@ -21,6 +21,6 @@ namespace BuildIt.CognitiveServices.Models.Feeds.InputParameters
         /// <summary>
         /// Media type of the body sent to the API.
         /// </summary>
-        public string content { get; set; } = Constants.DefaultContentType;
+        public string contentType { get; set; } = Constants.DefaultContentType;
     }
 }

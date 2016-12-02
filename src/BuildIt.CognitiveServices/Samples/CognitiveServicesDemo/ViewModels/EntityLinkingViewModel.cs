@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
 using Newtonsoft.Json;
+using BuildIt.CognitiveServices;
 using Xamarin.Forms;
 
 namespace CognitiveServicesDemo.ViewModels
@@ -61,6 +62,12 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
+                var cognitiveService = new CognitiveServiceClient();
+                var result = await cognitiveService.EntityLInkingApiRequestAsync(Constants.EntityLinkingKey, context);
+
+
+
+                
                 var client = new HttpClient();
                 var count = 0;
                 //request header

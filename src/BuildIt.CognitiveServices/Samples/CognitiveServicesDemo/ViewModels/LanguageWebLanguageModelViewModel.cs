@@ -58,10 +58,10 @@ namespace CognitiveServicesDemo.ViewModels
             {
                 var client = new HttpClient();
 
-                CognitiveServiceClient co = new CognitiveServiceClient();
-                await co.BreakIntoWordsApiRequestAsync(new BreakIntoWordsParameters()
+                var co = new CognitiveServiceClient();
+                var result = await co.BreakIntoWordsApiRequestAsync(new BreakIntoWordsParameters()
                 {
-                    subscriptionKey = Constants.WebLanguageModelKey,
+                    subscriptionKey = Constants.WebLanguageModelKey,text = InputText
                 });
 
 

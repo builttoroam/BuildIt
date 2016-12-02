@@ -12,5 +12,6 @@
         public const string BreakIntoWordsApi = "https://api.projectoxford.ai/text/weblm/v1.0/breakIntoWords?";
         public const string BingSearchApi = "https://api.cognitive.microsoft.com/bing/v5.0/search?";
         public const string BingAutosuggestAPi = "https://api.cognitive.microsoft.com/bing/v5.0/suggestions/?";
+        public const string EntityLinkingApi = "https://api.projectoxford.ai/entitylinking/v1.0/link?";
     }
 }
