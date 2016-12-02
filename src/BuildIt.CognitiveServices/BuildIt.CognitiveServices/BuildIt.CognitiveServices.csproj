@@ -47,7 +47,7 @@
     <Compile Include="CognitiveServiceClient.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Interfaces\ICognitiveServiceClient.cs" />
-    <Compile Include="Models\Feeds\Academic\BingSearchApiFeeds.cs" />
+    <Compile Include="Models\Feeds\Search\BingSearchApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\EntityLinkingApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\InterpretApiFeeds.cs" />
     <Compile Include="Models\Feeds\InputParameters\AcademicParameters.cs" />
