@@ -12,7 +12,7 @@ namespace CognitiveServicesDemo.Views
     {
         public VisionFaceViewModel CurrentViewModel => BindingContext as VisionFaceViewModel;
 
-        public Xamarin.Forms.Rectangle Rectangle1 { get; set; }
+        public Rectangle Rectangle1 { get; set; }
 
         public VisionFacePage()
         {
@@ -58,13 +58,8 @@ namespace CognitiveServicesDemo.Views
         {
             try
             {
-                //var file1 = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
-                //{
-                //    AllowCropping = true,
-                //    Directory = "Receipts",
-                //    Name = $"{DateTime.UtcNow}.jpg"
 
-                //});
+
                 await CrossMedia.Current.Initialize();
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported) return;
                 
@@ -92,13 +87,12 @@ namespace CognitiveServicesDemo.Views
 
 
 
-                List<Rectangle> face = new List<Rectangle>();
-                Rectangle rectangle = new Rectangle();
+                var face = new List<Rectangle>();
+                var rectangle = new Rectangle();
                 foreach (var s in faceMetaData)
-                {
                     if (s != null)
                     {
-                        string[] xywh = s.Split(',');
+                        var xywh = s.Split(',');
                         
                         rectangle.X = double.Parse(xywh[0]);
                         rectangle.Y = double.Parse(xywh[1]);
@@ -111,7 +105,6 @@ namespace CognitiveServicesDemo.Views
                         //ResultLayout.Children.Add(frane, Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => left/imageWidht*this.TestImage.Width), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => top/imageHeight*this.TestImage.Height), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => width/imageWidht* this.TestImage.Width), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => height/imageHeight * this.TestImage.Height));
 
                     }
-                }
                 var imageMetadata = CurrentViewModel.ImageMetadata.Split(',');
                 var imageWidht = int.Parse(imageMetadata[0]);
                 var imageHeight = int.Parse(imageMetadata[1]);
@@ -119,6 +112,9 @@ namespace CognitiveServicesDemo.Views
 
 
                 Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidht,imageHeight);
+
+
+
                 //string[] xywh = faceMetaData.Split(',');
                 CurrentViewModel.WarningText = "Here is the computer vision results for you";
                 //RectImage.Source = CurrentViewModel.ImageUrl;
