@@ -2,6 +2,9 @@
 {
     public class AcademicParameters
     {
+        /// <summary>
+        /// Subscription key
+        /// </summary>
         public string SubscriptionKey { get; set; }
         /// <summary>
         /// Query entered by user. If complete is set to 1, query will be interpreted as a prefix for generating query auto-completion suggestions.

@@ -59,8 +59,7 @@ namespace CognitiveServicesDemo.ViewModels
                 var co = new CognitiveServiceClient();
                 var result = await co.AcademicInterpretApiRequestAsync(new AcademicParameters()
                 {
-                    SubscriptionKey =  Constants.AcademicKey,
-                    Query = InputText,
+                    SubscriptionKey =  Constants.AcademicKey,Query = InputText
                 });
 
 

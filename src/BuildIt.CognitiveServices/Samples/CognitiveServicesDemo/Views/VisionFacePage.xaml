@@ -13,14 +13,14 @@
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
       <Label Text="Vision Face" VerticalOptions="Start" HorizontalOptions="Center" />
-      <customLayout:FacialRecognitionImage Grid.Row="2" x:Name="Layout"></customLayout:FacialRecognitionImage>
-      <StackLayout Grid.Row="3" Orientation="Vertical"  HorizontalOptions="Center" VerticalOptions="Start">
+      <customLayout:FacialRecognitionImage Grid.Row="1" x:Name="Layout"></customLayout:FacialRecognitionImage>
+      <StackLayout Grid.Row="2" Orientation="Vertical"  HorizontalOptions="Center" VerticalOptions="Start">
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Take Photo" Clicked="TakePhoto_Click"></Button>
-        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>
+        <!--<Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Emotion" Clicked="EmotionButton_Click"></Button>
-        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Computer vision" Clicked="ComputerVisionButton_Click"></Button>
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Computer vision" Clicked="ComputerVisionButton_Click"></Button>-->
       </StackLayout>
-      <StackLayout Grid.Row="4" Orientation="Vertical" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
+      <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
         <Label Text="Image information"></Label>
         <Label TextColor="Red"  Text="{Binding Title}"/>
         <Label Text="Analysis categories" VerticalOptions="Start"/>

@@ -154,7 +154,7 @@ namespace CognitiveServicesDemo.ViewModels
             HttpResponseMessage response3;
 
             var cognitiveService = new CognitiveServiceClient();
-            var sentiment = await cognitiveService.SentimentApiRequestAsync(Constants.TextAnalyticsKey, detectSentiment);
+            var result = await cognitiveService.SentimentApiRequestAsync(Constants.TextAnalyticsKey, detectSentiment);
             
             // Request body
             byte[] byteData3 = Encoding.UTF8.GetBytes(detectSentiment);

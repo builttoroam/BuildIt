@@ -265,8 +265,8 @@ namespace CognitiveServicesDemo.ViewModels
 
                 
                 //call from class library
-                //var co = new CognitiveServiceClient();
-                //var result = await co.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
+                var co = new CognitiveServiceClient();
+                var result = await co.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
                 //var photoStream = await PclStorageStreamAsync(ImageUrl);
                 AnalysisResult analysisRects = await UploadAndAnalyzeImage(file.GetStream());
                 

@@ -23,8 +23,16 @@ using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 
 namespace BuildIt.CognitiveServices
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CognitiveServiceClient : ICognitiveServiceClient
     {
+        /// <summary>
+        /// Interprets a natural language user query string
+        /// </summary>
+        /// <param name="academicParameters"></param>
+        /// <returns></returns>
         public async Task<ResultDto<InterpretApiFeeds>> AcademicInterpretApiRequestAsync(
             AcademicParameters academicParameters)
         {
@@ -56,6 +64,11 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// Bing Spell Check API
+        /// </summary>
+        /// <param name="spellCheckParameters"></param>
+        /// <returns></returns>
         public async Task<ResultDto<SpellCheckApiFeeds>> SpellCheckApiRequestAsync(
             SpellCheckParameters spellCheckParameters)
         {
@@ -336,7 +349,7 @@ namespace BuildIt.CognitiveServices
         /// The location (in offset by characters) of the selected word or phrase within the input text.
         /// </param>
         /// <returns></returns>
-        public async Task<ResultDto<EntityLinkingApiFeeds>> EntityLInkingApiRequestAsync(string subscriptionKey,
+        public async Task<ResultDto<EntityLinkingApiFeeds>> EntityLinkingApiRequestAsync(string subscriptionKey,
             string requestBody, string contentType = "text/plain",string selection = null,string offset = null)
         {
             var resultDto = new ResultDto<EntityLinkingApiFeeds>();
@@ -388,6 +401,11 @@ namespace BuildIt.CognitiveServices
             return resultDto;
         }
 
+        /// <summary>
+        /// Add a variety of image search options to your app or website, from trending images to detailed insights.
+        /// </summary>
+        /// <param name="bingSearchParameters"></param>
+        /// <returns></returns>
         public async Task<ResultDto<BingSearchApiFeeds>> BingSearchApiRequestAsync(BingSearchParameters bingSearchParameters)
         {
             var resultDto = new ResultDto<BingSearchApiFeeds>();

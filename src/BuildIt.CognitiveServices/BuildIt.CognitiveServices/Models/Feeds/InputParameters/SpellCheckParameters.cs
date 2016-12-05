@@ -2,6 +2,9 @@
 {
     public class SpellCheckParameters
     {
+        /// <summary>
+        /// Subscription key
+        /// </summary>
         public string subscriptionKey { get; set; }
         /// <summary>
         /// Media type of the body sent to the API.

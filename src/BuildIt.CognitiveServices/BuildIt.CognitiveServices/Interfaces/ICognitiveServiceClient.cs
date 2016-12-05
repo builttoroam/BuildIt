@@ -35,5 +35,7 @@ namespace BuildIt.CognitiveServices.Interfaces
         Task<ResultDto<Emotion[]>> VisionEmotionApiRequestAsync(string subscriptionKey, Stream photoStream);
 
         Task<ResultDto<FaceRectangle[]>> VisionFaceApiCheckAsync(string subscriptionKey, Stream photoStream);
+
+        Task<ResultDto<EntityLinkingApiFeeds>> EntityLinkingApiRequestAsync(string subscriptionKey, string requestBody, string contentType = "text/plain", string selection = null, string offset = null);
     }
 }

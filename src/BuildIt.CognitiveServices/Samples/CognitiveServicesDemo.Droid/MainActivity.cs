@@ -10,8 +10,9 @@ using MvvmCross.Forms.Presenter.Core;
 using MvvmCross.Forms.Presenter.Droid;
 using MvvmCross.Platform;
 using Xamarin.Forms;
-//using Com.Microsoft.Bing.Speech;
-//using Com.Microsoft.Cognitiveservices.Speechrecognition;
+using Com.Microsoft.Bing.Speech;
+using Com.Microsoft.SpeechSDK;
+using Com.Microsoft.Cognitiveservices.Speechrecognition;
 using System.Linq;
 
 namespace CognitiveServicesDemo.Droid
@@ -21,14 +22,14 @@ namespace CognitiveServicesDemo.Droid
     [Activity(Label = "Cognitive Service", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity//, ISpeechRecognitionServerEvents, IBingSpeech
     {
-        //private readonly SpeechRecognitionMode speechMode = SpeechRecognitionMode.LongDictation; //speech mode  short for20，long for200
+        //private readonly Com.Microsoft.Cognitiveservices.Speechrecognition.SpeechRecognitionMode speechMode = Com.Microsoft.Cognitiveservices.Speechrecognition.SpeechRecognitionMode.LongDictation; //speech mode  short for20，long for200
         //string locale = "en-au"; //language
         //string locale2 = "zh-CN";
         //string key = "1e7fe3d56350428197a55f6873c45269";
         //DataRecognitionClient dataClient = null;
         //MicrophoneRecognitionClient micClient = null;
-        FinalResponseStatus isReceivedResponse = FinalResponseStatus.NotReceived;
-
+        //FinalResponseStatus isReceivedResponse = FinalResponseStatus.NotReceived;
+        //Com.Microsoft.Cognitiveservices.Speechrecognition.SpeechRecognitionMode
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -41,7 +42,7 @@ namespace CognitiveServicesDemo.Droid
             var presenter = Mvx.Resolve<IMvxViewPresenter>() as MvxFormsDroidPagePresenter;
             presenter.MvxFormsApp = mvxFormsApp;
             //Mvx.RegisterType<IBingSpeech, MainActivity>();
-            
+
             Mvx.Resolve<IMvxAppStart>().Start();
             //App.Init(this);
         }
@@ -71,21 +72,21 @@ namespace CognitiveServicesDemo.Droid
         /// * @param recording The current recording state
         /// </summary>
         /// <param name="p0">If set to <c>true</c> p0.</param>
-        //public void OnAudioEvent(bool p0)
-        //{
-        //    this.WriteLine("--- Microphone status change received by onAudioEvent() ---");
-        //    this.WriteLine("********* Microphone status: " + p0 + " *********");
-        //    if (p0)
-        //    {
-        //        this.WriteLine("Please start speaking.");
-        //    }
+        public void OnAudioEvent(bool p0)
+        {
+            this.WriteLine("--- Microphone status change received by onAudioEvent() ---");
+            this.WriteLine("********* Microphone status: " + p0 + " *********");
+            if (p0)
+            {
+                this.WriteLine("Please start speaking.");
+            }
 
-        //    WriteLine();
-        //    if (!p0)
-        //    {
-        //        this.micClient.EndMicAndRecognition();
-        //    }
-        //}
+            WriteLine();
+            if (!p0)
+            {
+                //this.micClient.EndMicAndRecognition();
+            }
+        }
 
         public void OnError(int p0, string p1)
         {
@@ -128,6 +129,8 @@ namespace CognitiveServicesDemo.Droid
         //        this.WriteLine();
         //    }
         //}
+
+
         /// <summary>
         /// Called when a final response is received and its intent is parsed
         /// </summary>
@@ -137,9 +140,9 @@ namespace CognitiveServicesDemo.Droid
             this.WriteLine("--- Intent received by onIntentReceived() ---");
             this.WriteLine(p0);
             this.WriteLine();
-            
+
             //string allStr = string.Join("", p0.Results.Select(o => o.DisplayText).ToList());
-            
+
         }
 
         public void OnPartialResponseReceived(string p0)

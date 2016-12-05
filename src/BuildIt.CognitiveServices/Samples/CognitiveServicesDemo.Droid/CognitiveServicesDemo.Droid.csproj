@@ -112,6 +112,9 @@
       <HintPath>..\..\..\packages\Microsoft.ProjectOxford.Emotion.1.0.331.1\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Microsoft.ProjectOxford.Emotion.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ProjectOxford.Face">
+      <HintPath>..\..\..\..\..\..\Users\ChrisWang\.nuget\packages\Microsoft.ProjectOxford.Face\1.2.1.2\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Microsoft.ProjectOxford.Face.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ProjectOxford.Vision, Version=1.0.370.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.ProjectOxford.Vision.1.0.370\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Microsoft.ProjectOxford.Vision.dll</HintPath>
       <Private>True</Private>
@@ -288,6 +291,10 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\Users\ChrisWang\Desktop\Kwy.ProjectOxford.SpeechRecognition.Droid\Kwy.ProjectOxford.SpeechRecognition.Droid.csproj">
+      <Project>{96cbd5ba-45ca-41d5-b906-c212b102f727}</Project>
+      <Name>Kwy.ProjectOxford.SpeechRecognition.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj">
       <Project>{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}</Project>
       <Name>BuildIt.CognitiveServices</Name>
