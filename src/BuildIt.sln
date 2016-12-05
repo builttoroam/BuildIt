@@ -4618,9 +4618,8 @@ Global
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.Release|x86.ActiveCfg = Release|x86
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.Release|x86.Build.0 = Release|x86
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
-		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|ARM.ActiveCfg = Release|ARM
-		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|ARM.Build.0 = Release|ARM
+		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|ARM.Deploy.0 = Release|ARM
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|iPhone.Build.0 = Release|Any CPU
 		{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}.ReleaseLibraries|iPhoneSimulator.ActiveCfg = Release|Any CPU
@@ -4702,8 +4701,6 @@ Global
 		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.Release|x86.Build.0 = Release|x86
 		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.Release|x86.Deploy.0 = Release|x86
 		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
-		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
-		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.ReleaseLibraries|Any CPU.Deploy.0 = Release|Any CPU
 		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}.ReleaseLibraries|ARM.Deploy.0 = Release|Any CPU
@@ -4832,8 +4829,6 @@ Global
 		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.Release|x86.Build.0 = Release|x86
 		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.Release|x86.Deploy.0 = Release|x86
 		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.ReleaseLibraries|Any CPU.ActiveCfg = Release|x86
-		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.ReleaseLibraries|Any CPU.Build.0 = Release|x86
-		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.ReleaseLibraries|Any CPU.Deploy.0 = Release|x86
 		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.ReleaseLibraries|ARM.ActiveCfg = Release|ARM
 		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.ReleaseLibraries|ARM.Build.0 = Release|ARM
 		{CFEA158E-DD1F-428B-A0EA-464ABBD5A613}.ReleaseLibraries|ARM.Deploy.0 = Release|ARM
