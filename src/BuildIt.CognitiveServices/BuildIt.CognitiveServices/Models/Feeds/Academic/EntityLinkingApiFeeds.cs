@@ -32,8 +32,4 @@ namespace BuildIt.CognitiveServices.Models.Feeds.Academic
         public double score { get; set; }
     }
 
-    public class RootObject
-    {
-        
-    }
 }

@@ -302,7 +302,7 @@ namespace BuildIt.CognitiveServices
         /// <param name="market">default set en-au</param>
         /// <returns></returns>
         public async Task<ResultDto<BingAutosuggestApiFeeds>> BingAutosuggestApiRequestAsync(string subscriptionKey,
-            string context, string market= Constants.AuMarket)
+            string context, string market)
         {
             var resultDto = new ResultDto<BingAutosuggestApiFeeds>();
             try

@@ -10,9 +10,6 @@ using MvvmCross.Forms.Presenter.Core;
 using MvvmCross.Forms.Presenter.Droid;
 using MvvmCross.Platform;
 using Xamarin.Forms;
-using Com.Microsoft.Bing.Speech;
-using Com.Microsoft.SpeechSDK;
-using Com.Microsoft.Cognitiveservices.Speechrecognition;
 using System.Linq;
 
 namespace CognitiveServicesDemo.Droid
