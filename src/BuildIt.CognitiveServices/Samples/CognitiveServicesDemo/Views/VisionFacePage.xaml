@@ -4,23 +4,26 @@
              xmlns:customLayout="clr-namespace:BuildIt.CognitiveServices.XForms.UserControls;assembly=BuildIt.CognitiveServices.XForms"
              x:Class="CognitiveServicesDemo.Views.VisionFacePage">
   <ScrollView>
-    <Grid>
-      <Grid.RowDefinitions>
+        <StackLayout Orientation="Vertical">
+      <!--<Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
-      <Label Text="Vision Face" VerticalOptions="Start" HorizontalOptions="Center" />
-      <customLayout:FacialRecognitionImage Grid.Row="1" x:Name="Layout"></customLayout:FacialRecognitionImage>
-      <StackLayout Grid.Row="2" Orientation="Vertical"  HorizontalOptions="Center" VerticalOptions="Start">
-        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Take Photo" Clicked="TakePhoto_Click"></Button>
+      </Grid.RowDefinitions>-->
+      <Label Text="Vision Face" HorizontalOptions="Center" />
+            <Grid HorizontalOptions="CenterAndExpand" HeightRequest="200" WidthRequest="200">
+            <customLayout:FacialRecognitionImage x:Name="Layout"
+                                                 ></customLayout:FacialRecognitionImage>
+            </Grid>
+            <StackLayout Orientation="Vertical"  HorizontalOptions="Center" >
+        <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Take Photo" Clicked="TakePhoto_Click"></Button>
         <!--<Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Emotion" Clicked="EmotionButton_Click"></Button>
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Computer vision" Clicked="ComputerVisionButton_Click"></Button>-->
       </StackLayout>
-      <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="StartAndExpand" VerticalOptions="Start">
+      <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" >
         <Label Text="Image information"></Label>
         <Label TextColor="Red"  Text="{Binding Title}"/>
         <Label Text="Analysis categories" VerticalOptions="Start"/>
@@ -35,6 +38,6 @@
         <Label Text="Analysis Tag"/>
         <Label TextColor="Red" Text="{Binding AnalysisTag}"></Label>
       </StackLayout>
-    </Grid>
+    </StackLayout>
   </ScrollView>
 </ContentPage>
