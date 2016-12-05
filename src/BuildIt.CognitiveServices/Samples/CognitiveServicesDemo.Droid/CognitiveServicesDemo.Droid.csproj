@@ -291,10 +291,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Users\ChrisWang\Desktop\Kwy.ProjectOxford.SpeechRecognition.Droid\Kwy.ProjectOxford.SpeechRecognition.Droid.csproj">
-      <Project>{96cbd5ba-45ca-41d5-b906-c212b102f727}</Project>
-      <Name>Kwy.ProjectOxford.SpeechRecognition.Droid</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj">
       <Project>{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}</Project>
       <Name>BuildIt.CognitiveServices</Name>
