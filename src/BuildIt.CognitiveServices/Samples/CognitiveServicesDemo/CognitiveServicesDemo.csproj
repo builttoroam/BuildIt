@@ -221,6 +221,10 @@
       <Project>{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}</Project>
       <Name>BuildIt.CognitiveServices.XForms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj">
+      <Project>{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}</Project>
+      <Name>BuildIt.CognitiveServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

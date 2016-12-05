@@ -80,8 +80,6 @@ namespace CognitiveServicesDemo.ViewModels
                     subscriptionKey = Constants.SpellCheckKey
                 });
 
-
-
                 var response = await client.GetAsync(uri);
                 var jsonResult = await response.Content.ReadAsStringAsync();
                 ////spellingCheckedText = jsonResult;
