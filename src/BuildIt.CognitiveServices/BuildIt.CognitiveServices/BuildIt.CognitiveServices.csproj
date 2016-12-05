@@ -67,8 +67,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56e73033cf5ff80c2008c679/export?DocumentFormat=Swagger"&amp;"ApiName=Spell%2520Check%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+xcopy "$(TargetDir)Generated\*.*" "$(SolutionDir)$(ProjectName)\$(ProjectName)\Models" /Y
+rd /s /q "$(TargetDir)Generated"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
