@@ -96,6 +96,34 @@ AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectox
 
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/56f91f2d778daf23d8ec6739/export?DocumentFormat=Swagger"&amp;"ApiName=Computer%2520Vision%2520API%2520-%2520v1.0 -Namespace BuildIt.CognitiveServices
 
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/563309b6778daf02acc0a508/export?DocumentFormat=Swagger"&amp;"ApiName=Speaker%2520Recognition%2520API -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56e73033cf5ff80c2008c679/export?DocumentFormat=Swagger"&amp;"ApiName=Spell%2520Check%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/56d95961e597ed0f04b76e58/export?DocumentFormat=Swagger"&amp;"ApiName=Luis%2520Programmatic%2520API -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/56ea598f778daf01942505ff/export?DocumentFormat=Swagger"&amp;"ApiName=Linguistics%2520API -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics.V2.0/export?DocumentFormat=Swagger"&amp;"ApiName=Azure%2520Machine%2520Learning%2520-%2520Text%2520Analytics -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/55de9ca4e597ed1fd4e2f104/export?DocumentFormat=Swagger"&amp;"ApiName=Web%2520Language%2520Model%2520API -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/56332331778daf02acc0a50b/export?DocumentFormat=Swagger"&amp;"ApiName=Academic%2520Search%2520API -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/56f0eabfca730713cc392442/export?DocumentFormat=Swagger"&amp;"ApiName=EntityLinking%2520API -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/Recommendations.V4.0/export?DocumentFormat=Swagger"&amp;"ApiName=Recommendations -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56c7694ecf5ff801a090fbd1/export?DocumentFormat=Swagger"&amp;"ApiName=Autosuggest%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56b43f72cf5ff8098cef380a/export?DocumentFormat=Swagger"&amp;"ApiName=News%2520Search%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56b43f0ccf5ff8098cef3808/export?DocumentFormat=Swagger"&amp;"ApiName=Image%2520Search%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56b43f3ccf5ff8098cef3809/export?DocumentFormat=Swagger"&amp;"ApiName=Video%2520Search%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56b43eeccf5ff8098cef3807/export?DocumentFormat=Swagger"&amp;"ApiName=Web%2520Search%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
+
 xcopy "$(TargetDir)Generated\*.*" "$(SolutionDir)$(ProjectName)\$(ProjectName)\Models" /Y 
 rd /s /q "$(TargetDir)Generated"
 )</PreBuildEvent>
