@@ -81,15 +81,24 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/57cf753a3f9b070c105bd2c1/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Moderate -Namespace BuildIt.CognitiveServices
+    <PreBuildEvent>IF "$(ConfigurationName)"=="Debug" (
+AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/57cf753a3f9b070c105bd2c1/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Moderate -Namespace BuildIt.CognitiveServices
+
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/580519463f9b070e5c591178/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Review -Namespace BuildIt.CognitiveServices
+
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/57cf755e3f9b070c105bd2c2/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520List%2520Management -Namespace BuildIt.CognitiveServices
+
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/5639d931ca73072154c1ce89/export?DocumentFormat=Swagger"&amp;"ApiName=Emotion%2520API -Namespace BuildIt.CognitiveServices
+
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/563879b61984550e40cbbe8d/export?DocumentFormat=Swagger"&amp;"ApiName=Face%2520API%2520-%2520V1.0 -Namespace BuildIt.CognitiveServices
+
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/565d6516778daf15800928d5/export?DocumentFormat=Swagger"&amp;"ApiName=Video%2520API -Namespace BuildIt.CognitiveServices
+
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.projectoxford.ai/docs/services/56f91f2d778daf23d8ec6739/export?DocumentFormat=Swagger"&amp;"ApiName=Computer%2520Vision%2520API%2520-%2520v1.0 -Namespace BuildIt.CognitiveServices
+
 xcopy "$(TargetDir)Generated\*.*" "$(SolutionDir)$(ProjectName)\$(ProjectName)\Models" /Y 
-rd /s /q "$(TargetDir)Generated"</PreBuildEvent>
+rd /s /q "$(TargetDir)Generated"
+)</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
