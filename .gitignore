@@ -214,3 +214,6 @@ FakesAssemblies/
 /src/BuildIt.CognitiveServices/BuildIt.CognitiveServices.XForms/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.Config/BuildIt.Config.Impl.Common/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.Data.Sqlite/BuildIt.Data.Sqlite/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.Lifecycle/BuildIt.Lifecycle/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.Lifecycle/BuildIt.Lifecycle.Autofac/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.Lifecycle/BuildIt.Lifecycle.XForms/AssemblyTFMAttribute.cs.exclude
