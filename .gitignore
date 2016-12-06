@@ -220,3 +220,4 @@ FakesAssemblies/
 /src/BuildIt.MvvmCross/BuildIt.MvvmCross/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.MvvmCross/BuildIt.MvvmCross.Data/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.States/BuildIt.States/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.Synchronization/BuildIt.Synchronization/AssemblyTFMAttribute.cs.exclude
