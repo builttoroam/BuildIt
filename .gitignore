@@ -206,3 +206,4 @@ FakesAssemblies/
 
 # Visual Studio project file backups
 *.csproj.bak
+/src/BuildIt.General/BuildIt.General/AssemblyTFMAttribute.cs.exclude

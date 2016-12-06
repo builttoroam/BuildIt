@@ -10,4 +10,3 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("BuildIt.General.Explorables")]
 [assembly: InternalsVisibleTo("BuildIt.General.Tests1")]
 [assembly: InternalsVisibleTo("BuildIt.General.Tests2")]
-

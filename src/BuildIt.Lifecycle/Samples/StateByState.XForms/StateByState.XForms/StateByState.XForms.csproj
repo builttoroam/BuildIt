@@ -56,10 +56,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
-      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
-      <Name>BuildIt.General</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj">
       <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
       <Name>BuildIt.States</Name>

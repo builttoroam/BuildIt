@@ -70,12 +70,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.General\BuildIt.General.csproj">
-      <Project>{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}</Project>
-      <Name>BuildIt.General</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="DisplayNameAttributeTest.Constructor.g.cs">
       <DependentUpon>DisplayNameAttributeTest.cs</DependentUpon>
     </Compile>

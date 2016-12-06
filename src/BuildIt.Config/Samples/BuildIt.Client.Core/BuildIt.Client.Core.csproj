@@ -45,10 +45,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
-      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
-      <Name>BuildIt.General</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Config.Core\BuildIt.Config.Core.csproj">
       <Project>{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}</Project>
       <Name>BuildIt.Config.Core</Name>
