@@ -188,7 +188,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
+    <PreBuildEvent>IF "$(ConfigurationName)"=="Debug" (
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/57cf753a3f9b070c105bd2c1/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Moderate -Namespace BuildIt.CognitiveServices
 
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/580519463f9b070e5c591178/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Review -Namespace BuildIt.CognitiveServices
@@ -233,7 +233,7 @@ AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive
 
 xcopy "$(TargetDir)Generated" "$(SolutionDir)$(ProjectName)\$(ProjectName)\CognitiveServicesSwagger" /E /Y 
 rd /s /q "$(TargetDir)Generated"
-</PreBuildEvent>
+)</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
