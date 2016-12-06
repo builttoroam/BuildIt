@@ -219,3 +219,4 @@ FakesAssemblies/
 /src/BuildIt.Lifecycle/BuildIt.Lifecycle.XForms/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.MvvmCross/BuildIt.MvvmCross/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.MvvmCross/BuildIt.MvvmCross.Data/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.States/BuildIt.States/AssemblyTFMAttribute.cs.exclude
