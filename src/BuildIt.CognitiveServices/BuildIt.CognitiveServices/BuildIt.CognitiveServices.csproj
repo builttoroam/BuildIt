@@ -46,18 +46,128 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CognitiveServiceClient.cs" />
+    <Compile Include="CognitiveServicesSwagger\AcademicSearchAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\AutosuggestAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\AzureMachineLearningTextAnalytics.cs" />
+    <Compile Include="CognitiveServicesSwagger\ComputerVisionAPIV10.cs" />
+    <Compile Include="CognitiveServicesSwagger\ContentModeratorListManagement.cs" />
+    <Compile Include="CognitiveServicesSwagger\ContentModeratorModerate.cs" />
+    <Compile Include="CognitiveServicesSwagger\ContentModeratorReview.cs" />
+    <Compile Include="CognitiveServicesSwagger\EmotionAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\EntityLinkingAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\FaceAPIV10.cs" />
+    <Compile Include="CognitiveServicesSwagger\IAcademicSearchAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\IAutosuggestAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\IAzureMachineLearningTextAnalytics.cs" />
+    <Compile Include="CognitiveServicesSwagger\IComputerVisionAPIV10.cs" />
+    <Compile Include="CognitiveServicesSwagger\IContentModeratorListManagement.cs" />
+    <Compile Include="CognitiveServicesSwagger\IContentModeratorModerate.cs" />
+    <Compile Include="CognitiveServicesSwagger\IContentModeratorReview.cs" />
+    <Compile Include="CognitiveServicesSwagger\IEmotionAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\IEntityLinkingAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\IFaceAPIV10.cs" />
+    <Compile Include="CognitiveServicesSwagger\IImageSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\ILinguisticsAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\ImageSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\INewsSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\IRecommendations.cs" />
+    <Compile Include="CognitiveServicesSwagger\ISpeakerRecognitionAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\ISpellCheckAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\IVideoAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\IVideoSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\IWebLanguageModelAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\IWebSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\LinguisticsAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BatchInputV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BatchJobInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BatchJobInfoList.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BatchJobsRequestInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BlockListParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildDataStatistics.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildInfoList.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildMetrics.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildModelResponse.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\BuildRequestInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\CatalogImportStats.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\CatalogItemsPage.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\DateSplitterParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\DetectedLanguageV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\DetectTopicsHeaders.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\DiversityItemRecommend.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\DiversityUserRecommend.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\Error.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ErrorDetail.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ErrorLine.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ErrorRecordV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ErrorResponse.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\FbtBuildParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\FeatureBlockListParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\FeatureInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\FeatureInfoResponse.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\FeatureWhiteListParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ICatalogLine.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ImportErrorStats.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\InputV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\InternalError.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ItemFeature.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\JobInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\KeyPhraseBatchResultItemV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\KeyPhraseBatchResultV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\LanguageBatchResultItemV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\LanguageBatchResultV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ModelInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ModelInfoList.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ModelRequestInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\ModelUsageStatisticsResponse.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\MultiLanguageBatchInputV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\MultiLanguageInputV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\OperationInfoBuildInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\OperationProcessingResult.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\OperationResult.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\PercentileBucket.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\PerSeedBlockListParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\PrecisionItemRecommend.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\PrecisionMetric.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\PrecisionPopularItemRecommend.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\PrecisionUserRecommend.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RandomSplitterParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RankingBuildParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RecommendationBuildParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RecommendedItemInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RecommendedItemSetInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RecommendedItemSetInfoList.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RuleInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RuleInfoList.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RuleParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\RuleRequestInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\SentimentBatchResultItemV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\SentimentBatchResultV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\StorageBlobInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\TopicAssignmentRecordV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\TopicDetectionInputV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\TopicDetectionResultV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\TopicInfoRecordV2.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UpdateModelRequestInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UpsaleParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UsageEvent.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UsageEventInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UsageImportStats.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UsageInfo.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UsageStatistics.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\UsageStatisticsResponse.cs" />
+    <Compile Include="CognitiveServicesSwagger\Models\WhiteListParameters.cs" />
+    <Compile Include="CognitiveServicesSwagger\NewsSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\Recommendations.cs" />
+    <Compile Include="CognitiveServicesSwagger\SpeakerRecognitionAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\SpellCheckAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\VideoAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\VideoSearchAPIV5.cs" />
+    <Compile Include="CognitiveServicesSwagger\WebLanguageModelAPI.cs" />
+    <Compile Include="CognitiveServicesSwagger\WebSearchAPIV5.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Interfaces\ICognitiveServiceClient.cs" />
-    <Compile Include="Models\AcademicSearchAPI.cs" />
-    <Compile Include="Models\AutosuggestAPIV5.cs" />
-    <Compile Include="Models\AzureMachineLearningTextAnalytics.cs" />
-    <Compile Include="Models\ComputerVisionAPIV10.cs" />
-    <Compile Include="Models\ContentModeratorListManagement.cs" />
-    <Compile Include="Models\ContentModeratorModerate.cs" />
-    <Compile Include="Models\ContentModeratorReview.cs" />
-    <Compile Include="Models\EmotionAPI.cs" />
-    <Compile Include="Models\EntityLinkingAPI.cs" />
-    <Compile Include="Models\FaceAPIV10.cs" />
     <Compile Include="Models\Feeds\Search\BingSearchApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\EntityLinkingApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\InterpretApiFeeds.cs" />
@@ -71,44 +181,14 @@
     <Compile Include="Models\Feeds\Language\SentimentApiFeeds.cs" />
     <Compile Include="Models\Feeds\Language\SpellCheckApiFeeds.cs" />
     <Compile Include="Models\Feeds\Search\BingAutosuggestApiFeeds.cs" />
-    <Compile Include="Models\IAcademicSearchAPI.cs" />
-    <Compile Include="Models\IAutosuggestAPIV5.cs" />
-    <Compile Include="Models\IAzureMachineLearningTextAnalytics.cs" />
-    <Compile Include="Models\IComputerVisionAPIV10.cs" />
-    <Compile Include="Models\IContentModeratorListManagement.cs" />
-    <Compile Include="Models\IContentModeratorModerate.cs" />
-    <Compile Include="Models\IContentModeratorReview.cs" />
-    <Compile Include="Models\IEmotionAPI.cs" />
-    <Compile Include="Models\IEntityLinkingAPI.cs" />
-    <Compile Include="Models\IFaceAPIV10.cs" />
-    <Compile Include="Models\IImageSearchAPIV5.cs" />
-    <Compile Include="Models\ILinguisticsAPI.cs" />
-    <Compile Include="Models\ImageSearchAPIV5.cs" />
-    <Compile Include="Models\INewsSearchAPIV5.cs" />
     <Compile Include="Models\Interfaces\IResultDto.cs" />
-    <Compile Include="Models\IRecommendations.cs" />
-    <Compile Include="Models\ISpeakerRecognitionAPI.cs" />
-    <Compile Include="Models\ISpellCheckAPIV5.cs" />
-    <Compile Include="Models\IVideoAPI.cs" />
-    <Compile Include="Models\IVideoSearchAPIV5.cs" />
-    <Compile Include="Models\IWebLanguageModelAPI.cs" />
-    <Compile Include="Models\IWebSearchAPIV5.cs" />
-    <Compile Include="Models\LinguisticsAPI.cs" />
-    <Compile Include="Models\NewsSearchAPIV5.cs" />
-    <Compile Include="Models\Recommendations.cs" />
     <Compile Include="Models\ResultDto.cs" />
-    <Compile Include="Models\SpeakerRecognitionAPI.cs" />
-    <Compile Include="Models\SpellCheckAPIV5.cs" />
-    <Compile Include="Models\VideoAPI.cs" />
-    <Compile Include="Models\VideoSearchAPIV5.cs" />
-    <Compile Include="Models\WebLanguageModelAPI.cs" />
-    <Compile Include="Models\WebSearchAPIV5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>IF "$(ConfigurationName)"=="Debug" (
+    <PreBuildEvent>
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/57cf753a3f9b070c105bd2c1/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Moderate -Namespace BuildIt.CognitiveServices
 
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/580519463f9b070e5c591178/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Review -Namespace BuildIt.CognitiveServices
@@ -151,9 +231,9 @@ AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive
 
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://dev.cognitive.microsoft.com/docs/services/56b43eeccf5ff8098cef3807/export?DocumentFormat=Swagger"&amp;"ApiName=Web%2520Search%2520API%2520-%2520V5 -Namespace BuildIt.CognitiveServices
 
-xcopy "$(TargetDir)Generated\*.*" "$(SolutionDir)$(ProjectName)\$(ProjectName)\Models" /Y 
+xcopy "$(TargetDir)Generated" "$(SolutionDir)$(ProjectName)\$(ProjectName)\CognitiveServicesSwagger" /E /Y 
 rd /s /q "$(TargetDir)Generated"
-)</PreBuildEvent>
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
