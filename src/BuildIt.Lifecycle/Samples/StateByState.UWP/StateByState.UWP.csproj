@@ -130,6 +130,10 @@
       <Project>{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}</Project>
       <Name>BuildIt.General.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States.UWP\BuildIt.States.UWP.csproj">
       <Project>{0ca149fa-2055-4541-b45b-cdb6c09c51ea}</Project>
       <Name>BuildIt.States.UWP</Name>

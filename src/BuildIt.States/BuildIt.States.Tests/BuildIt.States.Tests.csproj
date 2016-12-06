@@ -66,6 +66,10 @@
       <Project>{d9058653-4416-4a9b-9fcd-1a2c805629ba}</Project>
       <Name>BuildIt.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj">
       <Project>{88ae5f64-0f5e-4ad5-b673-1748f25c5458}</Project>
       <Name>BuildIt.Lifecycle.Autofac</Name>
