@@ -208,3 +208,4 @@ FakesAssemblies/
 *.csproj.bak
 /src/BuildIt.General/BuildIt.General/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.AR/BuildIt.AR/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.Bot/BuildIt.Bot.Client/AssemblyTFMAttribute.cs.exclude
