@@ -67,7 +67,7 @@ namespace CognitiveServicesDemo.ViewModels
 
                 WebLanguageModelAPI web = new WebLanguageModelAPI();
                 var re = await web.BreakIntoWordsWithHttpMessagesAsync("title",
-                    "Tryoutwordbreakingbytypingasetenceorclickingthesamplesbelow",Math.Round(5.0,0), Math.Round(5.0, 0), null, "f13480095cdd4c8aad2115993f668a20");
+                    "Tryoutwordbreakingbytypingasetenceorclickingthesamplesbelow",5, 5, null, "f13480095cdd4c8aad2115993f668a20");
                 var stream = await re.Response.Content.ReadAsStreamAsync();
                 var serializer = new JsonSerializer();
                 WebLanguageModel result;

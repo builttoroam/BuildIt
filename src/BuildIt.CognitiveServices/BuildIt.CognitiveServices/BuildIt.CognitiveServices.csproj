@@ -188,7 +188,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>IF "$(ConfigurationName)"=="Debug" (
+    <PreBuildEvent>IF "$(ConfigurationName)"=="Different" (
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/57cf753a3f9b070c105bd2c1/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Moderate -Namespace BuildIt.CognitiveServices
 
 AutoRest.exe -CodeGenerator CSharp -Modeler Swagger -Input https://westus.dev.cognitive.microsoft.com/docs/services/580519463f9b070e5c591178/export?DocumentFormat=Swagger"&amp;"ApiName=Content%2520Moderator%2520-%2520Review -Namespace BuildIt.CognitiveServices
