@@ -7,6 +7,7 @@ using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
 using CognitiveServicesDemo.Common;
+using System.IO;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -51,6 +52,17 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
+                var spellCheck = new SpellCheckAPIV5();
+                var result = await spellCheck.SpellCheckWithHttpMessagesAsync(InputText,null, null, null, "en-us", null, Constants.SpellCheckKey);
+                var stream = await result.Response.Content.ReadAsStreamAsync();
+                var serializer = new JsonSerializer();
+                BingSpellCheckFeed feed;
+                using (var sr = new StreamReader(stream))
+                using (var jsonTextReader = new JsonTextReader(sr))
+                {
+                    feed = serializer.Deserialize<BingSpellCheckFeed>(jsonTextReader);
+                }
+                /*
                 var client = new HttpClient();
                 var queryContext = string.Empty;
                 if (!string.IsNullOrEmpty(context))
@@ -84,7 +96,7 @@ namespace CognitiveServicesDemo.ViewModels
                 var jsonResult = await response.Content.ReadAsStringAsync();
                 ////spellingCheckedText = jsonResult;
                 var feed = JsonConvert.DeserializeObject<BingSpellCheckFeed>(jsonResult);
-
+                */
 
                 if (string.Equals(feed.statusCode, 200) || string.Equals(feed.statusCode, 0))
                 {

@@ -16,12 +16,12 @@ namespace CognitiveServicesDemo.Model
     public class Suggestion
     {
         public string suggestion { get; set; }
-        public int score { get; set; }
+        public double score { get; set; }
     }
 
     public class FlaggedToken
     {
-        public int offset { get; set; }
+        public double offset { get; set; }
         public string token { get; set; }
         public string type { get; set; }
         public List<Suggestion> suggestions { get; set; }
