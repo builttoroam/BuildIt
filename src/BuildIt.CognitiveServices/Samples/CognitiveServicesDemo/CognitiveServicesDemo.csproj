@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Model\AcademicFeeds.cs" />
     <Compile Include="Model\BingAutoSuggestApi.cs" />
+    <Compile Include="Model\BingImageSearchFeeds.cs" />
     <Compile Include="Model\BingSpellCheckFeed.cs" />
     <Compile Include="Model\BingWebSearch.cs" />
     <Compile Include="Model\EntityLinking.cs" />
