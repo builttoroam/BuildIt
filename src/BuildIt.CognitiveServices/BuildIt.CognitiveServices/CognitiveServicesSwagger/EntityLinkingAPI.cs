@@ -2,6 +2,9 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using System.Net.Http;
+using System.Text;
+
 namespace BuildIt.CognitiveServices
 {
     using Microsoft.Rest;
@@ -129,13 +132,17 @@ namespace BuildIt.CognitiveServices
                     }
             };
             CustomInitialize();
-        }    
+        }
+
         /// <summary>
         /// Entity Linking is a natural language processing tool to help analyzing
         /// text for your application. Entity Linking recognize a named-entity from
         /// given text and  aligning a textual mention of the entity to an
         /// appropriate entry in a knowledge base.
         /// </summary>
+        /// <param name="requestBody">
+        /// Input content
+        /// </param>
         /// <param name='selection'>
         /// The specific word or phrase within the text that is to be entity linked.
         /// If not specified, the service will try to recognize and identify all the
@@ -165,7 +172,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> LinkEntityWithHttpMessagesAsync(string selection = default(string), string offset = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> LinkEntityWithHttpMessagesAsync(string requestBody, string selection = default(string), string offset = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -226,6 +233,16 @@ namespace BuildIt.CognitiveServices
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
+            
+                
+            //Set body
+            byte[] byteData = Encoding.UTF8.GetBytes(requestBody);
+
+            await _httpRequest.Content.ReadAsByteArrayAsync();
+            //using (var content = new ByteArrayContent(byteData))
+            //{
+            //    _httpResponse = await ServiceClientTracing.SendRequest();
+            //}
 
             // Serialize Request
             string _requestContent = null;

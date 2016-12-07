@@ -62,8 +62,11 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                var cognitiveService = new CognitiveServiceClient();
-                var result = await cognitiveService.EntityLinkingApiRequestAsync(Constants.EntityLinkingKey, context);
+                var entityLinking = new EntityLinkingAPI();
+                var result = await entityLinking.LinkEntityWithHttpMessagesAsync(InputText);
+
+                //var cognitiveService = new CognitiveServiceClient();
+                //var result = await cognitiveService.EntityLinkingApiRequestAsync(Constants.EntityLinkingKey, context);
                 
                 var client = new HttpClient();
                 var count = 0;

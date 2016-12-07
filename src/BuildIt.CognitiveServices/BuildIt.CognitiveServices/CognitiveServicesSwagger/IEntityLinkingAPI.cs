@@ -25,12 +25,15 @@ namespace BuildIt.CognitiveServices
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
 
-            /// <summary>
+        /// <summary>
         /// Entity Linking is a natural language processing tool to help
         /// analyzing text for your application. Entity Linking recognize a
         /// named-entity from given text and  aligning a textual mention of
         /// the entity to an appropriate entry in a knowledge base.
         /// </summary>
+        /// <param name="requestBody">
+        /// Input content
+        /// </param>
         /// <param name='selection'>
         /// The specific word or phrase within the text that is to be entity
         /// linked. If not specified, the service will try to recognize and
@@ -54,7 +57,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> LinkEntityWithHttpMessagesAsync(string selection = default(string), string offset = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> LinkEntityWithHttpMessagesAsync(string requestBody, string selection = default(string), string offset = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 }
