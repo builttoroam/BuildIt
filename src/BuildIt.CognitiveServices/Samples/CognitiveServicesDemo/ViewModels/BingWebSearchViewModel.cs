@@ -8,6 +8,7 @@ using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
 using BuildIt.CognitiveServices;
 using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
+using System.IO;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -43,13 +44,24 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                var co = new CognitiveServiceClient();
-                var result = await co.BingSearchApiRequestAsync(new BingSearchParameters()
-                {
-                    content = InputText,
-                    subscriptionKey = Constants.BingSearchKey
-                });
+                //var co = new CognitiveServiceClient();
+                //var result = await co.BingSearchApiRequestAsync(new BingSearchParameters()
+                //{
+                //    content = InputText,
+                //    subscriptionKey = Constants.BingSearchKey
+                //});
 
+                var webSearch = new WebSearchAPIV5();
+                var result = await webSearch.SearchWithHttpMessagesAsync(InputText, null, null, null, null, null, Constants.BingSearchKey);
+                var stream = await result.Response.Content.ReadAsStreamAsync();
+                var serializer = new JsonSerializer();
+                BingWebSearch feed;
+                using (var sr = new StreamReader(stream))
+                using (var jsonTextReader = new JsonTextReader(sr))
+                {
+                    feed = serializer.Deserialize<BingWebSearch>(jsonTextReader);
+                }
+                /*
                 var client = new HttpClient();
 
                 //request header
@@ -62,6 +74,7 @@ namespace CognitiveServicesDemo.ViewModels
                 //spellingCheckedText = jsonResult;
                 var feed = JsonConvert.DeserializeObject<BingWebSearch>(jsonResult);
                 WebSearchResults.Clear();
+                */
                 if (string.Equals(feed.statusCode, 200) || string.Equals(feed.statusCode, 0))
                 {
                     foreach (var value in feed.webPages.value)
@@ -78,6 +91,7 @@ namespace CognitiveServicesDemo.ViewModels
             }
             catch (Exception ex)
             {
+                // ignored
             }
         }
     }

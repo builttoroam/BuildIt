@@ -139,10 +139,14 @@ namespace BuildIt.CognitiveServices
                     }
             };
             CustomInitialize();
-        }    
+        }
+
         /// <summary>
         /// Get web, image, news, &amp; videos results for a given query.
         /// </summary>
+        /// <param name="q">
+        /// Input value
+        /// </param>
         /// <param name='count'>
         /// The number of search results to return in the response. The actual number
         /// delivered may be less than requested.
@@ -187,9 +191,9 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SearchWithHttpMessagesAsync(double? count = 10, double? offset = 0, string mkt = "en-us", string safesearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SearchWithHttpMessagesAsync(string q, int? count = 10, int? offset = 0, string mkt = "en-us", string safesearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            string q = "bill gates";
+            //string q = "bill gates";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
