@@ -20,7 +20,7 @@ namespace CognitiveServicesDemo.Views
         private async void Search_OnClicked(object sender, EventArgs e)
         {
 
-            await CurrentViewModel.BreakIntoWordRequestAsync(CurrentViewModel.InputText);
+            await CurrentViewModel.BingAutoSuggestRequestAsync(CurrentViewModel.InputText);
         }
 
         private void AutosuggestPage_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

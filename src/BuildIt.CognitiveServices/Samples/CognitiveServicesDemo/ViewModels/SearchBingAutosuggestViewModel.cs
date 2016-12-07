@@ -11,6 +11,7 @@ using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -63,18 +64,26 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
-        public async Task BreakIntoWordRequestAsync(string context)
+        public async Task BingAutoSuggestRequestAsync(string context)
         {
             try
             {
-
-                var cognitiveService = new CognitiveServiceClient();
-
-                
-                var result =  await cognitiveService.BingAutosuggestApiRequestAsync(Constants.BingAutosuggestKey, InputText, System.Globalization.CultureInfo.CurrentUICulture.Name);
+                var autosuggest = new AutosuggestAPIV5();
+                var result = await autosuggest.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey);
+                var stream = await result.Response.Content.ReadAsStreamAsync();
+                var serializer = new JsonSerializer();
+                BingAutoSuggestApi feed;
+                using (var sr = new StreamReader(stream))
+                using (var jsonTextReader = new JsonTextReader(sr))
+                {
+                    feed = serializer.Deserialize<BingAutoSuggestApi>(jsonTextReader);
+                }
+                //var cognitiveService = new CognitiveServiceClient();
+                //var result =  await cognitiveService.BingAutosuggestApiRequestAsync(Constants.BingAutosuggestKey, InputText, System.Globalization.CultureInfo.CurrentUICulture.Name);
 
                 var client = new HttpClient();
 
+                /*
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.BingAutosuggestKey);
                 var queryString = $"q={context}";
@@ -85,22 +94,13 @@ namespace CognitiveServicesDemo.ViewModels
                 var jsonResult = await response.Content.ReadAsStringAsync();
                 //spellingCheckedText = jsonResult;
                 var feed = JsonConvert.DeserializeObject<BingAutoSuggestApi>(jsonResult);
+                */
                 if (string.Equals(feed.statusCode, 200) || string.Equals(feed.statusCode, 0))
                 {
                     foreach (var suggestion in feed.suggestionGroups[0].searchSuggestions)
                     {
                         BingAutoSuggest.Add(suggestion);
                     }
-
-
-                    //foreach (var s in feed.suggestionGroups)
-                    //{
-                    //    foreach (var suggestion in s.searchSuggestions)
-                    //    {
-                    //        ResultName.Add(suggestion.displayText);
-                    //        ResultUrl.Add(suggestion.url);
-                    //    }
-                    //}
                 }
                 else
                 {
@@ -112,6 +112,7 @@ namespace CognitiveServicesDemo.ViewModels
             }
             catch (Exception ex)
             {
+                // ignored
             }
         }
     }
