@@ -13,6 +13,7 @@ using CognitiveServicesDemo.Model;
 using Newtonsoft.Json;
 using BuildIt.CognitiveServices;
 using Xamarin.Forms;
+using System.IO;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -63,13 +64,26 @@ namespace CognitiveServicesDemo.ViewModels
             try
             {
                 var entityLinking = new EntityLinkingAPI();
-                var result = await entityLinking.LinkEntityWithHttpMessagesAsync(InputText);
-
+                //var header = new List<string> { "text/plain" };
+                //var dic = new Dictionary<string, List<string>>();
+                //dic.Add("Content-Type", header);
+                
+                
+                var result = await entityLinking.LinkEntityWithHttpMessagesAsync(InputText,null,null,null,Constants.EntityLinkingKey);
+                var stream = await result.Response.Content.ReadAsStreamAsync();
+                var serializer = new JsonSerializer();
+                EntityLinking feed;
+                using (var sr = new StreamReader(stream))
+                using (var jsonTextReader = new JsonTextReader(sr))
+                {
+                    feed = serializer.Deserialize<EntityLinking>(jsonTextReader);
+                }
+                /*
                 //var cognitiveService = new CognitiveServiceClient();
                 //var result = await cognitiveService.EntityLinkingApiRequestAsync(Constants.EntityLinkingKey, context);
-                
+
                 var client = new HttpClient();
-                var count = 0;
+                
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.EntityLinkingKey);
                 var body = context;
@@ -87,7 +101,8 @@ namespace CognitiveServicesDemo.ViewModels
                 var jsonResult = await response.Content.ReadAsStringAsync();
                 
                 var feed = JsonConvert.DeserializeObject<EntityLinking>(jsonResult);
-                
+                */
+                var count = 0;
                 foreach (var entity in feed.entities)
                 {
                     EntityLinkings.Add(entity);
