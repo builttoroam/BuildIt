@@ -14,9 +14,9 @@
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework="netstandard1.1">
-        <dependency id="NETStandard.Library" version="1.6.0" />
-        <dependency id="Autofac" version="4.1.1" />
-        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="Autofac" version="4.2.1" />
+        <dependency id="BuildIt.General" version="1.0.0.41" />
       </group>
     </dependencies>
   </metadata>
@@ -26,3 +26,4 @@
     <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
   </files>
 </package>
+
