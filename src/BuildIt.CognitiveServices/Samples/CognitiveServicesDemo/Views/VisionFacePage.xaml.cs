@@ -23,7 +23,7 @@ namespace CognitiveServicesDemo.Views
 
         private async void BrowseButton_Click(object sender, EventArgs e)
         {
-            var frane = new Frame() { OutlineColor = Color.Red };
+            //var frane = new Frame() { OutlineColor = Color.Red };
             //ResultLayout.Children.Add(frane, Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Width * 0.25), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Height * 0.28), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Width * .4), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Height * .4));
             
             
@@ -32,7 +32,7 @@ namespace CognitiveServicesDemo.Views
 
         private async void EmotionButton_Click(object sender, EventArgs e)
         {
-            await CurrentViewModel.VisionEmotionAsync();
+            //await CurrentViewModel.VisionEmotionAsync();
         }
 
         private async void ComputerVisionButton_Click(object sender, EventArgs e)
@@ -76,7 +76,8 @@ namespace CognitiveServicesDemo.Views
                 //Image.Source = CurrentViewModel.ImageUrl;
 
 
-
+                //await CurrentViewModel.VisionFaceCheckAsync(file);
+                //await CurrentViewModel.VisionEmotionAsync(file);
                 await CurrentViewModel.VisionComputerVisionAsync(file);
                 var faceMetaData = CurrentViewModel.Xywh;
 

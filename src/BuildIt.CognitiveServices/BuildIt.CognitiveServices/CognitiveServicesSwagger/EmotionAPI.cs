@@ -2,9 +2,16 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using System.IO;
+using BuildIt.CognitiveServices.Models;
+using Microsoft.ProjectOxford.Emotion.Contract;
+
 namespace BuildIt.CognitiveServices
 {
+    using Microsoft.ProjectOxford.Emotion;
     using Microsoft.Rest;
+    using System;
+    using System.Diagnostics;
 
     public partial class EmotionAPI : Microsoft.Rest.ServiceClient<EmotionAPI>, IEmotionAPI
     {
@@ -22,6 +29,8 @@ namespace BuildIt.CognitiveServices
         /// Gets or sets json deserialization settings.
         /// </summary>
         public Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; private set; }
+
+        private EmotionServiceClient EmotionServiceClient { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the EmotionAPI class.
@@ -129,7 +138,8 @@ namespace BuildIt.CognitiveServices
                     }
             };
             CustomInitialize();
-        }    
+        }
+
         /// <summary>
         /// &lt;p&gt;Recognizes the emotions expressed by one or more people in an
         /// image, as well as returns a bounding box for the face. The emotions
@@ -150,6 +160,9 @@ namespace BuildIt.CognitiveServices
         /// &lt;br/&gt;&amp;bull; The emotions contempt and disgust are
         /// experimental.&lt;/p&gt;
         /// </summary>
+        /// <param name="imageStream">
+        /// Pass in image stream
+        /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
         /// </param>
@@ -168,7 +181,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> EmotionRecognitionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Emotion[]> EmotionRecognitionWithHttpMessagesAsync(Stream imageStream, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -220,53 +233,71 @@ namespace BuildIt.CognitiveServices
                 }
             }
 
-            // Serialize Request
-            string _requestContent = null;
-            // Send Request
-            if (_shouldTrace)
+            // Set Body
+            if (imageStream == null) return null;
+
+            EmotionServiceClient = new EmotionServiceClient(ocpApimSubscriptionKey);
+            try
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 401 && (int)_statusCode != 403 && (int)_statusCode != 429)
-            {
-                var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
+                using (Stream imageFileStream = imageStream)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    var emotionResult = await EmotionServiceClient.RecognizeAsync(imageFileStream);
+                    return emotionResult;
                 }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
             }
-            // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
+            catch (Exception ex)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                Debug.WriteLine($"Error : {ex}");
+                return null;
             }
-            return _result;
+
+            //// Serialize Request
+            //string _requestContent = null;
+            //// Send Request
+            //if (_shouldTrace)
+            //{
+            //    Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            //}
+            //cancellationToken.ThrowIfCancellationRequested();
+            //_httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            //if (_shouldTrace)
+            //{
+            //    Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            //}
+            //System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            //cancellationToken.ThrowIfCancellationRequested();
+            //string _responseContent = null;
+            //if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 401 && (int)_statusCode != 403 && (int)_statusCode != 429)
+            //{
+            //    var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+            //    if (_httpResponse.Content != null) {
+            //        _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //    }
+            //    else {
+            //        _responseContent = string.Empty;
+            //    }
+            //    ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+            //    ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+            //    if (_shouldTrace)
+            //    {
+            //        Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+            //    }
+            //    _httpRequest.Dispose();
+            //    if (_httpResponse != null)
+            //    {
+            //        _httpResponse.Dispose();
+            //    }
+            //    throw ex;
+            //}
+            //// Create Result
+            //var _result = new Microsoft.Rest.HttpOperationResponse();
+            //_result.Request = _httpRequest;
+            //_result.Response = _httpResponse;
+            //if (_shouldTrace)
+            //{
+            //    Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+            //}
+            //return _result;
         }
 
         /// <summary>

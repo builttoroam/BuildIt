@@ -19,9 +19,9 @@
             </Grid>
             <StackLayout Orientation="Vertical"  HorizontalOptions="Center" >
         <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Take Photo" Clicked="TakePhoto_Click"></Button>
-        <!--<Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face" Clicked="BrowseButton_Click"></Button>
         <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Emotion" Clicked="EmotionButton_Click"></Button>
-        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Computer vision" Clicked="ComputerVisionButton_Click"></Button>-->
+        <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Computer vision" Clicked="ComputerVisionButton_Click"></Button>
       </StackLayout>
       <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" >
         <Label Text="Image information"></Label>

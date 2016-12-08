@@ -4,6 +4,9 @@
 
 using System.IO;
 using System.Net.Http;
+using BuildIt.CognitiveServices.Models.Feeds.Academic;
+using Microsoft.ProjectOxford.Vision;
+using Microsoft.ProjectOxford.Vision.Contract;
 
 namespace BuildIt.CognitiveServices
 {
@@ -142,7 +145,8 @@ namespace BuildIt.CognitiveServices
                     }
             };
             CustomInitialize();
-        }    
+        }
+
         /// <summary>
         /// This operation extracts a rich set of visual features based on the image
         /// content.
@@ -161,6 +165,9 @@ namespace BuildIt.CognitiveServices
         /// &lt;h4&gt;Http Method&lt;/h4&gt;
         /// POST
         /// </summary>
+        /// <param name="imageStream">
+        /// Pass in image stream
+        /// </param>
         /// <param name='visualFeatures'>
         /// A string indicating what visual feature types to return. Multiple values
         /// should be comma-separated.
@@ -224,7 +231,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> AnalyzeImageWithHttpMessagesAsync(Stream imageStream, string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AnalysisResult> AnalyzeImageWithHttpMessagesAsync(Stream imageStream, string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -291,62 +298,71 @@ namespace BuildIt.CognitiveServices
                 }
             }
 
-
-
             // Set Body
-            _httpRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
-            _httpRequest.Content = new StringContent("{\"url\":\"http://www.faceaface-paris.com/wp-content/uploads/2015/07/carre_homme.jpg\"}");
-            //_httpRequest.Headers.TryAddWithoutValidation("Content-Type", "application/octet-stream");
-            //_httpRequest.Content = new StreamContent(imageStream);
+
+            if (imageStream == null) return null;
+            _httpRequest.Headers.TryAddWithoutValidation("Content-Type", "application/octet-stream");
+            _httpRequest.Content = new StreamContent(imageStream);
+            var visionServiceClient = new VisionServiceClient(ocpApimSubscriptionKey);
+            using (imageStream)
+            {
+                var visualFeature = new[]
+                {
+                    VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.Description,
+                    VisualFeature.Faces, VisualFeature.ImageType, VisualFeature.Tags
+                };
+                var analysisResult = await visionServiceClient.AnalyzeImageAsync(imageStream, visualFeature);
+                return analysisResult;
+            }
 
 
-            // Serialize Request
-            string _requestContent = null;
-            // Send Request
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 415 && (int)_statusCode != 500)
-            {
-                var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
+            //// Serialize Request
+            //string _requestContent = null;
+            //// Send Request
+            //if (_shouldTrace)
+            //{
+            //    Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            //}
+            //cancellationToken.ThrowIfCancellationRequested();
+            //_httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            //if (_shouldTrace)
+            //{
+            //    Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            //}
+            //System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            //cancellationToken.ThrowIfCancellationRequested();
+            //string _responseContent = null;
+            //if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 415 && (int)_statusCode != 500)
+            //{
+            //    var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+            //    if (_httpResponse.Content != null) {
+            //        _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //    }
+            //    else {
+            //        _responseContent = string.Empty;
+            //    }
+            //    ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+            //    ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+            //    if (_shouldTrace)
+            //    {
+            //        Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+            //    }
+            //    _httpRequest.Dispose();
+            //    if (_httpResponse != null)
+            //    {
+            //        _httpResponse.Dispose();
+            //    }
+            //    throw ex;
+            //}
+            //// Create Result
+            //var _result = new Microsoft.Rest.HttpOperationResponse();
+            //_result.Request = _httpRequest;
+            //_result.Response = _httpResponse;
+            //if (_shouldTrace)
+            //{
+            //    Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+            //}
+            //return _result;
         }
 
         /// <summary>

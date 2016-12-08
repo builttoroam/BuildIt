@@ -3,6 +3,7 @@
 // regenerated.
 
 using System.IO;
+using Microsoft.ProjectOxford.Vision.Contract;
 
 namespace BuildIt.CognitiveServices
 {
@@ -35,7 +36,7 @@ namespace BuildIt.CognitiveServices
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
 
-            /// <summary>
+        /// <summary>
         /// This operation extracts a rich set of visual features based on the
         /// image content.
         /// &lt;br&gt;
@@ -54,6 +55,9 @@ namespace BuildIt.CognitiveServices
         /// &lt;h4&gt;Http Method&lt;/h4&gt;
         /// POST
         /// </summary>
+        /// <param name="imageStream">
+        /// Pass in image stream, if parameter is null then need pass image url
+        /// </param>
         /// <param name='visualFeatures'>
         /// A string indicating what visual feature types to return. Multiple
         /// values should be comma-separated.
@@ -114,7 +118,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> AnalyzeImageWithHttpMessagesAsync(Stream imageStream, string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AnalysisResult> AnalyzeImageWithHttpMessagesAsync(Stream imageStream, string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// This operation generates a thumbnail image with the user-specified

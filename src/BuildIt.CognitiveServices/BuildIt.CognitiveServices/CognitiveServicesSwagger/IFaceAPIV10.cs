@@ -2,6 +2,9 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using System.IO;
+using Microsoft.ProjectOxford.Face.Contract;
+
 namespace BuildIt.CognitiveServices
 {
 
@@ -25,7 +28,7 @@ namespace BuildIt.CognitiveServices
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
 
-            /// <summary>
+        /// <summary>
         /// Detect human faces in an image and returns face locations, and
         /// optionally with faceIds, landmarks, and attributes.
         /// 
@@ -68,6 +71,9 @@ namespace BuildIt.CognitiveServices
         /// &lt;h4&gt;Http Method&lt;/h4&gt;
         /// POST
         /// </summary>
+        /// <param name="imageStream">
+        /// Pass in image stream
+        /// </param>
         /// <param name='returnFaceId'>
         /// Return faceIds of the detected faces or not. The default value is
         /// true.
@@ -96,7 +102,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> FaceDetectWithHttpMessagesAsync(bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<FaceRectangle[]> FaceDetectWithHttpMessagesAsync(Stream imageStream,bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// 
