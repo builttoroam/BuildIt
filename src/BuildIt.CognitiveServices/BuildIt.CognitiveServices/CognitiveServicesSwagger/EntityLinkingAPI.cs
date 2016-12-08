@@ -237,6 +237,8 @@ namespace BuildIt.CognitiveServices
                 
             //Set body
             _httpRequest.Content = new StringContent(requestBody);
+
+
             await _httpRequest.Content.ReadAsByteArrayAsync();
 
             // Serialize Request

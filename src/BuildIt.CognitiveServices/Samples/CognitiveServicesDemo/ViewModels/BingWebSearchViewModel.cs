@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using BuildIt.CognitiveServices;
 using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
 using System.IO;
+using Microsoft.Rest;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -44,6 +45,16 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
+                BingWebSearch feed;
+                using (var webSearch = new WebSearchAPIV5())
+                {
+                    feed = await webSearch.Request<WebSearchAPIV5, BingWebSearch>(
+                        client =>
+                            client.SearchWithHttpMessagesAsync(InputText, null, null, null, null, null,
+                                Constants.BingSearchKey));
+                }
+
+
                 //var co = new CognitiveServiceClient();
                 //var result = await co.BingSearchApiRequestAsync(new BingSearchParameters()
                 //{
@@ -51,16 +62,15 @@ namespace CognitiveServicesDemo.ViewModels
                 //    subscriptionKey = Constants.BingSearchKey
                 //});
 
-                var webSearch = new WebSearchAPIV5();
-                var result = await webSearch.SearchWithHttpMessagesAsync(InputText, null, null, null, null, null, Constants.BingSearchKey);
-                var stream = await result.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
-                BingWebSearch feed;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
-                {
-                    feed = serializer.Deserialize<BingWebSearch>(jsonTextReader);
-                }
+                //var result = await webSearch.SearchWithHttpMessagesAsync(InputText, null, null, null, null, null, Constants.BingSearchKey);
+                //var stream = await result.Response.Content.ReadAsStreamAsync();
+                //var serializer = new JsonSerializer();
+                //BingWebSearch feed;
+                //using (var sr = new StreamReader(stream))
+                //using (var jsonTextReader = new JsonTextReader(sr))
+                //{
+                //    feed = serializer.Deserialize<BingWebSearch>(jsonTextReader);
+                //}
                 /*
                 var client = new HttpClient();
 
@@ -95,4 +105,23 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
     }
+
+    //public static class RequestHelpers
+    //{
+    //    public static async Task<TResult> Request<TClient,TResult>(this TClient serviceClient,Func<TClient, System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse>> service ) where TClient: ServiceClient<TClient>
+    //    {
+    //        //var webSearch = new WebSearchAPIV5();
+    //        //var serviceClient = new TClient();
+    //        //var result = await webSearch.SearchWithHttpMessagesAsync(InputText, null, null, null, null, null, Constants.BingSearchKey);
+    //        var result = await service(serviceClient);
+            
+    //        var stream = await result.Response.Content.ReadAsStreamAsync();
+    //        var serializer = new JsonSerializer();
+    //        using (var sr = new StreamReader(stream))
+    //        using (var jsonTextReader = new JsonTextReader(sr))
+    //        {
+    //            return serializer.Deserialize<TResult>(jsonTextReader);
+    //        }
+    //    }
+    //}
 }
