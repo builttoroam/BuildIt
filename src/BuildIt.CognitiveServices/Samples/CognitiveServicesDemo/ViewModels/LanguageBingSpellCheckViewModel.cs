@@ -52,16 +52,25 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                var spellCheck = new SpellCheckAPIV5();
-                var result = await spellCheck.SpellCheckWithHttpMessagesAsync(InputText,null, null, null, "en-us", null, Constants.SpellCheckKey);
-                var stream = await result.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
                 BingSpellCheckFeed feed;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
+                using (var spellCheck = new SpellCheckAPIV5())
                 {
-                    feed = serializer.Deserialize<BingSpellCheckFeed>(jsonTextReader);
+                    feed = await spellCheck.Request<SpellCheckAPIV5, BingSpellCheckFeed>(
+                        client =>
+                            client.SpellCheckWithHttpMessagesAsync(InputText, null, null, null, "en-us", null, Constants.SpellCheckKey));
                 }
+
+
+                //var spellCheck = new SpellCheckAPIV5();
+                //var result = await spellCheck.SpellCheckWithHttpMessagesAsync(InputText,null, null, null, "en-us", null, Constants.SpellCheckKey);
+                //var stream = await result.Response.Content.ReadAsStreamAsync();
+                //var serializer = new JsonSerializer();
+                //BingSpellCheckFeed feed;
+                //using (var sr = new StreamReader(stream))
+                //using (var jsonTextReader = new JsonTextReader(sr))
+                //{
+                //    feed = serializer.Deserialize<BingSpellCheckFeed>(jsonTextReader);
+                //}
                 /*
                 var client = new HttpClient();
                 var queryContext = string.Empty;

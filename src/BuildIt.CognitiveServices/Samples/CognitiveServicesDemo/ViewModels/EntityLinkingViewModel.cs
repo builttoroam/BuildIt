@@ -63,20 +63,12 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                var entityLinking = new EntityLinkingAPI();
-                //var header = new List<string> { "text/plain" };
-                //var dic = new Dictionary<string, List<string>>();
-                //dic.Add("Content-Type", header);
-                
-                
-                var result = await entityLinking.LinkEntityWithHttpMessagesAsync(InputText,null,null,null,Constants.EntityLinkingKey);
-                var stream = await result.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
                 EntityLinking feed;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
+                using (var entityLinking = new EntityLinkingAPI())
                 {
-                    feed = serializer.Deserialize<EntityLinking>(jsonTextReader);
+                    feed = await entityLinking.Request<EntityLinkingAPI, EntityLinking>(
+                        client =>
+                            client.LinkEntityWithHttpMessagesAsync(InputText, null, null, null, Constants.EntityLinkingKey));
                 }
                 /*
                 //var cognitiveService = new CognitiveServiceClient();

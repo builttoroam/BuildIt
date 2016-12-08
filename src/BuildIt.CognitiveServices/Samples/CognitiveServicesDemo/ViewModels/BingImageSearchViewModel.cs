@@ -43,15 +43,12 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                ImageSearchAPIV5 imageSearch = new ImageSearchAPIV5();
-                var result = await imageSearch.SearchWithHttpMessagesAsync(InputText,null, 1, null, null, null, Constants.BingSearchKey);
-                var stream = await result.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
                 BingImageSearchFeeds feed;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
+                using (var imageSearch = new ImageSearchAPIV5())
                 {
-                    feed = serializer.Deserialize<BingImageSearchFeeds>(jsonTextReader);
+                    feed = await imageSearch.Request<ImageSearchAPIV5, BingImageSearchFeeds>(
+                        client =>
+                        client.SearchWithHttpMessagesAsync(InputText, null, 1, null, null, null, Constants.BingSearchKey));
                 }
                 /*
                 var client = new HttpClient();

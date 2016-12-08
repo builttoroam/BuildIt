@@ -55,28 +55,22 @@ namespace CognitiveServicesDemo.ViewModels
             try
             {
                 WarningText = String.Empty;
-                var client = new HttpClient();
+                AcademicFeeds feed;
+                using (var academic = new AcademicSearchAPI())
+                {
+                    feed = await academic.Request<AcademicSearchAPI, AcademicFeeds>(
+                        client =>
+                        client.InterpretWithHttpMessagesAsync(InputText, 1, null, 0, 1000, null, null, Constants.AcademicKey));
+                }
 
+
+                //var client = new HttpClient();
                 //var co = new CognitiveServiceClient();
                 //var result = await co.AcademicInterpretApiRequestAsync(new AcademicParameters()
                 //{
                 //    SubscriptionKey = Constants.AcademicKey,
                 //    Query = InputText
                 //});
-
-                var academic = new AcademicSearchAPI();
-                //var result = await academic.InterpretWithHttpMessagesAsync(InputText, 0, 10, 0, 1000, "latest", null,
-                //    Constants.AcademicKey, null);
-                var result = await academic.InterpretWithHttpMessagesAsync(InputText,1,null, 0, 1000, null, null,
-                            Constants.AcademicKey);
-                var stream = await result.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
-                AcademicFeeds feed;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
-                {
-                    feed = serializer.Deserialize<AcademicFeeds>(jsonTextReader);
-                }
                 /*
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.AcademicKey);

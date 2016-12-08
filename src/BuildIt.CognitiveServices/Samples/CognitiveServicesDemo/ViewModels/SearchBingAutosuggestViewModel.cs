@@ -68,20 +68,28 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                var autosuggest = new AutosuggestAPIV5();
-                var result = await autosuggest.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey);
-                var stream = await result.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
                 BingAutoSuggestApi feed;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
+                using (var autosuggest = new AutosuggestAPIV5())
                 {
-                    feed = serializer.Deserialize<BingAutoSuggestApi>(jsonTextReader);
+                    feed = await autosuggest.Request<AutosuggestAPIV5, BingAutoSuggestApi>(
+                        client =>
+                            client.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey));
                 }
+
+                //var autosuggest = new AutosuggestAPIV5();
+                //var result = await autosuggest.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey);
+                //var stream = await result.Response.Content.ReadAsStreamAsync();
+                //var serializer = new JsonSerializer();
+                //BingAutoSuggestApi feed;
+                //using (var sr = new StreamReader(stream))
+                //using (var jsonTextReader = new JsonTextReader(sr))
+                //{
+                //    feed = serializer.Deserialize<BingAutoSuggestApi>(jsonTextReader);
+                //}
                 //var cognitiveService = new CognitiveServiceClient();
                 //var result =  await cognitiveService.BingAutosuggestApiRequestAsync(Constants.BingAutosuggestKey, InputText, System.Globalization.CultureInfo.CurrentUICulture.Name);
 
-                var client = new HttpClient();
+                //var client = new HttpClient();
 
                 /*
                 //request header

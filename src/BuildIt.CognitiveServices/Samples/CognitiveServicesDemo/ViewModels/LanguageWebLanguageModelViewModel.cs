@@ -57,26 +57,33 @@ namespace CognitiveServicesDemo.ViewModels
         {
             try
             {
-                var client = new HttpClient();
+                WebLanguageModel feed;
+                using (var wLm = new WebLanguageModelAPI())
+                {
+                    feed = await wLm.Request<WebLanguageModelAPI, WebLanguageModel>(
+                        client =>
+                            client.BreakIntoWordsWithHttpMessagesAsync("title", InputText, 5, 5, null, Constants.WebLanguageModelKey));
+                }
 
+                //var client = new HttpClient();
                 //var co = new CognitiveServiceClient();
                 //var result = await co.BreakIntoWordsApiRequestAsync(new BreakIntoWordsParameters()
                 //{
                 //    subscriptionKey = Constants.WebLanguageModelKey,text = InputText
                 //});
 
-                WebLanguageModelAPI web = new WebLanguageModelAPI();
-                var re = await web.BreakIntoWordsWithHttpMessagesAsync("title",
-                    "Tryoutwordbreakingbytypingasetenceorclickingthesamplesbelow",5, 5, null, "f13480095cdd4c8aad2115993f668a20");
-                var stream = await re.Response.Content.ReadAsStreamAsync();
-                var serializer = new JsonSerializer();
-                WebLanguageModel result;
-                using (var sr = new StreamReader(stream))
-                using (var jsonTextReader = new JsonTextReader(sr))
-                {
-                    result = serializer.Deserialize<WebLanguageModel>(jsonTextReader);
-                }
                 
+                //WebLanguageModelAPI web = new WebLanguageModelAPI();
+                //var re = await web.BreakIntoWordsWithHttpMessagesAsync("title",InputText,5, 5, null, Constants.WebLanguageModelKey);
+                //var stream = await re.Response.Content.ReadAsStreamAsync();
+                //var serializer = new JsonSerializer();
+                //WebLanguageModel result;
+                //using (var sr = new StreamReader(stream))
+                //using (var jsonTextReader = new JsonTextReader(sr))
+                //{
+                //    result = serializer.Deserialize<WebLanguageModel>(jsonTextReader);
+                //}
+
                 /* Old api call method
                 //request header
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "f13480095cdd4c8aad2115993f668a20");
@@ -97,7 +104,7 @@ namespace CognitiveServicesDemo.ViewModels
                 var feed = JsonConvert.DeserializeObject<WebLanguageModel>(jsonResult);
                 */
 
-                AnalysisBreakIntoWord(result);
+                AnalysisBreakIntoWord(feed);
                 await MakeSpellCheckRequestAsync(OutputText);
             }
             catch (Exception ex)
