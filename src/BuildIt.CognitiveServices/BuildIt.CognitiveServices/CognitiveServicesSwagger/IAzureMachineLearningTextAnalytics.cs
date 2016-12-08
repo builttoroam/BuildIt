@@ -68,6 +68,9 @@ namespace BuildIt.CognitiveServices
         /// identified language is true.
         /// A total of 120 languages are supported.
         /// </summary>
+        /// <param name="requestBody">
+        /// Input content
+        /// </param>
         /// <param name='numberOfLanguagesToDetect'>
         /// Format - int32. (Optional) Number of languages to detect. Set to 1
         /// by default.
@@ -86,7 +89,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<object>> DetectLanguageWithHttpMessagesAsync(int? numberOfLanguagesToDetect = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchInputV2 batchInputV2 = default(BatchInputV2), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<object>> DetectLanguageWithHttpMessagesAsync(string requestBody, int? numberOfLanguagesToDetect = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchInputV2 batchInputV2 = default(BatchInputV2), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get the status of an operation submitted for processing. If the

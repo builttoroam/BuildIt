@@ -232,7 +232,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> MotionDetectionWithHttpMessagesAsync(string sensitivityLevel = default(string), double? frameSamplingValue = default(double?), string detectionZones = default(string), bool? detectLightChange = default(bool?), double? mergeTimeThreshold = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> MotionDetectionWithHttpMessagesAsync(string sensitivityLevel = default(string), int? frameSamplingValue = default(int?), string detectionZones = default(string), bool? detectLightChange = default(bool?), double? mergeTimeThreshold = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// This interface is used for getting result video content. Currently

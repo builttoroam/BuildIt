@@ -268,6 +268,9 @@ namespace BuildIt.CognitiveServices
                 }
             }
 
+            // Set Body
+
+
             // Serialize Request
             string _requestContent = null;
             // Send Request

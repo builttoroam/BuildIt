@@ -2,6 +2,9 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using System.IO;
+using System.Net.Http;
+
 namespace BuildIt.CognitiveServices
 {
     using Microsoft.Rest;
@@ -221,7 +224,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> AnalyzeImageWithHttpMessagesAsync(string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> AnalyzeImageWithHttpMessagesAsync(Stream imageStream, string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -287,6 +290,15 @@ namespace BuildIt.CognitiveServices
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
+
+
+
+            // Set Body
+            _httpRequest.Headers.TryAddWithoutValidation("Content-Type", "application/json");
+            _httpRequest.Content = new StringContent("{\"url\":\"http://www.faceaface-paris.com/wp-content/uploads/2015/07/carre_homme.jpg\"}");
+            //_httpRequest.Headers.TryAddWithoutValidation("Content-Type", "application/octet-stream");
+            //_httpRequest.Content = new StreamContent(imageStream);
+
 
             // Serialize Request
             string _requestContent = null;

@@ -2,6 +2,8 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using System.IO;
+
 namespace BuildIt.CognitiveServices
 {
 
@@ -112,7 +114,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> AnalyzeImageWithHttpMessagesAsync(string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> AnalyzeImageWithHttpMessagesAsync(Stream imageStream, string visualFeatures = "Categories", string details = default(string), string language = "en", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// This operation generates a thumbnail image with the user-specified

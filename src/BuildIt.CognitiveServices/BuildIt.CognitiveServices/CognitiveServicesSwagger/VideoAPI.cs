@@ -656,7 +656,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> MotionDetectionWithHttpMessagesAsync(string sensitivityLevel = default(string), double? frameSamplingValue = default(double?), string detectionZones = default(string), bool? detectLightChange = default(bool?), double? mergeTimeThreshold = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> MotionDetectionWithHttpMessagesAsync(string sensitivityLevel = default(string), int? frameSamplingValue = default(int?), string detectionZones = default(string), bool? detectLightChange = default(bool?), double? mergeTimeThreshold = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;

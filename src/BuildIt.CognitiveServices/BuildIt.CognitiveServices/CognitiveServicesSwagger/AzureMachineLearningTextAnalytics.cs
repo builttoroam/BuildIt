@@ -2,6 +2,8 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using System.Net.Http;
+
 namespace BuildIt.CognitiveServices
 {
     using Microsoft.Rest;
@@ -328,6 +330,9 @@ namespace BuildIt.CognitiveServices
         /// language is true.
         /// A total of 120 languages are supported.
         /// </summary>
+        /// <param name="requestBody">
+        /// Input value
+        /// </param>
         /// <param name='numberOfLanguagesToDetect'>
         /// Format - int32. (Optional) Number of languages to detect. Set to 1 by
         /// default.
@@ -355,7 +360,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<object>> DetectLanguageWithHttpMessagesAsync(int? numberOfLanguagesToDetect = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchInputV2 batchInputV2 = default(BatchInputV2), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<object>> DetectLanguageWithHttpMessagesAsync(string requestBody, int? numberOfLanguagesToDetect = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchInputV2 batchInputV2 = default(BatchInputV2), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -412,6 +417,10 @@ namespace BuildIt.CognitiveServices
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
+
+            //Set body
+            _httpRequest.Content = new StringContent(requestBody);
+
 
             // Serialize Request
             string _requestContent = null;

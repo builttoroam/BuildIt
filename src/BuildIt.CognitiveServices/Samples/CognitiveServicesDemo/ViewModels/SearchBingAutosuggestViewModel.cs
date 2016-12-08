@@ -75,22 +75,7 @@ namespace CognitiveServicesDemo.ViewModels
                         client =>
                             client.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey));
                 }
-
-                //var autosuggest = new AutosuggestAPIV5();
-                //var result = await autosuggest.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey);
-                //var stream = await result.Response.Content.ReadAsStreamAsync();
-                //var serializer = new JsonSerializer();
-                //BingAutoSuggestApi feed;
-                //using (var sr = new StreamReader(stream))
-                //using (var jsonTextReader = new JsonTextReader(sr))
-                //{
-                //    feed = serializer.Deserialize<BingAutoSuggestApi>(jsonTextReader);
-                //}
-                //var cognitiveService = new CognitiveServiceClient();
-                //var result =  await cognitiveService.BingAutosuggestApiRequestAsync(Constants.BingAutosuggestKey, InputText, System.Globalization.CultureInfo.CurrentUICulture.Name);
-
-                //var client = new HttpClient();
-
+                
                 /*
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.BingAutosuggestKey);
@@ -98,6 +83,7 @@ namespace CognitiveServicesDemo.ViewModels
                 var body = string.Empty;
                 var uri = "https://api.cognitive.microsoft.com/bing/v5.0/suggestions/?" + queryString;
 
+                //var client = new HttpClient();
                 var response = await client.GetAsync(uri);
                 var jsonResult = await response.Content.ReadAsStringAsync();
                 //spellingCheckedText = jsonResult;
