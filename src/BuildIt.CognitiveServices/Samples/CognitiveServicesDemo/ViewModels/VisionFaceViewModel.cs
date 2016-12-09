@@ -175,42 +175,24 @@ namespace CognitiveServicesDemo.ViewModels
 
         public async Task VisionFaceCheckAsync(MediaFile file)
         {
-            //var filePath = "Assets/tmrIsMon.jpg";
-            //var filePath = "CognitiveServicesDemo.Assets.recognition.jpg";
-            //Uri fileUri = new Uri(filePath);
-            if (file !=null)
+            //var filePath = "Assets/carre_homme.jpg";
+            //Image image = new Image();
+            //image.Source = filePath;
+
+            //ImageUrl = filePath;
+            //var photoStream = await PclStorageStreamAsync(filePath);
+            if (string.IsNullOrEmpty(ImageUrl))
             {
                 WarningText = "Please take photo first";
             }
             else
             {
-                //CognitiveServiceVision co = new CognitiveServiceVision();
-                //await co.VisionFaceCheckAsync(Constants.FaceApiKey, ImageUrl);
-
-                //await photoPropertiesService.PhotoImageUriAsync(ImageUrl);
-
-                //var photoStream = await PclStorageStreamAsync(ImageUrl);
-                var faceNo = 1;
-
-                Title = "Checking image";
-                var value = "";
-                FaceRectangle[] faceRects = await UploadAndDetectFaces(file.GetStream());
-                Title = "Here is the result";
-                if (faceRects.Length > 0)
-                {
-                    foreach (var faceRect in faceRects)
-                    {
-                        value +=
-                            $"Face{faceNo} + Height: {faceRect.Height} Left: {faceRect.Left} Top: {faceRect.Top} Width:{faceRect.Width}";
-                        faceNo++;
-                    }
-                }
-                CleanResult();
-                Title = value;
+                var computerVision = new FaceAPIV10();
+                var result = await computerVision.FaceDetectWithHttpMessagesAsync(file.GetStream(), null, null, null, null, Constants.FaceApiKey);
             }
         }
 
-        public async Task VisionEmotionAsync()
+        public async Task VisionEmotionAsync(MediaFile file)
         {
             if (string.IsNullOrEmpty(ImageUrl))
             {
@@ -218,19 +200,22 @@ namespace CognitiveServicesDemo.ViewModels
             }
             else
             {
-                
-                var faceNo = 1;
                 Title = "Checking image";
+                var emotion = new EmotionAPI();
+                var result = await emotion.EmotionRecognitionWithHttpMessagesAsync(file.GetStream(), null,Constants.EmotionApiKey);
+
+                var faceNo = 1;
+                
                 var value = "";
                 //var test = await cognitiveServiceVision.VisionEmotionApiRequestAsync(Constants.EmotionApiKey, ImageUrl);
                 //Emotion[] emotionRects = await cognitiveServiceVision.VisionEmotionApiRequestAsync(Constants.FaceApiKey,ImageUrl);
                 //var photoStream = await PclStorageStreamAsync(ImageUrl);
-                Emotion[] emotionRects = await UploadAndDetectEmotion(await PclStorageStreamAsync(ImageUrl));
+                //Emotion[] emotionRects = await UploadAndDetectEmotion(await PclStorageStreamAsync(ImageUrl));
 
-                if (emotionRects!= null && emotionRects.Length > 0)
+                if (result != null && result.Length > 0)
                 {
                     Title = "Here is the result";
-                    foreach (var emotionRect in emotionRects)
+                    foreach (var emotionRect in result)
                     {
                         value +=
                             $"Face{faceNo} Anger: {emotionRect.Scores.Anger} Contempt: {emotionRect.Scores.Contempt} Disgust: {emotionRect.Scores.Disgust} Fear: {emotionRect.Scores.Fear} Happiness: {emotionRect.Scores.Happiness} Neutral: {emotionRect.Scores.Neutral} Sadness: {emotionRect.Scores.Sadness} Surprise: {emotionRect.Scores.Surprise}";
@@ -254,22 +239,22 @@ namespace CognitiveServicesDemo.ViewModels
             }
             else
             {
-                
                 Title = "Checking image";
-                var value = "";
-                var faceNo = 1;
-                var analysisCategories = string.Empty;
-                var descriptionCaptions = string.Empty;
-                var analysisFaces = string.Empty;
-                var analysisTag = string.Empty;
+                var computerVision = new ComputerVisionAPIV10();
+                var analysisRects = await computerVision.AnalyzeImageWithHttpMessagesAsync(file.GetStream(), "Categories", null, "en", null,
+                    Constants.CuomputerVisionApiKey);
+                
+                //var analysisCategories = string.Empty;
+                //var descriptionCaptions = string.Empty;
+                //var analysisFaces = string.Empty;
+                //var analysisTag = string.Empty;
 
-                
-                //call from class library
-                var co = new CognitiveServiceClient();
-                var result = await co.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
-                //var photoStream = await PclStorageStreamAsync(ImageUrl);
-                AnalysisResult analysisRects = await UploadAndAnalyzeImage(file.GetStream());
-                
+                ////call from class library
+                //var co = new CognitiveServiceClient();
+                //var result = await co.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
+                ////var photoStream = await PclStorageStreamAsync(ImageUrl);
+                //AnalysisResult analysisRects = await UploadAndAnalyzeImage(file.GetStream());
+                var faceNo = 1;
                 if (analysisRects != null)
                 {
                     Title = "Here is the result";
@@ -333,8 +318,7 @@ namespace CognitiveServicesDemo.ViewModels
                     AnalysisFaces = analysisFaces;
                     AnalysisTag = analysisTag;
 
-                    value =
-                        $"Adult content: {analysisRects.Adult.IsAdultContent}, Image infor: {analysisRects.Metadata.Format} + Height: {analysisRects.Metadata.Height} + Width: {analysisRects.Metadata.Width}";
+                    var value = $"Adult content: {analysisRects.Adult.IsAdultContent}, Image infor: {analysisRects.Metadata.Format} + Height: {analysisRects.Metadata.Height} + Width: {analysisRects.Metadata.Width}";
                     Title = value;
                 }
             }

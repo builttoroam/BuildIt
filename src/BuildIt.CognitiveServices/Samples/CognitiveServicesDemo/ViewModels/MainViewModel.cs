@@ -68,5 +68,9 @@ namespace CognitiveServicesDemo.ViewModels
         {
             ShowViewModel<AcademicViewModel>();
         }
+        public void ShowVideo()
+        {
+            ShowViewModel<VisionVideoFacialRecognitionViewModel>();
+        }
     }
 }

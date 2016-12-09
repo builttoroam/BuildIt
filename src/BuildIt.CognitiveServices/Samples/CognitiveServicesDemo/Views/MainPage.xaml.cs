@@ -71,5 +71,10 @@ namespace CognitiveServicesDemo.Views
         {
             CurrentViewModel.ShowAcademic();
         }
+
+        private void VideoFacialRecognition(object sender, EventArgs e)
+        {
+            CurrentViewModel.ShowVideo();
+        }
     }
 }

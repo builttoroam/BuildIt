@@ -94,6 +94,7 @@
     <Compile Include="ViewModels\SearchBingAutosuggestViewModel.cs" />
     <Compile Include="ViewModels\VisionEmotionViewModel.cs" />
     <Compile Include="ViewModels\VisionFaceViewModel.cs" />
+    <Compile Include="ViewModels\VisionVideoFacialRecognitionViewModel.cs" />
     <Compile Include="Views\AcademicPage.xaml.cs">
       <DependentUpon>AcademicPage.xaml</DependentUpon>
     </Compile>
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="Views\VisionFacePage.xaml.cs">
       <DependentUpon>VisionFacePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisionVideoFacialRecognitionPage.xaml.cs">
+      <DependentUpon>VisionVideoFacialRecognitionPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +218,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.CognitiveServices.XForms\BuildIt.CognitiveServices.XForms.csproj">
       <Project>{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}</Project>
@@ -227,6 +230,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\carre_homme.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\VisionVideoFacialRecognitionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Web.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

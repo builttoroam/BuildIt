@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:o="clr-namespace:Octane.Xam.VideoPlayer;assembly=Octane.Xam.VideoPlayer"
+             x:Class="CognitiveServicesDemo.Views.VisionVideoFacialRecognitionPage">
+  <ScrollView>
+    <StackLayout Orientation="Vertical">
+      <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+      <Button Text="Recird video" BackgroundColor="Gray" Clicked="TakeVideo_OnClicked" HorizontalOptions="Center" VerticalOptions="Start" ></Button>
+      <o:VideoPlayer x:Name="VideoPlayer" />
+    </StackLayout>
+  </ScrollView>
+</ContentPage>

@@ -30,7 +30,7 @@
           <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Center">Cognitive Service - Vision</Label>
           <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start">
             <Button Grid.Row="0" BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face recognize" Clicked="VisionFace"></Button>
-            <!--<Button Grid.Row="1" BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Emotion" Clicked="VisionEmotions"></Button>-->
+            <Button Grid.Row="1" BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Video fical recognition" Clicked="VideoFacialRecognition"></Button>
           </StackLayout>
         </Grid>
         <Grid Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Center">
