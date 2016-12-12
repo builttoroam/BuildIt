@@ -13,6 +13,7 @@ using MvvmCross.Core.ViewModels;
 using Plugin.Media.Abstractions;
 using System.Web;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -21,6 +22,7 @@ namespace CognitiveServicesDemo.ViewModels
         private string videoPath;
         private string warningText;
         private string title;
+        private List<Rectangle> rectangles = new List<Rectangle>();
 
         private static readonly TimeSpan QueryWaitTime = TimeSpan.FromSeconds(20);
         private VideoServiceClient VideoServiceClient { get; set; }
@@ -55,47 +57,20 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
+        public List<Rectangle> Rectangles
+        {
+            get { return rectangles; }
+            set
+            {
+                rectangles = value; 
+                RaisePropertyChanged(() => Rectangles);
+            }
+        }
+
 
         public async void UploadVideoAsync(MediaFile file)
         {
-            //if (string.IsNullOrEmpty(VideoPath))
-            //{
-            //    WarningText = "Please record a video first";
-            //}
-            //else
-            //{
-            //    Title = "Checking image";
-            //    VideoServiceClient = new VideoServiceClient("9739e652e7214256ac48cb85e641a96e");
-            //    {
-            //        //Timeout = TimeSpan.FromMinutes(10)
-            //    };
-            //    using (Stream videoStream = file.GetStream())
-            //    {
-            //        // Creates a video operation of face tracking
-            //        var operation =
-            //            await
-            //                VideoServiceClient.CreateOperationAsync(videoStream,
-            //                    new FaceDetectionOperationSettings());
-
-            //        // Start querying service status
-            //        OperationResult result = await VideoServiceClient.GetOperationResultAsync(operation);
-            //        while (result.Status != OperationStatus.Succeeded && result.Status != OperationStatus.Failed)
-            //        {
-            //            Debug.WriteLine($"Server status: {result.Status}, wait {QueryWaitTime.TotalSeconds} seconds");
-            //            await Task.Delay(QueryWaitTime);
-            //            result = await VideoServiceClient.GetOperationResultAsync(operation);
-            //        }
-            //        Debug.WriteLine($"Finish processing with server status: {result.Status}");
-
-            //        // Processing finished, check result
-            //        if (result.Status == OperationStatus.Succeeded)
-            //        {
-            //            var videoAnalysisResult =
-            //                JsonConvert.DeserializeObject<FaceTracking>(result.ProcessingResult);
-            //        }
-            //    }
-
-
+            
             VideoServiceClient = new VideoServiceClient("9739e652e7214256ac48cb85e641a96e")
             {
                 Timeout = TimeSpan.FromMinutes(10)
@@ -123,16 +98,31 @@ namespace CognitiveServicesDemo.ViewModels
                     // Processing finished, check result
                     if (result.Status == OperationStatus.Succeeded)
                     {
+                        var rec = new Rectangle();
+
                         var videoAnalysisResult =
                             JsonConvert.DeserializeObject<FaceTracking>(result.ProcessingResult);
+                        foreach (var fragment in videoAnalysisResult.Fragments)
+                        {
+                            foreach (var fragmentEvent in fragment.Events)
+                            {
+                                foreach (var faceEvent in fragmentEvent)
+                                {
+                                    rec.X = faceEvent.X;
+                                    rec.Y = faceEvent.Y;
+                                    rec.Width = faceEvent.Width;
+                                    rec.Height = faceEvent.Height;
+                                    Rectangles.Add(rec);
+                                }
+                            }
+                        }
                     }
-
                 }
                 //var test = videoOperation.Url;
             }
             catch (Exception ex)
             {
-
+                // ignored
             }
         }
 
