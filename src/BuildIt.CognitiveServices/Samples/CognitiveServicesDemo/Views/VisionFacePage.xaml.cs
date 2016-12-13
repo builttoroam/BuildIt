@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using CognitiveServicesDemo.ViewModels;
-using Xamarin.Forms;
+﻿using CognitiveServicesDemo.ViewModels;
+using ExifLib;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace CognitiveServicesDemo.Views
 {
@@ -25,8 +26,8 @@ namespace CognitiveServicesDemo.Views
         {
             //var frane = new Frame() { OutlineColor = Color.Red };
             //ResultLayout.Children.Add(frane, Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Width * 0.25), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Height * 0.28), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Width * .4), Constraint.RelativeToView(TestImage, (ResultLayout, TestImage) => this.TestImage.Height * .4));
-            
-            
+
+
             //await CurrentViewModel.VisionFaceCheckAsync();
         }
 
@@ -37,7 +38,7 @@ namespace CognitiveServicesDemo.Views
 
         private async void ComputerVisionButton_Click(object sender, EventArgs e)
         {
-           // await CurrentViewModel.VisionComputerVisionAsync();
+            // await CurrentViewModel.VisionComputerVisionAsync();
 
             //string[] imageMetadata = CurrentViewModel.ImageMetadata.Split(',');
             //RectImg.WidthRequest = int.Parse(imageMetadata[0])/2;
@@ -62,16 +63,19 @@ namespace CognitiveServicesDemo.Views
 
                 await CrossMedia.Current.Initialize();
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported) return;
-                
+
                 // Supply media options for saving our photo after it's taken.
                 var mediaOptions = new StoreCameraMediaOptions
                 {
-                    Directory = "Receipts",
-                    Name = $"{DateTime.UtcNow}.jpg"
+                    Directory = "Media",
+                    Name = $"{DateTime.Now:T}.jpg".Replace(":", "-"),
+                    DefaultCamera = CameraDevice.Front,
+                    SaveToAlbum = false
                 };
 
                 // Take a photo of the business receipt.
                 var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
+
                 CurrentViewModel.ImageUrl = file.Path;
                 //Image.Source = CurrentViewModel.ImageUrl;
 
@@ -81,7 +85,7 @@ namespace CognitiveServicesDemo.Views
                 await CurrentViewModel.VisionComputerVisionAsync(file);
                 var faceMetaData = CurrentViewModel.Xywh;
 
-                
+
 
 
                 //TestImage.Source = CurrentViewModel.ImageUrl;
@@ -94,12 +98,12 @@ namespace CognitiveServicesDemo.Views
                     if (s != null)
                     {
                         var xywh = s.Split(',');
-                        
+
                         rectangle.X = double.Parse(xywh[0]);
                         rectangle.Y = double.Parse(xywh[1]);
                         rectangle.Width = double.Parse(xywh[2]);
                         rectangle.Height = double.Parse(xywh[3]);
-                        
+
                         face.Add(rectangle);
 
 
@@ -107,14 +111,26 @@ namespace CognitiveServicesDemo.Views
 
                     }
                 var imageMetadata = CurrentViewModel.ImageMetadata.Split(',');
-                var imageWidht = int.Parse(imageMetadata[0]);
+                var imageWidth = int.Parse(imageMetadata[0]);
                 var imageHeight = int.Parse(imageMetadata[1]);
                 Debug.WriteLine($"current metadata\n{CurrentViewModel.ImageMetadata}");
 
 
-                Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidht,imageHeight);
+                // Do some stuff to make sure the boxes render correctly
+                using (var streamPic = file.GetStream())
+                {
+                    var picInfo = ExifReader.ReadJpeg(streamPic);
+                    var orientation = picInfo.Orientation;
+                    if ((orientation == ExifOrientation.BottomLeft || orientation == ExifOrientation.TopRight)
+                        && imageHeight < imageWidth) // Orientation is wrong?
+                    {
+                        var temp = imageHeight;
+                        imageHeight = imageWidth;
+                        imageWidth = temp;
+                    }
+                }
 
-
+                Layout.DrawRectangle(face, CurrentViewModel.ImageUrl, imageWidth, imageHeight);
 
                 //string[] xywh = faceMetaData.Split(',');
                 CurrentViewModel.WarningText = "Here is the computer vision results for you";

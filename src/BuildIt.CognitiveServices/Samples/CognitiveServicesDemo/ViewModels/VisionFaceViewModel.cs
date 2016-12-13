@@ -1,21 +1,21 @@
-﻿using System;
+﻿using BuildIt.CognitiveServices;
+using CognitiveServicesDemo.Common;
+using Microsoft.ProjectOxford.Emotion;
+using Microsoft.ProjectOxford.Emotion.Contract;
+using Microsoft.ProjectOxford.Face;
+using Microsoft.ProjectOxford.Vision;
+using Microsoft.ProjectOxford.Vision.Contract;
+using MvvmCross.Core.ViewModels;
+using PCLStorage;
+using Plugin.Media.Abstractions;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using MvvmCross.Core.ViewModels;
-using PCLStorage;
 using Xamarin.Forms;
-using Microsoft.ProjectOxford.Face;
-using CognitiveServicesDemo.Common;
-using Microsoft.ProjectOxford.Emotion.Contract;
-using Microsoft.ProjectOxford.Emotion;
-using Microsoft.ProjectOxford.Vision;
-using Microsoft.ProjectOxford.Vision.Contract;
 using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 using Image = Xamarin.Forms.Image;
-using Plugin.Media.Abstractions;
-using BuildIt.CognitiveServices;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -169,7 +169,7 @@ namespace CognitiveServicesDemo.ViewModels
 
         public VisionFaceViewModel()
         {
-           
+
         }
 
 
@@ -202,10 +202,10 @@ namespace CognitiveServicesDemo.ViewModels
             {
                 Title = "Checking image";
                 var emotion = new EmotionAPI();
-                var result = await emotion.EmotionRecognitionWithHttpMessagesAsync(file.GetStream(), null,Constants.EmotionApiKey);
+                var result = await emotion.EmotionRecognitionWithHttpMessagesAsync(file.GetStream(), null, Constants.EmotionApiKey);
 
                 var faceNo = 1;
-                
+
                 var value = "";
                 //var test = await cognitiveServiceVision.VisionEmotionApiRequestAsync(Constants.EmotionApiKey, ImageUrl);
                 //Emotion[] emotionRects = await cognitiveServiceVision.VisionEmotionApiRequestAsync(Constants.FaceApiKey,ImageUrl);
@@ -243,11 +243,11 @@ namespace CognitiveServicesDemo.ViewModels
                 var computerVision = new ComputerVisionAPIV10();
                 var analysisRects = await computerVision.AnalyzeImageWithHttpMessagesAsync(file.GetStream(), "Categories", null, "en", null,
                     Constants.CuomputerVisionApiKey);
-                
-                //var analysisCategories = string.Empty;
-                //var descriptionCaptions = string.Empty;
-                //var analysisFaces = string.Empty;
-                //var analysisTag = string.Empty;
+
+                AnalysisCategories = string.Empty;
+                DescriptionCaptions = string.Empty;
+                AnalysisFaces = string.Empty;
+                AnalysisTag = string.Empty;
 
                 ////call from class library
                 //var co = new CognitiveServiceClient();
@@ -260,19 +260,19 @@ namespace CognitiveServicesDemo.ViewModels
                     Title = "Here is the result";
                     foreach (var analysisRect in analysisRects.Categories)
                     {
-                        analysisCategories += $" {analysisRect.Name} + Score: {analysisRect.Score}";
+                        AnalysisCategories += $" {analysisRect.Name} + Score: {analysisRect.Score}";
                     }
 
                     foreach (var descriptionCaption in analysisRects.Description.Captions)
                     {
-                        descriptionCaptions += $"{descriptionCaption.Text} + Confidence :{descriptionCaption.Confidence}";
+                        DescriptionCaptions += $"{descriptionCaption.Text} + Confidence :{descriptionCaption.Confidence}";
                     }
                     if (analysisRects.Faces.Length >= 1)
                     {
                         Xywh = new string[analysisRects.Faces.Length];
                         for (int i = 0; i < analysisRects.Faces.Length; i++)
                         {
-                            
+
                             Xywh[i] =
                                 $"{analysisRects.Faces[i].FaceRectangle.Left},{analysisRects.Faces[i].FaceRectangle.Top},{analysisRects.Faces[i].FaceRectangle.Width},{analysisRects.Faces[i].FaceRectangle.Height}";
                         }
@@ -290,13 +290,13 @@ namespace CognitiveServicesDemo.ViewModels
                         WarningText = "Can't detect face, please take another photo";
                         Xywh = new string[1];
                         Xywh[0] = ("0,0,0,0");
-                        
+
                     }
 
                     FaceMetadata = analysisRects.Faces;
                     foreach (var face in analysisRects.Faces)
                     {
-                        analysisFaces += $"FaceNo: {faceNo} Age: {face.Age} + Gender: {face.Gender}";
+                        AnalysisFaces += $"FaceNo: {faceNo} Age: {face.Age} + Gender: {face.Gender}";
 
                         //FaceMetadata = new List<string>
                         //{
@@ -308,15 +308,10 @@ namespace CognitiveServicesDemo.ViewModels
                     }
                     foreach (var analysisRectsTag in analysisRects.Tags)
                     {
-                        analysisTag += $"Confident: {analysisRectsTag.Confidence} + Name: {analysisRectsTag.Name}";
+                        AnalysisTag += $"Confident: {analysisRectsTag.Confidence} + Name: {analysisRectsTag.Name}";
                     }
 
                     ImageMetadata = $"{analysisRects.Metadata.Width},{analysisRects.Metadata.Height}";
-
-                    AnalysisCategories = analysisCategories;
-                    DescriptionCaptions = descriptionCaptions;
-                    AnalysisFaces = analysisFaces;
-                    AnalysisTag = analysisTag;
 
                     var value = $"Adult content: {analysisRects.Adult.IsAdultContent}, Image infor: {analysisRects.Metadata.Format} + Height: {analysisRects.Metadata.Height} + Width: {analysisRects.Metadata.Width}";
                     Title = value;
