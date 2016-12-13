@@ -87,6 +87,8 @@ namespace CognitiveServicesDemo.ViewModels
 
         public async Task TextAnalyticsAsync(string inputText)
         {
+
+
             //TextAnalyticsReplyBody text = new TextAnalyticsReplyBody();
             //text.documents[0].id = DateTime.Now.ToString();
             //text.documents[0].
@@ -94,6 +96,16 @@ namespace CognitiveServicesDemo.ViewModels
             //text.id = DateTime.Now.ToString();
             //var jsonString = JsonConvert.SerializeObject(text);
             var detectLanguage = " {\"documents\": [{ \"id\":\"" + DateTime.Now + "\", \"text\":\"" + inputText + "\"}]}";
+
+            var textAnalytics = new AzureMachineLearningTextAnalytics();
+            BatchInputV2 batch = new BatchInputV2()
+            {
+                Documents = new List<InputV2>() { }
+            };
+            var languageResult =
+                await
+                    textAnalytics.DetectLanguageWithHttpMessagesAsync(detectLanguage, 1, null,
+                        Constants.TextAnalyticsKey, batch);
 
             //HTTPClient
             var client = new HttpClient();
@@ -104,8 +116,8 @@ namespace CognitiveServicesDemo.ViewModels
 
             HttpResponseMessage response;
 
-            //var cognitiveService = new CognitiveServiceClient();
-            //var result = await cognitiveService.DetectLanguageApiRequestAsync(Constants.TextAnalyticsKey, detectLanguage);
+            var cognitiveService1 = new CognitiveServiceClient();
+            var result1 = await cognitiveService1.DetectLanguageApiRequestAsync(Constants.TextAnalyticsKey, detectLanguage);
 
 
 

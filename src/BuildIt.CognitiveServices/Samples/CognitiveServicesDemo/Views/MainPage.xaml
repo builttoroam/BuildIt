@@ -54,7 +54,7 @@
           <StackLayout Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Center" Orientation="Horizontal">
             <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Entity Linking" Clicked="EntityLinking"></Button>
             <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Academic" Clicked="Academic"></Button>
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Speech" Clicked="BingSpeech"></Button>
+            <!--<Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Speech" Clicked="BingSpeech"></Button>-->
           </StackLayout>
         </Grid>
         <Grid Grid.Row="3" VerticalOptions="Start" HorizontalOptions="Center">

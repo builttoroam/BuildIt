@@ -23,6 +23,7 @@ namespace CognitiveServicesDemo.ViewModels
         private string warningText;
         private string title;
         private List<Rectangle> rectangles = new List<Rectangle>();
+        private double videoCurrentPosition;
 
         private static readonly TimeSpan QueryWaitTime = TimeSpan.FromSeconds(20);
         private VideoServiceClient VideoServiceClient { get; set; }
@@ -64,6 +65,16 @@ namespace CognitiveServicesDemo.ViewModels
             {
                 rectangles = value; 
                 RaisePropertyChanged(() => Rectangles);
+            }
+        }
+
+        public double VideoCurrentPosition
+        {
+            get { return videoCurrentPosition; }
+            set
+            {
+                videoCurrentPosition = value; 
+                RaisePropertyChanged(() => VideoCurrentPosition);
             }
         }
 
@@ -118,35 +129,11 @@ namespace CognitiveServicesDemo.ViewModels
                         }
                     }
                 }
-                //var test = videoOperation.Url;
             }
             catch (Exception ex)
             {
                 // ignored
             }
         }
-
-        //public static async void MakeRequest()
-        //{
-        //    var client = new HttpClient();
-
-
-        //    // Request headers
-        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "0ac9abbebb5a4f9c83c8aaab43fdb12a");
-
-        //    var uri = "https://api.projectoxford.ai/video/v1.0/trackface?";
-
-        //    HttpResponseMessage response;
-
-        //    // Request body
-        //    byte[] byteData = Encoding.UTF8.GetBytes();
-
-        //    using (var content = new ByteArrayContent(byteData))
-        //    {
-        //        content.Headers.ContentType = new MediaTypeHeaderValue("< your content type, i.e. application/json >");
-        //        response = await client.PostAsync(uri, content);
-        //    }
-
-        //}
     }
 }
