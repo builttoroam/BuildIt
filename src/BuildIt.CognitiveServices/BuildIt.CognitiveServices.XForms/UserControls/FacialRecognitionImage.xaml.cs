@@ -6,6 +6,8 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
 {
     public partial class FacialRecognitionImage
     {
+        private bool imageLoaded;
+
         public FacialRecognitionImage()
         {
             InitializeComponent();
@@ -26,9 +28,9 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
         /// <param name="imageHeight">
         /// Height of image
         /// </param>
-        public void DrawRectangle(List<Rectangle> rectangle, string imageUri, double imageWidth, double imageHeight)
+        public void DrawRectangle(List<Rectangle> rectangle, string imageUri, double imageWidth,
+            double imageHeight)
         {
-
             DisplayImage.Source = imageUri;
 
             var existingFrames = ResultRelativeLayout.Children.OfType<Frame>().ToList();
@@ -36,12 +38,24 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
             {
                 ResultRelativeLayout.Children.Remove(existingFrame);
             }
-            var frame = new Frame() { OutlineColor = Color.Red };
+
+
+            var frame = new Frame { OutlineColor = Color.Red };
 
             foreach (var face in rectangle)
             {
-                ResultRelativeLayout.Children.Add(frame, Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.X / imageWidth * this.DisplayImage.Width), Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.Y / imageHeight * this.DisplayImage.Height), Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.Width / imageWidth * this.DisplayImage.Width), Constraint.RelativeToView(DisplayImage, (ResultRelativeLayout, DisplayImage) => face.Height / imageHeight * this.DisplayImage.Height));
+                var xConstraint = Constraint.RelativeToView(DisplayImage,
+                    (rl, v) => face.X / imageWidth * DisplayImage.Width);
+                var yConstraint = Constraint.RelativeToView(DisplayImage,
+                    (rl, v) => face.Y / imageHeight * DisplayImage.Height);
+                var widthConstraint = Constraint.RelativeToView(DisplayImage,
+                    (rl, v) => face.Width / imageWidth * DisplayImage.Width);
+                var heightConstraint = Constraint.RelativeToView(DisplayImage,
+                    (rl, v) => face.Height / imageHeight * DisplayImage.Height);
+
+                ResultRelativeLayout.Children.Add(frame, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
+
         }
     }
 }

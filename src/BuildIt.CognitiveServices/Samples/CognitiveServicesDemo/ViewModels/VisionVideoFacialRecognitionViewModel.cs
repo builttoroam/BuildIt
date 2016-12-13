@@ -1,18 +1,13 @@
-﻿using System;
+﻿using Microsoft.ProjectOxford.Video;
+using Microsoft.ProjectOxford.Video.Contract;
+using MvvmCross.Core.ViewModels;
+using Newtonsoft.Json;
+using Plugin.Media.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ProjectOxford.Video;
-using Microsoft.ProjectOxford.Video.Contract;
-using MvvmCross.Core.ViewModels;
-using Plugin.Media.Abstractions;
-using System.Web;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace CognitiveServicesDemo.ViewModels
@@ -63,7 +58,7 @@ namespace CognitiveServicesDemo.ViewModels
             get { return rectangles; }
             set
             {
-                rectangles = value; 
+                rectangles = value;
                 RaisePropertyChanged(() => Rectangles);
             }
         }
@@ -81,12 +76,12 @@ namespace CognitiveServicesDemo.ViewModels
 
         public async void UploadVideoAsync(MediaFile file)
         {
-            
+
             VideoServiceClient = new VideoServiceClient("9739e652e7214256ac48cb85e641a96e")
             {
                 Timeout = TimeSpan.FromMinutes(10)
             };
-            
+
             //Operation videoOperation;
             try
             {
