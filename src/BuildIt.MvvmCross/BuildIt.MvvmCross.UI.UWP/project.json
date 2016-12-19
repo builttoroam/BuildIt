@@ -2,7 +2,7 @@
   "dependencies": {
     "BuildIt.General": "0.1.5.6-beta",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "MvvmCross": "4.2.3"
+    "MvvmCross": "4.4.0"
   },
   "frameworks": {
     "uap10.0": {}

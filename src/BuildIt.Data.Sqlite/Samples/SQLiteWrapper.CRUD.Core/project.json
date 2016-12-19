@@ -1,7 +1,7 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "MvvmCross": "4.2.3",
+    "MvvmCross": "4.4.0",
     "SQLite.Net-PCL": "3.1.1",
     "SQLiteNetExtensions": "1.3.0"
   },

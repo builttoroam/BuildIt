@@ -7,7 +7,7 @@
       "version": "0.1.5.6-beta"
     },
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "PCLStorage": "1.0.2",
     "Plugin.VersionTracking": "1.0.1",
     "Xam.Plugin.Connectivity": "2.2.12"

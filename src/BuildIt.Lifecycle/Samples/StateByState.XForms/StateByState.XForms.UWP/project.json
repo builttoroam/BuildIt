@@ -1,14 +1,14 @@
 ﻿{
   "dependencies": {
-    "Autofac": "4.1.1",
-    "Microsoft.ApplicationInsights": "1.2.3",
+    "Autofac": "4.2.1",
+    "Microsoft.ApplicationInsights": "2.2.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "Xamarin.Forms": "2.3.2.127"
+    "Xamarin.Forms": "2.3.3.175"
   },
   "frameworks": {
     "uap10.0": {}

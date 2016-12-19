@@ -2,13 +2,13 @@
   "supports": {},
   "dependencies": {
     "BuildIt.General": "0.1.5.6-beta",
-    "MvvmCross": "4.2.3",
-    "MvvmCross.Binding": "4.2.3",
-    "MvvmCross.Core": "4.2.3",
-    "MvvmCross.Platform": "4.2.3",
+    "MvvmCross": "4.4.0",
+    "MvvmCross.Binding": "4.4.0",
+    "MvvmCross.Core": "4.4.0",
+    "MvvmCross.Platform": "4.4.0",
     "MvvmCross.Plugin.File": "4.2.3",
     "MvvmCross.Plugin.Network": "4.2.3",
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
