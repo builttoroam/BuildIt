@@ -16,7 +16,7 @@
       <RelativeLayout x:Name="ResultRelativeLayout" HorizontalOptions="Center" VerticalOptions="Center">
         <!--<Image x:Name="DisplayImage"></Image>-->
         <Grid></Grid>
-        <o:VideoPlayer x:Name="VideoPlayer" />
+        <o:VideoPlayer x:Name="VideoPlayer" Playing="VideoPlayer_OnPlaying" />
         <Label Text="test123" HorizontalOptions="Center" VerticalOptions="StartAndExpand"></Label>
       </RelativeLayout>
     </StackLayout>

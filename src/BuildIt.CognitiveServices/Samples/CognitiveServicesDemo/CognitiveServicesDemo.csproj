@@ -76,6 +76,7 @@
     <Compile Include="Model\BingWebSearch.cs" />
     <Compile Include="Model\EntityLinking.cs" />
     <Compile Include="Model\FacesResult.cs" />
+    <Compile Include="Model\FrameHighlight.cs" />
     <Compile Include="Model\TextAnalyticsResultBody.cs" />
     <Compile Include="Model\WebLanguageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
