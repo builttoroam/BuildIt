@@ -21,6 +21,7 @@ namespace CognitiveServicesDemo.ViewModels
         private string title;
         private List<FrameHighlight> frameHighlights = new List<FrameHighlight>();
         private double videoCurrentPosition;
+        private string statusText;
 
         private static readonly TimeSpan QueryWaitTime = TimeSpan.FromSeconds(20);
         private VideoServiceClient VideoServiceClient { get; set; }
@@ -79,6 +80,16 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
+        public string StatusText
+        {
+            get { return statusText; }
+            set
+            {
+                statusText = value;
+                RaisePropertyChanged(() => StatusText);
+            }
+        }
+
 
         public async Task UploadVideoAsync(MediaFile file)
         {
@@ -95,18 +106,22 @@ namespace CognitiveServicesDemo.ViewModels
 
                 using (Stream videoStream = file.GetStream())
                 {
+                    StatusText = "Uploading Video";
                     var operation =
                         await VideoServiceClient.CreateOperationAsync(videoStream, new FaceDetectionOperationSettings());
 
                     OperationResult result = await VideoServiceClient.GetOperationResultAsync(operation);
                     while (result.Status != OperationStatus.Succeeded && result.Status != OperationStatus.Failed)
                     {
+                        StatusText = "Waiting for Video to process";
                         Debug.WriteLine(
                             $"Server status: {result.Status}, wait {QueryWaitTime.TotalSeconds} seconds");
                         await Task.Delay(QueryWaitTime);
                         result = await VideoServiceClient.GetOperationResultAsync(operation);
                     }
-                    Debug.WriteLine($"Finish processing with server status: {result.Status}");
+
+                    StatusText = $"Finish processing with server status: {result.Status}";
+                    Debug.WriteLine(StatusText);
 
                     // Processing finished, check result
                     if (result.Status == OperationStatus.Succeeded)

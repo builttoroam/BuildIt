@@ -1,10 +1,9 @@
 ﻿using CognitiveServicesDemo.ViewModels;
-using Octane.Xam.VideoPlayer.Constants;
 using Octane.Xam.VideoPlayer.Events;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -18,7 +17,7 @@ namespace CognitiveServicesDemo.Views
             => BindingContext as VisionVideoFacialRecognitionViewModel;
 
         private int highlightIndex;
-        private TimeSpan lastDrawn = TimeSpan.Zero;
+        private bool videoPlaying;
 
         public VisionVideoFacialRecognitionPage()
         {
@@ -32,7 +31,7 @@ namespace CognitiveServicesDemo.Views
                 await CrossMedia.Current.Initialize();
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported) return;
 
-                var mediaOptions = new StoreVideoOptions()
+                var mediaOptions = new StoreVideoOptions
                 {
                     Directory = "Receipts",
                     Name = $"{DateTime.Now:T}.mp4".Replace(":", "-")
@@ -42,6 +41,7 @@ namespace CognitiveServicesDemo.Views
                 CurrentViewModel.VideoPath = file.Path;
                 await CurrentViewModel.UploadVideoAsync(file);
                 VideoPlayer.Source = CurrentViewModel.VideoPath;
+                DrawRectangles();
             }
             catch (Exception ex)
             {
@@ -49,42 +49,12 @@ namespace CognitiveServicesDemo.Views
             }
         }
 
-        private void DrawRectangles(object sender, EventArgs e)
-        {
-            //DrawRectangle(CurrentViewModel.Rectangles, VideoPlayer.Height, VideoPlayer.Width);
-            //CurrentViewModel.VideoCurrentPosition = VideoPlayer.CurrentTime.Milliseconds;
-        }
-
-        public void DrawRectangle(List<Rectangle> rectangle, double imageWidth, double imageHeight)
-        {
-            //DisplayImage.Source = imageUri;
-            var height = VideoPlayer.Height;
-            var width = VideoPlayer.Width;
-            var existingFrames = ResultRelativeLayout.Children.OfType<Frame>().ToList();
-            foreach (var existingFrame in existingFrames)
-            {
-                ResultRelativeLayout.Children.Remove(existingFrame);
-            }
-            var frame = new Frame() { OutlineColor = Color.Red };
-
-
-            //ResultRelativeLayout.Children.Add(frame, Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => (rectangle[1].X * this.VideoPlayer.Width)), Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => (rectangle[1].Y * VideoPlayer.Height)), Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => this.VideoPlayer.Width - (rectangle[1].Width * VideoPlayer.Width)), Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => this.VideoPlayer.Height - (rectangle[1].Height * VideoPlayer.Height)));
-            foreach (var face in rectangle)
-            {
-                ResultRelativeLayout.Children.Add(frame,
-                    Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => (face.X * this.VideoPlayer.Width)),
-                    Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => (face.Y * VideoPlayer.Height)),
-                    Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => this.VideoPlayer.Width - (face.Width * VideoPlayer.Width)),
-                    Constraint.RelativeToView(VideoPlayer, (ResultRelativeLayout, DisplayImage) => this.VideoPlayer.Height - (face.Height * VideoPlayer.Height)));
-            }
-        }
-
         private bool DrawRectangles()
         {
             var currentSecond = VideoPlayer.CurrentTime.TotalSeconds;
-            var isPlaying = VideoPlayer.State == PlayerState.Playing;
+            //var isPlaying = VideoPlayer.State == PlayerState.Playing;
 
-            if (!isPlaying) return true;
+            //if (!isPlaying) return true;
             if (CurrentViewModel.Processing || CurrentViewModel.FrameHighlights == null || CurrentViewModel.FrameHighlights.Count <= 0) return true;
 
             while (highlightIndex < CurrentViewModel.FrameHighlights.Count &&
@@ -102,42 +72,53 @@ namespace CognitiveServicesDemo.Views
                 ResultRelativeLayout.Children.Remove(existingFrame);
             }
 
-            var frame = new Frame() { OutlineColor = Color.Red };
-
             var positions = CurrentViewModel.FrameHighlights[highlightIndex - 1].HighlightRects;
             for (int i = 0; i < positions.Length; i++)
             {
                 var rect = positions[i];
                 var w = VideoPlayer.Width;
                 var h = VideoPlayer.Height;
-                var vw = CurrentViewModel.NaturalVideoWidth;
-                var vh = CurrentViewModel.NaturalVideoHeight;
+                //var vw = CurrentViewModel.NaturalVideoWidth;
+                //var vh = CurrentViewModel.NaturalVideoHeight;
 
                 if (h > 0 && rect.Height > 0)
                 {
-                    var vr = vw / vh;
-                    var offsetX = Math.Max((w - h * vr) / 2, 0);
-                    var offsetY = Math.Max((h - w / vr) / 2, 0);
+                    //var vr = vw / vh;
+                    //var offsetX = Math.Max((w - h * vr) / 2, 0);
+                    //var offsetY = Math.Max((h - w / vr) / 2, 0);
 
-                    var realWidth = w - 2 * offsetX;
-                    var realHeight = h - 2 * offsetY;
+                    //var realWidth = w - 2 * offsetX;
+                    //var realHeight = h - 2 * offsetY;
+
+                    var rectX = rect.X * w;
+                    var rectY = rect.Y * h;
+                    var rectW = rect.Width * w;
+                    var rectH = rect.Height * h;
+
+                    var frame = new Frame { OutlineColor = Color.Red };
+                    Debug.WriteLine($"Adding frame with values: X={rectX} Y={rectY} Width={rectW} Height={rectH}");
 
                     ResultRelativeLayout.Children.Add(frame,
-                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rect.X / vw * w),
-                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rect.Y / vh * h),
-                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rect.Width / vw * w),
-                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rect.Height / vh * h));
+                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rectX),
+                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rectY),
+                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rectW),
+                        Constraint.RelativeToView(VideoPlayer, (rl, v) => rectH));
 
                 }
             }
 
-            return VideoPlayer.State == PlayerState.Playing;
+            return videoPlaying;
         }
 
         private void VideoPlayer_OnPlaying(object sender, VideoPlayerEventArgs e)
         {
-            DrawRectangles();
+            videoPlaying = true;
             Device.StartTimer(HighlightTimerInterval, DrawRectangles);
+        }
+
+        private void VideoPlayer_OnCompleted(object sender, VideoPlayerEventArgs e)
+        {
+            videoPlaying = false;
         }
     }
 }

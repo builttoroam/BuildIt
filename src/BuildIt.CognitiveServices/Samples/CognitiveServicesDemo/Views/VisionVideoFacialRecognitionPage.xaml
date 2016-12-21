@@ -8,16 +8,15 @@
     <StackLayout Orientation="Vertical">
       <!--<Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />-->
       <Button Text="Recird video" BackgroundColor="Gray" Clicked="TakeVideo_OnClicked" HorizontalOptions="Center" VerticalOptions="Start" ></Button>
-      <Button Text="Draw rectangles" BackgroundColor="Gray" Clicked="DrawRectangles" HorizontalOptions="Center" VerticalOptions="Start" ></Button>
       <Grid>
         
         <userControls:FacialRecognitionImage x:Name="Layout"></userControls:FacialRecognitionImage>  
       </Grid>
       <RelativeLayout x:Name="ResultRelativeLayout" HorizontalOptions="Center" VerticalOptions="Center">
         <!--<Image x:Name="DisplayImage"></Image>-->
-        <Grid></Grid>
-        <o:VideoPlayer x:Name="VideoPlayer" Playing="VideoPlayer_OnPlaying" />
-        <Label Text="test123" HorizontalOptions="Center" VerticalOptions="StartAndExpand"></Label>
+        <!--<Grid></Grid>-->
+        <o:VideoPlayer x:Name="VideoPlayer" Playing="VideoPlayer_OnPlaying" Completed="VideoPlayer_OnCompleted" />
+        <Label Text="{Binding StatusText}" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
       </RelativeLayout>
     </StackLayout>
   </ScrollView>
