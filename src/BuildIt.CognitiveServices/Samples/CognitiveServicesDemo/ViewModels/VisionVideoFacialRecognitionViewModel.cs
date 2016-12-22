@@ -135,6 +135,7 @@ namespace CognitiveServicesDemo.ViewModels
             }
             catch (Exception ex)
             {
+                StatusText = $"Exception of type: {ex.GetType().Name} ocurred with message: {ex.Message}";
                 // ignored
             }
 
