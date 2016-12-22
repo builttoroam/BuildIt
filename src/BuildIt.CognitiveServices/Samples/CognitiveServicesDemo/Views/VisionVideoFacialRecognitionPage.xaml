@@ -6,18 +6,15 @@
              x:Class="CognitiveServicesDemo.Views.VisionVideoFacialRecognitionPage">
   <ScrollView>
     <StackLayout Orientation="Vertical">
-      <!--<Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />-->
-      <Button Text="Recird video" BackgroundColor="Gray" Clicked="TakeVideo_OnClicked" HorizontalOptions="Center" VerticalOptions="Start" ></Button>
+      <Button Text="Record video" BackgroundColor="Gray" Command="{Binding TakeVideoCommand}" HorizontalOptions="Center" VerticalOptions="Start" />
       <Grid>
         
         <userControls:FacialRecognitionImage x:Name="Layout"></userControls:FacialRecognitionImage>  
       </Grid>
       <RelativeLayout x:Name="ResultRelativeLayout" HorizontalOptions="Center" VerticalOptions="Center">
-        <!--<Image x:Name="DisplayImage"></Image>-->
-        <!--<Grid></Grid>-->
-        <o:VideoPlayer x:Name="VideoPlayer" Playing="VideoPlayer_OnPlaying" Completed="VideoPlayer_OnCompleted" />
-        <Label Text="{Binding StatusText}" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
+        <o:VideoPlayer x:Name="VideoPlayer" Source="{Binding VideoPath}" Playing="VideoPlayer_OnPlaying" Completed="VideoPlayer_OnCompleted" />
       </RelativeLayout>
+      <Label Text="{Binding StatusText}" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
     </StackLayout>
   </ScrollView>
 </ContentPage>

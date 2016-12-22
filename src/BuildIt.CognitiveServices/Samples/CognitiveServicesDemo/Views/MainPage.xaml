@@ -8,68 +8,39 @@
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
-      <Label Grid.Row="0" Text="Welcome to Built to Roam Demo for cognitive service demo" VerticalOptions="Start" HorizontalOptions="Center" />
-      <Grid Grid.Row="1">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <!--<Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">Cognitive Service - Speech</Label>
-      <Label Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">Cognitive Service - Language</Label>
-      <Label Grid.Row="3" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">Cognitive Service - Knowledge</Label>
-      <Label Grid.Row="4" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">Cognitive Service - Search</Label>-->
-        <Grid Grid.Row="0">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
-          <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Center">Cognitive Service - Vision</Label>
-          <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start">
-            <Button Grid.Row="0" BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Face recognize" Clicked="VisionFace"></Button>
-            <Button Grid.Row="1" BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Video fical recognition" Clicked="VideoFacialRecognition"></Button>
+      <Label Grid.Row="0" Text="Welcome to the Built to Roam Cognitive Services Demo" HorizontalOptions="Center" />
+      <StackLayout Grid.Row="1">
+        <StackLayout>
+          <Label HorizontalOptions="Center" Text="Cognitive Service - Vision" />
+          <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Image" Clicked="VisionFace" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Video" Clicked="VideoFacialRecognition" />
           </StackLayout>
-        </Grid>
-        <Grid Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Center">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
-          <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Center">Cognitive Service - Language</Label>
-          <StackLayout Grid.Row="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Start">
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Spell Check" Clicked="LanguageBingSpell"></Button>
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Text Analytics" Clicked="LanguageTextAnalytics"></Button>
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Break into Words" Clicked="LanguageWlm" ></Button>
+        </StackLayout>
+        <StackLayout>
+          <Label HorizontalOptions="Center" Text="Cognitive Service - Language" />
+          <StackLayout Orientation="Vertical" HorizontalOptions="Center">
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Spell Check" Clicked="LanguageBingSpell" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Text Analytics" Clicked="LanguageTextAnalytics" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Break into Words" Clicked="LanguageWlm" />
           </StackLayout>
-        </Grid>
-        <Grid Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
-          <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Center">Knowledge and Speech</Label>
-          <StackLayout Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Center" Orientation="Horizontal">
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Entity Linking" Clicked="EntityLinking"></Button>
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Academic" Clicked="Academic"></Button>
-            <!--<Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Speech" Clicked="BingSpeech"></Button>-->
+        </StackLayout>
+        <StackLayout>
+          <Label HorizontalOptions="Center" Text="Knowledge and Speech" />
+          <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Entity Linking" Clicked="EntityLinking" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Academic" Clicked="Academic" />
           </StackLayout>
-        </Grid>
-        <Grid Grid.Row="3" VerticalOptions="Start" HorizontalOptions="Center">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
-          <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Center">Bing Search</Label>
-          <StackLayout Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Center">
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Autosuggest" Clicked="BingAutosuggest"></Button>
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Web Search" Clicked="BingWebSearch"></Button>
-            <Button BackgroundColor="Silver" VerticalOptions="Start" HorizontalOptions="Center" Text="Bing Image Search" Clicked="BingImageSearch"></Button>
+        </StackLayout>
+        <StackLayout>
+          <Label HorizontalOptions="Center" Text="Bing Search" />
+          <StackLayout HorizontalOptions="Center">
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Autosuggest" Clicked="BingAutosuggest" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Web Search" Clicked="BingWebSearch" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Image Search" Clicked="BingImageSearch" />
           </StackLayout>
-        </Grid>
-      </Grid>
+        </StackLayout>
+      </StackLayout>
     </Grid>
   </ScrollView>
 </ContentPage>

@@ -1,7 +1,5 @@
 ﻿using CognitiveServicesDemo.ViewModels;
 using Octane.Xam.VideoPlayer.Events;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -22,30 +20,6 @@ namespace CognitiveServicesDemo.Views
         public VisionVideoFacialRecognitionPage()
         {
             InitializeComponent();
-        }
-
-        private async void TakeVideo_OnClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                await CrossMedia.Current.Initialize();
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported) return;
-
-                var mediaOptions = new StoreVideoOptions
-                {
-                    Directory = "Receipts",
-                    Name = $"{DateTime.Now:T}.mp4".Replace(":", "-")
-                };
-                //var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
-                var file = await CrossMedia.Current.TakeVideoAsync(mediaOptions);
-                CurrentViewModel.VideoPath = file.Path;
-                await CurrentViewModel.UploadVideoAsync(file);
-                VideoPlayer.Source = CurrentViewModel.VideoPath;
-            }
-            catch (Exception ex)
-            {
-                // ignored
-            }
         }
 
         private bool DrawRectangles()

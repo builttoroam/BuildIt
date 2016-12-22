@@ -3,6 +3,7 @@ using Microsoft.ProjectOxford.Video;
 using Microsoft.ProjectOxford.Video.Contract;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,6 @@ namespace CognitiveServicesDemo.ViewModels
         private string warningText;
         private string title;
         private List<FrameHighlight> frameHighlights = new List<FrameHighlight>();
-        private double videoCurrentPosition;
         private string statusText;
 
         private static readonly TimeSpan QueryWaitTime = TimeSpan.FromSeconds(20);
@@ -29,6 +29,15 @@ namespace CognitiveServicesDemo.ViewModels
         public bool Processing { get; private set; }
         public double NaturalVideoWidth { get; private set; }
         public double NaturalVideoHeight { get; private set; }
+
+        public IMvxCommand TakeVideoCommand { get; private set; }
+        public IMvxCommand PlayVideoCommand { get; private set; }
+
+        public VisionVideoFacialRecognitionViewModel()
+        {
+            TakeVideoCommand = new MvxAsyncCommand(CaptureVideo);
+            PlayVideoCommand = new MvxCommand(() => Debug.WriteLine(""));
+        }
 
         public string VideoPath
         {
@@ -70,16 +79,6 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
-        public double VideoCurrentPosition
-        {
-            get { return videoCurrentPosition; }
-            set
-            {
-                videoCurrentPosition = value;
-                RaisePropertyChanged(() => VideoCurrentPosition);
-            }
-        }
-
         public string StatusText
         {
             get { return statusText; }
@@ -90,8 +89,30 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
+        public async Task CaptureVideo()
+        {
+            try
+            {
+                await CrossMedia.Current.Initialize();
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported) return;
 
-        public async Task UploadVideoAsync(MediaFile file)
+                var mediaOptions = new StoreVideoOptions
+                {
+                    Directory = "Media",
+                    Name = $"{DateTime.Now:T}.mp4".Replace(":", "-")
+                };
+
+                var file = await CrossMedia.Current.TakeVideoAsync(mediaOptions);
+                await UploadVideoAsync(file);
+                VideoPath = file.Path;
+            }
+            catch (Exception ex)
+            {
+                StatusText = $"Exception of type: {ex.GetType().Name} ocurred with message: {ex.Message}";
+            }
+        }
+
+        private async Task UploadVideoAsync(MediaFile file)
         {
             Processing = true;
             VideoServiceClient = new VideoServiceClient("9739e652e7214256ac48cb85e641a96e")
@@ -99,23 +120,18 @@ namespace CognitiveServicesDemo.ViewModels
                 Timeout = TimeSpan.FromMinutes(10)
             };
 
-            //Operation videoOperation;
             try
             {
-                //Stream testStream = file.GetStream();
-
                 using (Stream videoStream = file.GetStream())
                 {
                     StatusText = "Uploading Video";
-                    var operation =
-                        await VideoServiceClient.CreateOperationAsync(videoStream, new FaceDetectionOperationSettings());
+                    var operation = await VideoServiceClient.CreateOperationAsync(videoStream, new FaceDetectionOperationSettings());
 
                     OperationResult result = await VideoServiceClient.GetOperationResultAsync(operation);
                     while (result.Status != OperationStatus.Succeeded && result.Status != OperationStatus.Failed)
                     {
-                        StatusText = "Waiting for Video to process";
-                        Debug.WriteLine(
-                            $"Server status: {result.Status}, wait {QueryWaitTime.TotalSeconds} seconds");
+                        StatusText = $"Server status: {result.Status}, wait {QueryWaitTime.TotalSeconds} seconds";
+                        Debug.WriteLine(StatusText);
                         await Task.Delay(QueryWaitTime);
                         result = await VideoServiceClient.GetOperationResultAsync(operation);
                     }
@@ -136,10 +152,11 @@ namespace CognitiveServicesDemo.ViewModels
             catch (Exception ex)
             {
                 StatusText = $"Exception of type: {ex.GetType().Name} ocurred with message: {ex.Message}";
-                // ignored
             }
-
-            Processing = false;
+            finally
+            {
+                Processing = false;
+            }
         }
 
         private static IEnumerable<FrameHighlight> GetHighlights(string json)
