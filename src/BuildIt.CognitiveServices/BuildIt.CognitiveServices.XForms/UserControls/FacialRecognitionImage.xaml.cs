@@ -6,56 +6,79 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
 {
     public partial class FacialRecognitionImage
     {
-        private bool imageLoaded;
+        public static readonly BindableProperty FaceRectanglesProperty =
+            BindableProperty.Create("FaceRectangles", typeof(IEnumerable<Rectangle>), typeof(FacialRecognitionImage), null, BindingMode.Default, null, FaceRectanglesUpdated);
+
+        public static readonly BindableProperty ImageSourceProperty =
+            BindableProperty.Create("ImageSource", typeof(ImageSource), typeof(FacialRecognitionImage));
+
+        public static readonly BindableProperty NaturalImageWidthProperty =
+            BindableProperty.Create("NaturalImageWidth", typeof(double), typeof(FacialRecognitionImage), 0.0d);
+
+        public static readonly BindableProperty NaturalImageHeightProperty =
+            BindableProperty.Create("NaturalImageHeight", typeof(double), typeof(FacialRecognitionImage), 0.0d);
 
         public FacialRecognitionImage()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Draw rectangle on face
-        /// </summary>
-        /// <param name="rectangle">
-        /// X, Y width and hight value of face
-        /// </param>
-        /// <param name="imageUri">
-        /// Pass imageUri to display image
-        /// </param>
-        /// <param name="imageWidth">
-        /// Width of image
-        /// </param>
-        /// <param name="imageHeight">
-        /// Height of image
-        /// </param>
-        public void DrawRectangle(List<Rectangle> rectangle, string imageUri, double imageWidth,
-            double imageHeight)
+        private static void FaceRectanglesUpdated(BindableObject bindable, object oldValue, object newValue)
         {
-            DisplayImage.Source = imageUri;
+            var control = bindable as FacialRecognitionImage;
+            if (control?.FaceRectangles != null)
+            {
+                control.DrawRectangles();
+            }
+        }
 
+        public IEnumerable<Rectangle> FaceRectangles // Todo - make a less Xamarin Forms entity type here
+        {
+            get { return (IEnumerable<Rectangle>)GetValue(FaceRectanglesProperty); }
+            set { SetValue(FaceRectanglesProperty, value); }
+        }
+
+        public ImageSource ImageSource
+        {
+            get { return (ImageSource)GetValue(ImageSourceProperty); }
+            set { SetValue(ImageSourceProperty, value); }
+        }
+
+        public double NaturalImageWidth
+        {
+            get { return (double)GetValue(NaturalImageWidthProperty); }
+            set { SetValue(NaturalImageWidthProperty, value); }
+        }
+
+        public double NaturalImageHeight
+        {
+            get { return (double)GetValue(NaturalImageHeightProperty); }
+            set { SetValue(NaturalImageHeightProperty, value); }
+        }
+
+        private void DrawRectangles()
+        {
             var existingFrames = ResultRelativeLayout.Children.OfType<Frame>().ToList();
             foreach (var existingFrame in existingFrames)
             {
                 ResultRelativeLayout.Children.Remove(existingFrame);
             }
 
-
-            var frame = new Frame { OutlineColor = Color.Red };
-
-            foreach (var face in rectangle)
+            foreach (var faceRectangle in FaceRectangles)
             {
-                var xConstraint = Constraint.RelativeToView(DisplayImage,
-                    (rl, v) => face.X / imageWidth * DisplayImage.Width);
-                var yConstraint = Constraint.RelativeToView(DisplayImage,
-                    (rl, v) => face.Y / imageHeight * DisplayImage.Height);
-                var widthConstraint = Constraint.RelativeToView(DisplayImage,
-                    (rl, v) => face.Width / imageWidth * DisplayImage.Width);
-                var heightConstraint = Constraint.RelativeToView(DisplayImage,
-                    (rl, v) => face.Height / imageHeight * DisplayImage.Height);
+                var frame = new Frame { OutlineColor = Color.Red, BackgroundColor = Color.Transparent };
+
+                var xConstraint = Constraint.RelativeToView(Image,
+                    (rl, v) => faceRectangle.X / NaturalImageWidth * v.Width);
+                var yConstraint = Constraint.RelativeToView(Image,
+                    (rl, v) => faceRectangle.Y / NaturalImageHeight * v.Height);
+                var widthConstraint = Constraint.RelativeToView(Image,
+                    (rl, v) => faceRectangle.Width / NaturalImageWidth * v.Width);
+                var heightConstraint = Constraint.RelativeToView(Image,
+                    (rl, v) => faceRectangle.Height / NaturalImageHeight * v.Height);
 
                 ResultRelativeLayout.Children.Add(frame, xConstraint, yConstraint, widthConstraint, heightConstraint);
             }
-
         }
     }
 }

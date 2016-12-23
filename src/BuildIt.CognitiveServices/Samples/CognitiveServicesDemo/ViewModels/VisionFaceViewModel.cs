@@ -1,45 +1,38 @@
 ﻿using BuildIt.CognitiveServices;
 using CognitiveServicesDemo.Common;
-using Microsoft.ProjectOxford.Emotion;
-using Microsoft.ProjectOxford.Emotion.Contract;
-using Microsoft.ProjectOxford.Face;
-using Microsoft.ProjectOxford.Vision;
-using Microsoft.ProjectOxford.Vision.Contract;
+using ExifLib;
 using MvvmCross.Core.ViewModels;
-using PCLStorage;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
-using Image = Xamarin.Forms.Image;
 
 namespace CognitiveServicesDemo.ViewModels
 {
     public class VisionFaceViewModel : MvxViewModel
     {
-        private FaceServiceClient FaceServiceClient { get; set; }
-        private EmotionServiceClient EmotionServiceClient { get; set; }
         private string title;
         private string analysisCategories;
         private string descriptionCaptions;
         private string analysisFaces;
         private string analysisTag;
-        private string imageUrl;
         private string warningText;
-        //private readonly IPhotoPropertiesService photoPropertiesService;
         private string imageMetadata;
-        private Microsoft.ProjectOxford.Vision.Contract.Face[] faceMetadata;
         private string[] xywh;
+        private ImageSource imageSource;
+        private double naturalImageWidth;
+        private double naturalImageHeight;
+        private List<Rectangle> faceRectangles;
 
-        //readonly CognitiveServiceVision cognitiveServiceVision = new CognitiveServiceVision();
-        private double x = 0.25;
-        private double y = 0.28;
-        private double width = 0.4;
-        private double height = 0.4;
+        public VisionFaceViewModel()
+        {
+            TakePhotoCommand = new MvxAsyncCommand(TakePhoto);
+        }
+
+        public IMvxCommand TakePhotoCommand { get; }
 
         public string Title
         {
@@ -50,27 +43,6 @@ namespace CognitiveServicesDemo.ViewModels
                 RaisePropertyChanged(() => Title);
             }
         }
-
-        public string ImageUrl
-        {
-            get { return imageUrl; }
-            set
-            {
-                imageUrl = value;
-                RaisePropertyChanged(() => ImageUrl);
-            }
-        }
-
-        public Microsoft.ProjectOxford.Vision.Contract.Face[] FaceMetadata
-        {
-            get { return faceMetadata; }
-            set
-            {
-                faceMetadata = value;
-                RaisePropertyChanged(() => FaceMetadata);
-            }
-        }
-
 
         public string AnalysisCategories
         {
@@ -142,96 +114,118 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
-        public double X
+        public ImageSource ImageSource
         {
-            get { return x; }
-            set { x = value; }
-        }
-
-        public double Y
-        {
-            get { return y; }
-            set { y = value; }
-        }
-
-        public double Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        public double Height
-        {
-            get { return height; }
-            set { height = value; }
-        }
-
-
-        public VisionFaceViewModel()
-        {
-
-        }
-
-
-        public async Task VisionFaceCheckAsync(MediaFile file)
-        {
-            //var filePath = "Assets/carre_homme.jpg";
-            //Image image = new Image();
-            //image.Source = filePath;
-
-            //ImageUrl = filePath;
-            //var photoStream = await PclStorageStreamAsync(filePath);
-            if (string.IsNullOrEmpty(ImageUrl))
+            get { return imageSource; }
+            set
             {
-                WarningText = "Please take photo first";
-            }
-            else
-            {
-                var computerVision = new FaceAPIV10();
-                var result = await computerVision.FaceDetectWithHttpMessagesAsync(file.GetStream(), null, null, null, null, Constants.FaceApiKey);
+                imageSource = value;
+                RaisePropertyChanged(() => ImageSource);
             }
         }
 
-        public async Task VisionEmotionAsync(MediaFile file)
+        public double NaturalImageWidth
         {
-            if (string.IsNullOrEmpty(ImageUrl))
+            get { return naturalImageWidth; }
+            set
             {
-                WarningText = "Please take photo first";
+                naturalImageWidth = value;
+                RaisePropertyChanged(() => NaturalImageWidth);
             }
-            else
+        }
+
+        public double NaturalImageHeight
+        {
+            get { return naturalImageHeight; }
+            set
             {
-                Title = "Checking image";
-                var emotion = new EmotionAPI();
-                var result = await emotion.EmotionRecognitionWithHttpMessagesAsync(file.GetStream(), null, Constants.EmotionApiKey);
+                naturalImageHeight = value;
+                RaisePropertyChanged(() => NaturalImageHeight);
+            }
+        }
 
-                var faceNo = 1;
+        public List<Rectangle> FaceRectangles
+        {
+            get { return faceRectangles; }
+            set
+            {
+                faceRectangles = value;
+                RaisePropertyChanged(() => FaceRectangles);
+            }
+        }
 
-                var value = "";
-                //var test = await cognitiveServiceVision.VisionEmotionApiRequestAsync(Constants.EmotionApiKey, ImageUrl);
-                //Emotion[] emotionRects = await cognitiveServiceVision.VisionEmotionApiRequestAsync(Constants.FaceApiKey,ImageUrl);
-                //var photoStream = await PclStorageStreamAsync(ImageUrl);
-                //Emotion[] emotionRects = await UploadAndDetectEmotion(await PclStorageStreamAsync(ImageUrl));
+        private async Task TakePhoto()
+        {
+            try
+            {
+                await CrossMedia.Current.Initialize();
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported) return;
 
-                if (result != null && result.Length > 0)
+                // Supply media options for saving our photo after it's taken.
+                var mediaOptions = new StoreCameraMediaOptions
                 {
-                    Title = "Here is the result";
-                    foreach (var emotionRect in result)
+                    Directory = "Media",
+                    Name = $"{DateTime.Now:T}.jpg".Replace(":", "-"),
+                    DefaultCamera = CameraDevice.Front,
+                    SaveToAlbum = false
+                };
+
+                // Take a photo of the business receipt.
+                var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
+
+                await VisionComputerVisionAsync(file);
+                var faceMetaData = Xywh;
+
+                var list = new List<Rectangle>();
+                var rectangle = new Rectangle();
+                foreach (var s in faceMetaData)
+                {
+                    if (s != null)
                     {
-                        value +=
-                            $"Face{faceNo} Anger: {emotionRect.Scores.Anger} Contempt: {emotionRect.Scores.Contempt} Disgust: {emotionRect.Scores.Disgust} Fear: {emotionRect.Scores.Fear} Happiness: {emotionRect.Scores.Happiness} Neutral: {emotionRect.Scores.Neutral} Sadness: {emotionRect.Scores.Sadness} Surprise: {emotionRect.Scores.Surprise}";
-                        faceNo++;
+                        var currentXywh = s.Split(',');
+
+                        rectangle.X = double.Parse(currentXywh[0]);
+                        rectangle.Y = double.Parse(currentXywh[1]);
+                        rectangle.Width = double.Parse(currentXywh[2]);
+                        rectangle.Height = double.Parse(currentXywh[3]);
+
+                        list.Add(rectangle);
                     }
                 }
-                else
+
+                var metadata = ImageMetadata.Split(',');
+                var imageWidth = int.Parse(metadata[0]);
+                var imageHeight = int.Parse(metadata[1]);
+                Debug.WriteLine($"current metadata\n{ImageMetadata}");
+
+                // Do some stuff to make sure the boxes render correctly
+                using (var streamPic = file.GetStream())
                 {
-                    value = "No results";
+                    var picInfo = ExifReader.ReadJpeg(streamPic);
+                    var orientation = picInfo.Orientation;
+                    if ((orientation == ExifOrientation.BottomLeft || orientation == ExifOrientation.TopRight)
+                        && imageHeight < imageWidth) // Orientation is wrong?
+                    {
+                        var temp = imageHeight;
+                        imageHeight = imageWidth;
+                        imageWidth = temp;
+                    }
                 }
-                CleanResult();
-                Title = value;
+
+                ImageSource = file.Path;
+                NaturalImageWidth = imageWidth;
+                NaturalImageHeight = imageHeight;
+                FaceRectangles = list;
+
+                WarningText = "Here is the computer vision results for you";
+            }
+            catch (Exception ex)
+            {
+                WarningText = $"Exception of type: {ex.GetType().Name} ocurred with message: {ex.Message}";
             }
         }
 
-        public async Task VisionComputerVisionAsync(MediaFile file)
+        private async Task VisionComputerVisionAsync(MediaFile file)
         {
             if (file == null)
             {
@@ -249,11 +243,6 @@ namespace CognitiveServicesDemo.ViewModels
                 AnalysisFaces = string.Empty;
                 AnalysisTag = string.Empty;
 
-                ////call from class library
-                //var co = new CognitiveServiceClient();
-                //var result = await co.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
-                ////var photoStream = await PclStorageStreamAsync(ImageUrl);
-                //AnalysisResult analysisRects = await UploadAndAnalyzeImage(file.GetStream());
                 var faceNo = 1;
                 if (analysisRects != null)
                 {
@@ -276,34 +265,18 @@ namespace CognitiveServicesDemo.ViewModels
                             Xywh[i] =
                                 $"{analysisRects.Faces[i].FaceRectangle.Left},{analysisRects.Faces[i].FaceRectangle.Top},{analysisRects.Faces[i].FaceRectangle.Width},{analysisRects.Faces[i].FaceRectangle.Height}";
                         }
-
-                        //Xywh = new string[analysisRects.Faces.Length];
-                        //foreach (var face in analysisRects.Faces)
-                        //{
-                        //    Xywh.Add($"{face.FaceRectangle.Left},{face.FaceRectangle.Top},{face.FaceRectangle.Width},{face.FaceRectangle.Height}");
-                        //    //Xywh = $"{analysisRects.Faces[0].FaceRectangle.Left},{analysisRects.Faces[0].FaceRectangle.Top},{analysisRects.Faces[0].FaceRectangle.Width},{face.FaceRectangle.Height}";
-                        //}
-                        //Xywh = $"{analysisRects.Faces[0].FaceRectangle.Left},{analysisRects.Faces[0].FaceRectangle.Top},{analysisRects.Faces[0].FaceRectangle.Width},{analysisRects.Faces[0].FaceRectangle.Height}";
                     }
                     else
                     {
                         WarningText = "Can't detect face, please take another photo";
                         Xywh = new string[1];
-                        Xywh[0] = ("0,0,0,0");
+                        Xywh[0] = "0,0,0,0";
 
                     }
 
-                    FaceMetadata = analysisRects.Faces;
                     foreach (var face in analysisRects.Faces)
                     {
                         AnalysisFaces += $"FaceNo: {faceNo} Age: {face.Age} + Gender: {face.Gender}";
-
-                        //FaceMetadata = new List<string>
-                        //{
-                        //    $"{face.FaceRectangle.Width},{face.FaceRectangle.Height},{face.FaceRectangle.Left},{face.FaceRectangle.Top}"
-                        //};
-                        //Xywh = $"{face.FaceRectangle.Left},{face.FaceRectangle.Top},{face.FaceRectangle.Width},{face.FaceRectangle.Height}";
-
                         faceNo++;
                     }
                     foreach (var analysisRectsTag in analysisRects.Tags)
@@ -318,109 +291,6 @@ namespace CognitiveServicesDemo.ViewModels
                 }
             }
 
-        }
-
-        private async Task CreateRectangle()
-        {
-            BoxView boxView = new BoxView
-            {
-
-            };
-
-            AbsoluteLayout absoluteLayout = new AbsoluteLayout
-            {
-
-
-                Children =
-                {
-
-                }
-            };
-
-            //AbsoluteLayout.SetLayoutBounds(boxView, new Rectangle(100f, 200f, 200f, 50f));
-
-        }
-
-        private async Task<AnalysisResult> UploadAndAnalyzeImage(Stream imageStream)
-        {
-            var visionServiceClient = new VisionServiceClient(Constants.CuomputerVisionApiKey);
-            var assembley = this.GetType().GetTypeInfo().Assembly;
-            using (Stream imageFileStream = imageStream)
-            {
-                VisualFeature[] visualFeatures = new VisualFeature[]
-                {
-                    VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.Description,
-                    VisualFeature.Faces, VisualFeature.ImageType, VisualFeature.Tags
-                };
-                AnalysisResult analysisResult =
-                    await visionServiceClient.AnalyzeImageAsync(imageFileStream, visualFeatures);
-                return analysisResult;
-            }
-
-        }
-
-
-        public async Task<Stream> PclStorageStreamAsync(string url)
-        {
-            try
-            {
-                IFile imageFile = await FileSystem.Current.GetFileFromPathAsync(url);
-
-                var photoStream = imageFile.OpenAsync(FileAccess.Read).Result;
-                var webImage = new Image { Aspect = Aspect.AspectFit };
-                webImage.Source = ImageSource.FromUri(new Uri(url));
-                return photoStream;
-
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        private async Task<FaceRectangle[]> UploadAndDetectFaces(Stream photoStream)
-        {
-            FaceServiceClient = new FaceServiceClient(Constants.FaceApiKey);
-            try
-            {
-                using (Stream imageFileStream = photoStream)
-                {
-                    var faces = await FaceServiceClient.DetectAsync(imageFileStream);
-                    var faceRects = faces.Select(face => face.FaceRectangle);
-                    return faceRects.ToArray();
-                }
-            }
-            catch (Exception ex)
-            {
-                return new FaceRectangle[0];
-            }
-        }
-
-        private async Task<Emotion[]> UploadAndDetectEmotion(Stream imageStream)
-        {
-            EmotionServiceClient = new EmotionServiceClient(Constants.EmotionApiKey);
-            try
-            {
-                Emotion[] emotionResult;
-                using (Stream imageFileStream = imageStream)
-                {
-                    emotionResult = await EmotionServiceClient.RecognizeAsync(imageFileStream);
-                    return emotionResult;
-                }
-            }
-            catch (Exception ex)
-            {
-
-                return new Emotion[0];
-            }
-        }
-
-        private void CleanResult()
-        {
-            AnalysisCategories = string.Empty;
-            DescriptionCaptions = string.Empty;
-            AnalysisFaces = string.Empty;
-            AnalysisTag = string.Empty;
         }
     }
 }

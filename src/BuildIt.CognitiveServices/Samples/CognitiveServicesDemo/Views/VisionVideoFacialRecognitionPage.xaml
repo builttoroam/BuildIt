@@ -2,15 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:o="clr-namespace:Octane.Xam.VideoPlayer;assembly=Octane.Xam.VideoPlayer"
-             xmlns:userControls="clr-namespace:BuildIt.CognitiveServices.XForms.UserControls;assembly=BuildIt.CognitiveServices.XForms"
              x:Class="CognitiveServicesDemo.Views.VisionVideoFacialRecognitionPage">
   <ScrollView>
     <StackLayout Orientation="Vertical">
       <Button Text="Record video" BackgroundColor="Gray" Command="{Binding TakeVideoCommand}" HorizontalOptions="Center" VerticalOptions="Start" />
-      <Grid>
-        
-        <userControls:FacialRecognitionImage x:Name="Layout"></userControls:FacialRecognitionImage>  
-      </Grid>
       <RelativeLayout x:Name="ResultRelativeLayout" HorizontalOptions="Center" VerticalOptions="Center">
         <o:VideoPlayer x:Name="VideoPlayer" Source="{Binding VideoPath}" Playing="VideoPlayer_OnPlaying" Completed="VideoPlayer_OnCompleted" />
       </RelativeLayout>

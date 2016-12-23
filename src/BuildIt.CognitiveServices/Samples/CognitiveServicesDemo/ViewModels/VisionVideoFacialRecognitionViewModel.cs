@@ -17,27 +17,23 @@ namespace CognitiveServicesDemo.ViewModels
 {
     public class VisionVideoFacialRecognitionViewModel : MvxViewModel
     {
-        private string videoPath;
-        private string warningText;
-        private string title;
-        private List<FrameHighlight> frameHighlights = new List<FrameHighlight>();
-        private string statusText;
-
         private static readonly TimeSpan QueryWaitTime = TimeSpan.FromSeconds(20);
-        private VideoServiceClient VideoServiceClient { get; set; }
 
-        public bool Processing { get; private set; }
-        public double NaturalVideoWidth { get; private set; }
-        public double NaturalVideoHeight { get; private set; }
+        public IMvxCommand TakeVideoCommand { get; }
 
-        public IMvxCommand TakeVideoCommand { get; private set; }
-        public IMvxCommand PlayVideoCommand { get; private set; }
+        private VideoServiceClient videoServiceClient;
+        private string videoPath;
+        private string statusText;
 
         public VisionVideoFacialRecognitionViewModel()
         {
             TakeVideoCommand = new MvxAsyncCommand(CaptureVideo);
-            PlayVideoCommand = new MvxCommand(() => Debug.WriteLine(""));
         }
+
+        public List<FrameHighlight> FrameHighlights { get; private set; } = new List<FrameHighlight>();
+        public bool Processing { get; private set; }
+        public double NaturalVideoWidth { get; private set; }
+        public double NaturalVideoHeight { get; private set; }
 
         public string VideoPath
         {
@@ -46,36 +42,6 @@ namespace CognitiveServicesDemo.ViewModels
             {
                 videoPath = value;
                 RaisePropertyChanged(() => VideoPath);
-            }
-        }
-
-        public string WarningText
-        {
-            get { return warningText; }
-            set
-            {
-                warningText = value;
-                RaisePropertyChanged(() => WarningText);
-            }
-        }
-
-        public string Title
-        {
-            get { return title; }
-            set
-            {
-                title = value;
-                RaisePropertyChanged(() => Title);
-            }
-        }
-
-        public List<FrameHighlight> FrameHighlights
-        {
-            get { return frameHighlights; }
-            set
-            {
-                frameHighlights = value;
-                RaisePropertyChanged(() => FrameHighlights);
             }
         }
 
@@ -115,7 +81,7 @@ namespace CognitiveServicesDemo.ViewModels
         private async Task UploadVideoAsync(MediaFile file)
         {
             Processing = true;
-            VideoServiceClient = new VideoServiceClient("9739e652e7214256ac48cb85e641a96e")
+            videoServiceClient = new VideoServiceClient("9739e652e7214256ac48cb85e641a96e")
             {
                 Timeout = TimeSpan.FromMinutes(10)
             };
@@ -125,15 +91,15 @@ namespace CognitiveServicesDemo.ViewModels
                 using (Stream videoStream = file.GetStream())
                 {
                     StatusText = "Uploading Video";
-                    var operation = await VideoServiceClient.CreateOperationAsync(videoStream, new FaceDetectionOperationSettings());
+                    var operation = await videoServiceClient.CreateOperationAsync(videoStream, new FaceDetectionOperationSettings());
 
-                    OperationResult result = await VideoServiceClient.GetOperationResultAsync(operation);
+                    OperationResult result = await videoServiceClient.GetOperationResultAsync(operation);
                     while (result.Status != OperationStatus.Succeeded && result.Status != OperationStatus.Failed)
                     {
                         StatusText = $"Server status: {result.Status}, wait {QueryWaitTime.TotalSeconds} seconds";
                         Debug.WriteLine(StatusText);
                         await Task.Delay(QueryWaitTime);
-                        result = await VideoServiceClient.GetOperationResultAsync(operation);
+                        result = await videoServiceClient.GetOperationResultAsync(operation);
                     }
 
                     StatusText = $"Finish processing with server status: {result.Status}";

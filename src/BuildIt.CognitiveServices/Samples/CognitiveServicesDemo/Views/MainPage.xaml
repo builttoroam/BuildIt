@@ -13,31 +13,31 @@
         <StackLayout>
           <Label HorizontalOptions="Center" Text="Cognitive Service - Vision" />
           <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Image" Clicked="VisionFace" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Video" Clicked="VideoFacialRecognition" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Image" Command="{Binding ShowFaceCommand}" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Video" Command="{Binding ShowVideoCommand}" />
           </StackLayout>
         </StackLayout>
         <StackLayout>
           <Label HorizontalOptions="Center" Text="Cognitive Service - Language" />
           <StackLayout Orientation="Vertical" HorizontalOptions="Center">
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Spell Check" Clicked="LanguageBingSpell" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Text Analytics" Clicked="LanguageTextAnalytics" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Break into Words" Clicked="LanguageWlm" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Spell Check" Command="{Binding ShowBindSpellCheckCommand}" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Text Analytics" Command="{Binding ShowTextAnalyticsCommand}" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Break into Words" Command="{Binding ShowWlmCommand}" />
           </StackLayout>
         </StackLayout>
         <StackLayout>
           <Label HorizontalOptions="Center" Text="Knowledge and Speech" />
           <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Entity Linking" Clicked="EntityLinking" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Academic" Clicked="Academic" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Entity Linking" Command="{Binding ShowEentityLinkingCommand}" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Academic" Command="{Binding ShowAcademicCommand}" />
           </StackLayout>
         </StackLayout>
         <StackLayout>
           <Label HorizontalOptions="Center" Text="Bing Search" />
           <StackLayout HorizontalOptions="Center">
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Autosuggest" Clicked="BingAutosuggest" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Web Search" Clicked="BingWebSearch" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Image Search" Clicked="BingImageSearch" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Autosuggest" Command="{Binding ShowBingAutoSuggestCommand}" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Web Search" Command="{Binding ShowBingWebSearchCommand}" />
+            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Bing Image Search" Command="{Binding ShowBingImageSearchCommand}" />
           </StackLayout>
         </StackLayout>
       </StackLayout>

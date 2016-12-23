@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BuildIt.CognitiveServices.XForms.UserControls.FacialRecognitionImage">
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuildIt.CognitiveServices.XForms.UserControls.FacialRecognitionImage"
+             x:Name="Control">
   <ContentView.Content>
     <RelativeLayout x:Name="ResultRelativeLayout" HorizontalOptions="Center" VerticalOptions="Center">
-      <Image x:Name="DisplayImage" />
+      <Image x:Name="Image" BindingContext="{x:Reference Control}" Source="{Binding ImageSource}" />
     </RelativeLayout>
   </ContentView.Content>
 </ContentView>
