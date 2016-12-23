@@ -168,6 +168,7 @@
     <Compile Include="CognitiveServicesSwagger\WebSearchAPIV5.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Interfaces\ICognitiveServiceClient.cs" />
+    <Compile Include="Models\FaceRectangle.cs" />
     <Compile Include="Models\Feeds\Search\BingSearchApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\EntityLinkingApiFeeds.cs" />
     <Compile Include="Models\Feeds\Academic\InterpretApiFeeds.cs" />

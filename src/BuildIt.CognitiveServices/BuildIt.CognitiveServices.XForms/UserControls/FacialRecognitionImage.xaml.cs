@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BuildIt.CognitiveServices.Models;
+using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -7,7 +8,7 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
     public partial class FacialRecognitionImage
     {
         public static readonly BindableProperty FaceRectanglesProperty =
-            BindableProperty.Create("FaceRectangles", typeof(IEnumerable<Rectangle>), typeof(FacialRecognitionImage), null, BindingMode.Default, null, FaceRectanglesUpdated);
+            BindableProperty.Create("FaceRectangles", typeof(IEnumerable<FaceRectangle>), typeof(FacialRecognitionImage), null, BindingMode.Default, null, FaceRectanglesUpdated);
 
         public static readonly BindableProperty ImageSourceProperty =
             BindableProperty.Create("ImageSource", typeof(ImageSource), typeof(FacialRecognitionImage));
@@ -32,9 +33,9 @@ namespace BuildIt.CognitiveServices.XForms.UserControls
             }
         }
 
-        public IEnumerable<Rectangle> FaceRectangles // Todo - make a less Xamarin Forms entity type here
+        public IEnumerable<FaceRectangle> FaceRectangles // Todo - make a less Xamarin Forms entity type here
         {
-            get { return (IEnumerable<Rectangle>)GetValue(FaceRectanglesProperty); }
+            get { return (IEnumerable<FaceRectangle>)GetValue(FaceRectanglesProperty); }
             set { SetValue(FaceRectanglesProperty, value); }
         }
 

@@ -1,13 +1,13 @@
-﻿{
+{
   "supports": {},
   "dependencies": {
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-    "NETStandard.Library": "1.6.1",
-    "Xamarin.Forms": "2.3.3.175"
+    "Xamarin.Forms": "2.3.3.175",
+    "NETStandard.Library": "1.6.0",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1"
   },
   "frameworks": {
-    "netstandard1.0": {
-      "imports": "portable-net45+wpa81+wp8+win8"
+    "netstandard1.1": {
+      "imports": "portable-net45+win8+wpa81"
     }
   }
 }

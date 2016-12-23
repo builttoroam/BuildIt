@@ -1,4 +1,5 @@
 ﻿using BuildIt.CognitiveServices;
+using BuildIt.CognitiveServices.Models;
 using CognitiveServicesDemo.Common;
 using ExifLib;
 using MvvmCross.Core.ViewModels;
@@ -25,7 +26,7 @@ namespace CognitiveServicesDemo.ViewModels
         private ImageSource imageSource;
         private double naturalImageWidth;
         private double naturalImageHeight;
-        private List<Rectangle> faceRectangles;
+        private List<FaceRectangle> faceRectangles;
 
         public VisionFaceViewModel()
         {
@@ -144,7 +145,7 @@ namespace CognitiveServicesDemo.ViewModels
             }
         }
 
-        public List<Rectangle> FaceRectangles
+        public List<FaceRectangle> FaceRectangles
         {
             get { return faceRectangles; }
             set
@@ -176,8 +177,8 @@ namespace CognitiveServicesDemo.ViewModels
                 await VisionComputerVisionAsync(file);
                 var faceMetaData = Xywh;
 
-                var list = new List<Rectangle>();
-                var rectangle = new Rectangle();
+                var list = new List<FaceRectangle>();
+                var rectangle = new FaceRectangle();
                 foreach (var s in faceMetaData)
                 {
                     if (s != null)
