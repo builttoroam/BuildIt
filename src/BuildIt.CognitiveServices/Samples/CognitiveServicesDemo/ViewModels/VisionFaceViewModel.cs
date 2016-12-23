@@ -1,4 +1,5 @@
 ﻿using BuildIt.CognitiveServices;
+using BuildIt.CognitiveServices.Interfaces;
 using BuildIt.CognitiveServices.Models;
 using CognitiveServicesDemo.Common;
 using ExifLib;
@@ -7,7 +8,6 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -15,6 +15,8 @@ namespace CognitiveServicesDemo.ViewModels
 {
     public class VisionFaceViewModel : MvxViewModel
     {
+        private ICognitiveServiceClient CognitiveServiceClient { get; } = new CognitiveServiceClient();
+
         private string title;
         private string analysisCategories;
         private string descriptionCaptions;
@@ -174,32 +176,64 @@ namespace CognitiveServicesDemo.ViewModels
                 // Take a photo of the business receipt.
                 var file = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
 
-                await VisionComputerVisionAsync(file);
-                var faceMetaData = Xywh;
-
-                var list = new List<FaceRectangle>();
-                var rectangle = new FaceRectangle();
-                foreach (var s in faceMetaData)
+                if (file == null)
                 {
-                    if (s != null)
-                    {
-                        var currentXywh = s.Split(',');
-
-                        rectangle.X = double.Parse(currentXywh[0]);
-                        rectangle.Y = double.Parse(currentXywh[1]);
-                        rectangle.Width = double.Parse(currentXywh[2]);
-                        rectangle.Height = double.Parse(currentXywh[3]);
-
-                        list.Add(rectangle);
-                    }
+                    WarningText = "Please take photo first";
+                    return;
                 }
 
-                var metadata = ImageMetadata.Split(',');
-                var imageWidth = int.Parse(metadata[0]);
-                var imageHeight = int.Parse(metadata[1]);
-                Debug.WriteLine($"current metadata\n{ImageMetadata}");
+                Title = "Uploading and processing image";
+                var analysisResult = await CognitiveServiceClient.ComputerVisionApiRequestAsync(Constants.CuomputerVisionApiKey, file.GetStream());
 
-                // Do some stuff to make sure the boxes render correctly
+                var list = new List<FaceRectangle>();
+                var imageWidth = 0d;
+                var imageHeight = 0d;
+
+                if (analysisResult.Success)
+                {
+                    AnalysisCategories = string.Empty;
+                    DescriptionCaptions = string.Empty;
+                    AnalysisFaces = string.Empty;
+                    AnalysisTag = string.Empty;
+                    var analysis = analysisResult.Result;
+
+                    foreach (var analysisCategory in analysis.Categories)
+                    {
+                        AnalysisCategories += $" {analysisCategory.Name} + Score: {analysisCategory.Score}";
+                    }
+
+                    foreach (var descriptionCaption in analysis.Description.Captions)
+                    {
+                        DescriptionCaptions += $"{descriptionCaption.Text} + Confidence :{descriptionCaption.Confidence}";
+                    }
+
+                    var faceNo = 1;
+                    var rectangle = new FaceRectangle();
+                    foreach (var analysisFace in analysis.Faces)
+                    {
+                        rectangle.Y = analysisFace.FaceRectangle.Top;
+                        rectangle.X = analysisFace.FaceRectangle.Left;
+                        rectangle.Width = analysisFace.FaceRectangle.Width;
+                        rectangle.Height = analysisFace.FaceRectangle.Height;
+
+                        list.Add(rectangle);
+
+                        AnalysisFaces += $"FaceNo: {faceNo} Age: {analysisFace.Age} + Gender: {analysisFace.Gender}";
+                        faceNo++;
+                    }
+
+                    foreach (var tag in analysis.Tags)
+                    {
+                        AnalysisTag += $"Confident: {tag.Confidence} + Name: {tag.Name}";
+                    }
+
+                    ImageMetadata = $"{analysis.Metadata.Width},{analysis.Metadata.Height}";
+                    imageHeight = analysis.Metadata.Height;
+                    imageWidth = analysis.Metadata.Width;
+
+                    Title = $"Adult content: {analysis.Adult.IsAdultContent}, Image infor: {analysis.Metadata.Format} + Height: {analysis.Metadata.Height} + Width: {analysis.Metadata.Width}";
+                }
+
                 using (var streamPic = file.GetStream())
                 {
                     var picInfo = ExifReader.ReadJpeg(streamPic);
@@ -224,74 +258,6 @@ namespace CognitiveServicesDemo.ViewModels
             {
                 WarningText = $"Exception of type: {ex.GetType().Name} ocurred with message: {ex.Message}";
             }
-        }
-
-        private async Task VisionComputerVisionAsync(MediaFile file)
-        {
-            if (file == null)
-            {
-                WarningText = "Please take photo first";
-            }
-            else
-            {
-                Title = "Checking image";
-                var computerVision = new ComputerVisionAPIV10();
-                var analysisRects = await computerVision.AnalyzeImageWithHttpMessagesAsync(file.GetStream(), "Categories", null, "en", null,
-                    Constants.CuomputerVisionApiKey);
-
-                AnalysisCategories = string.Empty;
-                DescriptionCaptions = string.Empty;
-                AnalysisFaces = string.Empty;
-                AnalysisTag = string.Empty;
-
-                var faceNo = 1;
-                if (analysisRects != null)
-                {
-                    Title = "Here is the result";
-                    foreach (var analysisRect in analysisRects.Categories)
-                    {
-                        AnalysisCategories += $" {analysisRect.Name} + Score: {analysisRect.Score}";
-                    }
-
-                    foreach (var descriptionCaption in analysisRects.Description.Captions)
-                    {
-                        DescriptionCaptions += $"{descriptionCaption.Text} + Confidence :{descriptionCaption.Confidence}";
-                    }
-                    if (analysisRects.Faces.Length >= 1)
-                    {
-                        Xywh = new string[analysisRects.Faces.Length];
-                        for (int i = 0; i < analysisRects.Faces.Length; i++)
-                        {
-
-                            Xywh[i] =
-                                $"{analysisRects.Faces[i].FaceRectangle.Left},{analysisRects.Faces[i].FaceRectangle.Top},{analysisRects.Faces[i].FaceRectangle.Width},{analysisRects.Faces[i].FaceRectangle.Height}";
-                        }
-                    }
-                    else
-                    {
-                        WarningText = "Can't detect face, please take another photo";
-                        Xywh = new string[1];
-                        Xywh[0] = "0,0,0,0";
-
-                    }
-
-                    foreach (var face in analysisRects.Faces)
-                    {
-                        AnalysisFaces += $"FaceNo: {faceNo} Age: {face.Age} + Gender: {face.Gender}";
-                        faceNo++;
-                    }
-                    foreach (var analysisRectsTag in analysisRects.Tags)
-                    {
-                        AnalysisTag += $"Confident: {analysisRectsTag.Confidence} + Name: {analysisRectsTag.Name}";
-                    }
-
-                    ImageMetadata = $"{analysisRects.Metadata.Width},{analysisRects.Metadata.Height}";
-
-                    var value = $"Adult content: {analysisRects.Adult.IsAdultContent}, Image infor: {analysisRects.Metadata.Format} + Height: {analysisRects.Metadata.Height} + Width: {analysisRects.Metadata.Width}";
-                    Title = value;
-                }
-            }
-
         }
     }
 }
