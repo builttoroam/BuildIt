@@ -14,7 +14,7 @@
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
-      <dependency id="NETStandard.Library" version="1.6.0" />
+      <dependency id="NETStandard.Library" version="1.6.1" />
       <dependency id="Xamarin.Forms" version="2.3.3.168" />
     </dependencies>
   </metadata>

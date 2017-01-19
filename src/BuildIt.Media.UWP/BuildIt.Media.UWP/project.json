@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "BuildIt.General": "0.1.4",
+    "BuildIt.General": "1.0.0.41",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0"
   },

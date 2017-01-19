@@ -16,7 +16,7 @@
     "Octane.Xam.VideoPlayer": "1.2.1",
     "PCLStorage": "1.0.2",
     "Xam.Plugin.Media": "2.6.2.16-beta",
-    "Xamarin.Forms": "2.3.3.175"
+    "Xamarin.Forms": "2.3.3.180"
   },
   "frameworks": {
     "netstandard1.1": {

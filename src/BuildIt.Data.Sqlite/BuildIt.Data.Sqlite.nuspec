@@ -14,7 +14,7 @@
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="BuildIt.General" version="1.0.0.41" />
-      <dependency id="NETStandard.Library" version="1.6.0" />
+      <dependency id="NETStandard.Library" version="1.6.1" />
       <dependency id="Newtonsoft.Json" version ="9.0.1" />
       <dependency id="SQLite.Net-PCL" version ="3.1.1" />
       <dependency id="SQLiteNetExtensions" version ="1.3.0" />
