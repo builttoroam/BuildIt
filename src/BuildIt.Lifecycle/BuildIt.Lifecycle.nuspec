@@ -16,7 +16,7 @@
       <group targetFramework="netstandard1.0">
         <dependency id="BuildIt.General" version="1.0.0.41" />
         <dependency id="BuildIt.States" version="1.0.0.41" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
       <group targetFramework="uap">
@@ -34,13 +34,13 @@
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
         <dependency id="Microsoft.NETCore.Platforms" version ="1.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
       <group targetFramework="wp81">
         <dependency id="BuildIt.General" version="1.0.0.41" />
         <dependency id="Microsoft.NETCore.Platforms" version ="1.0.1" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
     </dependencies>

@@ -2,15 +2,12 @@
     "version": "1.0.0-*",
     "dependencies": {
         "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-      "NETStandard.Library": "1.6.1",
-        "Newtonsoft.Json": "9.0.1",
-        "BuildIt.General": {
-            "target": "package",
-            "version": "0.1.5.6-beta"
-        },
-        "BuildIt.Web.General": {
-            "target": "project"
-        }
+      "Newtonsoft.Json": "9.0.1",
+      "BuildIt.Web.General": {
+        "target": "project"
+      },
+      "BuildIt.General": "1.0.0.41",
+      "NETStandard.Library": "1.6.1"
     },
     "frameworks": {
         "netstandard1.1": {

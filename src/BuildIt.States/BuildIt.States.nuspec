@@ -16,7 +16,7 @@
       <group targetFramework="netstandard1.0">
         <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
         <dependency id="BuildIt.General" version="1.0.0.20" />
-        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
       </group>
       <group targetFramework="monoandroid">
         <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->

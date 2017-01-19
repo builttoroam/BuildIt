@@ -1,7 +1,7 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "BuildIt.General": "1.0.0.1-beta",
+    "BuildIt.General": "1.0.0.41",
     "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
