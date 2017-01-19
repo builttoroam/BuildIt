@@ -43,8 +43,8 @@
       <HintPath>..\..\packages\BuildIt.Bot.Client.0.1.6.59-beta\lib\netstandard1.1\BuildIt.Bot.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BuildIt.General, Version=0.1.5.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.General.0.1.5.6-beta\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    <Reference Include="BuildIt.General, Version=1.0.0.41, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.General.1.0.0.41\lib\netstandard1.0\BuildIt.General.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="BuildIt.Web.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
