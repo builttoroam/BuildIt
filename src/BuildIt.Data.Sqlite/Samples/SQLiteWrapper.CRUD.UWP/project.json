@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "BuildIt.General": "1.0.0.41",
+    "BuildIt.General": "0.1.5.6-beta",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "MvvmCross": "4.4.0",
     "SQLite.Net-PCL": "3.1.1",

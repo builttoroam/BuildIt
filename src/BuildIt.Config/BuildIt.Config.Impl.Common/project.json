@@ -2,7 +2,10 @@
   "supports": {},
   "dependencies": {
     "Acr.UserDialogs": "6.2.3",
-    "BuildIt.General": "1.0.0.41",
+    "BuildIt.General": {
+      "target": "package",
+      "version": "0.1.5.6-beta"
+    },
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "NETStandard.Library": "1.6.1",
     "PCLStorage": "1.0.2",
