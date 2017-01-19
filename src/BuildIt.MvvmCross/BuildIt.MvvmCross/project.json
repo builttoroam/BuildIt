@@ -1,7 +1,7 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "BuildIt.General": "0.1.5.6-beta",
+    "BuildIt.General": "1.0.0.41",
     "MvvmCross": "4.4.0",
     "MvvmCross.Binding": "4.4.0",
     "MvvmCross.Core": "4.4.0",
