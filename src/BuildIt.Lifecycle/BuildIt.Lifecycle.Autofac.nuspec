@@ -14,9 +14,9 @@
     <tags>BuildIt</tags>
     <dependencies>
       <dependency id="Autofac" version="4.1.1" />
-      <dependency id="BuildIt.Autofac" version="0.1.5.5-beta" />
-      <dependency id="BuildIt.General" version="0.1.5.6-beta" />
-      <dependency id="BuildIt.States" version="0.1.5.5-beta" />
+      <dependency id="BuildIt.Autofac" version="1.0.0.44" />
+      <dependency id="BuildIt.General" version="1.0.0.41" />
+      <dependency id="BuildIt.States" version="1.0.0.41" />
       <dependency id="NETStandard.Library" version="1.6.0" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>

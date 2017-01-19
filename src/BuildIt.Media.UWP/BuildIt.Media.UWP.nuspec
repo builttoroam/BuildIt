@@ -14,7 +14,7 @@
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework="uap10">
-        <dependency id="BuildIt.General" version="0.1.5.6-beta" />
+        <dependency id="BuildIt.General" version="1.0.0.41" />
         <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.1.0.0" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2" />
       </group>
