@@ -3,8 +3,9 @@
     /// <summary>
     /// 
     /// </summary>
-    public class Constants
+    internal class Constants
     {
-        internal const int ConvoTokenExpirationTimeInMinutes = 30;        
+        public const int ConvoTokenExpirationTimeInMinutes = 30;
+        public const string JsonMimeType = "application/json";
     }
 }

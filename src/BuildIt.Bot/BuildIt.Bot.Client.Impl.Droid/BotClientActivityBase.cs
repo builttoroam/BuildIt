@@ -52,8 +52,8 @@ namespace BuildIt.Bot.Client.Impl.Droid
 
             try
             {
-                MessagingCenter.Subscribe<GcmService, string>(this, Constants.SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
-                MessagingCenter.Subscribe<GcmService, Exception>(this, Constants.FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
+                MessagingCenter.Subscribe<GcmService, string>(this, Utilities.Constants.SuccessSubscriptionMsg, (service, s) => { RegistrationSuccessful?.Invoke(s); });
+                MessagingCenter.Subscribe<GcmService, Exception>(this, Utilities.Constants.FailureSubscriptionMsg, (service, e) => { RegistrationFailure?.Invoke(e); });
 
                 Settings.Instance.IsAppInForeground = true;
             }
@@ -72,8 +72,8 @@ namespace BuildIt.Bot.Client.Impl.Droid
 
             try
             {
-                MessagingCenter.Unsubscribe<GcmService, string>(this, Constants.SuccessSubscriptionMsg);
-                MessagingCenter.Unsubscribe<GcmService, Exception>(this, Constants.FailureSubscriptionMsg);
+                MessagingCenter.Unsubscribe<GcmService, string>(this, Utilities.Constants.SuccessSubscriptionMsg);
+                MessagingCenter.Unsubscribe<GcmService, Exception>(this, Utilities.Constants.FailureSubscriptionMsg);
 
                 Settings.Instance.IsAppInForeground = false;
             }
@@ -116,7 +116,7 @@ namespace BuildIt.Bot.Client.Impl.Droid
 
         private bool IsLaunchedByPushNotification()
         {
-            return Intent.GetBooleanExtra(Constants.PushNotificationExtra, false);
+            return Intent.GetBooleanExtra(Utilities.Constants.PushNotificationExtra, false);
         }
 
         private bool TryCleaningToastNotificationHistory()

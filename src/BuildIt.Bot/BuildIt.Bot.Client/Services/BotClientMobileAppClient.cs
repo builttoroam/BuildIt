@@ -5,11 +5,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using BuildIt.Bot.Client.Models;
 using BuildIt.Bot.Client.Services.Interface;
-using BuildIt.Web;
-using BuildIt.Web.Models;
 using BuildIt.Web.Models.PushNotifications;
 using BuildIt.Web.Models.Results;
-using BuildIt.Web.Utilities;
 using Newtonsoft.Json;
 
 namespace BuildIt.Bot.Client.Services
@@ -41,11 +38,11 @@ namespace BuildIt.Bot.Client.Services
         /// </summary>
         /// <param name="pushRegistration"></param>
         /// <returns></returns>
-        public async Task<BuildIt.Web.Models.Results.HubRegistrationResult> RegisterPushAsync(PushRegistration pushRegistration)
+        public async Task<HubRegistrationResult> RegisterPushAsync(PushRegistration pushRegistration)
         {
             if (endpointRouteDetails?.BaseServiceUrl == null) return null;
 
-            BuildIt.Web.Models.Results.HubRegistrationResult hubRegistrationResult = null;
+            HubRegistrationResult hubRegistrationResult = null;
             try
             {
                 var json = JsonConvert.SerializeObject(pushRegistration);
@@ -53,13 +50,13 @@ namespace BuildIt.Bot.Client.Services
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, $"{endpointRouteDetails.BaseServiceUrl}/{endpointRouteDetails.ServiceAffix}/{endpointRouteDetails.RegisterPushRoute}");
                     request.Content = new StringContent(json);
-                    request.Content.Headers.ContentType = new MediaTypeHeaderValue(Constants.JsonMimeType);
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue(Utilities.Constants.JsonMimeType);
                     if (IsMobileService) request.Content.Headers.Add("ZUMO-API-VERSION", "2.0.0");
                     var response = await client.SendAsync(request);
                     if (response.IsSuccessStatusCode)
                     {
                         var contentJson = await response.Content.ReadAsStringAsync();
-                        hubRegistrationResult = JsonConvert.DeserializeObject<BuildIt.Web.Models.Results.HubRegistrationResult>(contentJson);
+                        hubRegistrationResult = JsonConvert.DeserializeObject<HubRegistrationResult>(contentJson);
                     }
                 }
             }
@@ -84,7 +81,7 @@ namespace BuildIt.Bot.Client.Services
                     var json = JsonConvert.SerializeObject(pushRegistration);
                     var request = new HttpRequestMessage(HttpMethod.Post, $"{endpointRouteDetails.BaseServiceUrl}/{endpointRouteDetails.ServiceAffix}/{endpointRouteDetails.DeregisterPushRoute}");
                     request.Content = new StringContent(json);
-                    request.Content.Headers.ContentType = new MediaTypeHeaderValue(Constants.JsonMimeType);
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue(Utilities.Constants.JsonMimeType);
                     if (IsMobileService) request.Content.Headers.Add("ZUMO-API-VERSION", "2.0.0");
                     var response = await client.SendAsync(request);
                 }
