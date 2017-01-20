@@ -14,9 +14,13 @@ namespace BuildIt.Auth
                 IsMultiTenanted ? "common" : Tenant,
                 "{0}");
 
+        [OAuthLogoutParameter("post_logout_redirect_uri")]
+        public string PostLogoutRedirectUrl { get; set; }
+
         protected override string BaseAuthorizeUrl => string.Format(BaseOAuthUrl, "authorize");
         protected override string BaseTokenUrl => string.Format(BaseOAuthUrl, "token");
 
         public override string Scope { get; set; } = "offline_access";
+        protected override string BaseLogoutUrl => $"https://login.windows.net/{(IsMultiTenanted ? "common" : Tenant)}/oauth2/logout";
     }
 }

@@ -44,6 +44,7 @@ namespace BuildIt.Auth
 
         protected abstract string BaseAuthorizeUrl { get; }
         protected abstract string BaseTokenUrl { get; }
+        protected abstract  string BaseLogoutUrl { get; }
 
         private IDictionary<string,string> ParameterValues<TParameter>() where TParameter : OAuthParameterAttribute
         {
@@ -69,7 +70,8 @@ namespace BuildIt.Auth
         }
 
         public string AuthorizeUrl => BaseAuthorizeUrl +"?"+ QueryParameters< OAuthAuthorizeParameterAttribute>();
-        public string TokenUrl=> BaseTokenUrl;
+        public string TokenUrl => BaseTokenUrl;
+        public string LogoutUrl => $"{BaseLogoutUrl}?{QueryParameters<OAuthLogoutParameterAttribute>()}";
 
         public IDictionary<string,string> TokenPostData =>ParameterValues<OAuthTokenParameterAttribute>();
         public IDictionary<string, string> RefreshTokenPostData => ParameterValues<OAuthRefreshTokenParameterAttribute>();

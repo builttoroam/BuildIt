@@ -13,6 +13,8 @@ namespace BuildIt.Auth
 
         public string OAuthLogonUrl => Specification?.AuthorizeUrl;
 
+        public string OAuthLogOffUrl => Specification?.LogoutUrl;
+
         public TokenData Token { get; private set; }
 
         private Action<bool> AuthenticationCompleted { get; set; }
@@ -25,8 +27,8 @@ namespace BuildIt.Auth
 
         public void Unregister()
         {
-            AuthenticationCompleted = null;
-            UriLauncher.Unregister();
+            //AuthenticationCompleted = null;
+            //UriLauncher.Unregister();
         }
 
 

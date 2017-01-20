@@ -6,5 +6,6 @@ namespace BuildIt.Auth
         protected override string BaseTokenUrl => "https://www.googleapis.com/oauth2/v4/token";
 
         public override string Scope { get; set; } = "profile";
+        protected override string BaseLogoutUrl { get; }
     }
 }

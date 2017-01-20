@@ -41,6 +41,7 @@
     <Compile Include="AzureActiveDirectoryOAuthSpecification.cs" />
     <Compile Include="GoogleOAuthSpecification.cs" />
     <Compile Include="OAuthAuthorizeParameterAttribute.cs" />
+    <Compile Include="OAuthLogoutParameterAttribute.cs" />
     <Compile Include="OAuthManager.cs" />
     <Compile Include="OAuthParameterAttribute.cs" />
     <Compile Include="OAuthSpecification.cs" />

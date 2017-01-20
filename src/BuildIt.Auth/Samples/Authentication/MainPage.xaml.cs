@@ -21,11 +21,12 @@ namespace Authentication
                     {
                         ClientId= "5db87179-0079-4264-a325-32be8cea7117",
                         RedirectUri = "ext.auth://callback",
+                        PostLogoutRedirectUrl = "ext.auth://callback",
                         Tenant = "nicksdemodir.onmicrosoft.com",
                         IsMultiTenanted = false,
                         State = "12345",
                         Nounce = "7362CAEA-9CA5-4B43-9BA3-34D7C303EBA7",
-                        Resource= "https://graph.microsoft.com"
+                        Resource= "https://graph.microsoft.com",
                     }
             };
         
@@ -176,6 +177,11 @@ namespace Authentication
         private async void ButtonGoogleRefresh_Clicked(object sender, EventArgs e)
         {
             await GoogleManager.RefreshAccessToken();
+        }
+
+        private void ButtonAzureLogout_Clicked(object sender, EventArgs e)
+        {
+            Device.OpenUri(new Uri(AzureManager.OAuthLogOffUrl));
         }
     }
 }

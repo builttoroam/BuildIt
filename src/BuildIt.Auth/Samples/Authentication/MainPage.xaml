@@ -14,5 +14,7 @@
                 Text="Refresh Azure" />
         <Button Clicked="ButtonGoogleRefresh_Clicked"
                 Text="Refresh Google" />
+
+      <Button Clicked="ButtonAzureLogout_Clicked" Text="Logout Azure" />
     </StackLayout>
 </ContentPage>
