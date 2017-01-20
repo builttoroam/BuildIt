@@ -1,6 +1,7 @@
 ﻿{
   "supports": {},
   "dependencies": {
+    "BuildIt.CognitiveServices": "1.0.0.54-beta",
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "NETStandard.Library": "1.6.1",
     "Xamarin.Forms": "2.3.3.180"
