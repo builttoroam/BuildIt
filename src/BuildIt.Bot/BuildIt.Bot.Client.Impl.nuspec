@@ -15,19 +15,19 @@
     <dependencies>      
       <group targetFramework="monoandroid">
         <dependency id="BuildIt.General" version="1.0.0.41" />  
-        <dependency id="BuildIt.Bot.Client" version="0.1.6.63-beta" />
+        <dependency id="BuildIt.Bot.Client" version="$version$" />
         <dependency id="Xamarin.Forms" version="2.3.3.180" />        
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
       </group>
       <group targetFramework="xamarinios">
         <dependency id="BuildIt.General" version="1.0.0.41" />        
-        <dependency id="BuildIt.Bot.Client" version="0.1.6.63-beta" />
+        <dependency id="BuildIt.Bot.Client" version="$version$" />
         <dependency id="Xamarin.Forms" version="2.3.3.180" />
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
       </group>
       <group targetFramework="uap">
         <dependency id="BuildIt.General" version="1.0.0.41" />   
-        <dependency id="BuildIt.Bot.Client" version="0.1.6.63-beta" />
+        <dependency id="BuildIt.Bot.Client" version="$version$" />
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
       </group>
     </dependencies>    
