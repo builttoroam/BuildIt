@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -182,6 +183,12 @@ namespace Authentication
         private void ButtonAzureLogout_Clicked(object sender, EventArgs e)
         {
             Device.OpenUri(new Uri(AzureManager.OAuthLogOffUrl));
+        }
+
+        private void ButtonGoogleLogout_Clicked(object sender, EventArgs e)
+        {
+            //Device.OpenUri(new Uri($"https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue={WebUtility.UrlEncode("ext.auth:/callback")}"));
+            Device.OpenUri(new Uri($"{GoogleManager.OAuthLogOffUrl}?token={WebUtility.UrlEncode(GoogleManager.Token.access_token)}"));
         }
     }
 }

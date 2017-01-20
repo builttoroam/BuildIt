@@ -69,9 +69,25 @@ namespace BuildIt.Auth
             return props;
         }
 
-        public string AuthorizeUrl => BaseAuthorizeUrl +"?"+ QueryParameters< OAuthAuthorizeParameterAttribute>();
+        public string AuthorizeUrl
+        {
+            get
+            {
+                var queryParameters = QueryParameters<OAuthAuthorizeParameterAttribute>();
+                return string.IsNullOrWhiteSpace(queryParameters) ? BaseAuthorizeUrl : $"{BaseAuthorizeUrl}?{queryParameters}";
+            }
+        }
+
         public string TokenUrl => BaseTokenUrl;
-        public string LogoutUrl => $"{BaseLogoutUrl}?{QueryParameters<OAuthLogoutParameterAttribute>()}";
+
+        public string LogoutUrl
+        {
+            get
+            {
+                var queryParameters = QueryParameters<OAuthLogoutParameterAttribute>();
+                return string.IsNullOrWhiteSpace(queryParameters) ? BaseLogoutUrl : $"{BaseLogoutUrl}?{queryParameters}";
+            }
+        }
 
         public IDictionary<string,string> TokenPostData =>ParameterValues<OAuthTokenParameterAttribute>();
         public IDictionary<string, string> RefreshTokenPostData => ParameterValues<OAuthRefreshTokenParameterAttribute>();
