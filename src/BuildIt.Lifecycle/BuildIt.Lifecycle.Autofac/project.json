@@ -4,6 +4,7 @@
     "Autofac": "4.2.1",
     "BuildIt.Autofac": "0.1.5.5-beta",
     "BuildIt.General": "1.0.0.41",
+    "BuildIt.Lifecycle": "1.0.0.52-beta",
     "BuildIt.States": "1.0.0.41",
     "NETStandard.Library": "1.6.1",
     "Newtonsoft.Json": "9.0.1"
