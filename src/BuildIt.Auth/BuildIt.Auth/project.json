@@ -1,0 +1,13 @@
+﻿{
+  "supports": {},
+  "dependencies": {
+    "Microsoft.Net.Http": "2.2.29",
+    "NETStandard.Library": "1.6.1",
+    "Newtonsoft.Json": "9.0.1"
+  },
+  "frameworks": {
+    "netstandard1.1": {
+      "imports": "portable-net45+win8+wpa81"
+    }
+  }
+}
