@@ -14,6 +14,7 @@
     <tags>BuildIt</tags>
     <dependencies>      
         <dependency id="BuildIt.General" version="1.0.0.41" />
+        <dependency id="BuildIt.Web" version="1.0.0.53" />
         <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.3" />
     </dependencies>      
   </metadata>
@@ -21,15 +22,10 @@
     <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\netstandard1.1" />    
     <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\netstandard1.1" />    
     <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\netstandard1.1" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\netstandard1.1" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\netstandard1.1" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\netstandard1.1" />
+
     
     <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
     <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
     <file src="BuildIt.Bot.Client\bin\Release\BuildIt.Bot.Client.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />    
-    <file src="..\BuildIt.Web\BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
   </files>
 </package>

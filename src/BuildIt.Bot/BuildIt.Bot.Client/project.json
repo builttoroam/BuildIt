@@ -2,6 +2,7 @@
   "supports": {},
   "dependencies": {
     "BuildIt.General": "1.0.0.41",
+    "BuildIt.Web": "1.0.0.53",
     "Microsoft.Rest.ClientRuntime": "2.3.4",
     "NETStandard.Library": "1.6.1"
   },
