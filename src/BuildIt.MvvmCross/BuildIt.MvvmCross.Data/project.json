@@ -6,8 +6,8 @@
     "MvvmCross.Binding": "4.4.0",
     "MvvmCross.Core": "4.4.0",
     "MvvmCross.Platform": "4.4.0",
-    "MvvmCross.Plugin.File": "4.2.3",
-    "MvvmCross.Plugin.Network": "4.2.3",
+    "MvvmCross.Plugin.File": "4.4.0",
+    "MvvmCross.Plugin.Network": "4.4.0",
     "NETStandard.Library": "1.6.1",
     "Newtonsoft.Json": "9.0.1"
   },
