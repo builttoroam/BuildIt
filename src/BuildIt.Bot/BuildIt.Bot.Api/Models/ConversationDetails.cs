@@ -1,7 +1,4 @@
-﻿#if NET46
-
-using System;
-using BuildIt.Web.Utilities;
+﻿using System;
 
 namespace BuildIt.Bot.Api.Models
 {
@@ -18,4 +15,3 @@ namespace BuildIt.Bot.Api.Models
     }
 }
 
-#endif

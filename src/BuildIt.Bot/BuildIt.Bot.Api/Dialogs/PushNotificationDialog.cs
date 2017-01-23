@@ -1,6 +1,4 @@
-﻿#if NET46
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
@@ -118,4 +116,3 @@ namespace BuildIt.Bot.Api.Dialogs
     }
 }
 
-#endif

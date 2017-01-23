@@ -1,6 +1,4 @@
-﻿#if NET46
-
-using System;
+﻿using System;
 using BuildIt.Web.Utilities;
 
 namespace BuildIt.Bot.Api.Models
@@ -27,5 +25,3 @@ namespace BuildIt.Bot.Api.Models
         public string PushNotificationLaunchArgument { get; set; }
     }
 }
-
-#endif
