@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Lifecycle", "BuildI
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.MvvmCross", "BuildIt.MvvmCross", "{82D705BC-FFC7-4A59-8C73-2430E94F56E6}"
 	ProjectSection(SolutionItems) = preProject
+		BuildIt.MvvmCross\BuildIt.MvvmCross.Data.nuspec = BuildIt.MvvmCross\BuildIt.MvvmCross.Data.nuspec
 		BuildIt.MvvmCross\BuildIt.MvvmCross.nuspec = BuildIt.MvvmCross\BuildIt.MvvmCross.nuspec
 	EndProjectSection
 EndProject

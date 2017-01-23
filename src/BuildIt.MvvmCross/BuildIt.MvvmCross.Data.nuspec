@@ -20,13 +20,15 @@
         <dependency id="MvvmCross.Binding" version="4.4.0" />
         <dependency id="MvvmCross.Core" version="4.4.0" />
         <dependency id="MvvmCross.Platform" version="4.4.0" />
+        <dependency id="MvvmCross.Plugin.File" version="4.4.0" />
+        <dependency id="MvvmCross.Plugin.Network" version="4.4.0" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.BuildIt.MvvmCross.Data.dll" target="lib\netstandard1.0" />    
-    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.BuildIt.MvvmCross.Data.pdb" target="lib\netstandard1.0" />    
-    <file src="BuildIt.MvvmCross\bin\Release\BuildIt.BuildIt.MvvmCross.Data.xml" target="lib\netstandard1.0" />          
+    <file src="BuildIt.MvvmCross.Data\bin\Release\BuildIt.MvvmCross.Data.dll" target="lib\netstandard1.0" />    
+    <file src="BuildIt.MvvmCross.Data\bin\Release\BuildIt.MvvmCross.Data.pdb" target="lib\netstandard1.0" />    
+    <file src="BuildIt.MvvmCross.Data\bin\Release\BuildIt.MvvmCross.Data.xml" target="lib\netstandard1.0" />          
   </files>
 </package>
