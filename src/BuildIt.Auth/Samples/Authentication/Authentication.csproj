@@ -57,11 +57,5 @@
   <ItemGroup>
     <None Include="project.json" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BuildIt.Auth\BuildIt.Auth.csproj">
-      <Project>{7094b192-eb80-43a0-b9d8-30e354ac229e}</Project>
-      <Name>BuildIt.Auth</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

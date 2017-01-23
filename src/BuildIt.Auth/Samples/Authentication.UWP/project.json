@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "BuildIt.Auth": "1.0.0.62-beta",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.Net.Http": "2.2.29",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",

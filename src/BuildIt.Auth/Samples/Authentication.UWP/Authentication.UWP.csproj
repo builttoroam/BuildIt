@@ -157,10 +157,6 @@
       <Project>{a710a12c-969e-43f7-b41d-43bc16c56a81}</Project>
       <Name>Authentication</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\BuildIt.Auth\BuildIt.Auth.csproj">
-      <Project>{7094b192-eb80-43a0-b9d8-30e354ac229e}</Project>
-      <Name>BuildIt.Auth</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
