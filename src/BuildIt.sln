@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.General", "BuildIt.
 		BuildIt.General\BuildIt.General.nuspec = BuildIt.General\BuildIt.General.nuspec
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Media.UWP", "BuildIt.Media.UWP", "{A6339BD2-1137-4247-AC4A-C864DAB8D953}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Media", "BuildIt.Media", "{A6339BD2-1137-4247-AC4A-C864DAB8D953}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.Media.UWP\BuildIt.Media.nuspec = BuildIt.Media.UWP\BuildIt.Media.nuspec
 	EndProjectSection
