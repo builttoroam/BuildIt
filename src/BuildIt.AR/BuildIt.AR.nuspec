@@ -17,5 +17,26 @@
     <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\netstandard1.4"  />
     <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\netstandard1.4"  />
     <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\netstandard1.4"  />
+
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\uap" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\uap" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\uap" />
+    <file src="BuildIt.AR.UWP\bin\Release\BuildIt.AR.UWP.dll" target="lib\uap" />
+    <file src="BuildIt.AR.UWP\bin\Release\BuildIt.AR.UWP.pdb" target="lib\uap" />
+    <file src="BuildIt.AR.UWP\bin\Release\BuildIt.AR.UWP.xml" target="lib\uap" />
+
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\xamarinios" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\xamarinios" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\xamarinios" />
+    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.dll" target="lib\xamarinios" />
+    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.pdb" target="lib\xamarinios" />
+    <file src="BuildIt.AR.iOS\bin\Release\BuildIt.AR.iOS.xml" target="lib\xamarinios" />
+
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.dll" target="lib\monoandroid" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.pdb" target="lib\monoandroid" />
+    <file src="BuildIt.AR\bin\Release\BuildIt.AR.xml" target="lib\monoandroid" />
+    <file src="BuildIt.AR.Android\bin\Release\BuildIt.AR.Android.dll" target="lib\monoandroid" />
+    <file src="BuildIt.AR.Android\bin\Release\BuildIt.AR.Android.pdb" target="lib\monoandroid" />
+    <file src="BuildIt.AR.Android\bin\Release\BuildIt.AR.Android.xml" target="lib\monoandroid" />
   </files>
 </package>

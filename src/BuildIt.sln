@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.General", "BuildIt.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Media.UWP", "BuildIt.Media.UWP", "{A6339BD2-1137-4247-AC4A-C864DAB8D953}"
 	ProjectSection(SolutionItems) = preProject
-		BuildIt.Media.UWP\BuildIt.Media.UWP.nuspec = BuildIt.Media.UWP\BuildIt.Media.UWP.nuspec
+		BuildIt.Media.UWP\BuildIt.Media.nuspec = BuildIt.Media.UWP\BuildIt.Media.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C1F11C4A-0559-4C00-8ACA-BA231F7A0B05}"
@@ -3637,6 +3637,7 @@ Global
 		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.Release|x86.ActiveCfg = Release|Any CPU
 		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.Release|x86.Build.0 = Release|Any CPU
 		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
 		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
 		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
 		{6B2A447F-2473-4108-99A9-9AC2DEAAD5A6}.ReleaseLibraries|iPhone.ActiveCfg = Release|Any CPU

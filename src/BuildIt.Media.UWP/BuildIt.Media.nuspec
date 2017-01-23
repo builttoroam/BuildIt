@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>BuildIt.Media.UWP</id>
+    <id>BuildIt.Media</id>
     <version>$version$</version>
-    <title>BuildIt.Media.UWP</title>
+    <title>BuildIt.Media</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>

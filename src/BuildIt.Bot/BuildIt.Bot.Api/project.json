@@ -4,11 +4,12 @@
       "NETStandard.Library": "1.6.1"
     },
     "frameworks": {
-        "netstandard1.1": {
-            "buildOptions": {
-                "define": [ "NETStandard11" ]
-            }
+      "netstandard1.1": {
+        "buildOptions": {
+          "define": [ "NETStandard11" ]
         },
+        "imports": "portable-net45+win8+wpa81"
+      },
         "net46": {
             "dependencies": {
                 "BuildIt.Web.General": {
