@@ -1,5 +1,4 @@
-﻿#if NETStandard16
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using BuildIt.Config.Core.Api.Controllers;
 using BuildIt.Config.Core.Models;
@@ -42,4 +41,3 @@ namespace BuildIt.Config.Core.Api.Utilities
         }
     }
 }
-#endif

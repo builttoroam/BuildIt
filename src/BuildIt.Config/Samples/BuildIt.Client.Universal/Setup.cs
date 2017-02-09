@@ -1,10 +1,9 @@
-﻿using Windows.UI.Xaml.Controls;
-using BuildIt.Config.Core.Services.Interfaces;
+﻿using BuildIt.Config.Core.Services.Interfaces;
 using BuildIt.Config.Impl.Common;
-using BuildIt.Config.Impl.Win;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.WindowsUWP.Platform;
+using Windows.UI.Xaml.Controls;
 
 namespace BuildIt.Client.Universal
 {

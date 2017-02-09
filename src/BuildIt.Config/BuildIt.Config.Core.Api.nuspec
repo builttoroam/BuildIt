@@ -17,33 +17,16 @@
         <dependency id="BuildIt.General" version="1.0.0.20" />
         <dependency id="BuildIt.Config.Core" version="$version$" />
         <dependency id="NETStandard.Library" version="1.6.1" />
-        <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
-
         <dependency id="Microsoft.AspNetCore.Mvc" version="1.0.0" />
-      </group>
-      <group targetFramework="net452">
-        <dependency id="BuildIt.General" version="1.0.0.20" />
-        <dependency id="BuildIt.Config.Core" version="$version$" />
-        <dependency id="NETStandard.Library" version="1.6.1" />
-        <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
-        <dependency id="Newtonsoft.Json" version="9.0.1" />
-
-        <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
-        <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
-        <dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.3" />
-        <dependency id="Microsoft.Bcl" version="1.1.10" />
       </group>
     </dependencies>
   <frameworkAssemblies>    
-      <frameworkAssembly assemblyName="System.Web.Routing" targetFramework="net40" />    
-      <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />    
+    <frameworkAssembly assemblyName="System.Web.Routing" targetFramework="net40" />    
+    <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />    
   </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="BuildIt.Config.Core.Api\bin\Release\net452\BuildIt.Config.Core.Api.dll" target="lib\net45" />
-    <file src="BuildIt.Config.Core.Api\bin\Release\net452\BuildIt.Config.Core.Api.pdb" target="lib\net45" />
-    <file src="BuildIt.Config.Core.Api\bin\Release\net452\BuildIt.Config.Core.Api.xml" target="lib\net45" />
     <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.dll" target="lib\netstandard1.6" />
     <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.pdb" target="lib\netstandard1.6" />
     <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.xml" target="lib\netstandard1.6" />

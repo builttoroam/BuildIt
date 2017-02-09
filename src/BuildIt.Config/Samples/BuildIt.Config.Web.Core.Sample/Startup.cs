@@ -9,8 +9,9 @@ using Microsoft.Extensions.Logging;
 using BuildIt.Config.Core.Api.Utilities;
 using BuildIt.Config.Core.Models;
 using Microsoft.AspNetCore.Routing;
+using Swashbuckle.AspNetCore.Swagger;
 
-namespace WebApplication1
+namespace BuildIt.Config.Web.Core.Sample
 {
     public class Startup
     {
@@ -18,6 +19,11 @@ namespace WebApplication1
         {
             //services.AddAppConfiguration();      
             //services.AddRouting();
+            services.AddSwaggerGen(opts =>
+            {
+                opts.SwaggerDoc("v1", new Info { Title = "App Configuration API", Version = "v1" });
+            });
+
             services.AddMvc(opts =>
             {
                 opts.Conventions.Insert(0, new AppConfigurationRoutingConvention(new AppConfigurationRoutingModel() { Prefix = "api3", Controller = "test" }));
@@ -33,7 +39,8 @@ namespace WebApplication1
                 app.UseDeveloperExceptionPage();
                 CreateEnvironmentVariables();
             }
-            
+
+            app.UseSwagger();
             app.UseMvc();
             
         }

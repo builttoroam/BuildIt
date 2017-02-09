@@ -2,6 +2,7 @@
   "supports": {},
   "dependencies": {
     "Acr.UserDialogs": "6.2.3",
+    "BuildIt.General":  "1.0.0.41",
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "MvvmCross": "4.4.0",
     "NETStandard.Library": "1.6.1"

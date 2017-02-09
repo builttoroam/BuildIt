@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication1
+namespace BuildIt.Config.Web.Core.Sample
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
