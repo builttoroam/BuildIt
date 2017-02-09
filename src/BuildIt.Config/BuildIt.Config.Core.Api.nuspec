@@ -27,8 +27,8 @@
   </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.dll" target="lib\netstandard1.6" />
-    <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.pdb" target="lib\netstandard1.6" />
-    <file src="BuildIt.Config.Core.Api\bin\Release\netstandard1.6\BuildIt.Config.Core.Api.xml" target="lib\netstandard1.6" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\BuildIt.Config.Core.Api.dll" target="lib\netstandard1.6" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\BuildIt.Config.Core.Api.pdb" target="lib\netstandard1.6" />
+    <file src="BuildIt.Config.Core.Api\bin\Release\BuildIt.Config.Core.Api.xml" target="lib\netstandard1.6" />
   </files> 
 </package>
