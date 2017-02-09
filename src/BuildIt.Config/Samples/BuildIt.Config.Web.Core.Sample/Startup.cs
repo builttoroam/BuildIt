@@ -41,6 +41,10 @@ namespace BuildIt.Config.Web.Core.Sample
             }
 
             app.UseSwagger();
+            app.UseSwaggerUi(opts =>
+            {
+                opts.SwaggerEndpoint("/swagger/v1/swagger.json", "App Configuration API v1");
+            });
             app.UseMvc();
             
         }

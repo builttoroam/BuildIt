@@ -10,7 +10,7 @@ namespace BuildIt.Config.Core.Api.Controllers
     public class AppConfigurationController : Controller
     {
 
-        [HttpPost("")]
+        [HttpPost]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public AppConfigurationServerResponse Post([FromBody]List<AppConfigurationMapperAttributes> configMapperValues, [FromQuery]string hash = null)
         {
