@@ -21,10 +21,6 @@
         <dependency id="Microsoft.AspNetCore.Mvc" version="1.1.1" />
       </group>
     </dependencies>
-  <frameworkAssemblies>    
-    <frameworkAssembly assemblyName="System.Web.Routing" targetFramework="net40" />    
-    <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />    
-  </frameworkAssemblies>
   </metadata>
   <files>
     <file src="BuildIt.Config.Core.Api\bin\Release\BuildIt.Config.Core.Api.dll" target="lib\netstandard1.6" />
