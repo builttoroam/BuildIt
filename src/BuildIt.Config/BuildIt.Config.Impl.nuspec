@@ -15,7 +15,7 @@
     <dependencies>
       <dependency id="BuildIt.General" version="1.0.0.20" />
       <dependency id="BuildIt.Config.Core" version="$version$" />
-      <dependency id="Acr.UserDialogs" version="6.2.3" />
+      <dependency id="Acr.UserDialogs" version="6.3.8" />
       <dependency id="PCLStorage" version="1.0.2" />
       <dependency id="Xam.Plugin.Connectivity" version="2.2.12" />
       <dependency id="Plugin.VersionTracking" version="1.0.1" />

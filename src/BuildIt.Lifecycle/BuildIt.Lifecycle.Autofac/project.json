@@ -2,7 +2,7 @@
   "supports": {},
   "dependencies": {
     "Autofac": "4.3.0",
-    "BuildIt.Autofac": "0.1.5.5-beta",
+    "BuildIt.Autofac": "1.0.0.44",
     "BuildIt.General": "1.0.0.41",
     "BuildIt.Lifecycle": "1.0.0.52-beta",
     "BuildIt.States": "1.0.0.41",
