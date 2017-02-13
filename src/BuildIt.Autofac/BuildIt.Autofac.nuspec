@@ -15,7 +15,7 @@
     <dependencies>
       <group targetFramework="netstandard1.1">
         <dependency id="NETStandard.Library" version="1.6.1" />
-        <dependency id="Autofac" version="4.2.1" />
+        <dependency id="Autofac" version="4.3.0" />
         <dependency id="BuildIt.General" version="1.0.0.41" />
       </group>
     </dependencies>

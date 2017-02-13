@@ -13,7 +13,7 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="Autofac" version="4.2.1" />
+      <dependency id="Autofac" version="4.3.0" />
       <dependency id="BuildIt.Autofac" version="1.0.0.44" />
       <dependency id="BuildIt.General" version="1.0.0.41" />
       <dependency id="BuildIt.States" version="1.0.0.41" />

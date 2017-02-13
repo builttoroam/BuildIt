@@ -1,18 +1,17 @@
 {
     "version": "1.0.0-*",
-    "dependencies": {
-        "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-      "NETStandard.Library": "1.6.1",
-        "Newtonsoft.Json": "9.0.1",
-        "BuildIt.General": {
-            "target": "package",
-            "version": "1.0.0.41"
-        },
-      "BuildIt.Web.General": {
-        "target": "project"
-      },
-      "Microsoft.Azure.Mobile.Server": "2.0.0"
+  "dependencies": {
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "NETStandard.Library": "1.6.1",
+    "Newtonsoft.Json": "9.0.1",
+    "BuildIt.General": {
+      "target": "package",
+      "version": "1.0.0.41"
     },
+    "BuildIt.Web.General": {
+      "target": "project"
+    }
+  },
     "frameworks": {
         "netstandard1.1": {
             "dependencies": {
@@ -21,18 +20,18 @@
                 "define": [ "NETStandard11" ]
             }
         },
-        "net45": {
+        "net46": {
             "frameworkAssemblies": {
                 "System.Web": "4.0.0.0",
                 "System.Configuration": "4.0.0.0",
                 "System.Web.Routing": "4.0.0.0"
             },
-            "dependencies": {
-                "Microsoft.Azure.NotificationHubs": "1.0.7",
-                "Microsoft.AspNet.WebApi.Core": "5.2.3",
-                "Microsoft.AspNet.Mvc": "5.2.3",
-                "Microsoft.Azure.Mobile.Server": "1.1.157.1"                
-            },
+          "dependencies": {
+            "Microsoft.Azure.NotificationHubs": "1.0.7",
+            "Microsoft.AspNet.WebApi.Core": "5.2.3",
+            "Microsoft.AspNet.Mvc": "5.2.3",
+            "Microsoft.Azure.Mobile.Server": "2.0.0"
+          },
             "buildOptions": {
                 "define": [ "NET45" ]
             }

@@ -16,12 +16,12 @@
       <group targetFramework="netstandard1.1">
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
-      <group targetFramework="net45">
+      <group targetFramework="net46">
         <dependency id="Newtonsoft.Json" version="9.0.1" />
         <dependency id="Microsoft.Azure.NotificationHubs" version="1.0.7" />
         <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
         <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
-        <dependency id="Microsoft.Azure.Mobile.Server" version="1.1.157.1" />
+        <dependency id="Microsoft.Azure.Mobile.Server" version="2.0.0" />
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -37,11 +37,11 @@
     <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\netstandard1.1" />    
     <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\netstandard1.1" />
     
-    <file src="BuildIt.Web\bin\Release\net45\BuildIt.Web.dll" target="lib\net45" />    
-    <file src="BuildIt.Web\bin\Release\net45\BuildIt.Web.pdb" target="lib\net45" />    
-    <file src="BuildIt.Web\bin\Release\net45\BuildIt.Web.xml" target="lib\net45" />
-    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\net45" />    
-    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\net45" />    
-    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\net45" />
+    <file src="BuildIt.Web\bin\Release\net46\BuildIt.Web.dll" target="lib\net46" />    
+    <file src="BuildIt.Web\bin\Release\net46\BuildIt.Web.pdb" target="lib\net46" />    
+    <file src="BuildIt.Web\bin\Release\net46\BuildIt.Web.xml" target="lib\net46" />
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.dll" target="lib\net46" />    
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.pdb" target="lib\net46" />    
+    <file src="BuildIt.Web.General\bin\Release\BuildIt.Web.General.xml" target="lib\net46" />
   </files>
 </package>
