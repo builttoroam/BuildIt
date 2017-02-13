@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Auth", "BuildIt.Auth\BuildIt.Auth\BuildIt.Auth.csproj", "{7094B192-EB80-43A0-B9D8-30E354AC229E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Auth", "BuildIt.Auth\BuildIt.Auth.csproj", "{7094B192-EB80-43A0-B9D8-30E354AC229E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{6A0322E3-C532-4D5D-B45A-6DB33AE34CF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "BuildIt.Auth\Samples\Authentication\Authentication.csproj", "{546AF7CD-5CB1-4D70-9C86-B410B95CBAA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Samples\Authentication\Authentication.csproj", "{546AF7CD-5CB1-4D70-9C86-B410B95CBAA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Droid", "BuildIt.Auth\Samples\Authentication.Droid\Authentication.Droid.csproj", "{A3E7358D-48DE-42E5-8B3F-8F9BB7447C55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Droid", "Samples\Authentication.Droid\Authentication.Droid.csproj", "{A3E7358D-48DE-42E5-8B3F-8F9BB7447C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.iOS", "BuildIt.Auth\Samples\Authentication.iOS\Authentication.iOS.csproj", "{C31DED73-637C-4531-8F77-43D705DC4901}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.iOS", "Samples\Authentication.iOS\Authentication.iOS.csproj", "{C31DED73-637C-4531-8F77-43D705DC4901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.UWP", "BuildIt.Auth\Samples\Authentication.UWP\Authentication.UWP.csproj", "{666839D2-A793-440A-BD9C-98502B37D58B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.UWP", "Samples\Authentication.UWP\Authentication.UWP.csproj", "{666839D2-A793-440A-BD9C-98502B37D58B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
