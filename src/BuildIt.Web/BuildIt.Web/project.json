@@ -8,9 +8,10 @@
             "target": "package",
             "version": "1.0.0.41"
         },
-        "BuildIt.Web.General": {
-            "target": "project"
-        }
+      "BuildIt.Web.General": {
+        "target": "project"
+      },
+      "Microsoft.Azure.Mobile.Server": "2.0.0"
     },
     "frameworks": {
         "netstandard1.1": {
