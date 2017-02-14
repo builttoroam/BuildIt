@@ -41,9 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AppConfigurationController.cs" />
+    <Compile Include="Extensions\ConfigurationExtensions.cs" />
     <Compile Include="Extensions\MiddlewareExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AppConfigurationRoutingConvention.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>..\..\..\..\..\..\Users\RichardRachowski\.nuget\packages\Microsoft.Extensions.Configuration\1.0.0\lib\netstandard1.1\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

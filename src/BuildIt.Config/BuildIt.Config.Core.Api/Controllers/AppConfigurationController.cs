@@ -1,6 +1,6 @@
 ﻿using BuildIt.Config.Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 
@@ -9,6 +9,12 @@ namespace BuildIt.Config.Core.Api.Controllers
 
     public class AppConfigurationController : Controller
     {
+        private readonly IConfiguration configuration;
+
+        public AppConfigurationController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
 
         [HttpPost]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
@@ -18,11 +24,10 @@ namespace BuildIt.Config.Core.Api.Controllers
 
             var res = new AppConfigurationServerResponse();
 
-            var config = Environment.GetEnvironmentVariables();
 
             foreach (var configMapperValue in configMapperValues)
             {
-                if (configMapperValue.ValueIsRequired && !config.Contains(configMapperValue.Name))
+                if (configMapperValue.ValueIsRequired && string.IsNullOrWhiteSpace(configuration[configMapperValue.Name]))
                 {
                     if (res.AppConfigErors == null) res.AppConfigErors = new List<AppConfigurationError>();
                     var appConfigError = new AppConfigurationError
@@ -34,9 +39,9 @@ namespace BuildIt.Config.Core.Api.Controllers
                 }
                 else
                 {
-                    var appConfigValue = new AppConfigurationValue()
+                    var appConfigValue = new AppConfigurationValue
                     {
-                        Value = config[configMapperValue.Name] as string,
+                        Value = configuration[configMapperValue.Name],
                         Attributes = configMapperValue
                     };
                     res.AppConfigValues.Add(appConfigValue);

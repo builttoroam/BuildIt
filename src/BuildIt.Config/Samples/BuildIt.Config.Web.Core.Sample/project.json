@@ -10,7 +10,9 @@
         "Microsoft.Extensions.Logging.Console": "1.0.0",        
         "Microsoft.AspNetCore.Mvc": "1.1.1",
       "Newtonsoft.Json": "9.0.1",
-      "Swashbuckle.AspNetCore": "1.0.0-rc1"
+      "Swashbuckle.AspNetCore": "1.0.0-rc1",
+      "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
+      "Microsoft.Extensions.Configuration.Json": "1.0.0"
     },
 
     "tools": {
@@ -27,8 +29,7 @@
                 "target": "project"
               }            },
             "imports": [
-                "dotnet5.6",
-                "portable-net45+win8"
+                "dotnet5.6"
             ]
         }        
     },

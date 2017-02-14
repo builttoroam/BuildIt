@@ -222,3 +222,4 @@ FakesAssemblies/
 /src/BuildIt.States/BuildIt.States/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.Synchronization/BuildIt.Synchronization/AssemblyTFMAttribute.cs.exclude
 /src/BuildIt.Web/BuildIt.Web.General/AssemblyTFMAttribute.cs.exclude
+/src/BuildIt.Config/Samples/BuildIt.Config.Web.Core.Sample/Properties/PublishProfiles
