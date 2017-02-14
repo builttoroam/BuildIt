@@ -24,7 +24,7 @@ namespace BuildIt.Config.Web.Core.Sample
             // Register your various configuration sources such as any json files, environment variables, etc.
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile("appsettings.json", true, true) // Note: Any file config sources must be added to your project.json's publishOptions:include node
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
