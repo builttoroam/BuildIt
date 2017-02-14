@@ -45,8 +45,9 @@ namespace BuildIt.Config.Web.Core.Sample
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                CreateEnvironmentVariables();
             }
+
+            CreateEnvironmentVariables();
 
             app.UseSwagger();
             app.UseSwaggerUi(opts =>
