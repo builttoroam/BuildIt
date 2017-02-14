@@ -21,6 +21,7 @@ namespace BuildIt.Config.Web.Core.Sample
 
         public Startup(IHostingEnvironment env)
         {
+            // Register your various configuration sources such as any json files, environment variables, etc.
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
@@ -35,6 +36,7 @@ namespace BuildIt.Config.Web.Core.Sample
                 opts.SwaggerDoc("v1", new Info { Title = "App Configuration API", Version = "v1" });
             });
 
+            // Pass your completed configuration sources, and an optional route to initialise AppConfiguration
             services.AddBuildItConfig(Configuration, new AppConfigurationRoutingModel {Prefix = "api3", Controller = "test"});
         }
 
