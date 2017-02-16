@@ -13,7 +13,6 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
       <dependency id="NETStandard.Library" version="1.6.1" />
       <dependency id="Xamarin.Forms" version="2.3.3.180" />
       <dependency id="BuildIt.CognitiveServices" version="$version$" />

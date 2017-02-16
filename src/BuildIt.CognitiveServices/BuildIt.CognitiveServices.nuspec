@@ -13,13 +13,12 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
       <dependency id="NETStandard.Library" version="1.6.1" />
-      <dependency id="Microsoft.ProjectOxford.Emotion" version="1.0.331.1" />
+      <dependency id="Microsoft.ProjectOxford.Emotion" version="1.0.336" />
       <dependency id="Microsoft.ProjectOxford.Face" version="1.2.1.2" />
-      <dependency id="Microsoft.ProjectOxford.Vision" version="1.0.370" />
+      <dependency id="Microsoft.ProjectOxford.Vision" version="1.0.372" />
       <dependency id="PCLStorage" version="1.0.2" />
-      <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.4" />
+      <dependency id="Microsoft.Rest.ClientRuntime" version="2.3.5" />
     </dependencies>
   </metadata>
   <files>
