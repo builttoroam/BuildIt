@@ -75,15 +75,14 @@ namespace BuildIt.CognitiveServices
             /// --&gt;
             /// &lt;/style&gt;
             /// &lt;p&gt;
-            /// By creating a new build, you start the training process that will
-            /// allow you to generate a machine learning model that you can later on
-            /// query for recommendations.
+            /// By creating a new build, you start the training process that will allow
+            /// you to generate a machine learning model that you can later on query for
+            /// recommendations.
             /// &lt;/p&gt;
             /// &lt;p&gt;
-            /// Before triggering a build you first must upload catalog and usage
-            /// data.
-            /// Triggering a new build is an asynchronous operations.   Once a build
-            /// is triggered you will receive an &lt;i&gt;operation&lt;/i&gt; (in the
+            /// Before triggering a build you first must upload catalog and usage data.
+            /// Triggering a new build is an asynchronous operations.	 Once a build is
+            /// triggered you will receive an &lt;i&gt;operation&lt;/i&gt; (in the
             /// Operation-Location header of the response)
             /// that you can use to track the build status, or to cancel the build
             /// operation.
@@ -91,9 +90,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;/p&gt;
             /// 
             /// &lt;p&gt;
-            /// There are 3 types of builds: a &lt;i&gt;Recommendation&lt;/i&gt;
-            /// build, a &lt;i&gt;Rank&lt;/i&gt; build and an &lt;i&gt; FBT&lt;/i&gt;
-            /// build.
+            /// There are 3 types of builds: a &lt;i&gt;Recommendation&lt;/i&gt; build,
+            /// a &lt;i&gt;Rank&lt;/i&gt; build and an &lt;i&gt; FBT&lt;/i&gt; build.
             /// &lt;/p&gt;
             /// 
             /// &lt;p&gt;
@@ -102,9 +100,9 @@ namespace BuildIt.CognitiveServices
             /// &lt;br&gt;
             /// &lt;p class="tab"&gt;
             /// &lt;i&gt;Item to Item recommendations (I2I)&lt;/i&gt;
-            /// &lt;br&gt;Given an item or a list of items, it will predict other
-            /// items that are likely to be of high interest to customers that have
-            /// interacted with the original set of items.
+            /// &lt;br&gt;Given an item or a list of items, it will predict other items
+            /// that are likely to be of high interest to customers that have interacted
+            /// with the original set of items.
             /// &lt;/p&gt;
             /// &lt;p class="tab"&gt;
             /// &lt;i&gt;User to Item recommendations (U2I) &lt;/i&gt;
@@ -118,7 +116,7 @@ namespace BuildIt.CognitiveServices
             /// &lt;p&gt;
             /// &lt;b&gt;FBT or Frequently-Bought-Together build&lt;/b&gt;&lt;br /&gt;
             /// An FBT build is yet another recommendations algorithm called sometimes a
-            /// "conservative" recommender.  It counts the number of times two or three
+            /// "conservative" recommender.	It counts the number of times two or three
             /// different products co-occur together, and then sorts the sets based on a
             /// similarity function (Co-occurrences, Jaccard, Lift).
             /// Given an item, and FBT build returns other items that are likely to occur
@@ -183,59 +181,58 @@ namespace BuildIt.CognitiveServices
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelIterations&lt;/td&gt;
-            /// &lt;td&gt;The number of iterations the model performs is reflected
-            /// by the overall compute time and the model accuracy. The higher the
-            /// number, the better accuracy you will get, but the compute time will take
-            /// longer. (Default is 20)&lt;/td&gt;
+            /// &lt;td&gt;The number of iterations the model performs is reflected by
+            /// the overall compute time and the model accuracy. The higher the number,
+            /// the better accuracy you will get, but the compute time will take longer.
+            /// (Default is 20)&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;10 to 50 (Default: 40)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelDimensions&lt;/td&gt;
-            /// &lt;td&gt;The number of dimensions relates to the number of
-            /// 'features' the model will try to find within your data. Increasing the
-            /// number of dimensions will allow better fine-tuning of the results into
-            /// smaller clusters. However, too many dimensions will prevent the model
-            /// from finding correlations between items.&lt;/td&gt;
+            /// &lt;td&gt;The number of dimensions relates to the number of 'features'
+            /// the model will try to find within your data. Increasing the number of
+            /// dimensions will allow better fine-tuning of the results into smaller
+            /// clusters. However, too many dimensions will prevent the model from
+            /// finding correlations between items.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;10 to 40 (Default: 20)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of usage points an item
-            /// should be in for it to be considred in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of usage points an item should be
+            /// in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 30 (Default: 20)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of usage points an item
-            /// should be in for it to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of usage points an item should be
+            /// in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 30 (Default: Not set)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// 
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of transactions a user must
-            /// have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of transactions a user must have
+            /// performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 10 (Default: 2)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of transactions a user must
-            /// have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of transactions a user must have
+            /// performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 10 (Default: Not set)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;EnableModelingInsights&lt;/td&gt;
-            /// &lt;td&gt;Defines whether offline evaluation should be performed
-            /// in order to gather modeling insights (i.e. precision and diversity
-            /// metrics).
-            /// If set to true, a subset of the data will not be used for
-            /// training as it will need to be reserved for testing of the model.
+            /// &lt;td&gt;Defines whether offline evaluation should be performed in
+            /// order to gather modeling insights (i.e. precision and diversity metrics).
+            /// If set to true, a subset of the data will not be used for training
+            /// as it will need to be reserved for testing of the model.
             /// &lt;a
             /// href="https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-buildtypes/#offline-evaluation"
             /// &gt;Read more about offline evaluations&lt;/a&gt;
@@ -251,8 +248,8 @@ namespace BuildIt.CognitiveServices
             /// recommendation model.
             /// &lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
-            /// &lt;td&gt;Valid Values: True/False (Default: True if features in
-            /// the model)&lt;/td&gt;
+            /// &lt;td&gt;Valid Values: True/False (Default: True if features in the
+            /// model)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// 
             /// 
@@ -260,23 +257,22 @@ namespace BuildIt.CognitiveServices
             /// &lt;td&gt;ModelingFeatureList&lt;/td&gt;
             /// &lt;td&gt; Comma-separated list of feature names to be used in the
             /// recommendation build, in order to enhance the recommendation.
-            /// If the given list is empty, no features will be used to train
-            /// the model.
+            /// If the given list is empty, no features will be used to train the
+            /// model.
             /// &lt;/td&gt;
             /// &lt;td&gt;String&lt;/td&gt;
             /// &lt;td&gt;Valid Values: Feature names, up to 512 chars&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;AllowColdItemPlacement&lt;/td&gt;
-            /// &lt;td&gt;Indicates if the recommendation should also push cold
-            /// items via feature similarity.&lt;/td&gt;
+            /// &lt;td&gt;Indicates if the recommendation should also push cold items
+            /// via feature similarity.&lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
             /// &lt;td&gt;Valid Values: True/False&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;EnableFeatureCorrelation&lt;/td&gt;
-            /// &lt;td&gt;Indicates if features can be used in
-            /// reasoning.&lt;/td&gt;
+            /// &lt;td&gt;Indicates if features can be used in reasoning.&lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
             /// &lt;td&gt;Valid Values: True/False&lt;/td&gt;
             /// &lt;/tr&gt;
@@ -289,8 +285,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;EnableU2I&lt;/td&gt;
-            /// &lt;td&gt;Enable personalized recommendation a.k.a. U2I (user to
-            /// item recommendations).&lt;/td&gt;
+            /// &lt;td&gt;Enable personalized recommendation a.k.a. U2I (user to item
+            /// recommendations).&lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
             /// &lt;td&gt;Valid Values: True/False&lt;/td&gt;
             /// &lt;/tr&gt;
@@ -303,34 +299,31 @@ namespace BuildIt.CognitiveServices
             /// style="border-collapse:collapse;"&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtSupportThreshold&lt;/td&gt;
-            /// &lt;td&gt;How conservative the model is. Number of
-            /// co-occurrences of items to be considered for modeling.&lt;/td&gt;
+            /// &lt;td&gt;How conservative the model is. Number of co-occurrences of
+            /// items to be considered for modeling.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Valid Values: 3-50 (default: 6)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtMaxItemSetSize&lt;/td&gt;
-            /// &lt;td&gt;Bounds the number of items in a frequent
-            /// set.&lt;/td&gt;
+            /// &lt;td&gt;Bounds the number of items in a frequent set.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Valid Values: 2-3 (default: 2)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtMinimalScore&lt;/td&gt;
-            /// &lt;td&gt;Minimal score that a frequent set should have in
-            /// order to be included in the returned results. The higher the
-            /// better.&lt;/td&gt;
+            /// &lt;td&gt;Minimal score that a frequent set should have in order to
+            /// be included in the returned results. The higher the better.&lt;/td&gt;
             /// &lt;td&gt;Double&lt;/td&gt;
             /// &lt;td&gt;0 and above&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtSimilarityFunction&lt;/td&gt;
-            /// &lt;td&gt;Defines the similarity function to be used by the
-            /// build. Lift favors serendipity, Co-occurrence favors predictability, and
-            /// Jaccard is a nice compromise between the two.&lt;/td&gt;
+            /// &lt;td&gt;Defines the similarity function to be used by the build.
+            /// Lift favors serendipity, Co-occurrence favors predictability, and Jaccard
+            /// is a nice compromise between the two.&lt;/td&gt;
             /// &lt;td&gt;String&lt;/td&gt;
-            /// &lt;td&gt;cooccurrence, lift, jaccard (default:
-            /// lift)&lt;/td&gt;
+            /// &lt;td&gt;cooccurrence, lift, jaccard (default: lift)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;/table&gt;
             /// &lt;/p&gt;
@@ -343,17 +336,17 @@ namespace BuildIt.CognitiveServices
             /// style="border-collapse:collapse;"&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelIterations&lt;/td&gt;
-            /// &lt;td&gt;The number of iterations the model performs is
-            /// reflected by the overall compute time and the model accuracy. The higher
-            /// the number, the better accuracy you will get, but the compute time will
-            /// take longer.&lt;/td&gt;
+            /// &lt;td&gt;The number of iterations the model performs is reflected
+            /// by the overall compute time and the model accuracy. The higher the
+            /// number, the better accuracy you will get, but the compute time will take
+            /// longer.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;10-50&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelDimensions&lt;/td&gt;
-            /// &lt;td&gt;The number of dimensions relates to the number
-            /// of 'features' the model will try to find within your data. Increasing the
+            /// &lt;td&gt;The number of dimensions relates to the number of
+            /// 'features' the model will try to find within your data. Increasing the
             /// number of dimensions will allow better fine-tuning of the results into
             /// smaller clusters. However, too many dimensions will prevent the model
             /// from finding correlations between items.&lt;/td&gt;
@@ -362,30 +355,30 @@ namespace BuildIt.CognitiveServices
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of usage points an
-            /// item should be in for it to be considred in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of usage points an item
+            /// should be in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0-30&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of usage points an
-            /// item should be in for it to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of usage points an item
+            /// should be in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Greater than ItemCutOffLowerBound&lt;/td&gt;
             /// &lt;/tr&gt;
             /// 
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of transactions a
-            /// user must have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of transactions a user must
+            /// have performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0-10&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of transactions a
-            /// user must have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of transactions a user must
+            /// have performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Greater than UserCutOffLowerBound&lt;/td&gt;
             /// &lt;/tr&gt;
@@ -450,15 +443,14 @@ namespace BuildIt.CognitiveServices
             /// --&gt;
             /// &lt;/style&gt;
             /// &lt;p&gt;
-            /// By creating a new build, you start the training process that will
-            /// allow you to generate a machine learning model that you can later on
-            /// query for recommendations.
+            /// By creating a new build, you start the training process that will allow
+            /// you to generate a machine learning model that you can later on query for
+            /// recommendations.
             /// &lt;/p&gt;
             /// &lt;p&gt;
-            /// Before triggering a build you first must upload catalog and usage
-            /// data.
-            /// Triggering a new build is an asynchronous operations.   Once a build
-            /// is triggered you will receive an &lt;i&gt;operation&lt;/i&gt; (in the
+            /// Before triggering a build you first must upload catalog and usage data.
+            /// Triggering a new build is an asynchronous operations.	 Once a build is
+            /// triggered you will receive an &lt;i&gt;operation&lt;/i&gt; (in the
             /// Operation-Location header of the response)
             /// that you can use to track the build status, or to cancel the build
             /// operation.
@@ -466,9 +458,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;/p&gt;
             /// 
             /// &lt;p&gt;
-            /// There are 3 types of builds: a &lt;i&gt;Recommendation&lt;/i&gt;
-            /// build, a &lt;i&gt;Rank&lt;/i&gt; build and an &lt;i&gt; FBT&lt;/i&gt;
-            /// build.
+            /// There are 3 types of builds: a &lt;i&gt;Recommendation&lt;/i&gt; build,
+            /// a &lt;i&gt;Rank&lt;/i&gt; build and an &lt;i&gt; FBT&lt;/i&gt; build.
             /// &lt;/p&gt;
             /// 
             /// &lt;p&gt;
@@ -477,9 +468,9 @@ namespace BuildIt.CognitiveServices
             /// &lt;br&gt;
             /// &lt;p class="tab"&gt;
             /// &lt;i&gt;Item to Item recommendations (I2I)&lt;/i&gt;
-            /// &lt;br&gt;Given an item or a list of items, it will predict other
-            /// items that are likely to be of high interest to customers that have
-            /// interacted with the original set of items.
+            /// &lt;br&gt;Given an item or a list of items, it will predict other items
+            /// that are likely to be of high interest to customers that have interacted
+            /// with the original set of items.
             /// &lt;/p&gt;
             /// &lt;p class="tab"&gt;
             /// &lt;i&gt;User to Item recommendations (U2I) &lt;/i&gt;
@@ -493,7 +484,7 @@ namespace BuildIt.CognitiveServices
             /// &lt;p&gt;
             /// &lt;b&gt;FBT or Frequently-Bought-Together build&lt;/b&gt;&lt;br /&gt;
             /// An FBT build is yet another recommendations algorithm called sometimes a
-            /// "conservative" recommender.  It counts the number of times two or three
+            /// "conservative" recommender.	It counts the number of times two or three
             /// different products co-occur together, and then sorts the sets based on a
             /// similarity function (Co-occurrences, Jaccard, Lift).
             /// Given an item, and FBT build returns other items that are likely to occur
@@ -558,59 +549,58 @@ namespace BuildIt.CognitiveServices
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelIterations&lt;/td&gt;
-            /// &lt;td&gt;The number of iterations the model performs is reflected
-            /// by the overall compute time and the model accuracy. The higher the
-            /// number, the better accuracy you will get, but the compute time will take
-            /// longer. (Default is 20)&lt;/td&gt;
+            /// &lt;td&gt;The number of iterations the model performs is reflected by
+            /// the overall compute time and the model accuracy. The higher the number,
+            /// the better accuracy you will get, but the compute time will take longer.
+            /// (Default is 20)&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;10 to 50 (Default: 40)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelDimensions&lt;/td&gt;
-            /// &lt;td&gt;The number of dimensions relates to the number of
-            /// 'features' the model will try to find within your data. Increasing the
-            /// number of dimensions will allow better fine-tuning of the results into
-            /// smaller clusters. However, too many dimensions will prevent the model
-            /// from finding correlations between items.&lt;/td&gt;
+            /// &lt;td&gt;The number of dimensions relates to the number of 'features'
+            /// the model will try to find within your data. Increasing the number of
+            /// dimensions will allow better fine-tuning of the results into smaller
+            /// clusters. However, too many dimensions will prevent the model from
+            /// finding correlations between items.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;10 to 40 (Default: 20)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of usage points an item
-            /// should be in for it to be considred in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of usage points an item should be
+            /// in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 30 (Default: 20)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of usage points an item
-            /// should be in for it to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of usage points an item should be
+            /// in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 30 (Default: Not set)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// 
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of transactions a user must
-            /// have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of transactions a user must have
+            /// performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 10 (Default: 2)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of transactions a user must
-            /// have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of transactions a user must have
+            /// performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0 to 10 (Default: Not set)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;EnableModelingInsights&lt;/td&gt;
-            /// &lt;td&gt;Defines whether offline evaluation should be performed
-            /// in order to gather modeling insights (i.e. precision and diversity
-            /// metrics).
-            /// If set to true, a subset of the data will not be used for
-            /// training as it will need to be reserved for testing of the model.
+            /// &lt;td&gt;Defines whether offline evaluation should be performed in
+            /// order to gather modeling insights (i.e. precision and diversity metrics).
+            /// If set to true, a subset of the data will not be used for training
+            /// as it will need to be reserved for testing of the model.
             /// &lt;a
             /// href="https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-buildtypes/#offline-evaluation"
             /// &gt;Read more about offline evaluations&lt;/a&gt;
@@ -626,8 +616,8 @@ namespace BuildIt.CognitiveServices
             /// recommendation model.
             /// &lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
-            /// &lt;td&gt;Valid Values: True/False (Default: True if features in
-            /// the model)&lt;/td&gt;
+            /// &lt;td&gt;Valid Values: True/False (Default: True if features in the
+            /// model)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// 
             /// 
@@ -635,23 +625,22 @@ namespace BuildIt.CognitiveServices
             /// &lt;td&gt;ModelingFeatureList&lt;/td&gt;
             /// &lt;td&gt; Comma-separated list of feature names to be used in the
             /// recommendation build, in order to enhance the recommendation.
-            /// If the given list is empty, no features will be used to train
-            /// the model.
+            /// If the given list is empty, no features will be used to train the
+            /// model.
             /// &lt;/td&gt;
             /// &lt;td&gt;String&lt;/td&gt;
             /// &lt;td&gt;Valid Values: Feature names, up to 512 chars&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;AllowColdItemPlacement&lt;/td&gt;
-            /// &lt;td&gt;Indicates if the recommendation should also push cold
-            /// items via feature similarity.&lt;/td&gt;
+            /// &lt;td&gt;Indicates if the recommendation should also push cold items
+            /// via feature similarity.&lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
             /// &lt;td&gt;Valid Values: True/False&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;EnableFeatureCorrelation&lt;/td&gt;
-            /// &lt;td&gt;Indicates if features can be used in
-            /// reasoning.&lt;/td&gt;
+            /// &lt;td&gt;Indicates if features can be used in reasoning.&lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
             /// &lt;td&gt;Valid Values: True/False&lt;/td&gt;
             /// &lt;/tr&gt;
@@ -664,8 +653,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;EnableU2I&lt;/td&gt;
-            /// &lt;td&gt;Enable personalized recommendation a.k.a. U2I (user to
-            /// item recommendations).&lt;/td&gt;
+            /// &lt;td&gt;Enable personalized recommendation a.k.a. U2I (user to item
+            /// recommendations).&lt;/td&gt;
             /// &lt;td&gt;Boolean&lt;/td&gt;
             /// &lt;td&gt;Valid Values: True/False&lt;/td&gt;
             /// &lt;/tr&gt;
@@ -678,34 +667,31 @@ namespace BuildIt.CognitiveServices
             /// style="border-collapse:collapse;"&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtSupportThreshold&lt;/td&gt;
-            /// &lt;td&gt;How conservative the model is. Number of
-            /// co-occurrences of items to be considered for modeling.&lt;/td&gt;
+            /// &lt;td&gt;How conservative the model is. Number of co-occurrences of
+            /// items to be considered for modeling.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Valid Values: 3-50 (default: 6)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtMaxItemSetSize&lt;/td&gt;
-            /// &lt;td&gt;Bounds the number of items in a frequent
-            /// set.&lt;/td&gt;
+            /// &lt;td&gt;Bounds the number of items in a frequent set.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Valid Values: 2-3 (default: 2)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtMinimalScore&lt;/td&gt;
-            /// &lt;td&gt;Minimal score that a frequent set should have in
-            /// order to be included in the returned results. The higher the
-            /// better.&lt;/td&gt;
+            /// &lt;td&gt;Minimal score that a frequent set should have in order to
+            /// be included in the returned results. The higher the better.&lt;/td&gt;
             /// &lt;td&gt;Double&lt;/td&gt;
             /// &lt;td&gt;0 and above&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;FbtSimilarityFunction&lt;/td&gt;
-            /// &lt;td&gt;Defines the similarity function to be used by the
-            /// build. Lift favors serendipity, Co-occurrence favors predictability, and
-            /// Jaccard is a nice compromise between the two.&lt;/td&gt;
+            /// &lt;td&gt;Defines the similarity function to be used by the build.
+            /// Lift favors serendipity, Co-occurrence favors predictability, and Jaccard
+            /// is a nice compromise between the two.&lt;/td&gt;
             /// &lt;td&gt;String&lt;/td&gt;
-            /// &lt;td&gt;cooccurrence, lift, jaccard (default:
-            /// lift)&lt;/td&gt;
+            /// &lt;td&gt;cooccurrence, lift, jaccard (default: lift)&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;/table&gt;
             /// &lt;/p&gt;
@@ -718,17 +704,17 @@ namespace BuildIt.CognitiveServices
             /// style="border-collapse:collapse;"&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelIterations&lt;/td&gt;
-            /// &lt;td&gt;The number of iterations the model performs is
-            /// reflected by the overall compute time and the model accuracy. The higher
-            /// the number, the better accuracy you will get, but the compute time will
-            /// take longer.&lt;/td&gt;
+            /// &lt;td&gt;The number of iterations the model performs is reflected
+            /// by the overall compute time and the model accuracy. The higher the
+            /// number, the better accuracy you will get, but the compute time will take
+            /// longer.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;10-50&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;NumberOfModelDimensions&lt;/td&gt;
-            /// &lt;td&gt;The number of dimensions relates to the number
-            /// of 'features' the model will try to find within your data. Increasing the
+            /// &lt;td&gt;The number of dimensions relates to the number of
+            /// 'features' the model will try to find within your data. Increasing the
             /// number of dimensions will allow better fine-tuning of the results into
             /// smaller clusters. However, too many dimensions will prevent the model
             /// from finding correlations between items.&lt;/td&gt;
@@ -737,30 +723,30 @@ namespace BuildIt.CognitiveServices
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of usage points an
-            /// item should be in for it to be considred in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of usage points an item
+            /// should be in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0-30&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;ItemCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of usage points an
-            /// item should be in for it to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of usage points an item
+            /// should be in for it to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Greater than ItemCutOffLowerBound&lt;/td&gt;
             /// &lt;/tr&gt;
             /// 
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffLowerBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the minimum number of transactions a
-            /// user must have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the minimum number of transactions a user must
+            /// have performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;0-10&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;UserCutOffUpperBound&lt;/td&gt;
-            /// &lt;td&gt;Defines the maximum number of transactions a
-            /// user must have performed to be considered in the model.&lt;/td&gt;
+            /// &lt;td&gt;Defines the maximum number of transactions a user must
+            /// have performed to be considered in the model.&lt;/td&gt;
             /// &lt;td&gt;Integer&lt;/td&gt;
             /// &lt;td&gt;Greater than UserCutOffLowerBound&lt;/td&gt;
             /// &lt;/tr&gt;
@@ -943,15 +929,15 @@ namespace BuildIt.CognitiveServices
             /// option is not set when building the model): &lt;br&gt;
             /// 1. If the item list contains just a single item that is not in the
             /// catalog - an empty list is returned.&lt;br&gt;
-            /// 2. If the item list contains some items that don't appear in the
-            /// catalog - these are removed and a result is generated based on the other
+            /// 2. If the item list contains some items that don't appear in the catalog
+            /// - these are removed and a result is generated based on the other
             /// items.&lt;br&gt;
             /// 3. If an item list contains only &lt;i&gt;cold items&lt;/i&gt; the
             /// &lt;i&gt;most popular&lt;/i&gt; recommendation list is generated as a
             /// response.&lt;br&gt;
-            /// 4. If the items list contains some &lt;i&gt;cold&lt;/i&gt; items
-            /// (after removing the items that don't appear in the catalog) - the result
-            /// is generated based on the other items only.&lt;br&gt;
+            /// 4. If the items list contains some &lt;i&gt;cold&lt;/i&gt; items (after
+            /// removing the items that don't appear in the catalog) - the result is
+            /// generated based on the other items only.&lt;br&gt;
             /// &lt;p&gt;
             /// Empty recommendations may be returned if none of the items are in the
             /// catalog or if the trained model did not have sufficient data to provide
@@ -1005,15 +991,15 @@ namespace BuildIt.CognitiveServices
             /// option is not set when building the model): &lt;br&gt;
             /// 1. If the item list contains just a single item that is not in the
             /// catalog - an empty list is returned.&lt;br&gt;
-            /// 2. If the item list contains some items that don't appear in the
-            /// catalog - these are removed and a result is generated based on the other
+            /// 2. If the item list contains some items that don't appear in the catalog
+            /// - these are removed and a result is generated based on the other
             /// items.&lt;br&gt;
             /// 3. If an item list contains only &lt;i&gt;cold items&lt;/i&gt; the
             /// &lt;i&gt;most popular&lt;/i&gt; recommendation list is generated as a
             /// response.&lt;br&gt;
-            /// 4. If the items list contains some &lt;i&gt;cold&lt;/i&gt; items
-            /// (after removing the items that don't appear in the catalog) - the result
-            /// is generated based on the other items only.&lt;br&gt;
+            /// 4. If the items list contains some &lt;i&gt;cold&lt;/i&gt; items (after
+            /// removing the items that don't appear in the catalog) - the result is
+            /// generated based on the other items only.&lt;br&gt;
             /// &lt;p&gt;
             /// Empty recommendations may be returned if none of the items are in the
             /// catalog or if the trained model did not have sufficient data to provide
@@ -1451,9 +1437,9 @@ namespace BuildIt.CognitiveServices
             /// active build.&lt;br&gt;
             /// The API will return a list of predicted items according to the usage
             /// history of the user.&lt;br&gt;
-            /// Note:  There is no user recommendation for an &lt;i&gt;FBT&lt;/i&gt;
-            /// build. If the active build is &lt;i&gt;FBT&lt;/i&gt;, this method will
-            /// return an error.
+            /// Note:	There is no user recommendation for an &lt;i&gt;FBT&lt;/i&gt; build.
+            /// If the active build is &lt;i&gt;FBT&lt;/i&gt;, this method will return an
+            /// error.
             /// 
             /// &lt;p&gt;&lt;b&gt;Note&lt;/b&gt;&lt;/p&gt;
             /// &lt;p&gt;The EnableU2I build parameter needs to be set to true in order to
@@ -1498,9 +1484,9 @@ namespace BuildIt.CognitiveServices
             /// active build.&lt;br&gt;
             /// The API will return a list of predicted items according to the usage
             /// history of the user.&lt;br&gt;
-            /// Note:  There is no user recommendation for an &lt;i&gt;FBT&lt;/i&gt;
-            /// build. If the active build is &lt;i&gt;FBT&lt;/i&gt;, this method will
-            /// return an error.
+            /// Note:	There is no user recommendation for an &lt;i&gt;FBT&lt;/i&gt; build.
+            /// If the active build is &lt;i&gt;FBT&lt;/i&gt;, this method will return an
+            /// error.
             /// 
             /// &lt;p&gt;&lt;b&gt;Note&lt;/b&gt;&lt;/p&gt;
             /// &lt;p&gt;The EnableU2I build parameter needs to be set to true in order to
@@ -1575,9 +1561,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;tr&gt;
             /// &lt;td&gt;Item Id&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;[A-z], [a-z], [0-9], [_]
-            /// &amp;#40;Underscore&amp;#41;, [-] &amp;#40;Dash&amp;#41;&lt;br&gt; Max
-            /// length: 50&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 50&lt;/td&gt;
             /// &lt;td&gt;Unique identifier of an item.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
@@ -1592,15 +1577,15 @@ namespace BuildIt.CognitiveServices
             /// &lt;td&gt;Yes&lt;/td&gt;
             /// &lt;td&gt;Any alphanumeric characters&lt;br&gt; Max length:
             /// 255&lt;/td&gt;
-            /// &lt;td&gt;Category to which this item belongs (e.g. Cooking
-            /// Books, Drama...); can be empty.&lt;/td&gt;
+            /// &lt;td&gt;Category to which this item belongs (e.g. Cooking Books,
+            /// Drama...); can be empty.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;Description&lt;/td&gt;
             /// &lt;td&gt;No, unless features are present (but can be
             /// empty)&lt;/td&gt;
-            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length:
-            /// 4000 &lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length: 4000
+            /// &lt;/td&gt;
             /// &lt;td&gt;Description of this item.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
@@ -1608,8 +1593,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;td&gt;No&lt;/td&gt;
             /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length:
             /// 4000&lt;/td&gt;
-            /// &lt;td&gt;Comma-separated list of feature-name=feature-value
-            /// that can be used to enhance model recommendation.&lt;br&gt;
+            /// &lt;td&gt;Comma-separated list of feature-name=feature-value that
+            /// can be used to enhance model recommendation.&lt;br&gt;
             /// Feature names max length: 255&lt;br&gt;
             /// Feature-value max length: 255&lt;br&gt;
             /// Feature values should be categorical.
@@ -1643,12 +1628,16 @@ namespace BuildIt.CognitiveServices
             /// 
             /// &lt;p&gt;
             /// &lt;b&gt;Notes&lt;/b&gt;&lt;br /&gt;
-            /// The maximum numbe of items supported is 100,000.&lt;br /&gt;
+            /// The maximum number of items supported is 100,000.&lt;br /&gt;
             /// The maximum size of data that can be sent in a single POST call for this
             /// API is 200MB. You may call this API several times upload more catalog
-            /// data to your project. If you call this API several times, the system will
-            /// insert only the new catalog items; Existing items will remain with the
-            /// original values.  You cannot update catalog items by using this API.
+            /// data to your project. &lt;br/&gt;
+            /// If you call this API several times, the system will insert only the new
+            /// catalog items; Existing items will remain with the original values.
+            /// &lt;br/&gt;
+            /// Do not make concurrent calls to this API. Wait for one call to return
+            /// before making another call to this API.&lt;br/&gt;
+            /// You cannot update catalog items by using this API.
             /// &lt;/p&gt;
             /// 
             /// </summary>
@@ -1656,12 +1645,13 @@ namespace BuildIt.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
-            /// Unique identifier of the model
+            /// Unique identifier of the model. Only letters (A-Z, a-z), numbers (0-9),
+            /// hyphens (-) and underscore (_) are allowed. Max length: 50
             /// </param>
             /// <param name='catalogDisplayName'>
             /// Display name of the catalog data. e.g. "CatalogFile1"
-            /// Only letters (A-Z, a-z), numbers (0-9), hyphens (-) and
-            /// underscore (_) are allowed. Max length: 50
+            /// Only letters (A-Z, a-z), numbers (0-9), hyphens (-) and underscore
+            /// (_) are allowed. Max length: 50
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -1670,11 +1660,11 @@ namespace BuildIt.CognitiveServices
             /// subscription key in header
             /// </param>
             /// <param name='file'>
-            /// File to upload
+            /// File to upload.
             /// </param>
-            public static object Uploadacatalogfiletoamodel(this IRecommendations operations, string modelId, string catalogDisplayName, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string))
+            public static object Uploadcatalogfile(this IRecommendations operations, string modelId, string catalogDisplayName, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).UploadacatalogfiletoamodelAsync(modelId, catalogDisplayName, subscriptionKey, ocpApimSubscriptionKey, file), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).UploadcatalogfileAsync(modelId, catalogDisplayName, subscriptionKey, ocpApimSubscriptionKey, file), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1706,9 +1696,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;tr&gt;
             /// &lt;td&gt;Item Id&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;[A-z], [a-z], [0-9], [_]
-            /// &amp;#40;Underscore&amp;#41;, [-] &amp;#40;Dash&amp;#41;&lt;br&gt; Max
-            /// length: 50&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 50&lt;/td&gt;
             /// &lt;td&gt;Unique identifier of an item.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
@@ -1723,15 +1712,15 @@ namespace BuildIt.CognitiveServices
             /// &lt;td&gt;Yes&lt;/td&gt;
             /// &lt;td&gt;Any alphanumeric characters&lt;br&gt; Max length:
             /// 255&lt;/td&gt;
-            /// &lt;td&gt;Category to which this item belongs (e.g. Cooking
-            /// Books, Drama...); can be empty.&lt;/td&gt;
+            /// &lt;td&gt;Category to which this item belongs (e.g. Cooking Books,
+            /// Drama...); can be empty.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;Description&lt;/td&gt;
             /// &lt;td&gt;No, unless features are present (but can be
             /// empty)&lt;/td&gt;
-            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length:
-            /// 4000 &lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length: 4000
+            /// &lt;/td&gt;
             /// &lt;td&gt;Description of this item.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
@@ -1739,8 +1728,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;td&gt;No&lt;/td&gt;
             /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length:
             /// 4000&lt;/td&gt;
-            /// &lt;td&gt;Comma-separated list of feature-name=feature-value
-            /// that can be used to enhance model recommendation.&lt;br&gt;
+            /// &lt;td&gt;Comma-separated list of feature-name=feature-value that
+            /// can be used to enhance model recommendation.&lt;br&gt;
             /// Feature names max length: 255&lt;br&gt;
             /// Feature-value max length: 255&lt;br&gt;
             /// Feature values should be categorical.
@@ -1774,12 +1763,16 @@ namespace BuildIt.CognitiveServices
             /// 
             /// &lt;p&gt;
             /// &lt;b&gt;Notes&lt;/b&gt;&lt;br /&gt;
-            /// The maximum numbe of items supported is 100,000.&lt;br /&gt;
+            /// The maximum number of items supported is 100,000.&lt;br /&gt;
             /// The maximum size of data that can be sent in a single POST call for this
             /// API is 200MB. You may call this API several times upload more catalog
-            /// data to your project. If you call this API several times, the system will
-            /// insert only the new catalog items; Existing items will remain with the
-            /// original values.  You cannot update catalog items by using this API.
+            /// data to your project. &lt;br/&gt;
+            /// If you call this API several times, the system will insert only the new
+            /// catalog items; Existing items will remain with the original values.
+            /// &lt;br/&gt;
+            /// Do not make concurrent calls to this API. Wait for one call to return
+            /// before making another call to this API.&lt;br/&gt;
+            /// You cannot update catalog items by using this API.
             /// &lt;/p&gt;
             /// 
             /// </summary>
@@ -1787,12 +1780,13 @@ namespace BuildIt.CognitiveServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
-            /// Unique identifier of the model
+            /// Unique identifier of the model. Only letters (A-Z, a-z), numbers (0-9),
+            /// hyphens (-) and underscore (_) are allowed. Max length: 50
             /// </param>
             /// <param name='catalogDisplayName'>
             /// Display name of the catalog data. e.g. "CatalogFile1"
-            /// Only letters (A-Z, a-z), numbers (0-9), hyphens (-) and
-            /// underscore (_) are allowed. Max length: 50
+            /// Only letters (A-Z, a-z), numbers (0-9), hyphens (-) and underscore
+            /// (_) are allowed. Max length: 50
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -1801,14 +1795,14 @@ namespace BuildIt.CognitiveServices
             /// subscription key in header
             /// </param>
             /// <param name='file'>
-            /// File to upload
+            /// File to upload.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<object> UploadacatalogfiletoamodelAsync(this IRecommendations operations, string modelId, string catalogDisplayName, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<object> UploadcatalogfileAsync(this IRecommendations operations, string modelId, string catalogDisplayName, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.UploadacatalogfiletoamodelWithHttpMessagesAsync(modelId, catalogDisplayName, subscriptionKey, ocpApimSubscriptionKey, file, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UploadcatalogfileWithHttpMessagesAsync(modelId, catalogDisplayName, subscriptionKey, ocpApimSubscriptionKey, file, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1828,13 +1822,13 @@ namespace BuildIt.CognitiveServices
             /// &lt;p&gt;
             /// You may set the optional 'skip' parameter to start listing items at an
             /// offset.
-            /// If the requested number of items (specified using the 'top'
-            /// parameters) is larger than the server default page size,  only the first
-            /// default page size items will be returned and a '@nextLink' property will
-            /// be added to the response, linking to the rest of the request items.
-            /// The parameter 'maxPageSize' defines the maximum items count to return
-            /// in a single page.  MaxPageSize will be honored only if lower than
-            /// server's default page size.
+            /// If the requested number of items (specified using the 'top' parameters)
+            /// is larger than the server default page size,	only the first default page
+            /// size items will be returned and a '@nextLink' property will be added to
+            /// the response, linking to the rest of the request items.
+            /// The parameter 'maxPageSize' defines the maximum items count to return in
+            /// a single page.	MaxPageSize will be honored only if lower than server's
+            /// default page size.
             /// &lt;/p&gt;
             /// 
             /// &lt;p&gt;
@@ -1895,9 +1889,11 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static object Getallcatalogitems(this IRecommendations operations, string modelId, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            /// <param name='file'>
+            /// </param>
+            public static object Getallcatalogitems(this IRecommendations operations, string modelId, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetallcatalogitemsAsync(modelId, top, skip, maxpagesize, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetallcatalogitemsAsync(modelId, top, skip, maxpagesize, subscriptionKey, ocpApimSubscriptionKey, file), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1914,13 +1910,13 @@ namespace BuildIt.CognitiveServices
             /// &lt;p&gt;
             /// You may set the optional 'skip' parameter to start listing items at an
             /// offset.
-            /// If the requested number of items (specified using the 'top'
-            /// parameters) is larger than the server default page size,  only the first
-            /// default page size items will be returned and a '@nextLink' property will
-            /// be added to the response, linking to the rest of the request items.
-            /// The parameter 'maxPageSize' defines the maximum items count to return
-            /// in a single page.  MaxPageSize will be honored only if lower than
-            /// server's default page size.
+            /// If the requested number of items (specified using the 'top' parameters)
+            /// is larger than the server default page size,	only the first default page
+            /// size items will be returned and a '@nextLink' property will be added to
+            /// the response, linking to the rest of the request items.
+            /// The parameter 'maxPageSize' defines the maximum items count to return in
+            /// a single page.	MaxPageSize will be honored only if lower than server's
+            /// default page size.
             /// &lt;/p&gt;
             /// 
             /// &lt;p&gt;
@@ -1981,12 +1977,400 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
+            /// <param name='file'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<object> GetallcatalogitemsAsync(this IRecommendations operations, string modelId, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<object> GetallcatalogitemsAsync(this IRecommendations operations, string modelId, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetallcatalogitemsWithHttpMessagesAsync(modelId, top, skip, maxpagesize, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetallcatalogitemsWithHttpMessagesAsync(modelId, top, skip, maxpagesize, subscriptionKey, ocpApimSubscriptionKey, file, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// &lt;p&gt;
+            /// Deletes a set of items from the catalog. The set of items should be
+            /// passed in the request body, unless deleteAll is set to true.
+            /// &lt;p&gt;
+            /// &lt;p&gt;
+            /// Notes:&lt;br /&gt;
+            /// 1. Item Ids	can have a max length of 50 characters and allowed
+            /// characters are [A-z], [a-z], [0-9], [_] (Underscore), [-] (Dash).&lt;br
+            /// /&gt;
+            /// 2.	Deleting a catalog item will not impact the recommendations served by
+            /// previous builds. &lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// The request body should contain one line per item that must be deleted.
+            /// The first entry per line should contain the item id to be deleted. This
+            /// allows you to either pass just the item id, or in the same format that is
+            /// used to upload items to the catalog.
+            /// &lt;/p&gt;
+            /// 
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;
+            /// Example:
+            /// &lt;/b&gt;&lt;br /&gt;
+            /// PID2342&lt;br /&gt;
+            /// FI6342Z&lt;br /&gt;
+            /// PID2345&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model. Only letters (A-Z, a-z), numbers (0-9),
+            /// hyphens (-) and underscore (_) are allowed. Max length: 50
+            /// </param>
+            /// <param name='deleteAll'>
+            /// If set to true, the entire catalog is deleted, else items received in
+            /// request body are deleted. Set to false by default.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='file'>
+            /// A file containing one line per item that must be deleted.
+            /// </param>
+            public static object Deletecatalogitems(this IRecommendations operations, string modelId, bool? deleteAll = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).DeletecatalogitemsAsync(modelId, deleteAll, subscriptionKey, ocpApimSubscriptionKey, file), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// &lt;p&gt;
+            /// Deletes a set of items from the catalog. The set of items should be
+            /// passed in the request body, unless deleteAll is set to true.
+            /// &lt;p&gt;
+            /// &lt;p&gt;
+            /// Notes:&lt;br /&gt;
+            /// 1. Item Ids	can have a max length of 50 characters and allowed
+            /// characters are [A-z], [a-z], [0-9], [_] (Underscore), [-] (Dash).&lt;br
+            /// /&gt;
+            /// 2.	Deleting a catalog item will not impact the recommendations served by
+            /// previous builds. &lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// The request body should contain one line per item that must be deleted.
+            /// The first entry per line should contain the item id to be deleted. This
+            /// allows you to either pass just the item id, or in the same format that is
+            /// used to upload items to the catalog.
+            /// &lt;/p&gt;
+            /// 
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;
+            /// Example:
+            /// &lt;/b&gt;&lt;br /&gt;
+            /// PID2342&lt;br /&gt;
+            /// FI6342Z&lt;br /&gt;
+            /// PID2345&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model. Only letters (A-Z, a-z), numbers (0-9),
+            /// hyphens (-) and underscore (_) are allowed. Max length: 50
+            /// </param>
+            /// <param name='deleteAll'>
+            /// If set to true, the entire catalog is deleted, else items received in
+            /// request body are deleted. Set to false by default.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='file'>
+            /// A file containing one line per item that must be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<object> DeletecatalogitemsAsync(this IRecommendations operations, string modelId, bool? deleteAll = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.DeletecatalogitemsWithHttpMessagesAsync(modelId, deleteAll, subscriptionKey, ocpApimSubscriptionKey, file, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// &lt;p&gt;
+            /// Updates a set of items in the catalog.
+            /// &lt;p&gt;
+            /// &lt;p&gt;
+            /// The catalog items to be updated should be provided in the request
+            /// body.&lt;br /&gt;
+            /// If an item exists, it is updated with the new information
+            /// provided.&lt;br /&gt;
+            /// If an item was not previously in the catalog, it will be added to the
+            /// catalog.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// The format used is the same as the format for uploading catalog files:
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;
+            /// Additional details
+            /// &lt;/b&gt;&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;table border="1" cellpadding="10" cellspacing="10"
+            /// style="border-collapse:collapse;"&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Name &lt;/td&gt;
+            /// &lt;td&gt;Mandatory&lt;/td&gt;
+            /// &lt;td&gt;Type&lt;/td&gt;
+            /// &lt;td&gt;Description&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Item Id&lt;/td&gt;
+            /// &lt;td&gt;Yes&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 50&lt;/td&gt;
+            /// &lt;td&gt;Unique identifier of an item.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Item Name&lt;/td&gt;
+            /// &lt;td&gt;Yes&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters&lt;br&gt; Max length:
+            /// 255&lt;/td&gt;
+            /// &lt;td&gt;Item name.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Item Category&lt;/td&gt;
+            /// &lt;td&gt;Yes&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters&lt;br&gt; Max length:
+            /// 255&lt;/td&gt;
+            /// &lt;td&gt;Category to which this item belongs (e.g. Cooking Books,
+            /// Drama...); can be empty.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Description&lt;/td&gt;
+            /// &lt;td&gt;No, unless features are present (but can be
+            /// empty)&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length: 4000
+            /// &lt;/td&gt;
+            /// &lt;td&gt;Description of this item.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Features list&lt;/td&gt;
+            /// &lt;td&gt;No&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length:
+            /// 4000&lt;/td&gt;
+            /// &lt;td&gt;
+            /// Comma-separated list of feature-name=feature-value that can be
+            /// used to enhance model recommendation.&lt;br&gt;
+            /// Feature names max length: 255&lt;br&gt;
+            /// Feature-value max length: 255&lt;br&gt;
+            /// Feature values should be categorical.
+            /// &lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;/table&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// The request body should contain a file containing one line per item that
+            /// will be updated.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;Example without features&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+            /// AAA04294,Office Language Pack Online DwnLd,Office&lt;br&gt;
+            /// AAA04303,Minecraft Download Game,Games&lt;br&gt;
+            /// C9F00168,Kiruna Flip Cover,Accessories&lt;br&gt;
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// &lt;b&gt;Example with features&lt;/b&gt;&lt;br&gt;&lt;br /&gt;
+            /// AAA04294,Office Language Pack Online DwnLd,Office,,
+            /// softwaretype=productivity, compatibility=Windows&lt;br /&gt;
+            /// BAB04303,Minecraft DwnLd,Games,, softwaretype=gaming, compatibility=iOS,
+            /// agegroup=all&lt;br /&gt;
+            /// C9F00168,Kiruna Flip Cover,Accessories,, compatibility=lumia,
+            /// hardwaretype=mobile&lt;br /&gt;
+            /// &lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;Notes&lt;/b&gt;&lt;br /&gt;
+            /// 1. The maximum number of items supported is 100,000.&lt;br /&gt;
+            /// 2. The maximum size of data that can be sent in a single PATCH call for
+            /// this API is 200MB.&lt;br /&gt;
+            /// 3. Do not make concurrent calls to this API. Wait for one call to return
+            /// before making another call to this API.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model. Only letters (A-Z, a-z), numbers (0-9),
+            /// hyphens (-) and underscore (_) are allowed. Max length: 50
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='file'>
+            /// A file containing one line per item that will be updated.
+            /// </param>
+            public static object Updatecatalogitems(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).UpdatecatalogitemsAsync(modelId, subscriptionKey, ocpApimSubscriptionKey, file), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// &lt;p&gt;
+            /// Updates a set of items in the catalog.
+            /// &lt;p&gt;
+            /// &lt;p&gt;
+            /// The catalog items to be updated should be provided in the request
+            /// body.&lt;br /&gt;
+            /// If an item exists, it is updated with the new information
+            /// provided.&lt;br /&gt;
+            /// If an item was not previously in the catalog, it will be added to the
+            /// catalog.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// The format used is the same as the format for uploading catalog files:
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;
+            /// Additional details
+            /// &lt;/b&gt;&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;table border="1" cellpadding="10" cellspacing="10"
+            /// style="border-collapse:collapse;"&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Name &lt;/td&gt;
+            /// &lt;td&gt;Mandatory&lt;/td&gt;
+            /// &lt;td&gt;Type&lt;/td&gt;
+            /// &lt;td&gt;Description&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Item Id&lt;/td&gt;
+            /// &lt;td&gt;Yes&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 50&lt;/td&gt;
+            /// &lt;td&gt;Unique identifier of an item.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Item Name&lt;/td&gt;
+            /// &lt;td&gt;Yes&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters&lt;br&gt; Max length:
+            /// 255&lt;/td&gt;
+            /// &lt;td&gt;Item name.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Item Category&lt;/td&gt;
+            /// &lt;td&gt;Yes&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters&lt;br&gt; Max length:
+            /// 255&lt;/td&gt;
+            /// &lt;td&gt;Category to which this item belongs (e.g. Cooking Books,
+            /// Drama...); can be empty.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Description&lt;/td&gt;
+            /// &lt;td&gt;No, unless features are present (but can be
+            /// empty)&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length: 4000
+            /// &lt;/td&gt;
+            /// &lt;td&gt;Description of this item.&lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;tr&gt;
+            /// &lt;td&gt;Features list&lt;/td&gt;
+            /// &lt;td&gt;No&lt;/td&gt;
+            /// &lt;td&gt;Any alphanumeric characters &lt;br&gt; Max length:
+            /// 4000&lt;/td&gt;
+            /// &lt;td&gt;
+            /// Comma-separated list of feature-name=feature-value that can be
+            /// used to enhance model recommendation.&lt;br&gt;
+            /// Feature names max length: 255&lt;br&gt;
+            /// Feature-value max length: 255&lt;br&gt;
+            /// Feature values should be categorical.
+            /// &lt;/td&gt;
+            /// &lt;/tr&gt;
+            /// &lt;/table&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// The request body should contain a file containing one line per item that
+            /// will be updated.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;Example without features&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+            /// AAA04294,Office Language Pack Online DwnLd,Office&lt;br&gt;
+            /// AAA04303,Minecraft Download Game,Games&lt;br&gt;
+            /// C9F00168,Kiruna Flip Cover,Accessories&lt;br&gt;
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// &lt;b&gt;Example with features&lt;/b&gt;&lt;br&gt;&lt;br /&gt;
+            /// AAA04294,Office Language Pack Online DwnLd,Office,,
+            /// softwaretype=productivity, compatibility=Windows&lt;br /&gt;
+            /// BAB04303,Minecraft DwnLd,Games,, softwaretype=gaming, compatibility=iOS,
+            /// agegroup=all&lt;br /&gt;
+            /// C9F00168,Kiruna Flip Cover,Accessories,, compatibility=lumia,
+            /// hardwaretype=mobile&lt;br /&gt;
+            /// &lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// &lt;p&gt;
+            /// &lt;b&gt;Notes&lt;/b&gt;&lt;br /&gt;
+            /// 1. The maximum number of items supported is 100,000.&lt;br /&gt;
+            /// 2. The maximum size of data that can be sent in a single PATCH call for
+            /// this API is 200MB.&lt;br /&gt;
+            /// 3. Do not make concurrent calls to this API. Wait for one call to return
+            /// before making another call to this API.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// 
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model. Only letters (A-Z, a-z), numbers (0-9),
+            /// hyphens (-) and underscore (_) are allowed. Max length: 50
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='file'>
+            /// A file containing one line per item that will be updated.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<object> UpdatecatalogitemsAsync(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.UpdatecatalogitemsWithHttpMessagesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey, file, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2021,24 +2405,22 @@ namespace BuildIt.CognitiveServices
             /// &lt;tr&gt;
             /// &lt;td&gt;User Id&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;[A-z], [a-z], [0-9], [_]
-            /// &amp;#40;Underscore&amp;#41;, [-] &amp;#40;Dash&amp;#41;&lt;br&gt; Max
-            /// length: 255&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 255&lt;/td&gt;
             /// &lt;td&gt;Unique identifier of a user.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;Item Id&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;[A-z], [a-z], [0-9], [_]
-            /// &amp;#40;Underscore&amp;#41;, [-] &amp;#40;Dash&amp;#41;&lt;br&gt; Max
-            /// length: 50&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 50&lt;/td&gt;
             /// &lt;td&gt;Unique identifier of an item.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;Time&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;Date in format: YYYY-MM-DDTHH:MM:SS&lt;br /&gt;
-            /// (e.g. 2013-06-20T10:00:00)&lt;/td&gt;
+            /// &lt;td&gt;Date in format: YYYY-MM-DDTHH:MM:SS&lt;br /&gt; (e.g.
+            /// 2013-06-20T10:00:00)&lt;/td&gt;
             /// &lt;td&gt;Transaction time.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
@@ -2052,7 +2434,8 @@ namespace BuildIt.CognitiveServices
             /// - RemoveShopCart&lt;br /&gt;
             /// - Purchase&lt;br /&gt;
             /// &lt;/td&gt;
-            /// &lt;td&gt;The type of transaction.&lt;/td&gt;
+            /// &lt;td&gt;The type of transaction. If no usage event is defined,
+            /// Purchase will be assumed.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;/table&gt;
             /// &lt;br /&gt;
@@ -2079,8 +2462,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;p&gt;
             /// &lt;b&gt;Notes &lt;/b&gt;
             /// &lt;br /&gt;
-            /// You need to upload a catalog file before you start adding usage data
-            /// to your model. Only items in the catalog file will be used during the
+            /// You need to upload a catalog file before you start adding usage data to
+            /// your model. Only items in the catalog file will be used during the
             /// training phase. All other items will be ignored.
             /// &lt;br/&gt;
             /// The maximum size of data that can be sent in POST call for this API is
@@ -2099,8 +2482,8 @@ namespace BuildIt.CognitiveServices
             /// </param>
             /// <param name='usageDisplayName'>
             /// Display name of the usage data. e.g. "UsageFile1"
-            /// Only letters(A-Z, a-z), numbers(0-9), hyphens(-) and
-            /// underscore(_) are allowed. Max length: 50
+            /// Only letters(A-Z, a-z), numbers(0-9), hyphens(-) and underscore(_)
+            /// are allowed. Max length: 50
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -2145,24 +2528,22 @@ namespace BuildIt.CognitiveServices
             /// &lt;tr&gt;
             /// &lt;td&gt;User Id&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;[A-z], [a-z], [0-9], [_]
-            /// &amp;#40;Underscore&amp;#41;, [-] &amp;#40;Dash&amp;#41;&lt;br&gt; Max
-            /// length: 255&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 255&lt;/td&gt;
             /// &lt;td&gt;Unique identifier of a user.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;Item Id&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;[A-z], [a-z], [0-9], [_]
-            /// &amp;#40;Underscore&amp;#41;, [-] &amp;#40;Dash&amp;#41;&lt;br&gt; Max
-            /// length: 50&lt;/td&gt;
+            /// &lt;td&gt;[A-z], [a-z], [0-9], [_] &amp;#40;Underscore&amp;#41;, [-]
+            /// &amp;#40;Dash&amp;#41;&lt;br&gt; Max length: 50&lt;/td&gt;
             /// &lt;td&gt;Unique identifier of an item.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
             /// &lt;td&gt;Time&lt;/td&gt;
             /// &lt;td&gt;Yes&lt;/td&gt;
-            /// &lt;td&gt;Date in format: YYYY-MM-DDTHH:MM:SS&lt;br /&gt;
-            /// (e.g. 2013-06-20T10:00:00)&lt;/td&gt;
+            /// &lt;td&gt;Date in format: YYYY-MM-DDTHH:MM:SS&lt;br /&gt; (e.g.
+            /// 2013-06-20T10:00:00)&lt;/td&gt;
             /// &lt;td&gt;Transaction time.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;tr&gt;
@@ -2176,7 +2557,8 @@ namespace BuildIt.CognitiveServices
             /// - RemoveShopCart&lt;br /&gt;
             /// - Purchase&lt;br /&gt;
             /// &lt;/td&gt;
-            /// &lt;td&gt;The type of transaction.&lt;/td&gt;
+            /// &lt;td&gt;The type of transaction. If no usage event is defined,
+            /// Purchase will be assumed.&lt;/td&gt;
             /// &lt;/tr&gt;
             /// &lt;/table&gt;
             /// &lt;br /&gt;
@@ -2203,8 +2585,8 @@ namespace BuildIt.CognitiveServices
             /// &lt;p&gt;
             /// &lt;b&gt;Notes &lt;/b&gt;
             /// &lt;br /&gt;
-            /// You need to upload a catalog file before you start adding usage data
-            /// to your model. Only items in the catalog file will be used during the
+            /// You need to upload a catalog file before you start adding usage data to
+            /// your model. Only items in the catalog file will be used during the
             /// training phase. All other items will be ignored.
             /// &lt;br/&gt;
             /// The maximum size of data that can be sent in POST call for this API is
@@ -2223,8 +2605,8 @@ namespace BuildIt.CognitiveServices
             /// </param>
             /// <param name='usageDisplayName'>
             /// Display name of the usage data. e.g. "UsageFile1"
-            /// Only letters(A-Z, a-z), numbers(0-9), hyphens(-) and
-            /// underscore(_) are allowed. Max length: 50
+            /// Only letters(A-Z, a-z), numbers(0-9), hyphens(-) and underscore(_)
+            /// are allowed. Max length: 50
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -2241,52 +2623,6 @@ namespace BuildIt.CognitiveServices
             public static async System.Threading.Tasks.Task<object> UploadusagefileAsync(this IRecommendations operations, string modelId, string usageDisplayName, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), string file = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UploadusagefileWithHttpMessagesAsync(modelId, usageDisplayName, subscriptionKey, ocpApimSubscriptionKey, file, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes all usage file of a model
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static ErrorResponse Deleteallusagefiles(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).DeleteallusagefilesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes all usage file of a model
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<ErrorResponse> DeleteallusagefilesAsync(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.DeleteallusagefilesWithHttpMessagesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2339,29 +2675,13 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Return metrics such as precision and diversity for a given build.
-            /// 
-            /// As part of the precision and diversity metrics evaluation, the system
-            /// finds a sample of users, and then the transactions
-            /// for those users are split into two groups: the training dataset and the
-            /// test dataset. In order to get metrics, you should have
-            /// set the enableModelingInsights parameter to true at build time.
-            /// 
-            /// &lt;p&gt;
-            /// Learn more about build metrics on the offline evaluation section of
-            /// the &lt;a
-            /// href="https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-buildtypes/"&gt;Build
-            /// Types and Model Quality&lt;/a&gt; documentation.
-            /// &lt;/p&gt;
+            /// Deletes all usage file of a model
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='buildId'>
-            /// Format - int64. Unique identifier of the build
+            /// Unique identifier of the model.
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -2369,35 +2689,19 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static object Getbuildmetrics(this IRecommendations operations, string modelId, int buildId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static ErrorResponse Deleteallusagefiles(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetbuildmetricsAsync(modelId, buildId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).DeleteallusagefilesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Return metrics such as precision and diversity for a given build.
-            /// 
-            /// As part of the precision and diversity metrics evaluation, the system
-            /// finds a sample of users, and then the transactions
-            /// for those users are split into two groups: the training dataset and the
-            /// test dataset. In order to get metrics, you should have
-            /// set the enableModelingInsights parameter to true at build time.
-            /// 
-            /// &lt;p&gt;
-            /// Learn more about build metrics on the offline evaluation section of
-            /// the &lt;a
-            /// href="https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-buildtypes/"&gt;Build
-            /// Types and Model Quality&lt;/a&gt; documentation.
-            /// &lt;/p&gt;
+            /// Deletes all usage file of a model
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='buildId'>
-            /// Format - int64. Unique identifier of the build
+            /// Unique identifier of the model.
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -2408,9 +2712,125 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<object> GetbuildmetricsAsync(this IRecommendations operations, string modelId, int buildId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ErrorResponse> DeleteallusagefilesAsync(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetbuildmetricsWithHttpMessagesAsync(modelId, buildId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteallusagefilesWithHttpMessagesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Search for catalog items.
+            /// 
+            /// Retrieves a list of catalog items using the ids provided or items that
+            /// contain the given search term.
+            /// The 'ids' and 'searchTerm' parameters cannot be used together. If both are
+            /// provided, only the searchTerm parameter will be ignored.
+            /// If provided, the searchTerm parameters must be at least 3 characters long.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model
+            /// </param>
+            /// <param name='ids'>
+            /// The ids of the catalog items to retrieve
+            /// </param>
+            /// <param name='searchTerm'>
+            /// The search term to filter by catalog items by
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static object Getspecificcatalogitemsbysearchterm(this IRecommendations operations, string modelId, string ids = default(string), string searchTerm = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetspecificcatalogitemsbysearchtermAsync(modelId, ids, searchTerm, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Search for catalog items.
+            /// 
+            /// Retrieves a list of catalog items using the ids provided or items that
+            /// contain the given search term.
+            /// The 'ids' and 'searchTerm' parameters cannot be used together. If both are
+            /// provided, only the searchTerm parameter will be ignored.
+            /// If provided, the searchTerm parameters must be at least 3 characters long.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model
+            /// </param>
+            /// <param name='ids'>
+            /// The ids of the catalog items to retrieve
+            /// </param>
+            /// <param name='searchTerm'>
+            /// The search term to filter by catalog items by
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<object> GetspecificcatalogitemsbysearchtermAsync(this IRecommendations operations, string modelId, string ids = default(string), string searchTerm = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetspecificcatalogitemsbysearchtermWithHttpMessagesAsync(modelId, ids, searchTerm, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the details of all rules for a model.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static object Getallbusinessrules(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetallbusinessrulesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the details of all rules for a model.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<object> GetallbusinessrulesAsync(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetallbusinessrulesWithHttpMessagesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2418,28 +2838,28 @@ namespace BuildIt.CognitiveServices
 
             /// <summary>
             /// &lt;p&gt;
-            /// Adds a new business rule for a model.     These are the types of rules
+            /// Adds a new business rule for a model.		 These are the types of rules
             /// supported: &lt;br /&gt;
             /// &lt;/p&gt;
             /// &lt;p&gt;
             /// &lt;b&gt;BlockList&lt;/b&gt; - BlockList enables you to provide a list
             /// of items that you do not want to return in the recommendation results.
             /// &lt;br /&gt;
-            /// &lt;b&gt;FeatureBlockList&lt;/b&gt; - Feature BlockList enables
-            /// you to block items based on the values of its features. Do not send more
-            /// than 1000 items in a single blocklist rule or your call may timeout. If
-            /// you need to block more than 1000 items, you can make several blocklist
+            /// &lt;b&gt;FeatureBlockList&lt;/b&gt; - Feature BlockList enables you to
+            /// block items based on the values of its features. Do not send more than
+            /// 1000 items in a single blocklist rule or your call may timeout. If you
+            /// need to block more than 1000 items, you can make several blocklist
             /// calls.&lt;br /&gt;
             /// &lt;b&gt;Upsale&lt;/b&gt; - Upsale enables you to enforce items to
             /// return in the recommendation results.&lt;br/&gt;
-            /// &lt;b&gt;WhiteList&lt;/b&gt; - White List enables you to only
-            /// suggest recommendations from a list of items.
+            /// &lt;b&gt;WhiteList&lt;/b&gt; - White List enables you to only suggest
+            /// recommendations from a list of items.
             /// &lt;br /&gt;
-            /// &lt;b&gt;FeatureWhiteList&lt;/b&gt; - Feature White List enables
-            /// you to only recommend items that have specific feature values.
+            /// &lt;b&gt;FeatureWhiteList&lt;/b&gt; - Feature White List enables you
+            /// to only recommend items that have specific feature values.
             /// &lt;br /&gt;
-            /// &lt;b&gt;PerSeedBlockList&lt;/b&gt; - Per Seed Block List enables
-            /// you to provide per item a list of items that cannot be returned as
+            /// &lt;b&gt;PerSeedBlockList&lt;/b&gt; - Per Seed Block List enables you
+            /// to provide per item a list of items that cannot be returned as
             /// recommendation results.
             /// &lt;br /&gt;
             /// &lt;/p&gt;
@@ -2468,7 +2888,7 @@ namespace BuildIt.CognitiveServices
             /// "type": "featureBlockList",
             /// "parameters": {
             /// "featureBlockList": { "name": "Movie_category",
-            /// "Values":["Adult","Drama"] }
+            /// "values":["Adult","Drama"] }
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2479,7 +2899,7 @@ namespace BuildIt.CognitiveServices
             /// "type": "upsale",
             /// "parameters": {
             /// "upsale":
-            /// {"ItemsToUpsale":["2406E770-769C-4189-89DE-1C9283F93A96"],"NumberOfItemsToUpsale":5}
+            /// {"itemIds":["2406E770-769C-4189-89DE-1C9283F93A96"],"NumberOfItemsToUpsale":5}
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2501,8 +2921,7 @@ namespace BuildIt.CognitiveServices
             /// {
             /// "type": "featureWhiteList",
             /// "parameters": {
-            /// "featureWhiteList": {"Name":"Movie_rating","Values":["PG13",
-            /// "PG"]}
+            /// "featureWhiteList": {"name":"Movie_rating","values":["PG13", "PG"]}
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2513,8 +2932,8 @@ namespace BuildIt.CognitiveServices
             /// {
             /// "type": "perSeedBlockList",
             /// "parameters": {
-            /// "perSeedBlockList": {"SeedItems":["9949"],
-            /// "ItemsToExclude":["9862","8158","8244"]}
+            /// "perSeedBlockList": {"seedItems":["9949"],
+            /// "itemsToExclude":["9862","8158","8244"]}
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2542,28 +2961,28 @@ namespace BuildIt.CognitiveServices
 
             /// <summary>
             /// &lt;p&gt;
-            /// Adds a new business rule for a model.     These are the types of rules
+            /// Adds a new business rule for a model.		 These are the types of rules
             /// supported: &lt;br /&gt;
             /// &lt;/p&gt;
             /// &lt;p&gt;
             /// &lt;b&gt;BlockList&lt;/b&gt; - BlockList enables you to provide a list
             /// of items that you do not want to return in the recommendation results.
             /// &lt;br /&gt;
-            /// &lt;b&gt;FeatureBlockList&lt;/b&gt; - Feature BlockList enables
-            /// you to block items based on the values of its features. Do not send more
-            /// than 1000 items in a single blocklist rule or your call may timeout. If
-            /// you need to block more than 1000 items, you can make several blocklist
+            /// &lt;b&gt;FeatureBlockList&lt;/b&gt; - Feature BlockList enables you to
+            /// block items based on the values of its features. Do not send more than
+            /// 1000 items in a single blocklist rule or your call may timeout. If you
+            /// need to block more than 1000 items, you can make several blocklist
             /// calls.&lt;br /&gt;
             /// &lt;b&gt;Upsale&lt;/b&gt; - Upsale enables you to enforce items to
             /// return in the recommendation results.&lt;br/&gt;
-            /// &lt;b&gt;WhiteList&lt;/b&gt; - White List enables you to only
-            /// suggest recommendations from a list of items.
+            /// &lt;b&gt;WhiteList&lt;/b&gt; - White List enables you to only suggest
+            /// recommendations from a list of items.
             /// &lt;br /&gt;
-            /// &lt;b&gt;FeatureWhiteList&lt;/b&gt; - Feature White List enables
-            /// you to only recommend items that have specific feature values.
+            /// &lt;b&gt;FeatureWhiteList&lt;/b&gt; - Feature White List enables you
+            /// to only recommend items that have specific feature values.
             /// &lt;br /&gt;
-            /// &lt;b&gt;PerSeedBlockList&lt;/b&gt; - Per Seed Block List enables
-            /// you to provide per item a list of items that cannot be returned as
+            /// &lt;b&gt;PerSeedBlockList&lt;/b&gt; - Per Seed Block List enables you
+            /// to provide per item a list of items that cannot be returned as
             /// recommendation results.
             /// &lt;br /&gt;
             /// &lt;/p&gt;
@@ -2592,7 +3011,7 @@ namespace BuildIt.CognitiveServices
             /// "type": "featureBlockList",
             /// "parameters": {
             /// "featureBlockList": { "name": "Movie_category",
-            /// "Values":["Adult","Drama"] }
+            /// "values":["Adult","Drama"] }
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2603,7 +3022,7 @@ namespace BuildIt.CognitiveServices
             /// "type": "upsale",
             /// "parameters": {
             /// "upsale":
-            /// {"ItemsToUpsale":["2406E770-769C-4189-89DE-1C9283F93A96"],"NumberOfItemsToUpsale":5}
+            /// {"itemIds":["2406E770-769C-4189-89DE-1C9283F93A96"],"NumberOfItemsToUpsale":5}
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2625,8 +3044,7 @@ namespace BuildIt.CognitiveServices
             /// {
             /// "type": "featureWhiteList",
             /// "parameters": {
-            /// "featureWhiteList": {"Name":"Movie_rating","Values":["PG13",
-            /// "PG"]}
+            /// "featureWhiteList": {"name":"Movie_rating","values":["PG13", "PG"]}
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2637,8 +3055,8 @@ namespace BuildIt.CognitiveServices
             /// {
             /// "type": "perSeedBlockList",
             /// "parameters": {
-            /// "perSeedBlockList": {"SeedItems":["9949"],
-            /// "ItemsToExclude":["9862","8158","8244"]}
+            /// "perSeedBlockList": {"seedItems":["9949"],
+            /// "itemsToExclude":["9862","8158","8244"]}
             /// }
             /// }
             /// &lt;/PRE&gt;
@@ -2717,13 +3135,16 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Retrieves the details of all rules for a model.
+            /// Retrieves information about a rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
             /// Unique identifier of the model
+            /// </param>
+            /// <param name='ruleId'>
+            /// Format - int64. Unique identifier of the rule
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -2731,19 +3152,22 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static object Getallbusinessrules(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static object Getbusinessrule(this IRecommendations operations, string modelId, int ruleId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetallbusinessrulesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetbusinessruleAsync(modelId, ruleId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Retrieves the details of all rules for a model.
+            /// Retrieves information about a rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
             /// Unique identifier of the model
+            /// </param>
+            /// <param name='ruleId'>
+            /// Format - int64. Unique identifier of the rule
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -2754,9 +3178,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<object> GetallbusinessrulesAsync(this IRecommendations operations, string modelId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<object> GetbusinessruleAsync(this IRecommendations operations, string modelId, int ruleId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetallbusinessrulesWithHttpMessagesAsync(modelId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetbusinessruleWithHttpMessagesAsync(modelId, ruleId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2815,130 +3239,12 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Retrieves information about a rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='ruleId'>
-            /// Format - int64. Unique identifier of the rule
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static object Getbusinessrule(this IRecommendations operations, string modelId, int ruleId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetbusinessruleAsync(modelId, ruleId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves information about a rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='ruleId'>
-            /// Format - int64. Unique identifier of the rule
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<object> GetbusinessruleAsync(this IRecommendations operations, string modelId, int ruleId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.GetbusinessruleWithHttpMessagesAsync(modelId, ruleId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Search for catalog items.
-            /// 
-            /// Retrieves a list of catalog items using the ids provided or items that
-            /// contain the given search term.
-            /// The 'ids' and 'searchTerm' parameters cannot be used together. If both are
-            /// provided, only the searchTerm parameter will be ignored.
-            /// If provided, the searchTerm parameters must be at least 3 characters long.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='ids'>
-            /// The ids of the catalog items to retrieve
-            /// </param>
-            /// <param name='searchTerm'>
-            /// The search term to filter by catalog items by
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static object Getspecificcatalogitemsbysearchterm(this IRecommendations operations, string modelId, string ids = default(string), string searchTerm = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetspecificcatalogitemsbysearchtermAsync(modelId, ids, searchTerm, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Search for catalog items.
-            /// 
-            /// Retrieves a list of catalog items using the ids provided or items that
-            /// contain the given search term.
-            /// The 'ids' and 'searchTerm' parameters cannot be used together. If both are
-            /// provided, only the searchTerm parameter will be ignored.
-            /// If provided, the searchTerm parameters must be at least 3 characters long.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='ids'>
-            /// The ids of the catalog items to retrieve
-            /// </param>
-            /// <param name='searchTerm'>
-            /// The search term to filter by catalog items by
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<object> GetspecificcatalogitemsbysearchtermAsync(this IRecommendations operations, string modelId, string ids = default(string), string searchTerm = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.GetspecificcatalogitemsbysearchtermWithHttpMessagesAsync(modelId, ids, searchTerm, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Upload a usage event to a model. Set buildId to "-1", to default to the
-            /// Active Build of the model.
+            /// Upload a usage event to a model.
+            /// If buildId is set to "-1",	the event is ingested against the Active
+            /// Build of the model.
+            /// Set the buildId is set to null or 0, the events are ingested against
+            /// the Active build, if Active build doesn't
+            /// exist, the events are not associated with any build.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2961,8 +3267,12 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Upload a usage event to a model. Set buildId to "-1", to default to the
-            /// Active Build of the model.
+            /// Upload a usage event to a model.
+            /// If buildId is set to "-1",	the event is ingested against the Active
+            /// Build of the model.
+            /// Set the buildId is set to null or 0, the events are ingested against
+            /// the Active build, if Active build doesn't
+            /// exist, the events are not associated with any build.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2991,16 +3301,29 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Deletes a specific usage file
+            /// Return metrics such as precision and diversity for a given build.
+            /// 
+            /// As part of the precision and diversity metrics evaluation, the system
+            /// finds a sample of users, and then the transactions
+            /// for those users are split into two groups: the training dataset and the
+            /// test dataset. In order to get metrics, you should have
+            /// set the enableModelingInsights parameter to true at build time.
+            /// 
+            /// &lt;p&gt;
+            /// Learn more about build metrics on the offline evaluation section of the
+            /// &lt;a
+            /// href="https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-buildtypes/"&gt;Build
+            /// Types and Model Quality&lt;/a&gt; documentation.
+            /// &lt;/p&gt;
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
-            /// Unique identifier of the model.
+            /// Unique identifier of the model
             /// </param>
-            /// <param name='fileId'>
-            /// The usage file id to delete
+            /// <param name='buildId'>
+            /// Format - int64. Unique identifier of the build
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -3008,22 +3331,35 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static ErrorResponse Deleteusagefile(this IRecommendations operations, string modelId, string fileId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static object Getbuildmetrics(this IRecommendations operations, string modelId, int buildId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).DeleteusagefileAsync(modelId, fileId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetbuildmetricsAsync(modelId, buildId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a specific usage file
+            /// Return metrics such as precision and diversity for a given build.
+            /// 
+            /// As part of the precision and diversity metrics evaluation, the system
+            /// finds a sample of users, and then the transactions
+            /// for those users are split into two groups: the training dataset and the
+            /// test dataset. In order to get metrics, you should have
+            /// set the enableModelingInsights parameter to true at build time.
+            /// 
+            /// &lt;p&gt;
+            /// Learn more about build metrics on the offline evaluation section of the
+            /// &lt;a
+            /// href="https://azure.microsoft.com/en-us/documentation/articles/cognitive-services-recommendations-buildtypes/"&gt;Build
+            /// Types and Model Quality&lt;/a&gt; documentation.
+            /// &lt;/p&gt;
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='modelId'>
-            /// Unique identifier of the model.
+            /// Unique identifier of the model
             /// </param>
-            /// <param name='fileId'>
-            /// The usage file id to delete
+            /// <param name='buildId'>
+            /// Format - int64. Unique identifier of the build
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -3034,9 +3370,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ErrorResponse> DeleteusagefileAsync(this IRecommendations operations, string modelId, string fileId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<object> GetbuildmetricsAsync(this IRecommendations operations, string modelId, int buildId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.DeleteusagefileWithHttpMessagesAsync(modelId, fileId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetbuildmetricsWithHttpMessagesAsync(modelId, buildId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -3095,6 +3431,58 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
+            /// Deletes a specific usage file
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model.
+            /// </param>
+            /// <param name='fileId'>
+            /// The usage file id to delete
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static ErrorResponse Deleteusagefile(this IRecommendations operations, string modelId, string fileId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).DeleteusagefileAsync(modelId, fileId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a specific usage file
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model.
+            /// </param>
+            /// <param name='fileId'>
+            /// The usage file id to delete
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ErrorResponse> DeleteusagefileAsync(this IRecommendations operations, string modelId, string fileId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.DeleteusagefileWithHttpMessagesAsync(modelId, fileId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get Feature info from given modelId and rankBuildId
             /// </summary>
             /// <param name='operations'>
@@ -3147,6 +3535,160 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
+            /// Submits a Batch Execution job.
+            /// &lt;p&gt;
+            /// There are situations when you need to get recommendations for more than
+            /// one item at a time. For instance, you may be interested in creating a
+            /// recommendations cache or even doing an analysis on the types of
+            /// recommendations you are getting.
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// Batch scoring operations are asynchronous operations.	This API allows you
+            /// to kick start the scoring operation.	Once the operation is started, you
+            /// need to wait for it to complete before you can gather the results of the
+            /// operation.
+            /// The response from the creation call with contain a header called
+            /// &lt;i&gt;Operation-Location&lt;/i&gt;. You can use this operation
+            /// location to query the status of the batch processing.
+            /// See the "Get operation status" API.
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// &lt;b&gt;Sample request body&lt;/b&gt;
+            /// &lt;/p&gt;
+            /// &lt;pre&gt;
+            /// {
+            /// "input": {
+            /// "authenticationType": "PublicOrSas",
+            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
+            /// "relativeLocation": "container1/batchInput.json",
+            /// "sasBlobToken": "?sv=2015-07_restofToken_...&amp;sp=rw"
+            /// },
+            /// "output": {
+            /// "authenticationType": "PublicOrSas",
+            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
+            /// "relativeLocation": "container1/batchOutput.json ",
+            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
+            /// },
+            /// "error": {
+            /// "authenticationType": "PublicOrSas",
+            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
+            /// "relativeLocation": "container1/errors.txt",
+            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
+            /// },
+            /// "job": {
+            /// "apiName": "ItemRecommend",
+            /// "modelId": "9ac12a0a-1add-4bdc-bf42-c6517942b3a6",
+            /// "buildId": 1015703,
+            /// "numberOfResults": 10,
+            /// "includeMetadata": true,
+            /// "minimalScore": 0.0
+            /// }
+            /// }
+            /// &lt;/pre&gt;
+            /// &lt;p&gt;
+            /// &lt;b&gt;	Limitations&lt;/b&gt;&lt;br /&gt;
+            /// Currently only one scoring job is allowed at a time.&lt;br /&gt;
+            /// A batch job input file cannot be more than 2MB.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='batchJobsRequestInfo'>
+            /// Parameters for the new batch job
+            /// </param>
+            public static ErrorResponse Startbatchjob(this IRecommendations operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchJobsRequestInfo batchJobsRequestInfo = default(BatchJobsRequestInfo))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).StartbatchjobAsync(subscriptionKey, ocpApimSubscriptionKey, batchJobsRequestInfo), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Submits a Batch Execution job.
+            /// &lt;p&gt;
+            /// There are situations when you need to get recommendations for more than
+            /// one item at a time. For instance, you may be interested in creating a
+            /// recommendations cache or even doing an analysis on the types of
+            /// recommendations you are getting.
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// Batch scoring operations are asynchronous operations.	This API allows you
+            /// to kick start the scoring operation.	Once the operation is started, you
+            /// need to wait for it to complete before you can gather the results of the
+            /// operation.
+            /// The response from the creation call with contain a header called
+            /// &lt;i&gt;Operation-Location&lt;/i&gt;. You can use this operation
+            /// location to query the status of the batch processing.
+            /// See the "Get operation status" API.
+            /// &lt;/p&gt;
+            /// &lt;p&gt;
+            /// &lt;b&gt;Sample request body&lt;/b&gt;
+            /// &lt;/p&gt;
+            /// &lt;pre&gt;
+            /// {
+            /// "input": {
+            /// "authenticationType": "PublicOrSas",
+            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
+            /// "relativeLocation": "container1/batchInput.json",
+            /// "sasBlobToken": "?sv=2015-07_restofToken_...&amp;sp=rw"
+            /// },
+            /// "output": {
+            /// "authenticationType": "PublicOrSas",
+            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
+            /// "relativeLocation": "container1/batchOutput.json ",
+            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
+            /// },
+            /// "error": {
+            /// "authenticationType": "PublicOrSas",
+            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
+            /// "relativeLocation": "container1/errors.txt",
+            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
+            /// },
+            /// "job": {
+            /// "apiName": "ItemRecommend",
+            /// "modelId": "9ac12a0a-1add-4bdc-bf42-c6517942b3a6",
+            /// "buildId": 1015703,
+            /// "numberOfResults": 10,
+            /// "includeMetadata": true,
+            /// "minimalScore": 0.0
+            /// }
+            /// }
+            /// &lt;/pre&gt;
+            /// &lt;p&gt;
+            /// &lt;b&gt;	Limitations&lt;/b&gt;&lt;br /&gt;
+            /// Currently only one scoring job is allowed at a time.&lt;br /&gt;
+            /// A batch job input file cannot be more than 2MB.&lt;br /&gt;
+            /// &lt;/p&gt;
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='batchJobsRequestInfo'>
+            /// Parameters for the new batch job
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ErrorResponse> StartbatchjobAsync(this IRecommendations operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchJobsRequestInfo batchJobsRequestInfo = default(BatchJobsRequestInfo), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.StartbatchjobWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, batchJobsRequestInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get information about an ongoing batch jobs.
             /// </summary>
             /// <param name='operations'>
@@ -3191,160 +3733,6 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Submits a Batch Execution job.
-            /// &lt;p&gt;
-            /// There are situations when you need to get recommendations for more than
-            /// one item at a time. For instance, you may be interested in creating a
-            /// recommendations cache or even doing an analysis on the types of
-            /// recommendations you are getting.
-            /// &lt;/p&gt;
-            /// &lt;p&gt;
-            /// Batch scoring operations are asynchronous operations.  This API allows you
-            /// to kick start the scoring operation.  Once the operation is started, you
-            /// need to wait for it to complete before you can gather the results of the
-            /// operation.
-            /// The response from the creation call with contain a header called
-            /// &lt;i&gt;Operation-Location&lt;/i&gt;. You can use this operation
-            /// location to query the status of the batch processing.
-            /// See the "Get operation status" API.
-            /// &lt;/p&gt;
-            /// &lt;p&gt;
-            /// &lt;b&gt;Sample request body&lt;/b&gt;
-            /// &lt;/p&gt;
-            /// &lt;pre&gt;
-            /// {
-            /// "input": {
-            /// "authenticationType": "PublicOrSas",
-            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
-            /// "relativeLocation": "container1/batchInput.json",
-            /// "sasBlobToken": "?sv=2015-07_restofToken_...&amp;sp=rw"
-            /// },
-            /// "output": {
-            /// "authenticationType": "PublicOrSas",
-            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
-            /// "relativeLocation": "container1/batchOutput.json ",
-            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
-            /// },
-            /// "error": {
-            /// "authenticationType": "PublicOrSas",
-            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
-            /// "relativeLocation": "container1/errors.txt",
-            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
-            /// },
-            /// "job": {
-            /// "apiName": "ItemRecommend",
-            /// "modelId": "9ac12a0a-1add-4bdc-bf42-c6517942b3a6",
-            /// "buildId": 1015703,
-            /// "numberOfResults": 10,
-            /// "includeMetadata": true,
-            /// "minimalScore": 0.0
-            /// }
-            /// }
-            /// &lt;/pre&gt;
-            /// &lt;p&gt;
-            /// &lt;b&gt;  Limitations&lt;/b&gt;&lt;br /&gt;
-            /// Currently only one scoring job is allowed at a time.&lt;br /&gt;
-            /// A batch job input file cannot be more than 2MB.&lt;br /&gt;
-            /// &lt;/p&gt;
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='batchJobsRequestInfo'>
-            /// Parameters for the new batch job
-            /// </param>
-            public static ErrorResponse Startbatchjob(this IRecommendations operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchJobsRequestInfo batchJobsRequestInfo = default(BatchJobsRequestInfo))
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).StartbatchjobAsync(subscriptionKey, ocpApimSubscriptionKey, batchJobsRequestInfo), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Submits a Batch Execution job.
-            /// &lt;p&gt;
-            /// There are situations when you need to get recommendations for more than
-            /// one item at a time. For instance, you may be interested in creating a
-            /// recommendations cache or even doing an analysis on the types of
-            /// recommendations you are getting.
-            /// &lt;/p&gt;
-            /// &lt;p&gt;
-            /// Batch scoring operations are asynchronous operations.  This API allows you
-            /// to kick start the scoring operation.  Once the operation is started, you
-            /// need to wait for it to complete before you can gather the results of the
-            /// operation.
-            /// The response from the creation call with contain a header called
-            /// &lt;i&gt;Operation-Location&lt;/i&gt;. You can use this operation
-            /// location to query the status of the batch processing.
-            /// See the "Get operation status" API.
-            /// &lt;/p&gt;
-            /// &lt;p&gt;
-            /// &lt;b&gt;Sample request body&lt;/b&gt;
-            /// &lt;/p&gt;
-            /// &lt;pre&gt;
-            /// {
-            /// "input": {
-            /// "authenticationType": "PublicOrSas",
-            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
-            /// "relativeLocation": "container1/batchInput.json",
-            /// "sasBlobToken": "?sv=2015-07_restofToken_...&amp;sp=rw"
-            /// },
-            /// "output": {
-            /// "authenticationType": "PublicOrSas",
-            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
-            /// "relativeLocation": "container1/batchOutput.json ",
-            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
-            /// },
-            /// "error": {
-            /// "authenticationType": "PublicOrSas",
-            /// "baseLocation": "https://mystorage1.blob.core.windows.net/",
-            /// "relativeLocation": "container1/errors.txt",
-            /// "sasBlobToken": "?sv=2015-07_restofToken_...4Z&amp;sp=rw"
-            /// },
-            /// "job": {
-            /// "apiName": "ItemRecommend",
-            /// "modelId": "9ac12a0a-1add-4bdc-bf42-c6517942b3a6",
-            /// "buildId": 1015703,
-            /// "numberOfResults": 10,
-            /// "includeMetadata": true,
-            /// "minimalScore": 0.0
-            /// }
-            /// }
-            /// &lt;/pre&gt;
-            /// &lt;p&gt;
-            /// &lt;b&gt;  Limitations&lt;/b&gt;&lt;br /&gt;
-            /// Currently only one scoring job is allowed at a time.&lt;br /&gt;
-            /// A batch job input file cannot be more than 2MB.&lt;br /&gt;
-            /// &lt;/p&gt;
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='batchJobsRequestInfo'>
-            /// Parameters for the new batch job
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<ErrorResponse> StartbatchjobAsync(this IRecommendations operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), BatchJobsRequestInfo batchJobsRequestInfo = default(BatchJobsRequestInfo), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.StartbatchjobWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, batchJobsRequestInfo, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// &lt;p&gt;Retrieves the statistics about the data used to create a given
             /// build of the model. &lt;/p&gt;
             /// 
@@ -3375,8 +3763,8 @@ namespace BuildIt.CognitiveServices
             /// build
             /// &lt;/p&gt;
             /// &lt;p&gt;
-            /// &lt;b&gt;numberOfUsersInBuild&lt;/b&gt;&lt;br /&gt; Number of users
-            /// that were actually used for modelling in the specified build
+            /// &lt;b&gt;numberOfUsersInBuild&lt;/b&gt;&lt;br /&gt; Number of users that
+            /// were actually used for modelling in the specified build
             /// &lt;/p&gt;
             /// &lt;p&gt;
             /// &lt;b&gt;numberOfUsageRecordsInBuild&lt;/b&gt;&lt;br /&gt; Number of
@@ -3439,8 +3827,8 @@ namespace BuildIt.CognitiveServices
             /// build
             /// &lt;/p&gt;
             /// &lt;p&gt;
-            /// &lt;b&gt;numberOfUsersInBuild&lt;/b&gt;&lt;br /&gt; Number of users
-            /// that were actually used for modelling in the specified build
+            /// &lt;b&gt;numberOfUsersInBuild&lt;/b&gt;&lt;br /&gt; Number of users that
+            /// were actually used for modelling in the specified build
             /// &lt;/p&gt;
             /// &lt;p&gt;
             /// &lt;b&gt;numberOfUsageRecordsInBuild&lt;/b&gt;&lt;br /&gt; Number of
@@ -3473,6 +3861,74 @@ namespace BuildIt.CognitiveServices
             public static async System.Threading.Tasks.Task<object> GetbuilddatastatisticsAsync(this IRecommendations operations, string modelId, int buildId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetbuilddatastatisticsWithHttpMessagesAsync(modelId, buildId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets statistics about the user interactions (usage) during a given time
+            /// interval for a particular model. This can be helpful in order to
+            /// calculate conversion rates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model
+            /// </param>
+            /// <param name='interval'>
+            /// It specifies the start and end date in ISO 8601 format. For instance:
+            /// "2007-03-01T13:00:00Z/2008-05-11T15:30:00Z"
+            /// </param>
+            /// <param name='eventTypes'>
+            /// Comma separated list of "EventTypes". Supported event types: Click,
+            /// RecommendationClick, AddShopCart, RemoveShopCart, Purchase.
+            /// Empty string or null to get all events.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static object Getusagestatisticsforamodel(this IRecommendations operations, string modelId, string interval, string eventTypes, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetusagestatisticsforamodelAsync(modelId, interval, eventTypes, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets statistics about the user interactions (usage) during a given time
+            /// interval for a particular model. This can be helpful in order to
+            /// calculate conversion rates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='modelId'>
+            /// Unique identifier of the model
+            /// </param>
+            /// <param name='interval'>
+            /// It specifies the start and end date in ISO 8601 format. For instance:
+            /// "2007-03-01T13:00:00Z/2008-05-11T15:30:00Z"
+            /// </param>
+            /// <param name='eventTypes'>
+            /// Comma separated list of "EventTypes". Supported event types: Click,
+            /// RecommendationClick, AddShopCart, RemoveShopCart, Purchase.
+            /// Empty string or null to get all events.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<object> GetusagestatisticsforamodelAsync(this IRecommendations operations, string modelId, string interval, string eventTypes, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetusagestatisticsforamodelWithHttpMessagesAsync(modelId, interval, eventTypes, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -3545,74 +4001,6 @@ namespace BuildIt.CognitiveServices
             public static async System.Threading.Tasks.Task<object> GetusagestatisticsforabuildAsync(this IRecommendations operations, string modelId, int buildId, string interval, string eventTypes, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetusagestatisticsforabuildWithHttpMessagesAsync(modelId, buildId, interval, eventTypes, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets statistics about the user interactions (usage) during a given time
-            /// interval for a particular model. This can be helpful in order to
-            /// calculate conversion rates.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='interval'>
-            /// It specifies the start and end date in ISO 8601 format. For instance:
-            /// "2007-03-01T13:00:00Z/2008-05-11T15:30:00Z"
-            /// </param>
-            /// <param name='eventTypes'>
-            /// Comma separated list of "EventTypes". Supported event types: Click,
-            /// RecommendationClick, AddShopCart, RemoveShopCart, Purchase.
-            /// Empty string or null to get all events.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static object Getusagestatisticsforamodel(this IRecommendations operations, string modelId, string interval, string eventTypes, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendations)s).GetusagestatisticsforamodelAsync(modelId, interval, eventTypes, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets statistics about the user interactions (usage) during a given time
-            /// interval for a particular model. This can be helpful in order to
-            /// calculate conversion rates.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='modelId'>
-            /// Unique identifier of the model
-            /// </param>
-            /// <param name='interval'>
-            /// It specifies the start and end date in ISO 8601 format. For instance:
-            /// "2007-03-01T13:00:00Z/2008-05-11T15:30:00Z"
-            /// </param>
-            /// <param name='eventTypes'>
-            /// Comma separated list of "EventTypes". Supported event types: Click,
-            /// RecommendationClick, AddShopCart, RemoveShopCart, Purchase.
-            /// Empty string or null to get all events.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<object> GetusagestatisticsforamodelAsync(this IRecommendations operations, string modelId, string interval, string eventTypes, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.GetusagestatisticsforamodelWithHttpMessagesAsync(modelId, interval, eventTypes, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -148,71 +148,11 @@ namespace BuildIt.CognitiveServices
             CustomInitialize();
         }    
         /// <summary>
-        /// A job Id will be returned for the Image content posted on this endpoint.
-        /// 
-        /// Once the content is evaluated against the Workflow provided the review
-        /// will be created or ignored based on the workflow expression.
-        /// 
-        /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
-        /// 
-        /// &lt;p&gt;
-        /// &lt;h4&gt;Job Completion CallBack Sample&lt;/h4&gt;&lt;br/&gt;
-        /// 
-        /// {&lt;br/&gt;
-        /// "JobId": "&lt;Job Id&gt;,&lt;br/&gt;
-        /// "ReviewId": "&lt;Review Id, if the Job resulted in a Review to be
-        /// created&gt;",&lt;br/&gt;
-        /// "WorkFlowId": "default",&lt;br/&gt;
-        /// "Status": "&lt;This will be one of Complete, InProgress,
-        /// Error&gt;",&lt;br/&gt;
-        /// "ContentType": "Image",&lt;br/&gt;
-        /// "ContentId": "&lt;This is the ContentId that was specified on
-        /// input&gt;",&lt;br/&gt;
-        /// "CallBackType": "Job",&lt;br/&gt;
-        /// "Metadata": {&lt;br/&gt;
-        /// "adultscore": "0.xxx",&lt;br/&gt;
-        /// "a": "False",&lt;br/&gt;
-        /// "racyscore": "0.xxx",&lt;br/&gt;
-        /// "r": "True"&lt;br/&gt;
-        /// }&lt;br/&gt;
-        /// }&lt;br/&gt;
-        /// 
-        /// &lt;/p&gt;
-        /// &lt;p&gt;
-        /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;&lt;br/&gt;
-        /// 
-        /// {
-        /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
-        /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
-        /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
-        /// "CallBackType": "Review",&lt;br/&gt;
-        /// "ContentId": "&lt;The ContentId that was specified
-        /// input&gt;",&lt;br/&gt;
-        /// "Metadata": {&lt;br/&gt;
-        /// "adultscore": "0.xxx",
-        /// "a": "False",&lt;br/&gt;
-        /// "racyscore": "0.xxx",&lt;br/&gt;
-        /// "r": "True"&lt;br/&gt;
-        /// },&lt;br/&gt;
-        /// "ReviewerResultTags": {&lt;br/&gt;
-        /// "a": "False",&lt;br/&gt;
-        /// "r": "True"&lt;br/&gt;
-        /// }&lt;br/&gt;
-        /// }&lt;br/&gt;
-        /// 
-        /// &lt;/p&gt;
+        /// Returns review details for the review Id passed.
         /// </summary>
         /// <param name='teamName'>
-        /// Your team name
         /// </param>
-        /// <param name='contentId'>
-        /// Content Id/Name
-        /// </param>
-        /// <param name='workflowName'>
-        /// Workflow Name, if left empty your teams default workflow would be used
-        /// </param>
-        /// <param name='callBackEndpoint'>
-        /// Callback endpoint for posting the reviews result.
+        /// <param name='reviewId'>
         /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
@@ -235,21 +175,16 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> JobCreateWithHttpMessagesAsync(string teamName, string contentId, string workflowName, string callBackEndpoint = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ReviewGetWithHttpMessagesAsync(string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (teamName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "teamName");
             }
-            if (contentId == null)
+            if (reviewId == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "contentId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "reviewId");
             }
-            if (workflowName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "workflowName");
-            }
-            string contentType = "Image";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -258,36 +193,18 @@ namespace BuildIt.CognitiveServices
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("teamName", teamName);
-                tracingParameters.Add("contentType", contentType);
-                tracingParameters.Add("contentId", contentId);
-                tracingParameters.Add("workflowName", workflowName);
-                tracingParameters.Add("callBackEndpoint", callBackEndpoint);
+                tracingParameters.Add("reviewId", reviewId);
                 tracingParameters.Add("subscriptionKey", subscriptionKey);
                 tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "JobCreate", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ReviewGet", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{teamName}/jobs").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{teamName}/reviews/{reviewId}").ToString();
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
+            _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (contentType != null)
-            {
-                _queryParameters.Add(string.Format("ContentType={0}", System.Uri.EscapeDataString(contentType)));
-            }
-            if (contentId != null)
-            {
-                _queryParameters.Add(string.Format("ContentId={0}", System.Uri.EscapeDataString(contentId)));
-            }
-            if (workflowName != null)
-            {
-                _queryParameters.Add(string.Format("WorkflowName={0}", System.Uri.EscapeDataString(workflowName)));
-            }
-            if (callBackEndpoint != null)
-            {
-                _queryParameters.Add(string.Format("CallBackEndpoint={0}", System.Uri.EscapeDataString(callBackEndpoint)));
-            }
             if (subscriptionKey != null)
             {
                 _queryParameters.Add(string.Format("subscription-key={0}", System.Uri.EscapeDataString(subscriptionKey)));
@@ -299,7 +216,7 @@ namespace BuildIt.CognitiveServices
             // Create HTTP transport objects
             System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
             System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (ocpApimSubscriptionKey != null)
@@ -681,11 +598,71 @@ namespace BuildIt.CognitiveServices
         }
 
         /// <summary>
-        /// Returns review details for the review Id passed.
+        /// A job Id will be returned for the Image content posted on this endpoint.
+        /// 
+        /// Once the content is evaluated against the Workflow provided the review
+        /// will be created or ignored based on the workflow expression.
+        /// 
+        /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
+        /// 
+        /// &lt;p&gt;
+        /// &lt;h4&gt;Job Completion CallBack Sample&lt;/h4&gt;&lt;br/&gt;
+        /// 
+        /// {&lt;br/&gt;
+        /// "JobId": "&lt;Job Id&gt;,&lt;br/&gt;
+        /// "ReviewId": "&lt;Review Id, if the Job resulted in a Review to be
+        /// created&gt;",&lt;br/&gt;
+        /// "WorkFlowId": "default",&lt;br/&gt;
+        /// "Status": "&lt;This will be one of Complete, InProgress,
+        /// Error&gt;",&lt;br/&gt;
+        /// "ContentType": "Image",&lt;br/&gt;
+        /// "ContentId": "&lt;This is the ContentId that was specified on
+        /// input&gt;",&lt;br/&gt;
+        /// "CallBackType": "Job",&lt;br/&gt;
+        /// "Metadata": {&lt;br/&gt;
+        /// "adultscore": "0.xxx",&lt;br/&gt;
+        /// "a": "False",&lt;br/&gt;
+        /// "racyscore": "0.xxx",&lt;br/&gt;
+        /// "r": "True"&lt;br/&gt;
+        /// }&lt;br/&gt;
+        /// }&lt;br/&gt;
+        /// 
+        /// &lt;/p&gt;
+        /// &lt;p&gt;
+        /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;&lt;br/&gt;
+        /// 
+        /// {
+        /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
+        /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
+        /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
+        /// "CallBackType": "Review",&lt;br/&gt;
+        /// "ContentId": "&lt;The ContentId that was specified
+        /// input&gt;",&lt;br/&gt;
+        /// "Metadata": {&lt;br/&gt;
+        /// "adultscore": "0.xxx",
+        /// "a": "False",&lt;br/&gt;
+        /// "racyscore": "0.xxx",&lt;br/&gt;
+        /// "r": "True"&lt;br/&gt;
+        /// },&lt;br/&gt;
+        /// "ReviewerResultTags": {&lt;br/&gt;
+        /// "a": "False",&lt;br/&gt;
+        /// "r": "True"&lt;br/&gt;
+        /// }&lt;br/&gt;
+        /// }&lt;br/&gt;
+        /// 
+        /// &lt;/p&gt;
         /// </summary>
         /// <param name='teamName'>
+        /// Your team name
         /// </param>
-        /// <param name='reviewId'>
+        /// <param name='contentId'>
+        /// Content Id/Name
+        /// </param>
+        /// <param name='workflowName'>
+        /// Workflow Name, if left empty your teams default workflow would be used
+        /// </param>
+        /// <param name='callBackEndpoint'>
+        /// Callback endpoint for posting the reviews result.
         /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
@@ -708,16 +685,21 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ReviewGetWithHttpMessagesAsync(string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> JobCreateWithHttpMessagesAsync(string teamName, string contentId, string workflowName, string callBackEndpoint = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (teamName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "teamName");
             }
-            if (reviewId == null)
+            if (contentId == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "reviewId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "contentId");
             }
+            if (workflowName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "workflowName");
+            }
+            string contentType = "Image";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -726,17 +708,312 @@ namespace BuildIt.CognitiveServices
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("teamName", teamName);
-                tracingParameters.Add("reviewId", reviewId);
+                tracingParameters.Add("contentType", contentType);
+                tracingParameters.Add("contentId", contentId);
+                tracingParameters.Add("workflowName", workflowName);
+                tracingParameters.Add("callBackEndpoint", callBackEndpoint);
                 tracingParameters.Add("subscriptionKey", subscriptionKey);
                 tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ReviewGet", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "JobCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{teamName}/reviews/{reviewId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{teamName}/jobs").ToString();
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
-            _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
+            if (contentType != null)
+            {
+                _queryParameters.Add(string.Format("ContentType={0}", System.Uri.EscapeDataString(contentType)));
+            }
+            if (contentId != null)
+            {
+                _queryParameters.Add(string.Format("ContentId={0}", System.Uri.EscapeDataString(contentId)));
+            }
+            if (workflowName != null)
+            {
+                _queryParameters.Add(string.Format("WorkflowName={0}", System.Uri.EscapeDataString(workflowName)));
+            }
+            if (callBackEndpoint != null)
+            {
+                _queryParameters.Add(string.Format("CallBackEndpoint={0}", System.Uri.EscapeDataString(callBackEndpoint)));
+            }
+            if (subscriptionKey != null)
+            {
+                _queryParameters.Add(string.Format("subscription-key={0}", System.Uri.EscapeDataString(subscriptionKey)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (ocpApimSubscriptionKey != null)
+            {
+                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
+                {
+                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ocpApimSubscriptionKey);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Send Request
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new Microsoft.Rest.HttpOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get all the Workflows available for you Team
+        /// </summary>
+        /// <param name='team'>
+        /// Your Team name
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetAllWithHttpMessagesAsync(string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (team == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "team");
+            }
+            // Tracing
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                tracingParameters.Add("team", team);
+                tracingParameters.Add("subscriptionKey", subscriptionKey);
+                tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "WorkflowGetAll", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{team}/workflows").ToString();
+            _url = _url.Replace("{team}", System.Uri.EscapeDataString(team));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
+            if (subscriptionKey != null)
+            {
+                _queryParameters.Add(string.Format("subscription-key={0}", System.Uri.EscapeDataString(subscriptionKey)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (ocpApimSubscriptionKey != null)
+            {
+                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
+                {
+                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ocpApimSubscriptionKey);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Send Request
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new Microsoft.Rest.HttpOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get the details of a specific Workflow on your Team
+        /// </summary>
+        /// <param name='team'>
+        /// Your Team name
+        /// </param>
+        /// <param name='workflowname'>
+        /// Provide a name for this workflow
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetWithHttpMessagesAsync(string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (team == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "team");
+            }
+            if (workflowname == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "workflowname");
+            }
+            // Tracing
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                tracingParameters.Add("team", team);
+                tracingParameters.Add("workflowname", workflowname);
+                tracingParameters.Add("subscriptionKey", subscriptionKey);
+                tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "WorkflowGet", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{team}/workflows/{workflowname}").ToString();
+            _url = _url.Replace("{team}", System.Uri.EscapeDataString(team));
+            _url = _url.Replace("{workflowname}", System.Uri.EscapeDataString(workflowname));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (subscriptionKey != null)
             {
@@ -932,283 +1209,6 @@ namespace BuildIt.CognitiveServices
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if (!_httpResponse.IsSuccessStatusCode)
-            {
-                var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get the details of a specific Workflow on your Team
-        /// </summary>
-        /// <param name='team'>
-        /// Your Team name
-        /// </param>
-        /// <param name='workflowname'>
-        /// Provide a name for this workflow
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetWithHttpMessagesAsync(string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (team == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "team");
-            }
-            if (workflowname == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "workflowname");
-            }
-            // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("team", team);
-                tracingParameters.Add("workflowname", workflowname);
-                tracingParameters.Add("subscriptionKey", subscriptionKey);
-                tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "WorkflowGet", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{team}/workflows/{workflowname}").ToString();
-            _url = _url.Replace("{team}", System.Uri.EscapeDataString(team));
-            _url = _url.Replace("{workflowname}", System.Uri.EscapeDataString(workflowname));
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (subscriptionKey != null)
-            {
-                _queryParameters.Add(string.Format("subscription-key={0}", System.Uri.EscapeDataString(subscriptionKey)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (ocpApimSubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ocpApimSubscriptionKey);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Send Request
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get all the Workflows available for you Team
-        /// </summary>
-        /// <param name='team'>
-        /// Your Team name
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetAllWithHttpMessagesAsync(string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (team == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "team");
-            }
-            // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("team", team);
-                tracingParameters.Add("subscriptionKey", subscriptionKey);
-                tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "WorkflowGetAll", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "teams/{team}/workflows").ToString();
-            _url = _url.Replace("{team}", System.Uri.EscapeDataString(team));
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (subscriptionKey != null)
-            {
-                _queryParameters.Add(string.Format("subscription-key={0}", System.Uri.EscapeDataString(subscriptionKey)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (ocpApimSubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ocpApimSubscriptionKey);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Send Request
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {

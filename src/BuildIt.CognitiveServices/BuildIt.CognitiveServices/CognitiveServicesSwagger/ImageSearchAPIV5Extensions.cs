@@ -49,9 +49,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static void Search(this IImageSearchAPIV5 operations, double? count = 10, double? offset = 0, string mkt = "en-us", string safeSearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static void Search(this IImageSearchAPIV5 operations, string query, double? count = 10, double? offset = 0, string mkt = "en-us", string safeSearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IImageSearchAPIV5)s).SearchAsync(count, offset, mkt, safeSearch, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IImageSearchAPIV5)s).SearchAsync(query, count, offset, mkt, safeSearch, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -95,9 +95,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task SearchAsync(this IImageSearchAPIV5 operations, double? count = 10, double? offset = 0, string mkt = "en-us", string safeSearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task SearchAsync(this IImageSearchAPIV5 operations, string query, double? count = 10, double? offset = 0, string mkt = "en-us", string safeSearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.SearchWithHttpMessagesAsync(count, offset, mkt, safeSearch, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+                await operations.SearchWithHttpMessagesAsync(query, count, offset, mkt, safeSearch, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

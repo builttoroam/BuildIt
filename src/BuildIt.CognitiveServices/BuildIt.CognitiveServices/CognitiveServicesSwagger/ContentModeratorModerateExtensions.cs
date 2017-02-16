@@ -11,51 +11,6 @@ namespace BuildIt.CognitiveServices
     /// </summary>
     public static partial class ContentModeratorModerateExtensions
     {
-            /// <summary>
-            /// Returns probabilities of the image containing racy or adult content.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cacheImage'>
-            /// Whether to retain the submitted image for future use; defaults to false if
-            /// omitted
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageEvaluate(this IContentModeratorModerate operations, bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorModerate)s).ImageEvaluateAsync(cacheImage, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns probabilities of the image containing racy or adult content.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cacheImage'>
-            /// Whether to retain the submitted image for future use; defaults to false if
-            /// omitted
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageEvaluateAsync(this IContentModeratorModerate operations, bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageEvaluateWithHttpMessagesAsync(cacheImage, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -93,67 +48,6 @@ namespace BuildIt.CognitiveServices
             public static async System.Threading.Tasks.Task ImageFindFacesAsync(this IContentModeratorModerate operations, bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ImageFindFacesWithHttpMessagesAsync(cacheImage, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Fuzzily match an image against one of your custom Image Lists. You can
-            /// create and manage your custom image lists using &lt;a
-            /// href="/docs/services/578ff44d2703741568569ab9/operations/578ff7b12703741568569abe"&gt;this&lt;/a&gt;
-            /// API.
-            /// 
-            /// Returns ID and tags of matching image.&lt;br/&gt;
-            /// &lt;br/&gt;
-            /// Note: Refresh Index must be run on the corresponding Image List before
-            /// additions and removals are reflected in the response.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='cacheimage'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageMatch(this IContentModeratorModerate operations, string listId = default(string), bool? cacheimage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorModerate)s).ImageMatchAsync(listId, cacheimage, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Fuzzily match an image against one of your custom Image Lists. You can
-            /// create and manage your custom image lists using &lt;a
-            /// href="/docs/services/578ff44d2703741568569ab9/operations/578ff7b12703741568569abe"&gt;this&lt;/a&gt;
-            /// API.
-            /// 
-            /// Returns ID and tags of matching image.&lt;br/&gt;
-            /// &lt;br/&gt;
-            /// Note: Refresh Index must be run on the corresponding Image List before
-            /// additions and removals are reflected in the response.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='cacheimage'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageMatchAsync(this IContentModeratorModerate operations, string listId = default(string), bool? cacheimage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageMatchWithHttpMessagesAsync(listId, cacheimage, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -217,6 +111,112 @@ namespace BuildIt.CognitiveServices
             public static async System.Threading.Tasks.Task ImageOCRAsync(this IContentModeratorModerate operations, bool? cacheImage = false, bool? enhanced = false, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ImageOCRWithHttpMessagesAsync(cacheImage, enhanced, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Returns probabilities of the image containing racy or adult content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cacheImage'>
+            /// Whether to retain the submitted image for future use; defaults to false if
+            /// omitted
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageEvaluate(this IContentModeratorModerate operations, bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorModerate)s).ImageEvaluateAsync(cacheImage, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns probabilities of the image containing racy or adult content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cacheImage'>
+            /// Whether to retain the submitted image for future use; defaults to false if
+            /// omitted
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageEvaluateAsync(this IContentModeratorModerate operations, bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageEvaluateWithHttpMessagesAsync(cacheImage, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Fuzzily match an image against one of your custom Image Lists. You can
+            /// create and manage your custom image lists using &lt;a
+            /// href="/docs/services/578ff44d2703741568569ab9/operations/578ff7b12703741568569abe"&gt;this&lt;/a&gt;
+            /// API.
+            /// 
+            /// Returns ID and tags of matching image.&lt;br/&gt;
+            /// &lt;br/&gt;
+            /// Note: Refresh Index must be run on the corresponding Image List before
+            /// additions and removals are reflected in the response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='cacheimage'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageMatch(this IContentModeratorModerate operations, string listId = default(string), bool? cacheimage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorModerate)s).ImageMatchAsync(listId, cacheimage, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Fuzzily match an image against one of your custom Image Lists. You can
+            /// create and manage your custom image lists using &lt;a
+            /// href="/docs/services/578ff44d2703741568569ab9/operations/578ff7b12703741568569abe"&gt;this&lt;/a&gt;
+            /// API.
+            /// 
+            /// Returns ID and tags of matching image.&lt;br/&gt;
+            /// &lt;br/&gt;
+            /// Note: Refresh Index must be run on the corresponding Image List before
+            /// additions and removals are reflected in the response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='cacheimage'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageMatchAsync(this IContentModeratorModerate operations, string listId = default(string), bool? cacheimage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageMatchWithHttpMessagesAsync(listId, cacheimage, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

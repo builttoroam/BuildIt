@@ -37,29 +37,7 @@ namespace BuildIt.CognitiveServices
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
 
-            /// <summary>
-        /// Returns probabilities of the image containing racy or adult
-        /// content.
-        /// </summary>
-        /// <param name='cacheImage'>
-        /// Whether to retain the submitted image for future use; defaults to
-        /// false if omitted
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ImageEvaluateWithHttpMessagesAsync(bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <param name='cacheImage'>
+            /// <param name='cacheImage'>
         /// Whether to retain the submitted image for future use; defaults to
         /// false if omitted
         /// </param>
@@ -76,35 +54,6 @@ namespace BuildIt.CognitiveServices
         /// The cancellation token.
         /// </param>
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ImageFindFacesWithHttpMessagesAsync(bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Fuzzily match an image against one of your custom Image Lists. You
-        /// can create and manage your custom image lists using &lt;a
-        /// href="/docs/services/578ff44d2703741568569ab9/operations/578ff7b12703741568569abe"&gt;this&lt;/a&gt;
-        /// API.
-        /// 
-        /// Returns ID and tags of matching image.&lt;br/&gt;
-        /// &lt;br/&gt;
-        /// Note: Refresh Index must be run on the corresponding Image List
-        /// before additions and removals are reflected in the response.
-        /// </summary>
-        /// <param name='listId'>
-        /// </param>
-        /// <param name='cacheimage'>
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ImageMatchWithHttpMessagesAsync(string listId = default(string), bool? cacheimage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Returns any text found in the image for the language specified. If
@@ -136,6 +85,57 @@ namespace BuildIt.CognitiveServices
         /// The cancellation token.
         /// </param>
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ImageOCRWithHttpMessagesAsync(bool? cacheImage = false, bool? enhanced = false, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Returns probabilities of the image containing racy or adult
+        /// content.
+        /// </summary>
+        /// <param name='cacheImage'>
+        /// Whether to retain the submitted image for future use; defaults to
+        /// false if omitted
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ImageEvaluateWithHttpMessagesAsync(bool? cacheImage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Fuzzily match an image against one of your custom Image Lists. You
+        /// can create and manage your custom image lists using &lt;a
+        /// href="/docs/services/578ff44d2703741568569ab9/operations/578ff7b12703741568569abe"&gt;this&lt;/a&gt;
+        /// API.
+        /// 
+        /// Returns ID and tags of matching image.&lt;br/&gt;
+        /// &lt;br/&gt;
+        /// Note: Refresh Index must be run on the corresponding Image List
+        /// before additions and removals are reflected in the response.
+        /// </summary>
+        /// <param name='listId'>
+        /// </param>
+        /// <param name='cacheimage'>
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ImageMatchWithHttpMessagesAsync(string listId = default(string), bool? cacheimage = default(bool?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// This operation will detect the language of given input content.

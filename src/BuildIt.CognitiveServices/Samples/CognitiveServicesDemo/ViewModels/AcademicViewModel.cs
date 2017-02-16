@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Net.Http;
-using System.Threading.Tasks;
-using BuildIt.CognitiveServices;
-using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
-using MvvmCross.Core.ViewModels;
+﻿using BuildIt.CognitiveServices;
 using CognitiveServicesDemo.Common;
-using Newtonsoft.Json;
 using CognitiveServicesDemo.Model;
-using System.IO;
+using MvvmCross.Core.ViewModels;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -60,7 +56,7 @@ namespace CognitiveServicesDemo.ViewModels
                 {
                     feed = await academic.Request<AcademicSearchAPI, AcademicFeeds>(
                         client =>
-                        client.InterpretWithHttpMessagesAsync(InputText, 1, null, 0, 1000, null, null, Constants.AcademicKey));
+                        client.InterpretWithHttpMessagesAsync(InputText, true, null, 0, 1000, null, null, Constants.AcademicKey));
                 }
 
 
@@ -84,7 +80,7 @@ namespace CognitiveServicesDemo.ViewModels
                 var feed = JsonConvert.DeserializeObject<AcademicFeeds>(jsonResult);
                 InterpretationParse.Clear();
                 */
-                if (feed.error !=null)
+                if (feed.error != null)
                 {
                     WarningText = feed.error.message;
                 }

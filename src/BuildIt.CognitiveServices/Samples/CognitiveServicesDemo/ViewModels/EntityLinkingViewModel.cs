@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MvvmCross.Core.ViewModels;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using BuildIt.CognitiveServices;
 using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
-using Newtonsoft.Json;
-using BuildIt.CognitiveServices;
-using Xamarin.Forms;
-using System.IO;
+using MvvmCross.Core.ViewModels;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace CognitiveServicesDemo.ViewModels
 {
     public class EntityLinkingViewModel : MvxViewModel
     {
-        
+
         private string input = PreInputText.EntityLinkingText;
         private string outPut;
         private string warningText;
@@ -34,7 +25,7 @@ namespace CognitiveServicesDemo.ViewModels
             set
             {
                 input = value;
-                RaisePropertyChanged(()=>InputText);
+                RaisePropertyChanged(() => InputText);
             }
         }
 
@@ -43,8 +34,8 @@ namespace CognitiveServicesDemo.ViewModels
             get { return outPut; }
             set
             {
-                outPut = value; 
-                RaisePropertyChanged(() =>OutPutText);
+                outPut = value;
+                RaisePropertyChanged(() => OutPutText);
             }
         }
 
@@ -53,8 +44,8 @@ namespace CognitiveServicesDemo.ViewModels
             get { return warningText; }
             set
             {
-                warningText = value; 
-                RaisePropertyChanged(() =>WarningText);
+                warningText = value;
+                RaisePropertyChanged(() => WarningText);
             }
         }
 
@@ -68,7 +59,7 @@ namespace CognitiveServicesDemo.ViewModels
                 {
                     feed = await entityLinking.Request<EntityLinkingAPI, EntityLinking>(
                         client =>
-                            client.LinkEntityWithHttpMessagesAsync(InputText, null, null, null, Constants.EntityLinkingKey));
+                            client.LinkEntityWithHttpMessagesAsync(InputText, null, null, Constants.EntityLinkingKey));
                 }
                 /*
                 //var cognitiveService = new CognitiveServiceClient();
@@ -114,7 +105,7 @@ namespace CognitiveServicesDemo.ViewModels
                 //            OutPutText += $"Word{count}: Name: {match.text}, wikipediaId: {feeds.wikipediaId}. ";
                 //        }
                 //    }
-                    
+
                 //}
                 //else
                 //{

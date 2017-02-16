@@ -27,8 +27,8 @@ namespace BuildIt.CognitiveServices.Models
         /// id records.</param>
         /// <param name="catalogCoverage">NumberOfCatalogItemsForModeling/
         /// NumberOfCatalogItems
-        /// This property indicates what part of the catalog can
-        /// be modelled with usage data. The rest of the items will need
+        /// This property indicates what part of the catalog can be
+        /// modelled with usage data. The rest of the items will need
         /// content-based features.</param>
         /// <param name="numberOfCatalogItemsInBuild">Number of unique items
         /// from usage data that are used for training (which are present in
@@ -39,8 +39,8 @@ namespace BuildIt.CognitiveServices.Models
         /// points that are used for training</param>
         /// <param name="catalogCoverageInBuild">NumberOfCatalogItemsInBuild/
         /// NumberOfCatalogItems
-        /// This property indicates what part of the catalog will
-        /// be modeled with usage data. The rest of the items will need
+        /// This property indicates what part of the catalog will be
+        /// modeled with usage data. The rest of the items will need
         /// content-based features.</param>
         public BuildDataStatistics(int? numberOfCatalogItems = default(int?), int? numberOfCatalogItemsInUsage = default(int?), int? numberOfUsers = default(int?), int? numberOfUsageRecords = default(int?), double? catalogCoverage = default(double?), int? numberOfCatalogItemsInBuild = default(int?), int? numberOfUsersInBuild = default(int?), int? numberOfUsageRecordsInBuild = default(int?), double? catalogCoverageInBuild = default(double?))
         {
@@ -84,8 +84,8 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets numberOfCatalogItemsForModeling/ NumberOfCatalogItems
-        /// This property indicates what part of the catalog can
-        /// be modelled with usage data. The rest of the items will need
+        /// This property indicates what part of the catalog can be
+        /// modelled with usage data. The rest of the items will need
         /// content-based features.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "catalogCoverage")]
@@ -114,8 +114,8 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets numberOfCatalogItemsInBuild/ NumberOfCatalogItems
-        /// This property indicates what part of the catalog will
-        /// be modeled with usage data. The rest of the items will need
+        /// This property indicates what part of the catalog will be
+        /// modeled with usage data. The rest of the items will need
         /// content-based features.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "catalogCoverageInBuild")]

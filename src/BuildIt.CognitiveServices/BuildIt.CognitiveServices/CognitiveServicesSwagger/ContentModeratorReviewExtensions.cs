@@ -12,6 +12,197 @@ namespace BuildIt.CognitiveServices
     public static partial class ContentModeratorReviewExtensions
     {
             /// <summary>
+            /// Returns review details for the review Id passed.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='teamName'>
+            /// </param>
+            /// <param name='reviewId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ReviewGet(this IContentModeratorReview operations, string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).ReviewGetAsync(teamName, reviewId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns review details for the review Id passed.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='teamName'>
+            /// </param>
+            /// <param name='reviewId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ReviewGetAsync(this IContentModeratorReview operations, string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ReviewGetWithHttpMessagesAsync(teamName, reviewId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Get the Job Details for a Job Id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='teamName'>
+            /// </param>
+            /// <param name='jobId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void JobGet(this IContentModeratorReview operations, string teamName, string jobId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).JobGetAsync(teamName, jobId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the Job Details for a Job Id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='teamName'>
+            /// </param>
+            /// <param name='jobId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task JobGetAsync(this IContentModeratorReview operations, string teamName, string jobId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.JobGetWithHttpMessagesAsync(teamName, jobId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// The reviews created would show up for Reviewers on your team. As Reviewers
+            /// complete reviewing, results of the Review would be POSTED (i.e. HTTP
+            /// POST) on the specified CallBackEndpoint.
+            /// 
+            /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
+            /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;
+            /// &lt;p&gt;
+            /// {&lt;br/&gt;
+            /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
+            /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
+            /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
+            /// "CallBackType": "Review",&lt;br/&gt;
+            /// "ContentId": "&lt;The ContentId that was specified
+            /// input&gt;",&lt;br/&gt;
+            /// "Metadata": {&lt;br/&gt;
+            /// "adultscore": "0.xxx",&lt;br/&gt;
+            /// "a": "False",&lt;br/&gt;
+            /// "racyscore": "0.xxx",&lt;br/&gt;
+            /// "r": "True"&lt;br/&gt;
+            /// },&lt;br/&gt;
+            /// "ReviewerResultTags": {&lt;br/&gt;
+            /// "a": "False",&lt;br/&gt;
+            /// "r": "True"&lt;br/&gt;
+            /// }&lt;br/&gt;
+            /// }&lt;br/&gt;
+            /// 
+            /// &lt;/p&gt;
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='teamName'>
+            /// Your Team Name
+            /// </param>
+            /// <param name='subTeam'>
+            /// Optional paramter used to specify the Sub Team for this review
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ReviewCreate(this IContentModeratorReview operations, string teamName, string subTeam = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).ReviewCreateAsync(teamName, subTeam, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The reviews created would show up for Reviewers on your team. As Reviewers
+            /// complete reviewing, results of the Review would be POSTED (i.e. HTTP
+            /// POST) on the specified CallBackEndpoint.
+            /// 
+            /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
+            /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;
+            /// &lt;p&gt;
+            /// {&lt;br/&gt;
+            /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
+            /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
+            /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
+            /// "CallBackType": "Review",&lt;br/&gt;
+            /// "ContentId": "&lt;The ContentId that was specified
+            /// input&gt;",&lt;br/&gt;
+            /// "Metadata": {&lt;br/&gt;
+            /// "adultscore": "0.xxx",&lt;br/&gt;
+            /// "a": "False",&lt;br/&gt;
+            /// "racyscore": "0.xxx",&lt;br/&gt;
+            /// "r": "True"&lt;br/&gt;
+            /// },&lt;br/&gt;
+            /// "ReviewerResultTags": {&lt;br/&gt;
+            /// "a": "False",&lt;br/&gt;
+            /// "r": "True"&lt;br/&gt;
+            /// }&lt;br/&gt;
+            /// }&lt;br/&gt;
+            /// 
+            /// &lt;/p&gt;
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='teamName'>
+            /// Your Team Name
+            /// </param>
+            /// <param name='subTeam'>
+            /// Optional paramter used to specify the Sub Team for this review
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ReviewCreateAsync(this IContentModeratorReview operations, string teamName, string subTeam = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ReviewCreateWithHttpMessagesAsync(teamName, subTeam, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// A job Id will be returned for the Image content posted on this endpoint.
             /// 
             /// Once the content is evaluated against the Workflow provided the review
@@ -177,198 +368,7 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Get the Job Details for a Job Id.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='teamName'>
-            /// </param>
-            /// <param name='jobId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void JobGet(this IContentModeratorReview operations, string teamName, string jobId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).JobGetAsync(teamName, jobId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the Job Details for a Job Id.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='teamName'>
-            /// </param>
-            /// <param name='jobId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task JobGetAsync(this IContentModeratorReview operations, string teamName, string jobId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.JobGetWithHttpMessagesAsync(teamName, jobId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// The reviews created would show up for Reviewers on your team. As Reviewers
-            /// complete reviewing, results of the Review would be POSTED (i.e. HTTP
-            /// POST) on the specified CallBackEndpoint.
-            /// 
-            /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
-            /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;
-            /// &lt;p&gt;
-            /// {&lt;br/&gt;
-            /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
-            /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
-            /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
-            /// "CallBackType": "Review",&lt;br/&gt;
-            /// "ContentId": "&lt;The ContentId that was specified
-            /// input&gt;",&lt;br/&gt;
-            /// "Metadata": {&lt;br/&gt;
-            /// "adultscore": "0.xxx",&lt;br/&gt;
-            /// "a": "False",&lt;br/&gt;
-            /// "racyscore": "0.xxx",&lt;br/&gt;
-            /// "r": "True"&lt;br/&gt;
-            /// },&lt;br/&gt;
-            /// "ReviewerResultTags": {&lt;br/&gt;
-            /// "a": "False",&lt;br/&gt;
-            /// "r": "True"&lt;br/&gt;
-            /// }&lt;br/&gt;
-            /// }&lt;br/&gt;
-            /// 
-            /// &lt;/p&gt;
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='teamName'>
-            /// Your Team Name
-            /// </param>
-            /// <param name='subTeam'>
-            /// Optional paramter used to specify the Sub Team for this review
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ReviewCreate(this IContentModeratorReview operations, string teamName, string subTeam = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).ReviewCreateAsync(teamName, subTeam, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The reviews created would show up for Reviewers on your team. As Reviewers
-            /// complete reviewing, results of the Review would be POSTED (i.e. HTTP
-            /// POST) on the specified CallBackEndpoint.
-            /// 
-            /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
-            /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;
-            /// &lt;p&gt;
-            /// {&lt;br/&gt;
-            /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
-            /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
-            /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
-            /// "CallBackType": "Review",&lt;br/&gt;
-            /// "ContentId": "&lt;The ContentId that was specified
-            /// input&gt;",&lt;br/&gt;
-            /// "Metadata": {&lt;br/&gt;
-            /// "adultscore": "0.xxx",&lt;br/&gt;
-            /// "a": "False",&lt;br/&gt;
-            /// "racyscore": "0.xxx",&lt;br/&gt;
-            /// "r": "True"&lt;br/&gt;
-            /// },&lt;br/&gt;
-            /// "ReviewerResultTags": {&lt;br/&gt;
-            /// "a": "False",&lt;br/&gt;
-            /// "r": "True"&lt;br/&gt;
-            /// }&lt;br/&gt;
-            /// }&lt;br/&gt;
-            /// 
-            /// &lt;/p&gt;
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='teamName'>
-            /// Your Team Name
-            /// </param>
-            /// <param name='subTeam'>
-            /// Optional paramter used to specify the Sub Team for this review
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ReviewCreateAsync(this IContentModeratorReview operations, string teamName, string subTeam = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ReviewCreateWithHttpMessagesAsync(teamName, subTeam, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Returns review details for the review Id passed.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='teamName'>
-            /// </param>
-            /// <param name='reviewId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ReviewGet(this IContentModeratorReview operations, string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).ReviewGetAsync(teamName, reviewId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns review details for the review Id passed.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='teamName'>
-            /// </param>
-            /// <param name='reviewId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ReviewGetAsync(this IContentModeratorReview operations, string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ReviewGetWithHttpMessagesAsync(teamName, reviewId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Create a new workflow or update an existing one.
+            /// Get all the Workflows available for you Team
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -376,31 +376,25 @@ namespace BuildIt.CognitiveServices
             /// <param name='team'>
             /// Your Team name
             /// </param>
-            /// <param name='workflowname'>
-            /// Provide a name for this workflow
-            /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
             /// </param>
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static void WorkflowCreateOrUpdate(this IContentModeratorReview operations, string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static void WorkflowGetAll(this IContentModeratorReview operations, string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).WorkflowCreateOrUpdateAsync(team, workflowname, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).WorkflowGetAllAsync(team, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create a new workflow or update an existing one.
+            /// Get all the Workflows available for you Team
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='team'>
             /// Your Team name
-            /// </param>
-            /// <param name='workflowname'>
-            /// Provide a name for this workflow
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -411,9 +405,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task WorkflowCreateOrUpdateAsync(this IContentModeratorReview operations, string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task WorkflowGetAllAsync(this IContentModeratorReview operations, string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.WorkflowCreateOrUpdateWithHttpMessagesAsync(team, workflowname, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+                await operations.WorkflowGetAllWithHttpMessagesAsync(team, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -466,13 +460,16 @@ namespace BuildIt.CognitiveServices
             }
 
             /// <summary>
-            /// Get all the Workflows available for you Team
+            /// Create a new workflow or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='team'>
             /// Your Team name
+            /// </param>
+            /// <param name='workflowname'>
+            /// Provide a name for this workflow
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -480,19 +477,22 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static void WorkflowGetAll(this IContentModeratorReview operations, string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static void WorkflowCreateOrUpdate(this IContentModeratorReview operations, string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).WorkflowGetAllAsync(team, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorReview)s).WorkflowCreateOrUpdateAsync(team, workflowname, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get all the Workflows available for you Team
+            /// Create a new workflow or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='team'>
             /// Your Team name
+            /// </param>
+            /// <param name='workflowname'>
+            /// Provide a name for this workflow
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -503,9 +503,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task WorkflowGetAllAsync(this IContentModeratorReview operations, string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task WorkflowCreateOrUpdateAsync(this IContentModeratorReview operations, string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.WorkflowGetAllWithHttpMessagesAsync(team, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+                await operations.WorkflowCreateOrUpdateWithHttpMessagesAsync(team, workflowname, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
     }

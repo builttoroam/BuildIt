@@ -2,10 +2,6 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-using System.IO;
-using BuildIt.CognitiveServices.Models;
-using Microsoft.ProjectOxford.Emotion.Contract;
-
 namespace BuildIt.CognitiveServices
 {
 
@@ -29,7 +25,7 @@ namespace BuildIt.CognitiveServices
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
 
-        /// <summary>
+            /// <summary>
         /// &lt;p&gt;Recognizes the emotions expressed by one or more people
         /// in an image, as well as returns a bounding box for the face. The
         /// emotions detected are happiness, sadness, surprise, anger, fear,
@@ -50,9 +46,6 @@ namespace BuildIt.CognitiveServices
         /// the best results. &lt;br/&gt;&amp;bull; The emotions contempt and
         /// disgust are experimental.&lt;/p&gt;
         /// </summary>
-        /// <param name="imageStream">
-        /// Input image stream
-        /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
         /// </param>
@@ -65,7 +58,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Emotion[]> EmotionRecognitionWithHttpMessagesAsync(Stream imageStream,string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> EmotionRecognitionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// &lt;p&gt;Welcome to the Microsoft Emotion API for Video. Emotion

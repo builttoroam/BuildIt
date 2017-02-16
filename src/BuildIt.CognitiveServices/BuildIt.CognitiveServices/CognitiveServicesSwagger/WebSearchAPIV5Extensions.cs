@@ -11,94 +11,94 @@ namespace BuildIt.CognitiveServices
     /// </summary>
     public static partial class WebSearchAPIV5Extensions
     {
-            /// <summary>
-            /// Get web, image, news, &amp; videos results for a given query.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='count'>
-            /// The number of search results to return in the response. The actual number
-            /// delivered may be less than requested.
-            /// </param>
-            /// <param name='offset'>
-            /// The zero-based offset that indicates the number of search results to skip
-            /// before returning results.
-            /// </param>
-            /// <param name='mkt'>
-            /// The market where the results come from. Typically, this is the country
-            /// where the user is making the request from; however, it could be a
-            /// different country if the user is not located in a country where Bing
-            /// delivers results. The market must be in the form {language code}-{country
-            /// code}. For example, en-US.
-            /// 
-            /// &lt;br&gt;
-            /// &lt;br&gt;
-            /// Full list of supported markets:
-            /// &lt;br&gt;
-            /// es-AR,en-AU,de-AT,nl-BE,fr-BE,pt-BR,en-CA,fr-CA,es-CL,da-DK,fi-FI,fr-FR,de-DE,zh-HK,en-IN,en-ID,en-IE,it-IT,ja-JP,ko-KR,en-MY,es-MX,nl-NL,en-NZ,no-NO,zh-CN,pl-PL,pt-PT,en-PH,ru-RU,ar-SA,en-ZA,es-ES,sv-SE,fr-CH,de-CH,zh-TW,tr-TR,en-GB,en-US,es-US.
-            /// Possible values include: 'en-us'
-            /// </param>
-            /// <param name='safesearch'>
-            /// A filter used to filter results for adult content. Possible values
-            /// include: 'Off', 'Moderate', 'Strict'
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void Search(this IWebSearchAPIV5 operations, double? count = 10, double? offset = 0, string mkt = "en-us", string safesearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebSearchAPIV5)s).SearchAsync(count, offset, mkt, safesearch, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// Get web, image, news, &amp; videos results for a given query.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='count'>
+        /// The number of search results to return in the response. The actual number
+        /// delivered may be less than requested.
+        /// </param>
+        /// <param name='offset'>
+        /// The zero-based offset that indicates the number of search results to skip
+        /// before returning results.
+        /// </param>
+        /// <param name='mkt'>
+        /// The market where the results come from. Typically, this is the country
+        /// where the user is making the request from; however, it could be a
+        /// different country if the user is not located in a country where Bing
+        /// delivers results. The market must be in the form {language code}-{country
+        /// code}. For example, en-US.
+        /// 
+        /// &lt;br&gt;
+        /// &lt;br&gt;
+        /// Full list of supported markets:
+        /// &lt;br&gt;
+        /// es-AR,en-AU,de-AT,nl-BE,fr-BE,pt-BR,en-CA,fr-CA,es-CL,da-DK,fi-FI,fr-FR,de-DE,zh-HK,en-IN,en-ID,en-IE,it-IT,ja-JP,ko-KR,en-MY,es-MX,nl-NL,en-NZ,no-NO,zh-CN,pl-PL,pt-PT,en-PH,ru-RU,ar-SA,en-ZA,es-ES,sv-SE,fr-CH,de-CH,zh-TW,tr-TR,en-GB,en-US,es-US.
+        /// Possible values include: 'en-us'
+        /// </param>
+        /// <param name='safesearch'>
+        /// A filter used to filter results for adult content. Possible values
+        /// include: 'Off', 'Moderate', 'Strict'
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        public static void Search(this IWebSearchAPIV5 operations, string query, double? count = 10, double? offset = 0, string mkt = "en-us", string safesearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+        {
+            System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebSearchAPIV5)s).SearchAsync(query, count, offset, mkt, safesearch, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// Get web, image, news, &amp; videos results for a given query.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='count'>
-            /// The number of search results to return in the response. The actual number
-            /// delivered may be less than requested.
-            /// </param>
-            /// <param name='offset'>
-            /// The zero-based offset that indicates the number of search results to skip
-            /// before returning results.
-            /// </param>
-            /// <param name='mkt'>
-            /// The market where the results come from. Typically, this is the country
-            /// where the user is making the request from; however, it could be a
-            /// different country if the user is not located in a country where Bing
-            /// delivers results. The market must be in the form {language code}-{country
-            /// code}. For example, en-US.
-            /// 
-            /// &lt;br&gt;
-            /// &lt;br&gt;
-            /// Full list of supported markets:
-            /// &lt;br&gt;
-            /// es-AR,en-AU,de-AT,nl-BE,fr-BE,pt-BR,en-CA,fr-CA,es-CL,da-DK,fi-FI,fr-FR,de-DE,zh-HK,en-IN,en-ID,en-IE,it-IT,ja-JP,ko-KR,en-MY,es-MX,nl-NL,en-NZ,no-NO,zh-CN,pl-PL,pt-PT,en-PH,ru-RU,ar-SA,en-ZA,es-ES,sv-SE,fr-CH,de-CH,zh-TW,tr-TR,en-GB,en-US,es-US.
-            /// Possible values include: 'en-us'
-            /// </param>
-            /// <param name='safesearch'>
-            /// A filter used to filter results for adult content. Possible values
-            /// include: 'Off', 'Moderate', 'Strict'
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task SearchAsync(this IWebSearchAPIV5 operations, double? count = 10, double? offset = 0, string mkt = "en-us", string safesearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.SearchWithHttpMessagesAsync(count, offset, mkt, safesearch, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
+        /// <summary>
+        /// Get web, image, news, &amp; videos results for a given query.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='count'>
+        /// The number of search results to return in the response. The actual number
+        /// delivered may be less than requested.
+        /// </param>
+        /// <param name='offset'>
+        /// The zero-based offset that indicates the number of search results to skip
+        /// before returning results.
+        /// </param>
+        /// <param name='mkt'>
+        /// The market where the results come from. Typically, this is the country
+        /// where the user is making the request from; however, it could be a
+        /// different country if the user is not located in a country where Bing
+        /// delivers results. The market must be in the form {language code}-{country
+        /// code}. For example, en-US.
+        /// 
+        /// &lt;br&gt;
+        /// &lt;br&gt;
+        /// Full list of supported markets:
+        /// &lt;br&gt;
+        /// es-AR,en-AU,de-AT,nl-BE,fr-BE,pt-BR,en-CA,fr-CA,es-CL,da-DK,fi-FI,fr-FR,de-DE,zh-HK,en-IN,en-ID,en-IE,it-IT,ja-JP,ko-KR,en-MY,es-MX,nl-NL,en-NZ,no-NO,zh-CN,pl-PL,pt-PT,en-PH,ru-RU,ar-SA,en-ZA,es-ES,sv-SE,fr-CH,de-CH,zh-TW,tr-TR,en-GB,en-US,es-US.
+        /// Possible values include: 'en-us'
+        /// </param>
+        /// <param name='safesearch'>
+        /// A filter used to filter results for adult content. Possible values
+        /// include: 'Off', 'Moderate', 'Strict'
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async System.Threading.Tasks.Task SearchAsync(this IWebSearchAPIV5 operations, string query, double? count = 10, double? offset = 0, string mkt = "en-us", string safesearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            await operations.SearchWithHttpMessagesAsync(query, count, offset, mkt, safesearch, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+        }
 
     }
 }

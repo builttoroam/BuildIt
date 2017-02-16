@@ -48,7 +48,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateConditionalProbabilityWithHttpMessagesAsync(string model, int? order = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateConditionalProbabilityWithHttpMessagesAsync(string model, double? order = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Calculate the joint probability that a particular sequence of
@@ -73,7 +73,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateJointProbabilityWithHttpMessagesAsync(string model, int? order = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateJointProbabilityWithHttpMessagesAsync(string model, double? order = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get the list of words (completions) most likely to follow a given
@@ -107,7 +107,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> GenerateNextWordsWithHttpMessagesAsync(string model, string words, int? order = default(int?), int? maxNumOfCandidatesReturned = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> GenerateNextWordsWithHttpMessagesAsync(string model, string words, double? order = default(double?), double? maxNumOfCandidatesReturned = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Insert spaces into a string of words lacking spaces, like a
@@ -143,7 +143,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> BreakIntoWordsWithHttpMessagesAsync(string model, string text, int? order = default(int?), int? maxNumOfCandidatesReturned = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> BreakIntoWordsWithHttpMessagesAsync(string model, string text, double? order = default(double?), double? maxNumOfCandidatesReturned = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// List models available currently.

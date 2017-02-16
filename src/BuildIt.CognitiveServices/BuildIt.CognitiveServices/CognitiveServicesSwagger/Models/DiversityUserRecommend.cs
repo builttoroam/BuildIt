@@ -18,10 +18,10 @@ namespace BuildIt.CognitiveServices.Models
         /// </summary>
         /// <param name="percentileBuckets">Each percentile bucket is
         /// represented by a span (min/max values
-        /// that range between 0 and 100). The items close to 100
-        /// are the
-        /// most popular items, and the items close to 0 are the
-        /// least popular.</param>
+        /// that range between 0 and 100). The items close to 100 are
+        /// the
+        /// most popular items, and the items close to 0 are the least
+        /// popular.</param>
         /// <param name="totalItemsRecommended">The total number of items
         /// recommended. (some may be duplicates)</param>
         /// <param name="uniqueItemsRecommended">Number of distinct items that
@@ -42,10 +42,10 @@ namespace BuildIt.CognitiveServices.Models
         /// <summary>
         /// Gets or sets each percentile bucket is represented by a span
         /// (min/max values
-        /// that range between 0 and 100). The items close to 100
-        /// are the
-        /// most popular items, and the items close to 0 are the
-        /// least popular.
+        /// that range between 0 and 100). The items close to 100 are
+        /// the
+        /// most popular items, and the items close to 0 are the least
+        /// popular.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "percentileBuckets")]
         public System.Collections.Generic.IList<PercentileBucket> PercentileBuckets { get; set; }

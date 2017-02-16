@@ -25,7 +25,7 @@ namespace BuildIt.CognitiveServices
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
 
-            /// <summary>
+        /// <summary>
         /// The interpret REST API takes an end user query string (i.e., a
         /// query entered by a user of your application) and returns
         /// formatted interpretations of user intent based on the Academic
@@ -74,7 +74,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> InterpretWithHttpMessagesAsync(string query, int? complete = 0, int? count = 10, int? offset = default(int?), int? timeout = default(int?), string model = "latest", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> InterpretWithHttpMessagesAsync(string query, bool? complete = false, double? count = 10, double? offset = default(double?), double? timeout = default(double?), string model = "latest", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// The evaluate REST API is used to return a set of academic entities
@@ -117,7 +117,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> EvaluateWithHttpMessagesAsync(string expr, string model = "latest", int? count = 10, int? offset = 0, string orderby = default(string), string attributes = "Id", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> EvaluateWithHttpMessagesAsync(string expr, string model = "latest", double? count = 10, double? offset = 0, string orderby = default(string), string attributes = "Id", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// The calchistogram REST API is used to calculate the distribution
@@ -154,7 +154,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalcHistogramWithHttpMessagesAsync(string expr, string model = "latest", string attributes = default(string), int? count = 10, int? offset = 0, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalcHistogramWithHttpMessagesAsync(string expr, string model = "latest", string attributes = default(string), double? count = 10, double? offset = 0, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Welcome to the Microsoft Cognitive Service Academic Search API, a
@@ -181,6 +181,48 @@ namespace BuildIt.CognitiveServices
         /// The cancellation token.
         /// </param>
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> GraphSearchWithHttpMessagesAsync(string mode, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// The similarity REST API is used to calculate a floating point
+        /// value based on 2 text inputs.
+        /// </summary>
+        /// <param name='s1'>
+        /// String to be compared, input length is bounded by the limitation
+        /// of the length of URL. When the strings are too long to be
+        /// processed using GET, use POST instead.
+        /// </param>
+        /// <param name='s2'>
+        /// String to be compared, input length is bounded by the limitation
+        /// of the length of URL. When the strings are too long to be
+        /// processed using GET, use POST instead.
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SimilarityWithHttpMessagesAsync(string s1, string s2, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> PostsimilarityWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 }

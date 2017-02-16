@@ -17,25 +17,24 @@ namespace BuildIt.CognitiveServices.Models
         /// Initializes a new instance of the JobInfo class.
         /// </summary>
         /// <param name="apiName">Api Name
-        /// The ApiName is internally an enum (see SupportedApis
-        /// in BatchScoringManager)
-        /// The valid values should be: ItemRecommend,
-        /// UserRecommend, ItemFbtRecommend</param>
+        /// The ApiName is internally an enum (see SupportedApis in
+        /// BatchScoringManager)
+        /// The valid values should be: ItemRecommend, UserRecommend,
+        /// ItemFbtRecommend</param>
         /// <param name="modelId">The Model Id
-        /// ModelId is the model id which batch scoring is
-        /// requested to</param>
+        /// ModelId is the model id which batch scoring is requested
+        /// to</param>
         /// <param name="buildId">The build Id
-        /// BuildId is the build id which batch scoring is
-        /// requested to
-        /// It is optional. If it is not provided, the active
-        /// build id will be used</param>
+        /// BuildId is the build id which batch scoring is requested to
+        /// It is optional. If it is not provided, the active build id
+        /// will be used</param>
         /// <param name="numberOfResults">Number of recommendations
-        /// It indicates the number of results (recommended items)
-        /// each request should return
+        /// It indicates the number of results (recommended items) each
+        /// request should return
         /// It is optional. The default value is 10</param>
         /// <param name="includeMetadata">Include Metadata
-        /// it indicates whether the result should include
-        /// metadata or not
+        /// it indicates whether the result should include metadata or
+        /// not
         /// It is optional. The default value is false</param>
         /// <param name="minimalScore">The minimum score. Currently only
         /// supported for FbtBuilds
@@ -53,36 +52,34 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets api Name
-        /// The ApiName is internally an enum (see SupportedApis
-        /// in BatchScoringManager)
-        /// The valid values should be: ItemRecommend,
-        /// UserRecommend, ItemFbtRecommend
+        /// The ApiName is internally an enum (see SupportedApis in
+        /// BatchScoringManager)
+        /// The valid values should be: ItemRecommend, UserRecommend,
+        /// ItemFbtRecommend
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "apiName")]
         public string ApiName { get; set; }
 
         /// <summary>
         /// Gets or sets the Model Id
-        /// ModelId is the model id which batch scoring is
-        /// requested to
+        /// ModelId is the model id which batch scoring is requested to
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "modelId")]
         public string ModelId { get; set; }
 
         /// <summary>
         /// Gets or sets the build Id
-        /// BuildId is the build id which batch scoring is
-        /// requested to
-        /// It is optional. If it is not provided, the active
-        /// build id will be used
+        /// BuildId is the build id which batch scoring is requested to
+        /// It is optional. If it is not provided, the active build id
+        /// will be used
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "buildId")]
         public long? BuildId { get; set; }
 
         /// <summary>
         /// Gets or sets number of recommendations
-        /// It indicates the number of results (recommended items)
-        /// each request should return
+        /// It indicates the number of results (recommended items) each
+        /// request should return
         /// It is optional. The default value is 10
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfResults")]
@@ -90,8 +87,8 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets include Metadata
-        /// it indicates whether the result should include
-        /// metadata or not
+        /// it indicates whether the result should include metadata or
+        /// not
         /// It is optional. The default value is false
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "includeMetadata")]

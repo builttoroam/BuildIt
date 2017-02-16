@@ -32,11 +32,11 @@ namespace BuildIt.CognitiveServices.Models
         /// computation for the model.</param>
         /// <param name="splitterStrategy">Defines the splitter strategy to be
         /// used by the build.
-        /// RandomSplitter splits the usage data in train and test
-        /// sets based on the given
+        /// RandomSplitter splits the usage data in train and test sets
+        /// based on the given
         /// randomSplitterParameters value.
-        /// LastEventSplitter splits the usage data in train and
-        /// test sets based on the last
+        /// LastEventSplitter splits the usage data in train and test
+        /// sets based on the last
         /// transaction for a each user.</param>
         /// <param name="randomSplitterParameters">Specifies the parameters to
         /// be used for random splitter.</param>
@@ -96,11 +96,11 @@ namespace BuildIt.CognitiveServices.Models
         /// <summary>
         /// Gets or sets defines the splitter strategy to be used by the
         /// build.
-        /// RandomSplitter splits the usage data in train and test
-        /// sets based on the given
+        /// RandomSplitter splits the usage data in train and test sets
+        /// based on the given
         /// randomSplitterParameters value.
-        /// LastEventSplitter splits the usage data in train and
-        /// test sets based on the last
+        /// LastEventSplitter splits the usage data in train and test
+        /// sets based on the last
         /// transaction for a each user.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "splitterStrategy")]

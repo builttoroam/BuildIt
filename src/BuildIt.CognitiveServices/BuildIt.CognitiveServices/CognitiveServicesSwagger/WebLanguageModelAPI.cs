@@ -102,7 +102,7 @@ namespace BuildIt.CognitiveServices
         /// </summary>
         private void Initialize()
         {
-            this.BaseUri = new System.Uri("https://api.projectoxford.ai/text/weblm/v1.0");
+            this.BaseUri = new System.Uri("https://westus.api.cognitive.microsoft.com/text/weblm/v1.0");
             SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -162,7 +162,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateConditionalProbabilityWithHttpMessagesAsync(string model, int? order = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateConditionalProbabilityWithHttpMessagesAsync(string model, double? order = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (model == null)
             {
@@ -309,7 +309,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateJointProbabilityWithHttpMessagesAsync(string model, int? order = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> CalculateJointProbabilityWithHttpMessagesAsync(string model, double? order = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (model == null)
             {
@@ -464,7 +464,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> GenerateNextWordsWithHttpMessagesAsync(string model, string words, int? order = default(int?), int? maxNumOfCandidatesReturned = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> GenerateNextWordsWithHttpMessagesAsync(string model, string words, double? order = default(double?), double? maxNumOfCandidatesReturned = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (model == null)
             {
@@ -636,7 +636,7 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> BreakIntoWordsWithHttpMessagesAsync(string model, string text, int? order = default(int?), int? maxNumOfCandidatesReturned = default(int?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> BreakIntoWordsWithHttpMessagesAsync(string model, string text, double? order = default(double?), double? maxNumOfCandidatesReturned = default(double?), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (model == null)
             {

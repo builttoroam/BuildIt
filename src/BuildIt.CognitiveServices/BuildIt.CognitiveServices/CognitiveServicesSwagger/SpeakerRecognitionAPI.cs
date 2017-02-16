@@ -102,7 +102,7 @@ namespace BuildIt.CognitiveServices
         /// </summary>
         private void Initialize()
         {
-            this.BaseUri = new System.Uri("https://api.projectoxford.ai/spid/v1.0");
+            this.BaseUri = new System.Uri("https://westus.api.cognitive.microsoft.com/spid/v1.0");
             SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

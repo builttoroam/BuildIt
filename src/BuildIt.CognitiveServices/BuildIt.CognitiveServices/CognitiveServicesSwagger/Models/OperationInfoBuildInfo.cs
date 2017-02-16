@@ -19,8 +19,8 @@ namespace BuildIt.CognitiveServices.Models
         /// <param name="type">Type of operation, currently 'BuildModel' is
         /// the only supported value</param>
         /// <param name="status">Description for operation status.
-        /// e.g. For 'BuildModel' operation type, this can be one
-        /// of: NotStarted, Running, Cancelling, Cancelled, Succeeded,
+        /// e.g. For 'BuildModel' operation type, this can be one of:
+        /// NotStarted, Running, Cancelling, Cancelled, Succeeded,
         /// Failed.</param>
         /// <param name="createdDateTime">Operation creation time</param>
         /// <param name="lastActionDateTime">Operation last updated
@@ -52,8 +52,8 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets description for operation status.
-        /// e.g. For 'BuildModel' operation type, this can be one
-        /// of: NotStarted, Running, Cancelling, Cancelled, Succeeded, Failed.
+        /// e.g. For 'BuildModel' operation type, this can be one of:
+        /// NotStarted, Running, Cancelling, Cancelled, Succeeded, Failed.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

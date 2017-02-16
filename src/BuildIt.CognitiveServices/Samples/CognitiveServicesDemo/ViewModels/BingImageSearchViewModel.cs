@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Net.Http;
-using System.Threading.Tasks;
-using BuildIt.CognitiveServices;
+﻿using BuildIt.CognitiveServices;
 using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
-using Newtonsoft.Json;
-using System.IO;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace CognitiveServicesDemo.ViewModels
 {

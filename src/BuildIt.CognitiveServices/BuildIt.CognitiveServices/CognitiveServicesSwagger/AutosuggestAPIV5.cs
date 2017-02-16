@@ -4,8 +4,6 @@
 
 namespace BuildIt.CognitiveServices
 {
-    using Microsoft.Rest;
-
     /// <summary>
     /// The Autosuggest API lets partners send a partial search query to Bing
     /// and get back a list of suggested queries that other users have
@@ -127,7 +125,7 @@ namespace BuildIt.CognitiveServices
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
                 ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
-                Converters = new  System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
                     {
                         new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
                     }
@@ -146,13 +144,9 @@ namespace BuildIt.CognitiveServices
             };
             CustomInitialize();
         }
-
         /// <summary>
         /// This operation provides suggestions for a given query or partial query.
         /// </summary>
-        /// <param name="q">
-        /// Input content
-        /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
         /// </param>
@@ -171,9 +165,9 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SuggestionsWithHttpMessagesAsync(string q, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SuggestionsWithHttpMessagesAsync(string query, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            //string q = "bill g";
+            string q = query;
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -219,7 +213,7 @@ namespace BuildIt.CognitiveServices
             }
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -248,10 +242,12 @@ namespace BuildIt.CognitiveServices
             if ((int)_statusCode != 200 && (int)_statusCode != 401 && (int)_statusCode != 403 && (int)_statusCode != 429)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                if (_httpResponse.Content != null)
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
-                else {
+                else
+                {
                     _responseContent = string.Empty;
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);

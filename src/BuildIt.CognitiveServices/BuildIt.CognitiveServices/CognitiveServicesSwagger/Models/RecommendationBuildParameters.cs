@@ -20,15 +20,15 @@ namespace BuildIt.CognitiveServices.Models
         /// </summary>
         /// <param name="numberOfModelIterations">The number of iterations the
         /// model performs.
-        /// The higher the number, the better accuracy, but
-        /// compute time will be higher.</param>
+        /// The higher the number, the better accuracy, but compute time
+        /// will be higher.</param>
         /// <param name="numberOfModelDimensions">The number of dimensions
         /// relates to the number of 'features' the model will try to find
         /// within your data.
         /// Increasing the number of dimensions will allow better
         /// fine-tuning of the results into smaller clusters.
-        /// However, too many dimensions will prevent the model
-        /// from finding correlations between items.</param>
+        /// However, too many dimensions will prevent the model from
+        /// finding correlations between items.</param>
         /// <param name="itemCutOffLowerBound">Defines the item lower bound
         /// for usage condenser.</param>
         /// <param name="itemCutOffUpperBound">Defines the item upper bound
@@ -41,11 +41,11 @@ namespace BuildIt.CognitiveServices.Models
         /// computation for the model.</param>
         /// <param name="splitterStrategy">Defines the splitter strategy to be
         /// used by the build.
-        /// RandomSplitter splits the usage data in train and test
-        /// sets based on the given
+        /// RandomSplitter splits the usage data in train and test sets
+        /// based on the given
         /// randomSplitterParameters value.
-        /// LastEventSplitter splits the usage data in train and
-        /// test sets based on the last
+        /// LastEventSplitter splits the usage data in train and test
+        /// sets based on the last
         /// transaction for a each user.</param>
         /// <param name="randomSplitterParameters">Specifies the parameters to
         /// be used for random splitter.</param>
@@ -91,8 +91,8 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets the number of iterations the model performs.
-        /// The higher the number, the better accuracy, but
-        /// compute time will be higher.
+        /// The higher the number, the better accuracy, but compute time
+        /// will be higher.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfModelIterations")]
         public int? NumberOfModelIterations { get; set; }
@@ -102,8 +102,8 @@ namespace BuildIt.CognitiveServices.Models
         /// 'features' the model will try to find within your data.
         /// Increasing the number of dimensions will allow better
         /// fine-tuning of the results into smaller clusters.
-        /// However, too many dimensions will prevent the model
-        /// from finding correlations between items.
+        /// However, too many dimensions will prevent the model from
+        /// finding correlations between items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfModelDimensions")]
         public int? NumberOfModelDimensions { get; set; }
@@ -141,11 +141,11 @@ namespace BuildIt.CognitiveServices.Models
         /// <summary>
         /// Gets or sets defines the splitter strategy to be used by the
         /// build.
-        /// RandomSplitter splits the usage data in train and test
-        /// sets based on the given
+        /// RandomSplitter splits the usage data in train and test sets
+        /// based on the given
         /// randomSplitterParameters value.
-        /// LastEventSplitter splits the usage data in train and
-        /// test sets based on the last
+        /// LastEventSplitter splits the usage data in train and test
+        /// sets based on the last
         /// transaction for a each user.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "splitterStrategy")]

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using BuildIt.CognitiveServices;
+﻿using BuildIt.CognitiveServices;
 using CognitiveServicesDemo.Common;
 using CognitiveServicesDemo.Model;
 using MvvmCross.Core.ViewModels;
-using Newtonsoft.Json;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -39,7 +33,7 @@ namespace CognitiveServicesDemo.ViewModels
             get { return resultUrl; }
             set
             {
-                resultUrl = value; 
+                resultUrl = value;
                 RaisePropertyChanged(() => ResultUrl);
             }
         }
@@ -49,7 +43,7 @@ namespace CognitiveServicesDemo.ViewModels
             get { return resultName; }
             set
             {
-                resultName = value; 
+                resultName = value;
                 RaisePropertyChanged(() => ResultName);
             }
         }
@@ -75,7 +69,7 @@ namespace CognitiveServicesDemo.ViewModels
                         client =>
                             client.SuggestionsWithHttpMessagesAsync(InputText, null, Constants.BingAutosuggestKey));
                 }
-                
+
                 /*
                 //request header
                 client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, Constants.BingAutosuggestKey);
@@ -98,7 +92,7 @@ namespace CognitiveServicesDemo.ViewModels
                 }
                 else
                 {
-                    OutputText= feed.message;
+                    OutputText = feed.message;
                 }
 
                 //AnalysisBreakIntoWord(feed);

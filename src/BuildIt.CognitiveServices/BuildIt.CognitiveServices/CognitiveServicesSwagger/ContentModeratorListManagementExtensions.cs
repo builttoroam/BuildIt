@@ -11,6 +11,173 @@ namespace BuildIt.CognitiveServices
     /// </summary>
     public static partial class ContentModeratorListManagementExtensions
     {
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageListsCreate(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsCreateAsync(subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageListsCreateAsync(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageListsCreateWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageListsGetAll(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsGetAllAsync(subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageListsGetAllAsync(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageListsGetAllWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageListsDelete(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsDeleteAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageListsDeleteAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageListsDeleteWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageListsGetDetails(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsGetDetailsAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageListsGetDetailsAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageListsGetDetailsWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageListsUpdateDetails(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsUpdateDetailsAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageListsUpdateDetailsAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageListsUpdateDetailsWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
             /// <summary>
             /// Add an Image to your image list. The image list can be used to do fuzzy
             /// matching against other images when using Image/Match API.
@@ -100,6 +267,41 @@ namespace BuildIt.CognitiveServices
                 await operations.ImageAddImageWithHttpMessagesAsync(listId, tag, label, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            public static void ImageGetallImageIds(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageGetallImageIdsAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='listId'>
+            /// </param>
+            /// <param name='subscriptionKey'>
+            /// subscription key in url
+            /// </param>
+            /// <param name='ocpApimSubscriptionKey'>
+            /// subscription key in header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task ImageGetallImageIdsAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.ImageGetallImageIdsWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+            }
+
             /// <summary>
             /// Delete all images from your list. The image list can be used to do fuzzy
             /// matching against other images when using Image/Match API.
@@ -164,9 +366,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static void ImageGetallImageIds(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static void ImageListsRefreshSearchIndex(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageGetallImageIdsAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsRefreshSearchIndexAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -183,9 +385,9 @@ namespace BuildIt.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task ImageGetallImageIdsAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task ImageListsRefreshSearchIndexAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.ImageGetallImageIdsWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+                await operations.ImageListsRefreshSearchIndexWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -243,208 +445,6 @@ namespace BuildIt.CognitiveServices
             public static async System.Threading.Tasks.Task ImageDeleteAsync(this IContentModeratorListManagement operations, string listId, string imageId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ImageDeleteWithHttpMessagesAsync(listId, imageId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageListsGetDetails(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsGetDetailsAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageListsGetDetailsAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageListsGetDetailsWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageListsDelete(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsDeleteAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageListsDeleteAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageListsDeleteWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageListsUpdateDetails(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsUpdateDetailsAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageListsUpdateDetailsAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageListsUpdateDetailsWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageListsCreate(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsCreateAsync(subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageListsCreateAsync(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageListsCreateWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageListsGetAll(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsGetAllAsync(subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageListsGetAllAsync(this IContentModeratorListManagement operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageListsGetAllWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void ImageListsRefreshSearchIndex(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IContentModeratorListManagement)s).ImageListsRefreshSearchIndexAsync(listId, subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='listId'>
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task ImageListsRefreshSearchIndexAsync(this IContentModeratorListManagement operations, string listId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.ImageListsRefreshSearchIndexWithHttpMessagesAsync(listId, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <param name='operations'>

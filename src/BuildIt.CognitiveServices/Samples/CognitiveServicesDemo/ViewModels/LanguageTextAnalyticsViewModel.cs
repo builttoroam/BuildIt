@@ -1,17 +1,15 @@
-﻿using System;
+﻿using BuildIt.CognitiveServices;
+using BuildIt.CognitiveServices.Models;
+using CognitiveServicesDemo.Common;
+using CognitiveServicesDemo.Model;
+using MvvmCross.Core.ViewModels;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using BuildIt.CognitiveServices;
-using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
-using BuildIt.CognitiveServices.Models;
-using CognitiveServicesDemo.Model;
-using MvvmCross.Core.ViewModels;
-using Newtonsoft.Json;
-using CognitiveServicesDemo.Common;
 
 namespace CognitiveServicesDemo.ViewModels
 {
@@ -95,17 +93,17 @@ namespace CognitiveServicesDemo.ViewModels
             //text.text = inputText;
             //text.id = DateTime.Now.ToString();
             //var jsonString = JsonConvert.SerializeObject(text);
+
             var detectLanguage = " {\"documents\": [{ \"id\":\"" + DateTime.Now + "\", \"text\":\"" + inputText + "\"}]}";
 
             var textAnalytics = new AzureMachineLearningTextAnalytics();
-            BatchInputV2 batch = new BatchInputV2()
+            BatchInputV2 batch = new BatchInputV2
             {
-                Documents = new List<InputV2>() { }
+                Documents = new List<InputV2> { new InputV2(DateTime.Now.ToString("u"), inputText) }
             };
             var languageResult =
                 await
-                    textAnalytics.DetectLanguageWithHttpMessagesAsync(detectLanguage, 1, null,
-                        Constants.TextAnalyticsKey, batch);
+                    textAnalytics.DetectLanguageWithHttpMessagesAsync(1, null, Constants.TextAnalyticsKey, batch);
 
             //HTTPClient
             var client = new HttpClient();
@@ -131,7 +129,7 @@ namespace CognitiveServicesDemo.ViewModels
             }
             var jsonResult = await response.Content.ReadAsStringAsync();
             var feed = JsonConvert.DeserializeObject<TextAnalyticsReplyBody>(jsonResult);
-            
+
 
 
             //*****************************************
@@ -154,7 +152,7 @@ namespace CognitiveServicesDemo.ViewModels
             }
             var jsonResult2 = await response2.Content.ReadAsStringAsync();
             var feed2 = JsonConvert.DeserializeObject<DetectkeyPhrases>(jsonResult2);
-            
+
 
 
 
@@ -167,7 +165,7 @@ namespace CognitiveServicesDemo.ViewModels
 
             var cognitiveService = new CognitiveServiceClient();
             var result = await cognitiveService.SentimentApiRequestAsync(Constants.TextAnalyticsKey, detectSentiment);
-            
+
             // Request body
             byte[] byteData3 = Encoding.UTF8.GetBytes(detectSentiment);
 

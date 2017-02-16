@@ -11,42 +11,42 @@ namespace BuildIt.CognitiveServices
     /// </summary>
     public static partial class AutosuggestAPIV5Extensions
     {
-            /// <summary>
-            /// This operation provides suggestions for a given query or partial query.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            public static void Suggestions(this IAutosuggestAPIV5 operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IAutosuggestAPIV5)s).SuggestionsAsync(subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// This operation provides suggestions for a given query or partial query.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        public static void Suggestions(this IAutosuggestAPIV5 operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+        {
+            System.Threading.Tasks.Task.Factory.StartNew(s => ((IAutosuggestAPIV5)s).SuggestionsAsync(subscriptionKey, ocpApimSubscriptionKey), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// This operation provides suggestions for a given query or partial query.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionKey'>
-            /// subscription key in url
-            /// </param>
-            /// <param name='ocpApimSubscriptionKey'>
-            /// subscription key in header
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task SuggestionsAsync(this IAutosuggestAPIV5 operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.SuggestionsWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
-            }
+        /// <summary>
+        /// This operation provides suggestions for a given query or partial query.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async System.Threading.Tasks.Task SuggestionsAsync(this IAutosuggestAPIV5 operations, string query, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            await operations.SuggestionsWithHttpMessagesAsync(query, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false);
+        }
 
     }
 }

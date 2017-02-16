@@ -18,15 +18,15 @@ namespace BuildIt.CognitiveServices.Models
         /// </summary>
         /// <param name="numberOfModelIterations">The number of iterations the
         /// model performs.
-        /// The higher the number, the better accuracy, but
-        /// compute time will be higher.</param>
+        /// The higher the number, the better accuracy, but compute time
+        /// will be higher.</param>
         /// <param name="numberOfModelDimensions">The number of dimensions
         /// relates to the number of 'features' the model will try to find
         /// within your data.
         /// Increasing the number of dimensions will allow better
         /// fine-tuning of the results into smaller clusters.
-        /// However, too many dimensions will prevent the model
-        /// from finding correlations between items.</param>
+        /// However, too many dimensions will prevent the model from
+        /// finding correlations between items.</param>
         /// <param name="itemCutOffLowerBound">Defines the item lower bound
         /// for usage condenser.</param>
         /// <param name="itemCutOffUpperBound">Defines the item upper bound
@@ -47,8 +47,8 @@ namespace BuildIt.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets the number of iterations the model performs.
-        /// The higher the number, the better accuracy, but
-        /// compute time will be higher.
+        /// The higher the number, the better accuracy, but compute time
+        /// will be higher.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfModelIterations")]
         public int? NumberOfModelIterations { get; set; }
@@ -58,8 +58,8 @@ namespace BuildIt.CognitiveServices.Models
         /// 'features' the model will try to find within your data.
         /// Increasing the number of dimensions will allow better
         /// fine-tuning of the results into smaller clusters.
-        /// However, too many dimensions will prevent the model
-        /// from finding correlations between items.
+        /// However, too many dimensions will prevent the model from
+        /// finding correlations between items.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfModelDimensions")]
         public int? NumberOfModelDimensions { get; set; }

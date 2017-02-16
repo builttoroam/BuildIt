@@ -29,7 +29,7 @@ namespace BuildIt.CognitiveServices.Models
         /// import</param>
         /// <param name="sampleErrorDetails">Sample lines having errors during
         /// catalog import</param>
-        public CatalogImportStats(int? processedLineCount = default(int?), int? errorLineCount = default(int?), int? importedLineCount = default(int?), System.Collections.Generic.IList<ImportErrorStats> errorSummary = default(System.Collections.Generic.IList<ImportErrorStats>), System.Collections.Generic.IList<ErrorDetail> sampleErrorDetails = default(System.Collections.Generic.IList<ErrorDetail>))
+        public CatalogImportStats(int? processedLineCount = default(int?), int? errorLineCount = default(int?), int? importedLineCount = default(int?), System.Collections.Generic.IList<ErrorStats> errorSummary = default(System.Collections.Generic.IList<ErrorStats>), System.Collections.Generic.IList<ErrorDetail> sampleErrorDetails = default(System.Collections.Generic.IList<ErrorDetail>))
         {
             ProcessedLineCount = processedLineCount;
             ErrorLineCount = errorLineCount;
@@ -62,7 +62,7 @@ namespace BuildIt.CognitiveServices.Models
         /// Gets or sets details of errors during catalog import
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "errorSummary")]
-        public System.Collections.Generic.IList<ImportErrorStats> ErrorSummary { get; set; }
+        public System.Collections.Generic.IList<ErrorStats> ErrorSummary { get; set; }
 
         /// <summary>
         /// Gets or sets sample lines having errors during catalog import

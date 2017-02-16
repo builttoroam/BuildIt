@@ -19,8 +19,7 @@ namespace BuildIt.CognitiveServices.Models
         /// <param name="authenticationType">Authentication Type
         /// value "PublicOrSas"</param>
         /// <param name="baseLocation">Base Location
-        /// ex: "https://{storage
-        /// name}.blob.core.windows.net/"</param>
+        /// ex: "https://{storage name}.blob.core.windows.net/"</param>
         /// <param name="relativeLocation">The relative location, including
         /// the container name</param>
         /// <param name="sasBlobToken">The sasToken to access the file</param>

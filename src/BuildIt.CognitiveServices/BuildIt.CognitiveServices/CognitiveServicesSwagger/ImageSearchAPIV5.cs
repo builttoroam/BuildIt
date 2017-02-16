@@ -4,8 +4,6 @@
 
 namespace BuildIt.CognitiveServices
 {
-    using Microsoft.Rest;
-
     /// <summary>
     /// The Image Search API lets partners send a search query to Bing and get
     /// back a list of relevant images. Note you should call the Image API if
@@ -119,7 +117,7 @@ namespace BuildIt.CognitiveServices
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
                 ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
-                Converters = new  System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
                     {
                         new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
                     }
@@ -138,13 +136,9 @@ namespace BuildIt.CognitiveServices
             };
             CustomInitialize();
         }
-
         /// <summary>
         /// Get relevant images for a given query.
         /// </summary>
-        /// <param name="q">
-        /// Input value
-        /// </param>
         /// <param name='count'>
         /// The number of image results to return in the response. The actual number
         /// delivered may be less than requested.
@@ -189,9 +183,9 @@ namespace BuildIt.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SearchWithHttpMessagesAsync(string q,int? count = 10, int? offset = 0, string mkt = "en-us", string safeSearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> SearchWithHttpMessagesAsync(string query, double? count = 10, double? offset = 0, string mkt = "en-us", string safeSearch = "Moderate", string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            //string q = "cats";
+            string q = query;
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -257,7 +251,7 @@ namespace BuildIt.CognitiveServices
             }
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -286,10 +280,12 @@ namespace BuildIt.CognitiveServices
             if ((int)_statusCode != 200)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                if (_httpResponse.Content != null)
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
-                else {
+                else
+                {
                     _responseContent = string.Empty;
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
@@ -383,7 +379,7 @@ namespace BuildIt.CognitiveServices
             }
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -412,10 +408,12 @@ namespace BuildIt.CognitiveServices
             if (!_httpResponse.IsSuccessStatusCode)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                if (_httpResponse.Content != null)
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
-                else {
+                else
+                {
                     _responseContent = string.Empty;
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
@@ -505,7 +503,7 @@ namespace BuildIt.CognitiveServices
             }
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -534,10 +532,12 @@ namespace BuildIt.CognitiveServices
             if ((int)_statusCode != 200)
             {
                 var ex = new Microsoft.Rest.HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                if (_httpResponse.Content != null)
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
-                else {
+                else
+                {
                     _responseContent = string.Empty;
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);

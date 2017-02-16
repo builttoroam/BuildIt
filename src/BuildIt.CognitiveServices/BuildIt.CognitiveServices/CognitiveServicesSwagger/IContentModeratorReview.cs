@@ -41,6 +41,97 @@ namespace BuildIt.CognitiveServices
 
 
             /// <summary>
+        /// Returns review details for the review Id passed.
+        /// </summary>
+        /// <param name='teamName'>
+        /// </param>
+        /// <param name='reviewId'>
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ReviewGetWithHttpMessagesAsync(string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Get the Job Details for a Job Id.
+        /// </summary>
+        /// <param name='teamName'>
+        /// </param>
+        /// <param name='jobId'>
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> JobGetWithHttpMessagesAsync(string teamName, string jobId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// The reviews created would show up for Reviewers on your team. As
+        /// Reviewers complete reviewing, results of the Review would be
+        /// POSTED (i.e. HTTP POST) on the specified CallBackEndpoint.
+        /// 
+        /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
+        /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;
+        /// &lt;p&gt;
+        /// {&lt;br/&gt;
+        /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
+        /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
+        /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
+        /// "CallBackType": "Review",&lt;br/&gt;
+        /// "ContentId": "&lt;The ContentId that was specified
+        /// input&gt;",&lt;br/&gt;
+        /// "Metadata": {&lt;br/&gt;
+        /// "adultscore": "0.xxx",&lt;br/&gt;
+        /// "a": "False",&lt;br/&gt;
+        /// "racyscore": "0.xxx",&lt;br/&gt;
+        /// "r": "True"&lt;br/&gt;
+        /// },&lt;br/&gt;
+        /// "ReviewerResultTags": {&lt;br/&gt;
+        /// "a": "False",&lt;br/&gt;
+        /// "r": "True"&lt;br/&gt;
+        /// }&lt;br/&gt;
+        /// }&lt;br/&gt;
+        /// 
+        /// &lt;/p&gt;
+        /// </summary>
+        /// <param name='teamName'>
+        /// Your Team Name
+        /// </param>
+        /// <param name='subTeam'>
+        /// Optional paramter used to specify the Sub Team for this review
+        /// </param>
+        /// <param name='subscriptionKey'>
+        /// subscription key in url
+        /// </param>
+        /// <param name='ocpApimSubscriptionKey'>
+        /// subscription key in header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ReviewCreateWithHttpMessagesAsync(string teamName, string subTeam = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
         /// A job Id will be returned for the Image content posted on this
         /// endpoint.
         /// 
@@ -125,105 +216,11 @@ namespace BuildIt.CognitiveServices
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> JobCreateWithHttpMessagesAsync(string teamName, string contentId, string workflowName, string callBackEndpoint = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// Get the Job Details for a Job Id.
-        /// </summary>
-        /// <param name='teamName'>
-        /// </param>
-        /// <param name='jobId'>
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> JobGetWithHttpMessagesAsync(string teamName, string jobId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// The reviews created would show up for Reviewers on your team. As
-        /// Reviewers complete reviewing, results of the Review would be
-        /// POSTED (i.e. HTTP POST) on the specified CallBackEndpoint.
-        /// 
-        /// &lt;h3&gt;CallBack Schemas &lt;/h3&gt;
-        /// &lt;h4&gt;Review Completion CallBack Sample&lt;/h4&gt;
-        /// &lt;p&gt;
-        /// {&lt;br/&gt;
-        /// "ReviewId": "&lt;Review Id&gt;",&lt;br/&gt;
-        /// "ModifiedOn": "2016-10-11T22:36:32.9934851Z",&lt;br/&gt;
-        /// "ModifiedBy": "&lt;Name of the Reviewer&gt;",&lt;br/&gt;
-        /// "CallBackType": "Review",&lt;br/&gt;
-        /// "ContentId": "&lt;The ContentId that was specified
-        /// input&gt;",&lt;br/&gt;
-        /// "Metadata": {&lt;br/&gt;
-        /// "adultscore": "0.xxx",&lt;br/&gt;
-        /// "a": "False",&lt;br/&gt;
-        /// "racyscore": "0.xxx",&lt;br/&gt;
-        /// "r": "True"&lt;br/&gt;
-        /// },&lt;br/&gt;
-        /// "ReviewerResultTags": {&lt;br/&gt;
-        /// "a": "False",&lt;br/&gt;
-        /// "r": "True"&lt;br/&gt;
-        /// }&lt;br/&gt;
-        /// }&lt;br/&gt;
-        /// 
-        /// &lt;/p&gt;
-        /// </summary>
-        /// <param name='teamName'>
-        /// Your Team Name
-        /// </param>
-        /// <param name='subTeam'>
-        /// Optional paramter used to specify the Sub Team for this review
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ReviewCreateWithHttpMessagesAsync(string teamName, string subTeam = default(string), string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Returns review details for the review Id passed.
-        /// </summary>
-        /// <param name='teamName'>
-        /// </param>
-        /// <param name='reviewId'>
-        /// </param>
-        /// <param name='subscriptionKey'>
-        /// subscription key in url
-        /// </param>
-        /// <param name='ocpApimSubscriptionKey'>
-        /// subscription key in header
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> ReviewGetWithHttpMessagesAsync(string teamName, string reviewId, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Create a new workflow or update an existing one.
+        /// Get all the Workflows available for you Team
         /// </summary>
         /// <param name='team'>
         /// Your Team name
         /// </param>
-        /// <param name='workflowname'>
-        /// Provide a name for this workflow
-        /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
         /// </param>
@@ -236,7 +233,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowCreateOrUpdateWithHttpMessagesAsync(string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetAllWithHttpMessagesAsync(string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get the details of a specific Workflow on your Team
@@ -262,10 +259,13 @@ namespace BuildIt.CognitiveServices
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetWithHttpMessagesAsync(string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// Get all the Workflows available for you Team
+        /// Create a new workflow or update an existing one.
         /// </summary>
         /// <param name='team'>
         /// Your Team name
+        /// </param>
+        /// <param name='workflowname'>
+        /// Provide a name for this workflow
         /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
@@ -279,7 +279,7 @@ namespace BuildIt.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowGetAllWithHttpMessagesAsync(string team, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> WorkflowCreateOrUpdateWithHttpMessagesAsync(string team, string workflowname, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 }
