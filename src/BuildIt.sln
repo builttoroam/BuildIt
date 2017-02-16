@@ -212,9 +212,11 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{7cff52a4-ad28-48b6-a73f-233d9cc002f2}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}*SharedItemsImports = 4
 		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}*SharedItemsImports = 4
 		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
