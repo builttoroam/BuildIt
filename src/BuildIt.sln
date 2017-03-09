@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.UI.Shared", "BuildIt.UI.Shared\BuildIt.UI.Shared.shproj", "{9C859F27-080A-4E23-8154-C736C5C09225}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4DD5348-6D07-4E61-8974-61C57A54DEC5}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.CodeMap.dgml = BuildIt.CodeMap.dgml
-		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle", "{C6B58AAF-DF70-496A-9180-248F142600E6}"
@@ -30,10 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.States", "BuildIt.S
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.States\BuildIt.States.nuspec = BuildIt.States\BuildIt.States.nuspec
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States", "BuildIt.States\BuildIt.States\BuildIt.States.csproj", "{B18D3D00-AD5F-41E5-8D44-1670F28946FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States.UWP", "BuildIt.States\BuildIt.States.UWP\BuildIt.States.UWP.csproj", "{0CA149FA-2055-4541-B45B-CDB6C09C51EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.General", "BuildIt.General", "{CB63CFC0-3FC2-4075-B958-DFBFC77E099C}"
 	ProjectSection(SolutionItems) = preProject
@@ -55,12 +46,58 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Synchronization", "
 		BuildIt.Synchronization\BuildIt.Synchronization.nuspec = BuildIt.Synchronization\BuildIt.Synchronization.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Autofac", "BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj", "{D9058653-4416-4A9B-9FCD-1A2C805629BA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Autofac", "BuildIt.Autofac", "{59BFD754-0682-45B0-A386-4A6915674BA9}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.Autofac\BuildIt.Autofac.nuspec = BuildIt.Autofac\BuildIt.Autofac.nuspec
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Config", "BuildIt.Config", "{C57DD687-4E64-4DD6-9365-6471C90E06EB}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Config\BuildIt.Config.Core.Api.nuspec = BuildIt.Config\BuildIt.Config.Core.Api.nuspec
+		BuildIt.Config\BuildIt.Config.Core.nuspec = BuildIt.Config\BuildIt.Config.Core.nuspec
+		BuildIt.Config\BuildIt.Config.Impl.nuspec = BuildIt.Config\BuildIt.Config.Impl.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Web", "BuildIt.Web", "{3A895C71-D91A-4B84-8213-2E19C3B550DA}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Web\BuildIt.Web.nuspec = BuildIt.Web\BuildIt.Web.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Bot", "BuildIt.Bot", "{A651744C-6719-4079-8AB2-F5A50DE11300}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Bot\BuildIt.Bot.Api.nuspec = BuildIt.Bot\BuildIt.Bot.Api.nuspec
+		BuildIt.Bot\BuildIt.Bot.Client.Impl.nuspec = BuildIt.Bot\BuildIt.Bot.Client.Impl.nuspec
+		BuildIt.Bot\BuildIt.Bot.Client.nuspec = BuildIt.Bot\BuildIt.Bot.Client.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.AR", "BuildIt.AR", "{1A8BB5C9-4935-4D71-97F0-834EA8311651}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.AR\BuildIt.AR.Android.nuspec = BuildIt.AR\BuildIt.AR.Android.nuspec
+		BuildIt.AR\BuildIt.AR.iOS.nuspec = BuildIt.AR\BuildIt.AR.iOS.nuspec
+		BuildIt.AR\BuildIt.AR.nuspec = BuildIt.AR\BuildIt.AR.nuspec
+		BuildIt.AR\BuildIt.AR.UWP.nuspec = BuildIt.AR\BuildIt.AR.UWP.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.CognitiveServices", "BuildIt.CognitiveServices", "{D2B95664-49D4-413C-B54B-5C46F0FDF36E}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.CognitiveServices\BuildIt.CognitiveServices.nuspec = BuildIt.CognitiveServices\BuildIt.CognitiveServices.nuspec
+		BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms.nuspec = BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Auth", "BuildIt.Auth", "{3B649751-0D91-41F8-8F1F-3536C0CE8A2B}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Auth\BuildIt.Auth.nuspec = BuildIt.Auth\BuildIt.Auth.nuspec
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.UI.Shared", "BuildIt.UI.Shared\BuildIt.UI.Shared.shproj", "{9C859F27-080A-4E23-8154-C736C5C09225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States", "BuildIt.States\BuildIt.States\BuildIt.States.csproj", "{B18D3D00-AD5F-41E5-8D44-1670F28946FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States.UWP", "BuildIt.States\BuildIt.States.UWP\BuildIt.States.UWP.csproj", "{0CA149FA-2055-4541-B45B-CDB6C09C51EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Autofac", "BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj", "{D9058653-4416-4A9B-9FCD-1A2C805629BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Data.Sqlite", "BuildIt.Data.Sqlite\BuildIt.Data.Sqlite\BuildIt.Data.Sqlite.csproj", "{27622A0A-9C78-43ED-89A5-98215100E054}"
 EndProject
@@ -106,13 +143,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.MvvmCross.UI.Shared
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.WP8x", "BuildIt.Lifecycle\BuildIt.Lifecycle.WP8x\BuildIt.Lifecycle.WP8x.csproj", "{FCE262A3-9F22-4B02-8610-18841FE38960}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Config", "BuildIt.Config", "{C57DD687-4E64-4DD6-9365-6471C90E06EB}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.Config\BuildIt.Config.Core.Api.nuspec = BuildIt.Config\BuildIt.Config.Core.Api.nuspec
-		BuildIt.Config\BuildIt.Config.Core.nuspec = BuildIt.Config\BuildIt.Config.Core.nuspec
-		BuildIt.Config\BuildIt.Config.Impl.nuspec = BuildIt.Config\BuildIt.Config.Impl.nuspec
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config\BuildIt.Config.Core\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Common", "BuildIt.Config\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj", "{9F0FA446-E6E0-438E-9AA8-E2B7EC27071F}"
@@ -123,31 +153,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.iOS", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Win", "BuildIt.Config\BuildIt.Config.Impl.Win\BuildIt.Config.Impl.Win.csproj", "{29EA096D-DF83-484E-99A3-8C74BA10E65C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Web", "BuildIt.Web", "{3A895C71-D91A-4B84-8213-2E19C3B550DA}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.Web\BuildIt.Web.nuspec = BuildIt.Web\BuildIt.Web.nuspec
-	EndProjectSection
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BuildIt.Web", "BuildIt.Web\BuildIt.Web\BuildIt.Web.xproj", "{8A55B873-880A-48CB-BCC4-5A414886346F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Web.General", "BuildIt.Web\BuildIt.Web.General\BuildIt.Web.General.csproj", "{12529926-84CD-49A5-82D6-CB59326DB174}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Bot", "BuildIt.Bot", "{A651744C-6719-4079-8AB2-F5A50DE11300}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.Bot\BuildIt.Bot.Api.nuspec = BuildIt.Bot\BuildIt.Bot.Api.nuspec
-		BuildIt.Bot\BuildIt.Bot.Client.Impl.nuspec = BuildIt.Bot\BuildIt.Bot.Client.Impl.nuspec
-		BuildIt.Bot\BuildIt.Bot.Client.nuspec = BuildIt.Bot\BuildIt.Bot.Client.nuspec
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Bot.Client", "BuildIt.Bot\BuildIt.Bot.Client\BuildIt.Bot.Client.csproj", "{296AB37C-EA12-4B82-8AD4-6084D21044BC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.AR", "BuildIt.AR", "{1A8BB5C9-4935-4D71-97F0-834EA8311651}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.AR\BuildIt.AR.Android.nuspec = BuildIt.AR\BuildIt.AR.Android.nuspec
-		BuildIt.AR\BuildIt.AR.iOS.nuspec = BuildIt.AR\BuildIt.AR.iOS.nuspec
-		BuildIt.AR\BuildIt.AR.nuspec = BuildIt.AR\BuildIt.AR.nuspec
-		BuildIt.AR\BuildIt.AR.UWP.nuspec = BuildIt.AR\BuildIt.AR.UWP.nuspec
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.AR", "BuildIt.AR\BuildIt.AR\BuildIt.AR.csproj", "{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}"
 EndProject
@@ -167,20 +177,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Bot.Client.Impl.iOS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States.Tests", "BuildIt.States\BuildIt.States.Tests\BuildIt.States.Tests.csproj", "{6EB20973-5C6A-4B03-9636-B3B468C9B45D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.CognitiveServices", "BuildIt.CognitiveServices", "{D2B95664-49D4-413C-B54B-5C46F0FDF36E}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.CognitiveServices\BuildIt.CognitiveServices.nuspec = BuildIt.CognitiveServices\BuildIt.CognitiveServices.nuspec
-		BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms.nuspec = BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms.nuspec
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.CognitiveServices.XForms", "BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms\BuildIt.CognitiveServices.XForms.csproj", "{8B988DEF-DBE9-4C4E-9FD6-8DC9A022D722}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.CognitiveServices", "BuildIt.CognitiveServices\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj", "{94BC79A7-6D56-4A50-A9E3-9B452EC3011C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Auth", "BuildIt.Auth", "{3B649751-0D91-41F8-8F1F-3536C0CE8A2B}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.Auth\BuildIt.Auth.nuspec = BuildIt.Auth\BuildIt.Auth.nuspec
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Auth", "BuildIt.Auth\BuildIt.Auth\BuildIt.Auth.csproj", "{7094B192-EB80-43A0-B9D8-30E354AC229E}"
 EndProject
@@ -201,9 +200,6 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{35814764-6e47-4b95-ae23-7314ef61884b}*SharedItemsImports = 4
-		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{4e3502a3-129f-4679-a41b-f51f0dcfc2e7}*SharedItemsImports = 4
 		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{5d1d9d09-fe4b-4896-85b5-290a6ac9b677}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}*SharedItemsImports = 4
@@ -213,17 +209,11 @@ Global
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{7cff52a4-ad28-48b6-a73f-233d9cc002f2}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}*SharedItemsImports = 4
-		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}*SharedItemsImports = 4
 		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
-		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{c5f40178-c571-4212-9c23-b8fdc3784356}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
@@ -232,9 +222,6 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{e0e6a925-bc0c-4163-906b-46cc92d30f74}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{ee72434b-cb9d-41f4-b6b7-3bb60b2e7218}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
-		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

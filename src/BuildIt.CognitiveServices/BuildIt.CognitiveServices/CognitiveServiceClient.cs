@@ -1,12 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using BuildIt.CognitiveServices.Common;
+﻿using BuildIt.CognitiveServices.Common;
 using BuildIt.CognitiveServices.Interfaces;
 using BuildIt.CognitiveServices.Models;
 using BuildIt.CognitiveServices.Models.Feeds.Academic;
@@ -19,6 +11,14 @@ using Microsoft.ProjectOxford.Face;
 using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 using Newtonsoft.Json;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 
 namespace BuildIt.CognitiveServices
@@ -350,18 +350,18 @@ namespace BuildIt.CognitiveServices
         /// </param>
         /// <returns></returns>
         public async Task<ResultDto<EntityLinkingApiFeeds>> EntityLinkingApiRequestAsync(string subscriptionKey,
-            string requestBody, string contentType = "text/plain",string selection = null,string offset = null)
+            string requestBody, string contentType = "text/plain", string selection = null, string offset = null)
         {
             var resultDto = new ResultDto<EntityLinkingApiFeeds>();
             try
             {
                 var client = new HttpClient();
                 //request header
-                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle,subscriptionKey);
+                client.DefaultRequestHeaders.Add(Constants.SubscriptionTitle, subscriptionKey);
                 HttpResponseMessage response;
                 //request body
                 var byteData = Encoding.UTF8.GetBytes(requestBody);
-                var  parameters = string.Empty;
+                var parameters = string.Empty;
                 var pNo = 0;
                 if (!string.IsNullOrEmpty(selection))
                 {
@@ -373,7 +373,7 @@ namespace BuildIt.CognitiveServices
                     pNo++;
                     parameters += pNo == 2 ? $"&offset={offset}" : $"offset={offset}";
                 }
-                
+
                 var requestUrl = Constants.EntityLinkingApi + parameters;
 
                 using (var content = new ByteArrayContent(byteData))
