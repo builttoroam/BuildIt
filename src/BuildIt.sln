@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4DD5348-6D07-4E61-8974-61C57A54DEC5}"
 	ProjectSection(SolutionItems) = preProject
@@ -187,6 +187,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Bot.Api", "BuildIt.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core.Api", "BuildIt.Config\BuildIt.Config.Core.Api\BuildIt.Config.Core.Api.csproj", "{14CFC26F-525E-4C98-9C03-9B00D2832A15}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildIt.Backup.Azure", "BuildIt.Backup.Azure", "{3BA9FAC0-B9E5-4F49-9CC9-5C6F0AA0A7F6}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Backup.Azure\BuildIt.Backup.Azure.nuspec = BuildIt.Backup.Azure\BuildIt.Backup.Azure.nuspec
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Backup.Azure", "BuildIt.Backup.Azure\BuildIt.Backup.Azure\BuildIt.Backup.Azure.csproj", "{A389E82D-D221-4280-8DF3-306923A07410}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
@@ -200,6 +207,9 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{35814764-6e47-4b95-ae23-7314ef61884b}*SharedItemsImports = 4
+		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{42d11a77-3025-4796-9eef-80de816cad2e}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{4e3502a3-129f-4679-a41b-f51f0dcfc2e7}*SharedItemsImports = 4
 		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{5d1d9d09-fe4b-4896-85b5-290a6ac9b677}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}*SharedItemsImports = 4
@@ -209,11 +219,18 @@ Global
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{7cff52a4-ad28-48b6-a73f-233d9cc002f2}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}*SharedItemsImports = 4
+		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{94a8c9f6-c019-4b01-9aa4-9b7b97731d5c}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}*SharedItemsImports = 4
 		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
+		BuildIt.Shared\BuildIt.Shared.projitems*{a389e82d-d221-4280-8df3-306923a07410}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
+		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{c5f40178-c571-4212-9c23-b8fdc3784356}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
@@ -222,6 +239,9 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{e0e6a925-bc0c-4163-906b-46cc92d30f74}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{ee72434b-cb9d-41f4-b6b7-3bb60b2e7218}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
+		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
+		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1295,6 +1315,30 @@ Global
 		{14CFC26F-525E-4C98-9C03-9B00D2832A15}.ReleaseLibraries|x64.Build.0 = Release|Any CPU
 		{14CFC26F-525E-4C98-9C03-9B00D2832A15}.ReleaseLibraries|x86.ActiveCfg = Release|Any CPU
 		{14CFC26F-525E-4C98-9C03-9B00D2832A15}.ReleaseLibraries|x86.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|x64.Build.0 = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|x86.Build.0 = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|ARM.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|x64.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|x64.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|x86.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|x86.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|Any CPU.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|Any CPU.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|ARM.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|ARM.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|x64.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|x64.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|x86.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.ReleaseLibraries|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1347,5 +1391,6 @@ Global
 		{7094B192-EB80-43A0-B9D8-30E354AC229E} = {3B649751-0D91-41F8-8F1F-3536C0CE8A2B}
 		{6F7706BD-183E-431A-8DEF-6FAE99AF2BC8} = {A651744C-6719-4079-8AB2-F5A50DE11300}
 		{14CFC26F-525E-4C98-9C03-9B00D2832A15} = {C57DD687-4E64-4DD6-9365-6471C90E06EB}
+		{A389E82D-D221-4280-8DF3-306923A07410} = {3BA9FAC0-B9E5-4F49-9CC9-5C6F0AA0A7F6}
 	EndGlobalSection
 EndGlobal
