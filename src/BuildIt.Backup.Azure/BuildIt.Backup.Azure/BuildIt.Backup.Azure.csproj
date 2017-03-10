@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlobStorage\BackupBlobContainer.cs" />
+    <Compile Include="Operations\BlobBackupOperationNotification.cs" />
+    <Compile Include="Operations\BlobBackupQueueNotifier.cs" />
+    <Compile Include="Operations\IBlobBackupNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

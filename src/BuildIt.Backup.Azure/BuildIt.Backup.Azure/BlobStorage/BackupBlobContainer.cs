@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using BuildIt.Backup.Azure.Operations;
 
 namespace BuildIt.Backup.Azure.BlobStorage
 {
@@ -13,6 +14,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
             string targetStorageAccountConnectionString,
             string sourceContainerName,
             string targetContainerName,
+            IBlobBackupNotifier notifier,
             TextWriter log = null)
         {
             // Todo - Error handling
@@ -25,6 +27,20 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
             var sourceContainer = sourceBlobClient.GetContainerReference(sourceContainerName);
             var targetContainer = targetBlobClient.GetContainerReference(targetContainerName);
+            await targetContainer.CreateIfNotExistsAsync();
+            await Task.Delay(5000);
+            var containerExists = await targetContainer.ExistsAsync();
+            var waitCount = 0;
+            while (!containerExists)
+            {
+                await Task.Delay(5000);
+                containerExists = await targetContainer.ExistsAsync();
+                waitCount++;
+                if (waitCount > 30) // 2.5 minutes, really should have been created by now...
+                {
+                    throw new Exception("Unable to verify backup container");
+                }
+            }
 
             var sourceSasToken = sourceContainer.GetSharedAccessSignature(new SharedAccessBlobPolicy());
 
@@ -53,7 +69,9 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 // Might need to hold on to this returned ref string for something?
             }
 
-            // Todo - Raise a queue message to say that all blobs have started their copy operation
+            // Raise a message to say that all blobs have started their copy operation
+            await notifier.NotifyBackupInitiated(sourceBlobClient.Credentials.AccountName,
+                targetBlobClient.Credentials.AccountName, targetContainerName, sourceContainerName);
         }
 
         public static async Task<bool> MonitorBackupSinglePass(string targetStorageAccountConnectionString, string targetContainerName, TextWriter log = null)
