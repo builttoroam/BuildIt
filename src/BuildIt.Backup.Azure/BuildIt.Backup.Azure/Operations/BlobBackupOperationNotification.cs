@@ -9,9 +9,9 @@ namespace BuildIt.Backup.Azure.Operations
     public enum BlobBackupOperationType
     {
         Undefined,
-        BackupInitiated,
-        BackupInProgress,
-        BackupComplete
+        Initiated,
+        InProgress,
+        Complete
     }
 
     public class BlobBackupOperationNotification

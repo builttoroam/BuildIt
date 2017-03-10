@@ -1,7 +1,9 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using BuildIt.Backup.Azure.Operations;
 
@@ -9,6 +11,8 @@ namespace BuildIt.Backup.Azure.BlobStorage
 {
     public class BackupBlobContainer
     {
+        private const string MetadataCreatedTimeKey = "BackupContainerCreated";
+
         public static async Task InitiateContainerBackup(
             string sourceStorageAccountConnectionString,
             string targetStorageAccountConnectionString,
@@ -42,6 +46,8 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 }
             }
 
+            targetContainer.Metadata[MetadataCreatedTimeKey] = DateTime.UtcNow.ToString("s");
+            await targetContainer.SetMetadataAsync();
             var sourceSasToken = sourceContainer.GetSharedAccessSignature(new SharedAccessBlobPolicy());
 
             // Get a list of all blobs, might be worth moving this to a segmented/async manner
@@ -74,7 +80,13 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 targetBlobClient.Credentials.AccountName, targetContainerName, sourceContainerName);
         }
 
-        public static async Task<bool> MonitorBackupSinglePass(string targetStorageAccountConnectionString, string targetContainerName, TextWriter log = null)
+        public static async Task<bool> MonitorBackupSinglePass(
+            string targetStorageAccountConnectionString, 
+            string targetContainerName,
+            string sourceStorageAccountName,
+            string sourceContainerName,
+            IBlobBackupNotifier notifier, 
+            TextWriter log = null)
         {
             var pendingCopy = false;
 
@@ -108,10 +120,70 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     pendingCopy = true;
                 }
 
-                // Looks like everything has completed
+                // File has completed its copy operation
             }
 
+            // Send a message to our notifier in case we are calling these methods via queue triggers, or some other implemented notifier interface
+            await notifier.NotifyBackupProgress(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName, !pendingCopy);
             return pendingCopy;
+        }
+
+        public static async Task FinaliseContainerBackup(
+            string sourceStorageAccountConnectionString,
+            string targetStorageAccountConnectionString,
+            string targetContainerName,
+            string sourceContainerName,
+            int numberOfBackupsToRetain,
+            IBlobBackupNotifier notifier,
+            TextWriter log = null)
+        {
+            // Todo - error logging
+
+            var sourceStorageAccount = CloudStorageAccount.Parse(sourceStorageAccountConnectionString);
+            var targetStorageAccount = CloudStorageAccount.Parse(targetStorageAccountConnectionString);
+
+            var sourceBlobClient = sourceStorageAccount.CreateCloudBlobClient();
+            var targetBlobClient = targetStorageAccount.CreateCloudBlobClient();
+
+            var sourceContainer = sourceBlobClient.GetContainerReference(sourceContainerName);
+
+            // delete all snapshots from source container
+            var blobs = sourceContainer.ListBlobs(useFlatBlobListing: true);
+            foreach (var listBlobItem in blobs)
+            {
+                var blobUri = listBlobItem.Uri;
+                var blobName = Path.GetFileName(blobUri.ToString());
+                log?.WriteLine($"Deleting snapshots for blob: {blobName}");
+
+                // Only support block blobs for now, page blobs can't do snapshots which means we would have to acquire an infinite lease.
+                var sourceBlob = listBlobItem as CloudBlockBlob;
+                if (sourceBlob == null)
+                {
+                    throw new NullReferenceException($"Null Refernce on source blob, blobname: {blobName}");
+                }
+
+                await sourceBlob.DeleteIfExistsAsync(DeleteSnapshotsOption.DeleteSnapshotsOnly, null, null, null);
+            }
+
+            if (numberOfBackupsToRetain > 0)
+            {
+                var containers = targetBlobClient.ListContainers(sourceContainerName, ContainerListingDetails.Metadata).ToList(); // Force enumeration so that we can sort
+                if (containers.Count > numberOfBackupsToRetain)
+                {
+                    // Sort the containers by the date created tag in their metadata
+                    var sortedContainers = containers.OrderBy(c => c.Metadata[MetadataCreatedTimeKey]);
+                    var containersToDelete = sortedContainers.Take(containers.Count - numberOfBackupsToRetain);
+
+                    foreach (var cloudBlobContainer in containersToDelete)
+                    {
+                        if (cloudBlobContainer.Name != targetContainerName)
+                        {
+                            log?.WriteLine($"Deleting backup container according to retention policy: {cloudBlobContainer.Name}");
+                            await cloudBlobContainer.DeleteAsync();
+                        }
+                    }
+                }
+            }
         }
     }
 }
