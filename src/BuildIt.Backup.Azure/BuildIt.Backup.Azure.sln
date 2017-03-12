@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupWebjobSample", "Samples\BackupWebjobSample\BackupWebjobSample.csproj", "{DF896F51-7657-4737-A003-D14EF8C797A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Backup.Azure", "BuildIt.Backup.Azure\BuildIt.Backup.Azure.csproj", "{A389E82D-D221-4280-8DF3-306923A07410}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "..\BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1461F8CF-37B1-45C9-A273-0056F3D00953}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\BuildIt.Shared\BuildIt.Shared.projitems*{a389e82d-d221-4280-8df3-306923a07410}*SharedItemsImports = 4
+		..\BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF896F51-7657-4737-A003-D14EF8C797A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF896F51-7657-4737-A003-D14EF8C797A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF896F51-7657-4737-A003-D14EF8C797A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF896F51-7657-4737-A003-D14EF8C797A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A389E82D-D221-4280-8DF3-306923A07410}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF896F51-7657-4737-A003-D14EF8C797A3} = {1461F8CF-37B1-45C9-A273-0056F3D00953}
+	EndGlobalSection
+EndGlobal
