@@ -40,17 +40,18 @@ namespace BuildIt.Backup.Azure.Operations
         }
 
         public async Task NotifyBackupInitiated(
-            string sourceStorageAccountName, 
+            string sourceStorageAccountName,
             string targetStorageAccountName,
-            string sourceContainerName, 
+            string sourceContainerName,
             string targetContainerName)
         {
             var notification = new BlobBackupOperationNotification(
                 BlobBackupOperationType.Initiated,
                 sourceStorageAccountName,
-                targetStorageAccountName, 
-                sourceContainerName, 
-                targetContainerName);
+                targetStorageAccountName,
+                sourceContainerName,
+                targetContainerName,
+                null);
 
             await SendNotification(notification);
         }
@@ -67,7 +68,26 @@ namespace BuildIt.Backup.Azure.Operations
                 sourceStorageAccountName,
                 targetStorageAccountName,
                 sourceContainerName,
-                targetContainerName);
+                targetContainerName,
+                null);
+
+            await SendNotification(notification);
+        }
+
+        public async Task NotifyBackupError(
+            string sourceStorageAccountName,
+            string targetStorageAccountName,
+            string sourceContainerName,
+            string targetContainerName,
+            string errorMessage)
+        {
+            var notification = new BlobBackupOperationNotification(
+                BlobBackupOperationType.Error,
+                sourceStorageAccountName,
+                targetStorageAccountName,
+                sourceContainerName,
+                targetContainerName,
+                errorMessage);
 
             await SendNotification(notification);
         }

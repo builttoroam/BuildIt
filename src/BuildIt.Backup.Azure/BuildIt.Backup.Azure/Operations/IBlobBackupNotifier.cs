@@ -43,5 +43,12 @@ namespace BuildIt.Backup.Azure.Operations
             string sourceContainerName,
             string targetContainerName,
             bool backupCompleted);
+
+        Task NotifyBackupError(
+            string sourceStorageAccountName,
+            string targetStorageAccountName,
+            string sourceContainerName,
+            string targetContainerName,
+            string errorMessage);
     }
 }

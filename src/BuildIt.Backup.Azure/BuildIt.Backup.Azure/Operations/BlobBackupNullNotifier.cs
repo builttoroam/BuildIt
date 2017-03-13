@@ -27,5 +27,11 @@ namespace BuildIt.Backup.Azure.Operations
         {
             return Task.Delay(0);
         }
+
+        public Task NotifyBackupError(string sourceStorageAccountName, string targetStorageAccountName, string sourceContainerName,
+            string targetContainerName, string errorMessage)
+        {
+            return Task.Delay(0);
+        }
     }
 }

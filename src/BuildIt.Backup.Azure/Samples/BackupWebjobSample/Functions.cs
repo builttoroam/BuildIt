@@ -43,7 +43,7 @@ namespace BackupWebjobSample
         }
 
         // This function will get triggered/executed when a new message is written 
-        // on an Azure Queue called queue.
+        // on an Azure Queue called backuptest.
         public async Task ProcessBackupQueueMessage(
             [QueueTrigger("backuptest")] BlobBackupOperationNotification message,
             TextWriter log)
@@ -55,9 +55,9 @@ namespace BackupWebjobSample
             var sourceContainerName = ConfigurationManager.AppSettings["BackupSourceContainer"];
             int.TryParse(ConfigurationManager.AppSettings["NumberOfBackupsToRetain"], out var backupRetentionPolicy);
 
-            if (!sourceStorageAccountConnectionString.Contains(message.SourceStorageAccountName) ||
+            if ((!sourceStorageAccountConnectionString.Contains(message.SourceStorageAccountName) ||
                 !targetStorageAccountConnectionString.Contains(message.TargetStorageAccountName) ||
-                !sourceContainerName.Equals(message.SourceContainerName))
+                !sourceContainerName.Equals(message.SourceContainerName)) && message.OperationType != BlobBackupOperationType.Error)
             {
                 throw new Exception("This message is not intended for this function");
             }
@@ -99,6 +99,12 @@ namespace BackupWebjobSample
                         backupRetentionPolicy,
                         queueNotifier,
                         log);
+                    break;
+                case BlobBackupOperationType.Error:
+                    log.WriteLine("Backup has sent an error message, process may have been aborted, please check error message below:");
+                    log.WriteLine(!string.IsNullOrEmpty(message.ErrorMessage)
+                        ? message.ErrorMessage
+                        : "No error message available.");
                     break;
                 default:
                     break;
