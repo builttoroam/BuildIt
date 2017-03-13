@@ -22,6 +22,9 @@ namespace BackupWebjobSample
             }
 
             var host = new JobHost();
+
+            // For the purposes of this sample, we are manually calling this function on app startup
+            var callTask = host.CallAsync(typeof(Functions).GetMethod(nameof(Functions.InitiateBlobStorageBackup)));
             // The following code ensures that the WebJob will be running continuously
             host.RunAndBlock();
         }
