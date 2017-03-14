@@ -14,12 +14,14 @@ namespace BuildIt.Backup.Azure.Operations
             BackupOperationType operationType,
             string dbServer,
             string dbName,
+            string backupBlobName,
             Guid operationId,
             string errorMessage)
         {
             OperationType = operationType;
             DbServer = dbServer;
             DbName = dbName;
+            BackupBlobName = backupBlobName;
             OperationId = operationId;
             ErrorMessage = errorMessage;
         }
@@ -28,6 +30,7 @@ namespace BuildIt.Backup.Azure.Operations
         public BackupOperationType OperationType { get; }
         public string DbServer { get; }
         public string DbName { get; }
+        public string BackupBlobName { get; }
         public Guid OperationId { get; }
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ErrorMessage { get; }

@@ -238,7 +238,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
             if (numberOfBackupsToRetain > 0)
             {
-                var containers = targetBlobClient.ListContainers(sourceContainerName, ContainerListingDetails.Metadata).ToList(); // Force enumeration so that we can sort
+                var containers = targetBlobClient.ListContainers(sourceContainerName, ContainerListingDetails.Metadata).ToList(); // Force enumeration so that we can sort and count
                 if (containers.Count > numberOfBackupsToRetain)
                 {
                     // Sort the containers by the date created tag in their metadata

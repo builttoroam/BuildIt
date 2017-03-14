@@ -143,7 +143,10 @@ namespace BackupWebjobSample
             var dbName = ConfigurationManager.AppSettings["DbBackupDatabase"];
             var username = ConfigurationManager.AppSettings["DbBackupUsername"];
             var password = ConfigurationManager.AppSettings["DbBackupPassword"];
-            Enum.TryParse(ConfigurationManager.AppSettings["DbBackupRegion"], out AzureDbLocation dbRegion);
+            Enum.TryParse<AzureDbLocation>(ConfigurationManager.AppSettings["DbBackupRegion"], out var dbRegion);
+            int.TryParse(ConfigurationManager.AppSettings["NumberOfBackupsToRetain"], out var backupRetentionPolicy);
+            var targetStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupTargetConnectionString"];
+            var targetContainer = ConfigurationManager.AppSettings["DbBackupTargetContainer"];
 
             if ((serverName != message.DbServer ||
                  dbName != message.DbName) &&
@@ -167,6 +170,7 @@ namespace BackupWebjobSample
                         username,
                         password,
                         dbRegion,
+                        message.BackupBlobName,
                         message.OperationId,
                         queueNotifier,
                         log);
@@ -179,13 +183,22 @@ namespace BackupWebjobSample
                         username,
                         password,
                         dbRegion,
+                        message.BackupBlobName,
                         message.OperationId,
                         queueNotifier,
                         log);
                     break;
                 case BackupOperationType.Complete:
                     log.WriteLine("Received message that database backup has been completed, running cleanup tasks");
-                    // Todo - implement finalise method that will clean up backups based on retention policy
+                    await BackupSqlDb.FinaliseDbBackup(
+                        serverName,
+                        dbName,
+                        targetStorageAccountConnectionString,
+                        targetContainer,
+                        message.BackupBlobName,
+                        backupRetentionPolicy,
+                        queueNotifier,
+                        log);
                     break;
                 case BackupOperationType.Error:
                     log.WriteLine("Backup has sent an error message, process may have been aborted, please check error message below:");

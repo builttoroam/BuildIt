@@ -11,6 +11,7 @@ using System.Web;
 using BuildIt.Backup.Azure.DACWebService;
 using BuildIt.Backup.Azure.Operations;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace BuildIt.Backup.Azure.SqlDb
 {
@@ -38,7 +39,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                     "Unable to connect to target storage container to initiate backup. Check passed connection string values to ensure they are valid. \n" +
                     $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
                     $"Stacktrace for exception was {e.StackTrace}";
-                await notifier.NotifyBackupError(dbServerName, dbName, Guid.Empty, errorMessage);
+                await notifier.NotifyBackupError(dbServerName, dbName, null, Guid.Empty, errorMessage);
                 log?.WriteLine(errorMessage);
                 return;
             }
@@ -107,7 +108,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                         var dcs = new DataContractSerializer(typeof(Guid));
                         var operationId = (Guid)dcs.ReadObject(stream);
                         log?.WriteLine($"Backup operation has been initiated with operation id: {operationId}");
-                        await notifier.NotifyBackupInitiated(dbServerName, dbName, operationId);
+                        await notifier.NotifyBackupInitiated(dbServerName, dbName, blobName, operationId);
                     }
                 }
             }
@@ -118,7 +119,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                     $"Exception message: {e.Message} \n" +
                     $"Exception stacktrace: {e.StackTrace}";
                 log?.WriteLine(errorMessage);
-                await notifier.NotifyBackupError(dbServerName, dbName, Guid.Empty, errorMessage);
+                await notifier.NotifyBackupError(dbServerName, dbName, blobName, Guid.Empty, errorMessage);
             }
         }
 
@@ -128,6 +129,7 @@ namespace BuildIt.Backup.Azure.SqlDb
             string dbUsername,
             string dbPassword,
             AzureDbLocation dbLocation,
+            string backupBlobName,
             Guid operationId,
             IDbBackupNotifier notifier,
             TextWriter log = null)
@@ -174,25 +176,25 @@ namespace BuildIt.Backup.Azure.SqlDb
                                 var errorMessage =
                                     $"Backing up database: {dbName} failed with an error message of: {statusInfo.ErrorMessage}";
                                 log?.WriteLine(errorMessage);
-                                await notifier.NotifyBackupError(dbServerName, dbName, operationId, errorMessage);
+                                await notifier.NotifyBackupError(dbServerName, dbName, backupBlobName, operationId, errorMessage);
                             }
                             else if (statusInfo.Status.Contains("Running"))
                             {
                                 log?.WriteLine(
                                     $"Backup operation for databse: {dbName} is reporting status of: {statusInfo.Status}");
-                                await notifier.NotifyBackupProgress(dbServerName, dbName, operationId, true);
+                                await notifier.NotifyBackupProgress(dbServerName, dbName, backupBlobName, operationId, true);
                                 pendingCopy = true;
                             }
                             else if (statusInfo.Status == "Completed")
                             {
                                 log?.WriteLine($"Backup operation for database: {dbName} is complete.");
-                                await notifier.NotifyBackupProgress(dbServerName, dbName, operationId, false);
+                                await notifier.NotifyBackupProgress(dbServerName, dbName, backupBlobName, operationId, false);
                             }
                         }
                         else
                         {
                             log?.WriteLine($"Unable to obtain backup status information for database: {dbName} with operation id: {operationId}");
-                            await notifier.NotifyBackupProgress(dbServerName, dbName, operationId, true);
+                            await notifier.NotifyBackupProgress(dbServerName, dbName, backupBlobName, operationId, true);
                             pendingCopy = true;
                         }
                     }
@@ -205,10 +207,67 @@ namespace BuildIt.Backup.Azure.SqlDb
                     $"Exception message: {e.Message} \n" +
                     $"Exception stacktrace: {e.StackTrace}";
                 log?.WriteLine(errorMessage);
-                await notifier.NotifyBackupError(dbServerName, dbName, operationId, errorMessage);
+                await notifier.NotifyBackupError(dbServerName, dbName, backupBlobName, operationId, errorMessage);
             }
 
             return pendingCopy;
+        }
+
+        public static async Task FinaliseDbBackup(
+            string dbServerName,
+            string dbName,
+            string targetStorageAccountConnectionString,
+            string targetContainerName,
+            string backupBlobName,
+            int numberOfBackupsToRetain,
+            IDbBackupNotifier notifier,
+            TextWriter log = null)
+        {
+            CloudStorageAccount targetStorageAccount;
+            try
+            {
+                targetStorageAccount = CloudStorageAccount.Parse(targetStorageAccountConnectionString);
+            }
+            catch (Exception e)
+            {
+                var errorMessage =
+                    "Unable to connect to target storage container to initiate backup. Check passed connection string values to ensure they are valid. \n" +
+                    $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
+                    $"Stacktrace for exception was {e.StackTrace}";
+                await notifier.NotifyBackupError(dbServerName, dbName, backupBlobName, Guid.Empty, errorMessage);
+                log?.WriteLine(errorMessage);
+                return;
+            }
+
+            var targetBlobClient = targetStorageAccount.CreateCloudBlobClient();
+            var targetContainer = targetBlobClient.GetContainerReference(targetContainerName);
+
+            if (numberOfBackupsToRetain > 0)
+            {
+                var blobs = targetContainer.ListBlobs(useFlatBlobListing: true, prefix: dbName).ToList(); // Force enumeration so we can sort and count
+                if (blobs.Count > numberOfBackupsToRetain)
+                {
+                    var sortedBlobs = blobs.OrderBy(b => b.Uri.AbsolutePath); // Blob names are constructed from dates, this should be fine
+                    var blobsToDelete = sortedBlobs.Take(blobs.Count - numberOfBackupsToRetain);
+
+                    foreach (var listBlobItem in blobsToDelete)
+                    {
+                        var sourceBlob = listBlobItem as CloudBlockBlob;
+                        if (sourceBlob == null)
+                        {
+                            throw new NullReferenceException($"Null Refernce on source blob, blobname: {listBlobItem.Uri}");
+                        }
+
+                        if (sourceBlob.Name != backupBlobName)
+                        {
+                            log?.WriteLine($"Deleting Sql Db backup according to retention policy: {sourceBlob.Name}");
+                            await sourceBlob.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots, null, null, null);
+                        }
+                    }
+                }
+            }
+
+            log?.WriteLine($"Backup of {dbName} to {targetContainerName} is complete and finalised.");
         }
     }
 }

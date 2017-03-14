@@ -22,12 +22,14 @@ namespace BuildIt.Backup.Azure.Operations
         public async Task NotifyBackupInitiated(
             string dbServer,
             string dbName,
+            string backupBlobName,
             Guid operationId)
         {
             var notification = new DbBackupOperationNotification(
                 BackupOperationType.Initiated,
                 dbServer,
                 dbName,
+                backupBlobName,
                 operationId,
                 null);
 
@@ -38,6 +40,7 @@ namespace BuildIt.Backup.Azure.Operations
         public async Task NotifyBackupProgress(
             string dbServer,
             string dbName,
+            string backupBlobName,
             Guid operationId,
             bool backupInProgress)
         {
@@ -45,6 +48,7 @@ namespace BuildIt.Backup.Azure.Operations
                 backupInProgress ? BackupOperationType.InProgress : BackupOperationType.Complete,
                 dbServer,
                 dbName,
+                backupBlobName,
                 operationId,
                 null);
 
@@ -55,6 +59,7 @@ namespace BuildIt.Backup.Azure.Operations
         public async Task NotifyBackupError(
             string dbServer,
             string dbName,
+            string backupBlobName,
             Guid operationId,
             string errorMessage)
         {
@@ -62,6 +67,7 @@ namespace BuildIt.Backup.Azure.Operations
                 BackupOperationType.Error,
                 dbServer,
                 dbName,
+                backupBlobName,
                 operationId,
                 errorMessage);
 
