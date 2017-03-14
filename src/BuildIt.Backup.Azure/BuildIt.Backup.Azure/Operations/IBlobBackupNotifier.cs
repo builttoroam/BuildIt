@@ -36,14 +36,22 @@ namespace BuildIt.Backup.Azure.Operations
         /// <param name="targetStorageAccountName">Account name of the target blob container</param>
         /// <param name="sourceContainerName">Name of the source blob contianer</param>
         /// <param name="targetContainerName">Name of the source blob contianer</param>
-        /// <param name="backupCompleted">Whether the operation is complete, or still in progress</param>
+        /// <param name="backupInProgress">Whether the operation is complete, or still in progress</param>
         Task NotifyBackupProgress(
             string sourceStorageAccountName,
             string targetStorageAccountName,
             string sourceContainerName,
             string targetContainerName,
-            bool backupCompleted);
+            bool backupInProgress);
 
+        /// <summary>
+        /// Sends a notification via the implemented channel that an error has ocurred during an async copy command.
+        /// </summary>
+        /// <param name="sourceStorageAccountName">Account name of the source blob container</param>
+        /// <param name="targetStorageAccountName">Account name of the target blob container</param>
+        /// <param name="sourceContainerName">Name of the source blob contianer</param>
+        /// <param name="targetContainerName">Name of the source blob contianer</param>
+        /// <param name="errorMessage">The details of the error that has ocurred</param>
         Task NotifyBackupError(
             string sourceStorageAccountName,
             string targetStorageAccountName,

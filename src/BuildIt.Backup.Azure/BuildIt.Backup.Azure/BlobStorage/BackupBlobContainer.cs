@@ -182,7 +182,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
             log?.WriteLine($"Completed check of copy operation on container: {targetContainerName}. Blobs still pending: {pendingCopy}");
             // Send a message to our notifier in case we are calling these methods via queue triggers, or some other implemented notifier interface
-            await notifier.NotifyBackupProgress(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName, !pendingCopy);
+            await notifier.NotifyBackupProgress(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName, pendingCopy);
             return pendingCopy;
         }
 

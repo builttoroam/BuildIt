@@ -14,29 +14,11 @@ namespace BuildIt.Backup.Azure.Operations
     /// this class sends notifications by adding Azure Queue Messages to the
     /// Storage account and queue name specified in the constructor
     /// </summary>
-    public class BlobBackupQueueNotifier : IBlobBackupNotifier
+    public class BlobBackupQueueNotifier : BaseQueueOperationNotifier, IBlobBackupNotifier
     {
-        private string QueueStorageAccountConnectionString { get; }
-        private string QueueName { get; }
-        private TimeSpan? InProgressNotificationDelay { get; }
-
-        private bool isInited;
-        private CloudQueue queue;
-
         public BlobBackupQueueNotifier(string queueStorageAccountConnectionString, string queueName, TimeSpan? inProgressNotificationDelay)
+            : base(queueStorageAccountConnectionString, queueName, inProgressNotificationDelay)
         {
-            QueueStorageAccountConnectionString = queueStorageAccountConnectionString;
-            QueueName = queueName;
-            InProgressNotificationDelay = inProgressNotificationDelay;
-        }
-
-        public async Task Init()
-        {
-            var queueStorageAccount = CloudStorageAccount.Parse(QueueStorageAccountConnectionString);
-            var queueClient = queueStorageAccount.CreateCloudQueueClient();
-            queue = queueClient.GetQueueReference(QueueName);
-            await queue.CreateIfNotExistsAsync();
-            isInited = true;
         }
 
         public async Task NotifyBackupInitiated(
@@ -46,14 +28,15 @@ namespace BuildIt.Backup.Azure.Operations
             string targetContainerName)
         {
             var notification = new BlobBackupOperationNotification(
-                BlobBackupOperationType.Initiated,
+                BackupOperationType.Initiated,
                 sourceStorageAccountName,
                 targetStorageAccountName,
                 sourceContainerName,
                 targetContainerName,
                 null);
 
-            await SendNotification(notification);
+            var serializedNotification = JsonConvert.SerializeObject(notification);
+            await SendNotification(serializedNotification, false);
         }
 
         public async Task NotifyBackupProgress(
@@ -61,17 +44,18 @@ namespace BuildIt.Backup.Azure.Operations
             string targetStorageAccountName,
             string sourceContainerName,
             string targetContainerName,
-            bool backupCompleted)
+            bool backupInProgress)
         {
             var notification = new BlobBackupOperationNotification(
-                backupCompleted ? BlobBackupOperationType.Complete : BlobBackupOperationType.InProgress,
+                backupInProgress ? BackupOperationType.InProgress : BackupOperationType.Complete,
                 sourceStorageAccountName,
                 targetStorageAccountName,
                 sourceContainerName,
                 targetContainerName,
                 null);
 
-            await SendNotification(notification);
+            var serializedNotification = JsonConvert.SerializeObject(notification);
+            await SendNotification(serializedNotification, backupInProgress);
         }
 
         public async Task NotifyBackupError(
@@ -82,31 +66,15 @@ namespace BuildIt.Backup.Azure.Operations
             string errorMessage)
         {
             var notification = new BlobBackupOperationNotification(
-                BlobBackupOperationType.Error,
+                BackupOperationType.Error,
                 sourceStorageAccountName,
                 targetStorageAccountName,
                 sourceContainerName,
                 targetContainerName,
                 errorMessage);
 
-            await SendNotification(notification);
-        }
-
-        private async Task SendNotification(BlobBackupOperationNotification notification)
-        {
-            if (!isInited)
-            {
-                await Init();
-            }
-
-            var serialized = JsonConvert.SerializeObject(notification);
-            var cloudMessage = new CloudQueueMessage(serialized);
-
-            var initialiVisibilityDelay = notification.OperationType == BlobBackupOperationType.InProgress
-                ? InProgressNotificationDelay
-                : null;
-
-            await queue.AddMessageAsync(cloudMessage, null, initialiVisibilityDelay, null, null);
+            var serializedNotification = JsonConvert.SerializeObject(notification);
+            await SendNotification(serializedNotification, false);
         }
     }
 }

@@ -8,19 +8,10 @@ using Newtonsoft.Json.Converters;
 
 namespace BuildIt.Backup.Azure.Operations
 {
-    public enum BlobBackupOperationType
-    {
-        Undefined,
-        Initiated,
-        InProgress,
-        Complete,
-        Error
-    }
-
     public class BlobBackupOperationNotification
     {
         public BlobBackupOperationNotification(
-            BlobBackupOperationType operationType,
+            BackupOperationType operationType,
             string sourceStorageAccountName,
             string targetStorageAccountName,
             string sourceContainerName,
@@ -36,7 +27,7 @@ namespace BuildIt.Backup.Azure.Operations
         }
 
         [JsonConverter(typeof(StringEnumConverter))] // Serializing as string for message readability
-        public BlobBackupOperationType OperationType { get; }
+        public BackupOperationType OperationType { get; }
         public string SourceStorageAccountName { get; }
         public string TargetStorageAccountName { get; }
         public string SourceContainerName { get; }
