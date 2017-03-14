@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BuildIt.Backup.Azure.BlobStorage;
 using BuildIt.Backup.Azure.Operations;
+using BuildIt.Backup.Azure.SqlDb;
 using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
@@ -28,7 +29,7 @@ namespace BackupWebjobSample
 
             var queueNotifier = new BlobBackupQueueNotifier(
                 ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString,
-                "backuptest",
+                "blobbackuptest",
                 TimeSpan.FromSeconds(30));
 
             log.WriteLine($"Initiating backup of container: {sourceContainerName}");
@@ -44,11 +45,11 @@ namespace BackupWebjobSample
 
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called backuptest.
-        public async Task ProcessBackupQueueMessage(
-            [QueueTrigger("backuptest")] BlobBackupOperationNotification message,
+        public async Task ProcessBlobBackupQueueMessage(
+            [QueueTrigger("blobbackuptest")] BlobBackupOperationNotification message,
             TextWriter log)
         {
-            log.WriteLine($"Processing incomming backup queue message: {JsonConvert.SerializeObject(message)}");
+            log.WriteLine($"Processing incomming blob container backup queue message: {JsonConvert.SerializeObject(message)}");
 
             var sourceStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupSourceConnectionString"];
             var targetStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupTargetConnectionString"];
@@ -57,7 +58,7 @@ namespace BackupWebjobSample
 
             if ((!sourceStorageAccountConnectionString.Contains(message.SourceStorageAccountName) ||
                 !targetStorageAccountConnectionString.Contains(message.TargetStorageAccountName) ||
-                !sourceContainerName.Equals(message.SourceContainerName)) && message.OperationType != BlobBackupOperationType.Error)
+                !sourceContainerName.Equals(message.SourceContainerName)) && message.OperationType != BackupOperationType.Error)
             {
                 throw new Exception("This message is not intended for this function");
             }
@@ -69,7 +70,7 @@ namespace BackupWebjobSample
 
             switch (message.OperationType)
             {
-                case BlobBackupOperationType.Initiated:
+                case BackupOperationType.Initiated:
                     log.WriteLine("Received message that backup process has been initiated");
                     await BackupBlobContainer.MonitorBackupSinglePass(
                         targetStorageAccountConnectionString,
@@ -79,7 +80,7 @@ namespace BackupWebjobSample
                         queueNotifier,
                         log);
                     break;
-                case BlobBackupOperationType.InProgress:
+                case BackupOperationType.InProgress:
                     log.WriteLine("Received message that backup process is still in progress");
                     await BackupBlobContainer.MonitorBackupSinglePass(
                         targetStorageAccountConnectionString,
@@ -89,7 +90,7 @@ namespace BackupWebjobSample
                         queueNotifier,
                         log);
                     break;
-                case BlobBackupOperationType.Complete:
+                case BackupOperationType.Complete:
                     log.WriteLine("Received message that backup process has been completed, running cleanup tasks");
                     await BackupBlobContainer.FinaliseContainerBackup(
                         sourceStorageAccountConnectionString,
@@ -100,7 +101,93 @@ namespace BackupWebjobSample
                         queueNotifier,
                         log);
                     break;
-                case BlobBackupOperationType.Error:
+                case BackupOperationType.Error:
+                    log.WriteLine("Backup has sent an error message, process may have been aborted, please check error message below:");
+                    log.WriteLine(!string.IsNullOrEmpty(message.ErrorMessage)
+                        ? message.ErrorMessage
+                        : "No error message available.");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        [NoAutomaticTrigger]
+        [Singleton]
+        public async Task InitiateDatabaseStorageBackup(TextWriter log)
+        {
+            var serverName = ConfigurationManager.AppSettings["DbBackupServerName"];
+            var dbName = ConfigurationManager.AppSettings["DbBackupDatabase"];
+            var username = ConfigurationManager.AppSettings["DbBackupUsername"];
+            var password = ConfigurationManager.AppSettings["DbBackupPassword"];
+            var targetStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupTargetConnectionString"];
+            var targetContainer = ConfigurationManager.AppSettings["DbBackupTargetContainer"];
+            Enum.TryParse(ConfigurationManager.AppSettings["DbBackupRegion"], out AzureDbLocation dbRegion);
+
+            var queueNotifier = new DbBackupQueueNotifier(
+                ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString,
+                "dbbackuptest",
+                TimeSpan.FromSeconds(30));
+
+            await BackupSqlDb.InitiateDbBackup(serverName, dbName, username, password, dbRegion,
+                targetStorageAccountConnectionString, targetContainer, queueNotifier, log);
+        }
+
+        public async Task ProcessDbBackupQueueMessage(
+            [QueueTrigger("dbbackuptest")] DbBackupOperationNotification message,
+            TextWriter log)
+        {
+            log.WriteLine($"Processing incomming database backup queue message: {JsonConvert.SerializeObject(message)}");
+
+            var serverName = ConfigurationManager.AppSettings["DbBackupServerName"];
+            var dbName = ConfigurationManager.AppSettings["DbBackupDatabase"];
+            var username = ConfigurationManager.AppSettings["DbBackupUsername"];
+            var password = ConfigurationManager.AppSettings["DbBackupPassword"];
+            Enum.TryParse(ConfigurationManager.AppSettings["DbBackupRegion"], out AzureDbLocation dbRegion);
+
+            if ((serverName != message.DbServer ||
+                 dbName != message.DbName) &&
+                message.OperationType != BackupOperationType.Error)
+            {
+                throw new Exception("This message is not intended for this function");
+            }
+
+            var queueNotifier = new DbBackupQueueNotifier(
+                ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString,
+                "dbbackuptest",
+                TimeSpan.FromSeconds(30));
+
+            switch (message.OperationType)
+            {
+                case BackupOperationType.Initiated:
+                    log.WriteLine("Received message that backup process has been initiated");
+                    await BackupSqlDb.MonitorBackupSinglePass(
+                        serverName,
+                        dbName,
+                        username,
+                        password,
+                        dbRegion,
+                        message.OperationId,
+                        queueNotifier,
+                        log);
+                    break;
+                case BackupOperationType.InProgress:
+                    log.WriteLine("Received message that backup process is still in progress");
+                    await BackupSqlDb.MonitorBackupSinglePass(
+                        serverName,
+                        dbName,
+                        username,
+                        password,
+                        dbRegion,
+                        message.OperationId,
+                        queueNotifier,
+                        log);
+                    break;
+                case BackupOperationType.Complete:
+                    log.WriteLine("Received message that database backup has been completed, running cleanup tasks");
+                    // Todo - implement finalise method that will clean up backups based on retention policy
+                    break;
+                case BackupOperationType.Error:
                     log.WriteLine("Backup has sent an error message, process may have been aborted, please check error message below:");
                     log.WriteLine(!string.IsNullOrEmpty(message.ErrorMessage)
                         ? message.ErrorMessage
