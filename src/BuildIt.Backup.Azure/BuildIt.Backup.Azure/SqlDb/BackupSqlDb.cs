@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using BuildIt.Backup.Azure.DACWebService;
 using BuildIt.Backup.Azure.Operations;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
@@ -26,7 +27,7 @@ namespace BuildIt.Backup.Azure.SqlDb
             string targetStorageAccountConnectionString,
             string targetContainerName,
             IDbBackupNotifier notifier,
-            TextWriter log = null)
+            TraceWriter log = null)
         {
             CloudStorageAccount targetStorageAccount;
             try
@@ -40,13 +41,13 @@ namespace BuildIt.Backup.Azure.SqlDb
                     $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
                     $"Stacktrace for exception was {e.StackTrace}";
                 await notifier.NotifyBackupError(dbServerName, dbName, null, Guid.Empty, errorMessage);
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 return;
             }
 
             var targetBlobClient = targetStorageAccount.CreateCloudBlobClient();
             var targetContainer = targetBlobClient.GetContainerReference(targetContainerName);
-            log?.WriteLine($"Creating backup container with name: {targetContainerName}");
+            log?.Info($"Creating backup container with name: {targetContainerName}");
             await targetContainer.CreateIfNotExistsAsync();
             await Task.Delay(5000);
             var containerExists = await targetContainer.ExistsAsync();
@@ -94,7 +95,7 @@ namespace BuildIt.Backup.Azure.SqlDb
 
             try
             {
-                log?.WriteLine($"Initiating backup for SQL Database: {dbName}");
+                log?.Info($"Initiating backup for SQL Database: {dbName}");
                 using (var response = (HttpWebResponse)await request.GetResponseAsync())
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
@@ -107,7 +108,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                     {
                         var dcs = new DataContractSerializer(typeof(Guid));
                         var operationId = (Guid)dcs.ReadObject(stream);
-                        log?.WriteLine($"Backup operation has been initiated with operation id: {operationId}");
+                        log?.Info($"Backup operation has been initiated with operation id: {operationId}");
                         await notifier.NotifyBackupInitiated(dbServerName, dbName, blobName, operationId);
                     }
                 }
@@ -118,7 +119,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                     $"Exception of type {e.GetType().Name} ocurred while backing up database: {dbName} \n" +
                     $"Exception message: {e.Message} \n" +
                     $"Exception stacktrace: {e.StackTrace}";
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 await notifier.NotifyBackupError(dbServerName, dbName, blobName, Guid.Empty, errorMessage);
             }
         }
@@ -132,7 +133,7 @@ namespace BuildIt.Backup.Azure.SqlDb
             string backupBlobName,
             Guid operationId,
             IDbBackupNotifier notifier,
-            TextWriter log = null)
+            TraceWriter log = null)
         {
             var pendingCopy = false;
 
@@ -156,7 +157,7 @@ namespace BuildIt.Backup.Azure.SqlDb
 
             try
             {
-                log?.WriteLine($"Checking status of backup operation {operationId} for database: {dbName}");
+                log?.Info($"Checking status of backup operation {operationId} for database: {dbName}");
                 using (var response = (HttpWebResponse)await request.GetResponseAsync())
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
@@ -175,25 +176,25 @@ namespace BuildIt.Backup.Azure.SqlDb
                             {
                                 var errorMessage =
                                     $"Backing up database: {dbName} failed with an error message of: {statusInfo.ErrorMessage}";
-                                log?.WriteLine(errorMessage);
+                                log?.Error(errorMessage);
                                 await notifier.NotifyBackupError(dbServerName, dbName, backupBlobName, operationId, errorMessage);
                             }
                             else if (statusInfo.Status.Contains("Running"))
                             {
-                                log?.WriteLine(
+                                log?.Info(
                                     $"Backup operation for databse: {dbName} is reporting status of: {statusInfo.Status}");
                                 await notifier.NotifyBackupProgress(dbServerName, dbName, backupBlobName, operationId, true);
                                 pendingCopy = true;
                             }
                             else if (statusInfo.Status == "Completed")
                             {
-                                log?.WriteLine($"Backup operation for database: {dbName} is complete.");
+                                log?.Info($"Backup operation for database: {dbName} is complete.");
                                 await notifier.NotifyBackupProgress(dbServerName, dbName, backupBlobName, operationId, false);
                             }
                         }
                         else
                         {
-                            log?.WriteLine($"Unable to obtain backup status information for database: {dbName} with operation id: {operationId}");
+                            log?.Error($"Unable to obtain backup status information for database: {dbName} with operation id: {operationId}");
                             await notifier.NotifyBackupProgress(dbServerName, dbName, backupBlobName, operationId, true);
                             pendingCopy = true;
                         }
@@ -206,7 +207,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                     $"Exception of type {e.GetType().Name} ocurred while backing up database: {dbName} \n" +
                     $"Exception message: {e.Message} \n" +
                     $"Exception stacktrace: {e.StackTrace}";
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 await notifier.NotifyBackupError(dbServerName, dbName, backupBlobName, operationId, errorMessage);
             }
 
@@ -221,7 +222,7 @@ namespace BuildIt.Backup.Azure.SqlDb
             string backupBlobName,
             int numberOfBackupsToRetain,
             IDbBackupNotifier notifier,
-            TextWriter log = null)
+            TraceWriter log = null)
         {
             CloudStorageAccount targetStorageAccount;
             try
@@ -235,7 +236,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                     $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
                     $"Stacktrace for exception was {e.StackTrace}";
                 await notifier.NotifyBackupError(dbServerName, dbName, backupBlobName, Guid.Empty, errorMessage);
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 return;
             }
 
@@ -260,14 +261,14 @@ namespace BuildIt.Backup.Azure.SqlDb
 
                         if (sourceBlob.Name != backupBlobName)
                         {
-                            log?.WriteLine($"Deleting Sql Db backup according to retention policy: {sourceBlob.Name}");
+                            log?.Info($"Deleting Sql Db backup according to retention policy: {sourceBlob.Name}");
                             await sourceBlob.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots, null, null, null);
                         }
                     }
                 }
             }
 
-            log?.WriteLine($"Backup of {dbName} to {targetContainerName} is complete and finalised.");
+            log?.Info($"Backup of {dbName} to {targetContainerName} is complete and finalised.");
         }
     }
 }

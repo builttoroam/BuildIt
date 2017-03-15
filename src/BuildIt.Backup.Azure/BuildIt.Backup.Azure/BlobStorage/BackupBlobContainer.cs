@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BuildIt.Backup.Azure.Operations;
+using Microsoft.Azure.WebJobs.Host;
 
 namespace BuildIt.Backup.Azure.BlobStorage
 {
@@ -19,7 +20,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
             string sourceContainerName,
             string targetContainerName,
             IBlobBackupNotifier notifier,
-            TextWriter log = null)
+            TraceWriter log = null)
         {
             CloudStorageAccount sourceStorageAccount;
             CloudStorageAccount targetStorageAccount;
@@ -35,7 +36,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
                     $"Stacktrace for exception was {e.StackTrace}";
                 await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, errorMessage);
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 return;
             }
 
@@ -44,7 +45,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
             var sourceContainer = sourceBlobClient.GetContainerReference(sourceContainerName);
             var targetContainer = targetBlobClient.GetContainerReference(targetContainerName);
-            log?.WriteLine($"Creating backup container with name: {targetContainerName}");
+            log?.Info($"Creating backup container with name: {targetContainerName}");
             await targetContainer.CreateIfNotExistsAsync();
             await Task.Delay(5000);
             var containerExists = await targetContainer.ExistsAsync();
@@ -81,7 +82,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 {
                     var blobUri = listBlobItem.Uri;
                     var blobName = Path.GetFileName(blobUri.ToString());
-                    log?.WriteLine($"Copying blob: {blobName}");
+                    log?.Verbose($"Copying blob: {blobName}");
 
                     // Only support block blobs for now, page blobs can't do snapshots which means we would have to acquire an infinite lease.
                     var sourceBlob = listBlobItem as CloudBlockBlob;
@@ -108,11 +109,11 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
                     await notifier.NotifyBackupError(sourceBlobClient.Credentials.AccountName,
                         targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName, errorMessage);
-                    log?.WriteLine(errorMessage);
+                    log?.Error(errorMessage);
                 }
             }
 
-            log?.WriteLine($"Initiated copy operation on blobs from {sourceContainerName} to {targetContainerName}");
+            log?.Info($"Initiated copy operation on blobs from {sourceContainerName} to {targetContainerName}");
             // Raise a message to say that all blobs have started their copy operation
             await notifier.NotifyBackupInitiated(sourceBlobClient.Credentials.AccountName,
                 targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName);
@@ -124,7 +125,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
             string sourceStorageAccountName,
             string sourceContainerName,
             IBlobBackupNotifier notifier,
-            TextWriter log = null)
+            TraceWriter log = null)
         {
             var pendingCopy = false;
 
@@ -140,7 +141,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
                     $"Stacktrace for exception was {e.StackTrace}";
                 await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, errorMessage);
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 return false;
             }
 
@@ -168,7 +169,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                         $"Copying blob failed for blob: {destBlob.Name} with copy state: {destBlob.CopyState}. Copy operation will be restarted.";
                     await notifier.NotifyBackupError(sourceStorageAccountName, targetContainerName, sourceContainerName,
                         targetContainerName, errorMessage);
-                    log?.WriteLine(errorMessage);
+                    log?.Error(errorMessage);
                     // restart the copy process
                     await destBlob.StartCopyAsync(destBlob.CopyState.Source);
                 }
@@ -180,7 +181,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 // File has completed its copy operation
             }
 
-            log?.WriteLine($"Completed check of copy operation on container: {targetContainerName}. Blobs still pending: {pendingCopy}");
+            log?.Info($"Completed check of copy operation on container: {targetContainerName}. Blobs still pending: {pendingCopy}");
             // Send a message to our notifier in case we are calling these methods via queue triggers, or some other implemented notifier interface
             await notifier.NotifyBackupProgress(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName, pendingCopy);
             return pendingCopy;
@@ -193,7 +194,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
             string sourceContainerName,
             int numberOfBackupsToRetain,
             IBlobBackupNotifier notifier,
-            TextWriter log = null)
+            TraceWriter log = null)
         {
             CloudStorageAccount sourceStorageAccount;
             CloudStorageAccount targetStorageAccount;
@@ -209,7 +210,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
                     $"Stacktrace for exception was {e.StackTrace}";
                 await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, errorMessage);
-                log?.WriteLine(errorMessage);
+                log?.Error(errorMessage);
                 return;
             }
 
@@ -224,7 +225,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
             {
                 var blobUri = listBlobItem.Uri;
                 var blobName = Path.GetFileName(blobUri.ToString());
-                log?.WriteLine($"Deleting snapshots for blob: {blobName}");
+                log?.Verbose($"Deleting snapshots for blob: {blobName}");
 
                 // Only support block blobs for now, page blobs can't do snapshots which means we would have to acquire an infinite lease.
                 var sourceBlob = listBlobItem as CloudBlockBlob;
@@ -249,14 +250,14 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     {
                         if (cloudBlobContainer.Name != targetContainerName)
                         {
-                            log?.WriteLine($"Deleting backup container according to retention policy: {cloudBlobContainer.Name}");
+                            log?.Info($"Deleting backup container according to retention policy: {cloudBlobContainer.Name}");
                             await cloudBlobContainer.DeleteAsync();
                         }
                     }
                 }
             }
 
-            log?.WriteLine($"Backup of {sourceContainerName} to {targetContainerName} is complete and finalised.");
+            log?.Info($"Backup of {sourceContainerName} to {targetContainerName} is complete and finalised.");
         }
     }
 }

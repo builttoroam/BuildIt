@@ -9,6 +9,7 @@ using BuildIt.Backup.Azure.BlobStorage;
 using BuildIt.Backup.Azure.Operations;
 using BuildIt.Backup.Azure.SqlDb;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
@@ -20,7 +21,7 @@ namespace BackupWebjobSample
         // The function that initiates the backup process should always be a singleton, either explicitly, or via a singleton type trigger
         [NoAutomaticTrigger]
         [Singleton]
-        public async Task InitiateBlobStorageBackup(TextWriter log)
+        public async Task InitiateBlobStorageBackup(TraceWriter log)
         {
             var sourceStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupSourceConnectionString"];
             var targetStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupTargetConnectionString"];
@@ -32,7 +33,7 @@ namespace BackupWebjobSample
                 "blobbackuptest",
                 TimeSpan.FromSeconds(30));
 
-            log.WriteLine($"Initiating backup of container: {sourceContainerName}");
+            log.Info($"Initiating backup of container: {sourceContainerName}");
 
             await BackupBlobContainer.InitiateContainerBackup(
                 sourceStorageAccountConnectionString,
@@ -47,9 +48,9 @@ namespace BackupWebjobSample
         // on an Azure Queue called backuptest.
         public async Task ProcessBlobBackupQueueMessage(
             [QueueTrigger("blobbackuptest")] BlobBackupOperationNotification message,
-            TextWriter log)
+            TraceWriter log)
         {
-            log.WriteLine($"Processing incomming blob container backup queue message: {JsonConvert.SerializeObject(message)}");
+            log.Info($"Processing incomming blob container backup queue message: {JsonConvert.SerializeObject(message)}");
 
             var sourceStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupSourceConnectionString"];
             var targetStorageAccountConnectionString = ConfigurationManager.AppSettings["BackupTargetConnectionString"];
@@ -71,7 +72,7 @@ namespace BackupWebjobSample
             switch (message.OperationType)
             {
                 case BackupOperationType.Initiated:
-                    log.WriteLine("Received message that backup process has been initiated");
+                    log.Info("Received message that backup process has been initiated");
                     await BackupBlobContainer.MonitorBackupSinglePass(
                         targetStorageAccountConnectionString,
                         message.TargetContainerName,
@@ -81,7 +82,7 @@ namespace BackupWebjobSample
                         log);
                     break;
                 case BackupOperationType.InProgress:
-                    log.WriteLine("Received message that backup process is still in progress");
+                    log.Info("Received message that backup process is still in progress");
                     await BackupBlobContainer.MonitorBackupSinglePass(
                         targetStorageAccountConnectionString,
                         message.TargetContainerName,
@@ -91,7 +92,7 @@ namespace BackupWebjobSample
                         log);
                     break;
                 case BackupOperationType.Complete:
-                    log.WriteLine("Received message that backup process has been completed, running cleanup tasks");
+                    log.Info("Received message that backup process has been completed, running cleanup tasks");
                     await BackupBlobContainer.FinaliseContainerBackup(
                         sourceStorageAccountConnectionString,
                         targetStorageAccountConnectionString,
@@ -102,8 +103,8 @@ namespace BackupWebjobSample
                         log);
                     break;
                 case BackupOperationType.Error:
-                    log.WriteLine("Backup has sent an error message, process may have been aborted, please check error message below:");
-                    log.WriteLine(!string.IsNullOrEmpty(message.ErrorMessage)
+                    log.Error("Backup has sent an error message, process may have been aborted, please check error message below:");
+                    log.Error(!string.IsNullOrEmpty(message.ErrorMessage)
                         ? message.ErrorMessage
                         : "No error message available.");
                     break;
@@ -114,7 +115,7 @@ namespace BackupWebjobSample
 
         [NoAutomaticTrigger]
         [Singleton]
-        public async Task InitiateDatabaseStorageBackup(TextWriter log)
+        public async Task InitiateDatabaseStorageBackup(TraceWriter log)
         {
             var serverName = ConfigurationManager.AppSettings["DbBackupServerName"];
             var dbName = ConfigurationManager.AppSettings["DbBackupDatabase"];
@@ -135,9 +136,9 @@ namespace BackupWebjobSample
 
         public async Task ProcessDbBackupQueueMessage(
             [QueueTrigger("dbbackuptest")] DbBackupOperationNotification message,
-            TextWriter log)
+            TraceWriter log)
         {
-            log.WriteLine($"Processing incomming database backup queue message: {JsonConvert.SerializeObject(message)}");
+            log.Info($"Processing incomming database backup queue message: {JsonConvert.SerializeObject(message)}");
 
             var serverName = ConfigurationManager.AppSettings["DbBackupServerName"];
             var dbName = ConfigurationManager.AppSettings["DbBackupDatabase"];
@@ -163,7 +164,7 @@ namespace BackupWebjobSample
             switch (message.OperationType)
             {
                 case BackupOperationType.Initiated:
-                    log.WriteLine("Received message that backup process has been initiated");
+                    log.Info("Received message that backup process has been initiated");
                     await BackupSqlDb.MonitorBackupSinglePass(
                         serverName,
                         dbName,
@@ -176,7 +177,7 @@ namespace BackupWebjobSample
                         log);
                     break;
                 case BackupOperationType.InProgress:
-                    log.WriteLine("Received message that backup process is still in progress");
+                    log.Info("Received message that backup process is still in progress");
                     await BackupSqlDb.MonitorBackupSinglePass(
                         serverName,
                         dbName,
@@ -189,7 +190,7 @@ namespace BackupWebjobSample
                         log);
                     break;
                 case BackupOperationType.Complete:
-                    log.WriteLine("Received message that database backup has been completed, running cleanup tasks");
+                    log.Info("Received message that database backup has been completed, running cleanup tasks");
                     await BackupSqlDb.FinaliseDbBackup(
                         serverName,
                         dbName,
@@ -201,8 +202,8 @@ namespace BackupWebjobSample
                         log);
                     break;
                 case BackupOperationType.Error:
-                    log.WriteLine("Backup has sent an error message, process may have been aborted, please check error message below:");
-                    log.WriteLine(!string.IsNullOrEmpty(message.ErrorMessage)
+                    log.Error("Backup has sent an error message, process may have been aborted, please check error message below:");
+                    log.Error(!string.IsNullOrEmpty(message.ErrorMessage)
                         ? message.ErrorMessage
                         : "No error message available.");
                     break;
