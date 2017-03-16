@@ -256,6 +256,7 @@ namespace BuildIt.Backup.Azure.SqlDb
                         var sourceBlob = listBlobItem as CloudBlockBlob;
                         if (sourceBlob == null)
                         {
+                            // todo - optional [throw exception on page blob] parameter, otherwise continue/log
                             throw new NullReferenceException($"Null Refernce on source blob, blobname: {listBlobItem.Uri}");
                         }
 

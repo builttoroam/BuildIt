@@ -18,7 +18,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
             string sourceStorageAccountConnectionString,
             string targetStorageAccountConnectionString,
             string sourceContainerName,
-            string targetContainerName,
+            string targetContainerName, // todo - drop this and make targetcontainername from source prefix
             IBlobBackupNotifier notifier,
             TraceWriter log = null)
         {
@@ -88,6 +88,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     var sourceBlob = listBlobItem as CloudBlockBlob;
                     if (sourceBlob == null)
                     {
+                        // todo - optional [throw exception on page blob] parameter, otherwise continue/log
                         throw new NullReferenceException($"Null Refernce on source blob, blobname: {blobName}");
                     }
 
@@ -97,6 +98,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
                     var copyUri = $"{blobSnapshot.SnapshotQualifiedStorageUri.PrimaryUri}&{sourceSasToken}";
                     var copyRef = await destBlob.StartCopyAsync(new Uri(copyUri));
+                    // Todo - log out copy start success + copyRef
                     // Might need to hold on to this returned ref string for something?
 
                 }
@@ -157,6 +159,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
                 if (destBlob == null)
                 {
+                    // todo - optional [throw exception on page blob] parameter, otherwise continue/log
                     throw new NullReferenceException($"Null Refernce on source blob, blobname: {dest.Uri}");
                 }
 
@@ -164,14 +167,14 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     destBlob.CopyState.Status == CopyStatus.Failed)
                 {
                     // Pass an error to an appropriate service, using the notifier
-                    pendingCopy = true;
+                    //pendingCopy = true;
                     var errorMessage =
                         $"Copying blob failed for blob: {destBlob.Name} with copy state: {destBlob.CopyState}. Copy operation will be restarted.";
                     await notifier.NotifyBackupError(sourceStorageAccountName, targetContainerName, sourceContainerName,
                         targetContainerName, errorMessage);
                     log?.Error(errorMessage);
                     // restart the copy process
-                    await destBlob.StartCopyAsync(destBlob.CopyState.Source);
+                    //await destBlob.StartCopyAsync(destBlob.CopyState.Source);
                 }
                 else if (destBlob.CopyState.Status == CopyStatus.Pending)
                 {
@@ -234,6 +237,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     throw new NullReferenceException($"Null Refernce on source blob, blobname: {blobName}");
                 }
 
+                // Todo - optional parameter in case people dont want to delete snapshots
                 await sourceBlob.DeleteIfExistsAsync(DeleteSnapshotsOption.DeleteSnapshotsOnly, null, null, null);
             }
 
