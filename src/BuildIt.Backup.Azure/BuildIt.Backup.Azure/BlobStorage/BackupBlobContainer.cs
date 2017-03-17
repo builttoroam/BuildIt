@@ -18,10 +18,11 @@ namespace BuildIt.Backup.Azure.BlobStorage
             string sourceStorageAccountConnectionString,
             string targetStorageAccountConnectionString,
             string sourceContainerName,
-            string targetContainerName, // todo - drop this and make targetcontainername from source prefix
             IBlobBackupNotifier notifier,
             TraceWriter log = null)
         {
+            var targetContainerName = sourceContainerName + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
+
             CloudStorageAccount sourceStorageAccount;
             CloudStorageAccount targetStorageAccount;
             try

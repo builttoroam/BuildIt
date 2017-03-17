@@ -56,7 +56,6 @@ namespace BackupWebjobSample
             var sourceStorageAccountConnectionString = ConfigurationManager.AppSettings[BlobBackupSourceConnectionStringAppSetting];
             var targetStorageAccountConnectionString = ConfigurationManager.AppSettings[BackupTargetConnectionStringAppSetting];
             var sourceContainerName = ConfigurationManager.AppSettings[BlobBackupSourceContainerAppSetting];
-            var targetContainerName = sourceContainerName + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
 
             log.Info($"Initiating backup of container: {sourceContainerName}");
 
@@ -64,7 +63,6 @@ namespace BackupWebjobSample
                 sourceStorageAccountConnectionString,
                 targetStorageAccountConnectionString,
                 sourceContainerName,
-                targetContainerName,
                 blobBackupNotifier,
                 log);
         }
