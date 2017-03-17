@@ -92,6 +92,7 @@
     <Compile Include="Operations\BlobBackupNullNotifier.cs" />
     <Compile Include="Operations\BlobBackupOperationNotification.cs" />
     <Compile Include="Operations\BlobBackupQueueNotifier.cs" />
+    <Compile Include="Operations\DbBackupNullNotifier.cs" />
     <Compile Include="Operations\DbBackupOperationNotification.cs" />
     <Compile Include="Operations\DbBackupQueueNotifier.cs" />
     <Compile Include="Operations\IBlobBackupNotifier.cs" />
