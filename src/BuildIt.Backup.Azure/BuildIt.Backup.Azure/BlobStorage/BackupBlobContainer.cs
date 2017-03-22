@@ -11,8 +11,6 @@ namespace BuildIt.Backup.Azure.BlobStorage
 {
     public class BackupBlobContainer
     {
-        private const string MetadataCreatedTimeKey = "BackupContainerCreated";
-
         public static async Task InitiateContainerBackup(
             string sourceStorageAccountConnectionString,
             string targetStorageAccountConnectionString,
@@ -27,10 +25,8 @@ namespace BuildIt.Backup.Azure.BlobStorage
             if (!Helpers.ConnectStorageAccount(sourceStorageAccountConnectionString, out sourceStorageAccount, log) ||
                 !Helpers.ConnectStorageAccount(targetStorageAccountConnectionString, out targetStorageAccount, log))
             {
-                var errorMessage =
-                    "Unable to connect to either source or target storage container to initiate backup. Check passed connection string values to ensure they are valid.";
-                await notifier.NotifyBackupError(null, null, sourceContainerName, null, errorMessage);
-                log?.Error(errorMessage);
+                await notifier.NotifyBackupError(null, null, sourceContainerName, null, Constants.ErrorMessages.CannotConnectMultipleContainers);
+                log?.Error(Constants.ErrorMessages.CannotConnectMultipleContainers);
                 return;
             }
 
@@ -50,12 +46,12 @@ namespace BuildIt.Backup.Azure.BlobStorage
             TraceWriter log = null,
             bool throwExceptionOnPageBlobs = false)
         {
-            var targetContainerName = sourceContainer.Name + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
+            var targetContainerName = sourceContainer.Name + DateTime.UtcNow.ToString(Constants.DateFormats.BlobBackupContainerName);
             var targetContainer = targetBlobClient.GetContainerReference(targetContainerName);
             await Helpers.EnsureContainerExists(targetContainer, log);
 
             // Set the target containers metadata so we can easily sort it when finalising
-            targetContainer.Metadata[MetadataCreatedTimeKey] = DateTime.UtcNow.ToString("s");
+            targetContainer.Metadata[Constants.Metadata.ContainerCreatedTimeKey] = DateTime.UtcNow.ToString("s");
             await targetContainer.SetMetadataAsync();
 
             // Generate a shared access token for the copy operation
@@ -130,22 +126,32 @@ namespace BuildIt.Backup.Azure.BlobStorage
             TraceWriter log = null,
             bool throwExceptionOnPageBlobs = false)
         {
-            var pendingCopy = false;
 
             CloudStorageAccount targetStorageAccount;
             if (!Helpers.ConnectStorageAccount(targetStorageAccountConnectionString, out targetStorageAccount, log))
             {
-                var errorMessage =
-                    "Unable to connect to target storage container to initiate backup. Check passed connection string values to ensure they are valid.";
-                await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, errorMessage);
-                log?.Error(errorMessage);
+                await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, Constants.ErrorMessages.CannotConnectStorageAccount);
+                log?.Error(Constants.ErrorMessages.CannotConnectStorageAccount);
                 return false;
             }
 
             var targetBlobClient = targetStorageAccount.CreateCloudBlobClient();
             var targetContainer = targetBlobClient.GetContainerReference(targetContainerName);
 
-            // Extract above into an overload
+            return await MonitorBackupSinglePass(targetBlobClient, targetContainer, sourceStorageAccountName,
+                sourceContainerName, notifier, log, throwExceptionOnPageBlobs);
+        }
+
+        public static async Task<bool> MonitorBackupSinglePass(
+            CloudBlobClient targetBlobClient,
+            CloudBlobContainer targetContainer,
+            string sourceStorageAccountName,
+            string sourceContainerName,
+            IBlobBackupNotifier notifier,
+            TraceWriter log = null,
+            bool throwExceptionOnPageBlobs = false)
+        {
+            var pendingCopy = false;
 
             // Get a list of all blobs including copy info, might be worth moving this to a segmented/async manner
             var destBlobList = targetContainer.ListBlobs(useFlatBlobListing: true, blobListingDetails: BlobListingDetails.Copy);
@@ -171,8 +177,8 @@ namespace BuildIt.Backup.Azure.BlobStorage
                     // Pass an error to an appropriate service, using the notifier
                     var errorMessage =
                         $"Copying blob failed for blob: {destBlob.Name} with copy state: {destBlob.CopyState}. Copy operation will be restarted.";
-                    await notifier.NotifyBackupError(sourceStorageAccountName, targetContainerName, sourceContainerName,
-                        targetContainerName, errorMessage);
+                    await notifier.NotifyBackupError(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName,
+                        targetContainer.Name, errorMessage);
                     log?.Error(errorMessage);
                 }
                 else if (destBlob.CopyState.Status == CopyStatus.Pending)
@@ -183,9 +189,9 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 // File has completed its copy operation
             }
 
-            log?.Info($"Completed check of copy operation on container: {targetContainerName}. Blobs still pending: {pendingCopy}");
+            log?.Info($"Completed check of copy operation on container: {targetContainer.Name}. Blobs still pending: {pendingCopy}");
             // Send a message to our notifier in case we are calling these methods via queue triggers, or some other implemented notifier interface
-            await notifier.NotifyBackupProgress(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainerName, pendingCopy);
+            await notifier.NotifyBackupProgress(sourceStorageAccountName, targetBlobClient.Credentials.AccountName, sourceContainerName, targetContainer.Name, pendingCopy);
             return pendingCopy;
         }
 
@@ -202,28 +208,37 @@ namespace BuildIt.Backup.Azure.BlobStorage
         {
             CloudStorageAccount sourceStorageAccount;
             CloudStorageAccount targetStorageAccount;
-            try
+            if (!Helpers.ConnectStorageAccount(sourceStorageAccountConnectionString, out sourceStorageAccount, log) ||
+                !Helpers.ConnectStorageAccount(targetStorageAccountConnectionString, out targetStorageAccount, log))
             {
-                sourceStorageAccount = CloudStorageAccount.Parse(sourceStorageAccountConnectionString);
-                targetStorageAccount = CloudStorageAccount.Parse(targetStorageAccountConnectionString);
-            }
-            catch (Exception e)
-            {
-                var errorMessage =
-                    "Unable to connect to either source or target storage container to initiate backup. Check passed connection string values to ensure they are valid. \n" +
-                    $"Exception thrown was of type {e.GetType().Name} with message: {e.Message} \n" +
-                    $"Stacktrace for exception was {e.StackTrace}";
-                await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, errorMessage);
-                log?.Error(errorMessage);
+                await notifier.NotifyBackupError(null, null, sourceContainerName, targetContainerName, Constants.ErrorMessages.CannotConnectMultipleContainers);
+                log?.Error(Constants.ErrorMessages.CannotConnectMultipleContainers);
                 return;
             }
 
             var sourceBlobClient = sourceStorageAccount.CreateCloudBlobClient();
             var targetBlobClient = targetStorageAccount.CreateCloudBlobClient();
 
+            var sourceContainer = sourceBlobClient.GetContainerReference(sourceContainerName);
+            var targetContainer = sourceBlobClient.GetContainerReference(targetContainerName);
+
+            await FinaliseContainerBackup(sourceBlobClient, targetBlobClient, sourceContainer, targetContainer,
+                numberOfBackupsToRetain, notifier, log, throwExceptionOnPageBlobs, deleteSnapshotsFromCopySource);
+        }
+
+        public static async Task FinaliseContainerBackup(
+            CloudBlobClient sourceBlobClient,
+            CloudBlobClient targetBlobClient,
+            CloudBlobContainer sourceContainer,
+            CloudBlobContainer targetContainer,
+            int numberOfBackupsToRetain,
+            IBlobBackupNotifier notifier,
+            TraceWriter log = null,
+            bool throwExceptionOnPageBlobs = false,
+            bool deleteSnapshotsFromCopySource = true)
+        {
             if (deleteSnapshotsFromCopySource)
             {
-                var sourceContainer = sourceBlobClient.GetContainerReference(sourceContainerName);
                 // delete all snapshots from source container
                 var blobs = sourceContainer.ListBlobs(useFlatBlobListing: true);
                 foreach (var listBlobItem in blobs)
@@ -251,16 +266,16 @@ namespace BuildIt.Backup.Azure.BlobStorage
 
             if (numberOfBackupsToRetain > 0)
             {
-                var containers = targetBlobClient.ListContainers(sourceContainerName, ContainerListingDetails.Metadata).ToList(); // Force enumeration so that we can sort and count
+                var containers = targetBlobClient.ListContainers(sourceContainer.Name, ContainerListingDetails.Metadata).ToList(); // Force enumeration so that we can sort and count
                 if (containers.Count > numberOfBackupsToRetain)
                 {
                     // Sort the containers by the date created tag in their metadata
-                    var sortedContainers = containers.OrderBy(c => c.Metadata[MetadataCreatedTimeKey]);
+                    var sortedContainers = containers.OrderBy(c => c.Metadata[Constants.Metadata.ContainerCreatedTimeKey]);
                     var containersToDelete = sortedContainers.Take(containers.Count - numberOfBackupsToRetain);
 
                     foreach (var cloudBlobContainer in containersToDelete)
                     {
-                        if (cloudBlobContainer.Name != targetContainerName)
+                        if (cloudBlobContainer.Name != targetContainer.Name)
                         {
                             log?.Info($"Deleting backup container according to retention policy: {cloudBlobContainer.Name}");
                             await cloudBlobContainer.DeleteAsync();
@@ -269,7 +284,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
                 }
             }
 
-            log?.Info($"Backup of {sourceContainerName} to {targetContainerName} is complete and finalised.");
+            log?.Info($"Backup of {sourceContainer.Name} to {targetContainer.Name} is complete and finalised.");
         }
     }
 }

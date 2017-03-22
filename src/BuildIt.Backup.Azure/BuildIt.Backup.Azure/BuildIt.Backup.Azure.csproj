@@ -87,6 +87,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Operations\BackupOperationType.cs" />
     <Compile Include="Operations\BaseQueueOperationNotifier.cs" />
