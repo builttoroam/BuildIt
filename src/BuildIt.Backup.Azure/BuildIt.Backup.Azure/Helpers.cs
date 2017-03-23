@@ -11,6 +11,9 @@ namespace BuildIt.Backup.Azure
 {
     internal class Helpers
     {
+        private const int CheckContainerExistsDelay = 5000;
+        private const int MaximumContainerWaitLoops = 30;
+
         internal static bool ConnectStorageAccount(
             string sourceConnectionString,
             out CloudStorageAccount sourceStorageAccount,
@@ -47,10 +50,10 @@ namespace BuildIt.Backup.Azure
             var waitCount = 0;
             while (!containerExists)
             {
-                await Task.Delay(5000);
+                await Task.Delay(CheckContainerExistsDelay);
                 containerExists = await targetContainer.ExistsAsync();
                 waitCount++;
-                if (waitCount > 30) // 2.5 minutes, really should have been created by now...
+                if (waitCount > MaximumContainerWaitLoops) // 2.5 minutes, really should have been created by now...
                 {
                     throw new Exception("Unable to verify backup container");
                 }

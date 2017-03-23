@@ -8,7 +8,7 @@ namespace BuildIt.Backup.Azure.SqlDb
 {
     internal static class DacWebServiceEndpoints
     {
-        public static string GetEndpointForRegion(this AzureDbLocation region)
+        internal static string GetEndpointForRegion(this AzureDbLocation region)
         {
             switch (region)
             {
