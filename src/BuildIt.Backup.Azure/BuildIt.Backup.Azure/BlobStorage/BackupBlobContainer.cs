@@ -9,8 +9,25 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace BuildIt.Backup.Azure.BlobStorage
 {
-    public class BackupBlobContainer
+    /// <summary>
+    /// Contains methods that will initiate, monitor, and finalise a 
+    /// backup of a Cloud Blob Container to a target Cloud Storage account 
+    /// in an async manner.
+    /// 
+    /// This backup process only supports Blob Blobs.
+    /// </summary>
+    public static class BackupBlobContainer
     {
+        /// <summary>
+        /// Starts the backup process by creating a Storage Container in the target storage account, creates a snapshot of every blob
+        /// in the source container, then triggers and async copy command of that snapshot to the target container.
+        /// </summary>
+        /// <param name="sourceStorageAccountConnectionString">Connection String for the source storage account that owns the container to be backed up</param>
+        /// <param name="targetStorageAccountConnectionString">Connection String for the target storage account where the backup will be generated</param>
+        /// <param name="sourceContainerName">Name of the container to be backed up</param>
+        /// <param name="notifier">An implementation of IBlobBackupNotifier that will inform on the progress or error of the backup process</param>
+        /// <param name="log">An optional TraceWriter object for logging purposes</param>
+        /// <param name="throwExceptionOnPageBlobs">If set to true, this method will throw an exception if it encounters Page Blobs in the source container</param>
         public static async Task InitiateContainerBackup(
             string sourceStorageAccountConnectionString,
             string targetStorageAccountConnectionString,
@@ -38,6 +55,15 @@ namespace BuildIt.Backup.Azure.BlobStorage
             await InitiateContainerBackup(targetBlobClient, sourceContainer, notifier, log, throwExceptionOnPageBlobs);
         }
 
+        /// <summary>
+        /// Starts the backup process by creating a Storage Container in the target storage account, creates a snapshot of every blob
+        /// in the source container, then triggers and async copy command of that snapshot to the target container.
+        /// </summary>
+        /// <param name="targetBlobClient">A validated Cloud Blob Client for the storage account where the backup will be generated</param>
+        /// <param name="sourceContainer">A container reference to the Storage Container that will be backed up</param>
+        /// <param name="notifier">An implementation of IBlobBackupNotifier that will inform on the progress or error of the backup process</param>
+        /// <param name="log">An optional TraceWriter object for logging purposes</param>
+        /// <param name="throwExceptionOnPageBlobs">If set to true, this method will throw an exception if it encounters Page Blobs in the source container</param>
         public static async Task InitiateContainerBackup(
             CloudBlobClient targetBlobClient,
             CloudBlobContainer sourceContainer,

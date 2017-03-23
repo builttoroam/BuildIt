@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BuildIt.Backup.Azure.Operations
 {
+    /// <summary>
+    /// A null implementation of the IDbBackupNotifier interface. This class does nothing.
+    /// </summary>
     public class DbBackupNullNotifier : IDbBackupNotifier
     {
         public Task Init()
