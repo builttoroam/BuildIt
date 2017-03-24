@@ -114,8 +114,8 @@ namespace BackupWebjobSample
                     await BackupBlobContainer.FinaliseContainerBackup(
                         sourceStorageAccountConnectionString,
                         targetStorageAccountConnectionString,
-                        message.TargetContainerName,
                         sourceContainerName,
+                        message.TargetContainerName,
                         backupRetentionPolicy,
                         blobBackupNotifier,
                         log);
