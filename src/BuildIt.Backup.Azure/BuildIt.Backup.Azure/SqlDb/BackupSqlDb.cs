@@ -16,8 +16,27 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace BuildIt.Backup.Azure.SqlDb
 {
+    /// <summary>
+    /// Contains methods that will initiate, monitor, and finalise a 
+    /// backup of an Azure SQL Database to a target Cloud Storage account in an async manner.
+    /// 
+    /// This backup will result in .bacpac binary backups of Azure SQL Databases.
+    /// </summary>
     public class BackupSqlDb
     {
+        /// <summary>
+        /// Starts the backup process by ensuring the Storage Container in the target storage account exists (or creates it if it does not),
+        /// then triggers an async export command of the target database using the DAC Service to create a .bacpac of the database in Blob Storage.
+        /// </summary>
+        /// <param name="dbServerName">Public server endpoint, eg. [ServerName].database.windows.net</param>
+        /// <param name="dbName">Name of the database that is being backed up</param>
+        /// <param name="dbUsername">A valid admin username for the database to be backed up</param>
+        /// <param name="dbPassword">The password for the user account that is being used to connect to the database</param>
+        /// <param name="dbLocation">The Azure Resource location of the database server that is to be backed up</param>
+        /// <param name="targetStorageAccountConnectionString">Connection String for the target storage account where the backup will be generated</param>
+        /// <param name="targetContainerName">Name of the container that will be hold the backup blob</param>
+        /// <param name="notifier">An implementation of IDbBackupNotifier that will inform on the progress or error of the backup process</param>
+        /// <param name="log">An optional TraceWriter object for logging purposes</param>
         public static async Task InitiateDbBackup(
             string dbServerName,
             string dbName,
@@ -44,6 +63,18 @@ namespace BuildIt.Backup.Azure.SqlDb
             await InitiateDbBackup(dbServerName, dbName, dbUsername, dbPassword, dbLocation, targetContainer, notifier, log);
         }
 
+        /// <summary>
+        /// Starts the backup process by ensuring the Storage Container in the target storage account exists (or creates it if it does not),
+        /// then triggers an async export command of the target database using the DAC Service to create a .bacpac of the database in Blob Storage.
+        /// </summary>
+        /// <param name="dbServerName">Public server endpoint, eg. [ServerName].database.windows.net</param>
+        /// <param name="dbName">Name of the database that is being backed up</param>
+        /// <param name="dbUsername">A valid admin username for the database to be backed up</param>
+        /// <param name="dbPassword">The password for the user account that is being used to connect to the database</param>
+        /// <param name="dbLocation">The Azure Resource location of the database server that is to be backed up</param>
+        /// <param name="targetContainer">A container reference to the Storage Container that will hold the backup blob</param>
+        /// <param name="notifier">An implementation of IDbBackupNotifier that will inform on the progress or error of the backup process</param>
+        /// <param name="log">An optional TraceWriter object for logging purposes</param>
         public static async Task InitiateDbBackup(
             string dbServerName,
             string dbName,

@@ -11,8 +11,7 @@ namespace BuildIt.Backup.Azure.BlobStorage
 {
     /// <summary>
     /// Contains methods that will initiate, monitor, and finalise a 
-    /// backup of a Cloud Blob Container to a target Cloud Storage account 
-    /// in an async manner.
+    /// backup of a Cloud Blob Container to a target Cloud Storage account in an async manner.
     /// 
     /// This backup process only supports Blob Blobs.
     /// </summary>
