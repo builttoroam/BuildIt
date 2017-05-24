@@ -17,12 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildIt.General" Version="1.0.0.41" />
+    <PackageReference Include="BuildIt.States" Version="1.0.0.41" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.5.239-pre3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj" />
-    <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
+    <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj" />
+    <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

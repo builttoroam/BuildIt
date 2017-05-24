@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildIt.General" Version="1.0.0.41" />
+    <PackageReference Include="BuildIt.States" Version="1.0.0.41" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.5.239-pre3" />
   </ItemGroup>
 

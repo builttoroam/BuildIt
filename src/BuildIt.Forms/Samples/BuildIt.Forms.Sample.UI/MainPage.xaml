@@ -2,28 +2,49 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BuildIt.Forms.Sample"
+             xmlns:vsm="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
              xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Sample.MainPage">
-
-    <!--<Label Text="Welcome to Xamarin Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />-->
-
+    <vsm:VisualStateManager.VisualStateGroups>
+        <x:Array Type="{x:Type vsm:VisualStateGroup}">
+            <vsm:VisualStateGroup Name="LabelStates">
+                <vsm:VisualState Name="Show" />
+                <vsm:VisualState Name="Hide">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="false"
+                                    Target="HelloLabel.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
+        </x:Array>
+    </vsm:VisualStateManager.VisualStateGroups>
     <StackLayout>
-    <controls:ContentButton VerticalOptions="Center"
-                            HorizontalOptions="Center">
-
-        <StackLayout>
-        <Label Text="Hello!" />
-            <Label Text="Hello!" />
-            <Label Text="Hello!" />
-            <Label Text="Hello!" />
-            <Label Text="Hello!" />
-            <Label Text="Hello!" />
-        </StackLayout>
-    </controls:ContentButton>
+        <Label FontSize="30"
+               x:Name="HelloLabel"
+               Text="Hello World!" />
+        <Grid Padding="80">
+        <Button Text="Hello World!" Clicked="ButtonClicked"
+                HorizontalOptions="Center"
+                />
+        </Grid>
+        <Button Text="Hello World!"
+                Clicked="ButtonClicked"
+                HorizontalOptions="Center" />
         <controls:ContentButton VerticalOptions="Center"
-                                IsEnabled="false"
+                                Pressed="ToggleButtonPressed"
+                                HorizontalOptions="Center">
+
+            <StackLayout>
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+            </StackLayout>
+        </controls:ContentButton>
+        <controls:ContentButton VerticalOptions="Center"
+                                x:Name="DisabledButton"
                                 HorizontalOptions="Center">
 
             <StackLayout>

@@ -11,12 +11,22 @@ namespace BuildIt.Forms.Controls
 {
 	public partial class ContentButton : ContentView
 	{
-
+        public event EventHandler Pressed;
       
 
         public ContentButton ()
 		{
             InitializeComponent();
+
+            this.PropertyChanged += ContentButton_PropertyChanged;
+        }
+
+        private void ContentButton_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IsEnabled))
+            {
+                UpdateVisualState();
+            }
         }
 
         protected override void OnParentSet()
@@ -45,6 +55,10 @@ namespace BuildIt.Forms.Controls
                     break;
                 case TouchActionType.Released:
                     IsPressed = false;
+                    if(IsEntered)
+                    {
+                        Pressed.SafeRaise(this);
+                    }
                     break;
             }
             UpdateVisualState();

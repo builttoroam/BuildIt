@@ -11,6 +11,19 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+        <Button Width="200"
+                HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Hello World!"
+                           TextAlignment="Center"
+                           FontWeight="Bold" />
+                <TextBlock Text="This is a short message that should word wrap with all the lines being set to justified"
+                           FontStyle="Italic"
+                           TextWrapping="WrapWholeWords"
+                           TextAlignment="Justify" />
+            </StackPanel>
+        </Button>
+
+        <TextBlock RenderTransformOrigin="0.494,0.668" />
     </Grid>
 </forms:WindowsPage>

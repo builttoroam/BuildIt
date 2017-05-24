@@ -164,7 +164,7 @@
       <Project>{4180a997-f8e2-427a-b0f1-e504afdefdde}</Project>
       <Name>BuildIt.Forms.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj">
+    <ProjectReference Include="..\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj">
       <Project>{f4d30225-84fc-41d4-85ac-97a6d03d2cac}</Project>
       <Name>BuildIt.Forms.Sample.UI</Name>
     </ProjectReference>
