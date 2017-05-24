@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BuildIt.Forms.Sample"
+             xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
+             x:Class="BuildIt.Forms.Sample.MainPage">
+
+    <!--<Label Text="Welcome to Xamarin Forms!" 
+           VerticalOptions="Center" 
+           HorizontalOptions="Center" />-->
+
+    <StackLayout>
+    <controls:ContentButton VerticalOptions="Center"
+                            HorizontalOptions="Center">
+
+        <StackLayout>
+        <Label Text="Hello!" />
+            <Label Text="Hello!" />
+            <Label Text="Hello!" />
+            <Label Text="Hello!" />
+            <Label Text="Hello!" />
+            <Label Text="Hello!" />
+        </StackLayout>
+    </controls:ContentButton>
+        <controls:ContentButton VerticalOptions="Center"
+                                IsEnabled="false"
+                                HorizontalOptions="Center">
+
+            <StackLayout>
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+                <Label Text="Hello!" />
+            </StackLayout>
+        </controls:ContentButton>
+    </StackLayout>
+</ContentPage>

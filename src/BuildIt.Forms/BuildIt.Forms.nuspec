@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BuildIt.Forms</id>
+    <version>$version$</version>
+    <title>BuildIt.Forms</title>
+    <authors>Built to Roam Pty Ltd</authors>
+    <owners>Built to Roam Pty Ltd</owners>
+    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
+    <description>Adds VisualStateManager to Xamarin.Forms!</description>
+    <copyright>Copyright © 2016</copyright>
+    <tags>BuildIt</tags>
+    <dependencies>
+      <dependency id="Xamarin.Forms" version="2.3.5.239-pre3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.dll" target="lib\netstandard1.4" />
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.pdb" target="lib\netstandard1.4" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.dll" target="lib\netstandard1.4" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.pdb" target="lib\netstandard1.4" />
+
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.dll" target="lib\uap10.0" />
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.pdb" target="lib\uap10.0" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.dll" target="lib\uap10.0" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.pdb" target="lib\uap10.0" />
+    <file src="BuildIt.Forms.Controls.UWP\bin\Release\BuildIt.Forms.Controls.UWP.dll" target="lib\uap10.0" />
+    <file src="BuildIt.Forms.Controls.UWP\bin\Release\BuildIt.Forms.Controls.UWP.pdb" target="lib\uap10.0" />
+
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.dll" target="lib\Xamarin.iOS10" />
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.pdb" target="lib\Xamarin.iOS10" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.dll" target="lib\Xamarin.iOS10" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.pdb" target="lib\Xamarin.iOS10" />
+    <file src="BuildIt.Forms.Controls.iOS\bin\Release\BuildIt.Forms.Controls.iOS.dll" target="lib\Xamarin.iOS10" />
+    <file src="BuildIt.Forms.Controls.iOS\bin\Release\BuildIt.Forms.Controls.iOS.pdb" target="lib\Xamarin.iOS10" />
+
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.dll" target="lib\MonoAndroid10" />
+    <file src="BuildIt.Forms.Core\bin\Release\netstandard1.4\BuildIt.Forms.Core.pdb" target="lib\MonoAndroid10" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.dll" target="lib\MonoAndroid10" />
+    <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.pdb" target="lib\MonoAndroid10" />
+    <file src="BuildIt.Forms.Controls.Android\bin\Release\BuildIt.Forms.Controls.Android.dll" target="lib\MonoAndroid10" />
+    <file src="BuildIt.Forms.Controls.Android\bin\Release\BuildIt.Forms.Controls.Android.pdb" target="lib\MonoAndroid10" />
+  </files>
+</package>
+
