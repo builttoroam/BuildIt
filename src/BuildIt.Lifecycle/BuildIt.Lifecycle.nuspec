@@ -28,7 +28,7 @@
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
-      <group targetFramework="win81">
+      <!--<group targetFramework="win81">
         <dependency id="BuildIt.General" version="1.0.0.41" />
         <dependency id="Microsoft.Bcl" version="1.1.10" />
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
@@ -42,7 +42,7 @@
         <dependency id="Microsoft.NETCore.Platforms" version ="1.0.1" />
         <dependency id="NETStandard.Library" version="1.6.1" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
-      </group>
+      </group>-->
     </dependencies>
   </metadata>
 
@@ -59,7 +59,7 @@
     <file src="BuildIt.Lifecycle.UWP\bin\Release\BuildIt.Lifecycle.UWP.pdb" target="lib\uap" />
     <file src="BuildIt.Lifecycle.UWP\bin\Release\BuildIt.Lifecycle.UWP.xml" target="lib\uap" />
 
-    <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.dll" target="lib\win81" />
+    <!--<file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.dll" target="lib\win81" />
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.pdb" target="lib\win81" />
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.xml" target="lib\win81" />
     <file src="BuildIt.Lifecycle.Win8x\bin\Release\BuildIt.Lifecycle.Win8x.dll" target="lib\win81" />
@@ -71,6 +71,6 @@
     <file src="BuildIt.Lifecycle\bin\Release\BuildIt.Lifecycle.xml" target="lib\wp81" />
     <file src="BuildIt.Lifecycle.WP8x\bin\Release\BuildIt.Lifecycle.WP8x.dll" target="lib\wp81" />
     <file src="BuildIt.Lifecycle.WP8x\bin\Release\BuildIt.Lifecycle.WP8x.pdb" target="lib\wp81" />
-    <file src="BuildIt.Lifecycle.WP8x\bin\Release\BuildIt.Lifecycle.WP8x.xml" target="lib\wp81" />
+    <file src="BuildIt.Lifecycle.WP8x\bin\Release\BuildIt.Lifecycle.WP8x.xml" target="lib\wp81" />-->
   </files>
 </package>
