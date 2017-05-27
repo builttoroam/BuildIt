@@ -49,7 +49,7 @@ namespace BuildIt.Forms.Core
         _State8,
         _State9
     }
-    
+
 
     public static class StateManagerHelper
     {
@@ -57,8 +57,8 @@ namespace BuildIt.Forms.Core
         {
             //var gts = manager.GetType().GetRuntimeMethod("GoToState", new Type[] { state.StateType.GetType(),typeof(bool) });
             var gts = manager.GetType().GetTypeInfo().GetDeclaredMethod("GoToState");
-            gts=gts.MakeGenericMethod(state.StateType.GetType());
-            var stateChange = gts.Invoke(manager, new object[] { state.StateType ,true}) as Task<bool>;
+            gts = gts.MakeGenericMethod(state.StateType.GetType());
+            var stateChange = gts.Invoke(manager, new object[] { state.StateType, true }) as Task<bool>;
             var ok = await stateChange;
         }
     }
@@ -165,11 +165,11 @@ namespace BuildIt.Forms.Core
 
         public static readonly BindableProperty StateManagerProperty =
     BindableProperty.CreateAttached("StateManager", typeof(IStateManager),
-        typeof(VisualStateManager),null, defaultValueCreator: (bo)=>
-        {
+        typeof(VisualStateManager), null, defaultValueCreator: (bo) =>
+         {
 
-            return new StateManager();
-        });
+             return new StateManager();
+         });
 
         private static object CreateDefaultValue(BindableObject bindable)
         {
@@ -179,7 +179,7 @@ namespace BuildIt.Forms.Core
         private static void StateGroupsChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var manager = GetStateManager(bindable);
-            UpdateStateManager(manager, bindable, (IList < VisualStateGroup > )newvalue);
+            UpdateStateManager(manager, bindable, (IList<VisualStateGroup>)newvalue);
         }
 
         public static IStateManager GetStateManager(BindableObject view)
@@ -196,7 +196,7 @@ namespace BuildIt.Forms.Core
         {
             view.SetValue(VisualStateGroupsProperty, value);
 
-           
+
         }
 
         private static void UpdateStateManager(IStateManager manager, BindableObject view, IList<VisualStateGroup> groups)
@@ -204,7 +204,7 @@ namespace BuildIt.Forms.Core
             var idx = 0;
             foreach (var vsgroup in groups)
             {
-                UpdateStateManagerWithStateGroup(manager, view, vsgroup,idx);
+                UpdateStateManagerWithStateGroup(manager, view, vsgroup, idx);
                 idx++;
             }
         }
@@ -218,14 +218,14 @@ namespace BuildIt.Forms.Core
             var sg = Activator.CreateInstance(sgType) as IStateGroup;
             vsgroup.StateGroup = sg;
 
-            manager.AddStateGroup(stateType,sg);
+            manager.AddStateGroup(stateType, sg);
 
             var idx = 1;
             foreach (var vstate in vsgroup)
             {
-                var state = Enum.GetValues(stateType).GetValue( idx);
+                var state = Enum.GetValues(stateType).GetValue(idx);
                 var defState = sg.GetType().GetRuntimeMethod("DefineState", new Type[] { stateType });
-                var stateDef= defState.Invoke(sg, new object[] { state });
+                var stateDef = defState.Invoke(sg, new object[] { state });
                 vstate.StateType = state;
                 idx++;
 
@@ -234,7 +234,7 @@ namespace BuildIt.Forms.Core
 
 
                 BuildStateSetters(vstate, view as Element, values);
-                
+
             }
         }
 
@@ -249,6 +249,7 @@ namespace BuildIt.Forms.Core
                 if (setterTarget == null)
                 {
                     var cv = element as ContentView;
+                    if (cv == null) return;
                     foreach (var child in cv.Children)
                     {
                         setterTarget = child.FindByName<Element>(name);
@@ -257,6 +258,7 @@ namespace BuildIt.Forms.Core
                             break;
                         }
                     }
+
                 }
 
                 var targetProp = element.GetType().GetProperty(prop);
@@ -273,7 +275,7 @@ namespace BuildIt.Forms.Core
 
                         converter = Activator.CreateInstance(Type.GetType(converterType)) as TypeConverter;
                     }
-                   
+
                 }
 
 
@@ -290,7 +292,7 @@ namespace BuildIt.Forms.Core
             IStateValue Value { get; }
         }
 
-        private class StateValueBuilder<TElement,TPropertyValue>:IStateValueBuilder
+        private class StateValueBuilder<TElement, TPropertyValue> : IStateValueBuilder
         {
             public TElement Element { get; set; }
             public PropertyInfo Property { get; set; }
@@ -319,7 +321,7 @@ namespace BuildIt.Forms.Core
                         if (val is TPropertyValue) return (TPropertyValue)val;
                         return default(TPropertyValue);
                     };
-                    sv.Setter = (element,val) =>
+                    sv.Setter = (element, val) =>
                       {
 
                           Property.SetValue(element, val);
@@ -328,15 +330,16 @@ namespace BuildIt.Forms.Core
                     {
                         sv.Value = (TPropertyValue)Converter.ConvertFromInvariantString(RawValue);
                     }
-                    else if(RawValue is TPropertyValue){
+                    else if (RawValue is TPropertyValue)
+                    {
                         sv.Value = (TPropertyValue)(object)RawValue;
-                            }
+                    }
                     else
                     {
                         var parse = typeof(TPropertyValue).GetRuntimeMethod("Parse", new Type[] { typeof(string) });
                         if (parse != null)
                         {
-                            sv.Value = (TPropertyValue)parse.Invoke(null,new object[] { RawValue });
+                            sv.Value = (TPropertyValue)parse.Invoke(null, new object[] { RawValue });
                         }
                     }
                     return sv;
@@ -419,6 +422,61 @@ namespace BuildIt.Forms.Core
         public string Value { get; set; }
 
         public string Target { get; set; }
+    }
+
+    public class Ambient
+    {
+        public static readonly BindableProperty ForeColorProperty =
+           BindableProperty.CreateAttached("ForeColor", typeof(Color),
+               typeof(Ambient), Color.Transparent, BindingMode.OneWayToSource, null, ColorChanged);
+
+        private static void ColorChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var clr = (Color)newValue;
+            ApplyForeColor(bindable, clr);
+
+        }
+
+        private static IDictionary<Type, FieldInfo> ColorProperties = new Dictionary<Type, FieldInfo>();
+        private static void ApplyForeColor(BindableObject bindable, Color foreColor)
+        {
+            if (bindable == null) return;
+
+            var objType = bindable.GetType();
+            FieldInfo colorProp = null;
+            if (!ColorProperties.ContainsKey(objType))
+            {
+                colorProp = objType.GetField("TextColorProperty");
+                ColorProperties[objType] = colorProp;
+            }
+
+            if (colorProp != null)
+            {
+                var prop = colorProp.GetValue(bindable) as BindableProperty;
+                if (prop != null)
+                {
+                    var currentVal = bindable.GetValue(prop);
+                    if (currentVal == null || (Color)currentVal==default(Color))
+                    {
+                        bindable.SetValue(prop, foreColor);
+                    }
+                }
+            }
+
+            var element = bindable as Layout;
+            if (element != null)
+            {
+                foreach (var emt in element.Children)
+                {
+                    ApplyForeColor(emt, foreColor);
+                }
+                var clr = foreColor;
+                element.ChildAdded += (s, e) =>
+                {
+                    ApplyForeColor(e.Element as BindableObject, clr);
+                };
+            }
+        }
     }
 
 

@@ -18,10 +18,13 @@
             </vsm:VisualStateGroup>
         </x:Array>
     </vsm:VisualStateManager.VisualStateGroups>
-    <StackLayout>
+    <StackLayout vsm:Ambient.ForeColor="Blue" Margin="20">
         <Label FontSize="30"
                x:Name="HelloLabel"
-               Text="Hello World!" />
+               Text="Hello World - Blue!" />
+        <Label FontSize="30"
+               TextColor="Red"
+               Text="Hello World - Red!" />
         <Grid Padding="80">
         <Button Text="Hello World!" Clicked="ButtonClicked"
                 HorizontalOptions="Center"

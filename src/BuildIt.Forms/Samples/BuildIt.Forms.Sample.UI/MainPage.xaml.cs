@@ -14,6 +14,21 @@ namespace BuildIt.Forms.Sample
         public MainPage()
         {
             InitializeComponent();
+
+            //var x = new Label();
+            //x.TextColor
+
+            //var x = new Button();
+            //x.TextColor
+
+            //var x = new Frame();
+            //x.BackgroundColor;
+
+            //var x = new BoxView();
+            //x.Color;
+
+            //var cv = new ContentView();
+            //cv.BackgroundColor;
         }
 
         private bool visible = true;
