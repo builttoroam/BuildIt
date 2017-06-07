@@ -18,46 +18,55 @@
             </vsm:VisualStateGroup>
         </x:Array>
     </vsm:VisualStateManager.VisualStateGroups>
-    <StackLayout vsm:Ambient.ForeColor="Blue" Margin="20">
-        <Label FontSize="30"
-               x:Name="HelloLabel"
-               Text="Hello World - Blue!" />
-        <Label FontSize="30"
-               TextColor="Red"
-               Text="Hello World - Red!" />
-        <Grid Padding="80">
-        <Button Text="Hello World!" Clicked="ButtonClicked"
-                HorizontalOptions="Center"
-                />
-        </Grid>
-        <Button Text="Hello World!"
-                Clicked="ButtonClicked"
-                HorizontalOptions="Center" />
-        <controls:ContentButton VerticalOptions="Center"
-                                Pressed="ToggleButtonPressed"
-                                HorizontalOptions="Center">
+    <Grid>
+        <Grid.Effects>
+            <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush"/>
+        </Grid.Effects>
+        <StackLayout vsm:Ambient.ForeColor="Blue"
+                     Margin="20">
+            <Label FontSize="30"
+                   x:Name="HelloLabel"
+                   Text="Hello World - Blue!" />
+            <Label FontSize="30"
+                   TextColor="Red"
+                   Text="Hello World - Red!" />
+            <Grid Padding="80">
+                <Grid.Effects>
+                    <controls:BackgroundEffect FallbackColor="Red" />
+                </Grid.Effects>
+                <Button Text="Hello World!"
+                        Clicked="ButtonClicked"
+                        HorizontalOptions="Center" />
+            </Grid>
+            <Button Text="Hello World!"
+                    Clicked="ButtonClicked"
+                    HorizontalOptions="Center" />
+            <controls:ContentButton VerticalOptions="Center"
+                                    Pressed="ToggleButtonPressed"
+                                    HorizontalOptions="Center">
 
-            <StackLayout>
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-            </StackLayout>
-        </controls:ContentButton>
-        <controls:ContentButton VerticalOptions="Center"
-                                x:Name="DisabledButton"
-                                HorizontalOptions="Center">
+                <StackLayout>
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                </StackLayout>
+            </controls:ContentButton>
+            <controls:ContentButton VerticalOptions="Center"
+                                    x:Name="DisabledButton"
+                                    HorizontalOptions="Center">
 
-            <StackLayout>
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-                <Label Text="Hello!" />
-            </StackLayout>
-        </controls:ContentButton>
-    </StackLayout>
+                <StackLayout>
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                    <Label Text="Hello!" />
+                </StackLayout>
+            </controls:ContentButton>
+        </StackLayout>
+    </Grid>
 </ContentPage>

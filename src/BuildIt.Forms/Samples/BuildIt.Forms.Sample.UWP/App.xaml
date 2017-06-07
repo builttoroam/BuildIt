@@ -4,5 +4,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BuildIt.Forms.Sample.UWP"
     RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+        <ResourceDictionary.ThemeDictionaries>
+            <ResourceDictionary x:Key="Default">
+                <AcrylicBrush x:Key="MyAcrylicBrush"
+                              BackgroundSource="HostBackdrop"
+                              TintColor="#FFFF0000"
+                              TintOpacity="0.2"
+                              FallbackColor="#FF7F0000" />
+            </ResourceDictionary>
+
+            <ResourceDictionary x:Key="HighContrast">
+                <SolidColorBrush x:Key="MyAcrylicBrush"
+                                 Color="{ThemeResource SystemColorWindowColor}" />
+            </ResourceDictionary>
+
+            <ResourceDictionary x:Key="Light">
+                <AcrylicBrush x:Key="MyAcrylicBrush"
+                              BackgroundSource="HostBackdrop"
+                              TintColor="#FFFF0000"
+                              TintOpacity="0.2"
+                              FallbackColor="#FFFF7F7F" />
+            </ResourceDictionary>
+        </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 
 </Application>
