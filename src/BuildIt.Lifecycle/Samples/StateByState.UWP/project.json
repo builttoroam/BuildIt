@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Autofac": "4.2.1",
+    "Autofac": "4.3.0",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",

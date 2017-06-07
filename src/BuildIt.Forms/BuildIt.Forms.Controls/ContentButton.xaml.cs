@@ -38,6 +38,8 @@ namespace BuildIt.Forms.Controls
 
         private bool IsEntered { get; set; }
         private bool IsPressed { get; set; }
+
+        private bool EnterRequired { get; set; }
         private void OnTouchEffectAction(object sender, object args)
         {
             var touchArgs = args as TouchActionEventArgs;
@@ -45,9 +47,14 @@ namespace BuildIt.Forms.Controls
             switch(touchArgs.Type)
             {
                 case TouchActionType.Entered:
+                    EnterRequired = false;
                     IsEntered = true;
                     break;
                 case TouchActionType.Exited:
+                    if (IsPressed)
+                    {
+                        EnterRequired = true;
+                    }
                     IsEntered = false;
                     break;
                 case TouchActionType.Pressed:
@@ -55,7 +62,7 @@ namespace BuildIt.Forms.Controls
                     break;
                 case TouchActionType.Released:
                     IsPressed = false;
-                    if(IsEntered)
+                    if(IsEntered || !EnterRequired)
                     {
                         Pressed.SafeRaise(this);
                     }
