@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuildIt.forms.Sample.Core.ViewModels;
 using Xamarin.Forms;
 using BuildIt.Forms.Controls;
+using BuildIt.ServiceLocation;
+using BuildIt.States;
 
 namespace BuildIt.Forms.Sample
 {
     public partial class MainPage : ContentPage
     {
+
         public MainPage()
         {
             InitializeComponent();
+
+            BindingContext = new MainViewModel();
 
             //var x = new Label();
             //x.TextColor
@@ -29,13 +35,18 @@ namespace BuildIt.Forms.Sample
 
             //var cv = new ContentView();
             //cv.BackgroundColor;
-        }
 
-        private bool visible = true;
+            VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
+
+          
+        }
+        
+ 
         public void ToggleButtonPressed(object sender, EventArgs e)
         {
-            visible = !visible;
-            VisualStateManager.GoToState(this, visible ? "Show":"Hide");
+            
+            (BindingContext as MainViewModel).SwitchStates();
+            //VisualStateManager.GoToState(this, visible ? "Show":"Hide");
         }
 
         public void ButtonClicked(object sender, EventArgs e)

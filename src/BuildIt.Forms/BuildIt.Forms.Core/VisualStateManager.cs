@@ -51,18 +51,6 @@ namespace BuildIt.Forms.Core
     }
 
 
-    public static class StateManagerHelper
-    {
-        public static async Task GoToVisualState(this IStateManager manager, VisualState state)
-        {
-            //var gts = manager.GetType().GetRuntimeMethod("GoToState", new Type[] { state.StateType.GetType(),typeof(bool) });
-            var gts = manager.GetType().GetTypeInfo().GetDeclaredMethod("GoToState");
-            gts = gts.MakeGenericMethod(state.StateType.GetType());
-            var stateChange = gts.Invoke(manager, new object[] { state.StateType, true }) as Task<bool>;
-            var ok = await stateChange;
-        }
-    }
-
     public class VisualStateManager
     {
         public static Type[] StateTypes = new[] { typeof(_Group0), typeof(_Group1), typeof(_Group2) };
@@ -367,6 +355,44 @@ namespace BuildIt.Forms.Core
         //{
         //    view.SetValue(VisualStateGroupsProperty, value);
         //}
+        public static void Bind(Element element, IStateManager stateManager)
+        {
+            // Retrieve the list of state groups from the ViewModel's StateManager
+            var groups = stateManager.StateGroups;
+            var visualStateManagerGroups = VisualStateManager.GetVisualStateGroups(element);
+
+            // For each group we need to locate the state group in the StateManager
+            // in the xaml and then wire up statechanged event handlers
+            foreach (var group in groups)
+            {
+                var groupName = group.Key.Name; // The state groups are defined by an enum type
+
+                var visualStateGroup = (from vsg in visualStateManagerGroups
+                    where vsg.Name == groupName
+                    select vsg).FirstOrDefault();
+                if (visualStateGroup == null) continue;
+
+
+                var helperType = typeof(StateChangeHelper<>).MakeGenericType(group.Key);
+                var helper = Activator.CreateInstance(helperType, group.Value, element);
+            }
+        }
+
+        private class StateChangeHelper<TState> where TState : struct
+        {
+            private IStateGroup<TState> StateGroup { get; }
+            private Element Element { get; }
+            public StateChangeHelper(IStateGroup<TState> stateGroup, Element element)
+            {
+                StateGroup = stateGroup;
+                Element = element;
+
+                StateGroup.StateChanged += async (s, e) =>
+                {
+                    await VisualStateManager.GoToState(Element, e.State.ToString());
+                };
+            }
+        }
     }
 
     public class VisualStateGroup : List<VisualState>
