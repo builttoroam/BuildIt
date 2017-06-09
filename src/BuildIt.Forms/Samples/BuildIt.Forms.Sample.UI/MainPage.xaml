@@ -7,7 +7,7 @@
              x:Class="BuildIt.Forms.Sample.MainPage">
     <vsm:VisualStateManager.VisualStateGroups>
         <x:Array Type="{x:Type vsm:VisualStateGroup}">
-            <vsm:VisualStateGroup Name="LabelStates">
+            <vsm:VisualStateGroup Name="SampleStates">
                 <vsm:VisualState Name="Show" />
                 <vsm:VisualState Name="Hide">
                     <vsm:VisualState.Setters>
@@ -19,9 +19,10 @@
         </x:Array>
     </vsm:VisualStateManager.VisualStateGroups>
     <Grid>
-        <Grid.Effects>
+        <!-- Acrylic brushes only in Fall Creators Update -->
+        <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush"/>
-        </Grid.Effects>
+        </Grid.Effects>-->
         <StackLayout vsm:Ambient.ForeColor="Blue"
                      Margin="20">
             <Label FontSize="30"

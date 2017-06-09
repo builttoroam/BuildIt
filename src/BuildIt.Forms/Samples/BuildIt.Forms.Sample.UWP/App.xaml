@@ -8,11 +8,14 @@
         <ResourceDictionary>
         <ResourceDictionary.ThemeDictionaries>
             <ResourceDictionary x:Key="Default">
-                <AcrylicBrush x:Key="MyAcrylicBrush"
+                <SolidColorBrush x:Key="MyAcrylicBrush"
+                                 Color="{ThemeResource SystemColorWindowColor}" />
+                <!-- Acrylic brushes only in Fall Creators Update -->
+                    <!--<AcrylicBrush x:Key="MyAcrylicBrush"
                               BackgroundSource="HostBackdrop"
                               TintColor="#FFFF0000"
                               TintOpacity="0.2"
-                              FallbackColor="#FF7F0000" />
+                              FallbackColor="#FF7F0000" />-->
             </ResourceDictionary>
 
             <ResourceDictionary x:Key="HighContrast">
@@ -21,11 +24,14 @@
             </ResourceDictionary>
 
             <ResourceDictionary x:Key="Light">
-                <AcrylicBrush x:Key="MyAcrylicBrush"
+                <SolidColorBrush x:Key="MyAcrylicBrush"
+                                 Color="{ThemeResource SystemColorWindowColor}" />
+                <!-- Acrylic brushes only in Fall Creators Update -->
+                    <!--<AcrylicBrush x:Key="MyAcrylicBrush"
                               BackgroundSource="HostBackdrop"
                               TintColor="#FFFF0000"
                               TintOpacity="0.2"
-                              FallbackColor="#FFFF7F7F" />
+                              FallbackColor="#FFFF7F7F" />-->
             </ResourceDictionary>
         </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
