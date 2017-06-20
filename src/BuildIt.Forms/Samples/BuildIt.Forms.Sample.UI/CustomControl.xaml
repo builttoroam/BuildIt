@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:vsm="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
+             x:Class="BuildIt.Forms.Sample.CustomControl">
+  <ContentView.Content>
+      <StackLayout>
+            <vsm:VisualStateManager.VisualStateGroups>
+                <x:Array Type="{x:Type vsm:VisualStateGroup}">
+                    <vsm:VisualStateGroup Name="SampleStates">
+                        <vsm:VisualState Name="Show" />
+                        <vsm:VisualState Name="Hide">
+                            <vsm:VisualState.Setters>
+                                <vsm:Setter Value="false"
+                                    Target="ControlLabel.IsVisible" />
+                            </vsm:VisualState.Setters>
+                        </vsm:VisualState>
+                    </vsm:VisualStateGroup>
+                </x:Array>
+            </vsm:VisualStateManager.VisualStateGroups>
+            <Label x:Name="ControlLabel" Text="Hello Xamarin.Forms!" />
+            <Button Text="Show" Clicked="ShowClicked"/>
+            <Button Text="Hide" Clicked="HideClicked"/>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

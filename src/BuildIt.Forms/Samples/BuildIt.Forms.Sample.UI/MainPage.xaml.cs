@@ -40,8 +40,15 @@ namespace BuildIt.Forms.Sample
 
           
         }
-        
- 
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Custom.BindVisualStates();
+        }
+
+
         public void ToggleButtonPressed(object sender, EventArgs e)
         {
             

@@ -68,6 +68,12 @@
                     <Label Text="Hello!" />
                 </StackLayout>
             </controls:ContentButton>
+
+            <local:CustomControl x:Name="Custom">
+                <local:CustomControl.Effects>
+                    <controls:BackgroundEffect FallbackColor="Blue"/>
+                </local:CustomControl.Effects>
+            </local:CustomControl>
         </StackLayout>
     </Grid>
 </ContentPage>

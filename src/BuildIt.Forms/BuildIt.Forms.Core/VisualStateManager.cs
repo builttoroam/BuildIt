@@ -361,6 +361,17 @@ namespace BuildIt.Forms.Core
             var groups = stateManager.StateGroups;
             var visualStateManagerGroups = VisualStateManager.GetVisualStateGroups(element);
 
+
+           if (visualStateManagerGroups?.Count==0)
+            {
+                var cvv = element as ContentView;
+                foreach (var child in cvv.Children)
+                {
+                    visualStateManagerGroups = GetVisualStateGroups(child);
+                    if (visualStateManagerGroups?.Count != 0) break;
+                }
+            }
+
             // For each group we need to locate the state group in the StateManager
             // in the xaml and then wire up statechanged event handlers
             foreach (var group in groups)
