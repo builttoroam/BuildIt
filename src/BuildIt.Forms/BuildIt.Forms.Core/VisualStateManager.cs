@@ -268,7 +268,7 @@ namespace BuildIt.Forms.Core
 
 
                 var builderType = typeof(StateValueBuilder<,>).MakeGenericType(setterTarget.GetType(), targetProp.PropertyType);
-                var builder = Activator.CreateInstance(builderType, setterTarget, targetProp, (string)val, converter) as IStateValueBuilder;
+                var builder = Activator.CreateInstance(builderType, setterTarget, targetProp, (string)val, converter, setter.Duration) as IStateValueBuilder;
 
                 values.Add(builder.Value);
 
@@ -288,12 +288,15 @@ namespace BuildIt.Forms.Core
             public string RawValue { get; set; }
             public TypeConverter Converter { get; set; }
 
-            public StateValueBuilder(TElement element, PropertyInfo prop, string value, TypeConverter converter)
+            public int Duration { get; set; }
+
+            public StateValueBuilder(TElement element, PropertyInfo prop, string value, TypeConverter converter, int duration)
             {
                 Element = element;
                 Property = prop;
                 RawValue = value;
                 Converter = converter;
+                Duration = duration;
             }
 
             public IStateValue Value
@@ -309,9 +312,21 @@ namespace BuildIt.Forms.Core
                         if (val is TPropertyValue) return (TPropertyValue)val;
                         return default(TPropertyValue);
                     };
-                    sv.Setter = (element, val) =>
+                    sv.Setter = async (element, val) =>
                       {
-
+                          if (Duration >0)
+                          {
+                              var stepduration = 20.0;
+                              var steps = ((double)Duration / stepduration);
+                              var start = (double)Property.GetValue(element);
+                              var inc = ((double)(object)val - start) / steps;
+                              for (int i = 0; i < steps; i++)
+                              {
+                                  start += inc;
+                                  Property.SetValue(element, start);
+                                  await Task.Delay((int)stepduration);
+                              }
+                          }
                           Property.SetValue(element, val);
                       };
                     if (Converter?.CanConvertFrom(typeof(string)) ?? false)
@@ -459,6 +474,8 @@ namespace BuildIt.Forms.Core
         public string Value { get; set; }
 
         public string Target { get; set; }
+
+        public int Duration { get; set; }
     }
 
     public class Ambient

@@ -16,6 +16,22 @@
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
+            <vsm:VisualStateGroup Name="GridStates">
+                <vsm:VisualState Name="Default">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="100"
+                                    Target="AnimateGrid.HeightRequest" 
+                                    Duration="500"/>
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="DoubleHeight">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="300"
+                                    Target="AnimateGrid.HeightRequest" 
+                                    Duration="3000"/>
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
         </x:Array>
     </vsm:VisualStateManager.VisualStateGroups>
     <Grid>
@@ -31,6 +47,15 @@
             <Label FontSize="30"
                    TextColor="Red"
                    Text="Hello World - Red!" />
+            <Grid HeightRequest="100" WidthRequest="100" x:Name="AnimateGrid" HorizontalOptions="Start">
+                <Grid.Effects>
+                    <controls:BackgroundEffect FallbackColor="Green" />
+                </Grid.Effects>
+            </Grid>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Expand" Clicked="ExpandClicked"/>
+                <Button Text="Default" Clicked="DefaultClicked"/>
+            </StackLayout>
             <Grid Padding="80">
                 <Grid.Effects>
                     <controls:BackgroundEffect FallbackColor="Red" />

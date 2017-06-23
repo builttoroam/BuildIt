@@ -55,7 +55,15 @@ namespace BuildIt.Forms.Sample
             (BindingContext as MainViewModel).SwitchStates();
             //VisualStateManager.GoToState(this, visible ? "Show":"Hide");
         }
+        public void ExpandClicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "DoubleHeight");
+        }
 
+        public void DefaultClicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Default");
+        }
         public void ButtonClicked(object sender, EventArgs e)
         {
             DisabledButton.IsEnabled = !DisabledButton.IsEnabled;
