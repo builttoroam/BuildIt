@@ -8,11 +8,18 @@
     <vsm:VisualStateManager.VisualStateGroups>
         <x:Array Type="{x:Type vsm:VisualStateGroup}">
             <vsm:VisualStateGroup Name="SampleStates">
-                <vsm:VisualState Name="Show" />
+                <vsm:VisualState Name="Show">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="Shown"
+                                Target="StatusLabel.Text" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
                 <vsm:VisualState Name="Hide">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="false"
                                     Target="HelloLabel.IsVisible" />
+                        <vsm:Setter Value="Hidden"
+                                    Target="StatusLabel.Text" />
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
@@ -29,6 +36,7 @@
                    x:Name="HelloLabel"
                    Text="Hello World - Blue!" />
             <Label FontSize="30"
+                   x:Name="StatusLabel"
                    TextColor="Red"
                    Text="Hello World - Red!" />
             <Grid Padding="80">
