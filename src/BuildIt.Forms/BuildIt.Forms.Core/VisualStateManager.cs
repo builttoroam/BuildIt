@@ -249,7 +249,9 @@ namespace BuildIt.Forms.Core
 
                 }
 
-                var targetProp = element.GetType().GetProperty(prop);
+                if (setterTarget == null) continue;
+
+                var targetProp = setterTarget.GetType().GetProperty(prop);
                 var targetType = targetProp.PropertyType;
                 var val = (object)setter.Value;
                 TypeConverter converter = null;
