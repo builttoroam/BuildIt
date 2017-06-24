@@ -30,6 +30,10 @@
                                     Target="AnimateGrid.HeightRequest" 
                                     Duration="500"/>
                     </vsm:VisualState.Setters>
+                    <vsm:VisualState.Animations>
+                        <vsm:RotateAnimation Rotation="0" Duration="500" Target="AnimateGrid"/>
+                        <vsm:FadeAnimation Opacity="1" Duration="500" Target="AnimateGrid"/>
+                    </vsm:VisualState.Animations>
                 </vsm:VisualState>
                 <vsm:VisualState Name="DoubleHeight">
                     <vsm:VisualState.Setters>
@@ -37,6 +41,11 @@
                                     Target="AnimateGrid.HeightRequest" 
                                     Duration="3000"/>
                     </vsm:VisualState.Setters>
+                    <vsm:VisualState.Animations>
+                        <vsm:RotateAnimation Rotation="135" Duration="2000" Target="AnimateGrid"/>
+                        <vsm:FadeAnimation Opacity="0.5" Duration="500" Target="AnimateGrid"/>
+                        <vsm:TranslateAnimation TranslationX="200" Duration="500" Target="AnimateGrid"/>
+                    </vsm:VisualState.Animations>
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
         </x:Array>

@@ -223,35 +223,58 @@ namespace BuildIt.Forms.Core
 
                 BuildStateSetters(vstate, view as Element, values);
 
+                var animationFunction = BuildAnimations(vstate, view as Element);
+                if(animationFunction!=null)
+                {
+                    var changingTo = stateDef.GetType().GetProperty("ChangedTo");
+                    changingTo.SetValue(stateDef, animationFunction);
+                }
             }
         }
+        private static Func<Task> BuildAnimations(VisualState state, Element element)
+        {
+            return new Func<Task>(() =>
+            {
+                var tasks = new List<Task>();
 
-        private static void BuildStateSetters(VisualState state, Element element, IList<IStateValue> values)
+                foreach (var animation in state.Animations)
+                {
+                    var target = element.FindByTarget(animation);
+                    var animateTask = animation.Animate(target.Item1 as VisualElement);
+                    tasks.Add(animateTask);
+                }
+
+                return Task.WhenAll(tasks);
+            });
+        }
+
+            private static void BuildStateSetters(VisualState state, Element element, IList<IStateValue> values)
         {
             foreach (var setter in state.Setters)
             {
-                var target = setter.Target.Split('.');
-                var name = target.FirstOrDefault();
-                var prop = target.Skip(1).FirstOrDefault();
-                var setterTarget = element.FindByName<Element>(name);
-                if (setterTarget == null)
-                {
-                    var cv = element as ContentView;
-                    if (cv == null) return;
-                    foreach (var child in cv.Children)
-                    {
-                        setterTarget = child.FindByName<Element>(name);
-                        if (setterTarget != null)
-                        {
-                            break;
-                        }
-                    }
+                var target = element.FindByTarget(setter);
+                //var target = setter.Target.Split('.');
+                //var name = target.FirstOrDefault();
+                //var prop = target.Skip(1).FirstOrDefault();
+                //var setterTarget = element.FindByName<Element>(name);
+                //if (setterTarget == null)
+                //{
+                //    var cv = element as ContentView;
+                //    if (cv == null) return;
+                //    foreach (var child in cv.Children)
+                //    {
+                //        setterTarget = child.FindByName<Element>(name);
+                //        if (setterTarget != null)
+                //        {
+                //            break;
+                //        }
+                //    }
 
-                }
+                //}
 
-                if (setterTarget == null) continue;
-
-                var targetProp = setterTarget.GetType().GetProperty(prop);
+                if (target == null) continue;
+                var setterTarget = target.Item1;
+                var targetProp = target.Item2;//.GetType().GetProperty(prop);
                 var targetType = targetProp.PropertyType;
                 var val = (object)setter.Value;
                 TypeConverter converter = null;
@@ -318,15 +341,20 @@ namespace BuildIt.Forms.Core
                       {
                           if (Duration >0)
                           {
-                              var stepduration = 20.0;
-                              var steps = ((double)Duration / stepduration);
-                              var start = (double)Property.GetValue(element);
-                              var inc = ((double)(object)val - start) / steps;
-                              for (int i = 0; i < steps; i++)
+                              var startTime = DateTime.Now;
+                              var endTime = startTime.AddMilliseconds(Duration);
+                              var stepduration = 1000.0/60.0; // ~60 frames per sec
+                              var current = (double)Property.GetValue(element);
+                              var end = (double)(object)val;
+                              while(startTime<endTime)
                               {
-                                  start += inc;
-                                  Property.SetValue(element, start);
+                                  var remainingSteps = endTime.Subtract(startTime).TotalMilliseconds / stepduration;
+                                  if (remainingSteps <= 0) break;
+                                  var inc = (end- current) / remainingSteps;
+                                  current += inc;
+                                  Property.SetValue(element, current);
                                   await Task.Delay((int)stepduration);
+                                  startTime = DateTime.Now;
                               }
                           }
                           Property.SetValue(element, val);
@@ -423,6 +451,36 @@ namespace BuildIt.Forms.Core
         }
     }
 
+    public static class ElementHelper
+    {
+        public static Tuple<Element, PropertyInfo> FindByTarget(this Element element, TargettedStateAction setter)
+        {
+            //var setterTarget
+            var target = setter.Target.Split('.');
+            var name = target.FirstOrDefault();
+            var prop = target.Skip(1).FirstOrDefault();
+            var setterTarget = element.FindByName<Element>(name);
+            if (setterTarget == null)
+            {
+                var cv = element as ContentView;
+                if (cv != null)
+                {
+                    foreach (var child in cv.Children)
+                    {
+                        setterTarget = child.FindByName<Element>(name);
+                        if (setterTarget != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            var targetProp = prop!=null?setterTarget?.GetType()?.GetProperty(prop):null;
+            if (setterTarget == null) return null;
+            return new Tuple<Element, PropertyInfo>(setterTarget,targetProp);
+        }
+    }
+
     public class VisualStateGroup : List<VisualState>
     {
         // TODO: Fix so we don't need to track the type used in the state manager
@@ -450,7 +508,21 @@ namespace BuildIt.Forms.Core
         public string Name { get; set; }
         public static readonly BindableProperty SettersProperty =
              BindableProperty.CreateAttached("Setters", typeof(IList<Setter>),
-                 typeof(VisualStateManager), null, BindingMode.OneWayToSource, null, SettersChanged, null, null, CreateDefaultValue);
+                 typeof(VisualState), null, BindingMode.OneWayToSource, null, SettersChanged, null, null, CreateDefaultValue);
+
+
+
+        public IList<StateAnimation> Animations
+        {
+            get { return (IList<StateAnimation>)GetValue(AnimationsProperty); }
+            set { SetValue(AnimationsProperty, value); }
+        }
+
+        public static readonly BindableProperty AnimationsProperty =
+             BindableProperty.CreateAttached("Animations", typeof(IList<StateAnimation>),
+                 typeof(VisualState), null, BindingMode.OneWayToSource, null, null, null, null, CreateDefaultAnimations);
+
+
 
         private static void SettersChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -462,6 +534,10 @@ namespace BuildIt.Forms.Core
             return new List<Setter>();
         }
 
+        private static object CreateDefaultAnimations(BindableObject bindable)
+        {
+            return new List<StateAnimation>();
+        }
         public IList<Setter> Setters
         {
             get
@@ -469,12 +545,104 @@ namespace BuildIt.Forms.Core
                 return (IList<Setter>)base.GetValue(VisualState.SettersProperty);
             }
         }
+
+
     }
 
-    public class Setter
+    public class RotateAnimation:StateAnimation
+    {
+        public double Rotation { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.RotateTo(Rotation, (uint)Duration);
+        }
+    }
+
+    public class TranslateAnimation : StateAnimation
+    {
+        public double TranslationX { get; set; }
+        public double TranslationY { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.TranslateTo(TranslationX,TranslationY, (uint)Duration);
+        }
+    }
+
+    public class ScaleAnimation : StateAnimation
+    {
+        public double Scale { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.ScaleTo(Scale, (uint)Duration);
+        }
+    }
+    public class IncrementRotateAnimation : StateAnimation
+    {
+        public double Rotation { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.RelRotateTo(Rotation, (uint)Duration);
+        }
+    }
+
+    public class IncrementScaleAnimation : StateAnimation
+    {
+        public double Scale { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.RelScaleTo(Scale, (uint)Duration);
+        }
+    }
+
+
+    public class RotateYAnimation : StateAnimation
+    {
+        public double Rotation { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.RotateYTo(Rotation, (uint)Duration);
+        }
+    }
+    public class RotateXAnimation : StateAnimation
+    {
+        public double Rotation { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.RotateXTo(Rotation, (uint)Duration);
+        }
+    }
+
+    public class FadeAnimation : StateAnimation
+    {
+        public double Opacity { get; set; }
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+            return visualElement.FadeTo(Opacity, (uint)Duration);
+        }
+    }
+
+    public abstract class StateAnimation : TargettedStateAction
+    {
+        public abstract Task Animate(VisualElement visualElement);
+    }
+
+    public class Setter: TargettedStateAction
     {
         public string Value { get; set; }
 
+        
+    }
+
+    public class TargettedStateAction
+    {
         public string Target { get; set; }
 
         public int Duration { get; set; }
