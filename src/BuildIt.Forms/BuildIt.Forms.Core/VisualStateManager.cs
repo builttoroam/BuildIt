@@ -224,7 +224,7 @@ namespace BuildIt.Forms.Core
                 BuildStateSetters(vstate, view as Element, values);
 
                 var animationFunction = BuildAnimations(vstate, view as Element);
-                if(animationFunction!=null)
+                if (animationFunction != null)
                 {
                     var changingTo = stateDef.GetType().GetProperty("ChangedTo");
                     changingTo.SetValue(stateDef, animationFunction);
@@ -240,7 +240,8 @@ namespace BuildIt.Forms.Core
                 foreach (var animation in state.Animations)
                 {
                     var target = element.FindByTarget(animation);
-                    var animateTask = animation.Animate(target.Item1 as VisualElement);
+                    var tg = target?.Item1 as VisualElement;
+                    var animateTask = animation.Animate(tg ?? (element as VisualElement));
                     tasks.Add(animateTask);
                 }
 
@@ -248,7 +249,7 @@ namespace BuildIt.Forms.Core
             });
         }
 
-            private static void BuildStateSetters(VisualState state, Element element, IList<IStateValue> values)
+        private static void BuildStateSetters(VisualState state, Element element, IList<IStateValue> values)
         {
             foreach (var setter in state.Setters)
             {
@@ -339,18 +340,18 @@ namespace BuildIt.Forms.Core
                     };
                     sv.Setter = async (element, val) =>
                       {
-                          if (Duration >0)
+                          if (Duration > 0)
                           {
                               var startTime = DateTime.Now;
                               var endTime = startTime.AddMilliseconds(Duration);
-                              var stepduration = 1000.0/60.0; // ~60 frames per sec
+                              var stepduration = 1000.0 / 60.0; // ~60 frames per sec
                               var current = (double)Property.GetValue(element);
                               var end = (double)(object)val;
-                              while(startTime<endTime)
+                              while (startTime < endTime)
                               {
                                   var remainingSteps = endTime.Subtract(startTime).TotalMilliseconds / stepduration;
                                   if (remainingSteps <= 0) break;
-                                  var inc = (end- current) / remainingSteps;
+                                  var inc = (end - current) / remainingSteps;
                                   current += inc;
                                   Property.SetValue(element, current);
                                   await Task.Delay((int)stepduration);
@@ -407,7 +408,7 @@ namespace BuildIt.Forms.Core
             var visualStateManagerGroups = VisualStateManager.GetVisualStateGroups(element);
 
 
-           if (visualStateManagerGroups?.Count==0)
+            if (visualStateManagerGroups?.Count == 0)
             {
                 var cvv = element as ContentView;
                 foreach (var child in cvv.Children)
@@ -424,8 +425,8 @@ namespace BuildIt.Forms.Core
                 var groupName = group.Key.Name; // The state groups are defined by an enum type
 
                 var visualStateGroup = (from vsg in visualStateManagerGroups
-                    where vsg.Name == groupName
-                    select vsg).FirstOrDefault();
+                                        where vsg.Name == groupName
+                                        select vsg).FirstOrDefault();
                 if (visualStateGroup == null) continue;
 
 
@@ -455,6 +456,7 @@ namespace BuildIt.Forms.Core
     {
         public static Tuple<Element, PropertyInfo> FindByTarget(this Element element, TargettedStateAction setter)
         {
+            if (string.IsNullOrWhiteSpace(setter?.Target)) return null;
             //var setterTarget
             var target = setter.Target.Split('.');
             var name = target.FirstOrDefault();
@@ -475,9 +477,9 @@ namespace BuildIt.Forms.Core
                     }
                 }
             }
-            var targetProp = prop!=null?setterTarget?.GetType()?.GetProperty(prop):null;
+            var targetProp = prop != null ? setterTarget?.GetType()?.GetProperty(prop) : null;
             if (setterTarget == null) return null;
-            return new Tuple<Element, PropertyInfo>(setterTarget,targetProp);
+            return new Tuple<Element, PropertyInfo>(setterTarget, targetProp);
         }
     }
 
@@ -549,7 +551,7 @@ namespace BuildIt.Forms.Core
 
     }
 
-    public class RotateAnimation:StateAnimation
+    public class RotateAnimation : StateAnimation
     {
         public double Rotation { get; set; }
         public override Task Animate(VisualElement visualElement)
@@ -566,7 +568,7 @@ namespace BuildIt.Forms.Core
         public override Task Animate(VisualElement visualElement)
         {
             if (visualElement == null) return null;
-            return visualElement.TranslateTo(TranslationX,TranslationY, (uint)Duration);
+            return visualElement.TranslateTo(TranslationX, TranslationY, (uint)Duration);
         }
     }
 
@@ -629,16 +631,54 @@ namespace BuildIt.Forms.Core
         }
     }
 
+    public class SequenceAnimation : MultiAnimation
+    {
+        public override async Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return;
+
+
+
+            foreach (var anim in Animations)
+            {
+                var target = visualElement.FindByTarget(anim);
+                var tg = target?.Item1 as VisualElement;
+                await anim.Animate(tg ?? (visualElement as VisualElement));
+            }
+        }
+    }
+
+    public class ParallelAnimation : MultiAnimation
+    {
+        public override Task Animate(VisualElement visualElement)
+        {
+            if (visualElement == null) return null;
+
+
+            var tasks = (from anim in Animations
+                         let target = visualElement.FindByTarget(anim)
+                         let tg = target?.Item1 as VisualElement
+                         select anim.Animate(tg ?? (visualElement as VisualElement)));
+            return Task.WhenAll(tasks);
+        }
+    }
+
+    [ContentProperty("Animations")]
+    public abstract class MultiAnimation : StateAnimation
+    {
+        public List<StateAnimation> Animations { get; } = new List<StateAnimation>();
+    }
+
     public abstract class StateAnimation : TargettedStateAction
     {
         public abstract Task Animate(VisualElement visualElement);
     }
 
-    public class Setter: TargettedStateAction
+    public class Setter : TargettedStateAction
     {
         public string Value { get; set; }
 
-        
+
     }
 
     public class TargettedStateAction
@@ -680,7 +720,7 @@ namespace BuildIt.Forms.Core
                 if (prop != null)
                 {
                     var currentVal = bindable.GetValue(prop);
-                    if (currentVal == null || (Color)currentVal==default(Color))
+                    if (currentVal == null || (Color)currentVal == default(Color))
                     {
                         bindable.SetValue(prop, foreColor);
                     }

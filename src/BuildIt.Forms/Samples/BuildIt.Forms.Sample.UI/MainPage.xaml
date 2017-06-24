@@ -42,9 +42,16 @@
                                     Duration="3000"/>
                     </vsm:VisualState.Setters>
                     <vsm:VisualState.Animations>
-                        <vsm:RotateAnimation Rotation="135" Duration="2000" Target="AnimateGrid"/>
-                        <vsm:FadeAnimation Opacity="0.5" Duration="500" Target="AnimateGrid"/>
-                        <vsm:TranslateAnimation TranslationX="200" Duration="500" Target="AnimateGrid"/>
+                        <vsm:ParallelAnimation>
+                            <vsm:TranslateAnimation TranslationX="200" Duration="3000" Target="AnimateGrid"/>
+                            <vsm:FadeAnimation Opacity="0.2" Duration="750" Target="AnimateGrid"/>
+                            <vsm:SequenceAnimation>
+                                <vsm:RotateAnimation Rotation="135" Duration="750" Target="AnimateGrid"/>
+                                <vsm:RotateAnimation Rotation="0" Duration="750" Target="AnimateGrid"/>
+                                <vsm:RotateAnimation Rotation="135" Duration="750" Target="AnimateGrid"/>
+                                <vsm:RotateAnimation Rotation="0" Duration="750" Target="AnimateGrid"/>
+                            </vsm:SequenceAnimation>
+                        </vsm:ParallelAnimation>
                     </vsm:VisualState.Animations>
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
