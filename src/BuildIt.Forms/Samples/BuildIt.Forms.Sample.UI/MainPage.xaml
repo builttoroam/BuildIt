@@ -64,16 +64,42 @@
         </Grid.Effects>-->
         <StackLayout vsm:Ambient.ForeColor="Blue"
                      Margin="20">
-            <Label FontSize="30"
+            <Grid HeightRequest="200" BackgroundColor="Pink">
+                <!--<Grid.Effects>
+                    <controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />
+                </Grid.Effects>-->
+                <Label FontSize="30"
                    x:Name="HelloLabel"
-                   Text="Hello World - Blue!" />
+                   Text="Hello World - Blue! &#xF04B;"
+                       controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"
+                       >
+                <!--<Label.Effects>
+                    <controls:BackgroundEffect FallbackColor="Pink" />-->
+                    <!--<controls:FontEffect />-->
+                    <!--FontName="fontawesome-webfont.ttf#FontAwesome" />-->
+                    <!--controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"-->
+
+                <!--</Label.Effects>-->
+                <!--<Label.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.iOS>FontAwesome</OnPlatform.iOS>
+                        <OnPlatform.Android></OnPlatform.Android>
+                        <OnPlatform.WinPhone>/Assets/Fonts/fontawesome-webfont.ttf#FontAwesome</OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Label.FontFamily>-->
+            </Label>
+            </Grid>
+
             <Label FontSize="30"
                    x:Name="StatusLabel"
                    TextColor="Red"
                    Text="Hello World - Red!" />
+           
+
             <Grid HeightRequest="100" WidthRequest="100" x:Name="AnimateGrid" HorizontalOptions="Start">
                 <Grid.Effects>
-                    <controls:BackgroundEffect FallbackColor="Green" />
+                    <!--<controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />-->
+                    <!--<controls:BackgroundEffect FallbackColor="Green" />-->
                 </Grid.Effects>
             </Grid>
             <StackLayout Orientation="Horizontal">
@@ -82,7 +108,7 @@
             </StackLayout>
             <Grid Padding="80">
                 <Grid.Effects>
-                    <controls:BackgroundEffect FallbackColor="Red" />
+                    <!--<controls:BackgroundEffect FallbackColor="Red" />-->
                 </Grid.Effects>
                 <Button Text="Hello World!"
                         Clicked="ButtonClicked"
@@ -120,7 +146,7 @@
 
             <local:CustomControl x:Name="Custom">
                 <local:CustomControl.Effects>
-                    <controls:BackgroundEffect FallbackColor="Blue"/>
+                    <!--<controls:BackgroundEffect FallbackColor="Blue"/>-->
                 </local:CustomControl.Effects>
             </local:CustomControl>
         </StackLayout>

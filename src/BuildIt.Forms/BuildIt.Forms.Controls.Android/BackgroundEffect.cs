@@ -6,7 +6,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.Droid.BackgroundEffect), "BackgroundEffect")]
-
 namespace BuildIt.Forms.Controls.Droid
 {
     public class BackgroundEffect : PlatformEffect

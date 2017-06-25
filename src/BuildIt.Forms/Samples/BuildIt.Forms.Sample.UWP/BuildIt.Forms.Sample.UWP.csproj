@@ -102,6 +102,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="BuildIt.Forms.Sample.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

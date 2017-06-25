@@ -20,6 +20,10 @@
       <string>UIInterfaceOrientationLandscapeLeft</string>
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>UIAppFonts</key>
+    <array>
+      <string>Fonts/fontawesome-webfont.ttf</string>
+    </array>
     <key>MinimumOSVersion</key>
     <string>8.0</string>
     <key>CFBundleDisplayName</key>
