@@ -132,6 +132,7 @@
             </controls:ContentButton>
             <controls:ContentButton VerticalOptions="Center"
                                     x:Name="DisabledButton"
+                                    Command="{Binding PressedCommand}"
                                     HorizontalOptions="Center">
 
                 <StackLayout>
