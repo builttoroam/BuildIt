@@ -1,17 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
-
-
-
-    public class StateDefinition<TState> : IStateDefinition<TState>
-        where TState : struct
+    public class StateDefinition : IStateDefinition
     {
-        public TState State { get; set; }
+        public virtual string StateName { get; }
 
         public IList<IStateTrigger> Triggers { get; }  = new List<IStateTrigger>();
 
@@ -20,8 +16,18 @@ namespace BuildIt.States
         public Func<Task> ChangedTo { get; set; }
 
         public Func<string, Task> ChangedToWithJsonData { get; set; }
-
+        
         public IList<IStateValue> Values { get; } = new List<IStateValue>();
+
+        protected StateDefinition()
+        {
+            
+        }
+        public StateDefinition(string stateName)
+        {
+            StateName = stateName;
+        }
+
 
         public void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
         {

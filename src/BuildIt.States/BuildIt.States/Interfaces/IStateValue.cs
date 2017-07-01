@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BuildIt.States
+namespace BuildIt.States.Interfaces
 {
     public interface IStateValue
     {

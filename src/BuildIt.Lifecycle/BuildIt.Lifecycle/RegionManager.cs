@@ -1,5 +1,4 @@
 using BuildIt.ServiceLocation;
-using BuildIt.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,9 +38,10 @@ namespace BuildIt.Lifecycle
             return region == PrimaryRegion;
         }
 
-        public void RegisterDependencies(IDependencyContainer container)
+        public void RegisterDependencies(BuildIt.States.IDependencyContainer container)
         {
-            DependencyContainer = container;
+            // TODO: Fix this to remove ref to BuildIt.States.IDepedencyContainer
+            //DependencyContainer = container;
             //var cb = new ContainerBuilder();
             container.StartUpdate();
             foreach (var state in RegionTypes)
@@ -65,7 +65,8 @@ namespace BuildIt.Lifecycle
             //}
 
             "Registering dependencies".Log();
-            (vm as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+            // TODO: Fix when removing BuildIT.States.IDependencyContainer
+            //(vm as BuildIt.States.IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
 
             vm.RegionId = Guid.NewGuid().ToString();
 

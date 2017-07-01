@@ -1,6 +1,6 @@
 using System;
 
-namespace BuildIt.States
+namespace BuildIt.States.Interfaces
 {
     public interface IIsAbleToBeBlocked
     {

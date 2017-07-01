@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
@@ -14,7 +15,12 @@ namespace BuildIt.States
 
         public IReadOnlyDictionary<Type, IStateGroup> StateGroups => stateGroups;
 
-        public void AddStateGroup<TState>(IStateGroup<TState> group)
+        public IEnumStateGroup<TState> EnumStateGroup<TState>() where TState:struct
+        {
+            return StateGroups.SafeValue(typeof(TState)) as IEnumStateGroup<TState>;
+        }
+
+        public void AddStateGroup<TState>(IEnumStateGroup<TState> group)
             where TState : struct
         {
             AddStateGroup(typeof(TState), group);
@@ -34,15 +40,15 @@ namespace BuildIt.States
         public TState CurrentState<TState>()
             where TState : struct
         {
-            var group = StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
+            var group = StateGroups.SafeValue(typeof(TState)) as IEnumStateGroup<TState>;
             if (group == null) return default(TState);
-            return group.CurrentState;
+            return group.CurrentEnumState;
         }
 
         public async Task<bool> GoToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
-            var group = StateGroups.SafeValue(typeof(TState));
+            var group = EnumStateGroup<TState>();//StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeTo(state, animate);
         }
@@ -50,13 +56,13 @@ namespace BuildIt.States
         public async Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
            where TState : struct
         {
-            var group = StateGroups.SafeValue(typeof(TState));
+            var group = EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeToWithData(state, data, animate);
         }
         public async Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
         {
-            var group = StateGroups.SafeValue(typeof(TState));
+            var group = EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeBackTo(state, animate);
         }
@@ -122,23 +128,6 @@ namespace BuildIt.States
             }
         }
 
-        //public void RegisterDependencies(IContainer container)
-        //{
-        //    foreach (var stateGroup in StateGroups)
-        //    {
-        //        (stateGroup.Value as ICanRegisterDependencies)?.RegisterDependencies(container);
-        //    }
-        //}
-
-        //public IUIExecutionContext UIContext { get; set; } 
-        //public virtual void RegisterForUIAccess(IUIExecutionContext context)
-        //{
-        //    UIContext = context;
-
-        //    foreach (var stateGroup in StateGroups)
-        //    {
-        //        (stateGroup.Value as IRegisterForUIAccess)?.RegisterForUIAccess(context);
-        //    }
-        //}
+       
     }
 }

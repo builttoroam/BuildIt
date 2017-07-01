@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using BuildIt.Lifecycle.States;
-using BuildIt.States;
+using BuildIt.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
@@ -40,8 +40,9 @@ namespace BuildIt.Lifecycle
         protected override async Task BuildCoreDependencies(IDependencyContainer container)
         {
             await base.BuildCoreDependencies(container);
-
-            RegionManager?.RegisterDependencies(container);
+            
+            // TODO: Fix when removing BuildIt.States.IDependencyContainer
+            //RegionManager?.RegisterDependencies(container);
         }
     }
 }

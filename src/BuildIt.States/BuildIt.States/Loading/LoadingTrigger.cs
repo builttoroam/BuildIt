@@ -1,4 +1,5 @@
 ﻿using System;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States.Loading
 {

@@ -9,6 +9,7 @@ using BuildIt.Autofac;
 using BuildIt.Lifecycle;
 using BuildIt.ServiceLocation;
 using BuildIt.States.Completion;
+using BuildIt.States.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BuildIt.States.Tests

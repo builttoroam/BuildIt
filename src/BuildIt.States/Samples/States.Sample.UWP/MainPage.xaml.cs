@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 using States.Sample.Core;
 using BuildIt.States.UWP;
 

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using BuildIt.States.Completion;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
@@ -16,13 +17,13 @@ namespace BuildIt.States
     public interface IStateGroupBuilder<TState> : IStateBuilder
         where TState : struct
     {
-        IStateGroup<TState> StateGroup { get; }
+        IEnumStateGroup<TState> StateGroup { get; }
     }
 
     public interface IStateDefinitionBuilder<TState> : IStateGroupBuilder<TState>
     where TState : struct
     {
-        IStateDefinition<TState> State { get; }
+        IEnumStateDefinition<TState> State { get; }
     }
 
 
@@ -144,14 +145,14 @@ where TState : struct
         private class StateGroupBuilder<TState> : StateBuilder, IStateGroupBuilder<TState>
             where TState : struct
         {
-            public IStateGroup<TState> StateGroup { get; set; }
+            public IEnumStateGroup<TState> StateGroup { get; set; }
 
         }
 
         private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>
             where TState : struct
         {
-            public IStateDefinition<TState> State { get; set; }
+            public IEnumStateDefinition<TState> State { get; set; }
 
         }
 
@@ -160,7 +161,7 @@ where TState : struct
             where TData : INotifyPropertyChanged
            where TState : struct
         {
-            public IStateDefinition<TState> State { get; set; }
+            public IEnumStateDefinition<TState> State { get; set; }
             public IStateDefinitionTypedDataWrapper<TData> StateDataWrapper
             => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TData>;
         }
@@ -655,10 +656,10 @@ where TStateData : INotifyPropertyChanged
         {
             if (vsm == null) return null;
 
-            var existing = vsm.StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
+            var existing = vsm.EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (existing == null)
             {
-                existing = new StateGroup<TState>();
+                existing = new EnumStateGroup<TState>();
                 vsm?.AddStateGroup(existing);
             }
 
@@ -732,7 +733,7 @@ where TStateData : INotifyPropertyChanged
         {
             if (vsmGroup == null) return null;
             //var vs = new StateDefinition<TState> { State = state };
-            var vs = vsmGroup.StateGroup.DefineState(state);
+            var vs = vsmGroup.StateGroup.DefineEnumState(state);
             if (vs == null) return null;
             return new StateDefinitionBuilder<TState>
             {
@@ -1358,12 +1359,12 @@ where TStateData : INotifyPropertyChanged
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            var vms = smInfo.StateGroup.DefineStateWithData<TStateData>(state);
+            var vms = smInfo.StateGroup.DefineEnumStateWithData<TStateData>(state);
             return new StateDefinitionWithDataBuilder<TState, TStateData>
             {
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
-                State = vms.State
+                State = vms.EnumState
             };
         }
 

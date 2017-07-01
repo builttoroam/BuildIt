@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BuildIt;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace States.Sample.Core
 {

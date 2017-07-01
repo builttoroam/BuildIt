@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BuildIt.States
+namespace BuildIt.States.Interfaces
 {
     public interface IStateManager//:IRegisterForUIAccess
     {
@@ -10,8 +10,9 @@ namespace BuildIt.States
 
         IReadOnlyDictionary<Type, IStateGroup> StateGroups { get; }
 
+        IEnumStateGroup<TState> EnumStateGroup<TState>() where TState : struct;
 
-        void AddStateGroup<TState>(IStateGroup<TState> group)
+        void AddStateGroup<TState>(IEnumStateGroup<TState> group)
             where TState : struct;
 
         void AddStateGroup(Type state, IStateGroup group);

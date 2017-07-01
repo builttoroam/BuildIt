@@ -13,13 +13,13 @@
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="Autofac" version="4.3.0" />
-      <dependency id="BuildIt.Autofac" version="1.0.0.44" />
-      <dependency id="BuildIt.General" version="1.0.0.41" />
+      <dependency id="Autofac" version="4.6.0" />
+      <dependency id="BuildIt.Autofac" version="1.0.0.107-beta" />
+      <dependency id="BuildIt.General" version="1.0.0.106-beta" />
       <dependency id="BuildIt.States" version="1.0.0.41" />
       <dependency id="BuildIt.Lifecycle" version="$version$" />
       <dependency id="NETStandard.Library" version="1.6.1" />
-      <dependency id="Newtonsoft.Json" version="9.0.1" />
+      <dependency id="Newtonsoft.Json" version="10.0.3" />
     </dependencies>
   </metadata>
   <files>
