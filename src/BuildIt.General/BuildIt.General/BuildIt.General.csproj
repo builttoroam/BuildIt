@@ -1,102 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildIt</RootNamespace>
+    <TargetFramework>netstandard1.0</TargetFramework>
     <AssemblyName>BuildIt.General</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <TargetFrameworkMonikerAssemblyAttributesPath>$(IntermediateOutputPath)AssemblyTFMAttribute.cs.exclude</TargetFrameworkMonikerAssemblyAttributesPath>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <PackageId>BuildIt.General</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\BuildIt.General.XML</DocumentationFile>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="BaseConfiguration.cs" />
-    <Compile Include="BasicDebugLogger.cs" />
-    <Compile Include="CancelEventArgs.cs" />
-    <Compile Include="ConfigurationManager.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="DisplayNameAttribute.cs" />
-    <Compile Include="DualParameterEventArgs.cs" />
-    <Compile Include="EnumExtensions.cs" />
-    <Compile Include="IConfigurationManager.cs" />
-    <Compile Include="ILogService.cs" />
-    <None Include="app.config" />
-    <Compile Include="IUIExecutionContext.cs" />
-    <Compile Include="LogHelper.cs" />
-    <Compile Include="NotifyBase.cs" />
-    <Compile Include="ParameterEventArgs.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceLocation\ActivationException.cs" />
-    <Compile Include="ServiceLocation\IDependencyContainer.cs" />
-    <Compile Include="ServiceLocation\IServiceLocator.cs" />
-    <Compile Include="ServiceLocation\ServiceLocator.cs" />
-    <Compile Include="ServiceLocation\ServiceLocatorImplBase.cs" />
-    <Compile Include="ServiceLocation\ServiceLocatorProvider.cs" />
-    <Compile Include="TripleParameterEventArgs.cs" />
-    <Compile Include="TupleHelpers.cs" />
-    <Compile Include="TypeRef.cs" />
-    <Compile Include="UIContext.cs" />
-    <Compile Include="Utilities.cs" />
-    <None Include="project.json" />
+    <None Remove="AssemblyTFMAttribute.cs.exclude" />
   </ItemGroup>
-  <Import Project="..\..\BuildIt.Shared\BuildIt.Shared.projitems" Label="Shared" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Target Name="_SetTargetFrameworkMonikerAttribute" BeforeTargets="GenerateTargetFrameworkMonikerAttribute">
-    <PropertyGroup>
-      <RealTargetFrameworkMoniker>.NETStandard,Version=v1.0</RealTargetFrameworkMoniker>
-      <RealTargetFrameworkMonikerDisplayName>$(RealTargetFrameworkMoniker)</RealTargetFrameworkMonikerDisplayName>
-      <TargetFrameworkMonikerAssemblyAttributeText Condition="'$(RealTargetFrameworkMoniker)' != '' and '$(TargetingClr2Framework)' != 'true'">
-        // &lt;autogenerated /&gt;
-        using System%3b
-        using System.Reflection%3b
-        [assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute("$(RealTargetFrameworkMoniker)", FrameworkDisplayName = "$(RealTargetFrameworkMonikerDisplayName)")]
-      </TargetFrameworkMonikerAssemblyAttributeText>
-    </PropertyGroup>
-  </Target>
+
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
 </Project>
