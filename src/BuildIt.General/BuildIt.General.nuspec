@@ -24,9 +24,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.General\bin\Release\BuildIt.General.dll" target="lib\netstandard1.0" />
-    <file src="BuildIt.General\bin\Release\BuildIt.General.pdb" target="lib\netstandard1.0" />
-    <file src="BuildIt.General\bin\Release\BuildIt.General.xml" target="lib\netstandard1.0" />
+    <file src="BuildIt.General\bin\Release\netstandard1.0\BuildIt.General.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.General\bin\Release\netstandard1.0\BuildIt.General.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.General\bin\Release\netstandard1.0\BuildIt.General.xml" target="lib\netstandard1.0" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.xml" target="lib\uap10" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.pdb" target="lib\uap10" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.dll" target="lib\uap10" />
