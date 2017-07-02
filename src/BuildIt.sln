@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4DD5348-6D07-4E61-8974-61C57A54DEC5}"
 	ProjectSection(SolutionItems) = preProject
@@ -206,41 +206,20 @@ Global
 		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{09abb880-ec6e-4a33-8c13-88ae55ca241c}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{0ca149fa-2055-4541-b45b-cdb6c09c51ea}*SharedItemsImports = 4
-		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{10302641-3597-4ef0-b6da-17bc44aad9fe}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{14cfc26f-525e-4c98-9c03-9b00d2832a15}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{27622a0a-9c78-43ed-89a5-98215100e054}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{29ea096d-df83-484e-99a3-8c74ba10e65c}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
-		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{2b0f08a9-a48c-476e-8ea9-cf4a36dded90}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{323a1445-e918-44fc-9c1d-82c1b9de0ad6}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{35814764-6e47-4b95-ae23-7314ef61884b}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{3d0998fa-f218-4674-9d94-4bc34d00848b}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{4e3502a3-129f-4679-a41b-f51f0dcfc2e7}*SharedItemsImports = 4
-		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{5d1d9d09-fe4b-4896-85b5-290a6ac9b677}*SharedItemsImports = 13
-		BuildIt.Shared\BuildIt.Shared.projitems*{5d71e1b4-2ffd-4962-a5a7-11ae20d1652b}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
 		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{77561504-0981-43b2-8f21-b52e8c358bf5}*SharedItemsImports = 4
-		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{7cff52a4-ad28-48b6-a73f-233d9cc002f2}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
-		BuildIt.Shared\BuildIt.Shared.projitems*{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}*SharedItemsImports = 4
 		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
-		BuildIt.Shared\BuildIt.Shared.projitems*{a389e82d-d221-4280-8df3-306923a07410}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
-		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{c5f40178-c571-4212-9c23-b8fdc3784356}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{cffd31ad-1805-4031-a86d-da41af2f7ed2}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{d9058653-4416-4a9b-9fcd-1a2c805629ba}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{e0e6a925-bc0c-4163-906b-46cc92d30f74}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{ee72434b-cb9d-41f4-b6b7-3bb60b2e7218}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1415,5 +1394,8 @@ Global
 		{77561504-0981-43B2-8F21-B52E8C358BF5} = {24BAD8E5-2D54-4E40-8D2C-9F9906E8424B}
 		{3D0998FA-F218-4674-9D94-4BC34D00848B} = {24BAD8E5-2D54-4E40-8D2C-9F9906E8424B}
 		{323A1445-E918-44FC-9C1D-82C1B9DE0AD6} = {24BAD8E5-2D54-4E40-8D2C-9F9906E8424B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5D465DC-4D38-42AB-A91D-A029C81E5530}
 	EndGlobalSection
 EndGlobal
