@@ -3,6 +3,7 @@ using BuildIt.Autofac;
 using BuildIt.States;
 using System;
 using System.Threading.Tasks;
+using BuildIt.ServiceLocation;
 
 namespace BuildIt.Lifecycle
 {
@@ -16,8 +17,7 @@ namespace BuildIt.Lifecycle
             var container = build.Build();
             var csl = new AutofacServiceLocator(container);
 
-            // TODO: Fix up once BuildIT.States.IDependencyContainer has been removed
-            //await application.Startup(() => csl, new AutofacDependencyContainer(container), buildDependencies);
+            await application.Startup(() => csl, new AutofacDependencyContainer(container), buildDependencies);
         }
     }
 }

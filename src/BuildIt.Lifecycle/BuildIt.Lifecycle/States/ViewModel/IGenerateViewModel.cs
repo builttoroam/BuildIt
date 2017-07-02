@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Autofac;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {

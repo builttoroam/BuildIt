@@ -7,21 +7,22 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle
 {
     public class VisualStateChanger<TState>:IStateBinder
         where TState : struct
     {
-        public INotifyStateChanged<TState> ChangeNotifier { get; }
+        public INotifyEnumStateChanged<TState> ChangeNotifier { get; }
 
         private Control VisualStateRoot { get; }
 
-        public VisualStateChanger(Control visualStateRoot, INotifyStateChanged<TState> changeNotifier)
+        public VisualStateChanger(Control visualStateRoot, INotifyEnumStateChanged<TState> changeNotifier)
         {
             VisualStateRoot = visualStateRoot;
             ChangeNotifier = changeNotifier;
-            ChangeNotifier.StateChanged += StateManager_StateChanged;
+            ChangeNotifier.EnumStateChanged += StateManager_StateChanged;
 
             var control = (VisualStateRoot as UserControl)?.Content as FrameworkElement;
             if (control == null)
@@ -41,17 +42,17 @@ namespace BuildIt.Lifecycle
         {
             var newState = e.NewState?.Name.EnumParse<TState>()??default(TState);
             if (newState.Equals(default(TState))) return;
-            ChangeNotifier?.ChangeTo(newState, false);
+            (ChangeNotifier as IEnumStateGroup<TState>)?.ChangeTo(newState, false);
         }
 
-        private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
         {
-            VisualStateManager.GoToState(VisualStateRoot, e.State.ToString(), e.UseTransitions);
+            VisualStateManager.GoToState(VisualStateRoot, e.EnumState.ToString(), e.UseTransitions);
         }
 
         public void Unbind()
         {
-            ChangeNotifier.StateChanged -= StateManager_StateChanged;
+            ChangeNotifier.EnumStateChanged -= StateManager_StateChanged;
         }
     }
 
@@ -87,7 +88,7 @@ namespace BuildIt.Lifecycle
 
                 var groups = VisualStateManager.GetVisualStateGroups(rootPage.Content as FrameworkElement);
 
-                var inotifier = typeof(INotifyStateChanged<>);
+                var inotifier = typeof(INotifyEnumStateChanged<>);
                 var vsct = typeof(VisualStateChanger<>);
 
                 foreach (var kvp in manager.StateGroups)

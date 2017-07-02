@@ -1,74 +1,58 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D3D02B64-940E-4620-84B8-C2751C345FEA}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "..\BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Lifecycle.Shared", "BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.shproj", "{A0E34142-1554-469E-8F66-0CD7D656BEAE}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Lifecycle.Shared", "BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.shproj", "{A0E34142-1554-469E-8F66-0CD7D656BEAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Autofac", "BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj", "{88AE5F64-0F5E-4AD5-B673-1748F25C5458}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Autofac", "BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj", "{88AE5F64-0F5E-4AD5-B673-1748F25C5458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.XForms", "BuildIt.Lifecycle.XForms\BuildIt.Lifecycle.XForms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.XForms", "BuildIt.Lifecycle\BuildIt.Lifecycle.XForms\BuildIt.Lifecycle.XForms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.WP8x", "BuildIt.Lifecycle.WP8x\BuildIt.Lifecycle.WP8x.csproj", "{FCE262A3-9F22-4B02-8610-18841FE38960}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.UWP", "BuildIt.Lifecycle\BuildIt.Lifecycle.UWP\BuildIt.Lifecycle.UWP.csproj", "{0959F4B6-D9E4-4947-8889-D913A26F4788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Win8x", "BuildIt.Lifecycle.Win8x\BuildIt.Lifecycle.Win8x.csproj", "{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Tests", "BuildIt.Lifecycle\BuildIt.Lifecycle.Tests\BuildIt.Lifecycle.Tests.csproj", "{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.UWP", "BuildIt.Lifecycle.UWP\BuildIt.Lifecycle.UWP.csproj", "{0959F4B6-D9E4-4947-8889-D913A26F4788}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StateByState.Shared", "BuildIt.Lifecycle\Samples\StateByState.Shared\StateByState.Shared.shproj", "{0914A06A-1A69-455F-8D93-2273C08A9143}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Tests", "BuildIt.Lifecycle.Tests\BuildIt.Lifecycle.Tests.csproj", "{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Core", "BuildIt.Lifecycle\Samples\StateByState.Core\StateByState.Core.csproj", "{B03072FE-40A3-4507-BFD1-C904BB0FE1FA}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StateByState.Shared", "Samples\StateByState.Shared\StateByState.Shared.shproj", "{0914A06A-1A69-455F-8D93-2273C08A9143}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Android", "BuildIt.Lifecycle\Samples\StateByState.Android\StateByState.Android.csproj", "{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Core", "Samples\StateByState.Core\StateByState.Core.csproj", "{B03072FE-40A3-4507-BFD1-C904BB0FE1FA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Android", "Samples\StateByState.Android\StateByState.Android.csproj", "{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.UWP", "Samples\StateByState.UWP\StateByState.UWP.csproj", "{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.UWP", "BuildIt.Lifecycle\Samples\StateByState.UWP\StateByState.UWP.csproj", "{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XForms", "XForms", "{48A8E961-9CF5-4B60-AC87-8B263E661834}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win8x", "Win8x", "{47F1328F-7386-42EF-A452-735503D9C3DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms", "BuildIt.Lifecycle\Samples\StateByState.XForms\StateByState.XForms\StateByState.XForms.csproj", "{3547BD44-1607-4AD4-B5A0-2B29D2736749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms", "Samples\StateByState.XForms\StateByState.XForms\StateByState.XForms.csproj", "{3547BD44-1607-4AD4-B5A0-2B29D2736749}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms.Droid", "BuildIt.Lifecycle\Samples\StateByState.XForms\StateByState.XForms.Droid\StateByState.XForms.Droid.csproj", "{2991D261-DF81-421A-B6BA-05D13A3A7CB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms.Droid", "Samples\StateByState.XForms\StateByState.XForms.Droid\StateByState.XForms.Droid.csproj", "{2991D261-DF81-421A-B6BA-05D13A3A7CB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms.UWP", "BuildIt.Lifecycle\Samples\StateByState.XForms\StateByState.XForms.UWP\StateByState.XForms.UWP.csproj", "{EEEBC901-56E1-47CC-B83D-DA70716FF20F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.XForms.UWP", "Samples\StateByState.XForms\StateByState.XForms.UWP\StateByState.XForms.UWP.csproj", "{EEEBC901-56E1-47CC-B83D-DA70716FF20F}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StateByState.Win8x.Shared", "Samples\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.shproj", "{C9E72DD3-AC4F-49C6-BB4E-70DCB8BA184E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Win8x.Windows", "Samples\StateByState.Win8x\StateByState.Win8x.Windows\StateByState.Win8x.Windows.csproj", "{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Win8x.WindowsPhone", "Samples\StateByState.Win8x\StateByState.Win8x.WindowsPhone\StateByState.Win8x.WindowsPhone.csproj", "{CC00825A-A657-4148-BDC8-EEB5E78A89AB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{9E982427-DDFA-4F34-B91B-0DD6F0C879ED}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac.nuspec = BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac.nuspec
+		BuildIt.Lifecycle\BuildIt.Lifecycle.nuspec = BuildIt.Lifecycle\BuildIt.Lifecycle.nuspec
+		BuildIt.Lifecycle\BuildIt.Lifecycle.XForms.nuspec = BuildIt.Lifecycle\BuildIt.Lifecycle.XForms.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Samples\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
-		Samples\StateByState.Shared\StateByState.Shared.projitems*{24b24ff9-10fc-4b8d-89a1-6c16ac1086d5}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
-		Samples\StateByState.Shared\StateByState.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
-		Samples\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{a6fe3a2e-193b-4ae8-87ba-eb12ce681a33}*SharedItemsImports = 4
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{b3b5beaf-e04d-4113-b8f0-659df433ecaa}*SharedItemsImports = 4
-		Samples\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{c9e72dd3-ac4f-49c6-bb4e-70dcb8ba184e}*SharedItemsImports = 13
-		Samples\StateByState.Shared\StateByState.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
-		Samples\StateByState.Win8x\StateByState.Win8x.Shared\StateByState.Win8x.Shared.projitems*{cc00825a-a657-4148-bdc8-eeb5e78a89ab}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
-		BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
-		..\BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{fce262a3-9f22-4b02-8610-18841fe38960}*SharedItemsImports = 4
+		BuildIt.Lifecycle\Samples\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
+		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
+		BuildIt.Lifecycle\Samples\StateByState.Shared\StateByState.Shared.projitems*{24b24ff9-10fc-4b8d-89a1-6c16ac1086d5}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
+		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
+		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
+		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,38 +113,6 @@ Global
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Release|x64.Build.0 = Release|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Release|x86.ActiveCfg = Release|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Release|x86.Build.0 = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|ARM.Build.0 = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|x64.Build.0 = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Debug|x86.Build.0 = Debug|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|ARM.ActiveCfg = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|ARM.Build.0 = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|x64.ActiveCfg = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|x64.Build.0 = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|x86.ActiveCfg = Release|Any CPU
-		{FCE262A3-9F22-4B02-8610-18841FE38960}.Release|x86.Build.0 = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|ARM.Build.0 = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|x64.Build.0 = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Debug|x86.Build.0 = Debug|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|ARM.ActiveCfg = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|ARM.Build.0 = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x64.ActiveCfg = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x64.Build.0 = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x86.ActiveCfg = Release|Any CPU
-		{B3B5BEAF-E04D-4113-B8F0-659DF433ECAA}.Release|x86.Build.0 = Release|Any CPU
 		{0959F4B6-D9E4-4947-8889-D913A26F4788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0959F4B6-D9E4-4947-8889-D913A26F4788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0959F4B6-D9E4-4947-8889-D913A26F4788}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -313,54 +265,6 @@ Global
 		{EEEBC901-56E1-47CC-B83D-DA70716FF20F}.Release|x86.ActiveCfg = Release|x86
 		{EEEBC901-56E1-47CC-B83D-DA70716FF20F}.Release|x86.Build.0 = Release|x86
 		{EEEBC901-56E1-47CC-B83D-DA70716FF20F}.Release|x86.Deploy.0 = Release|x86
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|ARM.ActiveCfg = Debug|ARM
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|ARM.Build.0 = Debug|ARM
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|ARM.Deploy.0 = Debug|ARM
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|x64.ActiveCfg = Debug|x64
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|x64.Build.0 = Debug|x64
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|x64.Deploy.0 = Debug|x64
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|x86.ActiveCfg = Debug|x86
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|x86.Build.0 = Debug|x86
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Debug|x86.Deploy.0 = Debug|x86
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|ARM.ActiveCfg = Release|ARM
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|ARM.Build.0 = Release|ARM
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|ARM.Deploy.0 = Release|ARM
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|x64.ActiveCfg = Release|x64
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|x64.Build.0 = Release|x64
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|x64.Deploy.0 = Release|x64
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|x86.ActiveCfg = Release|x86
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|x86.Build.0 = Release|x86
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33}.Release|x86.Deploy.0 = Release|x86
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|ARM.ActiveCfg = Debug|ARM
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|ARM.Build.0 = Debug|ARM
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|ARM.Deploy.0 = Debug|ARM
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|x64.Build.0 = Debug|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|x64.Deploy.0 = Debug|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|x86.ActiveCfg = Debug|x86
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|x86.Build.0 = Debug|x86
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Debug|x86.Deploy.0 = Debug|x86
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|ARM.ActiveCfg = Release|ARM
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|ARM.Build.0 = Release|ARM
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|ARM.Deploy.0 = Release|ARM
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|x64.ActiveCfg = Release|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|x64.Build.0 = Release|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|x64.Deploy.0 = Release|Any CPU
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|x86.ActiveCfg = Release|x86
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|x86.Build.0 = Release|x86
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -371,12 +275,11 @@ Global
 		{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
 		{48A8E961-9CF5-4B60-AC87-8B263E661834} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
-		{47F1328F-7386-42EF-A452-735503D9C3DD} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
 		{3547BD44-1607-4AD4-B5A0-2B29D2736749} = {48A8E961-9CF5-4B60-AC87-8B263E661834}
 		{2991D261-DF81-421A-B6BA-05D13A3A7CB8} = {48A8E961-9CF5-4B60-AC87-8B263E661834}
 		{EEEBC901-56E1-47CC-B83D-DA70716FF20F} = {48A8E961-9CF5-4B60-AC87-8B263E661834}
-		{C9E72DD3-AC4F-49C6-BB4E-70DCB8BA184E} = {47F1328F-7386-42EF-A452-735503D9C3DD}
-		{A6FE3A2E-193B-4AE8-87BA-EB12CE681A33} = {47F1328F-7386-42EF-A452-735503D9C3DD}
-		{CC00825A-A657-4148-BDC8-EEB5E78A89AB} = {47F1328F-7386-42EF-A452-735503D9C3DD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5901FA97-FEA6-4BE5-8ABC-EC7E3978D375}
 	EndGlobalSection
 EndGlobal

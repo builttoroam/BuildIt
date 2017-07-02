@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BuildIt.ServiceLocation;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle
 {

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Autofac;
+using BuildIt.ServiceLocation;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public interface IViewModelStateGroup<TState> : IStateGroup<TState>, IHasCurrentViewModel
+    public interface IViewModelStateGroup<TState> : IEnumStateGroup<TState>, IHasCurrentViewModel
         where TState : struct
     {
         IViewModelStateDefinition<TState, TViewModel> DefineViewModelState<TViewModel>(TState state)
@@ -21,7 +22,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
 
     public class ViewModelStateGroup<TState> :
-        StateGroup<TState>, 
+        EnumStateGroup<TState>, 
         ICanRegisterDependencies,
         IViewModelStateGroup<TState>,
         IRegisterForUIAccess
@@ -36,20 +37,20 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         private const string ErrorDontUseDefineState =
             "Use DefineViewModelState instead of DefineState for ViewModelStateManager";
-        public override IStateDefinition<TState> DefineState(TState state)
+        public override IEnumStateDefinition<TState> DefineEnumState(TState state)
         {
             throw new Exception(ErrorDontUseDefineState);
         }
 
-        public override IStateDefinition<TState> DefineState(IStateDefinition<TState> stateDefinition)
+        public override IEnumStateDefinition<TState> DefineEnumState(IEnumStateDefinition<TState> stateDefinition)
         {
             if (stateDefinition.GetType().GetGenericTypeDefinition() != typeof(ViewModelStateDefinition<,>)) throw new Exception(ErrorDontUseDefineState);
-            return base.DefineState(stateDefinition);
+            return base.DefineEnumState(stateDefinition);
         }
 
         public IViewModelStateDefinition<TState,TViewModel> DefineViewModelState<TViewModel>(TState state) where TViewModel : INotifyPropertyChanged//, new()
         {
-            var stateDefinition = new ViewModelStateDefinition<TState, TViewModel> { State = state };
+            var stateDefinition = new ViewModelStateDefinition<TState, TViewModel> (state );
             return DefineViewModelState(stateDefinition);
         }
 
@@ -89,7 +90,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             }
         }
 
-        protected override async Task<bool> ChangeToState(TState oldState, TState newState, bool isNewState)
+        protected override async Task<bool> ChangeToState(string oldState, string newState, bool isNewState)
         {
             // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
             var aboutVM = CurrentViewModel as IAboutToLeaveViewModelState;
@@ -197,14 +198,14 @@ namespace BuildIt.Lifecycle.States.ViewModel
         }
 
 
-        protected override async Task NotifyStateChanged(TState newState, bool useTransitions, bool isNewState)
+        protected override async Task NotifyStateChanged(string newState, bool useTransitions, bool isNewState)
         {
             await UIContext.RunAsync(async () =>
             {
                 await base.NotifyStateChanged(newState, useTransitions, isNewState);
             });
         }
-        protected override async Task ChangedToState(TState newState, string dataAsJson)
+        protected override async Task ChangedToState(string newState, string dataAsJson)
         {
             await base.ChangedToState(newState,dataAsJson);
 
@@ -216,7 +217,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 await arrived.Arriving();
             }
 
-            var currentVMStates = States[CurrentState] as IGenerateViewModel;
+            var currentVMStates = States[CurrentStateName] as IGenerateViewModel;
             if (currentVMStates != null)
             {
                 "Invoking ChangedTo on new state definition".Log();
@@ -227,43 +228,47 @@ namespace BuildIt.Lifecycle.States.ViewModel
         }
 
 
-        protected override async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
-        {
-            await base.ArrivedState(transition, currentState);
+        //protected override async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
+        //{
+        //    await base.ArrivedState(transition, currentState);
 
-            var trans = transition as ViewModelTransitionDefinition<TState>;
-            if (trans?.ArrivedStateViewModel != null)
-            {
-                await trans.ArrivedStateViewModel(currentState, CurrentViewModel);
-            }
+        //    var trans = transition as ViewModelTransitionDefinition<TState>;
+        //    if (trans?.ArrivedStateViewModel != null)
+        //    {
+        //        await trans.ArrivedStateViewModel(currentState, CurrentViewModel);
+        //    }
 
-        }
+        //}
 
-        protected override async Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
-        {
-            await base.LeavingState(transition, currentState, cancel);
+        //protected override async Task LeavingState(ITransitionDefinition<TState> transition, TState currentState, CancelEventArgs cancel)
+        //{
+        //    await base.LeavingState(transition, currentState, cancel);
 
-            if (cancel.Cancel) return;
+        //    if (cancel.Cancel) return;
 
-            var trans = transition as ViewModelTransitionDefinition<TState>;
-            if (trans?.LeavingStateViewModel != null)
-            {
-                await trans.LeavingStateViewModel(currentState, CurrentViewModel, cancel);
-            }
+        //    var trans = transition as ViewModelTransitionDefinition<TState>;
+        //    if (trans?.LeavingStateViewModel != null)
+        //    {
+        //        await trans.LeavingStateViewModel(currentState, CurrentViewModel, cancel);
+        //    }
 
-        }
+        //}
         #endregion
 
-        protected IContainer DependencyContainer { get; private set; }
-        public void RegisterDependencies(IContainer container)
+        //protected IContainer DependencyContainer { get; private set; }
+        public void RegisterDependencies(IDependencyContainer container)
         {
             DependencyContainer = container;
-            var cb = new ContainerBuilder();
-            foreach (var state in States.Values.OfType<IGenerateViewModel>())
+            using (DependencyContainer.StartUpdate())
             {
-                cb.RegisterType(state.ViewModelType);
+                //var cb = new ContainerBuilder();
+                foreach (var state in States.Values.OfType<IGenerateViewModel>())
+                {
+                    DependencyContainer.RegisterType(state.ViewModelType);
+                    //cb.RegisterType(state.ViewModelType);
+                }
+                //cb.Update(container);
             }
-            cb.Update(container);
         }
 
         public IUIExecutionContext UIContext { get; private set; }

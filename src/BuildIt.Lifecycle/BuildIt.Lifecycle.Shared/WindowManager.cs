@@ -12,7 +12,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
-    #if WINDOWS_UWP
+using BuildIt.States.Interfaces;
+#if WINDOWS_UWP
 using Windows.Phone.UI.Input;
 #endif
 namespace BuildIt.Lifecycle
@@ -65,7 +66,7 @@ namespace BuildIt.Lifecycle
                 {
 
                     var groups = sm.StateGroups;
-                    var inotifier = typeof(INotifyStateChanged<>);
+                    var inotifier = typeof(INotifyEnumStateChanged<>);
                     foreach (var stateGroup in groups)
                     {
                         var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);

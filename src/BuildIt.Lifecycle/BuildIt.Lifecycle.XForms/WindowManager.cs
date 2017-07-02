@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
@@ -90,7 +91,7 @@ namespace BuildIt.Lifecycle
             {
 
                 var groups = sm.StateGroups;
-                var inotifier = typeof(INotifyStateChanged<>);
+                var inotifier = typeof(INotifyEnumStateChanged<>);
                 foreach (var stateGroup in groups)
                 {
                     var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);

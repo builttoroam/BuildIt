@@ -1,6 +1,7 @@
 using System;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle
 {

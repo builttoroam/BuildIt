@@ -41,8 +41,7 @@ namespace BuildIt.Lifecycle
         {
             await base.BuildCoreDependencies(container);
             
-            // TODO: Fix when removing BuildIt.States.IDependencyContainer
-            //RegionManager?.RegisterDependencies(container);
+            RegionManager?.RegisterDependencies(container);
         }
     }
 }

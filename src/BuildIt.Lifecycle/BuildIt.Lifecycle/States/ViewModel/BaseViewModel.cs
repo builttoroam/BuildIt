@@ -1,5 +1,7 @@
 ﻿using System;
+using BuildIt.ServiceLocation;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {

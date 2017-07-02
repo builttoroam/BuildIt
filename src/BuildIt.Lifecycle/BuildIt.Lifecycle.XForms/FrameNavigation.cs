@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
@@ -15,7 +16,7 @@ namespace BuildIt.Lifecycle
         public INotifyPropertyChanged CurrentStateData => (StateNotifier as IHasStateData)?.CurrentStateData;
 
 
-        public INotifyStateChanged<TState> StateNotifier { get; }
+        public INotifyEnumStateChanged<TState> StateNotifier { get; }
 
         private IStateManager StateManager { get; }
 
@@ -26,7 +27,7 @@ namespace BuildIt.Lifecycle
         //,string registerAs = null)
         {
             StateManager = sm;
-            var stateNotifier = sm.StateGroups[typeof(TState)] as INotifyStateChanged<TState>;
+            var stateNotifier = sm.StateGroups[typeof(TState)] as INotifyEnumStateChanged<TState>;
             //var stateManager = hasStateManager.StateManager;
             //if (string.IsNullOrWhiteSpace( registerAs ))
             //{
@@ -41,7 +42,7 @@ namespace BuildIt.Lifecycle
 
             //RootFrame.Tag = registerAs;
             StateNotifier = stateNotifier;
-            StateNotifier.StateChanged += StateManager_StateChanged;
+            StateNotifier.EnumStateChanged += StateManager_StateChanged;
 
             sm.GoToPreviousStateIsBlockedChanged += Sm_GoToPreviousStateIsBlockedChanged;
         }
@@ -78,7 +79,7 @@ namespace BuildIt.Lifecycle
 
 
             var groups = sm.StateGroups;
-            var inotifier = typeof(INotifyStateChanged<>);
+            var inotifier = typeof(INotifyEnumStateChanged<>);
             var vsct = typeof(VisualStateChanger<>);
             foreach (var stateGroup in groups)
             {
@@ -120,9 +121,9 @@ namespace BuildIt.Lifecycle
 
         }
 
-        private async void StateManager_StateChanged(object sender, StateEventArgs<TState> e)
+        private async void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
         {
-            var tp = NavigationHelper.TypeForState(e.State);
+            var tp = NavigationHelper.TypeForState(e.EnumState);
 
             if (e.IsNewState)
             {

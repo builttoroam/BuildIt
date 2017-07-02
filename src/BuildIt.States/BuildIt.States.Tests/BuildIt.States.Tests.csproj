@@ -60,7 +60,7 @@
       <HintPath>..\..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="BuildIt.Autofac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.Autofac.1.1.0.16-beta\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
+      <HintPath>..\..\packages\BuildIt.Autofac.1.1.0.17-beta\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="BuildIt.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BuildIt.General.1.1.0.15-beta\lib\netstandard1.0\BuildIt.General.dll</HintPath>

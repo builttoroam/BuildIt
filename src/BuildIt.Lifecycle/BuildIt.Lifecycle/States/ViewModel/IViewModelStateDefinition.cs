@@ -2,12 +2,13 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
     public interface IViewModelStateDefinition<TState,TViewModel> 
         :IGenerateViewModel, 
-        IStateDefinition<TState> 
+        IEnumStateDefinition<TState> 
         where TViewModel: INotifyPropertyChanged 
         where TState : struct
     {

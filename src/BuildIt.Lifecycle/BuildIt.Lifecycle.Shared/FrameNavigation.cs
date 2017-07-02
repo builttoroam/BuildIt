@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle
 {
@@ -23,12 +24,12 @@ namespace BuildIt.Lifecycle
         public INotifyPropertyChanged CurrentStateData => (StateNotifier as IHasStateData) ?.CurrentStateData;
 
 
-        public INotifyStateChanged<TState> StateNotifier { get; }
+        public INotifyEnumStateChanged<TState> StateNotifier { get; }
 
         private Frame RootFrame { get; }
 
         public FrameNavigation(Frame rootFrame,
-            INotifyStateChanged<TState> stateNotifier)
+            INotifyEnumStateChanged<TState> stateNotifier)
             //,string registerAs = null)
         {
             //var stateManager = hasStateManager.StateManager;
@@ -44,7 +45,7 @@ namespace BuildIt.Lifecycle
 
             //RootFrame.Tag = registerAs;
             StateNotifier = stateNotifier;
-            StateNotifier.StateChanged += StateManager_StateChanged;
+            StateNotifier.EnumStateChanged += StateManager_StateChanged;
         }
 
         private void RootFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
@@ -72,7 +73,7 @@ namespace BuildIt.Lifecycle
             {
 
                 var groups = sm.StateGroups;
-                var inotifier = typeof (INotifyStateChanged<>);
+                var inotifier = typeof (INotifyEnumStateChanged<>);
                 var vsct = typeof (VisualStateChanger<>);
                 foreach (var stateGroup in groups)
                 {
@@ -113,9 +114,9 @@ namespace BuildIt.Lifecycle
 
         }
 
-        private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
         {
-            var tp = NavigationHelper.TypeForState(e.State);
+            var tp = NavigationHelper.TypeForState(e.EnumState);
 
             if (e.IsNewState)
             {

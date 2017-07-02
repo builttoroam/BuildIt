@@ -1,14 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Autofac;
+using BuildIt.ServiceLocation;
 using BuildIt.States;
-using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
     public class ViewModelStateDefinition<TState, TViewModel> :
-        StateDefinition<TState>,
+        EnumStateDefinition<TState>,
         IViewModelStateDefinition<TState, TViewModel>
         where TState : struct
         where TViewModel : INotifyPropertyChanged 
@@ -76,6 +75,10 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
             "Invoking ChangedToWithDataViewModel".Log();
             await ChangedToWithDataViewModel((TViewModel)viewModel,data);
+        }
+
+        public ViewModelStateDefinition(TState state) : base(state)
+        {
         }
     }
 }

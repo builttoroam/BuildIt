@@ -1,9 +1,9 @@
-using Autofac;
+using BuildIt.ServiceLocation;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
     public interface ICanRegisterDependencies
     {
-        void RegisterDependencies(IContainer container);
+        void RegisterDependencies(IDependencyContainer container);
     }
 }
