@@ -21,9 +21,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.dll" target="lib\netstandard1.1" />
-    <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.pdb" target="lib\netstandard1.1" />
-    <file src="BuildIt.Autofac\bin\Release\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.dll" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.pdb" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
   </files>
 </package>
 
