@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using BuildIt.Autofac;
-using BuildIt.Lifecycle;
 using BuildIt.ServiceLocation;
 using BuildIt.States.Completion;
 using BuildIt.States.Interfaces;

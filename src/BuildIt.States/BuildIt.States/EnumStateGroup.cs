@@ -11,8 +11,12 @@ namespace BuildIt.States
         where TState : struct
 
     {
+
+#pragma warning disable CS0067 // See TODO
+        // TODO: Raise events at correct point when changing state
         public event EventHandler<EnumStateEventArgs<TState>> EnumStateChanged;
         public event EventHandler<EnumStateCancelEventArgs<TState>> EnumStateChanging;
+#pragma warning restore CS0067
         public override string GroupName => typeof(TState).Name;
 
         public IReadOnlyDictionary<TState, IEnumStateDefinition<TState>> EnumStates => (from s in States
@@ -25,7 +29,7 @@ namespace BuildIt.States
 
         public override string CurrentStateName
         {
-            get => CurrentEnumState + "";
+            get => (!default(TState).Equals(CurrentEnumState))? CurrentEnumState + "":null;
             protected set => CurrentEnumState = value.EnumParse<TState>();
         }
 

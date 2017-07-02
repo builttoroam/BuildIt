@@ -46,7 +46,10 @@ namespace BuildIt.Autofac
             editCount--;
             if (editCount == 0)
             {
+#pragma warning disable CS0618 // Type or member is obsolete - see TODO below
+                // TODO: Refactor the way the DI container is built to avoid updating it
                 Builder.Update(Container);
+#pragma warning restore CS0618 // Type or member is obsolete
                 Builder = null;
                 Wrapper = null;
             }

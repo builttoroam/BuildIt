@@ -13,8 +13,10 @@ namespace BuildIt.States
         public event EventHandler GoToPreviousStateIsBlockedChanged;
 
         public event EventHandler<StateEventArgs> StateChanged;
+#pragma warning disable CS0067 // See TODO
+        // TODO: Raise events at correct point when changing state
         public event EventHandler<StateCancelEventArgs> StateChanging;
-
+#pragma warning restore CS0067 
         public virtual string CurrentStateName { get; protected set; }
 
         public IDependencyContainer DependencyContainer { get; set; }

@@ -11,46 +11,42 @@
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>This library contains a number of helper methods and functions to make working with visual states easier</description>
     <copyright>Copyright © 2017</copyright>
-    <tags>BuildIt</tags>
+    <tags>BuildIt, States</tags>
     <dependencies>
       <group targetFramework="netstandard1.0">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.106-beta" />
+        <dependency id="BuildIt.General" version="1.1.0.10-beta" />
         <dependency id="NETStandard.Library" version="1.6.1" />
       </group>
       <group targetFramework="monoandroid">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.106-beta" />
+        <dependency id="BuildIt.General" version="1.1.0.10-beta" />
       </group>
       <group targetFramework="xamarinios">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.106-beta" />
+        <dependency id="BuildIt.General" version="1.1.0.10-beta" />
       </group>
       <group targetFramework="uap">
-        <!--<dependency id="BuildIt.General" version="1.0.0.1-beta" />-->
-        <dependency id="BuildIt.General" version="1.0.0.106-beta" />
+        <dependency id="BuildIt.General" version="1.1.0.10-beta" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.3.3" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\netstandard1.0" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\netstandard1.0" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\netstandard1.0" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\netstandard1.0" />
 
 
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\monoandroid" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\monoandroid" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\monoandroid" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\monoandroid" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\monoandroid" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\monoandroid" />
 
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\xamarinios10" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\xamarinios10" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\xamarinios10" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\xamarinios10" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\xamarinios10" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\xamarinios10" />
 
 
-    <file src="BuildIt.States\bin\Release\BuildIt.States.dll" target="lib\uap" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.pdb" target="lib\uap" />
-    <file src="BuildIt.States\bin\Release\BuildIt.States.xml" target="lib\uap" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\uap" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\uap" />
+    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.dll" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.pdb" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.xml" target="lib\uap" />

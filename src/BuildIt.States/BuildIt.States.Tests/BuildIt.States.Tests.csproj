@@ -38,10 +38,25 @@
     <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="BuildIt.Autofac, Version=1.0.0.110, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BuildIt.Autofac.1.0.0.110-beta\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BuildIt.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BuildIt.General.1.1.0.10-beta\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,18 +75,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj">
-      <Project>{d9058653-4416-4a9b-9fcd-1a2c805629ba}</Project>
-      <Name>BuildIt.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
-      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
-      <Name>BuildIt.General</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj">
-      <Project>{88ae5f64-0f5e-4ad5-b673-1748f25c5458}</Project>
-      <Name>BuildIt.Lifecycle.Autofac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BuildIt.States\BuildIt.States.csproj">
       <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>
       <Name>BuildIt.States</Name>
