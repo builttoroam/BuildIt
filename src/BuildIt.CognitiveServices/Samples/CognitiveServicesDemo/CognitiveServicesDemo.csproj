@@ -1,256 +1,108 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CognitiveServicesDemo</RootNamespace>
+    <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>CognitiveServicesDemo</AssemblyName>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <PackageId>CognitiveServicesDemo</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wpa81</PackageTargetFallback>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Release\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>bin\x86\Release\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
-    <PlatformTarget>ARM</PlatformTarget>
-    <OutputPath>bin\ARM\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
-    <PlatformTarget>ARM</PlatformTarget>
-    <OutputPath>bin\ARM\Release\</OutputPath>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="App.cs" />
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="CustomResultLayout.xaml.cs">
-      <DependentUpon>CustomResultLayout.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\AcademicFeeds.cs" />
-    <Compile Include="Model\BingAutoSuggestApi.cs" />
-    <Compile Include="Model\BingImageSearchFeeds.cs" />
-    <Compile Include="Model\BingSpellCheckFeed.cs" />
-    <Compile Include="Model\BingWebSearch.cs" />
-    <Compile Include="Model\EntityLinking.cs" />
-    <Compile Include="Model\FacesResult.cs" />
-    <Compile Include="Model\FrameHighlight.cs" />
-    <Compile Include="Model\TextAnalyticsResultBody.cs" />
-    <Compile Include="Model\WebLanguageModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Interfaces\IBingSpeech.cs" />
-    <Compile Include="Service\Interfaces\IPhotoPropertiesService.cs" />
-    <Compile Include="ShapeView.cs" />
-    <Compile Include="ViewModels\AcademicViewModel.cs" />
-    <Compile Include="ViewModels\BingImageSearchViewModel.cs" />
-    <Compile Include="ViewModels\BingSpeechViewModel.cs" />
-    <Compile Include="ViewModels\BingWebSearchViewModel.cs" />
-    <Compile Include="ViewModels\EntityLinkingViewModel.cs" />
-    <Compile Include="ViewModels\LanguageBingSpellCheckViewModel.cs" />
-    <Compile Include="ViewModels\LanguageTextAnalyticsViewModel.cs" />
-    <Compile Include="ViewModels\LanguageWebLanguageModelViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\SearchBingAutosuggestViewModel.cs" />
-    <Compile Include="ViewModels\VisionEmotionViewModel.cs" />
-    <Compile Include="ViewModels\VisionFaceViewModel.cs" />
-    <Compile Include="ViewModels\VisionVideoFacialRecognitionViewModel.cs" />
-    <Compile Include="Views\AcademicPage.xaml.cs">
-      <DependentUpon>AcademicPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BingImageSearchPage.xaml.cs">
-      <DependentUpon>BingImageSearchPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BingSpeechPage.xaml.cs">
-      <DependentUpon>BingSpeechPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BingWebSearchPage.xaml.cs">
-      <DependentUpon>BingWebSearchPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EntityLinkingPage.xaml.cs">
-      <DependentUpon>EntityLinkingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LanguageBingSpellCheckPage.xaml.cs">
-      <DependentUpon>LanguageBingSpellCheckPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LanguageTextAnalyticsPage.xaml.cs">
-      <DependentUpon>LanguageTextAnalyticsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LanguageWebLanguageModelPage.xaml.cs">
-      <DependentUpon>LanguageWebLanguageModelPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SearchBingAutosuggestPage.xaml.cs">
-      <DependentUpon>SearchBingAutosuggestPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VisionEmotionPage.xaml.cs">
-      <DependentUpon>VisionEmotionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VisionFacePage.xaml.cs">
-      <DependentUpon>VisionFacePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VisionVideoFacialRecognitionPage.xaml.cs">
-      <DependentUpon>VisionVideoFacialRecognitionPage.xaml</DependentUpon>
-    </Compile>
+    <None Remove="CustomResultLayout.xaml" />
+    <None Remove="Views\AcademicPage.xaml" />
+    <None Remove="Views\BingImageSearchPage.xaml" />
+    <None Remove="Views\BingSpeechPage.xaml" />
+    <None Remove="Views\BingWebSearchPage.xaml" />
+    <None Remove="Views\EntityLinkingPage.xaml" />
+    <None Remove="Views\LanguageBingSpellCheckPage.xaml" />
+    <None Remove="Views\LanguageTextAnalyticsPage.xaml" />
+    <None Remove="Views\LanguageWebLanguageModelPage.xaml" />
+    <None Remove="Views\MainPage.xaml" />
+    <None Remove="Views\SearchBingAutosuggestPage.xaml" />
+    <None Remove="Views\VisionEmotionPage.xaml" />
+    <None Remove="Views\VisionFacePage.xaml" />
+    <None Remove="Views\VisionVideoFacialRecognitionPage.xaml" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="GettingStarted.Xamarin" />
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\VisionEmotionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\MainPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\VisionFacePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\LanguageTextAnalyticsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\LanguageBingSpellCheckPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\LanguageWebLanguageModelPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\EntityLinkingPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\SearchBingAutosuggestPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\BingWebSearchPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\BingSpeechPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\BingImageSearchPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\AcademicPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="CustomResultLayout.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\carre_homme.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\VisionVideoFacialRecognitionPage.xaml">
+    <EmbeddedResource Include="Views\AcademicPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BingImageSearchPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BingSpeechPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BingWebSearchPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\EntityLinkingPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LanguageBingSpellCheckPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LanguageTextAnalyticsPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LanguageWebLanguageModelPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SearchBingAutosuggestPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisionEmotionPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisionFacePage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisionVideoFacialRecognitionPage.xaml">
+      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildIt.CognitiveServices.XForms\BuildIt.CognitiveServices.XForms.csproj">
-      <Project>{8b988def-dbe9-4c4e-9fd6-8dc9a022d722}</Project>
-      <Name>BuildIt.CognitiveServices.XForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj">
-      <Project>{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}</Project>
-      <Name>BuildIt.CognitiveServices</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-  </Target>
-  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <ItemGroup>
+    <PackageReference Include="ExifLib.PCL" Version="1.0.1" />
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
+    <PackageReference Include="Microsoft.ProjectOxford.Common" Version="1.0.324" />
+    <PackageReference Include="Microsoft.ProjectOxford.Face.DotNetStandard" Version="1.0.0" />
+    <PackageReference Include="Microsoft.ProjectOxford.Video" Version="1.2.0" />
+    <PackageReference Include="Microsoft.ProjectOxford.Vision" Version="1.0.393" />
+    <PackageReference Include="MvvmCross" Version="5.0.5" />
+    <PackageReference Include="MvvmCross.Core" Version="5.0.5" />
+    <PackageReference Include="MvvmCross.Platform" Version="5.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Octane.Xam.VideoPlayer" Version="1.2.3" />
+    <PackageReference Include="PCLStorage" Version="1.0.2" />
+    <PackageReference Include="Xam.Plugin.Media" Version="2.6.2.16-beta" />
+    <PackageReference Include="Xamarin.Forms" Version="2.3.4.247" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildIt.CognitiveServices.XForms\BuildIt.CognitiveServices.XForms.csproj" />
+    <ProjectReference Include="..\..\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,17 +1,22 @@
 ﻿{
   "dependencies": {
-    "ExifLib.PCL": "1.0.2-pre01",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "Microsoft.ProjectOxford.Face": "1.2.1.2",
-    "MvvmCross": "4.4.0",
+    "ExifLib.PCL": "1.0.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
+    "Microsoft.ProjectOxford.Face.DotNetStandard": "1.0.0",
+    "Microsoft.ProjectOxford.Vision": "1.0.393",
+    "Microsoft.Rest.ClientRuntime": "2.3.8",
+    "MvvmCross": "5.0.5",
     "MvvmCross.Forms.Presenter": "4.4.0",
-    "Newtonsoft.Json": "9.0.1",
+    "MvvmCross.Platform": "5.0.5",
+    "Newtonsoft.Json": "10.0.3",
+    "Octane.Xam.VideoPlayer": "1.2.3",
     "PCLStorage": "1.0.2",
+    "System.Net.Http": "4.3.2",
     "Xam.Plugin.Media": "2.6.2.16-beta",
-    "Xamarin.Forms": "2.3.3.180"
+    "Xamarin.Forms": "2.3.4.247"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.14393": {}
   },
   "runtimes": {
     "win10-arm": {},

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using Microsoft.WindowsAzure.MobileServices;
+//using Microsoft.WindowsAzure.MobileServices;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.Platform;
@@ -34,7 +34,7 @@ namespace CognitiveServicesDemo.iOS
             //manager.Authenticator.AuthenticateInstallation();
 
             window = new UIWindow(UIScreen.MainScreen.Bounds);
-            CurrentPlatform.Init();
+//            CurrentPlatform.Init();
 
             var setup = new Setup(this, window);
             setup.Initialize();
