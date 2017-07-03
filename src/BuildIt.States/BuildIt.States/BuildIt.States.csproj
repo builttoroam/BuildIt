@@ -22,10 +22,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
   </ItemGroup>
 

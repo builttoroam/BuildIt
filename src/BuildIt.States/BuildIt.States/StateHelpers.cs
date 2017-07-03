@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -649,6 +650,11 @@ where TStateData : INotifyPropertyChanged
 
         #endregion
 
+        public static bool AllTriggersActive(this IStateDefinition state)
+        {
+            if (state == null) return false;
+            return state.Triggers.All(x => x.IsActive);
+        }
 
         public static IStateGroupBuilder<TState> Group<TState>
             (this IStateManager vsm) where TState : struct

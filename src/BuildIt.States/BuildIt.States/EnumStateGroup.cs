@@ -33,11 +33,17 @@ namespace BuildIt.States
             protected set => CurrentEnumState = value.EnumParse<TState>();
         }
 
+        /// <summary>
+        /// Returns the state definition for the current state
+        /// </summary>
+        public IStateDefinition CurrentEnumStateDefinition
+            => States.SafeValue(CurrentStateName) as IEnumStateDefinition<TState>;
 
-        protected override bool IsDefaultState(IStateDefinition stateDefinition)
+
+
+        protected bool IsDefaultState(TState enumDef)
         {
-            var enumDef = stateDefinition as IEnumStateDefinition<TState>;
-            return enumDef?.EnumState.Equals(default(TState)) ?? false;
+            return default(TState).Equals(enumDef);
         }
 
         public void DefineAllStates()

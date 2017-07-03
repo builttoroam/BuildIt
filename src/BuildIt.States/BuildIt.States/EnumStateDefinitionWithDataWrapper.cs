@@ -3,13 +3,23 @@ using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
-    public class EnumStateDefinitionWithDataWrapper<TState, TData> : StateDefinitionWithDataWrapper<TData> , IEnumStateDefinitionWithData<TState, TData>
+    /// <summary>
+    /// Defines properties and methods for a state definition based on an enum
+    /// </summary>
+    /// <typeparam name="TState">The enum type</typeparam>
+    /// <typeparam name="TData">The type of data to be associated with the state</typeparam>
+    public class EnumStateDefinitionWithDataWrapper<TState, TData> : 
+        StateDefinitionWithDataWrapper<TData> , IEnumStateDefinitionWithData<TState, TData>
         where TData : INotifyPropertyChanged
         where TState : struct
     {
-        public IEnumStateDefinition<TState> EnumState { get; set; }
-
-        public IStateDefinitionTypedDataWrapper<TData> StateDataWrapper
-            => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TData>;
+        /// <summary>
+        /// The enum state definition
+        /// </summary>
+        public IEnumStateDefinition<TState> EnumState
+        {
+            get => State as IEnumStateDefinition<TState>;
+            set => State = value;
+        }
     }
 }

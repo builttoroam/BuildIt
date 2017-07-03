@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using BuildIt.Autofac;
+using BuildIt.ServiceLocation;
 //using BuildIt.Autofac;
 //using BuildIt.ServiceLocation;
 using BuildIt.States.Completion;
@@ -96,8 +98,7 @@ namespace BuildIt.States.Tests
             State7
         }
 
-        // TODO: Restore dependency container - fix autofac ref
-        //private IDependencyContainer Container { get; set; }
+        private IDependencyContainer Container { get; set; }
 
         [TestInitialize]
         public void TestInit()
@@ -105,14 +106,13 @@ namespace BuildIt.States.Tests
             var build = new ContainerBuilder();
             var container = build.Build();
 
-            // TODO: Fix autofac ref and uncomment this block
-            //var csl = new AutofacServiceLocator(container);
-            //Container = new AutofacDependencyContainer(container);
-            //using (Container.StartUpdate())
-            //{
-            //    Container.Register<BasicDebugLogger, ILogService>();
-            //}
-            //ServiceLocator.SetLocatorProvider(() => csl);
+           var csl = new AutofacServiceLocator(container);
+            Container = new AutofacDependencyContainer(container);
+            using (Container.StartUpdate())
+            {
+                Container.Register<BasicDebugLogger, ILogService>();
+            }
+            ServiceLocator.SetLocatorProvider(() => csl);
         }
 
 
@@ -154,7 +154,7 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
             Assert.AreEqual(1, sm.StateGroups.Count);
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             Assert.IsNotNull(grp);
             Assert.IsInstanceOfType(builder, typeof(IStateGroupBuilder<TestStates>));
         }
@@ -170,7 +170,7 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(2, sm.StateGroups.Count);
             Assert.AreNotEqual(builder, builder2);
 
-            var grp = sm.StateGroups[typeof(MoreStates)] as EnumStateGroup<MoreStates>;
+            var grp = sm.EnumStateGroup<MoreStates>();//StateGroups[typeof(MoreStates)] as EnumStateGroup<MoreStates>;
             Assert.IsNotNull(grp);
             Assert.IsInstanceOfType(builder2, typeof(IStateGroupBuilder<MoreStates>));
         }
@@ -184,7 +184,7 @@ namespace BuildIt.States.Tests
             var builder = sm.Group<TestStates>()
                 .WithHistory();
             Assert.AreEqual(1, sm.StateGroups.Count);
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             Assert.AreEqual(true, grp.TrackHistory);
         }
 
@@ -195,7 +195,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             Assert.AreEqual(0, grp.States.Count);
             builder = builder.DefineAllStates();
 
@@ -211,7 +211,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             Assert.AreEqual(0, grp.States.Count);
             builder.DefineState(TestStates.Base);
             Assert.AreEqual(0, grp.States.Count);
@@ -232,7 +232,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var st = builder.DefineState(TestStates.State1);
             Assert.AreEqual(0, st.State.Triggers.Count);
@@ -271,7 +271,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var st = builder.DefineState(TestStates.State1).OnComplete(TestCompletion.Complete1);
             Assert.IsInstanceOfType(st, typeof(IStateCompletionBuilder<TestStates, TestCompletion>));
@@ -288,7 +288,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var st = builder.DefineState(TestStates.State1).OnDefaultComplete();
             Assert.IsInstanceOfType(st, typeof(IStateCompletionBuilder<TestStates, DefaultCompletion>));
@@ -305,7 +305,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var st =
                 builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
@@ -325,7 +325,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var st = builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1).OnDefaultComplete();
             Assert.IsInstanceOfType(st,
@@ -344,7 +344,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             var complete = false;
             var st = builder.DefineState(TestStates.State1).OnCompleteWithData(TestCompletion.Complete1, () => complete);
             Assert.IsInstanceOfType(st, typeof(IStateCompletionWithDataBuilder<TestStates, TestCompletion, bool>));
@@ -365,7 +365,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             var complete = false;
             var st = builder.DefineState(TestStates.State1).OnDefaultCompleteWithData(() => complete);
             Assert.IsInstanceOfType(st, typeof(IStateCompletionWithDataBuilder<TestStates, DefaultCompletion, bool>));
@@ -388,7 +388,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
             var st =
                 builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
                     .OnCompleteWithData(TestCompletion.Complete1, (sd) => sd.TestBoolValue);
@@ -415,7 +415,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var st =
                 builder.DefineStateWithData<TestStates, State1Data>(TestStates.State1)
@@ -443,7 +443,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -471,7 +471,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -481,23 +481,28 @@ namespace BuildIt.States.Tests
                 .ChangeState(TestStates.State2);
             builder.DefineState(TestStates.State2);
 
-            // TODO: Uncomment
-            //grp.RegisterDependencies(Container);
+            grp.RegisterDependencies(Container);
 
             Assert.AreEqual(TestStates.Base, sm.CurrentState<TestStates>());
-            var data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var data = (sm.EnumStateGroup<TestStates>()
+            //StateGroups[typeof(TestStates)] 
+            ).CurrentStateData as State1Data;
             Assert.IsNull(data);
 
             await sm.GoToState(TestStates.State1);
             Assert.AreEqual(TestStates.State1, sm.CurrentState<TestStates>());
-            data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNotNull(data);
             Assert.IsTrue(data.HasCustomEvent1Handlers);
 
 
             data.RaiseCustomEvent1();
             Assert.AreEqual(TestStates.State2, sm.CurrentState<TestStates>());
-            var newdata = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var newdata = (sm.EnumStateGroup<TestStates>()
+            //StateGroups[typeof(TestStates)] 
+            ).CurrentStateData as State1Data;
             Assert.IsNull(newdata);
             Assert.IsFalse(data.HasCustomEvent1Handlers);
         }
@@ -509,7 +514,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -518,22 +523,27 @@ namespace BuildIt.States.Tests
                 .ChangeState(TestStates.State2);
             builder.DefineState(TestStates.State2);
 
-            // TODO: Uncomment
-            //grp.RegisterDependencies(Container);
+            grp.RegisterDependencies(Container);
 
             Assert.AreEqual(TestStates.Base, sm.CurrentState<TestStates>());
-            var data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNull(data);
 
             await sm.GoToState(TestStates.State1);
             Assert.AreEqual(TestStates.State1, sm.CurrentState<TestStates>());
-            data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNotNull(data);
 
 
             data.RaiseTestComplete(TestCompletion.Complete1);
             Assert.AreEqual(TestStates.State2, sm.CurrentState<TestStates>());
-            var newdata = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var newdata = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNull(newdata);
         }
 
@@ -543,7 +553,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -553,22 +563,27 @@ namespace BuildIt.States.Tests
             builder.DefineStateWithData<TestStates, State2Data>(TestStates.State2)
                 .WhenChangedToWithData((State2Data vm, int d) => vm.InitValue1 = $"Input: {d}");
 
-            // TODO: Uncomment
-            //grp.RegisterDependencies(Container);
+            grp.RegisterDependencies(Container);
 
             Assert.AreEqual(TestStates.Base, sm.CurrentState<TestStates>());
-            var data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNull(data);
 
             await sm.GoToState(TestStates.State1);
             Assert.AreEqual(TestStates.State1, sm.CurrentState<TestStates>());
-            data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNotNull(data);
 
 
             data.RaiseTestComplete(TestCompletion.Complete1);
             Assert.AreEqual(TestStates.State2, sm.CurrentState<TestStates>());
-            var newdata = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State2Data;
+            var newdata = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State2Data;
             Assert.IsNotNull(newdata);
             var input = newdata.InitValue1;
             Assert.IsNotNull(input);
@@ -580,7 +595,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -593,22 +608,27 @@ namespace BuildIt.States.Tests
                 .DefineStateWithData<TestStates, State2Data>(TestStates.State2);
             //.WhenChangedToWithData((State2Data vm, int d) => vm.InitValue1 = $"Input: {d}");
 
-            // TODO: Uncomment
-            //grp.RegisterDependencies(Container);
+            grp.RegisterDependencies(Container);
 
             Assert.AreEqual(TestStates.Base, sm.CurrentState<TestStates>());
-            var data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNull(data);
 
             await sm.GoToState(TestStates.State1);
             Assert.AreEqual(TestStates.State1, sm.CurrentState<TestStates>());
-            data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNotNull(data);
 
 
             data.RaiseTestCompleteWithData(TestCompletion.Complete1);
             Assert.AreEqual(TestStates.State2, sm.CurrentState<TestStates>());
-            var newdata = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State2Data;
+            var newdata = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State2Data;
             Assert.IsNotNull(newdata);
             var input = newdata.InitValue1;
             Assert.IsNotNull(input);
@@ -621,7 +641,7 @@ namespace BuildIt.States.Tests
             var sm = new StateManager();
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
-            var grp = sm.StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
+            var grp = sm.EnumStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
 
             var sd = new State1Data();
 
@@ -630,23 +650,27 @@ namespace BuildIt.States.Tests
                 .ChangeState(TestStates.State2);
             builder.DefineState(TestStates.State2);
 
-            // TODO: Uncomment
-            //grp.RegisterDependencies(Container);
-                                                 // TODO: Uncomment
+            grp.RegisterDependencies(Container);
 
             Assert.AreEqual(TestStates.Base, sm.CurrentState<TestStates>());
-            var data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNull(data);
 
             await sm.GoToState(TestStates.State1);
             Assert.AreEqual(TestStates.State1, sm.CurrentState<TestStates>());
-            data = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            data = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNotNull(data);
 
 
             data.RaiseComplete();
             Assert.AreEqual(TestStates.State2, sm.CurrentState<TestStates>());
-            var newdata = (sm.StateGroups[typeof(TestStates)] as IHasStateData).CurrentStateData as State1Data;
+            var newdata = (sm.EnumStateGroup<TestStates>()
+                //StateGroups[typeof(TestStates)] 
+                ).CurrentStateData as State1Data;
             Assert.IsNull(newdata);
         }
     }

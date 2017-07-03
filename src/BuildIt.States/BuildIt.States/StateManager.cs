@@ -6,29 +6,31 @@ using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class StateManager : IStateManager//, ICanRegisterDependencies
     {
         public event EventHandler GoToPreviousStateIsBlockedChanged;
 
-        private readonly Dictionary<Type, IStateGroup> stateGroups =
-            new Dictionary<Type, IStateGroup>();
+        private readonly Dictionary<string, IStateGroup> stateGroups =
+            new Dictionary<string, IStateGroup>();
 
-        public IReadOnlyDictionary<Type, IStateGroup> StateGroups => stateGroups;
+        public IReadOnlyDictionary<string, IStateGroup> StateGroups => stateGroups;
 
-        public IEnumStateGroup<TState> EnumStateGroup<TState>() where TState:struct
+        public IEnumStateGroup<TState> EnumStateGroup<TState>() where TState : struct
         {
-            return StateGroups.SafeValue(typeof(TState)) as IEnumStateGroup<TState>;
+            return StateGroup(typeof(TState).Name) as IEnumStateGroup<TState>;
         }
 
-        public void AddStateGroup<TState>(IEnumStateGroup<TState> group)
-            where TState : struct
+        public IStateGroup StateGroup(string groupName)
         {
-            AddStateGroup(typeof(TState), group);
+            return StateGroups.SafeValue(groupName);
         }
 
-        public void AddStateGroup(Type state, IStateGroup group)
+        public void AddStateGroup(IStateGroup group)
         {
-            stateGroups[state] = group;
+            stateGroups[group.GroupName] = group;
             group.GoToPreviousStateIsBlockedChanged += Group_IsBlockedChanged;
         }
 
@@ -40,9 +42,15 @@ namespace BuildIt.States
         public TState CurrentState<TState>()
             where TState : struct
         {
-            var group = StateGroups.SafeValue(typeof(TState)) as IEnumStateGroup<TState>;
+            var group = EnumStateGroup<TState>();
             if (group == null) return default(TState);
             return group.CurrentEnumState;
+        }
+
+        public string CurrentState(string groupName)
+        {
+            var group = StateGroup(groupName);
+            return @group?.CurrentStateName;
         }
 
         public async Task<bool> GoToState<TState>(TState state, bool animate = true)
@@ -65,6 +73,27 @@ namespace BuildIt.States
             var group = EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState));
             if (group == null) return false;
             return await group.ChangeBackTo(state, animate);
+        }
+
+
+        public async Task<bool> GoToState(string groupName, string stateName, bool animate = true)
+        {
+            var group = StateGroup(groupName);
+            if (group == null) return false;
+            return await group.ChangeTo(stateName, animate);
+        }
+
+        public async Task<bool> GoToStateWithData<TData>(string groupName, string stateName, TData data, bool animate = true)
+        {
+            var group = StateGroup(groupName);
+            if (group == null) return false;
+            return await group.ChangeToWithData(stateName, data, animate);
+        }
+        public async Task<bool> GoBackToState(string groupName, string stateName, bool animate = true)
+        {
+            var group = StateGroup(groupName);
+            if (group == null) return false;
+            return await group.ChangeBackTo(stateName, animate);
         }
 
         public async Task<bool> GoBackToPreviousState(bool animate = true)
@@ -99,34 +128,7 @@ namespace BuildIt.States
             return new StateManagerBinder(this, managerToBindTo, bothDirections);
         }
 
-        private class StateManagerBinder : IStateBinder
-        {
-            IStateManager StateManager { get; }
-            IStateManager StateManagerToBindTo { get; }
-
-            IList<IStateBinder> GroupBinders { get; } = new List<IStateBinder>();
-            public StateManagerBinder(IStateManager sm, IStateManager manager, bool bothDirections=true)
-            {
-                StateManager = sm;
-                StateManagerToBindTo = manager;
-
-                foreach (var kvp in manager.StateGroups)
-                {
-                    var sg = StateManager.StateGroups.SafeValue(kvp.Key);
-                    var binder = sg?.Bind(kvp.Value, bothDirections);
-                    if (binder == null) continue;
-                    GroupBinders.Add(binder);
-                }
-            }
-
-            public void Unbind()
-            {
-                foreach (var groupBinder in GroupBinders)
-                {
-                    groupBinder.Unbind();
-                }
-            }
-        }
+        
 
        
     }

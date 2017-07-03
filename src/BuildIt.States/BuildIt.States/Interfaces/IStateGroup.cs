@@ -6,13 +6,17 @@ using BuildIt.ServiceLocation;
 
 namespace BuildIt.States.Interfaces
 {
-    public interface IStateGroup:IRequiresUIAccess,
+    public interface IStateGroup:
+        IRequiresUIAccess, 
+        IRegisterDependencies,
         INotifyStateChanged,
         INotifyStateChanging
     {
         event EventHandler GoToPreviousStateIsBlockedChanged;
 
         string GroupName { get; }
+
+        INotifyPropertyChanged CurrentStateData { get; }
 
         Task<bool> ChangeTo(string newState, bool useTransitions = true);
 
@@ -48,12 +52,4 @@ namespace BuildIt.States.Interfaces
 
 
     }
-
-
-    public interface IStateBinder
-    {
-        void Unbind();
-    }
-
-    
 }
