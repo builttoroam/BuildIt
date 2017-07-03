@@ -165,7 +165,7 @@ namespace BuildIt
 
         public static TReturn SafeValue<TKey, TValue, TReturn>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            if (dictionary == null) return default(TReturn);
+            if (dictionary == null || key==null) return default(TReturn);
             TValue val;
             if (dictionary.TryGetValue(key, out val))
             {
@@ -186,14 +186,14 @@ namespace BuildIt
 
         public static TValue SafeValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            if (dictionary == null) return default(TValue);
+            if (dictionary == null || key==null) return default(TValue);
             TValue val;
             return dictionary.TryGetValue(key, out val) ? val : default(TValue);
         }
 
         public static TValue SafeValue<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key)
         {
-            if (dictionary == null) return default(TValue);
+            if (dictionary == null || key==null) return default(TValue);
             TValue val;
             return dictionary.TryGetValue(key, out val) ? val : default(TValue);
         }
