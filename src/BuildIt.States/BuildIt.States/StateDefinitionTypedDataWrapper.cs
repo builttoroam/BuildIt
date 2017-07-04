@@ -50,6 +50,16 @@ namespace BuildIt.States
             await ChangingFrom((TData)dataEntity);
         }
 
+        public Func<TData, Task> ChangedFrom { get; set; }
+
+        public async Task InvokeChangedFrom(INotifyPropertyChanged dataEntity)
+        {
+            if (ChangedFrom == null) return;
+
+            "Invoking ChangedFrom".Log();
+            await ChangedFrom((TData)dataEntity);
+        }
+
 
         public Func<TData, Task> ChangedTo { get; set; }
 

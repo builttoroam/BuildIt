@@ -43,6 +43,13 @@ namespace BuildIt.States.Interfaces
         Task InvokeChangingFrom(INotifyPropertyChanged dataEntity);
 
         /// <summary>
+        /// Invokes the ChangedFrom method
+        /// </summary>
+        /// <param name="dataEntity">The data entity to invoke the method on</param>
+        /// <returns>Task to await</returns>
+        Task InvokeChangedFrom(INotifyPropertyChanged dataEntity);
+
+        /// <summary>
         /// Invokes the ChangedTo method
         /// </summary>
         /// <param name="dataEntity">The data entity to invoke the method on</param>

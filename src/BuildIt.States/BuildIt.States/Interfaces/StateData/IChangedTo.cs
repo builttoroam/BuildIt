@@ -6,4 +6,5 @@ namespace BuildIt.States.Interfaces.StateData
     {
         Task ChangedTo();
     }
+
 }

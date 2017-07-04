@@ -18,17 +18,43 @@ namespace BuildIt.States
         /// <summary>
         /// The triggers that are available for the state
         /// </summary>
-        public IList<IStateTrigger> Triggers { get; }  = new List<IStateTrigger>();
+        public IList<IStateTrigger> Triggers { get; } = new List<IStateTrigger>();
 
         /// <summary>
         /// Method to be invoked when about to change from the state (cancellable)
         /// </summary>
         public Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
-        
+
+        /// <summary>
+        /// Method to be invoked when about to change to the state (cancellable)
+        /// </summary>
+        public Func<CancelEventArgs, Task> AboutToChangeTo { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when about to change to the state (cancellable)
+        /// </summary>
+        public Func<string, CancelEventArgs, Task> AboutToChangeToWithData { get; set; }
+
         /// <summary>
         /// Method to be invoked when changing from the state (not cancellable)
         /// </summary>
         public Func<Task> ChangingFrom { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when the state transition to this state is about to start (arriving at this state)
+        /// </summary>
+        public Func<Task> ChangingTo { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when the state transition to this state is about to start (arriving at this state)
+        /// </summary>
+        public Func<string, Task> ChangingToWithData { get; set; }
+
+
+        /// <summary>
+        /// Method to be invoked when the state transition has completed (left this state)
+        /// </summary>
+        public Func<Task> ChangedFrom { get; set; }
 
         /// <summary>
         /// Method to be invoked when changed to the state
@@ -39,7 +65,7 @@ namespace BuildIt.States
         /// Method to be invoked when changed to the state, with data
         /// </summary>
         public Func<string, Task> ChangedToWithJsonData { get; set; }
-        
+
         /// <summary>
         /// The set of properties to change when entering this state
         /// </summary>
@@ -50,7 +76,7 @@ namespace BuildIt.States
         /// </summary>
         protected StateDefinition()
         {
-            
+
         }
 
         /// <summary>

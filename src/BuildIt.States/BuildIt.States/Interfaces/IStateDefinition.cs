@@ -27,9 +27,34 @@ namespace BuildIt.States.Interfaces
         Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
 
         /// <summary>
+        /// Method to be invoked when about to change to the state (cancellable)
+        /// </summary>
+        Func<CancelEventArgs, Task> AboutToChangeTo { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when about to change to the state (cancellable)
+        /// </summary>
+        Func<string, CancelEventArgs, Task> AboutToChangeToWithData { get; set; }
+
+        /// <summary>
         /// Method to be invoked when the state transition has started (leaving this state)
         /// </summary>
         Func<Task> ChangingFrom { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when the state transition to this state is about to start (arriving at this state)
+        /// </summary>
+        Func<Task> ChangingTo { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when the state transition to this state is about to start (arriving at this state)
+        /// </summary>
+        Func<string, Task> ChangingToWithData { get; set; }
+
+        /// <summary>
+        /// Method to be invoked when the state transition has completed (left this state)
+        /// </summary>
+        Func<Task> ChangedFrom { get; set; }
 
         /// <summary>
         /// Method to be invoked when the state transition has completed (arriving at this state)

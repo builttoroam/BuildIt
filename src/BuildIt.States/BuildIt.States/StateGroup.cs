@@ -397,12 +397,12 @@ namespace BuildIt.States
 
             // Invoke all the methods/events prior to changing state (cancellable!)
             "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
-            var success = await AboutToChangeFrom(isNewState, useTransitions);
+            var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions);
             if (!success) return false;
 
             // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
             "Invoking ChangingFrom before state change".Log();
-            await ChangingFrom(isNewState, useTransitions);
+            await ChangingFrom(newState, data, isNewState, useTransitions);
 
             // Perform the state change 
             "Invoking ChangeCurrentState to perform state change".Log();
@@ -410,7 +410,7 @@ namespace BuildIt.States
 
             // Perform post-change methods
             "Invoking ChangedToState after state change".Log();
-            await ChangedToState(data, isNewState, useTransitions);
+            await ChangedToState(newState, data, isNewState, useTransitions);
 
             "ChangeTo completed".Log();
             return true;
@@ -428,7 +428,7 @@ namespace BuildIt.States
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
         /// <returns>Success indicator</returns>
-        protected virtual async Task<bool> AboutToChangeFrom(bool isNewState, bool useTransitions)
+        protected virtual async Task<bool> AboutToChangeFrom(string newState, string data, bool isNewState, bool useTransitions)
         {
             var current = CurrentStateName;
             var currentStateDef = CurrentStateDefinition;
@@ -466,11 +466,38 @@ namespace BuildIt.States
             }
 
             // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
-            if (!(CurrentStateData is IAboutToChangeFrom stateData)) return true;
+            if (CurrentStateData is IAboutToChangeFrom stateData)
+            {
+                "Invoking AboutToLeave".Log();
+                await stateData.AboutToChangeFrom(cancel);
+                if (cancel.Cancel) return false;
+            }
 
-            "Invoking AboutToLeave".Log();
-            await stateData.AboutToChangeFrom(cancel);
-            if (!cancel.Cancel) return true;
+            var newStateDef = StateDefinition(newState);
+            if (newStateDef?.AboutToChangeTo != null)
+            {
+                "Invoking 'AboutToChangeTo' on current state definition".Log();
+                await newStateDef.AboutToChangeTo(cancel);
+                "'AboutToChangeTo' completed".Log();
+                if (cancel.Cancel)
+                {
+                    "Cancelling state transition invoking 'AboutToChangeTo'".Log();
+                    return false;
+                }
+            }
+
+            if (newStateDef?.AboutToChangeToWithData != null)
+            {
+                "Invoking 'AboutToChangeTo' on current state definition".Log();
+                await newStateDef.AboutToChangeToWithData(data, cancel);
+                "'AboutToChangeTo' completed".Log();
+                if (cancel.Cancel)
+                {
+                    "Cancelling state transition invoking 'AboutToChangeTo'".Log();
+                    return false;
+                }
+            }
+           
 
             "ChangeToState cancelled by AboutToLeave".Log();
             return false;
@@ -485,7 +512,7 @@ namespace BuildIt.States
         /// </summary>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
-        protected virtual async Task ChangingFrom(bool isNewState, bool useTransitions)
+        protected virtual async Task ChangingFrom(string newState, string dataAsJson, bool isNewState, bool useTransitions)
         {
             var currentStateDef = CurrentStateDefinition;
             var currentStateDataWrapper = CurrentStateDataWrapper;
@@ -508,6 +535,22 @@ namespace BuildIt.States
                 "Invoking Leaving on current view model".Log();
                 await leaving.ChangingFrom();
             }
+
+            var newStateDef = StateDefinition(newState);
+            var hasData = !string.IsNullOrWhiteSpace(dataAsJson);
+
+            if (newStateDef?.ChangingTo != null)
+            {
+                "Invoking 'ChangingTo' on new state definition".Log();
+                await newStateDef.ChangingTo();
+            }
+
+            if (hasData && newStateDef?.ChangingToWithData != null)
+            {
+                "Invoking 'ChangingToWithData' on new state definition".Log();
+                await newStateDef.ChangingToWithData(dataAsJson);
+            }
+
         }
 
         /// <summary>
@@ -615,9 +658,25 @@ namespace BuildIt.States
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected virtual async Task ChangedToState(string dataAsJson, bool isNewState, bool useTransitions)
+        protected virtual async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions)
 #pragma warning restore 1998
         {
+            var oldStateDef = StateDefinition(oldState);
+            if (oldStateDef?.ChangedFrom != null)
+            {
+                "Invoking ChangedFrom on old state definition".Log();
+                await oldStateDef.ChangedFrom();
+            }
+
+            var oldStateDataWrapper = oldStateDef?.UntypedStateDataWrapper;
+            if (oldStateDataWrapper != null)
+            {
+                "Invoking ChangedFrom on current state definition".Log();
+                await oldStateDataWrapper.InvokeChangedFrom(CurrentStateData);
+            }
+
+
+
             var currentStateDef = CurrentStateDefinition;
             var currentStateDataWrapper = CurrentStateDataWrapper;
 
@@ -659,7 +718,7 @@ namespace BuildIt.States
                 "No new state definition".Log();
             }
 
-            if (currentStateDataWrapper != null )
+            if (currentStateDataWrapper != null)
             {
                 "Invoking ChangedTo on new state definition".Log();
                 await currentStateDataWrapper.InvokeChangedTo(CurrentStateData);
