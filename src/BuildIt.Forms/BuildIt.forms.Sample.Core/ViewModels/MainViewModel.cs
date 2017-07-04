@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BuildIt.States;
 using System.Windows.Input;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.forms.Sample.Core.ViewModels
 {

@@ -5,56 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using BuildIt.States.Interfaces;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace BuildIt.Forms.Core
 {
-    public enum _Group0
-    {
-        _State0,
-        _State1,
-        _State2,
-        _State3,
-        _State4,
-        _State5,
-        _State6,
-        _State7,
-        _State8,
-        _State9
-    }
-    public enum _Group1
-    {
-        _State0,
-        _State1,
-        _State2,
-        _State3,
-        _State4,
-        _State5,
-        _State6,
-        _State7,
-        _State8,
-        _State9
-    }
-    public enum _Group2
-    {
-        _State0,
-        _State1,
-        _State2,
-        _State3,
-        _State4,
-        _State5,
-        _State6,
-        _State7,
-        _State8,
-        _State9
-    }
-
-
     public class VisualStateManager
     {
-        public static Type[] StateTypes = new[] { typeof(_Group0), typeof(_Group1), typeof(_Group2) };
-
         public static async Task GoToState(Element element, string stateName)
         {
             var groups = GetVisualStateGroups(element);
@@ -85,68 +42,9 @@ namespace BuildIt.Forms.Core
 
             if (state == null || state.Group?.CurrentState == state.State) return;
             await manager.GoToVisualState(state.State);
-            //foreach (var setter in state.State.Setters)
-            //{
-            //    var target = setter.Target.Split('.');
-            //    var name = target.FirstOrDefault();
-            //    var prop = target.Skip(1).FirstOrDefault();
-            //    var setterTarget = element.FindByName<Element>(name);
-            //    if (setterTarget == null)
-            //    {
-            //        var cv = element as ContentView;
-            //        foreach (var child in cv.Children)
-            //        {
-            //            setterTarget = child.FindByName<Element>(name);
-            //            if (setterTarget != null)
-            //            {
-            //                break;
-            //            }
-            //        }
-            //    }
-
-            //    var targetProp = element.GetType().GetProperty(prop);
-            //    var targetType = targetProp.PropertyType;
-            //    var val = (object)setter.Value;
-            //    if (targetType != typeof(string))
-            //    {
-            //        var converterType = targetType.GetTypeInfo()
-            //            .GetCustomAttribute<TypeConverterAttribute>(true)
-            //            ?.ConverterTypeName;
-            //        var converter = Activator.CreateInstance(Type.GetType(converterType)) as TypeConverter;
-            //        if (!converter?.CanConvertFrom(typeof(string)) ?? false) return;
-            //        val = converter.ConvertFromInvariantString((string)val);
-            //    }
-
-            //    targetProp?.SetValue(setterTarget, val);
-            //}
-
-            //state.Group.CurrentState = state.State;
+           
         }
-        /*
-         * internal static readonly BindablePropertyKey TriggersPropertyKey = 
-         * BindableProperty.CreateReadOnly(
-         *      "Triggers", 
-         *      typeof(IList<TriggerBase>), 
-         *      typeof(VisualElement), 
-         *      null, 
-         *      BindingMode.OneWayToSource, 
-         *      null, null, 
-         *      null, null, 
-         *      new BindableProperty.CreateDefaultValueDelegate(VisualElement.<>c.<>9.<.cctor>b__214_5));
-
-         * 
-         * public IList<TriggerBase> Triggers
-{
-	get
-	{
-		return (IList<TriggerBase>)base.GetValue(VisualElement.TriggersProperty);
-	}
-}
-         * 
-         * 
-         */
-
-
+       
         public static readonly BindableProperty VisualStateGroupsProperty =
             BindableProperty.CreateAttached("VisualStateGroups", typeof(IList<VisualStateGroup>),
                 typeof(VisualStateManager), null, BindingMode.OneWayToSource, null, StateGroupsChanged, null, null, CreateDefaultValue);
@@ -199,54 +97,66 @@ namespace BuildIt.Forms.Core
 
         private static void UpdateStateManagerWithStateGroup(IStateManager manager, BindableObject view, VisualStateGroup vsgroup, int groupIdx)
         {
-            var stateType = StateTypes[groupIdx]; // TODO: Need to protect against out of range 
-            vsgroup.StateGroupType = stateType;
 
-            var sgType = typeof(StateGroup<>).MakeGenericType(stateType);
-            var sg = Activator.CreateInstance(sgType) as IStateGroup;
+            var sg = new StateGroup(vsgroup.Name);
             vsgroup.StateGroup = sg;
 
-            manager.AddStateGroup(stateType, sg);
+            manager.AddStateGroup(sg);
 
-            var idx = 1;
             foreach (var vstate in vsgroup)
             {
-                var state = Enum.GetValues(stateType).GetValue(idx);
-                var defState = sg.GetType().GetRuntimeMethod("DefineState", new Type[] { stateType });
-                var stateDef = defState.Invoke(sg, new object[] { state });
-                vstate.StateType = state;
-                idx++;
-
-                var valuesProp = stateDef.GetType().GetProperty("Values");
-                var values = valuesProp.GetValue(stateDef) as IList<IStateValue>;
-
+                var stateDef = sg.DefineState(vstate.Name);
+                var values = stateDef.Values;
+                vstate.StateGroup = sg;
 
                 BuildStateSetters(vstate, view as Element, values);
 
-                var animationFunction = BuildAnimations(vstate, view as Element);
-                if (animationFunction != null)
+                var arriving = vstate.ArrivingAnimations;
+                if (arriving != null)
                 {
-                    var changingTo = stateDef.GetType().GetProperty("ChangedTo");
-                    changingTo.SetValue(stateDef, animationFunction);
+                    var animationFunction = BuildAnimations(arriving.PreAnimations, view as Element);
+                    stateDef.ChangingTo = animationFunction;
+
+                    var panimationFunction = BuildAnimations(arriving.PostAnimations, view as Element);
+                    stateDef.ChangedTo = panimationFunction;
                 }
+
+                var leaving = vstate.LeavingAnimations;
+                if (leaving != null)
+                {
+                    var animationFunction = BuildAnimations(leaving.PreAnimations, view as Element);
+                    stateDef.ChangingFrom = animationFunction;
+
+                    var panimationFunction = BuildAnimations(leaving.PostAnimations, view as Element);
+                    stateDef.ChangedFrom = panimationFunction;
+                }
+
             }
         }
-        private static Func<Task> BuildAnimations(VisualState state, Element element)
+
+        private static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element)
         {
-            return new Func<Task>(() =>
+            var tasks = new List<Task>();
+
+            foreach (var animation in animations)
             {
-                var tasks = new List<Task>();
+                var target = element.FindByTarget(animation);
+                var tg = target?.Item1 as VisualElement;
+                var animateTask = animation.Animate(tg ?? (element as VisualElement));
+                tasks.Add(animateTask);
+            }
 
-                foreach (var animation in state.Animations)
-                {
-                    var target = element.FindByTarget(animation);
-                    var tg = target?.Item1 as VisualElement;
-                    var animateTask = animation.Animate(tg ?? (element as VisualElement));
-                    tasks.Add(animateTask);
-                }
+            return Task.WhenAll(tasks);
+        }
 
-                return Task.WhenAll(tasks);
-            });
+        private static Func<CancelEventArgs, Task> BuildCancellableAnimations(IList<StateAnimation> animations, Element element)
+        {
+            return (cancel) => BuildAnimationTasks(animations, element);
+        }
+
+        private static Func<Task> BuildAnimations(IList<StateAnimation> animations, Element element)
+        {
+            return () => BuildAnimationTasks(animations, element);
         }
 
         private static void BuildStateSetters(VisualState state, Element element, IList<IStateValue> values)
@@ -254,24 +164,7 @@ namespace BuildIt.Forms.Core
             foreach (var setter in state.Setters)
             {
                 var target = element.FindByTarget(setter);
-                //var target = setter.Target.Split('.');
-                //var name = target.FirstOrDefault();
-                //var prop = target.Skip(1).FirstOrDefault();
-                //var setterTarget = element.FindByName<Element>(name);
-                //if (setterTarget == null)
-                //{
-                //    var cv = element as ContentView;
-                //    if (cv == null) return;
-                //    foreach (var child in cv.Children)
-                //    {
-                //        setterTarget = child.FindByName<Element>(name);
-                //        if (setterTarget != null)
-                //        {
-                //            break;
-                //        }
-                //    }
-
-                //}
+               
 
                 if (target == null) continue;
                 var setterTarget = target.Item1;
@@ -384,23 +277,7 @@ namespace BuildIt.Forms.Core
         }
 
 
-        //public static readonly BindableProperty VisualStateGroupsProperty =
-        //    BindableProperty.CreateAttached("VisualStateGroups", typeof(Array), 
-        //        typeof(VisualStateManager),null,BindingMode.OneWay,null,StateGroupsChanged);
-
-        //private static void StateGroupsChanged(BindableObject bindable, object oldvalue, object newvalue)
-        //{
-        //}
-
-        //public static Array GetVisualStateGroups(BindableObject view)
-        //{
-        //    return (Array)view.GetValue(VisualStateGroupsProperty);
-        //}
-
-        //public static void SetVisualStateGroups(BindableObject view, Array value)
-        //{
-        //    view.SetValue(VisualStateGroupsProperty, value);
-        //}
+      
         public static void Bind(Element element, IStateManager stateManager)
         {
             // Retrieve the list of state groups from the ViewModel's StateManager
@@ -422,7 +299,7 @@ namespace BuildIt.Forms.Core
             // in the xaml and then wire up statechanged event handlers
             foreach (var group in groups)
             {
-                var groupName = group.Key.Name; // The state groups are defined by an enum type
+                var groupName = group.Key; // The state groups are defined by an enum type
 
                 var visualStateGroup = (from vsg in visualStateManagerGroups
                                         where vsg.Name == groupName
@@ -430,331 +307,26 @@ namespace BuildIt.Forms.Core
                 if (visualStateGroup == null) continue;
 
 
-                var helperType = typeof(StateChangeHelper<>).MakeGenericType(group.Key);
-                var helper = Activator.CreateInstance(helperType, group.Value, element);
+                var helper = new StateChangeHelper(group.Value, element);
             }
         }
 
-        private class StateChangeHelper<TState> where TState : struct
+        private class StateChangeHelper 
         {
-            private IStateGroup<TState> StateGroup { get; }
+            private IStateGroup StateGroup { get; }
             private Element Element { get; }
-            public StateChangeHelper(IStateGroup<TState> stateGroup, Element element)
+            public StateChangeHelper(IStateGroup stateGroup, Element element)
             {
                 StateGroup = stateGroup;
                 Element = element;
 
                 StateGroup.StateChanged += async (s, e) =>
                 {
-                    await VisualStateManager.GoToState(Element, e.State.ToString());
-                };
-            }
-        }
-    }
-
-    public static class ElementHelper
-    {
-        public static Tuple<Element, PropertyInfo> FindByTarget(this Element element, TargettedStateAction setter)
-        {
-            if (string.IsNullOrWhiteSpace(setter?.Target)) return null;
-            //var setterTarget
-            var target = setter.Target.Split('.');
-            var name = target.FirstOrDefault();
-            var prop = target.Skip(1).FirstOrDefault();
-            var setterTarget = element.FindByName<Element>(name);
-            if (setterTarget == null)
-            {
-                var cv = element as ContentView;
-                if (cv != null)
-                {
-                    foreach (var child in cv.Children)
-                    {
-                        setterTarget = child.FindByName<Element>(name);
-                        if (setterTarget != null)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            var targetProp = prop != null ? setterTarget?.GetType()?.GetProperty(prop) : null;
-            if (setterTarget == null) return null;
-            return new Tuple<Element, PropertyInfo>(setterTarget, targetProp);
-        }
-    }
-
-    public class VisualStateGroup : List<VisualState>
-    {
-        // TODO: Fix so we don't need to track the type used in the state manager
-        public Type StateGroupType { get; set; }
-        public IStateGroup StateGroup { get; set; }
-
-        public string Name { get; set; }
-
-        public VisualState CurrentState { get; set; }
-
-
-
-        public VisualStateGroup()
-        {
-
-        }
-
-    }
-
-    public class VisualState : BindableObject
-    {
-        // TODO: Remove need to track state type object (use Name instead)
-        public object StateType { get; set; }
-
-        public string Name { get; set; }
-        public static readonly BindableProperty SettersProperty =
-             BindableProperty.CreateAttached("Setters", typeof(IList<Setter>),
-                 typeof(VisualState), null, BindingMode.OneWayToSource, null, SettersChanged, null, null, CreateDefaultValue);
-
-
-
-        public IList<StateAnimation> Animations
-        {
-            get { return (IList<StateAnimation>)GetValue(AnimationsProperty); }
-            set { SetValue(AnimationsProperty, value); }
-        }
-
-        public static readonly BindableProperty AnimationsProperty =
-             BindableProperty.CreateAttached("Animations", typeof(IList<StateAnimation>),
-                 typeof(VisualState), null, BindingMode.OneWayToSource, null, null, null, null, CreateDefaultAnimations);
-
-
-
-        private static void SettersChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-
-        }
-
-        private static object CreateDefaultValue(BindableObject bindable)
-        {
-            return new List<Setter>();
-        }
-
-        private static object CreateDefaultAnimations(BindableObject bindable)
-        {
-            return new List<StateAnimation>();
-        }
-        public IList<Setter> Setters
-        {
-            get
-            {
-                return (IList<Setter>)base.GetValue(VisualState.SettersProperty);
-            }
-        }
-
-
-    }
-
-    public class RotateAnimation : StateAnimation
-    {
-        public double Rotation { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.RotateTo(Rotation, (uint)Duration);
-        }
-    }
-
-    public class TranslateAnimation : StateAnimation
-    {
-        public double TranslationX { get; set; }
-        public double TranslationY { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.TranslateTo(TranslationX, TranslationY, (uint)Duration);
-        }
-    }
-
-    public class ScaleAnimation : StateAnimation
-    {
-        public double Scale { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.ScaleTo(Scale, (uint)Duration);
-        }
-    }
-    public class IncrementRotateAnimation : StateAnimation
-    {
-        public double Rotation { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.RelRotateTo(Rotation, (uint)Duration);
-        }
-    }
-
-    public class IncrementScaleAnimation : StateAnimation
-    {
-        public double Scale { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.RelScaleTo(Scale, (uint)Duration);
-        }
-    }
-
-
-    public class RotateYAnimation : StateAnimation
-    {
-        public double Rotation { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.RotateYTo(Rotation, (uint)Duration);
-        }
-    }
-    public class RotateXAnimation : StateAnimation
-    {
-        public double Rotation { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.RotateXTo(Rotation, (uint)Duration);
-        }
-    }
-
-    public class FadeAnimation : StateAnimation
-    {
-        public double Opacity { get; set; }
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-            return visualElement.FadeTo(Opacity, (uint)Duration);
-        }
-    }
-
-    public class SequenceAnimation : MultiAnimation
-    {
-        public override async Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return;
-
-
-
-            foreach (var anim in Animations)
-            {
-                var target = visualElement.FindByTarget(anim);
-                var tg = target?.Item1 as VisualElement;
-                await anim.Animate(tg ?? (visualElement as VisualElement));
-            }
-        }
-    }
-
-    public class ParallelAnimation : MultiAnimation
-    {
-        public override Task Animate(VisualElement visualElement)
-        {
-            if (visualElement == null) return null;
-
-
-            var tasks = (from anim in Animations
-                         let target = visualElement.FindByTarget(anim)
-                         let tg = target?.Item1 as VisualElement
-                         select anim.Animate(tg ?? (visualElement as VisualElement)));
-            return Task.WhenAll(tasks);
-        }
-    }
-
-    [ContentProperty("Animations")]
-    public abstract class MultiAnimation : StateAnimation
-    {
-        public List<StateAnimation> Animations { get; } = new List<StateAnimation>();
-    }
-
-    public abstract class StateAnimation : TargettedStateAction
-    {
-        public abstract Task Animate(VisualElement visualElement);
-    }
-
-    public class Setter : TargettedStateAction
-    {
-        public string Value { get; set; }
-
-
-    }
-
-    public class TargettedStateAction
-    {
-        public string Target { get; set; }
-
-        public int Duration { get; set; }
-    }
-
-    public class Ambient
-    {
-        public static readonly BindableProperty ForeColorProperty =
-           BindableProperty.CreateAttached("ForeColor", typeof(Color),
-               typeof(Ambient), Color.Transparent, BindingMode.OneWayToSource, null, ColorChanged);
-
-        private static void ColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var clr = (Color)newValue;
-            ApplyForeColor(bindable, clr);
-
-        }
-
-        private static IDictionary<Type, FieldInfo> ColorProperties = new Dictionary<Type, FieldInfo>();
-        private static void ApplyForeColor(BindableObject bindable, Color foreColor)
-        {
-            if (bindable == null) return;
-
-            var objType = bindable.GetType();
-            FieldInfo colorProp = null;
-            if (!ColorProperties.ContainsKey(objType))
-            {
-                colorProp = objType.GetField("TextColorProperty");
-                ColorProperties[objType] = colorProp;
-            }
-
-            if (colorProp != null)
-            {
-                var prop = colorProp.GetValue(bindable) as BindableProperty;
-                if (prop != null)
-                {
-                    var currentVal = bindable.GetValue(prop);
-                    if (currentVal == null || (Color)currentVal == default(Color))
-                    {
-                        bindable.SetValue(prop, foreColor);
-                    }
-                }
-            }
-
-            var element = bindable as Layout;
-            if (element != null)
-            {
-                foreach (var emt in element.Children)
-                {
-                    ApplyForeColor(emt, foreColor);
-                }
-                var clr = foreColor;
-                element.ChildAdded += (s, e) =>
-                {
-                    ApplyForeColor(e.Element as BindableObject, clr);
+                    await VisualStateManager.GoToState(Element, e.StateName);
                 };
             }
         }
     }
 
 
-    /*
-     *  <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="States">
-                <VisualState x:Name="Test">
-                    <VisualState.Setters>
-                        <Setter Value="Red"
-                                Target="BG.(Grid.Background)"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-     * 
-     */
 }

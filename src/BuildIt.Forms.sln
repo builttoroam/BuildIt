@@ -5,34 +5,34 @@ VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0B120515-A0A9-4444-9C71-985BBF749FD5}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "..\BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Core", "BuildIt.Forms.Core\BuildIt.Forms.Core.csproj", "{EF038A32-FB22-46AD-8258-4A254F046C14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Core", "BuildIt.Forms\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj", "{EF038A32-FB22-46AD-8258-4A254F046C14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Controls", "BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj", "{B88241FC-7403-4AD2-989E-47D7BB5CDD76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Controls", "BuildIt.Forms\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj", "{B88241FC-7403-4AD2-989E-47D7BB5CDD76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Controls.Android", "BuildIt.Forms.Controls.Android\BuildIt.Forms.Controls.Android.csproj", "{77561504-0981-43B2-8F21-B52E8C358BF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Controls.Android", "BuildIt.Forms\BuildIt.Forms.Controls.Android\BuildIt.Forms.Controls.Android.csproj", "{77561504-0981-43B2-8F21-B52E8C358BF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Controls.iOS", "BuildIt.Forms.Controls.iOS\BuildIt.Forms.Controls.iOS.csproj", "{3D0998FA-F218-4674-9D94-4BC34D00848B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Controls.iOS", "BuildIt.Forms\BuildIt.Forms.Controls.iOS\BuildIt.Forms.Controls.iOS.csproj", "{3D0998FA-F218-4674-9D94-4BC34D00848B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Controls.UWP", "BuildIt.Forms.Controls.UWP\BuildIt.Forms.Controls.UWP.csproj", "{323A1445-E918-44FC-9C1D-82C1B9DE0AD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Controls.UWP", "BuildIt.Forms\BuildIt.Forms.Controls.UWP\BuildIt.Forms.Controls.UWP.csproj", "{323A1445-E918-44FC-9C1D-82C1B9DE0AD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Sample.UI", "Samples\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj", "{3083890B-12C7-4FBE-85BC-0CCF9CB1D556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Sample.UI", "BuildIt.Forms\Samples\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj", "{3083890B-12C7-4FBE-85BC-0CCF9CB1D556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.Android", "Samples\BuildIt.Forms.Sample.Android\BuildIt.Forms.Sample.Android.csproj", "{596B1582-CBDD-4F8D-89C2-C42FF1792601}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.Android", "BuildIt.Forms\Samples\BuildIt.Forms.Sample.Android\BuildIt.Forms.Sample.Android.csproj", "{596B1582-CBDD-4F8D-89C2-C42FF1792601}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.iOS", "Samples\BuildIt.Forms.Sample.iOS\BuildIt.Forms.Sample.iOS.csproj", "{317705FC-D2E8-4ADB-A605-39301849F247}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.iOS", "BuildIt.Forms\Samples\BuildIt.Forms.Sample.iOS\BuildIt.Forms.Sample.iOS.csproj", "{317705FC-D2E8-4ADB-A605-39301849F247}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.UWP", "Samples\BuildIt.Forms.Sample.UWP\BuildIt.Forms.Sample.UWP.csproj", "{01D94B8F-59CE-46D4-82D1-808E865621EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.UWP", "BuildIt.Forms\Samples\BuildIt.Forms.Sample.UWP\BuildIt.Forms.Sample.UWP.csproj", "{01D94B8F-59CE-46D4-82D1-808E865621EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.forms.Sample.Core", "BuildIt.forms.Sample.Core\BuildIt.forms.Sample.Core.csproj", "{7A0993B9-39BE-464B-8C6E-33FCB46E46D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.forms.Sample.Core", "BuildIt.Forms\BuildIt.forms.Sample.Core\BuildIt.forms.Sample.Core.csproj", "{7A0993B9-39BE-464B-8C6E-33FCB46E46D1}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{323a1445-e918-44fc-9c1d-82c1b9de0ad6}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{3d0998fa-f218-4674-9d94-4bc34d00848b}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{77561504-0981-43b2-8f21-b52e8c358bf5}*SharedItemsImports = 4
-		..\BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
+		BuildIt.Shared\BuildIt.Shared.projitems*{323a1445-e918-44fc-9c1d-82c1b9de0ad6}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{3d0998fa-f218-4674-9d94-4bc34d00848b}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{77561504-0981-43b2-8f21-b52e8c358bf5}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

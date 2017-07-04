@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using BuildIt.Forms.Controls;
 using BuildIt.ServiceLocation;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.Forms.Sample
 {

@@ -11,7 +11,7 @@
                 <vsm:VisualState Name="Show">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="Shown"
-                                Target="StatusLabel.Text" />
+                                    Target="StatusLabel.Text" />
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
                 <vsm:VisualState Name="Hide">
@@ -27,32 +27,87 @@
                 <vsm:VisualState Name="Default">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="100"
-                                    Target="AnimateGrid.HeightRequest" 
-                                    Duration="500"/>
+                                    Target="AnimateGrid.HeightRequest"
+                                    Duration="500" />
                     </vsm:VisualState.Setters>
-                    <vsm:VisualState.Animations>
-                        <vsm:RotateAnimation Rotation="0" Duration="500" Target="AnimateGrid"/>
-                        <vsm:FadeAnimation Opacity="1" Duration="500" Target="AnimateGrid"/>
-                    </vsm:VisualState.Animations>
+                    <vsm:VisualState.ArrivingAnimations>
+                        <vsm:AnimationGroup>
+                            <vsm:AnimationGroup.PreAnimations>
+                                <vsm:RotateAnimation Rotation="-360"
+                                                     Duration="500"
+                                                     Target="AnimateGrid" />
+                                <vsm:FadeAnimation Opacity="0"
+                                                   Duration="500"
+                                                   Target="AnimateGrid" />
+                            </vsm:AnimationGroup.PreAnimations>
+                            <vsm:AnimationGroup.PostAnimations>
+                                <vsm:RotateAnimation Rotation="0"
+                                                     Duration="500"
+                                                     Target="AnimateGrid" />
+                                <vsm:FadeAnimation Opacity="1"
+                                                   Duration="500"
+                                                   Target="AnimateGrid" />
+                            </vsm:AnimationGroup.PostAnimations>
+                        </vsm:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                    <vsm:VisualState.LeavingAnimations>
+                        <vsm:AnimationGroup>
+
+                            <vsm:AnimationGroup.PreAnimations>
+                                <vsm:RotateAnimation Rotation="360"
+                                                     Duration="500"
+                                                     Target="AnimateGrid" />
+                                <vsm:FadeAnimation Opacity="0"
+                                                   Duration="500"
+                                                   Target="AnimateGrid" />
+                            </vsm:AnimationGroup.PreAnimations>
+                            <vsm:AnimationGroup.PostAnimations>
+                                <vsm:RotateAnimation Rotation="0"
+                                                     Duration="500"
+                                                     Target="AnimateGrid" />
+                                <vsm:FadeAnimation Opacity="1"
+                                                   Duration="500"
+                                                   Target="AnimateGrid" />
+                            </vsm:AnimationGroup.PostAnimations>
+                        </vsm:AnimationGroup>
+                    </vsm:VisualState.LeavingAnimations>
+
                 </vsm:VisualState>
                 <vsm:VisualState Name="DoubleHeight">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="300"
-                                    Target="AnimateGrid.HeightRequest" 
-                                    Duration="3000"/>
+                                    Target="AnimateGrid.HeightRequest"
+                                    Duration="3000" />
                     </vsm:VisualState.Setters>
-                    <vsm:VisualState.Animations>
-                        <vsm:ParallelAnimation>
-                            <vsm:TranslateAnimation TranslationX="200" Duration="3000" Target="AnimateGrid"/>
-                            <vsm:FadeAnimation Opacity="0.2" Duration="750" Target="AnimateGrid"/>
-                            <vsm:SequenceAnimation>
-                                <vsm:RotateAnimation Rotation="135" Duration="750" Target="AnimateGrid"/>
-                                <vsm:RotateAnimation Rotation="0" Duration="750" Target="AnimateGrid"/>
-                                <vsm:RotateAnimation Rotation="135" Duration="750" Target="AnimateGrid"/>
-                                <vsm:RotateAnimation Rotation="0" Duration="750" Target="AnimateGrid"/>
-                            </vsm:SequenceAnimation>
-                        </vsm:ParallelAnimation>
-                    </vsm:VisualState.Animations>
+                    <vsm:VisualState.ArrivingAnimations>
+                        <vsm:AnimationGroup>
+                            <vsm:AnimationGroup.PostAnimations>
+                                <vsm:ParallelAnimation>
+                                    <vsm:TranslateAnimation TranslationX="200"
+                                                            Duration="3000"
+                                                            Target="AnimateGrid" />
+                                    <vsm:FadeAnimation Opacity="0.2"
+                                                       Duration="750"
+                                                       Target="AnimateGrid" />
+                                    <vsm:SequenceAnimation>
+                                        <vsm:RotateAnimation Rotation="135"
+                                                             Duration="750"
+                                                             Target="AnimateGrid" />
+                                        <vsm:RotateAnimation Rotation="0"
+                                                             Duration="750"
+                                                             Target="AnimateGrid" />
+                                        <vsm:RotateAnimation Rotation="135"
+                                                             Duration="750"
+                                                             Target="AnimateGrid" />
+                                        <vsm:RotateAnimation Rotation="0"
+                                                             Duration="750"
+                                                             Target="AnimateGrid" />
+                                    </vsm:SequenceAnimation>
+                                </vsm:ParallelAnimation>
+                            </vsm:AnimationGroup.PostAnimations>
+                        </vsm:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
         </x:Array>
@@ -64,47 +119,52 @@
         </Grid.Effects>-->
         <StackLayout vsm:Ambient.ForeColor="Blue"
                      Margin="20">
-            <Grid HeightRequest="200" BackgroundColor="Pink">
+            <Grid HeightRequest="200"
+                  BackgroundColor="Pink">
                 <!--<Grid.Effects>
                     <controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />
                 </Grid.Effects>-->
                 <Label FontSize="30"
-                   x:Name="HelloLabel"
-                   Text="Hello World - Blue! &#xF04B;"
-                       controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"
-                       >
-                <!--<Label.Effects>
+                       x:Name="HelloLabel"
+                       Text="Hello World - Blue! &#xF04B;"
+                       controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome">
+                    <!--<Label.Effects>
                     <controls:BackgroundEffect FallbackColor="Pink" />-->
                     <!--<controls:FontEffect />-->
                     <!--FontName="fontawesome-webfont.ttf#FontAwesome" />-->
                     <!--controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"-->
 
-                <!--</Label.Effects>-->
-                <!--<Label.FontFamily>
+                    <!--</Label.Effects>-->
+                    <!--<Label.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
                         <OnPlatform.iOS>FontAwesome</OnPlatform.iOS>
                         <OnPlatform.Android></OnPlatform.Android>
                         <OnPlatform.WinPhone>/Assets/Fonts/fontawesome-webfont.ttf#FontAwesome</OnPlatform.WinPhone>
                     </OnPlatform>
                 </Label.FontFamily>-->
-            </Label>
+                </Label>
             </Grid>
 
             <Label FontSize="30"
                    x:Name="StatusLabel"
                    TextColor="Red"
                    Text="Hello World - Red!" />
-           
 
-            <Grid HeightRequest="100" WidthRequest="100" x:Name="AnimateGrid" HorizontalOptions="Start">
+
+            <Grid HeightRequest="100"
+                  WidthRequest="100"
+                  x:Name="AnimateGrid"
+                  HorizontalOptions="Start">
                 <Grid.Effects>
                     <!--<controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />-->
-                    <!--<controls:BackgroundEffect FallbackColor="Green" />-->
+                    <controls:BackgroundEffect FallbackColor="Green" />
                 </Grid.Effects>
             </Grid>
             <StackLayout Orientation="Horizontal">
-                <Button Text="Expand" Clicked="ExpandClicked"/>
-                <Button Text="Default" Clicked="DefaultClicked"/>
+                <Button Text="Expand"
+                        Clicked="ExpandClicked" />
+                <Button Text="Default"
+                        Clicked="DefaultClicked" />
             </StackLayout>
             <Grid Padding="80">
                 <Grid.Effects>

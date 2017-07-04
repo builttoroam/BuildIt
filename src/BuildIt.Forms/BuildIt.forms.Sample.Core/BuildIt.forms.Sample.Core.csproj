@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.0.0.41" />
-    <PackageReference Include="BuildIt.States" Version="1.0.0.41" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.23-beta" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.forms.Sample.Core.ViewModels
 {

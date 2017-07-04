@@ -171,10 +171,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildIt.General">
-      <Version>1.0.0.41</Version>
+      <Version>1.1.0.15-beta</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.0.0.41</Version>
+      <Version>1.1.0.23-beta</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.3</Version>
@@ -183,7 +183,7 @@
       <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>2.3.5.239-pre3</Version>
+      <Version>2.3.5.256-pre6</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
