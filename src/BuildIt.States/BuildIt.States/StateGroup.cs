@@ -470,7 +470,11 @@ namespace BuildIt.States
             {
                 "Invoking AboutToLeave".Log();
                 await stateData.AboutToChangeFrom(cancel);
-                if (cancel.Cancel) return false;
+                if (cancel.Cancel)
+                {
+                    "ChangeToState cancelled by AboutToLeave".Log();
+                    return false;
+                }
             }
 
             var newStateDef = StateDefinition(newState);
@@ -498,9 +502,7 @@ namespace BuildIt.States
                 }
             }
            
-
-            "ChangeToState cancelled by AboutToLeave".Log();
-            return false;
+            return true;
         }
 
         /// <summary>
