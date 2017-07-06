@@ -6,15 +6,29 @@ using Newtonsoft.Json;
 
 namespace BuildIt
 {
+    /// <summary>
+    /// Helper class that simplifies writing log information
+    /// </summary>
     public static class LogHelper
     {
+        /// <summary>
+        /// Logs information about an entity
+        /// </summary>
+        /// <typeparam name="TEntity">The type of entity to write</typeparam>
+        /// <param name="entity">The entity to write (serialized)</param>
+        /// <param name="caller">The name of the calling method</param>
         public static void Log<TEntity>(this TEntity entity, [CallerMemberName] string caller = null)
         {
             var json = JsonConvert.SerializeObject(entity);
             // ReSharper disable once ExplicitCallerInfoArgument // Ignore that argument can be null
-            Log(typeof (TEntity).Name + ": " + json, caller);
+            Log(typeof(TEntity).Name + ": " + json, caller);
         }
 
+        /// <summary>
+        /// Log out a message
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        /// <param name="caller">The name of the calling method</param>
         public static void Log(this string message, [CallerMemberName] string caller = null)
         {
             try
@@ -27,6 +41,12 @@ namespace BuildIt
             }
         }
 
+        /// <summary>
+        /// Logs an exception
+        /// </summary>
+        /// <param name="ex">The exception to log</param>
+        /// <param name="message">The message (optional) to log</param>
+        /// <param name="caller">The calling method</param>
         public static void LogException(this Exception ex, string message = null,
             [CallerMemberName] string caller = null)
         {

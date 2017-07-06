@@ -15,15 +15,4 @@ namespace BuildIt
 
         bool IsRunningOnUIThread { get; }
     }
-
-    public interface IRequiresUIAccess
-    {
-        IUIExecutionContext UIContext { get; }
-    }
-
-    public interface IRegisterForUIAccess : IRequiresUIAccess
-    {
-        void RegisterForUIAccess(IUIExecutionContext context);
-    }
-
 }

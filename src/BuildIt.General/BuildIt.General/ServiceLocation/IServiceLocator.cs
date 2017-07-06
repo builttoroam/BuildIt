@@ -34,7 +34,7 @@ namespace BuildIt.ServiceLocation
         /// registered in the container.
         /// </summary>
         /// <param name="serviceType">Type of object requested.</param>
-        /// <exception cref="BuildIt.ServiceLActivationExceptiontion">if there is are errors resolving
+        /// <exception cref="ActivationException">if there is are errors resolving
         /// the service instance.</exception>
         /// <returns>A sequence of instances of the requested <paramref name="serviceType"/>.</returns>
         IEnumerable<object> GetAllInstances(Type serviceType);

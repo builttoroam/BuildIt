@@ -13,8 +13,15 @@ namespace BuildIt
     /// </summary>
     public class ParameterEventArgs<T> : EventArgs
     {
+        /// <summary>
+        /// The first parameter
+        /// </summary>
         public T Parameter1 { get; set; }
 
+        /// <summary>
+        /// Constructs the event args
+        /// </summary>
+        /// <param name="parameter">The first parameter</param>
         public ParameterEventArgs(T parameter)
         {
             Parameter1 = parameter;

@@ -34,6 +34,9 @@ namespace BuildIt.ServiceLocation
             currentProvider = newProvider;
         }
 
+        /// <summary>
+        /// Indicates whether the service location provider has been specified (use SetLocatorProvider)
+        /// </summary>
         public static bool IsLocationProviderSet => currentProvider != null;
     }
 }
