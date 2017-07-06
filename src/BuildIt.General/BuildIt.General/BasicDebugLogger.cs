@@ -16,7 +16,7 @@ namespace BuildIt
         public virtual void Debug(string message)
         {
             // NB: This is a null operation in the release method - this stub is only
-            // here to facilitate debugging the General library 
+            // here to facilitate debugging the General library
             System.Diagnostics.Debug.WriteLine(message);
         }
 
@@ -28,7 +28,7 @@ namespace BuildIt
         public virtual void Exception(string message, Exception ex)
         {
             // NB: This is a null operation in the release method - this stub is only
-            // here to facilitate debugging the General library 
+            // here to facilitate debugging the General library
             System.Diagnostics.Debug.WriteLine("Exception:" + ex.Message + " - " + message);
         }
     }

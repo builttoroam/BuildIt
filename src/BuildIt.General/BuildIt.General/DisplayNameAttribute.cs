@@ -9,11 +9,7 @@ namespace BuildIt
     public class DisplayNameAttribute : Attribute
     {
         /// <summary>
-        /// Gets the display name for the element
-        /// </summary>
-        public string DisplayName { get; }
-
-        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayNameAttribute"/> class.
         /// Constructs the attribute and sets the name
         /// </summary>
         /// <param name="displayName"></param>
@@ -21,5 +17,10 @@ namespace BuildIt
         {
             DisplayName = displayName;
         }
+
+        /// <summary>
+        /// Gets the display name for the element
+        /// </summary>
+        public string DisplayName { get; }
     }
 }

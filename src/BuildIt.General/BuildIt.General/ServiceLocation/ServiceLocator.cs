@@ -12,13 +12,21 @@ namespace BuildIt.ServiceLocation
         private static ServiceLocatorProvider currentProvider;
 
         /// <summary>
-        /// The current ambient container.
+        /// Gets a value indicating whether indicates whether the service location provider has been specified (use SetLocatorProvider)
+        /// </summary>
+        public static bool IsLocationProviderSet => currentProvider != null;
+
+        /// <summary>
+        /// Gets the current ambient container.
         /// </summary>
         public static IServiceLocator Current
         {
             get
             {
-                if (!IsLocationProviderSet) throw new InvalidOperationException(Constants.ServiceLocationProviderNotSetMessage);
+                if (!IsLocationProviderSet)
+                {
+                    throw new InvalidOperationException(Constants.ServiceLocationProviderNotSetMessage);
+                }
 
                 return currentProvider();
             }
@@ -33,10 +41,5 @@ namespace BuildIt.ServiceLocation
         {
             currentProvider = newProvider;
         }
-
-        /// <summary>
-        /// Indicates whether the service location provider has been specified (use SetLocatorProvider)
-        /// </summary>
-        public static bool IsLocationProviderSet => currentProvider != null;
     }
 }

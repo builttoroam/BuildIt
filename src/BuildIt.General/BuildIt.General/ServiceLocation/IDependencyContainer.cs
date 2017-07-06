@@ -12,6 +12,7 @@ namespace BuildIt.ServiceLocation
         /// </summary>
         /// <returns>Disposable object that will end the container update</returns>
         IDisposable StartUpdate();
+
         /// <summary>
         /// Ends updating the container
         /// </summary>
@@ -22,10 +23,11 @@ namespace BuildIt.ServiceLocation
         /// </summary>
         /// <typeparam name="TTypeToRegister"></typeparam>
         /// <typeparam name="TInterfaceTypeToRegisterAs"></typeparam>
-        void Register<TTypeToRegister, TInterfaceTypeToRegisterAs>() where TTypeToRegister : TInterfaceTypeToRegisterAs;
+        void Register<TTypeToRegister, TInterfaceTypeToRegisterAs>()
+            where TTypeToRegister : TInterfaceTypeToRegisterAs;
 
         /// <summary>
-        /// Registers a type 
+        /// Registers a type
         /// </summary>
         /// <typeparam name="TTypeToRegister"></typeparam>
         void Register<TTypeToRegister>();

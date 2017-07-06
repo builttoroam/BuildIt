@@ -1,6 +1,6 @@
 ﻿/********************************************************************************************************
  * Copyright (c) 2015 Built to Roam
- * This code is available for use only within authorised applications. 
+ * This code is available for use only within authorised applications.
  * Do not redistribute or reuse in unauthorised applications
  ********************************************************************************************************/
 
@@ -14,11 +14,7 @@ namespace BuildIt
     public class ParameterEventArgs<T> : EventArgs
     {
         /// <summary>
-        /// The first parameter
-        /// </summary>
-        public T Parameter1 { get; set; }
-
-        /// <summary>
+        /// Initializes a new instance of the <see cref="ParameterEventArgs{T}"/> class.
         /// Constructs the event args
         /// </summary>
         /// <param name="parameter">The first parameter</param>
@@ -26,6 +22,11 @@ namespace BuildIt
         {
             Parameter1 = parameter;
         }
+
+        /// <summary>
+        /// Gets or sets the first parameter
+        /// </summary>
+        public T Parameter1 { get; set; }
 
         /// <summary>
         /// Converts the parameter into a ParameterEventArgs

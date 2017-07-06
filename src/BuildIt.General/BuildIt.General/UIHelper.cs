@@ -8,7 +8,11 @@ namespace BuildIt
         public static void RegisterForUIAccess(this IRegisterForUIAccess requiresAccess, IRequiresUIAccess hasAccess)
         {
             var cxt = hasAccess?.UIContext;
-            if (cxt == null) return;
+            if (cxt == null)
+            {
+                return;
+            }
+
             requiresAccess?.RegisterForUIAccess(hasAccess?.UIContext);
         }
 
@@ -39,6 +43,7 @@ namespace BuildIt
                 await action();
                 return;
             }
+
             if (context.IsRunningOnUIThread)
             {
                 await action();

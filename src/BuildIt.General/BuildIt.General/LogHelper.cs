@@ -11,6 +11,31 @@ namespace BuildIt
     /// </summary>
     public static class LogHelper
     {
+        private static ILogService logService;
+        private static bool hasLookedForLogService;
+
+        private static ILogService LogService
+        {
+            get
+            {
+                try
+                {
+                    if (hasLookedForLogService)
+                    {
+                        return logService;
+                    }
+
+                    hasLookedForLogService = true;
+                    return logService ?? (logService = ServiceLocator.Current.GetInstance<ILogService>());
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error retrieving ILogService implementation: " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
         /// <summary>
         /// Logs information about an entity
         /// </summary>
@@ -20,6 +45,7 @@ namespace BuildIt
         public static void Log<TEntity>(this TEntity entity, [CallerMemberName] string caller = null)
         {
             var json = JsonConvert.SerializeObject(entity);
+
             // ReSharper disable once ExplicitCallerInfoArgument // Ignore that argument can be null
             Log(typeof(TEntity).Name + ": " + json, caller);
         }
@@ -47,12 +73,10 @@ namespace BuildIt
         /// <param name="ex">The exception to log</param>
         /// <param name="message">The message (optional) to log</param>
         /// <param name="caller">The calling method</param>
-        public static void LogException(this Exception ex, string message = null,
-            [CallerMemberName] string caller = null)
+        public static void LogException(this Exception ex, string message = null, [CallerMemberName] string caller = null)
         {
             try
             {
-
                 InternalWriteException(caller + ": " + message, ex);
             }
             catch (Exception ext)
@@ -61,29 +85,7 @@ namespace BuildIt
             }
         }
 
-
-        private static ILogService logService;
-        private static bool hasLookedForLogService;
-
-        private static ILogService LogService
-        {
-            get
-            {
-                try
-                {
-                    if (hasLookedForLogService) return logService;
-                    hasLookedForLogService = true;
-                    return logService ?? (logService = ServiceLocator.Current.GetInstance<ILogService>());
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Error retrieving ILogService implementation: " + ex.Message);
-                    return null;
-                }
-            }
-        }
-
-        private static void InternalWriteLog(string message)
+    private static void InternalWriteLog(string message)
         {
             try
             {
@@ -95,7 +97,6 @@ namespace BuildIt
                 Debug.WriteLine(ext.Message);
             }
         }
-
 
         private static void InternalWriteException(string message, Exception ex)
         {

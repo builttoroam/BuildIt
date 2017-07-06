@@ -12,6 +12,11 @@ namespace BuildIt
         where TConfiguration : BaseConfiguration
     {
         /// <summary>
+        /// Gets returns the current configuration
+        /// </summary>
+        TConfiguration Current { get; }
+
+        /// <summary>
         /// Populates the configuration manager
         /// </summary>
         /// <param name="configurations">Dictionary of key (each environment) and configuration entity</param>
@@ -22,10 +27,5 @@ namespace BuildIt
         /// </summary>
         /// <param name="key">The configuration environment</param>
         void SelectConfiguration(TConfigurationKey key);
-
-        /// <summary>
-        /// Returns the current configuration
-        /// </summary>
-        TConfiguration Current { get; }
     }
 }

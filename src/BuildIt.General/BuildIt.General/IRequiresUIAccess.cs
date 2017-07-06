@@ -6,7 +6,7 @@ namespace BuildIt
     public interface IRequiresUIAccess
     {
         /// <summary>
-        /// The UI context registered with the entity
+        /// Gets the UI context registered with the entity
         /// </summary>
         IUIExecutionContext UIContext { get; }
     }

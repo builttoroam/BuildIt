@@ -8,7 +8,7 @@ namespace BuildIt
     public class CancelEventArgs : EventArgs
     {
         /// <summary>
-        /// Whether the action should be cancelled or not
+        /// Gets or sets a value indicating whether whether the action should be cancelled or not
         /// </summary>
         public bool Cancel { get; set; }
     }
