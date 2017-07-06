@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0B120515-A0A9-4444-9C71-985BBF749FD5}"
 EndProject
@@ -25,7 +25,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.iOS", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.UWP", "BuildIt.Forms\Samples\BuildIt.Forms.Sample.UWP\BuildIt.Forms.Sample.UWP.csproj", "{01D94B8F-59CE-46D4-82D1-808E865621EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.forms.Sample.Core", "BuildIt.Forms\BuildIt.forms.Sample.Core\BuildIt.forms.Sample.Core.csproj", "{7A0993B9-39BE-464B-8C6E-33FCB46E46D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.forms.Sample.Core", "BuildIt.Forms\BuildIt.forms.Sample.Core\BuildIt.forms.Sample.Core.csproj", "{7A0993B9-39BE-464B-8C6E-33FCB46E46D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{D0C173D1-828E-462F-ACB2-AD1DB2324CF9}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Forms\BuildIt.Forms.nuspec = BuildIt.Forms\BuildIt.Forms.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -573,5 +578,8 @@ Global
 		{317705FC-D2E8-4ADB-A605-39301849F247} = {0B120515-A0A9-4444-9C71-985BBF749FD5}
 		{01D94B8F-59CE-46D4-82D1-808E865621EE} = {0B120515-A0A9-4444-9C71-985BBF749FD5}
 		{7A0993B9-39BE-464B-8C6E-33FCB46E46D1} = {0B120515-A0A9-4444-9C71-985BBF749FD5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6D66695-869E-4605-B50E-D2D2CD9CB161}
 	EndGlobalSection
 EndGlobal

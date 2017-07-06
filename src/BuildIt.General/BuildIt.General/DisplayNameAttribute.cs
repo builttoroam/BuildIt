@@ -12,7 +12,7 @@ namespace BuildIt
         /// Initializes a new instance of the <see cref="DisplayNameAttribute"/> class.
         /// Constructs the attribute and sets the name
         /// </summary>
-        /// <param name="displayName"></param>
+        /// <param name="displayName">The name to assign to the element</param>
         public DisplayNameAttribute(string displayName)
         {
             DisplayName = displayName;

@@ -27,6 +27,7 @@
         /// <summary>
         /// Converts the parameter into a ParameterEventArgs
         /// </summary>
+        /// <param name="parameters">The parameter list</param>
         public static implicit operator DualParameterEventArgs<T1, T2>(object[] parameters)
         {
             if (parameters == null || parameters.Length != 2 || parameters[0] == null || parameters[1] == null)

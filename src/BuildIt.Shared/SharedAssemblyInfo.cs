@@ -1,5 +1,5 @@
-﻿using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Resources;
 
 [assembly: AssemblyCompany("Built to Roam Pty Ltd")]
 [assembly: AssemblyCopyright("Copyright © 2017")]
@@ -10,5 +10,3 @@ using System.Reflection;
 [assembly: AssemblyVersion("1.1.0.0")]
 [assembly: AssemblyFileVersion("1.1.0.0")]
 [assembly: AssemblyInformationalVersion("1.1.0.0")]
-
-

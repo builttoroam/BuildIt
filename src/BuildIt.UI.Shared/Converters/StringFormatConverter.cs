@@ -1,10 +1,4 @@
-﻿/********************************************************************************************************
- * Copyright (c) 2011 Built to Roam
- * This code is available for use only within authorised applications. 
- * Do not redistribute or reuse in unauthorised applications
- ********************************************************************************************************/
-
-using System;
+﻿using System;
 using System.Globalization;
 #if !NETFX_CORE
 using System.Windows.Data;
@@ -20,21 +14,24 @@ namespace BuildIt.General.UI.Converters
     /// </summary>
     public class StringFormatConverter : IValueConverter
     {
+#pragma warning disable SA1615 // Element return value must be documented
         /// <summary>
         /// Converts a value to a string by formatting it.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <param name="targetType">The target type of the conversion.</param>
         /// <param name="parameter">The format string.</param>
-        /// <param name="culture">The culture to use for conversion.</param>
+        /// <param name="language">The language to use for conversion.</param>
         /// <returns>The formatted string.</returns>
+#pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object Convert(object value, Type targetType, object parameter,
 #if !NETFX_CORE
-            CultureInfo culture
+            CultureInfo culture)
 #else
- string language
+            string language)
 #endif
-)
+#pragma warning restore SA1117 // Parameters must be on same line or separate lines
+#pragma warning restore SA1615 // Element return value must be documented
         {
             if (value == null)
             {
@@ -51,15 +48,15 @@ namespace BuildIt.General.UI.Converters
         /// <param name="targetType">The target type of the conversion.</param>
         /// <param name="parameter">A parameter used during the conversion
         /// process.</param>
-        /// <param name="culture">The culture to use for the conversion.</param>
+        /// <param name="language">The language to use for conversion.</param>
         /// <returns>The converted object.</returns>
+#pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object ConvertBack(object value, Type targetType, object parameter,
 #if !NETFX_CORE
-            CultureInfo culture
+            CultureInfo culture)
 #else
- string language
+            string language)
 #endif
-)
         {
             throw new NotSupportedException();
         }

@@ -11,6 +11,7 @@ namespace BuildIt
     /// <summary>
     /// Event args with one strongly typed parameter
     /// </summary>
+    /// <typeparam name="T">The type of the first parameter</typeparam>
     public class ParameterEventArgs<T> : EventArgs
     {
         /// <summary>
@@ -31,6 +32,7 @@ namespace BuildIt
         /// <summary>
         /// Converts the parameter into a ParameterEventArgs
         /// </summary>
+        /// <param name="parameter">The first parameter</param>
         public static implicit operator ParameterEventArgs<T>(T parameter)
         {
             return new ParameterEventArgs<T>(parameter);

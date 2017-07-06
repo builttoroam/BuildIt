@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 #if NETFX_CORE
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
 using System.Windows.Controls;
@@ -13,19 +13,40 @@ using Microsoft.Phone.Controls;
 
 namespace BuildIt.General.UI
 {
+    /// <summary>
+    /// General helper class
+    /// </summary>
     public static class Utilities
     {
+        /// <summary>
+        /// Inverts a visibility value
+        /// </summary>
+        /// <param name="visible">The value to invert</param>
+        /// <returns>The inverted value</returns>
         public static Visibility Inverse(this Visibility visible)
         {
             return visible == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
+        /// <summary>
+        /// Converts bool to visibility value
+        /// </summary>
+        /// <param name="isVisible">bool value to convert</param>
+        /// <returns>The corresponding visibility value</returns>
         public static Visibility ToVisibility(this bool isVisible)
         {
             return isVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public static T SelectedItem<T>(this object sender, bool resetSelectedIndex = true) where T : class
+        /// <summary>
+        /// Returns the selected item, and optionally sets the selected item back to null
+        /// </summary>
+        /// <typeparam name="T">The type of the selected item</typeparam>
+        /// <param name="sender">The list element</param>
+        /// <param name="resetSelectedIndex">Whether selected item should be set to null</param>
+        /// <returns>The selected item</returns>
+        public static T SelectedItem<T>(this object sender, bool resetSelectedIndex = true)
+            where T : class
         {
             T selected = null;
             var list = sender as Selector;
@@ -47,13 +68,17 @@ namespace BuildIt.General.UI
                 }
 #endif
 
-
             }
             else
             {
                 selected = list.SelectedItem as T;
             }
-            if (selected == null) return default(T);
+
+            if (selected == null)
+            {
+                return default(T);
+            }
+
             if (resetSelectedIndex)
             {
 #if !NETFX_CORE
@@ -70,36 +95,53 @@ namespace BuildIt.General.UI
                 list.SelectedIndex = -1;
 #endif
             }
+
             return selected;
         }
 
-
-        public static T FindControlByType<T>(this DependencyObject container, string name = null) where T : DependencyObject
+        /// <summary>
+        /// Finds an element by name and type
+        /// </summary>
+        /// <typeparam name="T">The type of element to search for</typeparam>
+        /// <param name="container">The root element to search from</param>
+        /// <param name="name">The (optional) name of element to retrieve</param>
+        /// <returns>The matching element</returns>
+        public static T FindControlByType<T>(this DependencyObject container, string name = null)
+            where T : DependencyObject
         {
             T foundControl = null;
 
-            //for each child object in the container
+            // for each child object in the container
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(container); i++)
             {
-                //is the object of the type we are looking for?
+                // is the object of the type we are looking for?
                 if (VisualTreeHelper.GetChild(container, i) is T && (VisualTreeHelper.GetChild(container, i).GetValue(FrameworkElement.NameProperty).Equals(name) || name == null))
                 {
                     foundControl = (T)VisualTreeHelper.GetChild(container, i);
                     break;
                 }
-                //if not, does it have children?
+
+                // if not, does it have children?
                 else if (VisualTreeHelper.GetChildrenCount(VisualTreeHelper.GetChild(container, i)) > 0)
                 {
-                    //recursively look at its children
+                    // recursively look at its children
                     foundControl = FindControlByType<T>(VisualTreeHelper.GetChild(container, i), name);
                     if (foundControl != null)
+                    {
                         break;
+                    }
                 }
             }
 
             return foundControl;
         }
 
+        /// <summary>
+        /// Returns all descendents to a particular depth
+        /// </summary>
+        /// <param name="root">The root element</param>
+        /// <param name="depth">The depth to return elements to</param>
+        /// <returns>The collection of elements</returns>
         public static IEnumerable<DependencyObject> Descendents(this DependencyObject root, int depth)
         {
             int count = VisualTreeHelper.GetChildrenCount(root);
@@ -110,16 +152,28 @@ namespace BuildIt.General.UI
                 if (depth > 0)
                 {
                     foreach (var descendent in Descendents(child, --depth))
+                    {
                         yield return descendent;
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// The descendents of an element
+        /// </summary>
+        /// <param name="root">The root element</param>
+        /// <returns>The descendents</returns>
         public static IEnumerable<DependencyObject> Descendents(this DependencyObject root)
         {
             return Descendents(root, int.MaxValue);
         }
 
+        /// <summary>
+        /// The ancestors of the element
+        /// </summary>
+        /// <param name="root">The start element</param>
+        /// <returns>The ancestors</returns>
         public static IEnumerable<DependencyObject> Ancestors(this DependencyObject root)
         {
             DependencyObject current = VisualTreeHelper.GetParent(root);

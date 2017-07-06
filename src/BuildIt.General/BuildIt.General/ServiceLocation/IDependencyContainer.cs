@@ -21,15 +21,15 @@ namespace BuildIt.ServiceLocation
         /// <summary>
         /// Registers a type based on an interface it implements
         /// </summary>
-        /// <typeparam name="TTypeToRegister"></typeparam>
-        /// <typeparam name="TInterfaceTypeToRegisterAs"></typeparam>
+        /// <typeparam name="TTypeToRegister">The type to register</typeparam>
+        /// <typeparam name="TInterfaceTypeToRegisterAs">The type that it should be registered as</typeparam>
         void Register<TTypeToRegister, TInterfaceTypeToRegisterAs>()
             where TTypeToRegister : TInterfaceTypeToRegisterAs;
 
         /// <summary>
         /// Registers a type
         /// </summary>
-        /// <typeparam name="TTypeToRegister"></typeparam>
+        /// <typeparam name="TTypeToRegister">The type to register</typeparam>
         void Register<TTypeToRegister>();
 
         /// <summary>
