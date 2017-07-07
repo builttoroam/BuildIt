@@ -22,7 +22,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
+    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildIt.General" Version="1.1.0.26" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using BuildIt.States.Interfaces.Builder;
 
 namespace BuildIt.States.UWP
 {

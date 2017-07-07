@@ -11,6 +11,7 @@ using BuildIt.ServiceLocation;
 //using BuildIt.ServiceLocation;
 using BuildIt.States.Completion;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Interfaces.Builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BuildIt.States.Tests
@@ -401,8 +402,10 @@ namespace BuildIt.States.Tests
             Assert.IsNotNull(st.StateDataWrapper);
             Assert.AreEqual(TestCompletion.Complete1, st.Completion);
             Assert.IsNotNull(st.Data);
-            var vm = new State1Data();
-            vm.TestBoolValue = false;
+            var vm = new State1Data
+            {
+                TestBoolValue = false
+            };
             Assert.AreEqual(false, st.Data(vm));
             vm.TestBoolValue = true;
             Assert.AreEqual(true, st.Data(vm));
@@ -428,8 +431,7 @@ namespace BuildIt.States.Tests
             Assert.IsNotNull(st.State);
             Assert.IsNotNull(st.StateDataWrapper);
             Assert.AreEqual(DefaultCompletion.Complete, st.Completion);
-            var vm = new State1Data();
-            vm.TestBoolValue = false;
+            var vm = new State1Data {TestBoolValue = false};
             Assert.AreEqual(false, st.Data(vm));
             vm.TestBoolValue = true;
             Assert.AreEqual(true, st.Data(vm));

@@ -50,22 +50,22 @@ namespace States.Sample.UWP
         {
             base.OnNavigatedTo(e);
 
-            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.Loading);
+            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoading);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.Loading);
+            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoading);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.LoadingFailed);
+            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoadingFailed);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.Loaded);
+            (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoaded);
         }
     }
 

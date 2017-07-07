@@ -2,80 +2,35 @@
 
 namespace BuildIt.States
 {
-    public interface IStateEventArgs
-    {
-        string StateName { get;  }
-        bool UseTransitions { get;  }
-        bool IsNewState { get;  }
-    }
-
-
-
-    public class StateCancelEventArgs : CancelEventArgs, IStateEventArgs
-    {
-        public virtual string StateName { get; }
-        public bool UseTransitions { get; protected set; }
-        public bool IsNewState { get; protected set; }
-
-        protected StateCancelEventArgs()
-        {
-
-        }
-
-        public StateCancelEventArgs(string state, bool useTransitions, bool isNewState)
-        {
-            StateName=state;
-            UseTransitions = useTransitions;
-            IsNewState = isNewState;
-        }
-    }
-
+    /// <summary>
+    /// Event args for state change and changing events
+    /// </summary>
     public class StateEventArgs : EventArgs, IStateEventArgs
     {
-        public virtual string StateName { get; }
-        public bool UseTransitions { get; protected set; }
-        public bool IsNewState { get; protected set; }
-
+        /// <summary>
+        /// Empty constructor to support subclassing
+        /// </summary>
         protected StateEventArgs()
         {
-            
+
         }
 
+        /// <summary>
+        /// Constructs new instance
+        /// </summary>
+        /// <param name="state">The state name</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="isNewState">Whether this is a new state or going back to existing</param>
         public StateEventArgs(string state, bool useTransitions, bool isNewState)
         {
             StateName = state;
             UseTransitions = useTransitions;
             IsNewState = isNewState;
         }
-    }
+        public virtual string StateName { get; }
+        public bool UseTransitions { get; protected set; }
+        public bool IsNewState { get; protected set; }
 
-    public class EnumStateEventArgs<TState> : StateEventArgs
-        where TState:struct
-    {
-        public override string StateName => EnumState + "";
-
-        public TState EnumState { get;  }
-
-        public EnumStateEventArgs(TState state, bool useTransitions, bool isNewState)
-        {
-            EnumState = state;
-            UseTransitions = useTransitions;
-            IsNewState = isNewState;
-        }
-    }
-
-    public class EnumStateCancelEventArgs<TState> : StateCancelEventArgs
-        where TState : struct
-    {
-        public override string StateName => EnumState + "";
-
-        public TState EnumState { get; }
-
-        public EnumStateCancelEventArgs(TState state, bool useTransitions, bool isNewState)
-        {
-            EnumState = state;
-            UseTransitions = useTransitions;
-            IsNewState = isNewState;
-        }
+       
     }
 }

@@ -425,6 +425,8 @@ namespace BuildIt.States
         /// - State data
         /// Note: If overriding, make sure to call the base method!
         /// </summary>
+        /// <param name="newState">The new state to transition to</param>
+        /// <param name="data">The json data to be passed to the new state</param>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
         /// <returns>Success indicator</returns>
@@ -512,6 +514,8 @@ namespace BuildIt.States
         /// - State data
         /// Note: If overriding, make sure to call the base method!
         /// </summary>
+        /// <param name="newState">The new state</param>
+        /// <param name="dataAsJson">The data to be passed into the new state</param>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
         protected virtual async Task ChangingFrom(string newState, string dataAsJson, bool isNewState, bool useTransitions)
@@ -656,6 +660,7 @@ namespace BuildIt.States
         /// - State definition
         /// Note: If overriding, make sure to call the base method!
         /// </summary>
+        /// <param name="oldState">The previous/existing state</param>
         /// <param name="dataAsJson">Any data that needs to be passed in</param>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>

@@ -7,9 +7,19 @@ namespace BuildIt.States
     /// </summary>
     public abstract class BaseBinder<TEntity> : IStateBinder
     {
+        /// <summary>
+        /// The target for binding (to be updated when source changes)
+        /// </summary>
         protected TEntity Target { get; }
+        
+        /// <summary>
+        /// The source to be monitored
+        /// </summary>
         protected TEntity Source { get; }
 
+        /// <summary>
+        /// Whether the target is monitored for changes too
+        /// </summary>
         protected bool BothDirections { get; }
 
         private bool IsBound { get; set; }
@@ -40,7 +50,14 @@ namespace BuildIt.States
             IsBound = true;
         }
 
+        /// <summary>
+        /// Binds source and target
+        /// </summary>
         protected abstract void InternalBind();
+
+        /// <summary>
+        /// Unbinds source and target
+        /// </summary>
         protected abstract void InternalUnbind();
 
         /// <summary>

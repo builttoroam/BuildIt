@@ -12,9 +12,9 @@ namespace States.Sample.Core
     public enum LoadingStates
     {
         Base,
-        Loading,
-        Loaded,
-        LoadingFailed
+        UILoading,
+        UILoaded,
+        UILoadingFailed
     }
 
     public enum SizeStates

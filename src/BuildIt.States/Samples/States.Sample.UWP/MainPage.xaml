@@ -26,7 +26,7 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup x:Name="LoadingUIStates">
-                <VisualState x:Name="Loading">
+                <VisualState x:Name="UILoading">
                     <Storyboard>
                         <ColorAnimation Duration="0"
                                         To="#FF1DFF00"
@@ -35,7 +35,7 @@
                                         d:IsOptimized="True" />
                     </Storyboard>
                 </VisualState>
-                <VisualState x:Name="Loaded">
+                <VisualState x:Name="UILoaded">
                     <Storyboard>
                         <ColorAnimation Duration="0"
                                         To="Blue"
@@ -44,7 +44,7 @@
                                         d:IsOptimized="True" />
                     </Storyboard>
                 </VisualState>
-                <VisualState x:Name="LoadingFailed">
+                <VisualState x:Name="UILoadingFailed">
                     <Storyboard>
                         <ColorAnimation Duration="0"
                                         To="#FFCBFF00"

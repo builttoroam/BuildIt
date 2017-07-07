@@ -6,28 +6,48 @@ using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
-    /// <summary>
-    /// 
-    /// </summary>
+/// <summary>
+/// Manager class for interacting with states
+/// </summary>
     public class StateManager : IStateManager//, ICanRegisterDependencies
     {
-        public event EventHandler GoToPreviousStateIsBlockedChanged;
-
         private readonly Dictionary<string, IStateGroup> stateGroups =
             new Dictionary<string, IStateGroup>();
 
+        /// <summary>
+        /// Event to indicate that going to previous state has been blocked by one of the active states
+        /// </summary>
+        public event EventHandler GoToPreviousStateIsBlockedChanged;
+
+        /// <summary>
+        /// The currently defined state groups
+        /// </summary>
         public IReadOnlyDictionary<string, IStateGroup> StateGroups => stateGroups;
 
+        /// <summary>
+        /// Retrieves state group based on type
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) to look up the state group</typeparam>
+        /// <returns>The typed state group</returns>
         public IEnumStateGroup<TState> EnumStateGroup<TState>() where TState : struct
         {
             return StateGroup(typeof(TState).Name) as IEnumStateGroup<TState>;
         }
 
+        /// <summary>
+        /// Retrieves a state group by name
+        /// </summary>
+        /// <param name="groupName">The name of the state group to retrieve</param>
+        /// <returns>The state group (or null)</returns>
         public IStateGroup StateGroup(string groupName)
         {
             return StateGroups.SafeValue(groupName);
         }
 
+        /// <summary>
+        /// Add a state group
+        /// </summary>
+        /// <param name="group">The state group to add</param>
         public void AddStateGroup(IStateGroup group)
         {
             stateGroups[group.GroupName] = group;
@@ -39,6 +59,11 @@ namespace BuildIt.States
             GoToPreviousStateIsBlockedChanged.SafeRaise(this);
         }
 
+        /// <summary>
+        /// The current state for a particular state group
+        /// </summary>
+        /// <typeparam name="TState">the type (enum) to look up the state group</typeparam>
+        /// <returns>The current state</returns>
         public TState CurrentState<TState>()
             where TState : struct
         {
@@ -47,12 +72,24 @@ namespace BuildIt.States
             return group.CurrentEnumState;
         }
 
+        /// <summary>
+        /// The current state for a particular state group
+        /// </summary>
+        /// <param name="groupName">The name of the state group to retrieve</param>
+        /// <returns>The current state</returns>
         public string CurrentState(string groupName)
         {
             var group = StateGroup(groupName);
             return @group?.CurrentStateName;
         }
 
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether to animate the transition</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
@@ -61,6 +98,15 @@ namespace BuildIt.States
             return await group.ChangeTo(state, animate);
         }
 
+        /// <summary>
+        /// Transitions to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of state to go to</typeparam>
+        /// <typeparam name="TData">The type of data to be passed to new state</typeparam>
+        /// <param name="state">The new state to go to</param>
+        /// <param name="data">The data to pass to the new state</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
            where TState : struct
         {
@@ -68,6 +114,14 @@ namespace BuildIt.States
             if (group == null) return false;
             return await group.ChangeToWithData(state, data, animate);
         }
+
+        /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct
         {
             var group = EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState));
@@ -76,6 +130,13 @@ namespace BuildIt.States
         }
 
 
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoToState(string groupName, string stateName, bool animate = true)
         {
             var group = StateGroup(groupName);
@@ -83,12 +144,29 @@ namespace BuildIt.States
             return await group.ChangeTo(stateName, animate);
         }
 
+        /// <summary>
+        /// Go to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TData">The type of data to be passed to the new state</typeparam>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="data">The data to be passed in</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoToStateWithData<TData>(string groupName, string stateName, TData data, bool animate = true)
         {
             var group = StateGroup(groupName);
             if (group == null) return false;
             return await group.ChangeToWithData(stateName, data, animate);
         }
+
+        /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoBackToState(string groupName, string stateName, bool animate = true)
         {
             var group = StateGroup(groupName);
@@ -96,6 +174,11 @@ namespace BuildIt.States
             return await group.ChangeBackTo(stateName, animate);
         }
 
+        /// <summary>
+        /// Go back to the previous state
+        /// </summary>
+        /// <param name="animate">whether to animate the transition</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoBackToPreviousState(bool animate = true)
         {
             foreach (var stateGroup in StateGroups)
@@ -106,6 +189,9 @@ namespace BuildIt.States
             return false;
         }
 
+        /// <summary>
+        /// Indicates if there is a previous state (in any state group)
+        /// </summary>
         public bool PreviousStateExists
         {
             get
@@ -114,6 +200,9 @@ namespace BuildIt.States
             }
         }
 
+        /// <summary>
+        /// Whether going to previous state is currently blocked
+        /// </summary>
         public bool GoToPreviousStateIsBlocked
         {
             get
@@ -123,13 +212,15 @@ namespace BuildIt.States
             }
         }
 
+        /// <summary>
+        /// Bind two different state managers
+        /// </summary>
+        /// <param name="managerToBindTo">The state manager to listen to for changes</param>
+        /// <param name="bothDirections">Whether updates to states should go both ways</param>
+        /// <returns>Binder that can be used to disconnect the state managers</returns>
         public IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections=true)
         {
             return new StateManagerBinder(this, managerToBindTo, bothDirections);
         }
-
-        
-
-       
     }
 }
