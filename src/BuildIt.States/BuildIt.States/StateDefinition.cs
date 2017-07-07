@@ -11,75 +11,76 @@ namespace BuildIt.States
     public class StateDefinition : IStateDefinition
     {
         /// <summary>
-        /// The name of the state (should be unique)
+        /// Gets the name of the state (should be unique)
         /// </summary>
         public virtual string StateName { get; }
 
         /// <summary>
-        /// The triggers that are available for the state
+        /// Gets the triggers that are available for the state
         /// </summary>
         public IList<IStateTrigger> Triggers { get; } = new List<IStateTrigger>();
 
         /// <summary>
-        /// Method to be invoked when about to change from the state (cancellable)
+        /// Gets or sets method to be invoked when about to change from the state (cancellable)
         /// </summary>
         public Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
 
         /// <summary>
-        /// Method to be invoked when about to change to the state (cancellable)
+        /// Gets or sets method to be invoked when about to change to the state (cancellable)
         /// </summary>
         public Func<CancelEventArgs, Task> AboutToChangeTo { get; set; }
 
         /// <summary>
-        /// Method to be invoked when about to change to the state (cancellable)
+        /// Gets or sets method to be invoked when about to change to the state (cancellable)
         /// </summary>
         public Func<string, CancelEventArgs, Task> AboutToChangeToWithData { get; set; }
 
         /// <summary>
-        /// Method to be invoked when changing from the state (not cancellable)
+        /// Gets or sets method to be invoked when changing from the state (not cancellable)
         /// </summary>
         public Func<Task> ChangingFrom { get; set; }
 
         /// <summary>
-        /// Method to be invoked when the state transition to this state is about to start (arriving at this state)
+        /// Gets or sets method to be invoked when the state transition to this state is about to start (arriving at this state)
         /// </summary>
         public Func<Task> ChangingTo { get; set; }
 
         /// <summary>
-        /// Method to be invoked when the state transition to this state is about to start (arriving at this state)
+        /// Gets or sets method to be invoked when the state transition to this state is about to start (arriving at this state)
         /// </summary>
         public Func<string, Task> ChangingToWithData { get; set; }
 
 
         /// <summary>
-        /// Method to be invoked when the state transition has completed (left this state)
+        /// Gets or sets method to be invoked when the state transition has completed (left this state)
         /// </summary>
         public Func<Task> ChangedFrom { get; set; }
 
         /// <summary>
-        /// Method to be invoked when changed to the state
+        /// Gets or sets method to be invoked when changed to the state
         /// </summary>
         public Func<Task> ChangedTo { get; set; }
 
         /// <summary>
-        /// Method to be invoked when changed to the state, with data
+        /// Gets or sets method to be invoked when changed to the state, with data
         /// </summary>
         public Func<string, Task> ChangedToWithJsonData { get; set; }
 
         /// <summary>
-        /// The set of properties to change when entering this state
+        /// Gets the set of properties to change when entering this state
         /// </summary>
         public IList<IStateValue> Values { get; } = new List<IStateValue>();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateDefinition"/> class.
         /// Internal constructor to prevent creating the state without a name
         /// </summary>
         protected StateDefinition()
         {
-
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateDefinition"/> class.
         /// Creates an instance of the state with a name
         /// </summary>
         /// <param name="stateName">The name of the state</param>
@@ -109,7 +110,7 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// The state data wrapper - captures the type of data to be created along with the state
+        /// Gets or sets the state data wrapper - captures the type of data to be created along with the state
         /// </summary>
         public IStateDefinitionDataWrapper UntypedStateDataWrapper { get; set; }
     }

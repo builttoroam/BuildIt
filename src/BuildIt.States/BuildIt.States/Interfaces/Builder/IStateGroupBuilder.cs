@@ -8,7 +8,7 @@ namespace BuildIt.States.Interfaces.Builder
         where TState : struct
     {
         /// <summary>
-        /// The typed state group
+        /// Gets the typed state group
         /// </summary>
         IEnumStateGroup<TState> StateGroup { get; }
     }

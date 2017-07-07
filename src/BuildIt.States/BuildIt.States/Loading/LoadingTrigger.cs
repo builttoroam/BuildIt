@@ -11,6 +11,7 @@ namespace BuildIt.States.Loading
         where TLoadingState : struct
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="LoadingTrigger{TLoadingState}"/> class.
         /// Initializes a new loading trigger
         /// </summary>
         /// <param name="manager">The loading manager to track loading state</param>
@@ -21,12 +22,12 @@ namespace BuildIt.States.Loading
         }
 
         /// <summary>
-        /// The loading enum value
+        /// Gets or sets the loading enum value
         /// </summary>
         public TLoadingState ActiveValue { get; set; }
 
         /// <summary>
-        /// The loading manager for tracking loading state
+        /// Gets the loading manager for tracking loading state
         /// </summary>
         private LoadingManager<TLoadingState> Manager { get; }
 

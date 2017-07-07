@@ -13,7 +13,7 @@ namespace BuildIt.States.Interfaces.StateData
         event EventHandler IsBlockedChanged;
 
         /// <summary>
-        /// Blocked state
+        /// Gets a value indicating whether blocked state
         /// </summary>
         bool IsBlocked { get; }
     }

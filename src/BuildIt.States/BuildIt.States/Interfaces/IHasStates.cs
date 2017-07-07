@@ -6,7 +6,7 @@ namespace BuildIt.States.Interfaces
     public interface IHasStates
     {
         /// <summary>
-        /// Accesses the state manager
+        /// Gets accesses the state manager
         /// </summary>
         IStateManager StateManager { get; }
     }

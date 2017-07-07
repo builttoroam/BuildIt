@@ -29,12 +29,12 @@ namespace BuildIt.States
 #pragma warning restore CS0067
 
         /// <summary>
-        /// The name of the state group (based on enum type)
+        /// Gets the name of the state group (based on enum type)
         /// </summary>
         public override string GroupName => typeof(TState).Name;
 
         /// <summary>
-        /// The typed state definitions
+        /// Gets the typed state definitions
         /// </summary>
         public IReadOnlyDictionary<TState, IEnumStateDefinition<TState>> EnumStates => (from s in States
                 let ekey = Utilities.EnumParse<TState>(s.Key)
@@ -43,21 +43,21 @@ namespace BuildIt.States
             .ToDictionary(x => x.Key, y => y.Value);
 
         /// <summary>
-        /// The current typed state
+        /// Gets the current typed state
         /// </summary>
         public TState CurrentEnumState { get; private set; }
 
         /// <summary>
-        /// The current state name
+        /// Gets or sets the current state name
         /// </summary>
         public override string CurrentStateName
         {
-            get => (!default(TState).Equals(CurrentEnumState))? CurrentEnumState + "":null;
+            get => (!default(TState).Equals(CurrentEnumState)) ? CurrentEnumState + string.Empty : null;
             protected set => CurrentEnumState = value.EnumParse<TState>();
         }
 
         /// <summary>
-        /// Returns the state definition for the current state
+        /// Gets returns the state definition for the current state
         /// </summary>
         public IStateDefinition CurrentEnumStateDefinition
             => States.SafeValue(CurrentStateName) as IEnumStateDefinition<TState>;
@@ -148,7 +148,7 @@ namespace BuildIt.States
         /// <returns>Success if change is completed</returns>
         public async Task<bool> ChangeToWithData<TData>(TState findState, TData data, bool useTransitions = true)
         {
-            return await ChangeToWithData(findState + "", data, useTransitions);
+            return await ChangeToWithData(findState + string.Empty, data, useTransitions);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace BuildIt.States
         /// <returns>Success if change is completed</returns>
         public async Task<bool> ChangeTo(TState findState, bool useTransitions = true)
         {
-            return await ChangeTo(findState + "", useTransitions);
+            return await ChangeTo(findState + string.Empty, useTransitions);
         }
 
         /// <summary>
@@ -170,9 +170,12 @@ namespace BuildIt.States
         /// <returns>Success if change is completed</returns>
         public async Task<bool> ChangeBackTo(TState findState, bool useTransitions = true)
         {
-            if (TrackHistory == false) throw new Exception("History tracking not enabled");
+            if (TrackHistory == false)
+            {
+                throw new Exception("History tracking not enabled");
+            }
 
-            return await ChangeBackTo(findState + "", useTransitions);
+            return await ChangeBackTo(findState + string.Empty, useTransitions);
         }
     }
 }

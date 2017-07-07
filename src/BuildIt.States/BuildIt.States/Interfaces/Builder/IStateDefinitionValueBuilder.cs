@@ -10,7 +10,7 @@ namespace BuildIt.States.Interfaces.Builder
         where TState : struct
     {
         /// <summary>
-        /// The value to set
+        /// Gets the value to set
         /// </summary>
         StateValue<TElement, TPropertyValue> Value { get; }
     }

@@ -30,29 +30,29 @@ namespace BuildIt.States
         public event EventHandler<StateCancelEventArgs> StateChanging;
 
         /// <summary>
-        /// Dependency container for registering and retrieving types
+        /// Gets or sets dependency container for registering and retrieving types
         /// </summary>
         public IDependencyContainer DependencyContainer { get; set; }
 
         /// <summary>
-        /// Context for doing UI tasks
+        /// Gets or sets context for doing UI tasks
         /// </summary>
         public IUIExecutionContext UIContext { get; set; }
 
         /// <summary>
-        /// The name (unique in this group) of the current state
+        /// Gets or sets the name (unique in this group) of the current state
         /// </summary>
         public virtual string CurrentStateName { get; protected set; }
 
 
         /// <summary>
-        /// Returns the state definition for the current state
+        /// Gets returns the state definition for the current state
         /// </summary>
         public IStateDefinition CurrentStateDefinition
             => !IsDefaultState(CurrentStateName) ? States.SafeValue(CurrentStateName) : null;
 
         /// <summary>
-        /// Returns information about the data entity associated with the current state
+        /// Gets returns information about the data entity associated with the current state
         /// </summary>
         public IStateDefinitionDataWrapper CurrentStateDataWrapper => !IsDefaultState(CurrentStateName)
             ? CurrentStateDefinition?.UntypedStateDataWrapper
@@ -65,18 +65,22 @@ namespace BuildIt.States
         /// <returns></returns>
         public IStateDefinition StateDefinition(string state)
         {
-            if (string.IsNullOrWhiteSpace(state)) return null;
+            if (string.IsNullOrWhiteSpace(state))
+            {
+                return null;
+            }
+
             return States.SafeValue(state);
         }
 
         /// <summary>
-        /// Dictionary of states that can be transitioned to
+        /// Gets dictionary of states that can be transitioned to
         /// </summary>
         public IDictionary<string, IStateDefinition> States { get; } =
             new Dictionary<string, IStateDefinition>();
 
         /// <summary>
-        /// Internal dictionary of default property values - so that they can be 
+        /// Gets internal dictionary of default property values - so that they can be
         /// unset in the case of transitioning to a state that doesn't define
         /// values for every property
         /// </summary>
@@ -85,13 +89,13 @@ namespace BuildIt.States
 
 
         /// <summary>
-        /// Cache of state data entities
+        /// Gets cache of state data entities
         /// </summary>
         private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
            new Dictionary<Type, INotifyPropertyChanged>();
 
         /// <summary>
-        /// The current state data
+        /// Gets or sets the current state data
         /// </summary>
         public INotifyPropertyChanged CurrentStateData { get; set; }
 
@@ -104,39 +108,43 @@ namespace BuildIt.States
             stateDataType == null ? null : StateDataCache.SafeValue(stateDataType);
 
         /// <summary>
-        /// All triggers defined for the states in this group
+        /// Gets all triggers defined for the states in this group
         /// </summary>
         private IList<IStateTrigger> Triggers { get; } = new List<IStateTrigger>();
 
         /// <summary>
-        /// The name of the state group
+        /// Gets the name of the state group
         /// </summary>
         public virtual string GroupName { get; }
 
         /// <summary>
-        /// /// Whether history will be recorded for this state group
+        /// Gets or sets a value indicating whether /// Whether history will be recorded for this state group
         /// </summary>
         public bool TrackHistory { get; set; } = false;
 
         /// <summary>
-        /// The history stack of state names
+        /// Gets the history stack of state names
         /// </summary>
         private Stack<string> History { get; } = new Stack<string>();
 
         /// <summary>
-        /// Whether history has been recorded
+        /// Gets a value indicating whether whether history has been recorded
         /// </summary>
         public bool HasHistory
         {
             get
             {
-                if (TrackHistory == false) throw new Exception("History tracking not enabled");
+                if (TrackHistory == false)
+                {
+                    throw new Exception("History tracking not enabled");
+                }
+
                 return History.Count > 0;
             }
         }
 
         /// <summary>
-        /// Whether the current state is preventing go to previous 
+        /// Gets a value indicating whether whether the current state is preventing go to previous
         /// Note: History must be enabled!
         /// </summary>
         public virtual bool GoToPreviousStateIsBlocked
@@ -144,9 +152,12 @@ namespace BuildIt.States
             get
             {
                 // Always block going to previous if history not enabled
-                if (!TrackHistory) return true;
+                if (!TrackHistory)
+                {
+                    return true;
+                }
 
-                // ReSharper disable once SuspiciousTypeConversion.Global 
+                // ReSharper disable once SuspiciousTypeConversion.Global
                 var isBlockable = CurrentStateData as IIsAbleToBeBlocked;
                 return isBlockable?.IsBlocked ?? false;
             }
@@ -154,6 +165,7 @@ namespace BuildIt.States
 
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateGroup"/> class.
         /// Internal constructor to limit construction without providing a name
         /// </summary>
         protected StateGroup()
@@ -161,6 +173,7 @@ namespace BuildIt.States
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateGroup"/> class.
         /// Constructs a group based on the supplied group name
         /// </summary>
         /// <param name="groupName">The name of the state group</param>
@@ -208,13 +221,22 @@ namespace BuildIt.States
         private async void UpdateStatesByTriggers()
         {
             // Don't change state if current state triggers are still active
-            if (CurrentStateDefinition.AllTriggersActive()) return;
+            if (CurrentStateDefinition.AllTriggersActive())
+            {
+                return;
+            }
 
             var firstActiveState = States.FirstOrDefault(x => x.Value.AllTriggersActive());
             // If there's no active state, then just return
-            if (IsDefaultState(firstActiveState.Value)) return;
+            if (IsDefaultState(firstActiveState.Value))
+            {
+                return;
+            }
 
-            if (CurrentStateName == firstActiveState.Key) return;
+            if (CurrentStateName == firstActiveState.Key)
+            {
+                return;
+            }
 
             await ChangeTo(firstActiveState.Key);
         }
@@ -321,7 +343,10 @@ namespace BuildIt.States
         /// <returns>Success indicator</returns>
         public async Task<bool> ChangeBackTo(string newState, bool useTransitions = true)
         {
-            if (TrackHistory == false) throw new Exception("History tracking not enabled");
+            if (TrackHistory == false)
+            {
+                throw new Exception("History tracking not enabled");
+            }
 
             return await PerformStateChange(newState, false, useTransitions);
         }
@@ -347,7 +372,11 @@ namespace BuildIt.States
         /// <returns>Success indicator</returns>
         public async Task<bool> ChangeToPrevious(bool useTransitions = true)
         {
-            if (History.Count == 0) return false;
+            if (History.Count == 0)
+            {
+                return false;
+            }
+
             var previous = History.Peek();
 
             return await ChangeBackTo(previous, useTransitions);
@@ -362,7 +391,10 @@ namespace BuildIt.States
         public IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections = true)
         {
             var sg = groupToBindTo;// as IStateGroup<TState>; // This includes INotifyStateChanged
-            if (sg == null) return null;
+            if (sg == null)
+            {
+                return null;
+            }
 
             return new StateGroupBinder(this, sg, bothDirections);
         }
@@ -375,7 +407,7 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Change to new state 
+        /// Change to new state
         /// </summary>
         /// <param name="newState">The name of the new state</param>
         /// <param name="isNewState">Whether this is a new state, or change to previous</param>
@@ -398,13 +430,16 @@ namespace BuildIt.States
             // Invoke all the methods/events prior to changing state (cancellable!)
             "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
             var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions);
-            if (!success) return false;
+            if (!success)
+            {
+                return false;
+            }
 
             // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
             "Invoking ChangingFrom before state change".Log();
             await ChangingFrom(newState, data, isNewState, useTransitions);
 
-            // Perform the state change 
+            // Perform the state change
             "Invoking ChangeCurrentState to perform state change".Log();
             await ChangeCurrentState(newState, isNewState, useTransitions);
 
@@ -438,7 +473,10 @@ namespace BuildIt.States
 
             // Raise an event before changing state
             var cancelChange = await NotifyStateChanging(current, isNewState, useTransitions);
-            if (cancelChange) return false;
+            if (cancelChange)
+            {
+                return false;
+            }
 
             var cancel = new CancelEventArgs();
 
@@ -503,7 +541,7 @@ namespace BuildIt.States
                     return false;
                 }
             }
-           
+
             return true;
         }
 
@@ -556,7 +594,6 @@ namespace BuildIt.States
                 "Invoking 'ChangingToWithData' on new state definition".Log();
                 await newStateDef.ChangingToWithData(dataAsJson);
             }
-
         }
 
         /// <summary>
@@ -598,7 +635,6 @@ namespace BuildIt.States
                     (stateData as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
 
                     await newStateDataWrapper.InvokeInitialise(stateData);
-
                 }
                 // ReSharper disable once SuspiciousTypeConversion.Global - data entities can implement both interfaces
                 (stateData as IRegisterForUIAccess)?.RegisterForUIAccess(this);
@@ -631,12 +667,16 @@ namespace BuildIt.States
             }
             else
             {
-                // Not new state (ie go back) to keep 
+                // Not new state (ie go back) to keep
                 // popping off history until we find the newState
                 while (History.Count > 0)
                 {
                     var historyState = History.Pop();
-                    if (!historyState.Equals(newState)) continue;
+                    if (!historyState.Equals(newState))
+                    {
+                        continue;
+                    }
+
                     CurrentStateName = newState;
                     break;
                 }
@@ -654,7 +694,7 @@ namespace BuildIt.States
 
 
         /// <summary>
-        /// Invokes methods after state change 
+        /// Invokes methods after state change
         /// - State data
         /// - State definition data wrapper
         /// - State definition
@@ -738,7 +778,6 @@ namespace BuildIt.States
 
             // Raise event after state changed
             await NotifyStateChanged(CurrentStateName, isNewState, useTransitions);
-
         }
 
         /// <summary>
@@ -773,10 +812,9 @@ namespace BuildIt.States
             catch (Exception ex)
             {
                 ex.LogException();
-                // Ignore any errors caused by the event being raised, as 
+                // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
-
         }
 
 
@@ -815,7 +853,7 @@ namespace BuildIt.States
             catch (Exception ex)
             {
                 ex.LogException();
-                // Ignore any errors caused by the event being raised, as 
+                // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
             return shouldCancel;
@@ -837,6 +875,5 @@ namespace BuildIt.States
                 }
             }
         }
-
     }
 }

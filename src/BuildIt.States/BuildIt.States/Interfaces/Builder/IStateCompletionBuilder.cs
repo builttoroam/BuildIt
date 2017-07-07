@@ -10,7 +10,7 @@ namespace BuildIt.States.Interfaces.Builder
         where TCompletion : struct
     {
         /// <summary>
-        /// The completion value
+        /// Gets the completion value
         /// </summary>
         TCompletion Completion { get; }
     }

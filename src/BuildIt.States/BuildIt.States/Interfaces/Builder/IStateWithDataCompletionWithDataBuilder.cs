@@ -13,13 +13,13 @@ namespace BuildIt.States.Interfaces.Builder
     /// <typeparam name="TData">The type of data</typeparam>
     public interface IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> :
         IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>,
-        IStateWithDataActionDataBuilder<TState,TStateData,TData>
+        IStateWithDataActionDataBuilder<TState, TStateData, TData>
         where TState : struct
         where TCompletion : struct
-        where TStateData : INotifyPropertyChanged,ICompletion<TCompletion>
+        where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
     {
         /// <summary>
-        /// The function to retrieve data
+        /// Gets the function to retrieve data
         /// </summary>
         Func<TStateData, TData> Data { get; }
     }

@@ -4,11 +4,11 @@ using System.ComponentModel;
 namespace BuildIt.States.Interfaces.Builder
 {
     /// <summary>
-    /// Builder for state with actions for the state data 
+    /// Builder for state with actions for the state data
     /// </summary>
     /// <typeparam name="TState">The type (enum) of the state</typeparam>
     /// <typeparam name="TStateData">The type of the state data</typeparam>
-    public interface IStateWithDataActionBuilder<TState,TStateData>: 
+    public interface IStateWithDataActionBuilder<TState, TStateData> :
         IStateDefinitionWithDataBuilder<TState, TStateData>
         where TStateData : INotifyPropertyChanged
         where TState : struct
@@ -19,7 +19,7 @@ namespace BuildIt.States.Interfaces.Builder
         /// <param name="newState">The new typed state</param>
         /// <returns>Method to call</returns>
         Action<TStateData> WhenChangedToNewState(TState newState);
-        
+
         /// <summary>
         /// Returns method to call when changing from a state
         /// </summary>

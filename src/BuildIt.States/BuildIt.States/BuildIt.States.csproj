@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.26" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

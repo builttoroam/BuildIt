@@ -5,7 +5,7 @@ namespace BuildIt.States.Interfaces
     /// <summary>
     /// Defines method to unbind state groups
     /// </summary>
-    public interface IStateBinder:IDisposable
+    public interface IStateBinder: IDisposable
     {
         /// <summary>
         /// Binds the state groups

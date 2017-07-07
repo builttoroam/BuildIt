@@ -9,7 +9,7 @@ namespace BuildIt.States.Interfaces.Builder
         where TState : struct
     {
         /// <summary>
-        /// The target element
+        /// Gets the target element
         /// </summary>
         TElement Target { get; }
     }

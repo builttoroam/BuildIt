@@ -25,7 +25,7 @@ namespace States.Sample.Core
         Large
     }
 
-    public class MainViewModel:NotifyBase,IHasStates
+    public class MainViewModel: NotifyBase,IHasStates
     {
         private string currentStateName = "Test data";
         public IStateManager StateManager { get; } = new StateManager();

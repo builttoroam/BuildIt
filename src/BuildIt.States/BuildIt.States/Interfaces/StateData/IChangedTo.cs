@@ -13,5 +13,4 @@ namespace BuildIt.States.Interfaces.StateData
         /// <returns>Task to await</returns>
         Task ChangedTo();
     }
-
 }

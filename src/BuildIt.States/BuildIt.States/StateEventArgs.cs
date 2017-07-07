@@ -8,14 +8,15 @@ namespace BuildIt.States
     public class StateEventArgs : EventArgs, IStateEventArgs
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateEventArgs"/> class.
         /// Empty constructor to support subclassing
         /// </summary>
         protected StateEventArgs()
         {
-
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateEventArgs"/> class.
         /// Constructs new instance
         /// </summary>
         /// <param name="state">The state name</param>
@@ -29,20 +30,18 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// The name of the state
+        /// Gets the name of the state
         /// </summary>
         public virtual string StateName { get; }
 
         /// <summary>
-        /// Whether to use transitions
+        /// Gets or sets a value indicating whether whether to use transitions
         /// </summary>
         public bool UseTransitions { get; protected set; }
 
         /// <summary>
-        /// Whether it's a new state or going to a previous state
+        /// Gets or sets a value indicating whether whether it's a new state or going to a previous state
         /// </summary>
         public bool IsNewState { get; protected set; }
-
-       
     }
 }

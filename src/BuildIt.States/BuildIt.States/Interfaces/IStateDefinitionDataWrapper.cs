@@ -10,7 +10,7 @@ namespace BuildIt.States.Interfaces
     public interface IStateDefinitionDataWrapper
     {
         /// <summary>
-        /// The type of data associated with the state (ie that an instance will be created from)
+        /// Gets the type of data associated with the state (ie that an instance will be created from)
         /// </summary>
         Type StateDataType { get; }
 

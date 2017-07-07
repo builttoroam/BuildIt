@@ -8,8 +8,8 @@ namespace BuildIt.States.Interfaces
     /// Typed state group
     /// </summary>
     /// <typeparam name="TState">The type (enum) of the state group</typeparam>
-    public interface IEnumStateGroup<TState> : 
-        IStateGroup, 
+    public interface IEnumStateGroup<TState> :
+        IStateGroup,
         INotifyEnumStateChanged<TState>,
         INotifyEnumStateChanging<TState>
         where TState : struct
@@ -39,12 +39,12 @@ namespace BuildIt.States.Interfaces
             where TStateData : INotifyPropertyChanged;
 
         /// <summary>
-        /// The current typed state
+        /// Gets the current typed state
         /// </summary>
         TState CurrentEnumState { get; }
 
         /// <summary>
-        /// Returns the state definition for the current state
+        /// Gets returns the state definition for the current state
         /// </summary>
         IReadOnlyDictionary<TState, IEnumStateDefinition<TState>> EnumStates { get; }
 
@@ -59,7 +59,7 @@ namespace BuildIt.States.Interfaces
         /// <param name="newState">The new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        Task<bool> ChangeTo(TState newState, bool useTransitions = true) ;
+        Task<bool> ChangeTo(TState newState, bool useTransitions = true);
 
         /// <summary>
         /// Change to typed state, with data
@@ -69,7 +69,7 @@ namespace BuildIt.States.Interfaces
         /// <param name="data">The data to pass to the new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        Task<bool> ChangeToWithData<TData>(TState newState, TData data, bool useTransitions = true) ;
+        Task<bool> ChangeToWithData<TData>(TState newState, TData data, bool useTransitions = true);
 
 
         /// <summary>
@@ -78,6 +78,6 @@ namespace BuildIt.States.Interfaces
         /// <param name="newState">The state to change back to</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        Task<bool> ChangeBackTo(TState newState, bool useTransitions = true) ;
+        Task<bool> ChangeBackTo(TState newState, bool useTransitions = true);
     }
 }

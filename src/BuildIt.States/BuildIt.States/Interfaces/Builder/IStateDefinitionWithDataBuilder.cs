@@ -12,7 +12,7 @@ namespace BuildIt.States.Interfaces.Builder
         where TState : struct
     {
         /// <summary>
-        /// The state data wrapper
+        /// Gets the state data wrapper
         /// </summary>
         IStateDefinitionTypedDataWrapper<TData> StateDataWrapper { get; }
     }

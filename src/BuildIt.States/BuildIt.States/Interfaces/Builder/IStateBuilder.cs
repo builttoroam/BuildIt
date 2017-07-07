@@ -6,7 +6,7 @@ namespace BuildIt.States.Interfaces.Builder
     public interface IStateBuilder
     {
         /// <summary>
-        /// Returns the current statemanager
+        /// Gets returns the current statemanager
         /// </summary>
         IStateManager StateManager { get; }
     }

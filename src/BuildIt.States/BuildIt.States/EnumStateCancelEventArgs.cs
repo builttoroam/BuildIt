@@ -8,6 +8,7 @@ namespace BuildIt.States
         where TState : struct
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="EnumStateCancelEventArgs{TState}"/> class.
         /// Constructs a new instance
         /// </summary>
         /// <param name="state">The typed state</param>
@@ -21,12 +22,12 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// The state name (based on enum value)
+        /// Gets the state name (based on enum value)
         /// </summary>
-        public override string StateName => EnumState + "";
+        public override string StateName => EnumState + string.Empty;
 
         /// <summary>
-        /// The enum value of the state
+        /// Gets the enum value of the state
         /// </summary>
         public TState EnumState { get; }
     }

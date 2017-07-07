@@ -14,7 +14,7 @@ namespace BuildIt.States.Interfaces.Builder
         where TState : struct
     {
         /// <summary>
-        /// The new state to transition to
+        /// Gets the new state to transition to
         /// </summary>
         TState NewState { get; }
     }

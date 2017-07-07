@@ -16,17 +16,17 @@ namespace BuildIt.States.Loading
         public event EventHandler LoadingChanged;
 
         /// <summary>
-        /// loading state
+        /// Gets or sets loading state
         /// </summary>
         public TLoadingState LoadingState { get; set; }
 
         /// <summary>
-        /// The loaded state
+        /// Gets or sets the loaded state
         /// </summary>
         public TLoadingState LoadedState { get; set; }
 
         /// <summary>
-        /// Whether loading is in progress
+        /// Gets or sets a value indicating whether whether loading is in progress
         /// </summary>
         public bool IsLoading
 
@@ -41,7 +41,7 @@ namespace BuildIt.States.Loading
         }
 
         /// <summary>
-        /// The current loading enum value
+        /// Gets the current loading enum value
         /// </summary>
         public TLoadingState IsLoadingState => IsLoading ? LoadingState : LoadedState;
 

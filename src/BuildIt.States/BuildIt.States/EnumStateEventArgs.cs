@@ -5,9 +5,10 @@ namespace BuildIt.States
     /// </summary>
     /// <typeparam name="TState">The type (enum) fo the state</typeparam>
     public class EnumStateEventArgs<TState> : StateEventArgs
-        where TState:struct
+        where TState : struct
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="EnumStateEventArgs{TState}"/> class.
         /// Constructs new instance
         /// </summary>
         /// <param name="state">The typed state</param>
@@ -21,14 +22,13 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// State name
+        /// Gets state name
         /// </summary>
-        public override string StateName => EnumState + "";
+        public override string StateName => EnumState + string.Empty;
 
         /// <summary>
-        /// Typed state 
+        /// Gets typed state
         /// </summary>
         public TState EnumState { get;  }
-
     }
 }

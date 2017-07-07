@@ -9,7 +9,7 @@ namespace BuildIt.States.Completion
         where TCompletion : struct
     {
         /// <summary>
-        /// The data to pass out of the state
+        /// Gets or sets the data to pass out of the state
         /// </summary>
         public TData Data { get; set; }
     }

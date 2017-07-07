@@ -13,7 +13,7 @@ namespace BuildIt.States.Loading
         event EventHandler LoadingChanged;
 
         /// <summary>
-        /// Loading status
+        /// Gets or sets a value indicating whether loading status
         /// </summary>
         bool IsLoading { get; set; }
     }

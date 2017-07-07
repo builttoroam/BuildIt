@@ -5,13 +5,12 @@ namespace BuildIt.States.Interfaces
     /// </summary>
     /// <typeparam name="TStateEnum">The enum type</typeparam>
     // ReSharper disable once TypeParameterCanBeVariant - not required as type should be an enum
-    public interface IEnumStateDefinition<TStateEnum> : IStateDefinition 
+    public interface IEnumStateDefinition<TStateEnum> : IStateDefinition
         where TStateEnum : struct
     {
         /// <summary>
-        /// The enum value for the state definition
+        /// Gets the enum value for the state definition
         /// </summary>
         TStateEnum EnumState { get; }
-
     }
 }

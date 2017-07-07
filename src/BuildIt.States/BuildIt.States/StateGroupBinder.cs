@@ -8,12 +8,13 @@ namespace BuildIt.States
     public class StateGroupBinder : BaseBinder<IStateGroup>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateGroupBinder"/> class.
         /// Creates instance of binder and wires up link between state groups
         /// </summary>
         /// <param name="target">The target group (to be updated when source changes)</param>
         /// <param name="source">The source group</param>
         /// <param name="bothDirections">If true, source will be updated by changes to target</param>
-        public StateGroupBinder(IStateGroup target, IStateGroup source, bool bothDirections):base(target,source,bothDirections)
+        public StateGroupBinder(IStateGroup target, IStateGroup source, bool bothDirections) : base(target, source, bothDirections)
         {
         }
 
@@ -23,10 +24,16 @@ namespace BuildIt.States
         protected override void InternalBind()
         {
             Source.StateChanged += Source_StateChanged;
-            if (!BothDirections) return;
+            if (!BothDirections)
+            {
+                return;
+            }
 
             var dest = Target;
-            if (dest == null) return;
+            if (dest == null)
+            {
+                return;
+            }
 
             dest.StateChanged += Dest_StateChanged;
         }
@@ -62,9 +69,16 @@ namespace BuildIt.States
         {
             Source.StateChanged -= Source_StateChanged;
 
-            if (!BothDirections) return;
+            if (!BothDirections)
+            {
+                return;
+            }
+
             var dest = Target;
-            if (dest == null) return;
+            if (dest == null)
+            {
+                return;
+            }
 
             dest.StateChanged += Dest_StateChanged;
         }

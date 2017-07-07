@@ -9,7 +9,7 @@ namespace BuildIt.States.Interfaces
     public interface IStateValue
     {
         /// <summary>
-        /// Uniqueness key for the value definition
+        /// Gets uniqueness key for the value definition
         /// </summary>
         Tuple<object, string> Key { get; }
 

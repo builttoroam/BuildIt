@@ -6,16 +6,17 @@ namespace BuildIt.States.Interfaces
     /// Wrapper for state definition coupled with data entity
     /// </summary>
     /// <typeparam name="TData">The type of data entity</typeparam>
-    public interface IStateDefinitionWithData<TData> where TData : INotifyPropertyChanged
+    public interface IStateDefinitionWithData<TData>
+        where TData : INotifyPropertyChanged
     {
         /// <summary>
-        /// The state definition
+        /// Gets the state definition
         /// </summary>
         IStateDefinition State { get; }
 
         /// <summary>
-        /// The associated state data entity
+        /// Gets the associated state data entity
         /// </summary>
-        IStateDefinitionTypedDataWrapper<TData> StateData { get; } 
+        IStateDefinitionTypedDataWrapper<TData> StateData { get; }
     }
 }

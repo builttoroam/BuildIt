@@ -6,17 +6,17 @@ namespace BuildIt.States
     public interface IStateEventArgs
     {
         /// <summary>
-        /// The state name
+        /// Gets the state name
         /// </summary>
         string StateName { get;  }
-        
+
         /// <summary>
-        /// Whether to use transitions
+        /// Gets a value indicating whether whether to use transitions
         /// </summary>
         bool UseTransitions { get;  }
-        
+
         /// <summary>
-        /// Whether it's a new state
+        /// Gets a value indicating whether whether it's a new state
         /// </summary>
         bool IsNewState { get;  }
     }

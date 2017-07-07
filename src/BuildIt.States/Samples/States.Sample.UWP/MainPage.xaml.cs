@@ -35,7 +35,7 @@ namespace States.Sample.UWP
             this.DataContext = vm;
 
             StateManager
-                
+
                 .Group<LoadingStates>()
                 .DefineAllStates(this, LoadingUIStates)
 

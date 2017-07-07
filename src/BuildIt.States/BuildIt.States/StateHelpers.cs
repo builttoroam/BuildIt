@@ -26,14 +26,12 @@ namespace BuildIt.States
             where TState : struct
         {
             public IEnumStateGroup<TState> StateGroup { get; set; }
-
         }
 
         private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>
             where TState : struct
         {
             public IEnumStateDefinition<TState> State { get; set; }
-
         }
 
         private class StateDefinitionWithDataBuilder<TState, TData> : StateGroupBuilder<TState>,
@@ -54,7 +52,6 @@ namespace BuildIt.States
        where TState : struct
         {
             public TState NewState { get; set; }
-
         }
 
         private class EventHandlerCache<TState, TEventHandler>
@@ -73,7 +70,6 @@ namespace BuildIt.States
                 }
                 return changeStateAction;
             }
-
         }
 
         private class StateDefinitionWithDataEventBuilder<TState, TData> : StateDefinitionWithDataBuilder<TState, TData>,
@@ -109,7 +105,10 @@ namespace BuildIt.States
             private EventHandler PreviousHandler { get; set; }
             private EventHandler CreatePrevious()
             {
-                if (PreviousHandler != null) return PreviousHandler;
+                if (PreviousHandler != null)
+                {
+                    return PreviousHandler;
+                }
 
                 PreviousHandler = (s, e) =>
                 {
@@ -170,7 +169,6 @@ namespace BuildIt.States
           where TState : struct
         {
             public TElement Target { get; set; }
-
         }
 
         private class StateDefinitionValueBuilder<TState, TElement, TPropertyValue> :
@@ -178,7 +176,6 @@ namespace BuildIt.States
            where TState : struct
         {
             public StateValue<TElement, TPropertyValue> Value { get; set; }
-
         }
 
         private class StateCompletionBuilder<TState, TCompletion> : StateDefinitionBuilder<TState>,
@@ -244,7 +241,11 @@ where TStateData : INotifyPropertyChanged
             private EventHandler<TCompletionArgs> Previous { get; set; }
             private EventHandler<TCompletionArgs> CreatePrevious()
             {
-                if (Previous != null) return Previous;
+                if (Previous != null)
+                {
+                    return Previous;
+                }
+
                 Previous = InternalCreatePrevious();
                 return Previous;
             }
@@ -308,7 +309,7 @@ where TStateData : INotifyPropertyChanged
             //public IStateDefinitionTypedDataWrapper<TStateData> StateDataWrapper
             //    => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TStateData>;
 
-            //private EventHandlerCache<TState, EventHandler<CompletionEventArgs<TCompletion>>> HandlerCache { get; } 
+            //private EventHandlerCache<TState, EventHandler<CompletionEventArgs<TCompletion>>> HandlerCache { get; }
             //    = new EventHandlerCache<TState, EventHandler<CompletionEventArgs<TCompletion>>>();
 
             //public Action<TStateData> WhenChangedToNewState(TState newState)
@@ -352,7 +353,6 @@ where TStateData : INotifyPropertyChanged
                     vm.Complete -= complete;
                 };
             }
-
         }
 
         private class StateWithDataCompletionWithDataEventBuilder<TState, TStateData, TCompletion, TData> :
@@ -407,10 +407,7 @@ where TStateData : INotifyPropertyChanged
                      }
                  });
                 return changeStateAction;
-
-
             }
-
         }
 
         private class StateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> :
@@ -444,8 +441,6 @@ where TStateData : INotifyPropertyChanged
                     }
                 });
                 return changeStateAction;
-
-
             }
 
             protected override EventHandler<CompletionEventArgs<TCompletion>> InternalCreatePrevious()
@@ -471,7 +466,11 @@ where TStateData : INotifyPropertyChanged
         /// <returns>Whether all triggers are active</returns>
         public static bool AllTriggersActive(this IStateDefinition state)
         {
-            if (state == null) return false;
+            if (state == null)
+            {
+                return false;
+            }
+
             return state.Triggers.All(x => x.IsActive);
         }
 
@@ -482,10 +481,13 @@ where TStateData : INotifyPropertyChanged
         /// <param name="vsm">The state manager</param>
         /// <returns>A state group builder (or null)</returns>
         public static IStateGroupBuilder<TState> Group<TState>
-            (this IStateManager vsm) where TState : struct
-
+            (this IStateManager vsm)
+            where TState : struct
         {
-            if (vsm == null) return null;
+            if (vsm == null)
+            {
+                return null;
+            }
 
             var existing = vsm.EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (existing == null)
@@ -511,7 +513,11 @@ where TStateData : INotifyPropertyChanged
             this IStateBuilder vsmGroup)
             where TState : struct
         {
-            if (vsmGroup == null) return null;
+            if (vsmGroup == null)
+            {
+                return null;
+            }
+
             return vsmGroup.StateManager.Group<TState>();
         }
 
@@ -527,7 +533,11 @@ where TStateData : INotifyPropertyChanged
     this IStateGroupBuilder<TState> vsmGroup)
     where TState : struct
         {
-            if (vsmGroup == null) return null;
+            if (vsmGroup == null)
+            {
+                return null;
+            }
+
             vsmGroup.StateGroup.TrackHistory = true;
             return vsmGroup;
         }
@@ -542,7 +552,11 @@ where TStateData : INotifyPropertyChanged
     this IStateGroupBuilder<TState> vsmGroup)
     where TState : struct
         {
-            if (vsmGroup == null) return null;
+            if (vsmGroup == null)
+            {
+                return null;
+            }
+
             vsmGroup.StateGroup.DefineAllStates();
             return vsmGroup;
         }
@@ -561,10 +575,17 @@ where TStateData : INotifyPropertyChanged
             TState state)
             where TState : struct
         {
-            if (vsmGroup == null) return null;
+            if (vsmGroup == null)
+            {
+                return null;
+            }
             //var vs = new StateDefinition<TState> { State = state };
             var vs = vsmGroup.StateGroup.DefineEnumState(state);
-            if (vs == null) return null;
+            if (vs == null)
+            {
+                return null;
+            }
+
             return new StateDefinitionBuilder<TState>
             {
                 StateManager = vsmGroup.StateManager,
@@ -585,11 +606,18 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated state definition builder</returns>
         public static IStateDefinitionBuilder<TState> AddTrigger<TState>(
             this IStateDefinitionBuilder<TState> vsmGroup,
-            IStateTrigger trigger) where TState : struct
+            IStateTrigger trigger)
+            where TState : struct
         {
-            if (vsmGroup == null) return null;
+            if (vsmGroup == null)
+            {
+                return null;
+            }
 
-            if (trigger == null) return vsmGroup;
+            if (trigger == null)
+            {
+                return vsmGroup;
+            }
 
             // Add trigger to triggers collection
             vsmGroup.State.Triggers.Add(trigger);
@@ -614,7 +642,11 @@ where TStateData : INotifyPropertyChanged
       where TState : struct
        where TCompletion : struct
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
+
             return new StateCompletionBuilder<TState, TCompletion>
             {
                 StateManager = smInfo.StateManager,
@@ -636,7 +668,11 @@ where TStateData : INotifyPropertyChanged
           this IStateDefinitionBuilder<TState> smInfo)
           where TState : struct
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
+
             return new StateCompletionBuilder<TState, DefaultCompletion>
             {
                 StateManager = smInfo.StateManager,
@@ -663,7 +699,11 @@ where TStateData : INotifyPropertyChanged
             where TCompletion : struct
             where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
+
             return new StateWithDataCompletionBuilder<TState, TStateData, TCompletion>
             {
                 StateManager = smInfo.StateManager,
@@ -688,7 +728,10 @@ where TStateData : INotifyPropertyChanged
           where TState : struct
           where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
 
             return new StateWithDataCompletionBuilder<TState, TStateData, DefaultCompletion>
             {
@@ -719,7 +762,11 @@ where TStateData : INotifyPropertyChanged
           where TState : struct
            where TCompletion : struct
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
+
             return new StateCompletionWithDataBuilder<TState, TCompletion, TData>
             {
                 StateManager = smInfo.StateManager,
@@ -728,7 +775,6 @@ where TStateData : INotifyPropertyChanged
                 Completion = completion,
                 Data = completionData
             };
-
         }
 
 
@@ -746,7 +792,11 @@ where TStateData : INotifyPropertyChanged
                Func<TData> completionData)
           where TState : struct
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
+
             return new StateCompletionWithDataBuilder<TState, DefaultCompletion, TData>
             {
                 StateManager = smInfo.StateManager,
@@ -755,7 +805,6 @@ where TStateData : INotifyPropertyChanged
                 Completion = DefaultCompletion.Complete,
                 Data = completionData
             };
-
         }
 
         /// <summary>
@@ -834,7 +883,11 @@ where TStateData : INotifyPropertyChanged
           where TState : struct
             where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
         {
-            if (smInfo == null) return null;
+            if (smInfo == null)
+            {
+                return null;
+            }
+
             return new StateWithDataCompletionWithDataBuilder<TState, TStateData, DefaultCompletion, TData>
             {
                 StateManager = smInfo.StateManager,
@@ -855,9 +908,13 @@ where TStateData : INotifyPropertyChanged
         /// <returns></returns>
         public static
             IStateDefinitionValueTargetBuilder<TState, TElement> Target<TState, TElement>(
-            this IStateDefinitionBuilder<TState> vsmGroup, TElement element) where TState : struct
+            this IStateDefinitionBuilder<TState> vsmGroup, TElement element)
+            where TState : struct
         {
-            if (vsmGroup == null || element == null) return null;
+            if (vsmGroup == null || element == null)
+            {
+                return null;
+            }
 
             return new StateDefinitionValueTargetBuilder<TState, TElement>
             {
@@ -883,9 +940,13 @@ where TStateData : INotifyPropertyChanged
        Change<TState, TElement, TPropertyValue>(
        this IStateDefinitionValueTargetBuilder<TState, TElement> vsmGroup,
        Expression<Func<TPropertyValue>> getter,
-       Action<TElement, TPropertyValue> setter = null) where TState : struct
+       Action<TElement, TPropertyValue> setter = null)
+            where TState : struct
         {
-            if (vsmGroup == null || getter == null) return null;
+            if (vsmGroup == null || getter == null)
+            {
+                return null;
+            }
 
             if (setter == null)
             {
@@ -928,9 +989,13 @@ where TStateData : INotifyPropertyChanged
             Change<TState, TElement, TPropertyValue>(
             this IStateDefinitionValueTargetBuilder<TState, TElement> vsmGroup,
             Expression<Func<TElement, TPropertyValue>> getter,
-            Action<TElement, TPropertyValue> setter = null) where TState : struct
+            Action<TElement, TPropertyValue> setter = null)
+            where TState : struct
         {
-            if (vsmGroup == null || getter == null) return null;
+            if (vsmGroup == null || getter == null)
+            {
+                return null;
+            }
 
             if (setter == null)
             {
@@ -973,10 +1038,18 @@ where TStateData : INotifyPropertyChanged
             ToValue<TState, TElement, TPropertyValue>(
             this
             IStateDefinitionValueBuilder<TState, TElement, TPropertyValue> vsmGroup,
-            TPropertyValue value) where TState : struct
+            TPropertyValue value)
+            where TState : struct
         {
-            if (vsmGroup == null) return null;
-            if (value == null) return vsmGroup;
+            if (vsmGroup == null)
+            {
+                return null;
+            }
+
+            if (value == null)
+            {
+                return vsmGroup;
+            }
 
             vsmGroup.Value.Value = value;
             vsmGroup.State.Values.Add(vsmGroup.Value);
@@ -996,7 +1069,8 @@ where TStateData : INotifyPropertyChanged
           IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
           this IStateDefinitionBuilder<TState> vsmGroup,
           Expression<Func<TPropertyValue>> getter,
-          TPropertyValue value) where TState : struct
+          TPropertyValue value)
+            where TState : struct
         {
             var property = (getter.Body as MemberExpression)?.Expression as ConstantExpression;
             var element = property?.Value;
@@ -1023,7 +1097,8 @@ where TStateData : INotifyPropertyChanged
             this IStateDefinitionBuilder<TState> vsmGroup,
             TElement element,
             Expression<Func<TElement, TPropertyValue>> getter,
-            TPropertyValue value) where TState : struct
+            TPropertyValue value)
+            where TState : struct
         {
             return vsmGroup
                 .Target(element)
@@ -1043,7 +1118,8 @@ where TStateData : INotifyPropertyChanged
             IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
             this IStateDefinitionBuilder<TState> vsmGroup,
             Expression<Func<object, TPropertyValue>> getter,
-            TPropertyValue value) where TState : struct
+            TPropertyValue value)
+            where TState : struct
         {
             var property = (getter.Body as MemberExpression)?.Expression as ConstantExpression;
             var element = property?.Value;
@@ -1055,7 +1131,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an action to be called when AboutToChange the state, passing in the current state data and new data 
+        /// Defines an action to be called when AboutToChange the state, passing in the current state data and new data
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <param name="smInfo">The builder to update</param>
@@ -1064,7 +1140,8 @@ where TStateData : INotifyPropertyChanged
         public static
             IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
            this IStateDefinitionBuilder<TState> smInfo,
-           Action<CancelEventArgs> action) where TState : struct
+           Action<CancelEventArgs> action)
+            where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
             return smInfo.WhenAboutToChange(async cancel => action(cancel));
@@ -1072,7 +1149,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an async action to be called when AboutToChange the state 
+        /// Defines an async action to be called when AboutToChange the state
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <param name="smInfo">The builder to update</param>
@@ -1080,9 +1157,14 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<CancelEventArgs, Task> action) where TState : struct
+            Func<CancelEventArgs, Task> action)
+            where TState : struct
         {
-            if (smInfo?.State == null) return null;
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: AboutToChangeFrom".Log();
@@ -1099,7 +1181,8 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangingFrom<TState>(
             this IStateDefinitionBuilder<TState> stateDefinition,
-            Action action) where TState : struct
+            Action action)
+            where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
             return stateDefinition.WhenChangingFrom(async () => action());
@@ -1115,9 +1198,14 @@ where TStateData : INotifyPropertyChanged
         /// <returns>Updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangingFrom<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<Task> action) where TState : struct
+            Func<Task> action)
+            where TState : struct
         {
-            if (smInfo?.State == null) return null;
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: ChangingFrom".Log();
@@ -1134,7 +1222,8 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangedTo<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Action action) where TState : struct
+            Action action)
+            where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
             return smInfo.WhenChangedTo(async () => action());
@@ -1142,7 +1231,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an async action to be called when ChangedTo the state 
+        /// Defines an async action to be called when ChangedTo the state
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <param name="smInfo">The builder to update</param>
@@ -1150,9 +1239,14 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangedTo<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<Task> action) where TState : struct
+            Func<Task> action)
+            where TState : struct
         {
-            if (smInfo?.State == null) return null;
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: ChangedTo".Log();
@@ -1226,7 +1320,11 @@ where TStateData : INotifyPropertyChanged
             where TStateData : INotifyPropertyChanged
 
         {
-            if (smInfo?.StateDataWrapper == null) return null;
+            if (smInfo?.StateDataWrapper == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.StateDataWrapper;
 
 
@@ -1243,7 +1341,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an action to be called when AboutToChange the state, passing in the current state data and new data 
+        /// Defines an action to be called when AboutToChange the state, passing in the current state data and new data
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <typeparam name="TStateData">The type of state data that will be passed to the action</typeparam>
@@ -1252,7 +1350,8 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData, CancelEventArgs> action) where TState : struct
+            Action<TStateData, CancelEventArgs> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998 // Convert sync method into async call
@@ -1261,7 +1360,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an async action to be called when AboutToChange the state, passing in the current state data and new data 
+        /// Defines an async action to be called when AboutToChange the state, passing in the current state data and new data
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <typeparam name="TStateData">The type of state data that will be passed to the action</typeparam>
@@ -1270,10 +1369,15 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, CancelEventArgs, Task> action) where TState : struct
+            Func<TStateData, CancelEventArgs, Task> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo?.StateDataWrapper == null) return null;
+            if (smInfo?.StateDataWrapper == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.StateDataWrapper;
 
             "Adding Behaviour: AboutToChangeFromViewModel".Log();
@@ -1298,7 +1402,8 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangingFrom<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData> action) where TState : struct
+            Action<TStateData> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
@@ -1316,10 +1421,15 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangingFrom<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, Task> action) where TState : struct
+            Func<TStateData, Task> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo?.StateDataWrapper == null) return null;
+            if (smInfo?.StateDataWrapper == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.StateDataWrapper;
 
             "Adding Behaviour: ChangingFromViewModel".Log();
@@ -1377,7 +1487,11 @@ where TStateData : INotifyPropertyChanged
         {
             var smInfo = existingInfo.DefineStateWithData<TState, TNewStateData>(existingInfo.NewState);
 
-            if (smInfo?.StateDataWrapper == null) return null;
+            if (smInfo?.StateDataWrapper == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.StateDataWrapper;
 
             "Adding Behaviour: ChangedToWithDataViewModel".Log();
@@ -1410,7 +1524,8 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedTo<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData> action) where TState : struct
+            Action<TStateData> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
@@ -1428,10 +1543,15 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedTo<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, Task> action) where TState : struct
+            Func<TStateData, Task> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo?.StateDataWrapper == null) return null;
+            if (smInfo?.StateDataWrapper == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.StateDataWrapper;
 
             "Adding Behaviour: ChangedToViewModel".Log();
@@ -1448,7 +1568,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an action to be called when ChangedTo the state, passing in the current state data and new data 
+        /// Defines an action to be called when ChangedTo the state, passing in the current state data and new data
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <typeparam name="TStateData">The type of state data that will be passed to the action</typeparam>
@@ -1458,7 +1578,8 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedToWithData<TState, TStateData, TData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData, TData> action) where TState : struct
+            Action<TStateData, TData> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
@@ -1467,7 +1588,7 @@ where TStateData : INotifyPropertyChanged
         }
 
         /// <summary>
-        /// Defines an action to be called when ChangedTo the state, passing in the current state data and new data 
+        /// Defines an action to be called when ChangedTo the state, passing in the current state data and new data
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
         /// <typeparam name="TStateData">The type of state data that will be passed to the action</typeparam>
@@ -1477,10 +1598,15 @@ where TStateData : INotifyPropertyChanged
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedToWithData<TState, TStateData, TData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, TData, Task> action) where TState : struct
+            Func<TStateData, TData, Task> action)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo?.StateDataWrapper == null) return null;
+            if (smInfo?.StateDataWrapper == null)
+            {
+                return null;
+            }
+
             var stateDefinition = smInfo.StateDataWrapper;
 
             "Adding Behaviour: ChangedToWithDataViewModel".Log();
@@ -1519,7 +1645,11 @@ where TStateData : INotifyPropertyChanged
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo?.State == null) return null;
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
             return new StateDefinitionWithDataEventBuilder<TState, TStateData>
             {
                 StateManager = smInfo.StateManager,
@@ -1528,8 +1658,6 @@ where TStateData : INotifyPropertyChanged
                 Subscribe = subscribe,
                 Unsubscribe = unsubscribe
             };
-
-
         }
 
 
@@ -1550,8 +1678,10 @@ where TStateData : INotifyPropertyChanged
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo == null) return null;
-
+            if (smInfo == null)
+            {
+                return null;
+            }
 
             var returnd = smInfo
                 .WhenChangedTo(smInfo.WhenChangedToNewState(stateToChangeTo))
@@ -1588,18 +1718,20 @@ where TStateData : INotifyPropertyChanged
         /// <returns></returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeState<TState, TStateData>(
     this IStateWithDataActionBuilder<TState, TStateData> smInfo,
-    TState stateToChangeTo) where TState : struct
-    where TStateData : INotifyPropertyChanged
+    TState stateToChangeTo)
+            where TState : struct
+            where TStateData : INotifyPropertyChanged
         {
-            if (smInfo == null) return null;
-
+            if (smInfo == null)
+            {
+                return null;
+            }
 
             var returnd = smInfo
                 .WhenChangedTo(smInfo.WhenChangedToNewState(stateToChangeTo))
                 .WhenChangingFrom(smInfo.WhenChangingFromNewState(stateToChangeTo));
 
             return returnd;
-
         }
 
         /// <summary>
@@ -1610,26 +1742,20 @@ where TStateData : INotifyPropertyChanged
         /// <param name="smInfo">The state builder</param>
         /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeToPreviousState<TState, TStateData>(
-            this IStateWithDataActionBuilder<TState, TStateData> smInfo) where TState : struct
+            this IStateWithDataActionBuilder<TState, TStateData> smInfo)
+            where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo == null) return null;
-
+            if (smInfo == null)
+            {
+                return null;
+            }
 
             var returnd = smInfo
                 .WhenChangedTo(smInfo.WhenChangedToPreviousState())
                 .WhenChangingFrom(smInfo.WhenChangingFromPreviousState());
 
             return returnd;
-
         }
-
-
-
-
     }
-
-
-
-
 }

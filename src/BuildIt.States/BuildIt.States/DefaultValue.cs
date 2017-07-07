@@ -12,17 +12,17 @@ namespace BuildIt.States
 
     {
         /// <summary>
-        /// The element to set the property on
+        /// Gets or sets the element to set the property on
         /// </summary>
         public TElement Element { get; set; }
 
         /// <summary>
-        /// The property setter
+        /// Gets or sets the property setter
         /// </summary>
         public Action<TElement, TPropertyValue> Setter { get; set; }
 
         /// <summary>
-        /// The default value of the property
+        /// Gets or sets the default value of the property
         /// </summary>
         public TPropertyValue Value { get; set; }
 
@@ -31,7 +31,7 @@ namespace BuildIt.States
         /// </summary>
         public void RevertToDefault()
         {
-            Setter(Element,Value);
+            Setter(Element, Value);
         }
     }
 }

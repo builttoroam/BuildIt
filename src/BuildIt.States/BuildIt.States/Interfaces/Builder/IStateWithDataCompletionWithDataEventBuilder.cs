@@ -14,10 +14,10 @@ namespace BuildIt.States.Interfaces.Builder
     public interface IStateWithDataCompletionWithDataEventBuilder
         <TState, TStateData, TCompletion, TData> :
             IStateCompletionBuilder<TState, TCompletion>,
-            IStateWithDataActionDataBuilder<TState, TStateData,TData> 
+            IStateWithDataActionDataBuilder<TState, TStateData, TData>
         where TState : struct
         where TCompletion : struct
-        where TStateData : INotifyPropertyChanged, ICompletionWithData<TCompletion,TData>
+        where TStateData : INotifyPropertyChanged, ICompletionWithData<TCompletion, TData>
     {
     }
 }

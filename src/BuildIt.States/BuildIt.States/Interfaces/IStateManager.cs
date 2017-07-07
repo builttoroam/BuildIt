@@ -15,7 +15,7 @@ namespace BuildIt.States.Interfaces
         event EventHandler GoToPreviousStateIsBlockedChanged;
 
         /// <summary>
-        /// The available state groups
+        /// Gets the available state groups
         /// </summary>
         IReadOnlyDictionary<string, IStateGroup> StateGroups { get; }
 
@@ -24,7 +24,8 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state group</typeparam>
         /// <returns>The state group</returns>
-        IEnumStateGroup<TState> EnumStateGroup<TState>() where TState : struct;
+        IEnumStateGroup<TState> EnumStateGroup<TState>()
+            where TState : struct;
 
         /// <summary>
         /// The state group by name
@@ -45,7 +46,8 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the group</typeparam>
         /// <returns>The enum that represents the current state</returns>
-        TState CurrentState<TState>() where TState : struct;
+        TState CurrentState<TState>()
+            where TState : struct;
 
         /// <summary>
         /// The current state for a specific state group
@@ -90,7 +92,8 @@ namespace BuildIt.States.Interfaces
         /// <param name="state">The state to go to</param>
         /// <param name="animate">Whether to animate the transition</param>
         /// <returns>Whether the transition was successful</returns>
-        Task<bool> GoToState<TState>(TState state, bool animate = true) where TState : struct;
+        Task<bool> GoToState<TState>(TState state, bool animate = true)
+            where TState : struct;
 
         /// <summary>
         /// Transitions to a new state, passing in data
@@ -111,7 +114,8 @@ namespace BuildIt.States.Interfaces
         /// <param name="state">The state to go to</param>
         /// <param name="animate">Whether the transition should be animated</param>
         /// <returns>Whether the transition was successful</returns>
-        Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct;
+        Task<bool> GoBackToState<TState>(TState state, bool animate = true)
+            where TState : struct;
 
         /// <summary>
         /// Go back to the previous state
@@ -121,12 +125,12 @@ namespace BuildIt.States.Interfaces
         Task<bool> GoBackToPreviousState(bool animate = true);
 
         /// <summary>
-        /// Indicates if there is a previous state (in any state group)
+        /// Gets a value indicating whether indicates if there is a previous state (in any state group)
         /// </summary>
         bool PreviousStateExists { get; }
 
         /// <summary>
-        /// Whether going to previous state is currently blocked
+        /// Gets a value indicating whether whether going to previous state is currently blocked
         /// </summary>
         bool GoToPreviousStateIsBlocked { get; }
 

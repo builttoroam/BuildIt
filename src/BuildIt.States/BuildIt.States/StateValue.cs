@@ -13,32 +13,32 @@ namespace BuildIt.States
 
     {
         /// <summary>
-        /// The unique key used to identify this entity
+        /// Gets or sets the unique key used to identify this entity
         /// </summary>
         public Tuple<object, string> Key { get; set; }
 
         /// <summary>
-        /// The element to adjust the property on
+        /// Gets or sets the element to adjust the property on
         /// </summary>
         public TElement Element { get; set; }
 
         /// <summary>
-        /// The getter for the property
+        /// Gets or sets the getter for the property
         /// </summary>
         public Func<TElement, TPropertyValue> Getter { get; set; }
 
         /// <summary>
-        /// The setter for the property
+        /// Gets or sets the setter for the property
         /// </summary>
         public Action<TElement, TPropertyValue> Setter { get; set; }
 
         /// <summary>
-        /// The property to set
+        /// Gets or sets the property to set
         /// </summary>
         public TPropertyValue Value { get; set; }
 
-        private IDefaultValue Default => 
-            new DefaultValue<TElement, TPropertyValue> { Element = Element, Setter=Setter, Value = Getter(Element) };
+        private IDefaultValue Default =>
+            new DefaultValue<TElement, TPropertyValue> { Element = Element, Setter = Setter, Value = Getter(Element) };
 
         /// <summary>
         /// Performs the state transition
@@ -52,6 +52,5 @@ namespace BuildIt.States
             }
             Setter(Element, Value);
         }
-
     }
 }

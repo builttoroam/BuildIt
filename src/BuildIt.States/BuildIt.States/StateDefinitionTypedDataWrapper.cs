@@ -14,37 +14,37 @@ namespace BuildIt.States
         where TData : INotifyPropertyChanged
     {
         /// <summary>
-        /// The method to call when initializing the state
+        /// Gets or sets the method to call when initializing the state
         /// </summary>
         public Func<TData, Task> Initialise { get; set; }
 
         /// <summary>
-        /// The method to call when about to change from a state
+        /// Gets or sets the method to call when about to change from a state
         /// </summary>
         public Func<TData, CancelEventArgs, Task> AboutToChangeFrom { get; set; }
 
         /// <summary>
-        /// The method to call when changing from a state
+        /// Gets or sets the method to call when changing from a state
         /// </summary>
         public Func<TData, Task> ChangingFrom { get; set; }
 
         /// <summary>
-        /// The method to call when changed from a state
+        /// Gets or sets the method to call when changed from a state
         /// </summary>
         public Func<TData, Task> ChangedFrom { get; set; }
 
         /// <summary>
-        /// The method to call when changed to a state
+        /// Gets or sets the method to call when changed to a state
         /// </summary>
         public Func<TData, Task> ChangedTo { get; set; }
 
         /// <summary>
-        /// The method to call when change to a state, passing in data
+        /// Gets or sets the method to call when change to a state, passing in data
         /// </summary>
         public Func<TData, string, Task> ChangedToWithData { get; set; }
 
         /// <summary>
-        /// The type of the state data
+        /// Gets the type of the state data
         /// </summary>
         public Type StateDataType => typeof(TData);
 
@@ -68,9 +68,15 @@ namespace BuildIt.States
         /// <returns>Task to await</returns>
         public async Task InvokeInitialise(INotifyPropertyChanged dataEntity)
         {
-            if (Initialise == null) return;
+            if (Initialise == null)
+            {
+                return;
+            }
 
-            if (!(dataEntity is TData entityData)) return;
+            if (!(dataEntity is TData entityData))
+            {
+                return;
+            }
 
             "Invoking Initialise".Log();
             await Initialise(entityData);
@@ -85,9 +91,15 @@ namespace BuildIt.States
         /// <returns>Task to await</returns>
         public async Task InvokeAboutToChangeFrom(INotifyPropertyChanged dataEntity, CancelEventArgs cancel)
         {
-            if (AboutToChangeFrom == null) return;
+            if (AboutToChangeFrom == null)
+            {
+                return;
+            }
 
-            if (!(dataEntity is TData entityData)) return;
+            if (!(dataEntity is TData entityData))
+            {
+                return;
+            }
 
             "Invoking AboutToChangeFrom".Log();
             await AboutToChangeFrom(entityData, cancel);
@@ -101,9 +113,15 @@ namespace BuildIt.States
         /// <returns>Task to await</returns>
         public async Task InvokeChangingFrom(INotifyPropertyChanged dataEntity)
         {
-            if (ChangingFrom == null) return;
+            if (ChangingFrom == null)
+            {
+                return;
+            }
 
-            if (!(dataEntity is TData entityData)) return;
+            if (!(dataEntity is TData entityData))
+            {
+                return;
+            }
 
             "Invoking ChangingFrom".Log();
             await ChangingFrom(entityData);
@@ -116,9 +134,15 @@ namespace BuildIt.States
         /// <returns>Task to await</returns>
         public async Task InvokeChangedFrom(INotifyPropertyChanged dataEntity)
         {
-            if (ChangedFrom == null) return;
+            if (ChangedFrom == null)
+            {
+                return;
+            }
 
-            if (!(dataEntity is TData entityData)) return;
+            if (!(dataEntity is TData entityData))
+            {
+                return;
+            }
 
             "Invoking ChangedFrom".Log();
             await ChangedFrom(entityData);
@@ -132,9 +156,15 @@ namespace BuildIt.States
         /// <returns>Task to await</returns>
         public async Task InvokeChangedTo(INotifyPropertyChanged dataEntity)
         {
-            if (ChangedTo == null) return;
+            if (ChangedTo == null)
+            {
+                return;
+            }
 
-            if (!(dataEntity is TData entityData)) return;
+            if (!(dataEntity is TData entityData))
+            {
+                return;
+            }
 
             "Invoking ChangedTo".Log();
             await ChangedTo(entityData);
@@ -148,9 +178,15 @@ namespace BuildIt.States
         /// <returns>Task to await</returns>
         public async Task InvokeChangedToWithData(INotifyPropertyChanged dataEntity, string data)
         {
-            if (ChangedToWithData == null) return;
+            if (ChangedToWithData == null)
+            {
+                return;
+            }
 
-            if (!(dataEntity is TData entityData)) return;
+            if (!(dataEntity is TData entityData))
+            {
+                return;
+            }
 
             "Invoking ChangedToWithData".Log();
             await ChangedToWithData(entityData, data);

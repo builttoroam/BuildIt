@@ -8,23 +8,24 @@ namespace BuildIt.States
     public abstract class BaseBinder<TEntity> : IStateBinder
     {
         /// <summary>
-        /// The target for binding (to be updated when source changes)
+        /// Gets the target for binding (to be updated when source changes)
         /// </summary>
         protected TEntity Target { get; }
-        
+
         /// <summary>
-        /// The source to be monitored
+        /// Gets the source to be monitored
         /// </summary>
         protected TEntity Source { get; }
 
         /// <summary>
-        /// Whether the target is monitored for changes too
+        /// Gets a value indicating whether whether the target is monitored for changes too
         /// </summary>
         protected bool BothDirections { get; }
 
         private bool IsBound { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BaseBinder{TEntity}"/> class.
         /// Creates instance of binder and wires up link between state groups
         /// </summary>
         /// <param name="target">The target group (to be updated when source changes)</param>
@@ -45,7 +46,11 @@ namespace BuildIt.States
         public void Bind()
         {
 
-            if (IsBound) return;
+            if (IsBound)
+            {
+                return;
+            }
+
             InternalBind();
             IsBound = true;
         }
@@ -65,7 +70,11 @@ namespace BuildIt.States
         /// </summary>
         public void Unbind()
         {
-            if (!IsBound) return;
+            if (!IsBound)
+            {
+                return;
+            }
+
             InternalUnbind();
             IsBound = false;
         }

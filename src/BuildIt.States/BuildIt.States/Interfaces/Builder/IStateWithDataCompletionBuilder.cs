@@ -11,7 +11,7 @@ namespace BuildIt.States.Interfaces.Builder
     /// <typeparam name="TCompletion">The type (enum) of completion</typeparam>
     public interface IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> :
         IStateCompletionBuilder<TState, TCompletion>,
-        IStateWithDataActionBuilder<TState,TStateData> 
+        IStateWithDataActionBuilder<TState, TStateData>
         where TState : struct
         where TCompletion : struct
         where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>

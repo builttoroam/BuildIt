@@ -8,13 +8,13 @@ namespace BuildIt.States.Interfaces.Builder
     /// <typeparam name="TState">The type (enum) of the state</typeparam>
     /// <typeparam name="TCompletion">The type (enum) of completion</typeparam>
     /// <typeparam name="TData">The type of data</typeparam>
-    public interface IStateCompletionWithDataBuilder<TState, TCompletion, TData> 
+    public interface IStateCompletionWithDataBuilder<TState, TCompletion, TData>
         : IStateCompletionBuilder<TState, TCompletion>
         where TState : struct
         where TCompletion : struct
     {
         /// <summary>
-        /// The data to complete with
+        /// Gets the data to complete with
         /// </summary>
         Func<TData> Data { get; }
     }

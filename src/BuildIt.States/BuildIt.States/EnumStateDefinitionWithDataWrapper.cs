@@ -8,13 +8,13 @@ namespace BuildIt.States
     /// </summary>
     /// <typeparam name="TState">The enum type</typeparam>
     /// <typeparam name="TData">The type of data to be associated with the state</typeparam>
-    public class EnumStateDefinitionWithDataWrapper<TState, TData> : 
-        StateDefinitionWithDataWrapper<TData> , IEnumStateDefinitionWithData<TState, TData>
+    public class EnumStateDefinitionWithDataWrapper<TState, TData> :
+        StateDefinitionWithDataWrapper<TData>, IEnumStateDefinitionWithData<TState, TData>
         where TData : INotifyPropertyChanged
         where TState : struct
     {
         /// <summary>
-        /// The enum state definition
+        /// Gets or sets the enum state definition
         /// </summary>
         public IEnumStateDefinition<TState> EnumState
         {

@@ -21,12 +21,12 @@ namespace BuildIt.States.Interfaces
         event EventHandler GoToPreviousStateIsBlockedChanged;
 
         /// <summary>
-        /// Name of the group
+        /// Gets name of the group
         /// </summary>
         string GroupName { get; }
 
         /// <summary>
-        /// The current state data (ie associated with the current state)
+        /// Gets the current state data (ie associated with the current state)
         /// </summary>
         INotifyPropertyChanged CurrentStateData { get; }
 
@@ -72,17 +72,17 @@ namespace BuildIt.States.Interfaces
         IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections = true);
 
         /// <summary>
-        /// Gets/Sets whether state change history is tracked
+        /// Gets or sets a value indicating whether gets/Sets whether state change history is tracked
         /// </summary>
         bool TrackHistory { get; set; }
 
         /// <summary>
-        /// Indicates whether there is a state change history
+        /// Gets a value indicating whether indicates whether there is a state change history
         /// </summary>
         bool HasHistory { get; }
 
         /// <summary>
-        /// Indicates whether go to previous is being blocked
+        /// Gets a value indicating whether indicates whether go to previous is being blocked
         /// </summary>
         bool GoToPreviousStateIsBlocked { get; }
 
@@ -113,7 +113,7 @@ namespace BuildIt.States.Interfaces
             where TStateData : INotifyPropertyChanged;
 
         /// <summary>
-        /// The current state name
+        /// Gets the current state name
         /// </summary>
         string CurrentStateName { get; }
 
@@ -124,7 +124,7 @@ namespace BuildIt.States.Interfaces
         void WatchTrigger(IStateTrigger trigger);
 
         /// <summary>
-        /// The states that have been defined
+        /// Gets the states that have been defined
         /// </summary>
         IDictionary<string, IStateDefinition> States { get; }
     }

@@ -11,12 +11,13 @@ namespace BuildIt.States
         private IList<IStateBinder> GroupBinders { get; } = new List<IStateBinder>();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateManagerBinder"/> class.
         /// Creates instance and binds the state groups
         /// </summary>
         /// <param name="target">The target (to be updated from source)</param>
         /// <param name="source">The source</param>
         /// <param name="bothDirections">Whether updates should go both directions (ie source updated from target)</param>
-        public StateManagerBinder(IStateManager target, IStateManager source, bool bothDirections = true):base(target,source,bothDirections)
+        public StateManagerBinder(IStateManager target, IStateManager source, bool bothDirections = true) : base(target, source, bothDirections)
         {
         }
 
@@ -30,7 +31,11 @@ namespace BuildIt.States
             {
                 var sg = Target.StateGroups.SafeValue(kvp.Key);
                 var binder = sg?.Bind(kvp.Value, BothDirections);
-                if (binder == null) continue;
+                if (binder == null)
+                {
+                    continue;
+                }
+
                 GroupBinders.Add(binder);
             }
         }

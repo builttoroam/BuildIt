@@ -24,14 +24,18 @@ namespace BuildIt.States.Interfaces
         }
 
         /// <summary>
-        /// Getss/Sets the active state of the trigger
+        /// Gets a value indicating whether getss/Sets the active state of the trigger
         /// </summary>
         public bool IsActive
         {
             get => isActive;
             private set
             {
-                if (isActive == value) return;
+                if (isActive == value)
+                {
+                    return;
+                }
+
                 isActive = value;
                 IsActiveChanged.SafeRaise(this);
             }

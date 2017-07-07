@@ -11,12 +11,12 @@ namespace BuildIt.States
         where TData : INotifyPropertyChanged
     {
         /// <summary>
-        /// The state definition
+        /// Gets or sets the state definition
         /// </summary>
         public IStateDefinition State { get; set; }
 
         /// <summary>
-        /// The associated state data entity
+        /// Gets the associated state data entity
         /// </summary>
         public IStateDefinitionTypedDataWrapper<TData> StateData
             => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TData>;
