@@ -1545,7 +1545,7 @@ where TStateData : INotifyPropertyChanged
         /// <returns></returns>
         public static IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData>
             ChangeState<TState, TStateData, TData>(
-            this IStateWithDataActionData<TState, TStateData, TData> smInfo,
+            this IStateWithDataActionDataBuilder<TState, TStateData, TData> smInfo,
             TState stateToChangeTo)
             where TState : struct
             where TStateData : INotifyPropertyChanged
@@ -1587,7 +1587,7 @@ where TStateData : INotifyPropertyChanged
         /// <param name="stateToChangeTo">The state to change to</param>
         /// <returns></returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeState<TState, TStateData>(
-    this IStateWithDataAction<TState, TStateData> smInfo,
+    this IStateWithDataActionBuilder<TState, TStateData> smInfo,
     TState stateToChangeTo) where TState : struct
     where TStateData : INotifyPropertyChanged
         {
@@ -1610,7 +1610,7 @@ where TStateData : INotifyPropertyChanged
         /// <param name="smInfo">The state builder</param>
         /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeToPreviousState<TState, TStateData>(
-            this IStateWithDataAction<TState, TStateData> smInfo) where TState : struct
+            this IStateWithDataActionBuilder<TState, TStateData> smInfo) where TState : struct
             where TStateData : INotifyPropertyChanged
         {
             if (smInfo == null) return null;

@@ -2,7 +2,8 @@
   "dependencies": {
     "BuildIt.General": "1.1.0.26",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
-    "Newtonsoft.Json": "10.0.3"
+    "Newtonsoft.Json": "10.0.3",
+    "StyleCop.Analyzers": "1.0.2"
   },
   "frameworks": {
     "uap10.0.10240": {}

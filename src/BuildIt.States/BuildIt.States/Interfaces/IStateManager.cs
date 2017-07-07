@@ -34,7 +34,7 @@ namespace BuildIt.States.Interfaces
         IStateGroup StateGroup(string groupName);
 
 
-       /// <summary>
+        /// <summary>
         /// Adds a group based on type of state
         /// </summary>
         /// <param name="group">The group to add</param>
@@ -54,21 +54,89 @@ namespace BuildIt.States.Interfaces
         /// <returns>The name of the current state</returns>
         string CurrentState(string groupName);
 
-        Task<bool> GoToState(string groupName,string stateName, bool animate = true);
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoToState(string groupName, string stateName, bool animate = true);
+
+        /// <summary>
+        /// Go to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TData">The type of data to be passed to the new state</typeparam>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="data">The data to be passed in</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <returns>Whether the transition was successful</returns>
         Task<bool> GoToStateWithData<TData>(string groupName, string stateName, TData data, bool animate = true);
+
+        /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
         Task<bool> GoBackToState(string groupName, string stateName, bool animate = true);
 
-
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether to animate the transition</param>
+        /// <returns>Whether the transition was successful</returns>
         Task<bool> GoToState<TState>(TState state, bool animate = true) where TState : struct;
-        Task<bool> GoToStateWithData<TState,TData>(TState state, TData data, bool animate = true) where TState : struct;
+
+        /// <summary>
+        /// Transitions to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of state to go to</typeparam>
+        /// <typeparam name="TData">The type of data to be passed to new state</typeparam>
+        /// <param name="state">The new state to go to</param>
+        /// <param name="data">The data to pass to the new state</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
+            where TState : struct;
+
+        /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
         Task<bool> GoBackToState<TState>(TState state, bool animate = true) where TState : struct;
 
+        /// <summary>
+        /// Go back to the previous state
+        /// </summary>
+        /// <param name="animate">whether to animate the transition</param>
+        /// <returns>Whether the transition was successful</returns>
         Task<bool> GoBackToPreviousState(bool animate = true);
 
+        /// <summary>
+        /// Indicates if there is a previous state (in any state group)
+        /// </summary>
         bool PreviousStateExists { get; }
 
+        /// <summary>
+        /// Whether going to previous state is currently blocked
+        /// </summary>
         bool GoToPreviousStateIsBlocked { get; }
 
-        IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections=true);
+        /// <summary>
+        /// Bind two different state managers
+        /// </summary>
+        /// <param name="managerToBindTo">The state manager to listen to for changes</param>
+        /// <param name="bothDirections">Whether updates to states should go both ways</param>
+        /// <returns>Binder that can be used to disconnect the state managers</returns>
+
+        IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections = true);
     }
 }
