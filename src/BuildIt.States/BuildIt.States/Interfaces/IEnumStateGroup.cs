@@ -14,6 +14,15 @@ namespace BuildIt.States.Interfaces
         INotifyEnumStateChanging<TState>
         where TState : struct
     {
+        /// <summary>
+        /// Gets the current typed state
+        /// </summary>
+        TState CurrentEnumState { get; }
+
+        /// <summary>
+        /// Gets returns the state definition for the current state
+        /// </summary>
+        IReadOnlyDictionary<TState, IEnumStateDefinition<TState>> EnumStates { get; }
 
         /// <summary>
         /// Defines a new typed state definition
@@ -39,16 +48,6 @@ namespace BuildIt.States.Interfaces
             where TStateData : INotifyPropertyChanged;
 
         /// <summary>
-        /// Gets the current typed state
-        /// </summary>
-        TState CurrentEnumState { get; }
-
-        /// <summary>
-        /// Gets returns the state definition for the current state
-        /// </summary>
-        IReadOnlyDictionary<TState, IEnumStateDefinition<TState>> EnumStates { get; }
-
-        /// <summary>
         /// Defines all states for the enum type
         /// </summary>
         void DefineAllStates();
@@ -70,7 +69,6 @@ namespace BuildIt.States.Interfaces
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
         Task<bool> ChangeToWithData<TData>(TState newState, TData data, bool useTransitions = true);
-
 
         /// <summary>
         /// Changes back to a typed state

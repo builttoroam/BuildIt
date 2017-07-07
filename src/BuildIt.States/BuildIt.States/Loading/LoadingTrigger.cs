@@ -6,7 +6,7 @@ namespace BuildIt.States.Loading
     /// <summary>
     /// State trigger based on the loading state
     /// </summary>
-    /// <typeparam name="TLoadingState"></typeparam>
+    /// <typeparam name="TLoadingState">The type (enum) for loading states</typeparam>
     public class LoadingTrigger<TLoadingState> : StateTriggerBase
         where TLoadingState : struct
     {
@@ -30,7 +30,6 @@ namespace BuildIt.States.Loading
         /// Gets the loading manager for tracking loading state
         /// </summary>
         private LoadingManager<TLoadingState> Manager { get; }
-
 
         private void Manager_LoadingChanged(object sender, EventArgs e)
         {

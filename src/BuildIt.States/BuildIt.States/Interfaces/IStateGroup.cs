@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using BuildIt.ServiceLocation;
 
 namespace BuildIt.States.Interfaces
 {
@@ -29,6 +28,33 @@ namespace BuildIt.States.Interfaces
         /// Gets the current state data (ie associated with the current state)
         /// </summary>
         INotifyPropertyChanged CurrentStateData { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether gets/Sets whether state change history is tracked
+        /// </summary>
+        bool TrackHistory { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether indicates whether there is a state change history
+        /// </summary>
+        bool HasHistory { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether indicates whether go to previous is being blocked
+        /// </summary>
+        bool GoToPreviousStateIsBlocked { get; }
+
+        // IDependencyContainer DependencyContainer { get; set; }
+
+        /// <summary>
+        /// Gets the current state name
+        /// </summary>
+        string CurrentStateName { get; }
+
+        /// <summary>
+        /// Gets the states that have been defined
+        /// </summary>
+        IDictionary<string, IStateDefinition> States { get; }
 
         /// <summary>
         /// Instigates a change to a state
@@ -72,24 +98,6 @@ namespace BuildIt.States.Interfaces
         IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections = true);
 
         /// <summary>
-        /// Gets or sets a value indicating whether gets/Sets whether state change history is tracked
-        /// </summary>
-        bool TrackHistory { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether indicates whether there is a state change history
-        /// </summary>
-        bool HasHistory { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether indicates whether go to previous is being blocked
-        /// </summary>
-        bool GoToPreviousStateIsBlocked { get; }
-
-        //        IDependencyContainer DependencyContainer { get; set; }
-
-
-        /// <summary>
         /// Defines a state in the group
         /// </summary>
         /// <param name="stateDefinition">The state definition to define</param>
@@ -113,19 +121,9 @@ namespace BuildIt.States.Interfaces
             where TStateData : INotifyPropertyChanged;
 
         /// <summary>
-        /// Gets the current state name
-        /// </summary>
-        string CurrentStateName { get; }
-
-        /// <summary>
-        /// Adds a trigger to start monitoring
+        ///     Adds a trigger to start monitoring
         /// </summary>
         /// <param name="trigger">The trigger to monitor</param>
         void WatchTrigger(IStateTrigger trigger);
-
-        /// <summary>
-        /// Gets the states that have been defined
-        /// </summary>
-        IDictionary<string, IStateDefinition> States { get; }
     }
 }

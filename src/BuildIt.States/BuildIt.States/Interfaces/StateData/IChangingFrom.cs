@@ -10,7 +10,7 @@ namespace BuildIt.States.Interfaces.StateData
         /// <summary>
         /// Method called when changing from state
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Task to be awaited</returns>
         Task ChangingFrom();
     }
 }

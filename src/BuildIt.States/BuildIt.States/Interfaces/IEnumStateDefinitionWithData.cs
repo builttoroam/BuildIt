@@ -7,7 +7,7 @@ namespace BuildIt.States.Interfaces
     /// </summary>
     /// <typeparam name="TState">The enum type</typeparam>
     /// <typeparam name="TData">The type of data to be associated with the state</typeparam>
-    public interface IEnumStateDefinitionWithData<TState, TData>: IStateDefinitionWithData<TData>
+    public interface IEnumStateDefinitionWithData<TState, TData> : IStateDefinitionWithData<TData>
         where TData : INotifyPropertyChanged
         where TState : struct
     {

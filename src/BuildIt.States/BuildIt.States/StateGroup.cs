@@ -15,6 +15,24 @@ namespace BuildIt.States
     public class StateGroup : IStateGroup
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateGroup"/> class.
+        /// Constructs a group based on the supplied group name
+        /// </summary>
+        /// <param name="groupName">The name of the state group</param>
+        public StateGroup(string groupName)
+        {
+            GroupName = groupName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateGroup"/> class.
+        /// Internal constructor to limit construction without providing a name
+        /// </summary>
+        protected StateGroup()
+        {
+        }
+
+        /// <summary>
         /// Indicates whether the state group is currently able to go to previous has changed
         /// </summary>
         public event EventHandler GoToPreviousStateIsBlockedChanged;
@@ -44,7 +62,6 @@ namespace BuildIt.States
         /// </summary>
         public virtual string CurrentStateName { get; protected set; }
 
-
         /// <summary>
         /// Gets returns the state definition for the current state
         /// </summary>
@@ -59,58 +76,15 @@ namespace BuildIt.States
             : null;
 
         /// <summary>
-        /// Retrieve state definition based on state name
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        public IStateDefinition StateDefinition(string state)
-        {
-            if (string.IsNullOrWhiteSpace(state))
-            {
-                return null;
-            }
-
-            return States.SafeValue(state);
-        }
-
-        /// <summary>
         /// Gets dictionary of states that can be transitioned to
         /// </summary>
         public IDictionary<string, IStateDefinition> States { get; } =
             new Dictionary<string, IStateDefinition>();
 
         /// <summary>
-        /// Gets internal dictionary of default property values - so that they can be
-        /// unset in the case of transitioning to a state that doesn't define
-        /// values for every property
-        /// </summary>
-        private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
-            = new Dictionary<Tuple<object, string>, IDefaultValue>();
-
-
-        /// <summary>
-        /// Gets cache of state data entities
-        /// </summary>
-        private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
-           new Dictionary<Type, INotifyPropertyChanged>();
-
-        /// <summary>
         /// Gets or sets the current state data
         /// </summary>
         public INotifyPropertyChanged CurrentStateData { get; set; }
-
-        /// <summary>
-        /// Retrieves any existing entity for a particular entity type
-        /// </summary>
-        /// <param name="stateDataType"></param>
-        /// <returns></returns>
-        private INotifyPropertyChanged Existing(Type stateDataType) =>
-            stateDataType == null ? null : StateDataCache.SafeValue(stateDataType);
-
-        /// <summary>
-        /// Gets all triggers defined for the states in this group
-        /// </summary>
-        private IList<IStateTrigger> Triggers { get; } = new List<IStateTrigger>();
 
         /// <summary>
         /// Gets the name of the state group
@@ -121,11 +95,6 @@ namespace BuildIt.States
         /// Gets or sets a value indicating whether /// Whether history will be recorded for this state group
         /// </summary>
         public bool TrackHistory { get; set; } = false;
-
-        /// <summary>
-        /// Gets the history stack of state names
-        /// </summary>
-        private Stack<string> History { get; } = new Stack<string>();
 
         /// <summary>
         /// Gets a value indicating whether whether history has been recorded
@@ -163,25 +132,39 @@ namespace BuildIt.States
             }
         }
 
+        /// <summary>
+        /// Gets internal dictionary of default property values - so that they can be
+        /// unset in the case of transitioning to a state that doesn't define
+        /// values for every property
+        /// </summary>
+        private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
+            = new Dictionary<Tuple<object, string>, IDefaultValue>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StateGroup"/> class.
-        /// Internal constructor to limit construction without providing a name
+        /// Gets cache of state data entities
         /// </summary>
-        protected StateGroup()
-        {
-        }
+        private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
+            new Dictionary<Type, INotifyPropertyChanged>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StateGroup"/> class.
-        /// Constructs a group based on the supplied group name
+        /// Gets all triggers defined for the states in this group
         /// </summary>
-        /// <param name="groupName">The name of the state group</param>
-        public StateGroup(string groupName)
-        {
-            GroupName = groupName;
-        }
+        private IList<IStateTrigger> Triggers { get; } = new List<IStateTrigger>();
 
+        /// <summary>
+        /// Gets the history stack of state names
+        /// </summary>
+        private Stack<string> History { get; } = new Stack<string>();
+
+        /// <summary>
+        /// Retrieve state definition based on state name
+        /// </summary>
+        /// <param name="state">The state name</param>
+        /// <returns>New state definition</returns>
+        public IStateDefinition StateDefinition(string state)
+        {
+            return string.IsNullOrWhiteSpace(state) ? null : States.SafeValue(state);
+        }
 
         /// <summary>
         /// Add and start watching a state trigger
@@ -191,68 +174,6 @@ namespace BuildIt.States
         {
             trigger.IsActiveChanged += Trigger_IsActiveChanged;
             Triggers.Add(trigger);
-        }
-
-        private void Trigger_IsActiveChanged(object sender, EventArgs e)
-        {
-            UpdateStatesByTriggers();
-        }
-
-        /// <summary>
-        /// Determines whether the supplied state definition is the default state
-        /// </summary>
-        /// <param name="stateDefinition">The state definition</param>
-        /// <returns></returns>
-        protected bool IsDefaultState(IStateDefinition stateDefinition)
-        {
-            return IsDefaultState(stateDefinition?.StateName);
-        }
-
-        /// <summary>
-        /// Determines whether the supplied state name is the default state
-        /// </summary>
-        /// <param name="stateName">The state name</param>
-        /// <returns></returns>
-        protected bool IsDefaultState(string stateName)
-        {
-            return string.IsNullOrWhiteSpace(stateName);
-        }
-
-        private async void UpdateStatesByTriggers()
-        {
-            // Don't change state if current state triggers are still active
-            if (CurrentStateDefinition.AllTriggersActive())
-            {
-                return;
-            }
-
-            var firstActiveState = States.FirstOrDefault(x => x.Value.AllTriggersActive());
-            // If there's no active state, then just return
-            if (IsDefaultState(firstActiveState.Value))
-            {
-                return;
-            }
-
-            if (CurrentStateName == firstActiveState.Key)
-            {
-                return;
-            }
-
-            await ChangeTo(firstActiveState.Key);
-        }
-
-        private void IsBlockable_IsBlockedChanged(object sender, EventArgs e)
-        {
-            OnGoToPreviousStateIsBlockedChanged();
-        }
-
-
-        /// <summary>
-        /// Method for raising the event indicating that going to previous has changed
-        /// </summary>
-        protected void OnGoToPreviousStateIsBlockedChanged()
-        {
-            GoToPreviousStateIsBlockedChanged.SafeRaise(this);
         }
 
         /// <summary>
@@ -269,7 +190,7 @@ namespace BuildIt.States
                 return null;
             }
 
-            var existing = StateDefinition(stateDefinition.StateName);// States.SafeValue(stateDefinition.StateName);
+            var existing = StateDefinition(stateDefinition.StateName); // States.SafeValue(stateDefinition.StateName);
             if (existing != null)
             {
                 $"State definition already defined, returning existing instance - {existing.GetType().Name}".Log();
@@ -285,7 +206,7 @@ namespace BuildIt.States
         /// Create state definition
         /// </summary>
         /// <param name="state">The name of the state definition to create</param>
-        /// <returns></returns>
+        /// <returns>The new state definition</returns>
         public virtual IStateDefinition DefineState(string state)
         {
             // Don't ever add the default value (eg Base) state
@@ -294,6 +215,7 @@ namespace BuildIt.States
                 "Attempted to add state definition for null or empty state name".Log();
                 return null;
             }
+
             var stateDefinition = new StateDefinition(state);
             return DefineState(stateDefinition);
         }
@@ -390,7 +312,7 @@ namespace BuildIt.States
         /// <returns>Binder entity that manages the relationship</returns>
         public IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections = true)
         {
-            var sg = groupToBindTo;// as IStateGroup<TState>; // This includes INotifyStateChanged
+            var sg = groupToBindTo; // as IStateGroup<TState>; // This includes INotifyStateChanged
             if (sg == null)
             {
                 return null;
@@ -399,58 +321,21 @@ namespace BuildIt.States
             return new StateGroupBinder(this, sg, bothDirections);
         }
 
-        private bool IsCurrentState(string newState)
-        {
-            // Check to see whether this is a change to the same state
-            var current = CurrentStateName;
-            return current?.Equals(newState) ?? false;
-        }
-
         /// <summary>
-        /// Change to new state
+        /// Registers any depedencies, including in the defined states and data wrappers
         /// </summary>
-        /// <param name="newState">The name of the new state</param>
-        /// <param name="isNewState">Whether this is a new state, or change to previous</param>
-        /// <param name="useTransitions">Use transition</param>
-        /// <param name="data">Json data to pass into the new state</param>
-        /// <returns>Indicates successful transition to the newState</returns>
-        private async Task<bool> PerformStateChange(string newState, bool isNewState, bool useTransitions, string data = null)
+        /// <param name="container">The container to register dependencies into</param>
+        public void RegisterDependencies(IDependencyContainer container)
         {
-
-            // Check to see whether this is a change to the same state
-            if (IsCurrentState(newState))
+            DependencyContainer = container;
+            using (container.StartUpdate())
             {
-                "Transitioning to same state - doing nothing".Log();
-                return true;
+                foreach (var state in States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
+                {
+                    container.RegisterType(state.StateDataType);
+                }
             }
-
-            var current = CurrentStateName;
-            $"Changing state from {current} to {newState} (Transitions: {useTransitions})".Log();
-
-            // Invoke all the methods/events prior to changing state (cancellable!)
-            "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
-            var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions);
-            if (!success)
-            {
-                return false;
-            }
-
-            // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
-            "Invoking ChangingFrom before state change".Log();
-            await ChangingFrom(newState, data, isNewState, useTransitions);
-
-            // Perform the state change
-            "Invoking ChangeCurrentState to perform state change".Log();
-            await ChangeCurrentState(newState, isNewState, useTransitions);
-
-            // Perform post-change methods
-            "Invoking ChangedToState after state change".Log();
-            await ChangedToState(newState, data, isNewState, useTransitions);
-
-            "ChangeTo completed".Log();
-            return true;
         }
-
 
         /// <summary>
         /// Invokes methods allowing change of state to be cancelled:
@@ -487,6 +372,7 @@ namespace BuildIt.States
                 await currentStateDef.AboutToChangeFrom(cancel);
                 "'AboutToChangeFrom' completed".Log();
             }
+
             if (cancel.Cancel)
             {
                 "Cancelling state transition invoking 'AboutToChangeFrom'".Log();
@@ -556,6 +442,7 @@ namespace BuildIt.States
         /// <param name="dataAsJson">The data to be passed into the new state</param>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
+        /// <returns>Task to be awaited</returns>
         protected virtual async Task ChangingFrom(string newState, string dataAsJson, bool isNewState, bool useTransitions)
         {
             var currentStateDef = CurrentStateDefinition;
@@ -603,6 +490,7 @@ namespace BuildIt.States
         /// <param name="newState">The name of the new state to transition to</param>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
+        /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
         protected virtual async Task ChangeCurrentState(string newState, bool isNewState, bool useTransitions)
 #pragma warning restore 1998
@@ -617,16 +505,14 @@ namespace BuildIt.States
             var newStateDef = States.SafeValue(newState);
             var newStateDataWrapper = newStateDef?.UntypedStateDataWrapper;
 
-
             if (newStateDataWrapper != null)
             {
-
                 "Retrieving existing ViewModel for new state".Log();
                 var stateData = Existing(newStateDataWrapper.StateDataType);
                 if (stateData == null)
                 {
-                    //var newGen = States[newState] as IGenerateViewModel;
-                    //if (newGen == null) return false;
+                    // var newGen = States[newState] as IGenerateViewModel;
+                    // if (newGen == null) return false;
                     "Generating ViewModel for new state".Log();
                     stateData = newStateDataWrapper.Generate();
 
@@ -636,6 +522,7 @@ namespace BuildIt.States
 
                     await newStateDataWrapper.InvokeInitialise(stateData);
                 }
+
                 // ReSharper disable once SuspiciousTypeConversion.Global - data entities can implement both interfaces
                 (stateData as IRegisterForUIAccess)?.RegisterForUIAccess(this);
 
@@ -680,18 +567,19 @@ namespace BuildIt.States
                     CurrentStateName = newState;
                     break;
                 }
+
                 if (!(CurrentStateName?.Equals(newState) ?? false))
                 {
                     CurrentStateName = newState;
                     $"Unable to go back to {newState} as it doesn't exist in the state History".Log();
                 }
             }
+
             $"CurrentState updated (now: {CurrentStateName})".Log();
 
             // Perform state transitions - adjust all the properties etc
             CurrentStateDefinition?.TransitionTo(DefaultValues);
         }
-
 
         /// <summary>
         /// Invokes methods after state change
@@ -704,6 +592,7 @@ namespace BuildIt.States
         /// <param name="dataAsJson">Any data that needs to be passed in</param>
         /// <param name="isNewState">Is this a new state (forward) or going back</param>
         /// <param name="useTransitions">Should use transitions</param>
+        /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
         protected virtual async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions)
 #pragma warning restore 1998
@@ -721,8 +610,6 @@ namespace BuildIt.States
                 "Invoking ChangedFrom on current state definition".Log();
                 await oldStateDataWrapper.InvokeChangedFrom(CurrentStateData);
             }
-
-
 
             var currentStateDef = CurrentStateDefinition;
             var currentStateDataWrapper = CurrentStateDataWrapper;
@@ -786,7 +673,7 @@ namespace BuildIt.States
         /// <param name="newState">The name of the state being changed to</param>
         /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
         /// <param name="useTransitions">Indicates whether to use transitions</param>
-        /// <returns></returns>
+        /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
         protected virtual async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions)
 #pragma warning restore 1998
@@ -816,7 +703,6 @@ namespace BuildIt.States
                 // the state change has still occurred
             }
         }
-
 
         /// <summary>
         /// Overridable method to raise the StateChanging event
@@ -856,24 +742,128 @@ namespace BuildIt.States
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
+
             return shouldCancel;
         }
 
+        /// <summary>
+        /// Determines whether the supplied state definition is the default state
+        /// </summary>
+        /// <param name="stateDefinition">The state definition</param>
+        /// <returns>True if this is the default state</returns>
+        protected bool IsDefaultState(IStateDefinition stateDefinition)
+        {
+            return IsDefaultState(stateDefinition?.StateName);
+        }
 
         /// <summary>
-        /// Registers any depedencies, including in the defined states and data wrappers
+        /// Determines whether the supplied state name is the default state
         /// </summary>
-        /// <param name="container"></param>
-        public void RegisterDependencies(IDependencyContainer container)
+        /// <param name="stateName">The state name</param>
+        /// <returns>True if this is the default state</returns>
+        protected bool IsDefaultState(string stateName)
         {
-            DependencyContainer = container;
-            using (container.StartUpdate())
-            {
-                foreach (var state in States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
-                {
-                    container.RegisterType(state.StateDataType);
-                }
-            }
+            return string.IsNullOrWhiteSpace(stateName);
         }
+
+        /// <summary>
+        /// Method for raising the event indicating that going to previous has changed
+        /// </summary>
+        protected void OnGoToPreviousStateIsBlockedChanged()
+        {
+            GoToPreviousStateIsBlockedChanged.SafeRaise(this);
+        }
+
+        private async void UpdateStatesByTriggers()
+        {
+            // Don't change state if current state triggers are still active
+            if (CurrentStateDefinition.AllTriggersActive())
+            {
+                return;
+            }
+
+            var firstActiveState = States.FirstOrDefault(x => x.Value.AllTriggersActive());
+            // If there's no active state, then just return
+            if (IsDefaultState(firstActiveState.Value))
+            {
+                return;
+            }
+
+            if (CurrentStateName == firstActiveState.Key)
+            {
+                return;
+            }
+
+            await ChangeTo(firstActiveState.Key);
+        }
+
+        private void IsBlockable_IsBlockedChanged(object sender, EventArgs e)
+        {
+            OnGoToPreviousStateIsBlockedChanged();
+        }
+
+        private bool IsCurrentState(string newState)
+        {
+            // Check to see whether this is a change to the same state
+            var current = CurrentStateName;
+            return current?.Equals(newState) ?? false;
+        }
+
+        /// <summary>
+        /// Change to new state
+        /// </summary>
+        /// <param name="newState">The name of the new state</param>
+        /// <param name="isNewState">Whether this is a new state, or change to previous</param>
+        /// <param name="useTransitions">Use transition</param>
+        /// <param name="data">Json data to pass into the new state</param>
+        /// <returns>Indicates successful transition to the newState</returns>
+        private async Task<bool> PerformStateChange(string newState, bool isNewState, bool useTransitions, string data = null)
+        {
+            // Check to see whether this is a change to the same state
+            if (IsCurrentState(newState))
+            {
+                "Transitioning to same state - doing nothing".Log();
+                return true;
+            }
+
+            var current = CurrentStateName;
+            $"Changing state from {current} to {newState} (Transitions: {useTransitions})".Log();
+
+            // Invoke all the methods/events prior to changing state (cancellable!)
+            "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
+            var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions);
+            if (!success)
+            {
+                return false;
+            }
+
+            // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
+            "Invoking ChangingFrom before state change".Log();
+            await ChangingFrom(newState, data, isNewState, useTransitions);
+
+            // Perform the state change
+            "Invoking ChangeCurrentState to perform state change".Log();
+            await ChangeCurrentState(newState, isNewState, useTransitions);
+
+            // Perform post-change methods
+            "Invoking ChangedToState after state change".Log();
+            await ChangedToState(newState, data, isNewState, useTransitions);
+
+            "ChangeTo completed".Log();
+            return true;
+        }
+
+        private void Trigger_IsActiveChanged(object sender, EventArgs e)
+        {
+            UpdateStatesByTriggers();
+        }
+
+        /// <summary>
+        /// Retrieves any existing entity for a particular entity type
+        /// </summary>
+        /// <param name="stateDataType">The type to use to look up state data</param>
+        /// <returns>The state data (or null)</returns>
+        private INotifyPropertyChanged Existing(Type stateDataType) =>
+            stateDataType == null ? null : StateDataCache.SafeValue(stateDataType);
     }
 }

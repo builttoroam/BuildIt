@@ -5,7 +5,7 @@ namespace BuildIt.States.Loading
     /// <summary>
     /// Manager to track loading state
     /// </summary>
-    /// <typeparam name="TLoadingState"></typeparam>
+    /// <typeparam name="TLoadingState">The type (enum) that defines loading/loaded values</typeparam>
     public class LoadingManager<TLoadingState> : ILoadingManager
     {
         private bool isLoading;
@@ -29,9 +29,8 @@ namespace BuildIt.States.Loading
         /// Gets or sets a value indicating whether whether loading is in progress
         /// </summary>
         public bool IsLoading
-
         {
-            get { return isLoading; }
+            get => isLoading;
             set
             {
                 isLoading = value;
@@ -56,12 +55,14 @@ namespace BuildIt.States.Loading
 
         private class Loader : IDisposable
         {
-            ILoadingManager Manager { get; }
             public Loader(ILoadingManager manager)
             {
                 Manager = manager;
                 Manager.IsLoading = true;
             }
+
+            private ILoadingManager Manager { get; }
+
             public void Dispose()
             {
                 Manager.IsLoading = false;

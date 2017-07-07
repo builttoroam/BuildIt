@@ -7,21 +7,12 @@ namespace BuildIt.States.Interfaces
     /// </summary>
     public class StateTriggerBase : IStateTriggerActivation, IStateTrigger
     {
+        private bool isActive;
+
         /// <summary>
         /// Event indicating that the active state of the trigger has changed
         /// </summary>
         public event EventHandler IsActiveChanged;
-
-        private bool isActive;
-
-        /// <summary>
-        /// Updates the active state of the trigger
-        /// </summary>
-        /// <param name="newIsActive"></param>
-        public void UpdateIsActive(bool newIsActive)
-        {
-            IsActive = newIsActive;
-        }
 
         /// <summary>
         /// Gets a value indicating whether getss/Sets the active state of the trigger
@@ -39,6 +30,15 @@ namespace BuildIt.States.Interfaces
                 isActive = value;
                 IsActiveChanged.SafeRaise(this);
             }
+        }
+
+        /// <summary>
+        /// Updates the active state of the trigger
+        /// </summary>
+        /// <param name="newIsActive">The new active state to set</param>
+        public void UpdateIsActive(bool newIsActive)
+        {
+            IsActive = newIsActive;
         }
     }
 }

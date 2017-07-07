@@ -13,10 +13,10 @@ namespace BuildIt.States
     /// <typeparam name="TState">The type (enum) fo the state group</typeparam>
     public class EnumStateGroup<TState> : StateGroup, IEnumStateGroup<TState>
         where TState : struct
-
     {
-        #pragma warning disable CS0067 // See TODO
+#pragma warning disable CS0067 // See TODO
         // TODO: Raise events at correct point when changing state
+
         /// <summary>
         /// Typed state changed event
         /// </summary>
@@ -37,9 +37,9 @@ namespace BuildIt.States
         /// Gets the typed state definitions
         /// </summary>
         public IReadOnlyDictionary<TState, IEnumStateDefinition<TState>> EnumStates => (from s in States
-                let ekey = Utilities.EnumParse<TState>(s.Key)
-                let eval = s.Value as IEnumStateDefinition<TState>
-                select new { Key = ekey, Value = eval })
+                                                                                        let ekey = Utilities.EnumParse<TState>(s.Key)
+                                                                                        let eval = s.Value as IEnumStateDefinition<TState>
+                                                                                        select new { Key = ekey, Value = eval })
             .ToDictionary(x => x.Key, y => y.Value);
 
         /// <summary>
@@ -61,16 +61,6 @@ namespace BuildIt.States
         /// </summary>
         public IStateDefinition CurrentEnumStateDefinition
             => States.SafeValue(CurrentStateName) as IEnumStateDefinition<TState>;
-
-        /// <summary>
-        /// Whether the supplied enum value is the default state
-        /// </summary>
-        /// <param name="enumDef">The type (enum) of the state group</param>
-        /// <returns>True if it is the default state</returns>
-        protected bool IsDefaultState(TState enumDef)
-        {
-            return default(TState).Equals(enumDef);
-        }
 
         /// <summary>
         /// Defines all states for the enum type
@@ -108,6 +98,7 @@ namespace BuildIt.States
                 "Attempted to add the default state definition".Log();
                 return null;
             }
+
             var stateDefinition = new EnumStateDefinition<TState>(state);
             return DefineEnumState(stateDefinition);
         }
@@ -127,7 +118,6 @@ namespace BuildIt.States
                 "Attempted to add the default state definition".Log();
                 return null;
             }
-
 
             $"Defining state for {typeof(TState).Name} with data type {typeof(TStateData)}".Log();
             var stateDefinition = new EnumStateDefinition<TState>(state)
@@ -176,6 +166,16 @@ namespace BuildIt.States
             }
 
             return await ChangeBackTo(findState + string.Empty, useTransitions);
+        }
+
+        /// <summary>
+        /// Whether the supplied enum value is the default state
+        /// </summary>
+        /// <param name="enumDef">The type (enum) of the state group</param>
+        /// <returns>True if it is the default state</returns>
+        protected bool IsDefaultState(TState enumDef)
+        {
+            return default(TState).Equals(enumDef);
         }
     }
 }

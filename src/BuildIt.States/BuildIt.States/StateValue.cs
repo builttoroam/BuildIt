@@ -10,7 +10,6 @@ namespace BuildIt.States
     /// <typeparam name="TElement">The type of element to set property on</typeparam>
     /// <typeparam name="TPropertyValue">The type of property to set</typeparam>
     public class StateValue<TElement, TPropertyValue> : IStateValue
-
     {
         /// <summary>
         /// Gets or sets the unique key used to identify this entity
@@ -43,13 +42,14 @@ namespace BuildIt.States
         /// <summary>
         /// Performs the state transition
         /// </summary>
-        /// <param name="defaultValues"></param>
+        /// <param name="defaultValues">The set of default values to apply if state doesn't define property value</param>
         public virtual void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
         {
             if (!defaultValues.ContainsKey(Key))
             {
                 defaultValues[Key] = Default;
             }
+
             Setter(Element, Value);
         }
     }

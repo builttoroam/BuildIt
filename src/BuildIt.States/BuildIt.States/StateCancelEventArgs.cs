@@ -7,14 +7,6 @@ namespace BuildIt.States
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StateCancelEventArgs"/> class.
-        /// Empty constructor to support subclassing
-        /// </summary>
-        protected StateCancelEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StateCancelEventArgs"/> class.
         /// Creates a new event args instance
         /// </summary>
         /// <param name="state">The new state</param>
@@ -28,13 +20,21 @@ namespace BuildIt.States
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateCancelEventArgs"/> class.
+        /// Empty constructor to support subclassing
+        /// </summary>
+        protected StateCancelEventArgs()
+        {
+        }
+
+        /// <summary>
         /// Gets the state name
         /// </summary>
         public virtual string StateName { get; }
 
-/// <summary>
-/// Gets or sets a value indicating whether whether to use transtions
-/// </summary>
+        /// <summary>
+        /// Gets or sets a value indicating whether whether to use transtions
+        /// </summary>
         public bool UseTransitions { get; protected set; }
 
         /// <summary>

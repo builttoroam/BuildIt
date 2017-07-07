@@ -7,7 +7,7 @@ namespace BuildIt.States.Interfaces
     /// <summary>
     /// Properties and Methods of the type specific data wrapper
     /// </summary>
-    /// <typeparam name="TData"></typeparam>
+    /// <typeparam name="TData">The type (enum) of the state being defined</typeparam>
     public interface IStateDefinitionTypedDataWrapper<TData>
         : IStateDefinitionDataWrapper
         where TData : INotifyPropertyChanged

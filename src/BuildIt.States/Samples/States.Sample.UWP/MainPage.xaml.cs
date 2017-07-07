@@ -1,38 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using BuildIt.States;
+using BuildIt.States.Interfaces;
+using BuildIt.States.UWP;
+using States.Sample.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using BuildIt.States;
-using BuildIt.States.Interfaces;
-using States.Sample.Core;
-using BuildIt.States.UWP;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace States.Sample.UWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
-        public IStateManager StateManager { get; } = new StateManager();
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainPage"/> class.
+        /// </summary>
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             var vm = new MainViewModel();
-            this.DataContext = vm;
+            DataContext = vm;
 
             StateManager
 
@@ -40,12 +28,20 @@ namespace States.Sample.UWP
                 .DefineAllStates(this, LoadingUIStates)
 
                 .Group<SizeStates>()
-                .DefineAllStates(this,LayoutStates);
+                .DefineAllStates(this, LayoutStates);
 
             StateManager.Bind(vm.StateManager);
         }
 
+        /// <summary>
+        /// Gets state Manager instance
+        /// </summary>
+        public IStateManager StateManager { get; } = new StateManager();
 
+        /// <summary>
+        /// Invoked when navigated to the page
+        /// </summary>
+        /// <param name="e">The navigation args</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -68,5 +64,4 @@ namespace States.Sample.UWP
             (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoaded);
         }
     }
-
 }

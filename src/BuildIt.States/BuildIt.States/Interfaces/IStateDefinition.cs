@@ -72,14 +72,14 @@ namespace BuildIt.States.Interfaces
         IList<IStateValue> Values { get; }
 
         /// <summary>
-        /// Implements the transition, setting values and recording the default values
-        /// </summary>
-        /// <param name="defaultValues"></param>
-        void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
-
-        /// <summary>
         /// Gets any state data (eg view model) that might be associated with the state
         /// </summary>
         IStateDefinitionDataWrapper UntypedStateDataWrapper { get; }
+
+        /// <summary>
+        /// Implements the transition, setting values and recording the default values
+        /// </summary>
+        /// <param name="defaultValues">The set of default values to apply if a state doesn't define property value</param>
+        void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
     }
 }

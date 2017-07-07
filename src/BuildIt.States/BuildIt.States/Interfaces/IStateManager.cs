@@ -20,6 +20,16 @@ namespace BuildIt.States.Interfaces
         IReadOnlyDictionary<string, IStateGroup> StateGroups { get; }
 
         /// <summary>
+        /// Gets a value indicating whether indicates if there is a previous state (in any state group)
+        /// </summary>
+        bool PreviousStateExists { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether whether going to previous state is currently blocked
+        /// </summary>
+        bool GoToPreviousStateIsBlocked { get; }
+
+        /// <summary>
         /// The enum state group for a type (enum)
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state group</typeparam>
@@ -33,7 +43,6 @@ namespace BuildIt.States.Interfaces
         /// <param name="groupName">The name of the state group</param>
         /// <returns>The state group</returns>
         IStateGroup StateGroup(string groupName);
-
 
         /// <summary>
         /// Adds a group based on type of state
@@ -125,22 +134,11 @@ namespace BuildIt.States.Interfaces
         Task<bool> GoBackToPreviousState(bool animate = true);
 
         /// <summary>
-        /// Gets a value indicating whether indicates if there is a previous state (in any state group)
-        /// </summary>
-        bool PreviousStateExists { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether whether going to previous state is currently blocked
-        /// </summary>
-        bool GoToPreviousStateIsBlocked { get; }
-
-        /// <summary>
         /// Bind two different state managers
         /// </summary>
         /// <param name="managerToBindTo">The state manager to listen to for changes</param>
         /// <param name="bothDirections">Whether updates to states should go both ways</param>
         /// <returns>Binder that can be used to disconnect the state managers</returns>
-
         IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections = true);
     }
 }

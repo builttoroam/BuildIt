@@ -10,16 +10,6 @@ namespace BuildIt.States
         where TState : struct
     {
         /// <summary>
-        /// Gets the name of the state
-        /// </summary>
-        public override string StateName => EnumState + string.Empty;
-
-        /// <summary>
-        /// Gets or sets the enum value for the state
-        /// </summary>
-        public TState EnumState { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="EnumStateDefinition{TState}"/> class.
         /// Creates an instance based on an enumeration value
         /// </summary>
@@ -28,5 +18,15 @@ namespace BuildIt.States
         {
             EnumState = state;
         }
+
+        /// <summary>
+        /// Gets the name of the state
+        /// </summary>
+        public override string StateName => EnumState + string.Empty;
+
+        /// <summary>
+        /// Gets or sets the enum value for the state
+        /// </summary>
+        public TState EnumState { get; set; }
     }
 }

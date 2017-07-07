@@ -11,6 +11,24 @@ namespace BuildIt.States
     public class StateDefinition : IStateDefinition
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="StateDefinition"/> class.
+        /// Creates an instance of the state with a name
+        /// </summary>
+        /// <param name="stateName">The name of the state</param>
+        public StateDefinition(string stateName)
+        {
+            StateName = stateName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateDefinition"/> class.
+        /// Internal constructor to prevent creating the state without a name
+        /// </summary>
+        protected StateDefinition()
+        {
+        }
+
+        /// <summary>
         /// Gets the name of the state (should be unique)
         /// </summary>
         public virtual string StateName { get; }
@@ -50,7 +68,6 @@ namespace BuildIt.States
         /// </summary>
         public Func<string, Task> ChangingToWithData { get; set; }
 
-
         /// <summary>
         /// Gets or sets method to be invoked when the state transition has completed (left this state)
         /// </summary>
@@ -72,27 +89,14 @@ namespace BuildIt.States
         public IList<IStateValue> Values { get; } = new List<IStateValue>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StateDefinition"/> class.
-        /// Internal constructor to prevent creating the state without a name
+        /// Gets or sets the state data wrapper - captures the type of data to be created along with the state
         /// </summary>
-        protected StateDefinition()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StateDefinition"/> class.
-        /// Creates an instance of the state with a name
-        /// </summary>
-        /// <param name="stateName">The name of the state</param>
-        public StateDefinition(string stateName)
-        {
-            StateName = stateName;
-        }
+        public IStateDefinitionDataWrapper UntypedStateDataWrapper { get; set; }
 
         /// <summary>
         /// Transitions to this state - invokes the property setters
         /// </summary>
-        /// <param name="defaultValues"></param>
+        /// <param name="defaultValues">The default values to be applied if state doesn't define property values</param>
         public void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
         {
             var defaults = new Dictionary<Tuple<object, string>, IDefaultValue>(defaultValues);
@@ -108,10 +112,5 @@ namespace BuildIt.States
                 defValue.Value.RevertToDefault();
             }
         }
-
-        /// <summary>
-        /// Gets or sets the state data wrapper - captures the type of data to be created along with the state
-        /// </summary>
-        public IStateDefinitionDataWrapper UntypedStateDataWrapper { get; set; }
     }
 }

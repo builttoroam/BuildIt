@@ -6,7 +6,7 @@ namespace BuildIt.States.Interfaces
     /// Raises typed state changed event
     /// </summary>
     /// <typeparam name="TState">The type (enum) of the state</typeparam>
-    public interface INotifyEnumStateChanged<TState>: INotifyStateChanged
+    public interface INotifyEnumStateChanged<TState> : INotifyStateChanged
         where TState : struct
     {
         /// <summary>

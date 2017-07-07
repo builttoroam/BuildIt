@@ -9,6 +9,7 @@
         /// Default value
         /// </summary>
         Base,
+
         /// <summary>
         /// Complete - default for ending state
         /// </summary>

@@ -9,14 +9,6 @@ namespace BuildIt.States
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StateEventArgs"/> class.
-        /// Empty constructor to support subclassing
-        /// </summary>
-        protected StateEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StateEventArgs"/> class.
         /// Constructs new instance
         /// </summary>
         /// <param name="state">The state name</param>
@@ -27,6 +19,14 @@ namespace BuildIt.States
             StateName = state;
             UseTransitions = useTransitions;
             IsNewState = isNewState;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StateEventArgs"/> class.
+        /// Empty constructor to support subclassing
+        /// </summary>
+        protected StateEventArgs()
+        {
         }
 
         /// <summary>

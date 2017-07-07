@@ -9,7 +9,7 @@ namespace BuildIt.States
     /// <summary>
     /// Wrapper class for defining a state, and associated data
     /// </summary>
-    /// <typeparam name="TData"></typeparam>
+    /// <typeparam name="TData">The type (enum) of the state being defined</typeparam>
     public class StateDefinitionTypedDataWrapper<TData> : IStateDefinitionTypedDataWrapper<TData>
         where TData : INotifyPropertyChanged
     {
@@ -73,15 +73,12 @@ namespace BuildIt.States
                 return;
             }
 
-            if (!(dataEntity is TData entityData))
+            if (dataEntity is TData entityData)
             {
-                return;
+                "Invoking Initialise".Log();
+                await Initialise(entityData);
             }
-
-            "Invoking Initialise".Log();
-            await Initialise(entityData);
         }
-
 
         /// <summary>
         /// Invokes the AboutToChange method, passing in data and cancel args
@@ -96,15 +93,12 @@ namespace BuildIt.States
                 return;
             }
 
-            if (!(dataEntity is TData entityData))
+            if (dataEntity is TData entityData)
             {
-                return;
+                "Invoking AboutToChangeFrom".Log();
+                await AboutToChangeFrom(entityData, cancel);
             }
-
-            "Invoking AboutToChangeFrom".Log();
-            await AboutToChangeFrom(entityData, cancel);
         }
-
 
         /// <summary>
         /// Invokes the changingfrom method
@@ -118,13 +112,11 @@ namespace BuildIt.States
                 return;
             }
 
-            if (!(dataEntity is TData entityData))
+            if (dataEntity is TData entityData)
             {
-                return;
+                "Invoking ChangingFrom".Log();
+                await ChangingFrom(entityData);
             }
-
-            "Invoking ChangingFrom".Log();
-            await ChangingFrom(entityData);
         }
 
         /// <summary>
@@ -139,15 +131,12 @@ namespace BuildIt.States
                 return;
             }
 
-            if (!(dataEntity is TData entityData))
+            if (dataEntity is TData entityData)
             {
-                return;
+                "Invoking ChangedFrom".Log();
+                await ChangedFrom(entityData);
             }
-
-            "Invoking ChangedFrom".Log();
-            await ChangedFrom(entityData);
         }
-
 
         /// <summary>
         /// Invokes the changed to method
@@ -161,13 +150,11 @@ namespace BuildIt.States
                 return;
             }
 
-            if (!(dataEntity is TData entityData))
+            if (dataEntity is TData entityData)
             {
-                return;
+                "Invoking ChangedTo".Log();
+                await ChangedTo(entityData);
             }
-
-            "Invoking ChangedTo".Log();
-            await ChangedTo(entityData);
         }
 
         /// <summary>
@@ -183,13 +170,11 @@ namespace BuildIt.States
                 return;
             }
 
-            if (!(dataEntity is TData entityData))
+            if (dataEntity is TData entityData)
             {
-                return;
+                "Invoking ChangedToWithData".Log();
+                await ChangedToWithData(entityData, data);
             }
-
-            "Invoking ChangedToWithData".Log();
-            await ChangedToWithData(entityData, data);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace BuildIt.States
     /// <typeparam name="TElement">The element to set the property on</typeparam>
     /// <typeparam name="TPropertyValue">The property to set</typeparam>
     public class DefaultValue<TElement, TPropertyValue> : IDefaultValue
-
     {
         /// <summary>
         /// Gets or sets the element to set the property on

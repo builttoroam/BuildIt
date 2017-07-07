@@ -6,10 +6,10 @@ using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
-/// <summary>
-/// Manager class for interacting with states
-/// </summary>
-    public class StateManager : IStateManager//, ICanRegisterDependencies
+    /// <summary>
+    /// Manager class for interacting with states
+    /// </summary>
+    public class StateManager : IStateManager// , ICanRegisterDependencies
     {
         private readonly Dictionary<string, IStateGroup> stateGroups =
             new Dictionary<string, IStateGroup>();
@@ -23,6 +23,23 @@ namespace BuildIt.States
         /// Gets the currently defined state groups
         /// </summary>
         public IReadOnlyDictionary<string, IStateGroup> StateGroups => stateGroups;
+
+        /// <summary>
+        /// Gets a value indicating whether indicates if there is a previous state (in any state group)
+        /// </summary>
+        public bool PreviousStateExists => StateGroups.Select(stateGroup => stateGroup.Value).Any(grp => grp.TrackHistory && grp.HasHistory);
+
+        /// <summary>
+        /// Gets a value indicating whether whether going to previous state is currently blocked
+        /// </summary>
+        public bool GoToPreviousStateIsBlocked
+        {
+            get
+            {
+                return PreviousStateExists &&
+                    StateGroups.Select(stateGroup => stateGroup.Value).Any(grp => grp.GoToPreviousStateIsBlocked);
+            }
+        }
 
         /// <summary>
         /// Retrieves state group based on type
@@ -53,11 +70,6 @@ namespace BuildIt.States
         {
             stateGroups[group.GroupName] = group;
             group.GoToPreviousStateIsBlockedChanged += Group_IsBlockedChanged;
-        }
-
-        private void Group_IsBlockedChanged(object sender, EventArgs e)
-        {
-            GoToPreviousStateIsBlockedChanged.SafeRaise(this);
         }
 
         /// <summary>
@@ -98,7 +110,7 @@ namespace BuildIt.States
         public async Task<bool> GoToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
-            var group = EnumStateGroup<TState>();//StateGroups.SafeValue(typeof(TState));
+            var group = EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
             if (group == null)
             {
                 return false;
@@ -117,9 +129,9 @@ namespace BuildIt.States
         /// <param name="animate">Whether the transition should be animated</param>
         /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
-           where TState : struct
+            where TState : struct
         {
-            var group = EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState));
+            var group = EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
             if (group == null)
             {
                 return false;
@@ -138,7 +150,7 @@ namespace BuildIt.States
         public async Task<bool> GoBackToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
-            var group = EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState));
+            var group = EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
             if (group == null)
             {
                 return false;
@@ -146,7 +158,6 @@ namespace BuildIt.States
 
             return await group.ChangeBackTo(state, animate);
         }
-
 
         /// <summary>
         /// Go to a new state
@@ -219,30 +230,8 @@ namespace BuildIt.States
                     return await grp.ChangeToPrevious(animate);
                 }
             }
+
             return false;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether indicates if there is a previous state (in any state group)
-        /// </summary>
-        public bool PreviousStateExists
-        {
-            get
-            {
-                return StateGroups.Select(stateGroup => stateGroup.Value).Any(grp => grp.TrackHistory && grp.HasHistory);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether whether going to previous state is currently blocked
-        /// </summary>
-        public bool GoToPreviousStateIsBlocked
-        {
-            get
-            {
-                return PreviousStateExists &&
-                    StateGroups.Select(stateGroup => stateGroup.Value).Any(grp => grp.GoToPreviousStateIsBlocked);
-            }
         }
 
         /// <summary>
@@ -254,6 +243,11 @@ namespace BuildIt.States
         public IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections = true)
         {
             return new StateManagerBinder(this, managerToBindTo, bothDirections);
+        }
+
+        private void Group_IsBlockedChanged(object sender, EventArgs e)
+        {
+            GoToPreviousStateIsBlockedChanged.SafeRaise(this);
         }
     }
 }

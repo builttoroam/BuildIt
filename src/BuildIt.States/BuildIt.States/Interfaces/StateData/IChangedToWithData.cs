@@ -11,7 +11,7 @@ namespace BuildIt.States.Interfaces.StateData
         /// Method called when changed to state, with data
         /// </summary>
         /// <param name="dataAsJson">The data passed into the state</param>
-        /// <returns></returns>
+        /// <returns>Task to be awaited</returns>
         Task ChangedToWithData(string dataAsJson);
     }
 }

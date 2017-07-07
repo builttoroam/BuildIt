@@ -16,449 +16,6 @@ namespace BuildIt.States
     /// </summary>
     public static class StateHelpers
     {
-        #region Builder Implementations
-        private class StateBuilder : IStateBuilder
-        {
-            public IStateManager StateManager { get; set; }
-        }
-
-        private class StateGroupBuilder<TState> : StateBuilder, IStateGroupBuilder<TState>
-            where TState : struct
-        {
-            public IEnumStateGroup<TState> StateGroup { get; set; }
-        }
-
-        private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>
-            where TState : struct
-        {
-            public IEnumStateDefinition<TState> State { get; set; }
-        }
-
-        private class StateDefinitionWithDataBuilder<TState, TData> : StateGroupBuilder<TState>,
-            IStateDefinitionWithDataBuilder<TState, TData>
-            where TData : INotifyPropertyChanged
-           where TState : struct
-        {
-            public IEnumStateDefinition<TState> State { get; set; }
-            public IStateDefinitionTypedDataWrapper<TData> StateDataWrapper
-            => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TData>;
-        }
-
-
-
-        private class StateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData> :
-         StateDefinitionWithDataBuilder<TState, TStateData>, IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
-        where TStateData : INotifyPropertyChanged
-       where TState : struct
-        {
-            public TState NewState { get; set; }
-        }
-
-        private class EventHandlerCache<TState, TEventHandler>
-            where TState : struct
-        {
-            private IDictionary<TState, TEventHandler> Handlers { get; } = new Dictionary<TState, TEventHandler>();
-
-            public TEventHandler BuildHandler(TState newState, Func<TState, TEventHandler> createHandler)
-            {
-                var changeStateAction = Handlers.SafeValue(newState);
-                if (changeStateAction == null)
-                {
-
-                    changeStateAction = createHandler(newState);
-                    Handlers[newState] = changeStateAction;
-                }
-                return changeStateAction;
-            }
-        }
-
-        private class StateDefinitionWithDataEventBuilder<TState, TData> : StateDefinitionWithDataBuilder<TState, TData>,
-            IStateDefinitionWithDataEventBuilder<TState, TData>
-            where TData : INotifyPropertyChanged
-           where TState : struct
-        {
-            public Action<TData, EventHandler> Subscribe { get; set; }
-            public Action<TData, EventHandler> Unsubscribe { get; set; }
-
-            private EventHandlerCache<TState, EventHandler> HandlerCache { get; } = new EventHandlerCache<TState, EventHandler>();
-            //private IDictionary<TState,EventHandler> Handlers { get; } = new Dictionary<TState,EventHandler>();
-
-            public Action<TData> WhenChangedToNewState(TState newState)
-            {
-                var changeStateAction = HandlerCache.BuildHandler(newState, Create);
-
-                return vm =>
-                {
-                    Subscribe(vm, changeStateAction);
-                };
-            }
-
-            private EventHandler Create(TState newState)
-            {
-                EventHandler changeStateAction = (s, e) =>
-                {
-                    StateManager.GoToState(newState);
-                };
-                return changeStateAction;
-            }
-
-            private EventHandler PreviousHandler { get; set; }
-            private EventHandler CreatePrevious()
-            {
-                if (PreviousHandler != null)
-                {
-                    return PreviousHandler;
-                }
-
-                PreviousHandler = (s, e) =>
-                {
-                    StateManager.GoBackToPreviousState();
-                };
-                return PreviousHandler;
-            }
-
-
-            //private EventHandler BuildHandler(TState newState)
-            //{
-            //    var changeStateAction= Handlers.SafeValue(newState);
-            //    if (changeStateAction == null)
-            //    {
-
-            //        changeStateAction = (s, e) =>
-            //        {
-            //            StateManager.GoToState(newState);
-            //        };
-            //        Handlers[newState] = changeStateAction;
-            //    }
-            //    return changeStateAction;
-            //}
-
-            public Action<TData> WhenChangingFromNewState(TState newState)
-            {
-                var changeStateAction = HandlerCache.BuildHandler(newState, Create); //BuildHandler(newState);
-
-                return vm =>
-                {
-                    Unsubscribe(vm, changeStateAction);
-                };
-            }
-
-            public Action<TData> WhenChangedToPreviousState()
-            {
-                var changeStateAction = CreatePrevious();
-
-                return vm =>
-                {
-                    Subscribe(vm, changeStateAction);
-                };
-            }
-
-            public Action<TData> WhenChangingFromPreviousState()
-            {
-                var changeStateAction = CreatePrevious();
-
-                return vm =>
-                {
-                    Unsubscribe(vm, changeStateAction);
-                };
-            }
-        }
-
-        private class StateDefinitionValueTargetBuilder<TState, TElement> :
-           StateDefinitionBuilder<TState>, IStateDefinitionValueTargetBuilder<TState, TElement>
-          where TState : struct
-        {
-            public TElement Target { get; set; }
-        }
-
-        private class StateDefinitionValueBuilder<TState, TElement, TPropertyValue> :
-            StateDefinitionBuilder<TState>, IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
-           where TState : struct
-        {
-            public StateValue<TElement, TPropertyValue> Value { get; set; }
-        }
-
-        private class StateCompletionBuilder<TState, TCompletion> : StateDefinitionBuilder<TState>,
-            IStateCompletionBuilder<TState, TCompletion>
-            where TState : struct
-            where TCompletion : struct
-        {
-            public TCompletion Completion { get; set; }
-        }
-
-        private class StateCompletionWithDataBuilder<TState, TCompletion, TData> :
-            StateCompletionBuilder<TState, TCompletion>,
-    IStateCompletionWithDataBuilder<TState, TCompletion, TData>
-    where TState : struct
-    where TCompletion : struct
-        {
-            public Func<TData> Data { get; set; }
-        }
-
-        private abstract class StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, TCompletionArgs> :
-    StateCompletionBuilder<TState, TCompletion>
-where TState : struct
-where TCompletion : struct
-where TStateData : INotifyPropertyChanged
-            where TCompletionArgs : CompletionEventArgs<TCompletion>
-        {
-            public IStateDefinitionTypedDataWrapper<TStateData> StateDataWrapper
-                => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TStateData>;
-
-            private EventHandlerCache<TState, EventHandler<TCompletionArgs>> HandlerCache { get; }
-                = new EventHandlerCache<TState, EventHandler<TCompletionArgs>>();
-
-            public Action<TStateData> WhenChangedToNewState(TState newState)
-            {
-                var changeStateAction = HandlerCache.BuildHandler(newState, Create);
-
-                return WireHandlerNewState(changeStateAction);
-                //    vm =>
-                //{
-                //    vm.Complete += changeStateAction;
-                //};
-            }
-
-            protected abstract Action<TStateData> WireHandlerNewState(EventHandler<TCompletionArgs> complete);
-            protected abstract Action<TStateData> UnwireHandlerNewState(EventHandler<TCompletionArgs> complete);
-            protected abstract Action<TStateData> WireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
-            protected abstract Action<TStateData> UnwireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
-
-            protected virtual EventHandler<TCompletionArgs> Create(TState newState)
-            {
-
-                EventHandler<TCompletionArgs> changeStateAction = (s, e) =>
-                {
-                    if (e.Completion.Equals(Completion))
-                    {
-                        StateManager.GoToState(newState);
-                    }
-                };
-
-                return changeStateAction;
-            }
-
-            private EventHandler<TCompletionArgs> Previous { get; set; }
-            private EventHandler<TCompletionArgs> CreatePrevious()
-            {
-                if (Previous != null)
-                {
-                    return Previous;
-                }
-
-                Previous = InternalCreatePrevious();
-                return Previous;
-            }
-            protected virtual EventHandler<TCompletionArgs> InternalCreatePrevious()
-            {
-                EventHandler<TCompletionArgs> changeStateAction = (s, e) =>
-                {
-                    if (e.Completion.Equals(Completion))
-                    {
-                        StateManager.GoBackToPreviousState();
-                    }
-                };
-
-                return changeStateAction;
-            }
-
-
-            public Action<TStateData> WhenChangingFromNewState(TState newState)
-            {
-                var changeStateAction = HandlerCache.BuildHandler(newState, Create);
-
-                return UnwireHandlerNewState(changeStateAction);
-                //    vm =>
-                //{
-                //    vm.Complete -= changeStateAction;
-                //};
-            }
-
-            public Action<TStateData> WhenChangedToPreviousState()
-            {
-                var changeStateAction = CreatePrevious();
-
-                return WireHandlerPreviousState(changeStateAction);
-                //    vm =>
-                //{
-                //    vm.Complete += changeStateAction;
-                //};
-            }
-
-            public Action<TStateData> WhenChangingFromPreviousState()
-            {
-                var changeStateAction = CreatePrevious();
-
-                return UnwireHandlerPreviousState(changeStateAction);
-
-                //    vm =>
-                //{
-                //    vm.Complete -= changeStateAction;
-                //};
-            }
-        }
-
-
-        private class StateWithDataCompletionBuilder<TState, TStateData, TCompletion> :
-            StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, CompletionEventArgs<TCompletion>>,
-            IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>
-        where TState : struct
-        where TCompletion : struct
-        where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
-        {
-            //public IStateDefinitionTypedDataWrapper<TStateData> StateDataWrapper
-            //    => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TStateData>;
-
-            //private EventHandlerCache<TState, EventHandler<CompletionEventArgs<TCompletion>>> HandlerCache { get; }
-            //    = new EventHandlerCache<TState, EventHandler<CompletionEventArgs<TCompletion>>>();
-
-            //public Action<TStateData> WhenChangedToNewState(TState newState)
-            //{
-            //    var changeStateAction = HandlerCache.BuildHandler(newState, Create);
-
-            //    return vm =>
-            //    {
-            //        vm.Complete += changeStateAction;
-            //    };
-            //}
-
-            protected override Action<TStateData> WireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
-            {
-                return vm =>
-                {
-                    vm.Complete += complete;
-                };
-            }
-
-            protected override Action<TStateData> UnwireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
-            {
-                return vm =>
-                {
-                    vm.Complete -= complete;
-                };
-            }
-
-            protected override Action<TStateData> WireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
-            {
-                return vm =>
-                {
-                    vm.Complete += complete;
-                };
-            }
-
-            protected override Action<TStateData> UnwireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
-            {
-                return vm =>
-                {
-                    vm.Complete -= complete;
-                };
-            }
-        }
-
-        private class StateWithDataCompletionWithDataEventBuilder<TState, TStateData, TCompletion, TData> :
-            StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, CompletionWithDataEventArgs<TCompletion, TData>>,
-            IStateWithDataCompletionWithDataEventBuilder<TState, TStateData, TCompletion, TData>
-            where TState : struct
-            where TCompletion : struct
-            where TStateData : INotifyPropertyChanged, ICompletionWithData<TCompletion, TData>
-        {
-            protected override Action<TStateData> WireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
-            {
-                return vm =>
-                {
-                    vm.CompleteWithData += complete;
-                };
-            }
-
-            protected override Action<TStateData> UnwireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
-            {
-                return vm =>
-                {
-                    vm.CompleteWithData -= complete;
-                };
-            }
-
-            protected override Action<TStateData> WireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
-            {
-                return vm =>
-                {
-                    vm.CompleteWithData += complete;
-                };
-            }
-
-            protected override Action<TStateData> UnwireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
-            {
-                return vm =>
-                {
-                    vm.CompleteWithData -= complete;
-                };
-            }
-
-
-            protected override EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> Create(TState newState)
-            {
-
-                var changeStateAction = new EventHandler<CompletionWithDataEventArgs<TCompletion, TData>>((s, e) =>
-                 {
-                     var dataVal = e.Data;
-                     if (e.Completion.Equals(Completion))
-                     {
-                         StateManager.GoToStateWithData(newState, dataVal);
-                     }
-                 });
-                return changeStateAction;
-            }
-        }
-
-        private class StateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> :
-            StateWithDataCompletionBuilder<TState, TStateData, TCompletion>,
-            IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
-            where TState : struct
-            where TCompletion : struct
-            where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
-        {
-            public Func<TStateData, TData> Data { get; set; }
-
-            protected override EventHandler<CompletionEventArgs<TCompletion>> Create(TState newState)
-            {
-
-                var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>((s, e) =>
-                {
-                    var dataVal = default(TData);
-                    var data = Data;
-                    if (e is CompletionWithDataEventArgs<TCompletion, TData> cc)
-                    {
-                        dataVal = cc.Data;
-                    }
-                    if (data != null)
-                    {
-                        var vvm = (TStateData)s;
-                        dataVal = data(vvm);
-                    }
-                    if (e.Completion.Equals(Completion))
-                    {
-                        StateManager.GoToStateWithData(newState, dataVal);
-                    }
-                });
-                return changeStateAction;
-            }
-
-            protected override EventHandler<CompletionEventArgs<TCompletion>> InternalCreatePrevious()
-            {
-                EventHandler<CompletionEventArgs<TCompletion>> changeStateAction = (s, e) =>
-                {
-                    if (e.Completion.Equals(Completion))
-                    {
-                        StateManager.GoBackToPreviousState();
-                    }
-                };
-
-                return changeStateAction;
-            }
-        }
-
-        #endregion
-
         /// <summary>
         /// Indicates whether all triggers are active
         /// </summary>
@@ -480,8 +37,7 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TState">The type (enum) of the group to build</typeparam>
         /// <param name="vsm">The state manager</param>
         /// <returns>A state group builder (or null)</returns>
-        public static IStateGroupBuilder<TState> Group<TState>
-            (this IStateManager vsm)
+        public static IStateGroupBuilder<TState> Group<TState>(this IStateManager vsm)
             where TState : struct
         {
             if (vsm == null)
@@ -489,7 +45,7 @@ where TStateData : INotifyPropertyChanged
                 return null;
             }
 
-            var existing = vsm.EnumStateGroup<TState>();// StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
+            var existing = vsm.EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (existing == null)
             {
                 existing = new EnumStateGroup<TState>();
@@ -520,8 +76,6 @@ where TStateData : INotifyPropertyChanged
 
             return vsmGroup.StateManager.Group<TState>();
         }
-
-
 
         /// <summary>
         /// Enables track history
@@ -561,7 +115,6 @@ where TStateData : INotifyPropertyChanged
             return vsmGroup;
         }
 
-
         /// <summary>
         /// Expoese a builder for the state definition
         /// </summary>
@@ -575,12 +128,7 @@ where TStateData : INotifyPropertyChanged
             TState state)
             where TState : struct
         {
-            if (vsmGroup == null)
-            {
-                return null;
-            }
-            //var vs = new StateDefinition<TState> { State = state };
-            var vs = vsmGroup.StateGroup.DefineEnumState(state);
+            var vs = vsmGroup?.StateGroup.DefineEnumState(state);
             if (vs == null)
             {
                 return null;
@@ -592,9 +140,6 @@ where TStateData : INotifyPropertyChanged
                 StateGroup = vsmGroup.StateGroup,
                 State = vs
             };
-
-            //vsmGroup.Item2.States.Add(state, vs);
-            //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
         /// <summary>
@@ -655,7 +200,6 @@ where TStateData : INotifyPropertyChanged
                 Completion = completion
             };
         }
-
 
         /// <summary>
         /// Exposes a builder to attach to the default completion of a state
@@ -777,7 +321,6 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
-
         /// <summary>
         /// Exposes a builder to attach to the default completion with data
         /// </summary>
@@ -835,7 +378,6 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
-
         /// <summary>
         /// Exposes a builder for a state that has state data that completes with data
         /// </summary>
@@ -846,7 +388,7 @@ where TStateData : INotifyPropertyChanged
         /// <param name="smInfo">The state definition builder</param>
         /// <param name="completion">The completion</param>
         /// <param name="completionData">The completion data</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
                  OnCompleteWithData<TState, TStateData, TCompletion, TData>(
                  this
@@ -904,8 +446,8 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
         /// <typeparam name="TElement">The element to be adjusted</typeparam>
         /// <param name="vsmGroup">The state definition builder</param>
-        /// <param name="element">The element to be adjusted</param>
-        /// <returns></returns>
+        /// <param name="element">The element whose property is to be adjusted</param>
+        /// <returns>New builder</returns>
         public static
             IStateDefinitionValueTargetBuilder<TState, TElement> Target<TState, TElement>(
             this IStateDefinitionBuilder<TState> vsmGroup, TElement element)
@@ -1023,7 +565,6 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
-
         /// <summary>
         /// Exposes a builder that define the new property value
         /// </summary>
@@ -1064,7 +605,7 @@ where TStateData : INotifyPropertyChanged
         /// <param name="vsmGroup">The state definition builder</param>
         /// <param name="getter">The expresion to the getter on the element</param>
         /// <param name="value">The value to set the property to</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static
           IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
           this IStateDefinitionBuilder<TState> vsmGroup,
@@ -1114,8 +655,8 @@ where TStateData : INotifyPropertyChanged
         /// <param name="vsmGroup">The state definition builder</param>
         /// <param name="getter">The expresion to the getter on the element</param>
         /// <param name="value">The value to set the property to</param>
-        public static
-            IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
+        /// <returns>New builder</returns>
+        public static IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
             this IStateDefinitionBuilder<TState> vsmGroup,
             Expression<Func<object, TPropertyValue>> getter,
             TPropertyValue value)
@@ -1254,9 +795,6 @@ where TStateData : INotifyPropertyChanged
             return smInfo;
         }
 
-
-
-
         /// <summary>
         /// Expoese a state definition builder for a state with state data
         /// </summary>
@@ -1298,7 +836,6 @@ where TStateData : INotifyPropertyChanged
                 Action<TStateData> action)
                 where TState : struct
                 where TStateData : INotifyPropertyChanged
-
         {
 #pragma warning disable 1998 // Convert sync method into async call
             return smInfo.Initialise(async vm => action(vm));
@@ -1312,13 +849,12 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TStateData">The type of the state data</typeparam>
         /// <param name="smInfo">The state definition builder</param>
         /// <param name="action">The action to perform initializaetion</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> Initialise<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
             Func<TStateData, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
-
         {
             if (smInfo?.StateDataWrapper == null)
             {
@@ -1326,7 +862,6 @@ where TStateData : INotifyPropertyChanged
             }
 
             var stateDefinition = smInfo.StateDataWrapper;
-
 
             "Adding Initialization".Log();
             if (stateDefinition.Initialise == null || action == null)
@@ -1337,6 +872,7 @@ where TStateData : INotifyPropertyChanged
             {
                 stateDefinition.Initialise += action;
             }
+
             return smInfo;
         }
 
@@ -1389,6 +925,7 @@ where TStateData : INotifyPropertyChanged
             {
                 stateDefinition.AboutToChangeFrom += action;
             }
+
             return smInfo;
         }
 
@@ -1441,6 +978,7 @@ where TStateData : INotifyPropertyChanged
             {
                 stateDefinition.ChangingFrom += action;
             }
+
             return smInfo;
         }
 
@@ -1453,7 +991,7 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TData">The type of the data being passed in</typeparam>
         /// <param name="smInfo">The state definition builder</param>
         /// <param name="action">The action to invoke to pass data into the state data</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             InitializeNewState<TState, TStateData, TNewStateData, TData>(
     this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> smInfo,
@@ -1476,7 +1014,7 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TData">The type of the data being passed in</typeparam>
         /// <param name="existingInfo">The state definition builder</param>
         /// <param name="action">The action to invoke to pass data into the state data</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             InitializeNewState<TState, TStateData, TNewStateData, TData>(
             this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> existingInfo,
@@ -1510,9 +1048,9 @@ where TStateData : INotifyPropertyChanged
             {
                 stateDefinition.ChangedToWithData += modAction;
             }
+
             return existingInfo;
         }
-
 
         /// <summary>
         /// Defines an action to be called when ChangedTo the state, passing in the current state data
@@ -1564,6 +1102,7 @@ where TStateData : INotifyPropertyChanged
             {
                 stateDefinition.ChangedTo += action;
             }
+
             return smInfo;
         }
 
@@ -1625,6 +1164,7 @@ where TStateData : INotifyPropertyChanged
             {
                 stateDefinition.ChangedToWithData += modAction;
             }
+
             return smInfo;
         }
 
@@ -1660,8 +1200,6 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
-
-
         /// <summary>
         /// Exposes builder to change state
         /// </summary>
@@ -1670,7 +1208,7 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TData">The type of data being passed into the new state</typeparam>
         /// <param name="smInfo">The state definition builder</param>
         /// <param name="stateToChangeTo">The state to change to</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData>
             ChangeState<TState, TStateData, TData>(
             this IStateWithDataActionDataBuilder<TState, TStateData, TData> smInfo,
@@ -1690,22 +1228,7 @@ where TStateData : INotifyPropertyChanged
 
             return returnd;
 
-            //new Tuple<IStateManager, IStateGroup<TState>, IStateDefinitionWithData<TState, TStateData>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
-        }
-
-        private static IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
-            IncludeStateInit
-            <TState, TStateData, TNewStateData>(this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo, TState newState)
-            where TState : struct
-            where TStateData : INotifyPropertyChanged
-        {
-            return new StateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
-            {
-                StateManager = smInfo.StateManager,
-                StateGroup = smInfo.StateGroup,
-                State = smInfo.State,
-                NewState = newState
-            };
+            // new Tuple<IStateManager, IStateGroup<TState>, IStateDefinitionWithData<TState, TStateData>>(smInfo.Item1, smInfo.Item2, smInfo.Item3);
         }
 
         /// <summary>
@@ -1715,7 +1238,7 @@ where TStateData : INotifyPropertyChanged
         /// <typeparam name="TStateData">The state data</typeparam>
         /// <param name="smInfo">The state definition builder</param>
         /// <param name="stateToChangeTo">The state to change to</param>
-        /// <returns></returns>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeState<TState, TStateData>(
     this IStateWithDataActionBuilder<TState, TStateData> smInfo,
     TState stateToChangeTo)
@@ -1757,5 +1280,431 @@ where TStateData : INotifyPropertyChanged
 
             return returnd;
         }
+
+        private static IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
+            IncludeStateInit
+            <TState, TStateData, TNewStateData>(this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo, TState newState)
+            where TState : struct
+            where TStateData : INotifyPropertyChanged
+        {
+            return new StateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
+            {
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                NewState = newState
+            };
+        }
+
+        #region Builder Implementations
+        private class StateBuilder : IStateBuilder
+        {
+            public IStateManager StateManager { get; set; }
+        }
+
+        private class StateGroupBuilder<TState> : StateBuilder, IStateGroupBuilder<TState>
+            where TState : struct
+        {
+            public IEnumStateGroup<TState> StateGroup { get; set; }
+        }
+
+        private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>
+            where TState : struct
+        {
+            public IEnumStateDefinition<TState> State { get; set; }
+        }
+
+        private class StateDefinitionWithDataBuilder<TState, TData> : StateGroupBuilder<TState>,
+            IStateDefinitionWithDataBuilder<TState, TData>
+            where TData : INotifyPropertyChanged
+            where TState : struct
+        {
+            public IEnumStateDefinition<TState> State { get; set; }
+
+            public IStateDefinitionTypedDataWrapper<TData> StateDataWrapper
+                => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TData>;
+        }
+
+        private class StateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData> :
+            StateDefinitionWithDataBuilder<TState, TStateData>, IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
+            where TStateData : INotifyPropertyChanged
+            where TState : struct
+        {
+            public TState NewState { get; set; }
+        }
+
+        private class EventHandlerCache<TState, TEventHandler>
+            where TState : struct
+        {
+            private IDictionary<TState, TEventHandler> Handlers { get; } = new Dictionary<TState, TEventHandler>();
+
+            public TEventHandler BuildHandler(TState newState, Func<TState, TEventHandler> createHandler)
+            {
+                var changeStateAction = Handlers.SafeValue(newState);
+                if (changeStateAction == null)
+                {
+                    changeStateAction = createHandler(newState);
+                    Handlers[newState] = changeStateAction;
+                }
+
+                return changeStateAction;
+            }
+        }
+
+        private class StateDefinitionWithDataEventBuilder<TState, TData> : StateDefinitionWithDataBuilder<TState, TData>,
+            IStateDefinitionWithDataEventBuilder<TState, TData>
+            where TData : INotifyPropertyChanged
+            where TState : struct
+        {
+            public Action<TData, EventHandler> Subscribe { get; set; }
+
+            public Action<TData, EventHandler> Unsubscribe { get; set; }
+
+            private EventHandlerCache<TState, EventHandler> HandlerCache { get; } = new EventHandlerCache<TState, EventHandler>();
+
+            private EventHandler PreviousHandler { get; set; }
+
+            public Action<TData> WhenChangedToNewState(TState newState)
+            {
+                var changeStateAction = HandlerCache.BuildHandler(newState, Create);
+
+                return vm =>
+                {
+                    Subscribe(vm, changeStateAction);
+                };
+            }
+
+            public Action<TData> WhenChangingFromNewState(TState newState)
+            {
+                var changeStateAction = HandlerCache.BuildHandler(newState, Create); // BuildHandler(newState);
+
+                return vm =>
+                {
+                    Unsubscribe(vm, changeStateAction);
+                };
+            }
+
+            public Action<TData> WhenChangedToPreviousState()
+            {
+                var changeStateAction = CreatePrevious();
+
+                return vm =>
+                {
+                    Subscribe(vm, changeStateAction);
+                };
+            }
+
+            public Action<TData> WhenChangingFromPreviousState()
+            {
+                var changeStateAction = CreatePrevious();
+
+                return vm =>
+                {
+                    Unsubscribe(vm, changeStateAction);
+                };
+            }
+
+            private EventHandler Create(TState newState)
+            {
+                EventHandler changeStateAction = (s, e) =>
+                {
+                    StateManager.GoToState(newState);
+                };
+                return changeStateAction;
+            }
+
+            private EventHandler CreatePrevious()
+            {
+                if (PreviousHandler != null)
+                {
+                    return PreviousHandler;
+                }
+
+                PreviousHandler = (s, e) =>
+                {
+                    StateManager.GoBackToPreviousState();
+                };
+                return PreviousHandler;
+            }
+        }
+
+        private class StateDefinitionValueTargetBuilder<TState, TElement> :
+            StateDefinitionBuilder<TState>, IStateDefinitionValueTargetBuilder<TState, TElement>
+            where TState : struct
+        {
+            public TElement Target { get; set; }
+        }
+
+        private class StateDefinitionValueBuilder<TState, TElement, TPropertyValue> :
+            StateDefinitionBuilder<TState>, IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
+            where TState : struct
+        {
+            public StateValue<TElement, TPropertyValue> Value { get; set; }
+        }
+
+        private class StateCompletionBuilder<TState, TCompletion> : StateDefinitionBuilder<TState>,
+            IStateCompletionBuilder<TState, TCompletion>
+            where TState : struct
+            where TCompletion : struct
+        {
+            public TCompletion Completion { get; set; }
+        }
+
+        private class StateCompletionWithDataBuilder<TState, TCompletion, TData> :
+            StateCompletionBuilder<TState, TCompletion>,
+            IStateCompletionWithDataBuilder<TState, TCompletion, TData>
+            where TState : struct
+            where TCompletion : struct
+        {
+            public Func<TData> Data { get; set; }
+        }
+
+        private abstract class StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, TCompletionArgs> :
+            StateCompletionBuilder<TState, TCompletion>
+            where TState : struct
+            where TCompletion : struct
+            where TStateData : INotifyPropertyChanged
+            where TCompletionArgs : CompletionEventArgs<TCompletion>
+        {
+            public IStateDefinitionTypedDataWrapper<TStateData> StateDataWrapper
+                => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TStateData>;
+
+            private EventHandler<TCompletionArgs> Previous { get; set; }
+
+            private EventHandlerCache<TState, EventHandler<TCompletionArgs>> HandlerCache { get; }
+                = new EventHandlerCache<TState, EventHandler<TCompletionArgs>>();
+
+            public Action<TStateData> WhenChangedToNewState(TState newState)
+            {
+                var changeStateAction = HandlerCache.BuildHandler(newState, Create);
+
+                return WireHandlerNewState(changeStateAction);
+                // vm =>
+                // {
+                //    vm.Complete += changeStateAction;
+                // };
+            }
+
+            public Action<TStateData> WhenChangingFromNewState(TState newState)
+            {
+                var changeStateAction = HandlerCache.BuildHandler(newState, Create);
+
+                return UnwireHandlerNewState(changeStateAction);
+                // vm =>
+                // {
+                //    vm.Complete -= changeStateAction;
+                // };
+            }
+
+            public Action<TStateData> WhenChangedToPreviousState()
+            {
+                var changeStateAction = CreatePrevious();
+
+                return WireHandlerPreviousState(changeStateAction);
+                // vm =>
+                // {
+                //    vm.Complete += changeStateAction;
+                // };
+            }
+
+            public Action<TStateData> WhenChangingFromPreviousState()
+            {
+                var changeStateAction = CreatePrevious();
+
+                return UnwireHandlerPreviousState(changeStateAction);
+
+                // vm =>
+                // {
+                //    vm.Complete -= changeStateAction;
+                // };
+            }
+
+            protected abstract Action<TStateData> WireHandlerNewState(EventHandler<TCompletionArgs> complete);
+
+            protected abstract Action<TStateData> UnwireHandlerNewState(EventHandler<TCompletionArgs> complete);
+
+            protected abstract Action<TStateData> WireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
+
+            protected abstract Action<TStateData> UnwireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
+
+            protected virtual EventHandler<TCompletionArgs> Create(TState newState)
+            {
+                EventHandler<TCompletionArgs> changeStateAction = (s, e) =>
+                {
+                    if (e.Completion.Equals(Completion))
+                    {
+                        StateManager.GoToState(newState);
+                    }
+                };
+
+                return changeStateAction;
+            }
+
+            protected virtual EventHandler<TCompletionArgs> InternalCreatePrevious()
+            {
+                EventHandler<TCompletionArgs> changeStateAction = (s, e) =>
+                {
+                    if (e.Completion.Equals(Completion))
+                    {
+                        StateManager.GoBackToPreviousState();
+                    }
+                };
+
+                return changeStateAction;
+            }
+
+            private EventHandler<TCompletionArgs> CreatePrevious()
+            {
+                if (Previous != null)
+                {
+                    return Previous;
+                }
+
+                Previous = InternalCreatePrevious();
+                return Previous;
+            }
+        }
+
+        private class StateWithDataCompletionBuilder<TState, TStateData, TCompletion> :
+            StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, CompletionEventArgs<TCompletion>>,
+            IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>
+            where TState : struct
+            where TCompletion : struct
+            where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
+        {
+            protected override Action<TStateData> WireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            {
+                return vm =>
+                {
+                    vm.Complete += complete;
+                };
+            }
+
+            protected override Action<TStateData> UnwireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            {
+                return vm =>
+                {
+                    vm.Complete -= complete;
+                };
+            }
+
+            protected override Action<TStateData> WireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            {
+                return vm =>
+                {
+                    vm.Complete += complete;
+                };
+            }
+
+            protected override Action<TStateData> UnwireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            {
+                return vm =>
+                {
+                    vm.Complete -= complete;
+                };
+            }
+        }
+
+        private class StateWithDataCompletionWithDataEventBuilder<TState, TStateData, TCompletion, TData> :
+            StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, CompletionWithDataEventArgs<TCompletion, TData>>,
+            IStateWithDataCompletionWithDataEventBuilder<TState, TStateData, TCompletion, TData>
+            where TState : struct
+            where TCompletion : struct
+            where TStateData : INotifyPropertyChanged, ICompletionWithData<TCompletion, TData>
+        {
+            protected override Action<TStateData> WireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            {
+                return vm =>
+                {
+                    vm.CompleteWithData += complete;
+                };
+            }
+
+            protected override Action<TStateData> UnwireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            {
+                return vm =>
+                {
+                    vm.CompleteWithData -= complete;
+                };
+            }
+
+            protected override Action<TStateData> WireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            {
+                return vm =>
+                {
+                    vm.CompleteWithData += complete;
+                };
+            }
+
+            protected override Action<TStateData> UnwireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            {
+                return vm =>
+                {
+                    vm.CompleteWithData -= complete;
+                };
+            }
+
+            protected override EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> Create(TState newState)
+            {
+                var changeStateAction = new EventHandler<CompletionWithDataEventArgs<TCompletion, TData>>((s, e) =>
+                {
+                    var dataVal = e.Data;
+                    if (e.Completion.Equals(Completion))
+                    {
+                        StateManager.GoToStateWithData(newState, dataVal);
+                    }
+                });
+                return changeStateAction;
+            }
+        }
+
+        private class StateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData> :
+            StateWithDataCompletionBuilder<TState, TStateData, TCompletion>,
+            IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
+            where TState : struct
+            where TCompletion : struct
+            where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
+        {
+            public Func<TStateData, TData> Data { get; set; }
+
+            protected override EventHandler<CompletionEventArgs<TCompletion>> Create(TState newState)
+            {
+                var changeStateAction = new EventHandler<CompletionEventArgs<TCompletion>>((s, e) =>
+                {
+                    var dataVal = default(TData);
+                    var data = Data;
+                    if (e is CompletionWithDataEventArgs<TCompletion, TData> cc)
+                    {
+                        dataVal = cc.Data;
+                    }
+                    if (data != null)
+                    {
+                        var vvm = (TStateData)s;
+                        dataVal = data(vvm);
+                    }
+                    if (e.Completion.Equals(Completion))
+                    {
+                        StateManager.GoToStateWithData(newState, dataVal);
+                    }
+                });
+                return changeStateAction;
+            }
+
+            protected override EventHandler<CompletionEventArgs<TCompletion>> InternalCreatePrevious()
+            {
+                EventHandler<CompletionEventArgs<TCompletion>> changeStateAction = (s, e) =>
+                {
+                    if (e.Completion.Equals(Completion))
+                    {
+                        StateManager.GoBackToPreviousState();
+                    }
+                };
+
+                return changeStateAction;
+            }
+        }
+
+        #endregion
+
     }
 }
