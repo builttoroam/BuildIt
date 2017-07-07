@@ -429,8 +429,7 @@ where TStateData : INotifyPropertyChanged
                 {
                     var dataVal = default(TData);
                     var data = Data;
-                    var cc = e as CompletionWithDataEventArgs<TCompletion, TData>;
-                    if (cc != null)
+                    if (e is CompletionWithDataEventArgs<TCompletion, TData> cc)
                     {
                         dataVal = cc.Data;
                     }
@@ -465,12 +464,23 @@ where TStateData : INotifyPropertyChanged
 
         #endregion
 
+        /// <summary>
+        /// Indicates whether all triggers are active
+        /// </summary>
+        /// <param name="state">The state definition</param>
+        /// <returns>Whether all triggers are active</returns>
         public static bool AllTriggersActive(this IStateDefinition state)
         {
             if (state == null) return false;
             return state.Triggers.All(x => x.IsActive);
         }
 
+        /// <summary>
+        /// Returns a state group builder for a specific type (enum)
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the group to build</typeparam>
+        /// <param name="vsm">The state manager</param>
+        /// <returns>A state group builder (or null)</returns>
         public static IStateGroupBuilder<TState> Group<TState>
             (this IStateManager vsm) where TState : struct
 
@@ -491,6 +501,12 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
+        /// <summary>
+        /// Returns a builder for the group
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state group</typeparam>
+        /// <param name="vsmGroup">A state builder</param>
+        /// <returns>New builder</returns>
         public static IStateGroupBuilder<TState> Group<TState>(
             this IStateBuilder vsmGroup)
             where TState : struct
@@ -516,32 +532,12 @@ where TStateData : INotifyPropertyChanged
             return vsmGroup;
         }
 
-        //public static IStateGroupBuilder<TState> 
-        //    Group<TState, TExistingState>(
-        //    this Tuple<IStateManager, IStateGroup<TExistingState>,
-        //        StateDefinition<TExistingState>> vsmGroup, TState state)
-        //    where TExistingState : struct
-        //    where TState : struct
-        //{
-        //    var grp = new StateGroup<TState>();
-        //    vsmGroup.Item1.AddStateGroup(grp);
-        //    return new Tuple<IStateManager, IStateGroup<TState>>(vsmGroup.Item1, grp);
-        //}
-
-
-        //public static Tuple<IStateManager,
-        //        IStateGroup<TState>> Group<TState, TExistingState, TExistingElement, TExistingPropertyValue>(
-        //    this Tuple<IStateManager, IStateGroup<TExistingState>,
-        //        StateDefinition<TExistingState>,
-        //        StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TState state)
-        //    where TExistingState : struct
-        //    where TState : struct
-        //{
-        //    var grp = new StateGroup<TState>();
-        //    vsmGroup.Item1.AddStateGroup(grp);
-        //    return new Tuple<IStateManager, IStateGroup<TState>>(vsmGroup.Item1, grp);
-        //}
-
+        /// <summary>
+        /// Defines all states for a group
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the group to build</typeparam>
+        /// <param name="vsmGroup">Existing group builder</param>
+        /// <returns>A state group builder (or null)</returns>
         public static IStateGroupBuilder<TState> DefineAllStates<TState>(
     this IStateGroupBuilder<TState> vsmGroup)
     where TState : struct
@@ -552,6 +548,13 @@ where TStateData : INotifyPropertyChanged
         }
 
 
+        /// <summary>
+        /// Expoese a builder for the state definition
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <param name="vsmGroup">The state group builder</param>
+        /// <param name="state">The state</param>
+        /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState> DefineState<TState>(
             this IStateGroupBuilder<TState> vsmGroup,
@@ -573,19 +576,13 @@ where TStateData : INotifyPropertyChanged
             //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
         }
 
-        //public static Tuple<IStateManager,
-        //                    IStateGroup<TState>,
-        //                    IStateDefinition<TState>> DefineState<TState>(
-        //    this Tuple<IStateManager,
-        //                IStateGroup<TState>,
-        //                IStateDefinition<TState>> vsmGroup,
-        //    TState state) where TState : struct
-        //{
-        //    var vs = new StateDefinition<TState> { State = state };
-        //    vsmGroup.Item2.States.Add(state, vs);
-        //    return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
-        //}
-
+        /// <summary>
+        /// Adds a trigger to a state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state group</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="trigger">The trigger to add</param>
+        /// <returns>The updated state definition builder</returns>
         public static IStateDefinitionBuilder<TState> AddTrigger<TState>(
             this IStateDefinitionBuilder<TState> vsmGroup,
             IStateTrigger trigger) where TState : struct
@@ -602,42 +599,14 @@ where TStateData : INotifyPropertyChanged
             return vsmGroup;
         }
 
-        //public static Tuple<IStateManager,
-        //    IStateGroup<TState>,
-        //    IStateDefinition<TState>> DefineState<TState, TExistingState, TExistingElement, TExistingPropertyValue>(
-        //    this Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TExistingState>, StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TState state)
-        //    where TExistingState : struct
-        //    where TState : struct
-        //{
-        //    var vs = new StateDefinition<TState> { State = state };
-        //    vsmGroup.Item2.States.Add(state, vs);
-        //    return new Tuple<IStateManager,
-        //        IStateGroup<TState>, IStateDefinition<TState>>(vsmGroup.Item1, vsmGroup.Item2, vs);
-        //}
-
-        //public class StateCompletionBinder<TCompletion>
-        //   where TCompletion : struct
-        //{
-        //    public TCompletion Completion { get; set; }
-
-        //}
-
-        //public class StateEventBinder
-        //{
-        //    public Action<EventHandler> Subscribe { get; set; }
-        //    public Action<EventHandler> Unsubscribe { get; set; }
-        //}
-
-
-
-        //public class StateCompletionWithDataBinder<TCompletion, TData> : StateCompletionBinder<TCompletion>
-        //    where TCompletion : struct
-        //{
-
-        //    public Func<TData> CompletionData { get; set; }
-
-        //}
-
+        /// <summary>
+        /// Expoese a builder for a state the completes
+        /// </summary>
+        /// <typeparam name="TState">The type (eum) of the state</typeparam>
+        /// <typeparam name="TCompletion">The type of the completion</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completion">The completion value</param>
+        /// <returns>New builder</returns>
         public static IStateCompletionBuilder<TState, TCompletion>
       OnComplete<TState, TCompletion>(
       this IStateDefinitionBuilder<TState> smInfo,
@@ -653,15 +622,15 @@ where TStateData : INotifyPropertyChanged
                 State = smInfo.State,
                 Completion = completion
             };
-
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionBinder<TCompletion> { Completion = completion };
-            //return smInfo.Extend(binder);
         }
 
 
+        /// <summary>
+        /// Exposes a builder to attach to the default completion of a state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <returns>A builder for the default completion</returns>
         public static IStateCompletionBuilder<TState, DefaultCompletion>
           OnDefaultComplete<TState>(
           this IStateDefinitionBuilder<TState> smInfo)
@@ -675,14 +644,17 @@ where TStateData : INotifyPropertyChanged
                 State = smInfo.State,
                 Completion = DefaultCompletion.Complete
             };
-
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
-            //return smInfo.Extend(binder);
         }
 
+        /// <summary>
+        /// Exposes a builder to attach to the completion of its state data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <typeparam name="TCompletion">The type of the state data completion</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completion">The completion value</param>
+        /// <returns>A builder for the state data completion</returns>
         public static IStateWithDataCompletionBuilder<TState, TStateData, TCompletion>
             OnComplete<TState, TStateData, TCompletion>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
@@ -701,6 +673,13 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
+        /// <summary>
+        /// Exposes a builder for a state that has state data that completes
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <returns>New builder</returns>
         public static
            IStateWithDataCompletionBuilder<TState, TStateData, DefaultCompletion>
           OnDefaultComplete<TState, TStateData>(
@@ -718,11 +697,18 @@ where TStateData : INotifyPropertyChanged
                 State = smInfo.State,
                 Completion = DefaultCompletion.Complete
             };
-
-            //var binder = new StateCompletionBinder<DefaultCompletion> { Completion = DefaultCompletion.Complete };
-            //return smInfo.Extend(binder);
         }
 
+        /// <summary>
+        /// Expoese builder for a state that completes with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TCompletion">The type (enum) of the completion</typeparam>
+        /// <typeparam name="TData">The type of the data to return</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completion">The completion</param>
+        /// <param name="completionData">The completion data</param>
+        /// <returns>New builder</returns>
         public static
            IStateCompletionWithDataBuilder<TState, TCompletion, TData>
           OnCompleteWithData<TState, TCompletion, TData>(
@@ -742,18 +728,18 @@ where TStateData : INotifyPropertyChanged
                 Completion = completion,
                 Data = completionData
             };
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionWithDataBinder<TCompletion, TData>
-            //{
-            //    Completion = completion,
-            //    CompletionData = completionData
-            //};
-            //return smInfo.Extend(binder);
 
         }
 
+
+        /// <summary>
+        /// Exposes a builder to attach to the default completion with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TData">The type of data to return from the state</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completionData">The completion data</param>
+        /// <returns>The state completion with data builder</returns>
         public static IStateCompletionWithDataBuilder<TState, DefaultCompletion, TData>
           OnDefaultCompleteWithData<TState, TData>(
           this IStateDefinitionBuilder<TState> smInfo,
@@ -770,18 +756,18 @@ where TStateData : INotifyPropertyChanged
                 Data = completionData
             };
 
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionWithDataBinder<DefaultCompletion, TData>
-            //{
-            //    Completion = DefaultCompletion.Complete,
-            //    CompletionData = completionData
-            //};
-            //return smInfo.Extend(binder);
-
         }
 
+        /// <summary>
+        /// Exposes builder for state with state data the completes with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <typeparam name="TCompletion">The type (enum) of completion</typeparam>
+        /// <typeparam name="TData">The type of the data to be returned</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completion">The completion</param>
+        /// <returns>New builder</returns>
         public static IStateWithDataCompletionWithDataEventBuilder<TState, TStateData, TCompletion, TData>
                  OnCompleteWithDataEvent<TState, TStateData, TCompletion, TData>(
                  this
@@ -798,14 +784,20 @@ where TStateData : INotifyPropertyChanged
                 State = smInfo.State,
                 Completion = completion
             };
-
-            //var binder = new ViewModelStateCompletionWithDataBinder<TStateData, TCompletion, TData> { Completion = completion, CompletionData = completionData };
-            //return smInfo.Extend(binder);
-
         }
 
 
-
+        /// <summary>
+        /// Exposes a builder for a state that has state data that completes with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of state data</typeparam>
+        /// <typeparam name="TCompletion">The type (enum) of completion</typeparam>
+        /// <typeparam name="TData">The type of data to be returned from the state data</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completion">The completion</param>
+        /// <param name="completionData">The completion data</param>
+        /// <returns></returns>
         public static IStateWithDataCompletionWithDataBuilder<TState, TStateData, TCompletion, TData>
                  OnCompleteWithData<TState, TStateData, TCompletion, TData>(
                  this
@@ -824,13 +816,17 @@ where TStateData : INotifyPropertyChanged
                 Completion = completion,
                 Data = completionData
             };
-
-            //var binder = new ViewModelStateCompletionWithDataBinder<TStateData, TCompletion, TData> { Completion = completion, CompletionData = completionData };
-            //return smInfo.Extend(binder);
-
         }
 
-
+        /// <summary>
+        /// Expoeses a builder for a state with a state data that uses default completion and returns data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of state data</typeparam>
+        /// <typeparam name="TData">The type of data to be returned</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="completionData">The completion data</param>
+        /// <returns>The new builder</returns>
         public static IStateWithDataCompletionWithDataBuilder<TState, TStateData, DefaultCompletion, TData>
           OnDefaultCompleteWithData<TState, TStateData, TData>(
           this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
@@ -847,66 +843,16 @@ where TStateData : INotifyPropertyChanged
                 Completion = DefaultCompletion.Complete,
                 Data = completionData
             };
-
-            //if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-            //var binder = new StateCompletionWithDataBinder<DefaultCompletion, TData>
-            //{
-            //    Completion = DefaultCompletion.Complete,
-            //    CompletionData = completionData
-            //};
-            //return smInfo.Extend(binder);
-
         }
 
-
-
-
-        //public static Tuple<IStateManager,
-        //    IStateGroup<TState>,
-        //    IStateDefinitionWithData<TState, TStateData>,
-        //    StateCompletionBinder<TCompletion>>
-        //   OnComplete<TState, TStateData, TCompletion>(
-        //   this Tuple<IStateManager,
-        //       IStateGroup<TState>,
-        //       IStateDefinitionWithData<TState, TStateData>> smInfo,
-        //        TCompletion completion)
-        //   where TState : struct
-        //   where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
-        //    where TCompletion : struct
-        //{
-        //    if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-        //    var binder = new StateCompletionBinder<TCompletion> { Completion = completion };
-        //    return smInfo.Extend(binder);
-        //}
-
-        //public static Tuple<IStateManager,
-        //    IStateGroup<TState>,
-        //    IStateDefinitionWithData<TState, TStateData>,
-        //    ViewModelStateCompletionWithDataBinder<TStateData, DefaultCompletion, TData>>
-        //   OnDefaultCompleteWithData<TState, TStateData, TData>(
-        //   this Tuple<IStateManager,
-        //       IStateGroup<TState>,
-        //       IStateDefinitionWithData<TState, TStateData>> smInfo,
-        //        Func<TStateData, TData> completionData)
-        //   where TState : struct
-        //   where TStateData : INotifyPropertyChanged, ICompletion<DefaultCompletion>
-        //{
-        //    if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
-
-
-        //    var binder = new ViewModelStateCompletionWithDataBinder<TStateData, DefaultCompletion, TData> { Completion = DefaultCompletion.Complete, CompletionData = completionData };
-        //    return smInfo.Extend(binder);
-
-        //}
-
-
-
-
-
+        /// <summary>
+        /// Exposes builder for the state definition target, for setting properties when switching to a state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TElement">The element to be adjusted</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="element">The element to be adjusted</param>
+        /// <returns></returns>
         public static
             IStateDefinitionValueTargetBuilder<TState, TElement> Target<TState, TElement>(
             this IStateDefinitionBuilder<TState> vsmGroup, TElement element) where TState : struct
@@ -920,22 +866,18 @@ where TStateData : INotifyPropertyChanged
                 State = vsmGroup.State,
                 Target = element
             };
-            //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>, TElement>(vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, element);
         }
 
-        //public static Tuple<IStateManager,
-        //    IStateGroup<TState>, IStateDefinition<TState>,
-        //    TElement> Target<TState, TElement, TExistingElement, TExistingPropertyValue>(
-        //    this Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>,
-        //        StateValue<TExistingElement, TExistingPropertyValue>> vsmGroup, TElement element)
-        //    where TState : struct
-
-        //{
-        //    return new Tuple<IStateManager,
-        //        IStateGroup<TState>, IStateDefinition<TState>,
-        //        TElement>(vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, element);
-        //}
-
+        /// <summary>
+        /// Returns a state definition property value builder - defines changing a property when moving to a state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TElement">The type of the element to adjust the property value on</typeparam>
+        /// <typeparam name="TPropertyValue">The type of the property to adjust</typeparam>
+        /// <param name="vsmGroup">The state definition value target builder</param>
+        /// <param name="getter">The property getter</param>
+        /// <param name="setter">The property setter</param>
+        /// <returns>New builder</returns>
         public static
        IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
        Change<TState, TElement, TPropertyValue>(
@@ -969,11 +911,18 @@ where TStateData : INotifyPropertyChanged
                 State = vsmGroup.State,
                 Value = vsv
             };
-            //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>, StateValue<TElement, TPropertyValue>>(
-            //    vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, vsv);
         }
 
-
+        /// <summary>
+        /// Exposes builder for changing property value on an element
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TElement">The type of the element to adjust</typeparam>
+        /// <typeparam name="TPropertyValue">The type of the property to adjust</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="getter">Expression to the getter</param>
+        /// <param name="setter">Action to set value</param>
+        /// <returns>New builder</returns>
         public static
             IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             Change<TState, TElement, TPropertyValue>(
@@ -1007,12 +956,18 @@ where TStateData : INotifyPropertyChanged
                 State = vsmGroup.State,
                 Value = vsv
             };
-            //return new Tuple<IStateManager, IStateGroup<TState>, IStateDefinition<TState>, StateValue<TElement, TPropertyValue>>(
-            //    vsmGroup.Item1, vsmGroup.Item2, vsmGroup.Item3, vsv);
         }
 
 
-
+        /// <summary>
+        /// Exposes a builder that define the new property value
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TElement">The type of the element to adjust the property on</typeparam>
+        /// <typeparam name="TPropertyValue">The type of the property to adjust</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="value">The value to set</param>
+        /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState>
             ToValue<TState, TElement, TPropertyValue>(
@@ -1025,11 +980,18 @@ where TStateData : INotifyPropertyChanged
 
             vsmGroup.Value.Value = value;
             vsmGroup.State.Values.Add(vsmGroup.Value);
-            //vsmGroup.Item4.Value = value;
-            //vsmGroup.Item3.Values.Add(vsmGroup.Item4);
             return vsmGroup;
         }
 
+        /// <summary>
+        /// Expoese a builder that changes a property value on an element
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TPropertyValue">The type of the property</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="getter">The expresion to the getter on the element</param>
+        /// <param name="value">The value to set the property to</param>
+        /// <returns></returns>
         public static
           IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
           this IStateDefinitionBuilder<TState> vsmGroup,
@@ -1045,7 +1007,17 @@ where TStateData : INotifyPropertyChanged
                 .ToValue(value);
         }
 
-
+        /// <summary>
+        /// Exposes a builder to change a property value
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TElement">The type of element to adjust property on</typeparam>
+        /// <typeparam name="TPropertyValue">The type of property to adjust</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="element">The element to adjust</param>
+        /// <param name="getter">The expression tree for the property</param>
+        /// <param name="value">The value to set</param>
+        /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TElement, TPropertyValue>(
             this IStateDefinitionBuilder<TState> vsmGroup,
@@ -1059,7 +1031,14 @@ where TStateData : INotifyPropertyChanged
                 .ToValue(value);
         }
 
-
+        /// <summary>
+        /// Expoese a builder that changes a property value on an element
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TPropertyValue">The type of the property</typeparam>
+        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="getter">The expresion to the getter on the element</param>
+        /// <param name="value">The value to set the property to</param>
         public static
             IStateDefinitionBuilder<TState> ChangePropertyValue<TState, TPropertyValue>(
             this IStateDefinitionBuilder<TState> vsmGroup,
@@ -1182,9 +1161,16 @@ where TStateData : INotifyPropertyChanged
         }
 
 
-      
 
-        #region Create State
+
+        /// <summary>
+        /// Expoese a state definition builder for a state with state data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="smInfo">The state group builder</param>
+        /// <param name="state">The state to define</param>
+        /// <returns>New builder</returns>
         public static
             IStateDefinitionWithDataBuilder<TState, TStateData>
            DefineStateWithData<TState, TStateData>(
@@ -1202,13 +1188,14 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
-    
-        //}
-
-        #endregion
-
-    
-
+        /// <summary>
+        /// Exposes a builder that invokes the initialize method on a state definition
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="action">The action to run to initialize the state data</param>
+        /// <returns>New builder</returns>
         public static
 
             IStateDefinitionWithDataBuilder<TState, TStateData>
@@ -1224,6 +1211,14 @@ where TStateData : INotifyPropertyChanged
 #pragma warning restore 1998
         }
 
+        /// <summary>
+        /// Initialize the state data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="action">The action to perform initializaetion</param>
+        /// <returns></returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> Initialise<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
             Func<TStateData, Task> action)
@@ -1339,7 +1334,16 @@ where TStateData : INotifyPropertyChanged
             return smInfo;
         }
 
-
+        /// <summary>
+        /// Exposes builder to initialize a new state with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of state data</typeparam>
+        /// <typeparam name="TNewStateData">The type of the new state data</typeparam>
+        /// <typeparam name="TData">The type of the data being passed in</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="action">The action to invoke to pass data into the state data</param>
+        /// <returns></returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             InitializeNewState<TState, TStateData, TNewStateData, TData>(
     this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> smInfo,
@@ -1353,6 +1357,16 @@ where TStateData : INotifyPropertyChanged
 #pragma warning restore 1998
         }
 
+        /// <summary>
+        /// Exposes builder to initialize (async) a new state with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of state data</typeparam>
+        /// <typeparam name="TNewStateData">The type of the new state data</typeparam>
+        /// <typeparam name="TData">The type of the data being passed in</typeparam>
+        /// <param name="existingInfo">The state definition builder</param>
+        /// <param name="action">The action to invoke to pass data into the state data</param>
+        /// <returns></returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             InitializeNewState<TState, TStateData, TNewStateData, TData>(
             this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> existingInfo,
@@ -1488,8 +1502,16 @@ where TStateData : INotifyPropertyChanged
             return smInfo;
         }
 
+        /// <summary>
+        /// Expoese builder for attaching to an event on the state data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="subscribe">The action to call when subscribing</param>
+        /// <param name="unsubscribe">The action to call when unsubscribing</param>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataEventBuilder<TState, TStateData>
-
             OnEvent<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
             Action<TStateData, EventHandler> subscribe,
@@ -1507,12 +1529,20 @@ where TStateData : INotifyPropertyChanged
                 Unsubscribe = unsubscribe
             };
 
-           
+
         }
 
 
 
-
+        /// <summary>
+        /// Exposes builder to change state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <typeparam name="TData">The type of data being passed into the new state</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="stateToChangeTo">The state to change to</param>
+        /// <returns></returns>
         public static IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData>
             ChangeState<TState, TStateData, TData>(
             this IStateWithDataActionData<TState, TStateData, TData> smInfo,
@@ -1548,6 +1578,14 @@ where TStateData : INotifyPropertyChanged
             };
         }
 
+        /// <summary>
+        /// Exposes builder for changing state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The state data</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <param name="stateToChangeTo">The state to change to</param>
+        /// <returns></returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeState<TState, TStateData>(
     this IStateWithDataAction<TState, TStateData> smInfo,
     TState stateToChangeTo) where TState : struct
@@ -1564,7 +1602,13 @@ where TStateData : INotifyPropertyChanged
 
         }
 
-
+        /// <summary>
+        /// Exposes builder that will change to previous state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="smInfo">The state builder</param>
+        /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> ChangeToPreviousState<TState, TStateData>(
             this IStateWithDataAction<TState, TStateData> smInfo) where TState : struct
             where TStateData : INotifyPropertyChanged

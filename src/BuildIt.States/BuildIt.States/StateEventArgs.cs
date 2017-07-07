@@ -27,8 +27,20 @@ namespace BuildIt.States
             UseTransitions = useTransitions;
             IsNewState = isNewState;
         }
+
+        /// <summary>
+        /// The name of the state
+        /// </summary>
         public virtual string StateName { get; }
+
+        /// <summary>
+        /// Whether to use transitions
+        /// </summary>
         public bool UseTransitions { get; protected set; }
+
+        /// <summary>
+        /// Whether it's a new state or going to a previous state
+        /// </summary>
         public bool IsNewState { get; protected set; }
 
        
