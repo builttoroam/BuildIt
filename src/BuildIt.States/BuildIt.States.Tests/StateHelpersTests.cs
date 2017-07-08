@@ -674,9 +674,4 @@ namespace BuildIt.States.Tests
             Assert.IsNull(newdata);
         }
     }
-
-    public class TestDebugLogger : BasicDebugLogger
-    {
-        
-    }
 }

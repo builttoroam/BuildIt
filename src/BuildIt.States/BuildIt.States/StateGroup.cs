@@ -21,6 +21,11 @@ namespace BuildIt.States
         /// <param name="groupName">The name of the state group</param>
         public StateGroup(string groupName)
         {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new ArgumentNullException(nameof(groupName), "Group name is required");
+            }
+
             GroupName = groupName;
         }
 

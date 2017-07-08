@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
@@ -14,6 +15,17 @@ namespace BuildIt.States
     public class EnumStateGroup<TState> : StateGroup, IEnumStateGroup<TState>
         where TState : struct
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumStateGroup{TState}"/> class.
+        /// </summary>
+        public EnumStateGroup()
+        {
+            if (!typeof(TState).GetTypeInfo().IsEnum)
+            {
+                throw new ArgumentException("Type argument should be enum", nameof(TState));
+            }
+        }
+
 #pragma warning disable CS0067 // See TODO
         // TODO: Raise events at correct point when changing state
 
@@ -100,6 +112,7 @@ namespace BuildIt.States
             }
 
             var stateDefinition = new EnumStateDefinition<TState>(state);
+            $"Defined state for {state}".Log();
             return DefineEnumState(stateDefinition);
         }
 
@@ -166,6 +179,48 @@ namespace BuildIt.States
             }
 
             return await ChangeBackTo(findState + string.Empty, useTransitions);
+        }
+
+        /// <summary>
+        /// Adds a state definition into the group
+        /// </summary>
+        /// <param name="stateDefinition">The state definition to add</param>
+        /// <returns>The added (or existing) state definition</returns>
+        public override IStateDefinition DefineState(IStateDefinition stateDefinition)
+        {
+            if (!(stateDefinition is IEnumStateDefinition<TState>))
+            {
+                throw new ArgumentException("State definition should be IEnumStateDefinition<TState> for typed state group", nameof(stateDefinition));
+            }
+
+            return base.DefineState(stateDefinition);
+        }
+
+        /// <summary>
+        /// Defines a state definition
+        /// </summary>
+        /// <param name="state">The state name - should be an enum value</param>
+        /// <returns>New state definition</returns>
+        public override IStateDefinition DefineState(string state)
+        {
+            if (state.EnumParse<TState>().Equals(default(TState)))
+            {
+                throw new ArgumentException("State name must match an enum value", nameof(state));
+            }
+
+            return base.DefineState(state);
+        }
+
+        /// <summary>
+        /// Overridden as not supported - use <see cref="M:DefineEnumStateWithData"/> instead
+        /// </summary>
+        /// <typeparam name="TStateData">The type of the state data</typeparam>
+        /// <param name="state">The state</param>
+        /// <returns>New state definition</returns>
+        /// <exception cref="NotSupportedException">Raised in all cases as method not supported</exception>
+        public override IStateDefinitionWithData<TStateData> DefineStateWithData<TStateData>(string state)
+        {
+            throw new NotSupportedException("Don't use for EnumStateGroup. Use DefineEnumStateWithData instead");
         }
 
         /// <summary>
