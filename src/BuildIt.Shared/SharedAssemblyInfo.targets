@@ -1,6 +1,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
     <PropertyGroup>  
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+      <Authors>Built to Roam</Authors>
+      <Company>Built to Roam Pty Ltd</Company>
+      <Copyright>Copyright © 2017</Copyright>
+      <RepositoryUrl>https://github.com/builttoroam/buildit</RepositoryUrl>
+      <PackageTags>BuildIt</PackageTags>
+      <NeutralLanguage>en-US</NeutralLanguage>
+      <PackageLicenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</PackageLicenseUrl>
+      <PackageProjectUrl>https://github.com/builttoroam/buildit</PackageProjectUrl>
+
+      <Version>1.1.0.0</Version>
+      <AssemblyVersion>1.1.0.0</AssemblyVersion>
+      <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 </Project>  
