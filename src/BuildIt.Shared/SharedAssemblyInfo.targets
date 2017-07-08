@@ -14,3 +14,9 @@
       <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 </Project>  
+
+<!-- 
+ Add the following to the csproj to add these attributes to the project
+   <Import Project="..\..\BuildIt.Shared\SharedAssemblyInfo.targets" />
+
+ -->

@@ -171,10 +171,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.15-beta</Version>
+      <Version>1.1.0.30</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.23-beta</Version>
+      <Version>1.1.0.31-beta</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.3</Version>

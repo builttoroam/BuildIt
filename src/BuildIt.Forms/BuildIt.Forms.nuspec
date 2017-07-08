@@ -13,8 +13,8 @@
     <copyright>Copyright © 2017</copyright>
     <tags>BuildIt</tags>
     <dependencies>
-      <dependency id="BuildIt.General" version="1.0.0.15-beta" />
-      <dependency id="BuildIt.States" version="1.0.0.23-beta" />
+      <dependency id="BuildIt.General" version="1.1.0.30" />
+      <dependency id="BuildIt.States" version="1.1.0.31" />
       <dependency id="Xamarin.Forms" version="2.3.5.256-pre6" />
     </dependencies>
   </metadata>

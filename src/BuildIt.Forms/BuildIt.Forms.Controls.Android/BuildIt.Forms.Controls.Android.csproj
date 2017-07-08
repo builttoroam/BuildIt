@@ -27,21 +27,25 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\BuildIt.Forms.Controls.Android.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\BuildIt.Forms.Controls.Android.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BuildIt.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.General.1.1.0.15-beta\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    <Reference Include="BuildIt.General, Version=1.1.0.30, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.General.1.1.0.30\lib\netstandard1.0\BuildIt.General.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.States, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.States.1.1.0.23-beta\lib\monoandroid\BuildIt.States.dll</HintPath>
+    <Reference Include="BuildIt.States, Version=1.1.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.States.1.1.0.31-beta\lib\monoandroid\BuildIt.States.dll</HintPath>
     </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.5.256-pre6\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>

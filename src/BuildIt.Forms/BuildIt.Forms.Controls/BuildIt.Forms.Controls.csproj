@@ -5,9 +5,19 @@
     <PackageTargetFallback>$(PackageTargetFallback);portable-monoandroid10+net45+win+win81+wp8+wpa81+xamarinios10+xamarinmac20</PackageTargetFallback>
   </PropertyGroup>
 
+  <Import Project="..\..\BuildIt.Shared\SharedAssemblyInfo.targets" />
+
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
+    <DefineConstants>RELEASE;NETSTANDARD1_4</DefineConstants>
+    <DocumentationFile>bin\Release\netstandard1.4\BuildIt.Forms.Controls.xml</DocumentationFile>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.4\BuildIt.Forms.Controls.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.23-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.31-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.5.256-pre6" />
   </ItemGroup>
 
