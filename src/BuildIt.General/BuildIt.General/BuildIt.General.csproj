@@ -12,6 +12,8 @@
     <RootNamespace>BuildIt</RootNamespace>
   </PropertyGroup>
 
+  <Import Project="..\..\BuildIt.Shared\AssemblyInfo.targets" />
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.0\BuildIt.General.xml</DocumentationFile>
     <DebugType>full</DebugType>

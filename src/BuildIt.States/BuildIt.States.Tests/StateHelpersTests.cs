@@ -74,8 +74,8 @@ namespace BuildIt.States.Tests
 
             event EventHandler<CompletionEventArgs<TestCompletion>> ICompletion<TestCompletion>.Complete
             {
-                add { TestComplete += value; }
-                remove { TestComplete -= value; }
+                add => TestComplete += value;
+                remove => TestComplete -= value;
             }
 
             public bool TestBoolValue { get; set; }
@@ -109,7 +109,7 @@ namespace BuildIt.States.Tests
             Container = new AutofacDependencyContainer(container);
             using (Container.StartUpdate())
             {
-                Container.Register<BasicDebugLogger, ILogService>();
+                Container.Register<TestDebugLogger, ILogService>();
             }
             ServiceLocator.SetLocatorProvider(() => csl);
         }
@@ -673,5 +673,10 @@ namespace BuildIt.States.Tests
                 ).CurrentStateData as State1Data;
             Assert.IsNull(newdata);
         }
+    }
+
+    public class TestDebugLogger : BasicDebugLogger
+    {
+        
     }
 }

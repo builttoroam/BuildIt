@@ -11,6 +11,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
+  <Import Project="..\..\BuildIt.Shared\AssemblyInfo.targets" />
+   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>bin\Debug\netstandard1.0\BuildIt.States.xml</DocumentationFile>

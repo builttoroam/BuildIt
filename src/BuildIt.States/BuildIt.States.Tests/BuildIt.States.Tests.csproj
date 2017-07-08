@@ -48,6 +48,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BasicStatesTests.cs" />
     <Compile Include="StateHelpersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
