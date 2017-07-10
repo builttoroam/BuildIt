@@ -11,7 +11,7 @@
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Support for Autofac using BuildIt.General ServiceLocator</description>
     <copyright>Copyright © 2017</copyright>
-    <tags>BuildIt, Autoface</tags>
+    <tags>BuildIt, Autofac</tags>
     <dependencies>
       <group targetFramework="netstandard1.1">
         <dependency id="NETStandard.Library" version="1.6.1" />
