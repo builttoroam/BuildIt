@@ -46,7 +46,7 @@ namespace BuildIt.Forms.Core
         }
        
         public static readonly BindableProperty VisualStateGroupsProperty =
-            BindableProperty.CreateAttached("VisualStateGroups", typeof(Groups),
+            BindableProperty.CreateAttached("VisualStateGroups", typeof(VisualStateGroups),
                 typeof(VisualStateManager), null, BindingMode.OneWayToSource, null, StateGroupsChanged, null, null, CreateDefaultValue);
 
         public static readonly BindableProperty StateManagerProperty =
@@ -59,13 +59,13 @@ namespace BuildIt.Forms.Core
 
         private static object CreateDefaultValue(BindableObject bindable)
         {
-            return new Groups();
+            return new VisualStateGroups();
         }
 
         private static void StateGroupsChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var manager = GetStateManager(bindable);
-            UpdateStateManager(manager, bindable, (Groups)newvalue);
+            UpdateStateManager(manager, bindable, (VisualStateGroups)newvalue);
         }
 
         public static IStateManager GetStateManager(BindableObject view)
@@ -73,12 +73,12 @@ namespace BuildIt.Forms.Core
             return (IStateManager)view.GetValue(StateManagerProperty);
         }
 
-        public static Groups GetVisualStateGroups(BindableObject view)
+        public static VisualStateGroups GetVisualStateGroups(BindableObject view)
         {
-            return (Groups)view.GetValue(VisualStateGroupsProperty);
+            return (VisualStateGroups)view.GetValue(VisualStateGroupsProperty);
         }
 
-        public static void SetVisualStateGroups(BindableObject view, Groups value)
+        public static void SetVisualStateGroups(BindableObject view, VisualStateGroups value)
         {
             view.SetValue(VisualStateGroupsProperty, value);
 
@@ -328,14 +328,6 @@ namespace BuildIt.Forms.Core
                     await VisualStateManager.GoToState(Element, e.StateName);
                 };
             }
-        }
-    }
-
-    public class Groups : List<VisualStateGroup>
-    {
-        public static implicit operator Groups(VisualStateGroup group)
-        {
-            return new Groups { group }; 
         }
     }
 }

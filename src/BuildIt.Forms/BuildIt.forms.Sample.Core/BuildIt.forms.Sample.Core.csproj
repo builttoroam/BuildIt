@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.31-beta" />
   </ItemGroup>

@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
-    <PackageReference Include="BuildIt.Autofac" Version="1.1.0.17-beta" />
+    <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.31-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.5.256-pre6" />
@@ -40,9 +40,6 @@
   <ItemGroup>
     <Compile Update="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="CustomControl.xaml.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Update="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
