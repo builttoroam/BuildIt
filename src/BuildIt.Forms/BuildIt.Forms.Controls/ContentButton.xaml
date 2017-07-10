@@ -9,7 +9,6 @@
             <Grid x:Name="RootGrid"
                   BackgroundColor="{TemplateBinding BackgroundColor}">
                 <local:VisualStateManager.VisualStateGroups>
-                    <local:Groups>
                         <local:VisualStateGroup Name="CommonStates">
                             <local:VisualState Name="Normal" />
                             <local:VisualState Name="PointerOver">
@@ -31,7 +30,6 @@
                                 </local:VisualState.Setters>
                             </local:VisualState>
                         </local:VisualStateGroup>
-                    </local:Groups>
                 </local:VisualStateManager.VisualStateGroups>
                 <BoxView BackgroundColor="Transparent"
                          x:Name="Background" />
