@@ -129,9 +129,6 @@
       <HintPath>..\..\..\packages\BuildIt.States.1.1.0.31-beta\lib\xamarinios10\BuildIt.States.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
@@ -150,6 +147,15 @@
       <HintPath>..\..\..\packages\Xamarin.Forms.2.3.5.256-pre6\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\packages\Autofac.4.6.0\lib\netstandard1.1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BuildIt.Autofac">
+      <HintPath>..\..\..\packages\BuildIt.Autofac.1.1.0.17-beta\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls.iOS\BuildIt.Forms.Controls.iOS.csproj">
@@ -159,26 +165,24 @@
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
-      <Project>{5f435051-e7d5-47f7-9d2f-d41041977c0c}</Project>
+      <Project>{B88241FC-7403-4AD2-989E-47D7BB5CDD76}</Project>
       <Name>BuildIt.Forms.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj">
-      <Project>{4180a997-f8e2-427a-b0f1-e504afdefdde}</Project>
+      <Project>{EF038A32-FB22-46AD-8258-4A254F046C14}</Project>
       <Name>BuildIt.Forms.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj">
-      <Project>{f4d30225-84fc-41d4-85ac-97a6d03d2cac}</Project>
+      <Project>{3083890B-12C7-4FBE-85BC-0CCF9CB1D556}</Project>
       <Name>BuildIt.Forms.Sample.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="..\..\packages\Xamarin.Forms.2.3.5.239-pre3\build\netstandard1.0\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.5.239-pre3\build\netstandard1.0\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.5.239-pre3\build\netstandard1.0\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.5.239-pre3\build\netstandard1.0\Xamarin.Forms.targets'))" />
     <Error Condition="!Exists('..\..\..\packages\Xamarin.Forms.2.3.5.256-pre6\build\netstandard1.0\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Xamarin.Forms.2.3.5.256-pre6\build\netstandard1.0\Xamarin.Forms.targets'))" />
   </Target>
   <Import Project="..\..\..\packages\Xamarin.Forms.2.3.5.256-pre6\build\netstandard1.0\Xamarin.Forms.targets" Condition="Exists('..\..\..\packages\Xamarin.Forms.2.3.5.256-pre6\build\netstandard1.0\Xamarin.Forms.targets')" />

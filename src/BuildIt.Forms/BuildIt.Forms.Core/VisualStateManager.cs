@@ -288,10 +288,13 @@ namespace BuildIt.Forms.Core
             if (visualStateManagerGroups?.Count == 0)
             {
                 var cvv = element as ContentView;
-                foreach (var child in cvv.Children)
+                if (cvv?.Children != null)
                 {
-                    visualStateManagerGroups = GetVisualStateGroups(child);
-                    if (visualStateManagerGroups?.Count != 0) break;
+                    foreach (var child in cvv.Children)
+                    {
+                        visualStateManagerGroups = GetVisualStateGroups(child);
+                        if (visualStateManagerGroups?.Count != 0) break;
+                    }
                 }
             }
 
@@ -328,5 +331,7 @@ namespace BuildIt.Forms.Core
         }
     }
 
-
+    public class Groups : List<VisualStateGroup>
+    {
+    }
 }

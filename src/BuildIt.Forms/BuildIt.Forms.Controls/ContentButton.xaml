@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
@@ -9,7 +9,7 @@
             <Grid x:Name="RootGrid"
                   BackgroundColor="{TemplateBinding BackgroundColor}">
                 <local:VisualStateManager.VisualStateGroups>
-                    <x:Array Type="{x:Type local:VisualStateGroup}">
+                    <local:Groups>
                         <local:VisualStateGroup Name="CommonStates">
                             <local:VisualState Name="Normal" />
                             <local:VisualState Name="PointerOver">
@@ -31,9 +31,8 @@
                                 </local:VisualState.Setters>
                             </local:VisualState>
                         </local:VisualStateGroup>
-                    </x:Array>
+                    </local:Groups>
                 </local:VisualStateManager.VisualStateGroups>
-
                 <BoxView BackgroundColor="Transparent"
                          x:Name="Background" />
                 <ContentPresenter x:Name="ContentPresenter"

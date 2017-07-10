@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BuildIt.Forms.Sample"
@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Sample.MainPage">
     <vsm:VisualStateManager.VisualStateGroups>
-        <x:Array Type="{x:Type vsm:VisualStateGroup}">
+        <vsm:Groups>
             <vsm:VisualStateGroup Name="SampleStates">
                 <vsm:VisualState Name="Show">
                     <vsm:VisualState.Setters>
@@ -110,7 +110,7 @@
 
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
-        </x:Array>
+        </vsm:Groups>
     </vsm:VisualStateManager.VisualStateGroups>
     <Grid>
         <!-- Acrylic brushes only in Fall Creators Update -->
