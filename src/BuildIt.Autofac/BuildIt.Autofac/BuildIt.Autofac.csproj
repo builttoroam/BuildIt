@@ -11,17 +11,28 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
   </PropertyGroup>
 
+  <Import Project="..\..\BuildIt.Shared\SharedAssemblyInfo.targets" />
+
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.1\BuildIt.Autofac.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard1.1\BuildIt.Autofac.xml</DocumentationFile>
+    <DefineConstants>RELEASE;NETSTANDARD1_1</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
-    <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

@@ -9,13 +9,10 @@ namespace BuildIt.Autofac
     /// </summary>
     public class AutofacDependencyContainer : IDependencyContainer
     {
-        private IContainer Container { get; }
         private int editCount = 0;
-        private ContainerBuilder Builder { get; set; }
-        private IDisposable Wrapper { get; set; }
 
         /// <summary>
-        /// Creates new instance from an Autofac container
+        /// Initializes a new instance of the <see cref="AutofacDependencyContainer"/> class.
         /// </summary>
         /// <param name="container">The Autofac container to use</param>
         public AutofacDependencyContainer(IContainer container)
@@ -23,19 +20,11 @@ namespace BuildIt.Autofac
             Container = container;
         }
 
-        private class ContainerWrapper : IDisposable
-        {
-            IDependencyContainer Container { get; }
-            public ContainerWrapper(IDependencyContainer container)
-            {
-                Container = container;
-            }
+        private IContainer Container { get; }
 
-            public void Dispose()
-            {
-                Container.EndUpdate();
-            }
-        }
+        private ContainerBuilder Builder { get; set; }
+
+        private IDisposable Wrapper { get; set; }
 
         /// <summary>
         /// Start the process of updating the container
@@ -49,6 +38,7 @@ namespace BuildIt.Autofac
                 Builder = new ContainerBuilder();
                 Wrapper = new ContainerWrapper(this);
             }
+
             return Wrapper;
         }
 
@@ -75,6 +65,7 @@ namespace BuildIt.Autofac
         /// <typeparam name="TTypeToRegister">The type to register</typeparam>
         /// <typeparam name="TInterfaceTypeToRegisterAs">The type/interface to register as</typeparam>
         public void Register<TTypeToRegister, TInterfaceTypeToRegisterAs>()
+            where TTypeToRegister : TInterfaceTypeToRegisterAs
         {
             Builder.RegisterType<TTypeToRegister>().As<TInterfaceTypeToRegisterAs>();
         }
@@ -82,7 +73,7 @@ namespace BuildIt.Autofac
         /// <summary>
         /// Register a type with the container
         /// </summary>
-        /// <typeparam name="TTypeToRegister"></typeparam>
+        /// <typeparam name="TTypeToRegister">The type to register</typeparam>
         public void Register<TTypeToRegister>()
         {
             Builder.RegisterType<TTypeToRegister>();
@@ -91,10 +82,25 @@ namespace BuildIt.Autofac
         /// <summary>
         /// Register a type with the container
         /// </summary>
-        /// <param name="typeToRegister"></param>
+        /// <param name="typeToRegister">The type to register</param>
         public void RegisterType(Type typeToRegister)
         {
             Builder.RegisterType(typeToRegister);
+        }
+
+        private class ContainerWrapper : IDisposable
+        {
+            public ContainerWrapper(IDependencyContainer container)
+            {
+                Container = container;
+            }
+
+            private IDependencyContainer Container { get; }
+
+            public void Dispose()
+            {
+                Container.EndUpdate();
+            }
         }
     }
 }

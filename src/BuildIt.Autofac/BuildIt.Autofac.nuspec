@@ -11,12 +11,12 @@
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Support for Autofac using BuildIt.General ServiceLocator</description>
     <copyright>Copyright © 2017</copyright>
-    <tags>BuildIt</tags>
+    <tags>BuildIt, Autoface</tags>
     <dependencies>
       <group targetFramework="netstandard1.1">
         <dependency id="NETStandard.Library" version="1.6.1" />
         <dependency id="Autofac" version="4.6.0" />
-        <dependency id="BuildIt.General" version="1.1.0.15-beta" />
+        <dependency id="BuildIt.General" version="1.1.0.30" />
       </group>
     </dependencies>
   </metadata>

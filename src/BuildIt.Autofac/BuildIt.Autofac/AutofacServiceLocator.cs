@@ -1,9 +1,9 @@
-﻿using Autofac;
-using BuildIt.ServiceLocation;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
+using BuildIt.ServiceLocation;
 
 namespace BuildIt.Autofac
 {
@@ -34,6 +34,7 @@ namespace BuildIt.Autofac
             {
                 throw new ArgumentNullException("container");
             }
+
             this.container = container;
         }
 
@@ -52,6 +53,7 @@ namespace BuildIt.Autofac
             {
                 throw new ArgumentNullException("serviceType");
             }
+
             return key != null ? container.ResolveNamed(key, serviceType) : container.Resolve(serviceType);
         }
 
@@ -69,6 +71,7 @@ namespace BuildIt.Autofac
             {
                 throw new ArgumentNullException("serviceType");
             }
+
             var enumerableType = typeof(IEnumerable<>).MakeGenericType(serviceType);
 
             object instance = container.Resolve(enumerableType);
