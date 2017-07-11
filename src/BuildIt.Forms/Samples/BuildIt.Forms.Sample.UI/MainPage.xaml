@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Sample.MainPage">
     <vsm:VisualStateManager.VisualStateGroups>
-        <!--<vsm:VisualStateGroups>-->
+        <vsm:VisualStateGroups>
         <vsm:VisualStateGroup Name="SampleStates">
             <vsm:VisualState Name="Show">
                 <vsm:VisualState.Setters>
@@ -110,7 +110,7 @@
 
             </vsm:VisualState>
         </vsm:VisualStateGroup>
-        <!--</vsm:VisualStateGroups>-->
+        </vsm:VisualStateGroups>
     </vsm:VisualStateManager.VisualStateGroups>
     <Grid>
         <ScrollView>
