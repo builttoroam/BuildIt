@@ -206,6 +206,8 @@
                     </StackLayout>
                 </controls:ContentButton>
 
+                <controls:IconButton Icon="&#xF04B;"></controls:IconButton>
+
                 <local:CustomControl x:Name="Custom">
                     <local:CustomControl.Effects>
                         <!--<controls:BackgroundEffect FallbackColor="Blue"/>-->

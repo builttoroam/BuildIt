@@ -105,7 +105,7 @@ namespace BuildIt.Forms.Controls
         private bool IsPressed { get; set; }
 
         private bool EnterRequired { get; set; }
-        private void OnTouchEffectAction(object sender, object args)
+        protected void OnTouchEffectAction(object sender, object args)
         {
             var touchArgs = args as TouchActionEventArgs;
             if (touchArgs == null) return;
