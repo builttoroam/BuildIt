@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:vsm="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
+
+             x:Class="BuildIt.Forms.Sample.ListViewItemControl">
+  <ContentView.Content>
+      <StackLayout>
+            <vsm:VisualStateManager.VisualStateGroups>
+                    <vsm:VisualStateGroup Name="ItemStates">
+                    <vsm:VisualState Name="ItemEnabled">
+                            <vsm:VisualState.Setters>
+                                <vsm:Setter Value="true"
+                                Target="EnabledLabel.IsVisible" />
+                            </vsm:VisualState.Setters>
+                        </vsm:VisualState>
+                    <vsm:VisualState Name="ItemDisabled">
+                            <vsm:VisualState.Setters>
+                            <vsm:Setter Value="false"
+                                Target="EnabledLabel.IsVisible" />
+                        </vsm:VisualState.Setters>
+                        </vsm:VisualState>
+                    </vsm:VisualStateGroup>
+            </vsm:VisualStateManager.VisualStateGroups>
+
+            <Label Text="Hello Xamarin.Forms!" />
+            <Label Text="Enabled!" x:Name="EnabledLabel" />
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

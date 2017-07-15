@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="CustomControl.xaml" />
+    <None Remove="ListViewItemControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListViewItemControl.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="MainPage.xaml">
@@ -40,6 +44,9 @@
   <ItemGroup>
     <Compile Update="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="ListViewItemControl.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Update="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

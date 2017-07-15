@@ -113,6 +113,10 @@
         </vsm:VisualStateGroups>
     </vsm:VisualStateManager.VisualStateGroups>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <ScrollView>
             <!-- Acrylic brushes only in Fall Creators Update -->
             <!--<Grid.Effects>
@@ -216,5 +220,19 @@
             </StackLayout>
 
         </ScrollView>
+
+
+        <Grid Grid.Column="1">
+            <ListView ItemsSource="{Binding Items}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                        <local:ListViewItemControl />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
     </Grid>
 </ContentPage>

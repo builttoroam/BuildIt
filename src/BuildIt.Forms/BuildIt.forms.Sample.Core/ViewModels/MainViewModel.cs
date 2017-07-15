@@ -4,6 +4,8 @@ using System.Text;
 using BuildIt.States;
 using System.Windows.Input;
 using BuildIt.States.Interfaces;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BuildIt.forms.Sample.Core.ViewModels
 {
@@ -15,12 +17,45 @@ namespace BuildIt.forms.Sample.Core.ViewModels
 
     }
 
+    public enum ItemStates
+    {
+        Base,
+        ItemEnabled,
+        ItemDisabled
+    }
+
+    public class ItemViewModel : NotifyBase, IHasStates
+    {
+        public IStateManager StateManager { get; } = new StateManager();
+
+        private Random Random { get; } = new Random();
+
+        public ItemViewModel()
+        {
+            StateManager.Group<ItemStates>().DefineAllStates();
+
+        }
+
+        public async Task Init()
+        {
+
+
+            var enabled = Random.Next(0, 100) > 50;
+            StateManager.GoToState(enabled ? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
+        }
+
+    }
+
+
+
     public class MainViewModel:IHasStates
     {
         private ICommand pressedCommand;
         public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates));
 
         public IStateManager StateManager { get; } = new StateManager();
+
+        public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
 
         public MainViewModel()
         {
@@ -34,6 +69,16 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         {
          visible = !visible;
             StateManager.GoToState(visible ? SampleStates.Show : SampleStates.Hide);
+        }
+
+        public async Task Init()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                var item = new ItemViewModel();
+                await item.Init();
+                Items.Add(item);
+            }
         }
     }
 

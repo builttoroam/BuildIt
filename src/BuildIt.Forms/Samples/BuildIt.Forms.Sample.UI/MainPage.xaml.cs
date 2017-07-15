@@ -39,14 +39,15 @@ namespace BuildIt.Forms.Sample
 
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
 
-          
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
 
             Custom.BindVisualStates();
+
+            await (BindingContext as MainViewModel).Init();
         }
 
 

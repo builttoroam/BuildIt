@@ -42,9 +42,9 @@ namespace BuildIt.Forms.Core
 
             if (state == null || state.Group?.CurrentState == state.State) return;
             await manager.GoToVisualState(state.State);
-           
+
         }
-       
+
         public static readonly BindableProperty VisualStateGroupsProperty =
             BindableProperty.CreateAttached("VisualStateGroups", typeof(VisualStateGroups),
                 typeof(VisualStateManager), null, BindingMode.OneWayToSource, null, StateGroupsChanged, null, null, CreateDefaultValue);
@@ -164,7 +164,7 @@ namespace BuildIt.Forms.Core
             foreach (var setter in state.Setters)
             {
                 var target = element.FindByTarget(setter);
-               
+
 
                 if (target == null) continue;
                 var setterTarget = target.Item1;
@@ -277,7 +277,7 @@ namespace BuildIt.Forms.Core
         }
 
 
-      
+
         public static void Bind(Element element, IStateManager stateManager)
         {
             // Retrieve the list of state groups from the ViewModel's StateManager
@@ -314,7 +314,7 @@ namespace BuildIt.Forms.Core
             }
         }
 
-        private class StateChangeHelper 
+        private class StateChangeHelper
         {
             private IStateGroup StateGroup { get; }
             private Element Element { get; }
@@ -327,6 +327,11 @@ namespace BuildIt.Forms.Core
                 {
                     await VisualStateManager.GoToState(Element, e.StateName);
                 };
+
+                if (!string.IsNullOrWhiteSpace(StateGroup.CurrentStateName))
+                {
+                    VisualStateManager.GoToState(Element, StateGroup.CurrentStateName);
+                }
             }
         }
     }
