@@ -315,7 +315,7 @@ namespace BuildIt.States
         /// <param name="groupToBindTo">The source group (ie changes in the source group update this group)</param>
         /// <param name="bothDirections">Whether updates should flow both directions</param>
         /// <returns>Binder entity that manages the relationship</returns>
-        public IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections = true)
+        public async Task<IStateBinder> Bind(IStateGroup groupToBindTo, bool bothDirections = true)
         {
             var sg = groupToBindTo; // as IStateGroup<TState>; // This includes INotifyStateChanged
             if (sg == null)
@@ -323,7 +323,9 @@ namespace BuildIt.States
                 return null;
             }
 
-            return new StateGroupBinder(this, sg, bothDirections);
+            var binder = new StateGroupBinder(this, sg, bothDirections);
+            await binder.Bind();
+            return binder;
         }
 
         /// <summary>

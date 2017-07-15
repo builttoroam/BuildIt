@@ -5,6 +5,7 @@
 
 // NB: DO NOT add this file to the BuildIt.Shared project itself - this doesn't work with Stylecop.
 // Use "Add as Link" for each project you want to use this file
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1208:System using directives must be placed before other using directives", Justification = "Using statements should just be sorted")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "Nothing wrong with regions")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1200:Using directives must be placed correctly", Justification = "Moving using inside namespace is dumb")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:Prefix local calls with this", Justification = "this is redundant, don't do this")]

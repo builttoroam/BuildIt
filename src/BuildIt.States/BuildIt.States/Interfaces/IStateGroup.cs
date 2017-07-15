@@ -95,7 +95,7 @@ namespace BuildIt.States.Interfaces
         /// <param name="groupToBindTo">The group to bind to</param>
         /// <param name="bothDirections">Whether groups are kept in sync in both directions</param>
         /// <returns>Binder object that can be used to unbind the groups</returns>
-        IStateBinder Bind(IStateGroup groupToBindTo, bool bothDirections = true);
+        Task<IStateBinder> Bind(IStateGroup groupToBindTo, bool bothDirections = true);
 
         /// <summary>
         /// Defines a state in the group

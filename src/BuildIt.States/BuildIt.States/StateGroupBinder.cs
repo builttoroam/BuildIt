@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
@@ -43,9 +44,16 @@ namespace BuildIt.States
         /// <summary>
         /// Binds the source and target state groups
         /// </summary>
-        protected override void InternalBind()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected override async Task InternalBind()
         {
             Source.StateChanged += Source_StateChanged;
+
+            if (Source.CurrentStateName != Target.CurrentStateName)
+            {
+                await UpdateState(Target, Source.CurrentStateName, true, false);
+            }
+
             if (!BothDirections)
             {
                 return;
@@ -60,27 +68,25 @@ namespace BuildIt.States
             dest.StateChanged += Dest_StateChanged;
         }
 
-        private void Source_StateChanged(object sender, StateEventArgs e)
+        private async void Source_StateChanged(object sender, StateEventArgs e)
         {
-            if (e.IsNewState)
-            {
-                Target.ChangeTo(e.StateName, e.UseTransitions);
-            }
-            else
-            {
-                Target.ChangeBackTo(e.StateName, e.UseTransitions);
-            }
+            await UpdateState(Target, e.StateName, e.IsNewState, e.UseTransitions);
         }
 
-        private void Dest_StateChanged(object sender, StateEventArgs e)
+        private async void Dest_StateChanged(object sender, StateEventArgs e)
         {
-            if (e.IsNewState)
+            await UpdateState(Source, e.StateName, e.IsNewState, e.UseTransitions);
+        }
+
+        private async Task UpdateState(IStateGroup stateGroup, string stateName, bool isNewState, bool useTransitions)
+        {
+            if (isNewState)
             {
-                Source.ChangeTo(e.StateName, e.UseTransitions);
+                await stateGroup.ChangeTo(stateName, useTransitions);
             }
             else
             {
-                Source.ChangeBackTo(e.StateName, e.UseTransitions);
+                await stateGroup.ChangeBackTo(stateName, useTransitions);
             }
         }
     }

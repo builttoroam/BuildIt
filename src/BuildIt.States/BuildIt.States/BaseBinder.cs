@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
@@ -20,8 +21,6 @@ namespace BuildIt.States
             BothDirections = bothDirections;
             Target = target;
             Source = source;
-
-            Bind();
         }
 
         /// <summary>
@@ -44,14 +43,15 @@ namespace BuildIt.States
         /// <summary>
         /// Binds the source and target state groups
         /// </summary>
-        public void Bind()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task Bind()
         {
             if (IsBound)
             {
                 return;
             }
 
-            InternalBind();
+            await InternalBind();
             IsBound = true;
         }
 
@@ -80,7 +80,8 @@ namespace BuildIt.States
         /// <summary>
         /// Binds source and target
         /// </summary>
-        protected abstract void InternalBind();
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected abstract Task InternalBind();
 
         /// <summary>
         /// Unbinds source and target

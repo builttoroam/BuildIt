@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using BuildIt.States.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
@@ -25,17 +26,19 @@ namespace BuildIt.States
         /// <summary>
         /// Binds each of the state groups
         /// </summary>
-        protected override void InternalBind()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected override async Task InternalBind()
         {
             foreach (var kvp in Source.StateGroups)
             {
                 var sg = Target.StateGroups.SafeValue(kvp.Key);
-                var binder = sg?.Bind(kvp.Value, BothDirections);
-                if (binder == null)
+                var binderTask = sg?.Bind(kvp.Value, BothDirections);
+                if (binderTask == null)
                 {
                     continue;
                 }
 
+                var binder = await binderTask;
                 GroupBinders.Add(binder);
             }
         }

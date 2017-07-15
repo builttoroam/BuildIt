@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces
 {
@@ -10,7 +11,8 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Binds the state groups
         /// </summary>
-        void Bind();
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task Bind();
 
         /// <summary>
         /// Unbinds the state groups
