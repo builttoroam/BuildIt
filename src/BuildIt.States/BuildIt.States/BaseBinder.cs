@@ -1,5 +1,6 @@
-using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
@@ -18,6 +19,20 @@ namespace BuildIt.States
         /// <param name="bothDirections">If true, source will be updated by changes to target</param>
         protected BaseBinder(TEntity target, TEntity source, bool bothDirections)
         {
+            if (target == null)
+            {
+#pragma warning disable IDE0016 // Use 'throw' expression - the recommended simplification is incorrect
+                throw new ArgumentNullException(nameof(target));
+#pragma warning restore IDE0016 // Use 'throw' expression
+            }
+
+            if (source == null)
+            {
+#pragma warning disable IDE0016 // Use 'throw' expression - the recommended simplification is incorrect
+                throw new ArgumentNullException(nameof(source));
+#pragma warning restore IDE0016 // Use 'throw' expression
+            }
+
             BothDirections = bothDirections;
             Target = target;
             Source = source;
@@ -26,12 +41,12 @@ namespace BuildIt.States
         /// <summary>
         /// Gets the target for binding (to be updated when source changes)
         /// </summary>
-        protected TEntity Target { get; }
+        protected TEntity Target { get; private set; }
 
         /// <summary>
         /// Gets the source to be monitored
         /// </summary>
-        protected TEntity Source { get; }
+        protected TEntity Source { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether whether the target is monitored for changes too
@@ -49,6 +64,11 @@ namespace BuildIt.States
             if (IsBound)
             {
                 return;
+            }
+
+            if (Target == null || Source == null)
+            {
+                throw new InvalidOperationException("Binder has been disposed; create a new binder to keep entities synchronized");
             }
 
             await InternalBind();
@@ -75,6 +95,9 @@ namespace BuildIt.States
         public void Dispose()
         {
             Unbind();
+
+            Source = default(TEntity);
+            Target = default(TEntity);
         }
 
         /// <summary>
