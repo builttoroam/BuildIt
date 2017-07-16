@@ -3,15 +3,56 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Core
 {
-    public class VisualStateManager
+    /// <summary>
+    /// Root class for interacting with visual states in Forms
+    /// </summary>
+    public static class VisualStateManager
     {
+        private const string VisualStateGroupsPropertyName = "VisualStateGroups";
+        private const string StateManagerPropertyName = "StateManager";
+
+        /// <summary>
+        /// Gets the visual state groups for a particular element
+        /// </summary>
+        public static readonly BindableProperty VisualStateGroupsProperty =
+           BindableProperty.CreateAttached(
+               VisualStateGroupsPropertyName,
+               typeof(VisualStateGroups),
+               declaringType: typeof(VisualStateManager),
+               defaultValue: null,
+               defaultBindingMode: BindingMode.OneWayToSource,
+               validateValue: null,
+               propertyChanged: StateGroupsChanged,
+               propertyChanging: null,
+               coerceValue: null,
+               defaultValueCreator: CreateDefaultValue);
+
+        /// <summary>
+        /// Gets the state manager for the particular element
+        /// </summary>
+        public static BindableProperty StateManagerProperty { get; } =
+            BindableProperty.CreateAttached(
+                StateManagerPropertyName,
+                typeof(IStateManager),
+                declaringType: typeof(VisualStateManager),
+                defaultValue: null,
+                defaultValueCreator: (bo) =>
+                {
+                    return new StateManager();
+                });
+
+        /// <summary>
+        /// Transitions the element to the specified state
+        /// </summary>
+        /// <param name="element">The element to change state</param>
+        /// <param name="stateName">The new state</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task GoToState(Element element, string stateName)
         {
             var groups = GetVisualStateGroups(element);
@@ -40,22 +81,13 @@ namespace BuildIt.Forms.Core
                 }
             }
 
-            if (state == null || state.Group?.CurrentState == state.State) return;
+            if (state == null || state.Group?.CurrentState == state.State)
+            {
+                return;
+            }
+
             await manager.GoToVisualState(state.State);
-
         }
-
-        public static readonly BindableProperty VisualStateGroupsProperty =
-            BindableProperty.CreateAttached("VisualStateGroups", typeof(VisualStateGroups),
-                typeof(VisualStateManager), null, BindingMode.OneWayToSource, null, StateGroupsChanged, null, null, CreateDefaultValue);
-
-        public static readonly BindableProperty StateManagerProperty =
-    BindableProperty.CreateAttached("StateManager", typeof(IStateManager),
-        typeof(VisualStateManager), null, defaultValueCreator: (bo) =>
-         {
-
-             return new StateManager();
-         });
 
         private static object CreateDefaultValue(BindableObject bindable)
         {
@@ -68,7 +100,7 @@ namespace BuildIt.Forms.Core
             UpdateStateManager(manager, bindable, (VisualStateGroups)newvalue);
         }
 
-        public static IStateManager GetStateManager(BindableObject view)
+        private static IStateManager GetStateManager(BindableObject view)
         {
             return (IStateManager)view.GetValue(StateManagerProperty);
         }
@@ -81,8 +113,6 @@ namespace BuildIt.Forms.Core
         public static void SetVisualStateGroups(BindableObject view, VisualStateGroups value)
         {
             view.SetValue(VisualStateGroupsProperty, value);
-
-
         }
 
         private static void UpdateStateManager(IStateManager manager, BindableObject view, IList<VisualStateGroup> groups)
@@ -97,7 +127,6 @@ namespace BuildIt.Forms.Core
 
         private static void UpdateStateManagerWithStateGroup(IStateManager manager, BindableObject view, VisualStateGroup vsgroup, int groupIdx)
         {
-
             var sg = new StateGroup(vsgroup.Name);
             vsgroup.StateGroup = sg;
 
@@ -272,73 +301,14 @@ namespace BuildIt.Forms.Core
                     return sv;
                 }
             }
-
-
         }
 
-
-
-        public async static Task<IStateBinder> Bind(Element element, IStateManager stateManager)
+        public static async Task<IStateBinder> Bind(Element element, IStateManager stateManager)
         {
             var sm = VisualStateManager.GetStateManager(element);
             var binder = sm.Bind(stateManager);
             await binder.Bind();
             return binder;
-           
-
-            //// Retrieve the list of state groups from the ViewModel's StateManager
-            //var groups = stateManager.StateGroups;
-            //var visualStateManagerGroups = VisualStateManager.GetVisualStateGroups(element);
-
-
-            //if (visualStateManagerGroups?.Count == 0)
-            //{
-            //    var cvv = element as ContentView;
-            //    if (cvv?.Children != null)
-            //    {
-            //        foreach (var child in cvv.Children)
-            //        {
-            //            visualStateManagerGroups = GetVisualStateGroups(child);
-            //            if (visualStateManagerGroups?.Count != 0) break;
-            //        }
-            //    }
-            //}
-
-            //// For each group we need to locate the state group in the StateManager
-            //// in the xaml and then wire up statechanged event handlers
-            //foreach (var group in groups)
-            //{
-            //    var groupName = group.Key; // The state groups are defined by an enum type
-
-            //    var visualStateGroup = (from vsg in visualStateManagerGroups
-            //                            where vsg.Name == groupName
-            //                            select vsg).FirstOrDefault();
-            //    if (visualStateGroup == null) continue;
-
-
-            //    var helper = new StateChangeHelper(group.Value, element);
-            //}
         }
-
-        //private class StateChangeHelper
-        //{
-        //    private IStateGroup StateGroup { get; }
-        //    private Element Element { get; }
-        //    public StateChangeHelper(IStateGroup stateGroup, Element element)
-        //    {
-        //        StateGroup = stateGroup;
-        //        Element = element;
-
-        //        StateGroup.StateChanged += async (s, e) =>
-        //        {
-        //            await VisualStateManager.GoToState(Element, e.StateName);
-        //        };
-
-        //        if (!string.IsNullOrWhiteSpace(StateGroup.CurrentStateName))
-        //        {
-        //            VisualStateManager.GoToState(Element, StateGroup.CurrentStateName);
-        //        }
-        //    }
-        //}
     }
 }

@@ -6,33 +6,66 @@ using Xamarin.Forms.Internals;
 
 namespace BuildIt.Forms.Core
 {
+    /// <summary>
+    /// Static helper class
+    /// </summary>
     public static class ElementHelper
     {
+        /// <summary>
+        /// Retrieves the target element and property info for a state action
+        /// </summary>
+        /// <param name="element">The root element (to begin search for target element)</param>
+        /// <param name="setter">The state action</param>
+        /// <returns>Reference to the target element and property info</returns>
         public static Tuple<Element, PropertyInfo> FindByTarget(this Element element, TargettedStateAction setter)
         {
-            if (string.IsNullOrWhiteSpace(setter?.Target)) return null;
-            //var setterTarget
-            var target = setter.Target.Split('.');
-            var name = Enumerable.FirstOrDefault<string>(target);
-            var prop = Enumerable.Skip<string>(target, 1).FirstOrDefault();
-            var setterTarget = element.FindByName<Element>(name);
+            Element setterTarget = null;
+            string prop = null;
+            if (setter.Element != null)
+            {
+                if (string.IsNullOrWhiteSpace(setter.Property))
+                {
+                    return null;
+                }
+
+                setterTarget = setter.Element;
+                prop = setter.Property;
+            }
+
             if (setterTarget == null)
             {
-                var cv = element as ContentView;
-                if (cv != null)
+                if (string.IsNullOrWhiteSpace(setter?.Target))
                 {
-                    foreach (var child in cv.Children)
+                    return null;
+                }
+
+                var target = setter.Target.Split('.');
+                var name = Enumerable.FirstOrDefault<string>(target);
+                prop = Enumerable.Skip<string>(target, 1).FirstOrDefault();
+                setterTarget = element.FindByName<Element>(name);
+                if (setterTarget == null)
+                {
+                    var cv = element as ContentView;
+                    if (cv != null)
                     {
-                        setterTarget = child.FindByName<Element>(name);
-                        if (setterTarget != null)
+                        foreach (var child in cv.Children)
                         {
-                            break;
+                            setterTarget = child.FindByName<Element>(name);
+                            if (setterTarget != null)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
             }
+
+            if (setterTarget == null)
+            {
+                return null;
+            }
+
             var targetProp = prop != null ? setterTarget?.GetType()?.GetProperty(prop) : null;
-            if (setterTarget == null) return null;
             return new Tuple<Element, PropertyInfo>(setterTarget, targetProp);
         }
     }

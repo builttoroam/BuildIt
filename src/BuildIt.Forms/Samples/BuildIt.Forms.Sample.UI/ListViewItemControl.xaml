@@ -4,27 +4,29 @@
                           xmlns:vsm="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
 
              x:Class="BuildIt.Forms.Sample.ListViewItemControl">
-  <ContentView.Content>
-      <StackLayout>
+    <ContentView.Content>
+        <StackLayout>
             <vsm:VisualStateManager.VisualStateGroups>
+                <vsm:VisualStateGroups>
                     <vsm:VisualStateGroup Name="ItemStates">
-                    <vsm:VisualState Name="ItemEnabled">
+                        <vsm:VisualState Name="ItemEnabled">
                             <vsm:VisualState.Setters>
                                 <vsm:Setter Value="true"
                                 Target="EnabledLabel.IsVisible" />
                             </vsm:VisualState.Setters>
                         </vsm:VisualState>
-                    <vsm:VisualState Name="ItemDisabled">
+                        <vsm:VisualState Name="ItemDisabled">
                             <vsm:VisualState.Setters>
-                            <vsm:Setter Value="false"
+                                <vsm:Setter Value="false"
                                 Target="EnabledLabel.IsVisible" />
-                        </vsm:VisualState.Setters>
+                            </vsm:VisualState.Setters>
                         </vsm:VisualState>
                     </vsm:VisualStateGroup>
+                </vsm:VisualStateGroups>
             </vsm:VisualStateManager.VisualStateGroups>
 
             <Label Text="Hello Xamarin.Forms!" />
             <Label Text="Enabled!" x:Name="EnabledLabel" />
         </StackLayout>
-  </ContentView.Content>
+    </ContentView.Content>
 </ContentView>
