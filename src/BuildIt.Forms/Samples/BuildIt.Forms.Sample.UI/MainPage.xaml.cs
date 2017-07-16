@@ -45,7 +45,7 @@ namespace BuildIt.Forms.Sample
         {
             base.OnAppearing();
 
-            Custom.BindVisualStates();
+            await Custom.BindVisualStates();
 
             await (BindingContext as MainViewModel).Init();
         }

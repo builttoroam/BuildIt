@@ -7,114 +7,115 @@
              x:Class="BuildIt.Forms.Sample.MainPage">
     <vsm:VisualStateManager.VisualStateGroups>
         <vsm:VisualStateGroups>
-        <vsm:VisualStateGroup Name="SampleStates">
-            <vsm:VisualState Name="Show">
-                <vsm:VisualState.Setters>
-                    <vsm:Setter Value="Shown"
+            <vsm:VisualStateGroup Name="SampleStates">
+                <vsm:VisualState Name="Show">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="Shown"
                                 Target="StatusLabel.Text" />
-                </vsm:VisualState.Setters>
-            </vsm:VisualState>
-            <vsm:VisualState Name="Hide">
-                <vsm:VisualState.Setters>
-                    <vsm:Setter Value="false"
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="Hide">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="false"
                                 Target="HelloLabel.IsVisible" />
-                    <vsm:Setter Value="Hidden"
+                        <vsm:Setter Value="Hidden"
                                 Target="StatusLabel.Text" />
-                </vsm:VisualState.Setters>
-            </vsm:VisualState>
-        </vsm:VisualStateGroup>
-        <vsm:VisualStateGroup Name="GridStates">
-            <vsm:VisualState Name="Default">
-                <vsm:VisualState.Setters>
-                    <vsm:Setter Value="100"
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
+            <vsm:VisualStateGroup Name="GridStates">
+                <vsm:VisualState Name="Default">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="100"
                                 Target="AnimateGrid.HeightRequest"
                                 Duration="500" />
-                </vsm:VisualState.Setters>
-                <vsm:VisualState.ArrivingAnimations>
-                    <vsm:AnimationGroup>
-                        <vsm:AnimationGroup.PreAnimations>
-                            <vsm:RotateAnimation Rotation="-360"
+                    </vsm:VisualState.Setters>
+                    <vsm:VisualState.ArrivingAnimations>
+                        <vsm:AnimationGroup>
+                            <vsm:AnimationGroup.PreAnimations>
+                                <vsm:RotateAnimation Rotation="-360"
                                                  Duration="500"
                                                  Target="AnimateGrid" />
-                            <vsm:FadeAnimation Opacity="0"
+                                <vsm:FadeAnimation Opacity="0"
                                                Duration="500"
                                                Target="AnimateGrid" />
-                        </vsm:AnimationGroup.PreAnimations>
-                        <vsm:AnimationGroup.PostAnimations>
-                            <vsm:RotateAnimation Rotation="0"
+                            </vsm:AnimationGroup.PreAnimations>
+                            <vsm:AnimationGroup.PostAnimations>
+                                <vsm:RotateAnimation Rotation="0"
                                                  Duration="500"
                                                  Target="AnimateGrid" />
-                            <vsm:FadeAnimation Opacity="1"
+                                <vsm:FadeAnimation Opacity="1"
                                                Duration="500"
                                                Target="AnimateGrid" />
-                        </vsm:AnimationGroup.PostAnimations>
-                    </vsm:AnimationGroup>
-                </vsm:VisualState.ArrivingAnimations>
-                <vsm:VisualState.LeavingAnimations>
-                    <vsm:AnimationGroup>
+                            </vsm:AnimationGroup.PostAnimations>
+                        </vsm:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                    <vsm:VisualState.LeavingAnimations>
+                        <vsm:AnimationGroup>
 
-                        <vsm:AnimationGroup.PreAnimations>
-                            <vsm:RotateAnimation Rotation="360"
+                            <vsm:AnimationGroup.PreAnimations>
+                                <vsm:RotateAnimation Rotation="360"
                                                  Duration="500"
                                                  Target="AnimateGrid" />
-                            <vsm:FadeAnimation Opacity="0"
+                                <vsm:FadeAnimation Opacity="0"
                                                Duration="500"
                                                Target="AnimateGrid" />
-                        </vsm:AnimationGroup.PreAnimations>
-                        <vsm:AnimationGroup.PostAnimations>
-                            <vsm:RotateAnimation Rotation="0"
+                            </vsm:AnimationGroup.PreAnimations>
+                            <vsm:AnimationGroup.PostAnimations>
+                                <vsm:RotateAnimation Rotation="0"
                                                  Duration="500"
                                                  Target="AnimateGrid" />
-                            <vsm:FadeAnimation Opacity="1"
+                                <vsm:FadeAnimation Opacity="1"
                                                Duration="500"
                                                Target="AnimateGrid" />
-                        </vsm:AnimationGroup.PostAnimations>
-                    </vsm:AnimationGroup>
-                </vsm:VisualState.LeavingAnimations>
+                            </vsm:AnimationGroup.PostAnimations>
+                        </vsm:AnimationGroup>
+                    </vsm:VisualState.LeavingAnimations>
 
-            </vsm:VisualState>
-            <vsm:VisualState Name="DoubleHeight">
-                <vsm:VisualState.Setters>
-                    <vsm:Setter Value="300"
+                </vsm:VisualState>
+                <vsm:VisualState Name="DoubleHeight">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="300"
                                 Target="AnimateGrid.HeightRequest"
                                 Duration="3000" />
-                </vsm:VisualState.Setters>
-                <vsm:VisualState.ArrivingAnimations>
-                    <vsm:AnimationGroup>
-                        <vsm:AnimationGroup.PostAnimations>
-                            <vsm:ParallelAnimation>
-                                <vsm:TranslateAnimation TranslationX="200"
+                    </vsm:VisualState.Setters>
+                    <vsm:VisualState.ArrivingAnimations>
+                        <vsm:AnimationGroup>
+                            <vsm:AnimationGroup.PostAnimations>
+                                <vsm:ParallelAnimation>
+                                    <vsm:TranslateAnimation TranslationX="200"
                                                         Duration="3000"
                                                         Target="AnimateGrid" />
-                                <vsm:FadeAnimation Opacity="0.2"
+                                    <vsm:FadeAnimation Opacity="0.2"
                                                    Duration="750"
                                                    Target="AnimateGrid" />
-                                <vsm:SequenceAnimation>
-                                    <vsm:RotateAnimation Rotation="135"
+                                    <vsm:SequenceAnimation>
+                                        <vsm:RotateAnimation Rotation="135"
                                                          Duration="750"
                                                          Target="AnimateGrid" />
-                                    <vsm:RotateAnimation Rotation="0"
+                                        <vsm:RotateAnimation Rotation="0"
                                                          Duration="750"
                                                          Target="AnimateGrid" />
-                                    <vsm:RotateAnimation Rotation="135"
+                                        <vsm:RotateAnimation Rotation="135"
                                                          Duration="750"
                                                          Target="AnimateGrid" />
-                                    <vsm:RotateAnimation Rotation="0"
+                                        <vsm:RotateAnimation Rotation="0"
                                                          Duration="750"
                                                          Target="AnimateGrid" />
-                                </vsm:SequenceAnimation>
-                            </vsm:ParallelAnimation>
-                        </vsm:AnimationGroup.PostAnimations>
-                    </vsm:AnimationGroup>
-                </vsm:VisualState.ArrivingAnimations>
+                                    </vsm:SequenceAnimation>
+                                </vsm:ParallelAnimation>
+                            </vsm:AnimationGroup.PostAnimations>
+                        </vsm:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
 
-            </vsm:VisualState>
-        </vsm:VisualStateGroup>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
         </vsm:VisualStateGroups>
     </vsm:VisualStateManager.VisualStateGroups>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
+            <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollView>
@@ -226,8 +227,24 @@
             <ListView ItemsSource="{Binding Items}" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                        <local:ListViewItemControl />
+                        <ViewCell Height="50">
+                            <local:ListViewItemControl />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+        <Grid Grid.Column="2">
+            <ListView ItemsSource="{Binding MoreItems}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="50">
+                            <StackLayout>
+                                <Label Text="Hello Xamarin.Forms!" />
+                                <Label Text="Enabled!" IsVisible="{Binding EnabledVisibility}" />
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

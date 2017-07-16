@@ -35,9 +35,9 @@ namespace BuildIt.Forms.Sample
             //VisualStateManager.GoToState(this, "Hide");
         }
 
-        public void BindVisualStates()
+        public async Task BindVisualStates()
         {
-            VisualStateManager.Bind(this, ViewModel.StateManager);
+            await VisualStateManager.Bind(this, ViewModel.StateManager);
         }
     }
 }

@@ -14,24 +14,28 @@ using Xamarin.Forms.Xaml;
 
 namespace BuildIt.Forms.Sample
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ListViewItemControl : ContentView
-	{
-		public ListViewItemControl ()
-		{
-			InitializeComponent ();
-
-            BindingContextChanged += ContextChanged;
-		}
-
-        public async void ContextChanged(object sender, EventArgs e)
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ListViewItemControl : ContentView
+    {
+        public ListViewItemControl()
         {
-            if (BindingContext is ItemViewModel)
-            {
-                VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
-
-                //await (BindingContext as ItemViewModel).Init();
-            }
+            InitializeComponent();
         }
+
+        private IStateBinder Binder { get; set; }
+
+        protected override async void OnBindingContextChanged()
+        {
+            Binder?.Dispose();
+
+            base.OnBindingContextChanged();
+
+            if (BindingContext is ItemViewModel itemViewModel)
+            {
+                Binder = await VisualStateManager.Bind(this.Content, itemViewModel?.StateManager);
+            }
+
+        }
+
     }
 }

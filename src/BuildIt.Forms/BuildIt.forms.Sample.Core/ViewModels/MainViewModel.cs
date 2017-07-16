@@ -30,25 +30,25 @@ namespace BuildIt.forms.Sample.Core.ViewModels
 
         private Random Random { get; } = new Random();
 
+        public bool EnabledVisibility { get; set; }
+
         public ItemViewModel()
         {
             StateManager.Group<ItemStates>().DefineAllStates();
+            EnabledVisibility = Random.Next(0, 100) > 50;
 
         }
 
         public async Task Init()
         {
-
-
-            var enabled = Random.Next(0, 100) > 50;
-            StateManager.GoToState(enabled ? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
+            await StateManager.GoToState(EnabledVisibility ? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
         }
 
     }
 
 
 
-    public class MainViewModel:IHasStates
+    public class MainViewModel : IHasStates
     {
         private ICommand pressedCommand;
         public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates));
@@ -56,6 +56,7 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         public IStateManager StateManager { get; } = new StateManager();
 
         public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
+        public ObservableCollection<ItemViewModel> MoreItems { get; } = new ObservableCollection<ItemViewModel>();
 
         public MainViewModel()
         {
@@ -67,18 +68,21 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         private bool visible = true;
         public void SwitchStates()
         {
-         visible = !visible;
+            visible = !visible;
             StateManager.GoToState(visible ? SampleStates.Show : SampleStates.Hide);
         }
 
         public async Task Init()
         {
+            var items = new List<ItemViewModel>();
             for (int i = 0; i < 20; i++)
             {
                 var item = new ItemViewModel();
                 await item.Init();
-                Items.Add(item);
+                items.Add(item);
             }
+            Items.Fill(items);
+            MoreItems.Fill(items);
         }
     }
 

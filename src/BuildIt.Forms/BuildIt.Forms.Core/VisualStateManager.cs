@@ -278,61 +278,67 @@ namespace BuildIt.Forms.Core
 
 
 
-        public static void Bind(Element element, IStateManager stateManager)
+        public async static Task<IStateBinder> Bind(Element element, IStateManager stateManager)
         {
-            // Retrieve the list of state groups from the ViewModel's StateManager
-            var groups = stateManager.StateGroups;
-            var visualStateManagerGroups = VisualStateManager.GetVisualStateGroups(element);
+            var sm = VisualStateManager.GetStateManager(element);
+            var binder = sm.Bind(stateManager);
+            await binder.Bind();
+            return binder;
+           
+
+            //// Retrieve the list of state groups from the ViewModel's StateManager
+            //var groups = stateManager.StateGroups;
+            //var visualStateManagerGroups = VisualStateManager.GetVisualStateGroups(element);
 
 
-            if (visualStateManagerGroups?.Count == 0)
-            {
-                var cvv = element as ContentView;
-                if (cvv?.Children != null)
-                {
-                    foreach (var child in cvv.Children)
-                    {
-                        visualStateManagerGroups = GetVisualStateGroups(child);
-                        if (visualStateManagerGroups?.Count != 0) break;
-                    }
-                }
-            }
+            //if (visualStateManagerGroups?.Count == 0)
+            //{
+            //    var cvv = element as ContentView;
+            //    if (cvv?.Children != null)
+            //    {
+            //        foreach (var child in cvv.Children)
+            //        {
+            //            visualStateManagerGroups = GetVisualStateGroups(child);
+            //            if (visualStateManagerGroups?.Count != 0) break;
+            //        }
+            //    }
+            //}
 
-            // For each group we need to locate the state group in the StateManager
-            // in the xaml and then wire up statechanged event handlers
-            foreach (var group in groups)
-            {
-                var groupName = group.Key; // The state groups are defined by an enum type
+            //// For each group we need to locate the state group in the StateManager
+            //// in the xaml and then wire up statechanged event handlers
+            //foreach (var group in groups)
+            //{
+            //    var groupName = group.Key; // The state groups are defined by an enum type
 
-                var visualStateGroup = (from vsg in visualStateManagerGroups
-                                        where vsg.Name == groupName
-                                        select vsg).FirstOrDefault();
-                if (visualStateGroup == null) continue;
+            //    var visualStateGroup = (from vsg in visualStateManagerGroups
+            //                            where vsg.Name == groupName
+            //                            select vsg).FirstOrDefault();
+            //    if (visualStateGroup == null) continue;
 
 
-                var helper = new StateChangeHelper(group.Value, element);
-            }
+            //    var helper = new StateChangeHelper(group.Value, element);
+            //}
         }
 
-        private class StateChangeHelper
-        {
-            private IStateGroup StateGroup { get; }
-            private Element Element { get; }
-            public StateChangeHelper(IStateGroup stateGroup, Element element)
-            {
-                StateGroup = stateGroup;
-                Element = element;
+        //private class StateChangeHelper
+        //{
+        //    private IStateGroup StateGroup { get; }
+        //    private Element Element { get; }
+        //    public StateChangeHelper(IStateGroup stateGroup, Element element)
+        //    {
+        //        StateGroup = stateGroup;
+        //        Element = element;
 
-                StateGroup.StateChanged += async (s, e) =>
-                {
-                    await VisualStateManager.GoToState(Element, e.StateName);
-                };
+        //        StateGroup.StateChanged += async (s, e) =>
+        //        {
+        //            await VisualStateManager.GoToState(Element, e.StateName);
+        //        };
 
-                if (!string.IsNullOrWhiteSpace(StateGroup.CurrentStateName))
-                {
-                    VisualStateManager.GoToState(Element, StateGroup.CurrentStateName);
-                }
-            }
-        }
+        //        if (!string.IsNullOrWhiteSpace(StateGroup.CurrentStateName))
+        //        {
+        //            VisualStateManager.GoToState(Element, StateGroup.CurrentStateName);
+        //        }
+        //    }
+        //}
     }
 }
