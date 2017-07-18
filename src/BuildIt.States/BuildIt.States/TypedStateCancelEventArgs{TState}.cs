@@ -1,34 +1,33 @@
-namespace BuildIt.States
+﻿namespace BuildIt.States
 {
     /// <summary>
     /// Event args for cancelling a state change
     /// </summary>
-    /// <typeparam name="TState">The type (enum) of the state</typeparam>
-    public class EnumStateCancelEventArgs<TState> : StateCancelEventArgs
-        where TState : struct
+    /// <typeparam name="TState">The type of the state</typeparam>
+    public class TypedStateCancelEventArgs<TState> : StateCancelEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumStateCancelEventArgs{TState}"/> class.
+        /// Initializes a new instance of the <see cref="TypedStateCancelEventArgs{TState}"/> class.
         /// Constructs a new instance
         /// </summary>
         /// <param name="state">The typed state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <param name="isNewState">Whether this is a new state, or go back to previous</param>
-        public EnumStateCancelEventArgs(TState state, bool useTransitions, bool isNewState)
+        public TypedStateCancelEventArgs(TState state, bool useTransitions, bool isNewState)
         {
-            EnumState = state;
+            TypedState = state;
             UseTransitions = useTransitions;
             IsNewState = isNewState;
         }
 
         /// <summary>
-        /// Gets the state name (based on enum value)
+        /// Gets the state name
         /// </summary>
-        public override string StateName => EnumState + string.Empty;
+        public override string StateName => TypedState + string.Empty;
 
         /// <summary>
         /// Gets the enum value of the state
         /// </summary>
-        public TState EnumState { get; }
+        public TState TypedState { get; }
     }
 }

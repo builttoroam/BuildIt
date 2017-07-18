@@ -27,6 +27,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EnumStateDefinition.cs" />
+    <Compile Remove="EnumStateDefinitionWithDataWrapper.cs" />
+    <Compile Remove="TypedStateGroup`1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 

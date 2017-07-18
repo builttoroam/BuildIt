@@ -1,38 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using Autofac;
+using BuildIt.Autofac;
+using BuildIt.ServiceLocation;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace BuildIt.Forms.Sample.UWP
 {
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App : Application
     {
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            var build = new ContainerBuilder();
+            var container = build.Build();
+
+            var csl = new AutofacServiceLocator(container);
+            var afContainer = new AutofacDependencyContainer(container);
+            using (afContainer.StartUpdate())
+            {
+                afContainer.Register<TestDebugLogger, ILogService>();
+            }
+
+            ServiceLocator.SetLocatorProvider(() => csl);
         }
 
         /// <summary>
@@ -112,5 +117,12 @@ namespace BuildIt.Forms.Sample.UWP
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+    }
+
+    public class TestDebugLogger : BasicDebugLogger
+    {
+        public override void Debug(string message) => System.Diagnostics.Debug.WriteLine(message);
+
+        public override void Exception(string message, Exception ex) => System.Diagnostics.Debug.WriteLine(message + " " + ex.StackTrace);
     }
 }

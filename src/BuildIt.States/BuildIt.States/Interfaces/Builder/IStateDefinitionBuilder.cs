@@ -10,6 +10,6 @@ namespace BuildIt.States.Interfaces.Builder
         /// <summary>
         /// Gets the typed state
         /// </summary>
-        IEnumStateDefinition<TState> State { get; }
+        ITypedStateDefinition<TState> State { get; }
     }
 }

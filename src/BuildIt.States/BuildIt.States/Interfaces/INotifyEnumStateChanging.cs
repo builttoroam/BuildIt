@@ -12,6 +12,6 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Typed state changing event
         /// </summary>
-        event EventHandler<EnumStateCancelEventArgs<TState>> EnumStateChanging;
+        event EventHandler<TypedStateCancelEventArgs<TState>> TypedStateChanging;
     }
 }

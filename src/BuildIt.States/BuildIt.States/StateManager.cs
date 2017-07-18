@@ -46,10 +46,10 @@ namespace BuildIt.States
         /// </summary>
         /// <typeparam name="TState">The type (enum) to look up the state group</typeparam>
         /// <returns>The typed state group</returns>
-        public IEnumStateGroup<TState> EnumStateGroup<TState>()
+        public ITypedStateGroup<TState> TypedStateGroup<TState>()
             where TState : struct
         {
-            return StateGroup(typeof(TState).Name) as IEnumStateGroup<TState>;
+            return StateGroup(typeof(TState).Name) as ITypedStateGroup<TState>;
         }
 
         /// <summary>
@@ -80,13 +80,13 @@ namespace BuildIt.States
         public TState CurrentState<TState>()
             where TState : struct
         {
-            var group = EnumStateGroup<TState>();
+            var group = TypedStateGroup<TState>();
             if (group == null)
             {
                 return default(TState);
             }
 
-            return group.CurrentEnumState;
+            return group.CurrentState;
         }
 
         /// <summary>
@@ -110,13 +110,13 @@ namespace BuildIt.States
         public async Task<bool> GoToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
-            var group = EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
+            var group = TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
             if (group == null)
             {
                 return false;
             }
 
-            return await group.ChangeTo(state, animate);
+            return await group.ChangeToState(state, animate);
         }
 
         /// <summary>
@@ -131,13 +131,13 @@ namespace BuildIt.States
         public async Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
             where TState : struct
         {
-            var group = EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
+            var group = TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
             if (group == null)
             {
                 return false;
             }
 
-            return await group.ChangeToWithData(state, data, animate);
+            return await group.ChangeToStateWithData(state, data, animate);
         }
 
         /// <summary>
@@ -150,13 +150,13 @@ namespace BuildIt.States
         public async Task<bool> GoBackToState<TState>(TState state, bool animate = true)
             where TState : struct
         {
-            var group = EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
+            var group = TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState));
             if (group == null)
             {
                 return false;
             }
 
-            return await group.ChangeBackTo(state, animate);
+            return await group.ChangeBackToState(state, animate);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeTo(stateName, animate);
+            return await group.ChangeToStateByName(stateName, animate);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeToWithData(stateName, data, animate);
+            return await group.ChangeToStateByNameWithData(stateName, data, animate);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeBackTo(stateName, animate);
+            return await group.ChangeBackToStateByName(stateName, animate);
         }
 
         /// <summary>
@@ -240,9 +240,11 @@ namespace BuildIt.States
         /// <param name="managerToBindTo">The state manager to listen to for changes</param>
         /// <param name="bothDirections">Whether updates to states should go both ways</param>
         /// <returns>Binder that can be used to disconnect the state managers</returns>
-        public IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections = true)
+        public async Task<IStateBinder> Bind(IStateManager managerToBindTo, bool bothDirections = true)
         {
-            return new StateManagerBinder(this, managerToBindTo, bothDirections);
+            var binder = new StateManagerBinder(this, managerToBindTo, bothDirections);
+            await binder.Bind();
+            return binder;
         }
 
         private void Group_IsBlockedChanged(object sender, EventArgs e)

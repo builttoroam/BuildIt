@@ -82,11 +82,11 @@ namespace BuildIt.States
         {
             if (isNewState)
             {
-                await stateGroup.ChangeTo(stateName, useTransitions);
+                await stateGroup.ChangeToStateByName(stateName, useTransitions);
             }
             else
             {
-                await stateGroup.ChangeBackTo(stateName, useTransitions);
+                await stateGroup.ChangeBackToStateByName(stateName, useTransitions);
             }
         }
     }

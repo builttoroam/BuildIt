@@ -19,7 +19,7 @@ namespace BuildIt.Forms.Core
 
         }
 
-        private static IDictionary<Type, FieldInfo> ColorProperties = new Dictionary<Type, FieldInfo>();
+        private static IDictionary<Type, FieldInfo> ColorProperties { get; } = new Dictionary<Type, FieldInfo>();
         private static void ApplyForeColor(BindableObject bindable, Color foreColor)
         {
             if (bindable == null) return;

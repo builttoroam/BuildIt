@@ -34,7 +34,7 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state group</typeparam>
         /// <returns>The state group</returns>
-        IEnumStateGroup<TState> EnumStateGroup<TState>()
+        ITypedStateGroup<TState> TypedStateGroup<TState>()
             where TState : struct;
 
         /// <summary>
@@ -139,6 +139,6 @@ namespace BuildIt.States.Interfaces
         /// <param name="managerToBindTo">The state manager to listen to for changes</param>
         /// <param name="bothDirections">Whether updates to states should go both ways</param>
         /// <returns>Binder that can be used to disconnect the state managers</returns>
-        IStateBinder Bind(IStateManager managerToBindTo, bool bothDirections = true);
+        Task<IStateBinder> Bind(IStateManager managerToBindTo, bool bothDirections = true);
     }
 }

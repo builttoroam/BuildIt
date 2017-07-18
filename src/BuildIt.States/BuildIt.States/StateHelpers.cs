@@ -45,7 +45,7 @@ namespace BuildIt.States
                 return null;
             }
 
-            var existing = vsm.EnumStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
+            var existing = vsm.TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (existing == null)
             {
                 existing = new EnumStateGroup<TState>();
@@ -128,7 +128,7 @@ namespace BuildIt.States
             TState state)
             where TState : struct
         {
-            var vs = vsmGroup?.StateGroup.DefineEnumState(state);
+            var vs = vsmGroup?.StateGroup.DefineTypedState(state);
             if (vs == null)
             {
                 return null;
@@ -811,12 +811,12 @@ namespace BuildIt.States
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            var vms = smInfo.StateGroup.DefineEnumStateWithData<TStateData>(state);
+            var vms = smInfo.StateGroup.DefineTypedStateWithData<TStateData>(state);
             return new StateDefinitionWithDataBuilder<TState, TStateData>
             {
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
-                State = vms.EnumState
+                State = vms.TypedState
             };
         }
 
@@ -1305,13 +1305,13 @@ namespace BuildIt.States
         private class StateGroupBuilder<TState> : StateBuilder, IStateGroupBuilder<TState>
             where TState : struct
         {
-            public IEnumStateGroup<TState> StateGroup { get; set; }
+            public ITypedStateGroup<TState> StateGroup { get; set; }
         }
 
         private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>
             where TState : struct
         {
-            public IEnumStateDefinition<TState> State { get; set; }
+            public ITypedStateDefinition<TState> State { get; set; }
         }
 
         private class StateDefinitionWithDataBuilder<TState, TData> : StateGroupBuilder<TState>,
@@ -1319,7 +1319,7 @@ namespace BuildIt.States
             where TData : INotifyPropertyChanged
             where TState : struct
         {
-            public IEnumStateDefinition<TState> State { get; set; }
+            public ITypedStateDefinition<TState> State { get; set; }
 
             public IStateDefinitionTypedDataWrapper<TData> StateDataWrapper
                 => State.UntypedStateDataWrapper as IStateDefinitionTypedDataWrapper<TData>;

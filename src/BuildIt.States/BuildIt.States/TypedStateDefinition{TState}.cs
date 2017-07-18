@@ -1,4 +1,4 @@
-using BuildIt.States.Interfaces;
+﻿using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
@@ -6,27 +6,26 @@ namespace BuildIt.States
     /// Definition of a state that's based on a enumeration value
     /// </summary>
     /// <typeparam name="TState">The enum type that defines the state group</typeparam>
-    public class EnumStateDefinition<TState> : BaseStateDefinition<TState>, IEnumStateDefinition<TState>
-        where TState : struct
+    public class TypedStateDefinition<TState> : BaseStateDefinition, ITypedStateDefinition<TState>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumStateDefinition{TState}"/> class.
+        /// Initializes a new instance of the <see cref="TypedStateDefinition{TState}"/> class.
         /// Creates an instance based on an enumeration value
         /// </summary>
         /// <param name="state">The enum value for the state definition to be created</param>
-        public EnumStateDefinition(TState state)
+        public TypedStateDefinition(TState state)
         {
-            EnumState = state;
+            State = state;
         }
 
         /// <summary>
         /// Gets the name of the state
         /// </summary>
-        public override string StateName => EnumState + string.Empty;
+        public override string StateName => State + string.Empty;
 
         /// <summary>
         /// Gets or sets the enum value for the state
         /// </summary>
-        public TState EnumState { get; set; }
+        public TState State { get; set; }
     }
 }
