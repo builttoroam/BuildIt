@@ -16,6 +16,8 @@ namespace BuildIt.States
     /// </summary>
     public static class StateHelpers
     {
+        private static IDictionary<string, IStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, IStateGroupDefinition>();
+
         /// <summary>
         /// Indicates whether all triggers are active
         /// </summary>
@@ -36,8 +38,9 @@ namespace BuildIt.States
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the group to build</typeparam>
         /// <param name="vsm">The state manager</param>
+        /// <param name="groupDefinitionKey">Optional tag to retrieve cached group definitions</param>
         /// <returns>A state group builder (or null)</returns>
-        public static IStateGroupBuilder<TState> Group<TState>(this IStateManager vsm)
+        public static IStateGroupBuilder<TState> Group<TState>(this IStateManager vsm, string groupDefinitionKey = null)
             where TState : struct
         {
             if (vsm == null)
@@ -45,17 +48,39 @@ namespace BuildIt.States
                 return null;
             }
 
+            bool isCachedDefinition = false;
             var existing = vsm.TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (existing == null)
             {
-                existing = new EnumStateGroup<TState>();
+                if (!string.IsNullOrWhiteSpace(groupDefinitionKey))
+                {
+                    var cached = CachedGroupDefinitions.SafeValue<string, IStateGroupDefinition, EnumStateGroupDefinition<TState>>(groupDefinitionKey);
+                    if (cached == null)
+                    {
+                        existing = new EnumStateGroup<TState>();
+                        CachedGroupDefinitions[groupDefinitionKey] = existing.GroupDefinition;
+                    }
+                    else
+                    {
+                        isCachedDefinition = true;
+                        existing = new EnumStateGroup<TState>(cached);
+                    }
+                }
+
+                if (existing == null)
+                {
+                    existing = new EnumStateGroup<TState>();
+                }
+
                 vsm?.AddStateGroup(existing);
             }
 
             return new StateGroupBuilder<TState>
             {
                 StateManager = vsm,
-                StateGroup = existing
+                StateGroup = existing,
+                StateGroupTag = groupDefinitionKey,
+                IsCachedDefinition = isCachedDefinition
             };
         }
 
@@ -119,16 +144,21 @@ namespace BuildIt.States
         /// Expoese a builder for the state definition
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
-        /// <param name="vsmGroup">The state group builder</param>
+        /// <param name="smInfo">The state group builder</param>
         /// <param name="state">The state</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState> DefineState<TState>(
-            this IStateGroupBuilder<TState> vsmGroup,
+            this IStateGroupBuilder<TState> smInfo,
             TState state)
             where TState : struct
         {
-            var vs = vsmGroup?.StateGroup.TypedGroupDefinition.DefineTypedState(state);
+            if (smInfo.IsCachedDefinition)
+            {
+                return new StateDefinitionBuilder<TState> { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
+            }
+
+            var vs = smInfo?.StateGroup.TypedGroupDefinition.DefineTypedState(state);
             if (vs == null)
             {
                 return null;
@@ -136,9 +166,10 @@ namespace BuildIt.States
 
             return new StateDefinitionBuilder<TState>
             {
-                StateManager = vsmGroup.StateManager,
-                StateGroup = vsmGroup.StateGroup,
-                State = vs
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = vs,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -197,7 +228,8 @@ namespace BuildIt.States
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                Completion = completion
+                Completion = completion,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -222,7 +254,8 @@ namespace BuildIt.States
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                Completion = DefaultCompletion.Complete
+                Completion = DefaultCompletion.Complete,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -253,7 +286,8 @@ namespace BuildIt.States
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                Completion = completion
+                Completion = completion,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -282,7 +316,8 @@ namespace BuildIt.States
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                Completion = DefaultCompletion.Complete
+                Completion = DefaultCompletion.Complete,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -317,7 +352,8 @@ namespace BuildIt.States
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
                 Completion = completion,
-                Data = completionData
+                Data = completionData,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -346,7 +382,8 @@ namespace BuildIt.States
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
                 Completion = DefaultCompletion.Complete,
-                Data = completionData
+                Data = completionData,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -374,7 +411,8 @@ namespace BuildIt.States
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                Completion = completion
+                Completion = completion,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -405,7 +443,8 @@ namespace BuildIt.States
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
                 Completion = completion,
-                Data = completionData
+                Data = completionData,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -436,7 +475,8 @@ namespace BuildIt.States
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
                 Completion = DefaultCompletion.Complete,
-                Data = completionData
+                Data = completionData,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -445,25 +485,31 @@ namespace BuildIt.States
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
         /// <typeparam name="TElement">The element to be adjusted</typeparam>
-        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="smInfo">The state definition builder</param>
         /// <param name="element">The element whose property is to be adjusted</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionValueTargetBuilder<TState, TElement> Target<TState, TElement>(
-            this IStateDefinitionBuilder<TState> vsmGroup, TElement element)
+            this IStateDefinitionBuilder<TState> smInfo, TElement element)
             where TState : struct
         {
-            if (vsmGroup == null || element == null)
+            if (smInfo == null || element == null)
             {
                 return null;
             }
 
+            if (smInfo.IsCachedDefinition)
+            {
+                return new StateDefinitionValueTargetBuilder<TState, TElement> { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
+            }
+
             return new StateDefinitionValueTargetBuilder<TState, TElement>
             {
-                StateManager = vsmGroup.StateManager,
-                StateGroup = vsmGroup.StateGroup,
-                State = vsmGroup.State,
-                Target = element
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Target = element,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -473,19 +519,19 @@ namespace BuildIt.States
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
         /// <typeparam name="TElement">The type of the element to adjust the property value on</typeparam>
         /// <typeparam name="TPropertyValue">The type of the property to adjust</typeparam>
-        /// <param name="vsmGroup">The state definition value target builder</param>
+        /// <param name="smInfo">The state definition value target builder</param>
         /// <param name="getter">The property getter</param>
         /// <param name="setter">The property setter</param>
         /// <returns>New builder</returns>
         public static
        IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
        Change<TState, TElement, TPropertyValue>(
-       this IStateDefinitionValueTargetBuilder<TState, TElement> vsmGroup,
+       this IStateDefinitionValueTargetBuilder<TState, TElement> smInfo,
        Expression<Func<TPropertyValue>> getter,
        Action<TElement, TPropertyValue> setter = null)
             where TState : struct
         {
-            if (vsmGroup == null || getter == null)
+            if (smInfo == null || getter == null)
             {
                 return null;
             }
@@ -493,7 +539,7 @@ namespace BuildIt.States
             if (setter == null)
             {
                 var propertyName = (getter.Body as MemberExpression)?.Member.Name;
-                var pinfo = vsmGroup.Target.GetType().GetRuntimeProperty(propertyName);
+                var pinfo = smInfo.Target.GetType().GetRuntimeProperty(propertyName);
                 setter = (element, value) =>
                 {
                     pinfo.SetValue(element, value);
@@ -502,17 +548,18 @@ namespace BuildIt.States
 
             var vsv = new StateValue<TElement, TPropertyValue>
             {
-                Key = new Tuple<object, string>(vsmGroup.Target, (getter.Body as MemberExpression)?.Member.Name),
-                Element = vsmGroup.Target,
+                Key = new Tuple<object, string>(smInfo.Target, (getter.Body as MemberExpression)?.Member.Name),
+                Element = smInfo.Target,
                 Getter = (vm) => getter.Compile().Invoke(),
                 Setter = setter
             };
             return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             {
-                StateManager = vsmGroup.StateManager,
-                StateGroup = vsmGroup.StateGroup,
-                State = vsmGroup.State,
-                Value = vsv
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Value = vsv,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -522,27 +569,32 @@ namespace BuildIt.States
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
         /// <typeparam name="TElement">The type of the element to adjust</typeparam>
         /// <typeparam name="TPropertyValue">The type of the property to adjust</typeparam>
-        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="smInfo">The state definition builder</param>
         /// <param name="getter">Expression to the getter</param>
         /// <param name="setter">Action to set value</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             Change<TState, TElement, TPropertyValue>(
-            this IStateDefinitionValueTargetBuilder<TState, TElement> vsmGroup,
+            this IStateDefinitionValueTargetBuilder<TState, TElement> smInfo,
             Expression<Func<TElement, TPropertyValue>> getter,
             Action<TElement, TPropertyValue> setter = null)
             where TState : struct
         {
-            if (vsmGroup == null || getter == null)
+            if (smInfo == null || getter == null)
             {
                 return null;
+            }
+
+            if (smInfo.IsCachedDefinition)
+            {
+                return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue> { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
             }
 
             if (setter == null)
             {
                 var propertyName = (getter.Body as MemberExpression)?.Member.Name;
-                var pinfo = vsmGroup.Target.GetType().GetRuntimeProperty(propertyName);
+                var pinfo = smInfo.Target.GetType().GetRuntimeProperty(propertyName);
                 setter = (element, value) =>
                 {
                     pinfo.SetValue(element, value);
@@ -551,17 +603,18 @@ namespace BuildIt.States
 
             var vsv = new StateValue<TElement, TPropertyValue>
             {
-                Key = new Tuple<object, string>(vsmGroup.Target, (getter.Body as MemberExpression)?.Member.Name),
-                Element = vsmGroup.Target,
+                Key = new Tuple<object, string>(smInfo.Target, (getter.Body as MemberExpression)?.Member.Name),
+                Element = smInfo.Target,
                 Getter = getter.Compile(),
                 Setter = setter
             };
             return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             {
-                StateManager = vsmGroup.StateManager,
-                StateGroup = vsmGroup.StateGroup,
-                State = vsmGroup.State,
-                Value = vsv
+                StateManager = smInfo.StateManager,
+                StateGroup = smInfo.StateGroup,
+                State = smInfo.State,
+                Value = vsv,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -571,30 +624,35 @@ namespace BuildIt.States
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
         /// <typeparam name="TElement">The type of the element to adjust the property on</typeparam>
         /// <typeparam name="TPropertyValue">The type of the property to adjust</typeparam>
-        /// <param name="vsmGroup">The state definition builder</param>
+        /// <param name="smInfo">The state definition builder</param>
         /// <param name="value">The value to set</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState>
             ToValue<TState, TElement, TPropertyValue>(
             this
-            IStateDefinitionValueBuilder<TState, TElement, TPropertyValue> vsmGroup,
+            IStateDefinitionValueBuilder<TState, TElement, TPropertyValue> smInfo,
             TPropertyValue value)
             where TState : struct
         {
-            if (vsmGroup == null)
+            if (smInfo.IsCachedDefinition)
+            {
+                return smInfo;
+            }
+
+            if (smInfo == null)
             {
                 return null;
             }
 
             if (value == null)
             {
-                return vsmGroup;
+                return smInfo;
             }
 
-            vsmGroup.Value.Value = value;
-            vsmGroup.State.Values.Add(vsmGroup.Value);
-            return vsmGroup;
+            smInfo.Value.Value = value;
+            smInfo.State.Values.Add(smInfo.Value);
+            return smInfo;
         }
 
         /// <summary>
@@ -816,7 +874,8 @@ namespace BuildIt.States
             {
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
-                State = vms.TypedState
+                State = vms.TypedState,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -1196,7 +1255,8 @@ namespace BuildIt.States
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
                 Subscribe = subscribe,
-                Unsubscribe = unsubscribe
+                Unsubscribe = unsubscribe,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -1292,7 +1352,8 @@ namespace BuildIt.States
                 StateManager = smInfo.StateManager,
                 StateGroup = smInfo.StateGroup,
                 State = smInfo.State,
-                NewState = newState
+                NewState = newState,
+                StateGroupTag = smInfo.StateGroupTag
             };
         }
 
@@ -1306,6 +1367,10 @@ namespace BuildIt.States
             where TState : struct
         {
             public ITypedStateGroup<TState> StateGroup { get; set; }
+
+            public string StateGroupTag { get; set; }
+
+            public bool IsCachedDefinition { get; set; }
         }
 
         private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>

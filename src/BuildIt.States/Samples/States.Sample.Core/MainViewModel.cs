@@ -1,6 +1,8 @@
 ﻿using BuildIt;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
+using System;
+using System.Collections.ObjectModel;
 
 namespace States.Sample.Core
 {
@@ -55,6 +57,44 @@ namespace States.Sample.Core
         /// </summary>
         Large
     }
+  public enum ItemStates
+        {
+            Base,
+            IsEnabled,
+            IsNotEnabled
+        }
+    public class RandomItem:NotifyBase
+    {
+      
+
+        public IStateManager StateManager { get; } = new StateManager();
+
+        public RandomItem()
+        {
+            StateManager
+                .Group<ItemStates>("cacheRandomItemGroup")
+                .DefineState(ItemStates.IsEnabled)
+                    .Target(this)
+                    .Change(x=>x.IsEnabled)
+                    .ToValue(true)
+                .DefineState(ItemStates.IsNotEnabled);
+
+        }
+
+        public string Output1 { get; set; }
+        public string Output2 { get; set; }
+
+        private bool isEnabled;
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                isEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     /// <summary>
     /// The view model for the main page
@@ -62,6 +102,8 @@ namespace States.Sample.Core
     public class MainViewModel : NotifyBase, IHasStates
     {
         private string currentStateName = "Test data";
+
+        public ObservableCollection<RandomItem> RandomItems { get; } = new ObservableCollection<RandomItem>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -78,6 +120,17 @@ namespace States.Sample.Core
                 .ChangePropertyValue(vm => CurrentStateName, "Normal")
                 .DefineState(SizeStates.Large)
                 .ChangePropertyValue(vm => CurrentStateName, "Large");
+
+            var rnd = new Random();
+            for (int i = 0; i < 1000; i++)
+            {
+                var item = new RandomItem { Output1 = Guid.NewGuid() + "", Output2 = Guid.NewGuid() + "" };
+                var enabled = (rnd.Next(0, 1000) < 500);
+                RandomItems.Add(item);
+                item.StateManager.GoToState(enabled ? ItemStates.IsEnabled : ItemStates.IsNotEnabled);
+            }
+            RandomItems[0].StateManager.GoToState(ItemStates.IsEnabled);
+            RandomItems[5].StateManager.GoToState(ItemStates.IsEnabled);
         }
 
         /// <summary>

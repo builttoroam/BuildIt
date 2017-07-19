@@ -4,9 +4,21 @@
       xmlns:local="using:States.Sample.UWP"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:converters="using:BuildIt.General.UI.Converters"
       mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="187*" />
+            <ColumnDefinition Width="173*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="171*" />
+            <RowDefinition Height="469*" />
+        </Grid.RowDefinitions>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="LayoutStates">
                 <VisualState x:Name="Narrow">
@@ -55,14 +67,28 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <StackPanel>
-        <TextBlock x:Name="textBlock"
-                   FontSize="30"
-                   Foreground="red"
-                   Text="{Binding CurrentStateName}" />
+        <StackPanel Grid.RowSpan="2"
+                    Grid.ColumnSpan="2">
+            <TextBlock x:Name="textBlock"
+                       FontSize="30"
+                       Foreground="red"
+                       Text="{Binding CurrentStateName}" />
             <Button Click="Button_Click">Load</Button>
             <Button Click="Button_Click_1">Not Loaded</Button>
-            <Button Click="Button_Click_2">Loading </Button>
+            <Button Click="Button_Click_2">Loading</Button>
         </StackPanel>
+
+        <ListView Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  ItemsSource="{Binding RandomItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Output1}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Output2}" Visibility="{Binding IsEnabled, Converter={StaticResource BoolVisibilityConverter}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

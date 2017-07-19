@@ -11,5 +11,15 @@ namespace BuildIt.States.Interfaces.Builder
         /// Gets the typed state group
         /// </summary>
         ITypedStateGroup<TState> StateGroup { get; }
+
+        /// <summary>
+        /// Gets Optional caching tag for state group
+        /// </summary>
+        string StateGroupTag { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether it's using a cached deffinition
+        /// </summary>
+        bool IsCachedDefinition { get; }
     }
 }
