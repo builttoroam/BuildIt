@@ -79,7 +79,8 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Implements the transition, setting values and recording the default values
         /// </summary>
+        /// <param name="targets">The set of target elements to use in state transition</param>
         /// <param name="defaultValues">The set of default values to apply if a state doesn't define property value</param>
-        void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
+        void TransitionTo(IDictionary<string, object> targets, IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
     }
 }

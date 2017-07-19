@@ -1,5 +1,6 @@
 using System;
 using BuildIt.States.Interfaces;
+using System.Collections.Generic;
 
 namespace BuildIt.States
 {
@@ -16,6 +17,11 @@ namespace BuildIt.States
         public TElement Element { get; set; }
 
         /// <summary>
+        /// Gets the identifier for the target to apply getters/setters to
+        /// </summary>
+        public string TargetId { get; set; }
+
+        /// <summary>
         /// Gets or sets the property setter
         /// </summary>
         public Action<TElement, TPropertyValue> Setter { get; set; }
@@ -28,9 +34,16 @@ namespace BuildIt.States
         /// <summary>
         /// Resets the property back to the default value
         /// </summary>
-        public void RevertToDefault()
+        /// <param name="targets">The set of target elements to use in state transition</param>
+        public void RevertToDefault(IDictionary<string, object> targets)
         {
-            Setter(Element, Value);
+            var element = Element;
+            if (element == null)
+            {
+                element = targets.SafeValue<string, object, TElement>(TargetId);
+            }
+
+            Setter(element, Value);
         }
     }
 }

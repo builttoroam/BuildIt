@@ -21,5 +21,10 @@ namespace BuildIt.States.Interfaces.Builder
         /// Gets a value indicating whether it's using a cached deffinition
         /// </summary>
         bool IsCachedDefinition { get; }
+
+        /// <summary>
+        /// The node index for determining which target element to use for specific node
+        /// </summary>
+        int NodeIndex { get; set; }
     }
 }

@@ -22,6 +22,11 @@ namespace BuildIt.States
         public TElement Element { get; set; }
 
         /// <summary>
+        /// Gets the identifier for the target to apply getters/setters to
+        /// </summary>
+        public string TargetId { get; set; }
+
+        /// <summary>
         /// Gets or sets the getter for the property
         /// </summary>
         public Func<TElement, TPropertyValue> Getter { get; set; }
@@ -36,21 +41,29 @@ namespace BuildIt.States
         /// </summary>
         public TPropertyValue Value { get; set; }
 
-        private IDefaultValue Default =>
-            new DefaultValue<TElement, TPropertyValue> { Element = Element, Setter = Setter, Value = Getter(Element) };
-
         /// <summary>
         /// Performs the state transition
         /// </summary>
+        /// <param name="targets">The set of target elements to use in state transition</param>
         /// <param name="defaultValues">The set of default values to apply if state doesn't define property value</param>
-        public virtual void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
+        public virtual void TransitionTo(IDictionary<string, object> targets, IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
         {
-            if (!defaultValues.ContainsKey(Key))
+            var element = Element;
+            if (element == null)
             {
-                defaultValues[Key] = Default;
+                element = targets.SafeValue<string, object, TElement>(TargetId);
             }
 
-            Setter(Element, Value);
+            if (!defaultValues.ContainsKey(Key))
+            {
+                defaultValues[Key] = Default(element);
+            }
+
+            Setter(element, Value);
         }
+
+        private IDefaultValue Default(TElement element) =>
+            new DefaultValue<TElement, TPropertyValue> { Element = Element, TargetId = TargetId, Setter = Setter, Value = Getter(element) };
+
     }
 }

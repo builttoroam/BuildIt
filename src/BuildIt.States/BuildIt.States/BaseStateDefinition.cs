@@ -86,20 +86,21 @@ namespace BuildIt.States
         /// <summary>
         /// Transitions to this state - invokes the property setters
         /// </summary>
+        /// <param name="targets">The set of target elements to use in state transition</param>
         /// <param name="defaultValues">The default values to be applied if state doesn't define property values</param>
-        public void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
+        public void TransitionTo(IDictionary<string, object> targets, IDictionary<Tuple<object, string>, IDefaultValue> defaultValues)
         {
             var defaults = new Dictionary<Tuple<object, string>, IDefaultValue>(defaultValues);
 
             foreach (var visualStateValue in Values)
             {
-                visualStateValue.TransitionTo(defaultValues);
+                visualStateValue.TransitionTo(targets, defaultValues);
                 defaults.Remove(visualStateValue.Key);
             }
 
             foreach (var defValue in defaults)
             {
-                defValue.Value.RevertToDefault();
+                defValue.Value.RevertToDefault(targets);
             }
         }
     }

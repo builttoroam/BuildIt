@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -57,6 +58,11 @@ namespace BuildIt.States.Interfaces
         /// Gets the current state name
         /// </summary>
         IStateDefinition CurrentStateDefinition { get; }
+
+        /// <summary>
+        /// Gets the targets to be used when changing state
+        /// </summary>
+        IDictionary<string,object> StateValueTargets { get; }
 
         /// <summary>
         /// Instigates a change to a state

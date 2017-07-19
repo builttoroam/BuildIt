@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace BuildIt.States.Interfaces
 {
     /// <summary>
@@ -8,6 +10,7 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Resets entity to default value
         /// </summary>
-        void RevertToDefault();
+        /// <param name="targets">The set of target elements to use in state transition</param>
+        void RevertToDefault(IDictionary<string, object> targets);
     }
 }

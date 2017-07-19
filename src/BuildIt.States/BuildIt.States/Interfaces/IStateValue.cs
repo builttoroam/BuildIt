@@ -14,9 +14,10 @@ namespace BuildIt.States.Interfaces
         Tuple<object, string> Key { get; }
 
         /// <summary>
-        /// Method to invoke the change of value
+        /// Performs the state transition
         /// </summary>
-        /// <param name="defaultValues">Default values to track original values of properties so they can be reverted</param>
-        void TransitionTo(IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
+        /// <param name="targets">The set of target elements to use in state transition</param>
+        /// <param name="defaultValues">The set of default values to apply if state doesn't define property value</param>
+        void TransitionTo(IDictionary<string, object> targets, IDictionary<Tuple<object, string>, IDefaultValue> defaultValues);
     }
 }

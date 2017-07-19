@@ -139,6 +139,12 @@ namespace BuildIt.States
         private Stack<string> History { get; } = new Stack<string>();
 
         /// <summary>
+        /// Gets the targets to be used when changing state
+        /// </summary>
+        public IDictionary<string, object> StateValueTargets { get; } = new Dictionary<string, object>();
+
+
+        /// <summary>
         /// Add and start watching a state trigger
         /// </summary>
         /// <param name="trigger">The state trigger to watch</param>
@@ -482,7 +488,7 @@ namespace BuildIt.States
             $"CurrentState updated (now: {CurrentStateName})".Log();
 
             // Perform state transitions - adjust all the properties etc
-            CurrentStateDefinition?.TransitionTo(GroupDefinition.DefaultValues);
+            CurrentStateDefinition?.TransitionTo(StateValueTargets, GroupDefinition.DefaultValues);
         }
 
         /// <summary>

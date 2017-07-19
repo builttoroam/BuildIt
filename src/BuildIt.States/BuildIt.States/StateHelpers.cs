@@ -17,6 +17,7 @@ namespace BuildIt.States
     public static class StateHelpers
     {
         private static IDictionary<string, IStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, IStateGroupDefinition>();
+        private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
 
         /// <summary>
         /// Indicates whether all triggers are active
@@ -80,7 +81,8 @@ namespace BuildIt.States
                 StateManager = vsm,
                 StateGroup = existing,
                 StateGroupTag = groupDefinitionKey,
-                IsCachedDefinition = isCachedDefinition
+                IsCachedDefinition = isCachedDefinition,
+                NodeIndex = 0
             };
         }
 
@@ -155,7 +157,8 @@ namespace BuildIt.States
         {
             if (smInfo.IsCachedDefinition)
             {
-                return new StateDefinitionBuilder<TState> { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
+                return new StateDefinitionBuilder<TState>
+                { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag };
             }
 
             var vs = smInfo?.StateGroup.TypedGroupDefinition.DefineTypedState(state);
@@ -500,7 +503,8 @@ namespace BuildIt.States
 
             if (smInfo.IsCachedDefinition)
             {
-                return new StateDefinitionValueTargetBuilder<TState, TElement> { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
+                return new StateDefinitionValueTargetBuilder<TState, TElement>
+                { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag, Target = element };
             }
 
             return new StateDefinitionValueTargetBuilder<TState, TElement>
@@ -536,6 +540,15 @@ namespace BuildIt.States
                 return null;
             }
 
+            var targetId = smInfo.StateGroupTag + "_" + smInfo.NodeIndex;
+            smInfo.StateGroup.StateValueTargets[targetId] = smInfo.Target;
+
+            if (smInfo.IsCachedDefinition)
+            {
+                return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
+                { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
+            }
+
             if (setter == null)
             {
                 var propertyName = (getter.Body as MemberExpression)?.Member.Name;
@@ -549,10 +562,14 @@ namespace BuildIt.States
             var vsv = new StateValue<TElement, TPropertyValue>
             {
                 Key = new Tuple<object, string>(smInfo.Target, (getter.Body as MemberExpression)?.Member.Name),
-                Element = smInfo.Target,
+                // Element = smInfo.Target,
+                TargetId = smInfo.StateGroupTag + "_" + smInfo.NodeIndex,
                 Getter = (vm) => getter.Compile().Invoke(),
                 Setter = setter
             };
+
+            smInfo.StateGroup.StateValueTargets[vsv.TargetId] = smInfo.Target;
+
             return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             {
                 StateManager = smInfo.StateManager,
@@ -586,9 +603,16 @@ namespace BuildIt.States
                 return null;
             }
 
+            var targetId = smInfo.StateGroupTag + "_" + smInfo.NodeIndex;
+            if (!string.IsNullOrWhiteSpace(smInfo.StateGroupTag))
+            {
+                smInfo.StateGroup.StateValueTargets[targetId] = smInfo.Target;
+            }
+
             if (smInfo.IsCachedDefinition)
             {
-                return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue> { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
+                return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
+                { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag };
             }
 
             if (setter == null)
@@ -604,10 +628,12 @@ namespace BuildIt.States
             var vsv = new StateValue<TElement, TPropertyValue>
             {
                 Key = new Tuple<object, string>(smInfo.Target, (getter.Body as MemberExpression)?.Member.Name),
-                Element = smInfo.Target,
+               // Element = smInfo.Target,
+                TargetId = targetId,
                 Getter = getter.Compile(),
                 Setter = setter
             };
+
             return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
             {
                 StateManager = smInfo.StateManager,
@@ -1366,11 +1392,44 @@ namespace BuildIt.States
         private class StateGroupBuilder<TState> : StateBuilder, IStateGroupBuilder<TState>
             where TState : struct
         {
+            private string stateGrouping;
+
             public ITypedStateGroup<TState> StateGroup { get; set; }
 
-            public string StateGroupTag { get; set; }
+            public string StateGroupTag
+            {
+                get => stateGrouping;
+                set
+                {
+                    stateGrouping = value;
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        return;
+                    }
+
+                    NodeIndex = CachedGroupNodeIndex.SafeValue(stateGrouping)+1;
+                    CachedGroupNodeIndex[stateGrouping] = NodeIndex;
+                }
+            }
 
             public bool IsCachedDefinition { get; set; }
+
+            private int nodeIndex;
+            public int NodeIndex {
+                get => nodeIndex;
+                set {
+                    nodeIndex = value;
+                    if (string.IsNullOrWhiteSpace(StateGroupTag))
+                    {
+                        return;
+                    }
+
+                    if (nodeIndex == 0)
+                    {
+                        CachedGroupNodeIndex[stateGrouping] = 0;
+                    }
+                }
+            }
         }
 
         private class StateDefinitionBuilder<TState> : StateGroupBuilder<TState>, IStateDefinitionBuilder<TState>
