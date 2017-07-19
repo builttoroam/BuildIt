@@ -155,7 +155,7 @@ namespace BuildIt.States
             TState state)
             where TState : struct
         {
-            if (smInfo.IsCachedDefinition)
+            if (smInfo?.IsCachedDefinition ?? false)
             {
                 return new StateDefinitionBuilder<TState>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag };
@@ -501,7 +501,7 @@ namespace BuildIt.States
                 return null;
             }
 
-            if (smInfo.IsCachedDefinition)
+            if (smInfo?.IsCachedDefinition ?? false)
             {
                 return new StateDefinitionValueTargetBuilder<TState, TElement>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag, Target = element };
@@ -543,7 +543,7 @@ namespace BuildIt.States
             var targetId = smInfo.StateGroupTag + "_" + smInfo.NodeIndex;
             smInfo.StateGroup.StateValueTargets[targetId] = smInfo.Target;
 
-            if (smInfo.IsCachedDefinition)
+            if (smInfo?.IsCachedDefinition ?? false)
             {
                 return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
@@ -563,6 +563,7 @@ namespace BuildIt.States
             {
                 Key = new Tuple<object, string>(smInfo.Target, (getter.Body as MemberExpression)?.Member.Name),
                 // Element = smInfo.Target,
+                Element = string.IsNullOrWhiteSpace(smInfo.StateGroupTag) ? smInfo.Target : default(TElement),
                 TargetId = smInfo.StateGroupTag + "_" + smInfo.NodeIndex,
                 Getter = (vm) => getter.Compile().Invoke(),
                 Setter = setter
@@ -609,7 +610,7 @@ namespace BuildIt.States
                 smInfo.StateGroup.StateValueTargets[targetId] = smInfo.Target;
             }
 
-            if (smInfo.IsCachedDefinition)
+            if (smInfo?.IsCachedDefinition ?? false)
             {
                 return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag };
@@ -628,7 +629,8 @@ namespace BuildIt.States
             var vsv = new StateValue<TElement, TPropertyValue>
             {
                 Key = new Tuple<object, string>(smInfo.Target, (getter.Body as MemberExpression)?.Member.Name),
-               // Element = smInfo.Target,
+                // Element = smInfo.Target,
+                Element = string.IsNullOrWhiteSpace(smInfo.StateGroupTag) ? smInfo.Target : default(TElement),
                 TargetId = targetId,
                 Getter = getter.Compile(),
                 Setter = setter
@@ -661,7 +663,7 @@ namespace BuildIt.States
             TPropertyValue value)
             where TState : struct
         {
-            if (smInfo.IsCachedDefinition)
+            if (smInfo?.IsCachedDefinition ?? false)
             {
                 return smInfo;
             }
@@ -1407,7 +1409,7 @@ namespace BuildIt.States
                         return;
                     }
 
-                    NodeIndex = CachedGroupNodeIndex.SafeValue(stateGrouping)+1;
+                    NodeIndex = CachedGroupNodeIndex.SafeValue(stateGrouping) + 1;
                     CachedGroupNodeIndex[stateGrouping] = NodeIndex;
                 }
             }
@@ -1415,9 +1417,11 @@ namespace BuildIt.States
             public bool IsCachedDefinition { get; set; }
 
             private int nodeIndex;
-            public int NodeIndex {
+            public int NodeIndex
+            {
                 get => nodeIndex;
-                set {
+                set
+                {
                     nodeIndex = value;
                     if (string.IsNullOrWhiteSpace(StateGroupTag))
                     {
