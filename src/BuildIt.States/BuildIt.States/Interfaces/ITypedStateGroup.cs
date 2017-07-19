@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces
@@ -9,17 +7,13 @@ namespace BuildIt.States.Interfaces
     /// State group where the type of the state information is defined
     /// </summary>
     /// <typeparam name="TState">The type that's used to define the state</typeparam>
-    public interface ITypedStateGroup<TState> : IStateGroup
+    public interface ITypedStateGroup<TState>
+    : IStateGroup, INotifyTypedStateChanged<TState>, INotifyTypedStateChanging<TState>
     {
         /// <summary>
-        /// Typed state changed event
+        /// Gets the state group definition (including the states that make up the group)
         /// </summary>
-        event EventHandler<TypedStateEventArgs<TState>> TypedStateChanged;
-
-        /// <summary>
-        /// Typed state changing event
-        /// </summary>
-        event EventHandler<TypedStateCancelEventArgs<TState>> TypedStateChanging;
+        ITypedStateGroupDefinition<TState> TypedGroupDefinition { get; }
 
         /// <summary>
         /// Gets the current state name
@@ -30,16 +24,6 @@ namespace BuildIt.States.Interfaces
         /// Gets the current state name
         /// </summary>
         ITypedStateDefinition<TState> CurrentTypedStateDefinition { get; }
-
-        /// <summary>
-        /// Gets returns the state definition for the current state
-        /// </summary>
-        IReadOnlyDictionary<TState, ITypedStateDefinition<TState>> TypedStates { get; }
-
-        /// <summary>
-        /// Defines all states for the enum type
-        /// </summary>
-        void DefineAllStates();
 
         /// <summary>
         /// Change to typed state
@@ -66,28 +50,5 @@ namespace BuildIt.States.Interfaces
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
         Task<bool> ChangeBackToState(TState newState, bool useTransitions = true);
-
-        /// <summary>
-        /// Defines a state in the group
-        /// </summary>
-        /// <param name="stateDefinition">The state definition to define</param>
-        /// <returns>The defined state definition (maybe existing if one has been previously defined)</returns>
-        ITypedStateDefinition<TState> DefineTypedState(ITypedStateDefinition<TState> stateDefinition);
-
-        /// <summary>
-        /// Defines a state based on a name
-        /// </summary>
-        /// <param name="state">The name of the state</param>
-        /// <returns>The defined state definition (maybe existing if one has been previously defined)</returns>
-        ITypedStateDefinition<TState> DefineTypedState(TState state);
-
-        /// <summary>
-        /// Defines a state with data
-        /// </summary>
-        /// <typeparam name="TStateData">The type of state data</typeparam>
-        /// <param name="state">The name of the state to define</param>
-        /// <returns>The defined state definition (maybe existing if one has been previously defined)</returns>
-        ITypedStateDefinitionWithData<TState, TStateData> DefineTypedStateWithData<TStateData>(TState state)
-            where TStateData : INotifyPropertyChanged;
     }
 }

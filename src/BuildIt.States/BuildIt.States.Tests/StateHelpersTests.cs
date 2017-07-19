@@ -195,13 +195,13 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
             var grp = sm.TypedStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
-            Assert.AreEqual(0, grp.States.Count);
+            Assert.AreEqual(0, grp.GroupDefinition.States.Count);
             builder = builder.DefineAllStates();
 
             // Note: There is no state defined for the first, or default, value of an enum
             Assert.AreEqual(
                 typeof(TestStates).GetRuntimeFields().Count(f => (f.Attributes & FieldAttributes.Literal) > 0) - 1,
-                grp.States.Count);
+                grp.GroupDefinition.States.Count);
         }
 
         [TestMethod]
@@ -211,15 +211,15 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(0, sm.StateGroups.Count);
             var builder = sm.Group<TestStates>();
             var grp = sm.TypedStateGroup<TestStates>();//StateGroups[typeof(TestStates)] as EnumStateGroup<TestStates>;
-            Assert.AreEqual(0, grp.States.Count);
+            Assert.AreEqual(0, grp.GroupDefinition.States.Count);
             builder.DefineState(TestStates.Base);
-            Assert.AreEqual(0, grp.States.Count);
+            Assert.AreEqual(0, grp.GroupDefinition.States.Count);
             builder.DefineState(TestStates.State1);
-            Assert.AreEqual(1, grp.States.Count);
-            var state = grp.States[TestStates.State1+""];
+            Assert.AreEqual(1, grp.GroupDefinition.States.Count);
+            var state = grp.GroupDefinition.States[TestStates.State1+""];
             builder.DefineState(TestStates.State1);
-            Assert.AreEqual(1, grp.States.Count);
-            var newstate = grp.States[TestStates.State1 + ""];
+            Assert.AreEqual(1, grp.GroupDefinition.States.Count);
+            var newstate = grp.GroupDefinition.States[TestStates.State1 + ""];
             Assert.AreEqual(state, newstate);
 
         }

@@ -14,11 +14,17 @@ namespace BuildIt.States
         /// Initializes a new instance of the <see cref="EnumStateGroup{TState}"/> class.
         /// </summary>
         public EnumStateGroup()
+            : this(new EnumStateGroupDefinition<TState>())
         {
-            if (!typeof(TState).GetTypeInfo().IsEnum)
-            {
-                throw new ArgumentException("Type argument should be enum", nameof(TState));
-            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumStateGroup{TState}"/> class.
+        /// </summary>
+        /// <param name="groupDefinition">An existing group definition</param>
+        public EnumStateGroup(EnumStateGroupDefinition<TState> groupDefinition)
+            : base(groupDefinition)
+        {
         }
 
         /// <summary>
@@ -29,25 +35,5 @@ namespace BuildIt.States
             get => (!default(TState).Equals(CurrentState)) ? CurrentState + string.Empty : null;
             protected set => CurrentState = value.EnumParse<TState>();
         }
-
-        /// <summary>
-        /// Defines all states for the enum type
-        /// </summary>
-        public override void DefineAllStates()
-        {
-            var vals = Enum.GetValues(typeof(TState));
-            foreach (var enumVal in vals)
-            {
-                $"Defining state {enumVal}".Log();
-                DefineTypedState((TState)enumVal);
-            }
-        }
-
-        /// <summary>
-        /// Returns a state from the state name
-        /// </summary>
-        /// <param name="stateName">The state name to parse</param>
-        /// <returns>The state</returns>
-        protected override TState FromString(string stateName) => Utilities.EnumParse<TState>(stateName);
     }
 }

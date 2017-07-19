@@ -26,7 +26,7 @@ namespace BuildIt.States.UWP
                 return null;
             }
 
-            vsmGroup.StateGroup.DefineAllStates();
+            vsmGroup.StateGroup.TypedGroupDefinition.DefineAllStates();
 
             xamlVisualStateGroup.States.DoForEach(
                 xamlVisualState =>

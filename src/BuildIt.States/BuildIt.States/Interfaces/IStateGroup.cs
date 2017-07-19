@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -20,9 +19,14 @@ namespace BuildIt.States.Interfaces
         event EventHandler GoToPreviousStateIsBlockedChanged;
 
         /// <summary>
-        /// Gets name of the group
+        /// Gets the name of the state group
         /// </summary>
         string GroupName { get; }
+
+        /// <summary>
+        /// Gets the state group definition (including the states that make up the group)
+        /// </summary>
+        IStateGroupDefinition GroupDefinition { get; }
 
         /// <summary>
         /// Gets the current state data (ie associated with the current state)
@@ -44,8 +48,6 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         bool GoToPreviousStateIsBlocked { get; }
 
-        // IDependencyContainer DependencyContainer { get; set; }
-
         /// <summary>
         /// Gets the current state name
         /// </summary>
@@ -55,11 +57,6 @@ namespace BuildIt.States.Interfaces
         /// Gets the current state name
         /// </summary>
         IStateDefinition CurrentStateDefinition { get; }
-
-        /// <summary>
-        /// Gets the states that have been defined
-        /// </summary>
-        IDictionary<string, IStateDefinition> States { get; }
 
         /// <summary>
         /// Instigates a change to a state

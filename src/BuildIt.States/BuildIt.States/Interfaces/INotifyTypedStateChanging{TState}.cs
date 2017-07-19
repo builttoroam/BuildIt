@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace BuildIt.States.Interfaces
 {
@@ -7,7 +7,6 @@ namespace BuildIt.States.Interfaces
     /// </summary>
     /// <typeparam name="TState">The type (enum) of the state</typeparam>
     public interface INotifyTypedStateChanging<TState> : INotifyStateChanging
-        where TState : struct
     {
         /// <summary>
         /// Typed state changing event

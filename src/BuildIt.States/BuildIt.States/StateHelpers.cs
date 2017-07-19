@@ -111,7 +111,7 @@ namespace BuildIt.States
                 return null;
             }
 
-            vsmGroup.StateGroup.DefineAllStates();
+            vsmGroup.StateGroup.TypedGroupDefinition.DefineAllStates();
             return vsmGroup;
         }
 
@@ -128,7 +128,7 @@ namespace BuildIt.States
             TState state)
             where TState : struct
         {
-            var vs = vsmGroup?.StateGroup.DefineTypedState(state);
+            var vs = vsmGroup?.StateGroup.TypedGroupDefinition.DefineTypedState(state);
             if (vs == null)
             {
                 return null;
@@ -811,7 +811,7 @@ namespace BuildIt.States
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            var vms = smInfo.StateGroup.DefineTypedStateWithData<TStateData>(state);
+            var vms = smInfo.StateGroup.TypedGroupDefinition.DefineTypedStateWithData<TStateData>(state);
             return new StateDefinitionWithDataBuilder<TState, TStateData>
             {
                 StateManager = smInfo.StateManager,

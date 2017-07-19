@@ -16,10 +16,11 @@ namespace BuildIt.States
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseStateGroup"/> class.
-        /// Internal constructor to limit construction without providing a name
         /// </summary>
-        protected BaseStateGroup()
+        /// <param name="groupDefinition">The definition for this stage group</param>
+        protected BaseStateGroup(IStateGroupDefinition groupDefinition)
         {
+            GroupDefinition = groupDefinition;
         }
 
         /// <summary>
@@ -36,6 +37,16 @@ namespace BuildIt.States
         /// Event indicating that the current state for this group is about to change
         /// </summary>
         public event EventHandler<StateCancelEventArgs> StateChanging;
+
+        /// <summary>
+        /// Gets the state group definition (including the states that make up the group)
+        /// </summary>
+        public IStateGroupDefinition GroupDefinition { get; }
+
+        /// <summary>
+        /// Gets the name of the state group
+        /// </summary>
+        public string GroupName => GroupDefinition.GroupName;
 
         /// <summary>
         /// Gets or sets dependency container for registering and retrieving types
@@ -56,7 +67,7 @@ namespace BuildIt.States
         /// Gets returns the state definition for the current state
         /// </summary>
         public IStateDefinition CurrentStateDefinition
-            => !IsDefaultState(CurrentStateName) ? States.SafeValue(CurrentStateName) : null;
+            => !IsDefaultState(CurrentStateName) ? GroupDefinition.StateDefinition(CurrentStateName) : null;
 
         /// <summary>
         /// Gets returns information about the data entity associated with the current state
@@ -66,20 +77,9 @@ namespace BuildIt.States
             : null;
 
         /// <summary>
-        /// Gets dictionary of states that can be transitioned to
-        /// </summary>
-        public IDictionary<string, IStateDefinition> States { get; } =
-            new Dictionary<string, IStateDefinition>();
-
-        /// <summary>
         /// Gets or sets the current state data
         /// </summary>
         public INotifyPropertyChanged CurrentStateData { get; set; }
-
-        /// <summary>
-        /// Gets the name of the state group
-        /// </summary>
-        public abstract string GroupName { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether /// Whether history will be recorded for this state group
@@ -123,14 +123,6 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Gets internal dictionary of default property values - so that they can be
-        /// unset in the case of transitioning to a state that doesn't define
-        /// values for every property
-        /// </summary>
-        private IDictionary<Tuple<object, string>, IDefaultValue> DefaultValues { get; }
-            = new Dictionary<Tuple<object, string>, IDefaultValue>();
-
-        /// <summary>
         /// Gets cache of state data entities
         /// </summary>
         private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
@@ -145,16 +137,6 @@ namespace BuildIt.States
         /// Gets the history stack of state names
         /// </summary>
         private Stack<string> History { get; } = new Stack<string>();
-
-        /// <summary>
-        /// Retrieve state definition based on state name
-        /// </summary>
-        /// <param name="state">The state name</param>
-        /// <returns>New state definition</returns>
-        public IStateDefinition StateDefinition(string state)
-        {
-            return string.IsNullOrWhiteSpace(state) ? null : States.SafeValue(state);
-        }
 
         /// <summary>
         /// Add and start watching a state trigger
@@ -252,7 +234,7 @@ namespace BuildIt.States
             DependencyContainer = container;
             using (container.StartUpdate())
             {
-                foreach (var state in States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
+                foreach (var state in GroupDefinition.States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
                 {
                     container.RegisterType(state.StateDataType);
                 }
@@ -325,7 +307,7 @@ namespace BuildIt.States
                 }
             }
 
-            var newStateDef = StateDefinition(newState);
+            var newStateDef = GroupDefinition.StateDefinition(newState);
             if (newStateDef?.AboutToChangeTo != null)
             {
                 "Invoking 'AboutToChangeTo' on current state definition".Log();
@@ -389,7 +371,7 @@ namespace BuildIt.States
                 await leaving.ChangingFrom();
             }
 
-            var newStateDef = StateDefinition(newState);
+            var newStateDef = GroupDefinition.StateDefinition(newState);
             var hasData = !string.IsNullOrWhiteSpace(dataAsJson);
 
             if (newStateDef?.ChangingTo != null)
@@ -424,7 +406,7 @@ namespace BuildIt.States
                 isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
             }
 
-            var newStateDef = States.SafeValue(newState);
+            var newStateDef = GroupDefinition.StateDefinition(newState); // States.SafeValue(newState);
             var newStateDataWrapper = newStateDef?.UntypedStateDataWrapper;
 
             if (newStateDataWrapper != null)
@@ -500,7 +482,7 @@ namespace BuildIt.States
             $"CurrentState updated (now: {CurrentStateName})".Log();
 
             // Perform state transitions - adjust all the properties etc
-            CurrentStateDefinition?.TransitionTo(DefaultValues);
+            CurrentStateDefinition?.TransitionTo(GroupDefinition.DefaultValues);
         }
 
         /// <summary>
@@ -519,7 +501,7 @@ namespace BuildIt.States
         protected virtual async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions)
 #pragma warning restore 1998
         {
-            var oldStateDef = StateDefinition(oldState);
+            var oldStateDef = GroupDefinition.StateDefinition(oldState);
             if (oldStateDef?.ChangedFrom != null)
             {
                 "Invoking ChangedFrom on old state definition".Log();
@@ -704,7 +686,7 @@ namespace BuildIt.States
                 return;
             }
 
-            var firstActiveState = States.FirstOrDefault(x => x.Value.AllTriggersActive());
+            var firstActiveState = GroupDefinition.States.FirstOrDefault(x => x.Value.AllTriggersActive());
             // If there's no active state, then just return
             if (IsDefaultState(firstActiveState.Value))
             {

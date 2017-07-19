@@ -29,6 +29,11 @@
   <ItemGroup>
     <Compile Remove="EnumStateDefinition.cs" />
     <Compile Remove="EnumStateDefinitionWithDataWrapper.cs" />
+    <Compile Remove="Interfaces\IEnumStateDefinition.cs" />
+    <Compile Remove="Interfaces\IEnumStateDefinitionWithData.cs" />
+    <Compile Remove="Interfaces\IEnumStateGroup.cs" />
+    <Compile Remove="Interfaces\INotifyEnumStateChanging.cs" />
+    <Compile Remove="Interfaces\ITypedStateGroupDefinition_old.cs" />
     <Compile Remove="TypedStateGroup`1.cs" />
   </ItemGroup>
 

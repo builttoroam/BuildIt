@@ -10,7 +10,7 @@ namespace BuildIt.States.Tests
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         // ReSharper disable once ObjectCreationAsStatement - Intentional
-        public void TestInvalidStateGroupCreationNullName() => new StateGroup(null);
+        public void TestInvalidStateGroupCreationNullName() => new StateGroup(default(string));
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -57,7 +57,7 @@ namespace BuildIt.States.Tests
             var groupName = "test";
             var sg = new StateGroup(groupName);
             Assert.AreEqual(groupName, sg.GroupName);
-            Assert.AreEqual(0, sg.States.Count);
+            Assert.AreEqual(0, sg.GroupDefinition.States.Count);
             Assert.IsTrue(string.IsNullOrEmpty(sg.CurrentStateName));
             Assert.IsNull(sg.CurrentStateDefinition);
             Assert.IsNull(sg.CurrentStateData);
@@ -66,7 +66,7 @@ namespace BuildIt.States.Tests
             var esg = new EnumStateGroup<TestEnumNoStates>();
             groupName = nameof(TestEnumNoStates);
             Assert.AreEqual(groupName, esg.GroupName);
-            Assert.AreEqual(0, esg.States.Count);
+            Assert.AreEqual(0, esg.GroupDefinition.States.Count);
             Assert.IsTrue(string.IsNullOrEmpty(esg.CurrentStateName));
             Assert.IsNull(esg.CurrentStateDefinition);
             Assert.IsNull(esg.CurrentStateData);
@@ -80,7 +80,7 @@ namespace BuildIt.States.Tests
             var groupName = "test";
             var sg = new StateGroup(groupName);
             var stateName = "one";
-            var sd = sg.DefineTypedState(stateName);
+            var sd = sg.TypedGroupDefinition.DefineTypedState(stateName);
             Assert.IsNotNull(sd);
             Assert.AreEqual(stateName,sd.StateName);
             Assert.IsTrue(string.IsNullOrEmpty(sg.CurrentStateName));
@@ -95,7 +95,7 @@ namespace BuildIt.States.Tests
 
 
             var esg = new EnumStateGroup<Test1State>();
-            var esd = esg.DefineTypedState(Test1State.OnlyState);
+            var esd = esg.TypedGroupDefinition.DefineTypedState(Test1State.OnlyState);
             Assert.IsNotNull(esd);
             Assert.AreEqual(nameof(Test1State.OnlyState), esd.StateName);
             Assert.IsTrue(string.IsNullOrEmpty(esg.CurrentStateName));
