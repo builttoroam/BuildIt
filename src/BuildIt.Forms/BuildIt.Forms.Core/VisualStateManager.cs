@@ -170,25 +170,54 @@ namespace BuildIt.Forms.Core
             }
         }
 
+        private static IDictionary<string, IStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, IStateGroupDefinition>();
+
         private static void UpdateStateManagerWithStateGroup(IStateManager manager, BindableObject view, VisualStateGroup vsgroup)
         {
             try
             {
+                StateGroup sg;
                 "Creating new StateGroup".Log();
-                var sg = new StateGroup(vsgroup.Name);
+                var key = vsgroup.DefinitionCacheKey;
+                var isExisting = false;
+                if (!string.IsNullOrWhiteSpace(key))
+                {
+                    var existing = CachedGroupDefinitions.SafeValue<string, IStateGroupDefinition, StateGroupDefinition>(key);
+                    if (existing != null)
+                    {
+                        sg = new StateGroup(existing);
+                        isExisting = true;
+                    }
+                    else
+                    {
+                        sg = new StateGroup(vsgroup.Name);
+                        CachedGroupDefinitions[key] = sg.GroupDefinition;
+                    }
+                }
+                else
+                {
+                    sg = new StateGroup(vsgroup.Name);
+                }
+
                 vsgroup.StateGroup = sg;
                 manager.AddStateGroup(sg);
+
+                if (isExisting)
+                {
+                    BuildSetterValuesForAllStates(vsgroup, sg, view as Element);
+                    return;
+                }
 
                 $"Defining states for group {vsgroup.Name}".Log();
                 foreach (var vstate in vsgroup)
                 {
                     $"Creating new state {vstate.Name}".Log();
-                    var stateDef = sg.DefineState(vstate.Name);
+                    var stateDef = sg.TypedGroupDefinition.DefineTypedState(vstate.Name);
                     var values = stateDef.Values;
                     vstate.StateGroup = sg;
 
                     "Building state setters".Log();
-                    BuildStateSetters(vstate, view as Element, values);
+                    BuildStateSetters(vsgroup, vstate, view as Element, values);
 
                     "Building arriving animations".Log();
                     var arriving = vstate.ArrivingAnimations;
@@ -219,6 +248,21 @@ namespace BuildIt.Forms.Core
             }
         }
 
+        private static void BuildSetterValuesForAllStates(VisualStateGroup vsgroup, StateGroup sg, Element element)
+        {
+            foreach (var vsstate in vsgroup)
+            {
+                var setterIndex = -1;
+                foreach (var setter in vsstate.Setters)
+                {
+                    setterIndex++;
+                    var targetId = vsgroup.Name + "_" + vsstate.Name + "_" + setterIndex;
+                    var target = element.FindByTarget(setter);
+                    sg.StateValueTargets[targetId] = target.Item1;
+                }
+            }
+        }
+
         private static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element)
         {
             var tasks = new List<Task>();
@@ -244,11 +288,13 @@ namespace BuildIt.Forms.Core
             return () => BuildAnimationTasks(animations, element);
         }
 
-        private static async void BuildStateSetters(VisualState state, Element element, IList<IStateValue> values)
+        private static async void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values)
         {
-            await Task.Yield();
+            //await Task.Yield();
+            var setterIndex = -1;
             foreach (var setter in state.Setters)
             {
+                setterIndex++;
                 $"Setter: {setter.Property}".Log();
                 var target = element.FindByTarget(setter);
                 if (target == null)
@@ -272,8 +318,17 @@ namespace BuildIt.Forms.Core
                     }
                 }
 
+                var targetId = group.Name + "_" + state.Name + "_" + setterIndex;
+
                 var builderType = typeof(StateValueBuilder<,>).MakeGenericType(setterTarget.GetType(), targetProp.PropertyType);
-                var builder = Activator.CreateInstance(builderType, setterTarget, targetProp, (string)val, converter, setter.Duration) as IStateValueBuilder;
+
+                if (!string.IsNullOrWhiteSpace(group.DefinitionCacheKey))
+                {
+                    group.StateGroup.StateValueTargets[targetId] = setterTarget;
+                    setterTarget = null;
+                }
+
+                var builder = Activator.CreateInstance(builderType, targetId, setterTarget, targetProp, (string)val, converter, setter.Duration) as IStateValueBuilder;
 
                 values.Add(builder.Value);
             }
@@ -287,6 +342,9 @@ namespace BuildIt.Forms.Core
         private class StateValueBuilder<TElement, TPropertyValue> : IStateValueBuilder
         {
             public TElement Element { get; set; }
+
+            public string TargetId { get; set; }
+
             public PropertyInfo Property { get; set; }
 
             public string RawValue { get; set; }
@@ -294,8 +352,9 @@ namespace BuildIt.Forms.Core
 
             public int Duration { get; set; }
 
-            public StateValueBuilder(TElement element, PropertyInfo prop, string value, TypeConverter converter, int duration)
+            public StateValueBuilder(string targetId, TElement element, PropertyInfo prop, string value, TypeConverter converter, int duration)
             {
+                TargetId = targetId;
                 Element = element;
                 Property = prop;
                 RawValue = value;
@@ -309,11 +368,16 @@ namespace BuildIt.Forms.Core
                 {
                     var sv = new StateValue<TElement, TPropertyValue>();
                     sv.Element = Element;
+                    sv.TargetId = TargetId;
                     sv.Key = new Tuple<object, string>(Element, Property.Name);
                     sv.Getter = (element) =>
                     {
                         var val = Property.GetValue(element);
-                        if (val is TPropertyValue) return (TPropertyValue)val;
+                        if (val is TPropertyValue)
+                        {
+                            return (TPropertyValue)val;
+                        }
+
                         return default(TPropertyValue);
                     };
                     sv.Setter = async (element, val) =>
@@ -336,6 +400,7 @@ namespace BuildIt.Forms.Core
                                   startTime = DateTime.Now;
                               }
                           }
+
                           Property.SetValue(element, val);
                       };
                     if (Converter?.CanConvertFrom(typeof(string)) ?? false)
@@ -362,8 +427,8 @@ namespace BuildIt.Forms.Core
         public static async Task<IStateBinder> Bind(Element element, IStateManager stateManager)
         {
             var sm = VisualStateManager.GetStateManager(element);
-            var binder = sm.Bind(stateManager);
-            await binder.Bind();
+            var binder = await sm.Bind(stateManager);
+            //await binder.Bind();
             return binder;
         }
     }

@@ -11,7 +11,7 @@ namespace BuildIt.Forms.Core
 
         public VisualState CurrentState { get; set; }
 
-
+        public string DefinitionCacheKey { get; set; }
 
         public VisualStateGroup()
         {

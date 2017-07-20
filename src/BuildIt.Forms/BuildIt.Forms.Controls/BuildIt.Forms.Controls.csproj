@@ -39,7 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.37-beta" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.41-beta" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.5.256-pre6" />
   </ItemGroup>

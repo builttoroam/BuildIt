@@ -8,7 +8,7 @@
         <StackLayout>
             <vsm:VisualStateManager.VisualStateGroups>
                 <vsm:VisualStateGroups>
-                    <vsm:VisualStateGroup Name="ItemStates">
+                    <vsm:VisualStateGroup Name="ItemStates" DefinitionCacheKey="ListViewItemControlItemStates">
                         <vsm:VisualState Name="ItemEnabled">
                             <vsm:VisualState.Setters>
                                 <vsm:Setter Value="true"
