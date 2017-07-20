@@ -27,17 +27,17 @@ namespace BuildIt.Forms.Sample.UWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            var build = new ContainerBuilder();
-            var container = build.Build();
+            //var build = new ContainerBuilder();
+            //var container = build.Build();
 
-            var csl = new AutofacServiceLocator(container);
-            var afContainer = new AutofacDependencyContainer(container);
-            using (afContainer.StartUpdate())
-            {
-                afContainer.Register<TestDebugLogger, ILogService>();
-            }
+            //var csl = new AutofacServiceLocator(container);
+            //var afContainer = new AutofacDependencyContainer(container);
+            //using (afContainer.StartUpdate())
+            //{
+            //    afContainer.Register<TestDebugLogger, ILogService>();
+            //}
 
-            ServiceLocator.SetLocatorProvider(() => csl);
+            //ServiceLocator.SetLocatorProvider(() => csl);
         }
 
         /// <summary>

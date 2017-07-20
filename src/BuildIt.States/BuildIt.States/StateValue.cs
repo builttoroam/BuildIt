@@ -64,6 +64,5 @@ namespace BuildIt.States
 
         private IDefaultValue Default(TElement element) =>
             new DefaultValue<TElement, TPropertyValue> { Element = Element, TargetId = TargetId, Setter = Setter, Value = Getter(element) };
-
     }
 }

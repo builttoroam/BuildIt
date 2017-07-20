@@ -380,29 +380,39 @@ namespace BuildIt.Forms.Core
 
                         return default(TPropertyValue);
                     };
-                    sv.Setter = async (element, val) =>
-                      {
-                          if (Duration > 0)
-                          {
-                              var startTime = DateTime.Now;
-                              var endTime = startTime.AddMilliseconds(Duration);
-                              var stepduration = 1000.0 / 60.0; // ~60 frames per sec
-                              var current = (double)Property.GetValue(element);
-                              var end = (double)(object)val;
-                              while (startTime < endTime)
-                              {
-                                  var remainingSteps = endTime.Subtract(startTime).TotalMilliseconds / stepduration;
-                                  if (remainingSteps <= 0) break;
-                                  var inc = (end - current) / remainingSteps;
-                                  current += inc;
-                                  Property.SetValue(element, current);
-                                  await Task.Delay((int)stepduration);
-                                  startTime = DateTime.Now;
-                              }
-                          }
 
-                          Property.SetValue(element, val);
-                      };
+                    if (typeof(TElement).GetTypeInfo().IsSubclassOf(typeof(VisualElement)) && Duration == 0)
+                    {
+                        sv.Setter = VisualElementProperties.Lookup<TElement, TPropertyValue>(Property.Name);
+                    }
+
+                    if (sv.Setter == null)
+                    {
+                        sv.Setter = async (element, val) =>
+                          {
+                              if (Duration > 0)
+                              {
+                                  var startTime = DateTime.Now;
+                                  var endTime = startTime.AddMilliseconds(Duration);
+                                  var stepduration = 1000.0 / 60.0; // ~60 frames per sec
+                              var current = (double)Property.GetValue(element);
+                                  var end = (double)(object)val;
+                                  while (startTime < endTime)
+                                  {
+                                      var remainingSteps = endTime.Subtract(startTime).TotalMilliseconds / stepduration;
+                                      if (remainingSteps <= 0) break;
+                                      var inc = (end - current) / remainingSteps;
+                                      current += inc;
+                                      Property.SetValue(element, current);
+                                      await Task.Delay((int)stepduration);
+                                      startTime = DateTime.Now;
+                                  }
+                              }
+
+                              Property.SetValue(element, val);
+                          };
+                    }
+
                     if (Converter?.CanConvertFrom(typeof(string)) ?? false)
                     {
                         sv.Value = (TPropertyValue)Converter.ConvertFromInvariantString(RawValue);
@@ -432,4 +442,20 @@ namespace BuildIt.Forms.Core
             return binder;
         }
     }
+
+
+    public static class VisualElementProperties
+    {
+        public static IDictionary<string, object> Setters = new Dictionary<string, object>
+        {
+            {"IsVisible",  new Action<VisualElement, bool>((VisualElement ve, bool isVisible) => ve.IsVisible=isVisible) }
+        };
+
+        internal static Action<TElement, TPropertyValue> Lookup<TElement, TPropertyValue>(string name)
+        {
+            var action = Setters.SafeValue<string, object, Action<TElement, TPropertyValue>>(name);
+            return action;
+        }
+    }
+
 }

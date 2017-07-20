@@ -16,16 +16,16 @@ namespace BuildIt.Forms.Sample
         {
             InitializeComponent();
 
-            var build = new ContainerBuilder();
-            var container = build.Build();
+            //var build = new ContainerBuilder();
+            //var container = build.Build();
 
-            var csl = new AutofacServiceLocator(container);
-            var dcontainer = new AutofacDependencyContainer(container);
-            using (dcontainer.StartUpdate())
-            {
-                dcontainer.Register<CustomBasicDebugLogger, ILogService>();
-            }
-            ServiceLocator.SetLocatorProvider(() => csl);
+            //var csl = new AutofacServiceLocator(container);
+            //var dcontainer = new AutofacDependencyContainer(container);
+            //using (dcontainer.StartUpdate())
+            //{
+            //    dcontainer.Register<CustomBasicDebugLogger, ILogService>();
+            //}
+            //ServiceLocator.SetLocatorProvider(() => csl);
 
             MainPage = new BuildIt.Forms.Sample.MainPage();
         }

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using BuildIt.States.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace BuildIt.forms.Sample.Core.ViewModels
 {
@@ -28,7 +29,7 @@ namespace BuildIt.forms.Sample.Core.ViewModels
     {
         public IStateManager StateManager { get; } = new StateManager();
 
-        private Random Random { get; } = new Random();
+        private static Random Random { get; } = new Random();
 
         public bool EnabledVisibility { get; set; }
 
@@ -36,7 +37,7 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         {
             StateManager.Group<ItemStates>().DefineAllStates();
             EnabledVisibility = Random.Next(0, 100) > 50;
-
+            //Debug.WriteLine($"Enabled - {EnabledVisibility}");
         }
 
         public async Task Init()
