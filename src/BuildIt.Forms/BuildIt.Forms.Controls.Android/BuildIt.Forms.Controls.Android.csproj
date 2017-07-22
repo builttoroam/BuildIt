@@ -44,8 +44,8 @@
     <Reference Include="BuildIt.General, Version=1.1.0.30, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BuildIt.General.1.1.0.30\lib\netstandard1.0\BuildIt.General.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.States, Version=1.1.0.41, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.States.1.1.0.41-beta\lib\monoandroid\BuildIt.States.dll</HintPath>
+    <Reference Include="BuildIt.States, Version=1.1.0.43, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.States.1.1.0.43-beta\lib\monoandroid\BuildIt.States.dll</HintPath>
     </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.5.256-pre6\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>

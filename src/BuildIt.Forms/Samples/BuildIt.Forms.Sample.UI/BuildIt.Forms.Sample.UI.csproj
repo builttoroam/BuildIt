@@ -35,7 +35,7 @@
     <PackageReference Include="Autofac" Version="4.6.0" />
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.41-beta" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.43-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.5.256-pre6" />
   </ItemGroup>
 

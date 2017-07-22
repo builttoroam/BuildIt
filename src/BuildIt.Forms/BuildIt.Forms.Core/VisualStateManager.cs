@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Typed.String;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Core
@@ -212,7 +213,7 @@ namespace BuildIt.Forms.Core
                 foreach (var vstate in vsgroup)
                 {
                     $"Creating new state {vstate.Name}".Log();
-                    var stateDef = sg.TypedGroupDefinition.DefineTypedState(vstate.Name);
+                    var stateDef = sg.TypedGroupDefinition.DefineStateFromName(vstate.Name);
                     var values = stateDef.Values;
                     vstate.StateGroup = sg;
 
