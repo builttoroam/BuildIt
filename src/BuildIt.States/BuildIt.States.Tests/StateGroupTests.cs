@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using BuildIt.States.Typed;
 using BuildIt.States.Typed.Enum;
@@ -89,7 +90,10 @@ namespace BuildIt.States.Tests
         public void TestInvalidStateGroupCreationEmptyStringName() => new StateGroup(String.Empty);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        // NR: Ideally this would be an ArgumentNullException but because the exception 
+        // is raised within the constructor of a nested type (ie the GroupDefinition) it
+        // is raised as a TargetInvocationException
+        [ExpectedException(typeof(TargetInvocationException))]
         // ReSharper disable once ObjectCreationAsStatement - Intentional
         public void TestInvalidEnumStateGroupNotEnum() => new EnumStateGroup<NotAnEnum>();
 
