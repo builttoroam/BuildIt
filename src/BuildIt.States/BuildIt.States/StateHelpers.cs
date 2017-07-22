@@ -18,8 +18,6 @@ namespace BuildIt.States
     /// </summary>
     public static class StateHelpers
     {
-        private static IDictionary<string, IStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, IStateGroupDefinition>();
-
         private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
 
         /// <summary>
@@ -52,26 +50,16 @@ namespace BuildIt.States
                 return null;
             }
 
-            bool isCachedDefinition = false;
+            var isCachedDefinition = false;
             var existing = vsm.TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
             if (existing == null)
             {
                 if (!string.IsNullOrWhiteSpace(groupDefinitionKey))
                 {
-                    var cached = CachedGroupDefinitions.SafeValue<string, IStateGroupDefinition, EnumStateGroupDefinition<TState>>(groupDefinitionKey);
-                    if (cached == null)
-                    {
-                        existing = new EnumStateGroup<TState>();
-                        CachedGroupDefinitions[groupDefinitionKey] = existing.GroupDefinition;
-                    }
-                    else
-                    {
-                        isCachedDefinition = true;
-                        existing = new EnumStateGroup<TState>(cached);
-                    }
+                    existing = new EnumStateGroup<TState>(groupDefinitionKey);
+                    isCachedDefinition = existing.TypedGroupDefinition.States.Count != 0;
                 }
-
-                if (existing == null)
+                else
                 {
                     existing = new EnumStateGroup<TState>();
                 }

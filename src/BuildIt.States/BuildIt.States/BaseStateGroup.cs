@@ -24,8 +24,9 @@ namespace BuildIt.States
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseStateGroup{TStateDefinition, TStateGroupDefinition}"/> class.
         /// </summary>
-        protected BaseStateGroup()
-            : this(new TStateGroupDefinition())
+        /// <param name="cacheKey">The cacheKey for the state definition</param>
+        protected BaseStateGroup(string cacheKey = null)
+            : this(CachedOrNewGroupDefinitionByKey(cacheKey))
         {
         }
 
@@ -164,6 +165,8 @@ namespace BuildIt.States
         /// Gets the targets to be used when changing state
         /// </summary>
         public IDictionary<string, object> StateValueTargets { get; } = new Dictionary<string, object>();
+
+        private static IDictionary<string, TStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, TStateGroupDefinition>();
 
         /// <summary>
         /// Gets cache of state data entities
@@ -719,6 +722,24 @@ namespace BuildIt.States
         protected void OnGoToPreviousStateIsBlockedChanged()
         {
             GoToPreviousStateIsBlockedChanged.SafeRaise(this);
+        }
+
+        private static TStateGroupDefinition CachedOrNewGroupDefinitionByKey(string cacheKey)
+        {
+            if (string.IsNullOrWhiteSpace(cacheKey))
+            {
+                return new TStateGroupDefinition();
+            }
+
+            var def = CachedGroupDefinitions.SafeValue(cacheKey);
+            return def ?? CreateAndCacheGroupDefinition(cacheKey);
+        }
+
+        private static TStateGroupDefinition CreateAndCacheGroupDefinition(string cacheKey)
+        {
+            var def = new TStateGroupDefinition();
+            CachedGroupDefinitions[cacheKey] = def;
+            return def;
         }
 
         private async void UpdateStatesByTriggers()

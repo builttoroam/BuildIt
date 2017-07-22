@@ -13,13 +13,16 @@ namespace BuildIt.States.Typed.String
         /// Constructs a group based on the supplied group name
         /// </summary>
         /// <param name="groupName">The name of the state group</param>
-        public StateGroup(string groupName)
-            : base(new StateGroupDefinition { GroupName = groupName })
+        /// <param name="cacheKey">The cacheKey for the state definition</param>
+        public StateGroup(string groupName, string cacheKey = null)
+            : base(cacheKey)
         {
             if (string.IsNullOrWhiteSpace(groupName))
             {
                 throw new ArgumentNullException(nameof(groupName), "Group name should not be null or empty");
             }
+
+            TypedGroupDefinition.GroupName = groupName;
         }
 
         /// <summary>

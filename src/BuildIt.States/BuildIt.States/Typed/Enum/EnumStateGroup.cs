@@ -11,8 +11,9 @@ namespace BuildIt.States.Typed.Enum
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumStateGroup{TState}"/> class.
         /// </summary>
-        public EnumStateGroup()
-            : this(new EnumStateGroupDefinition<TState>())
+        /// <param name="cacheKey">The cacheKey for the state definition</param>
+        public EnumStateGroup(string cacheKey = null)
+            : base(cacheKey)
         {
         }
 

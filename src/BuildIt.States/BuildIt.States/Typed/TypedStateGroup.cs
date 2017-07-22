@@ -18,8 +18,9 @@ namespace BuildIt.States.Typed
         /// <summary>
         /// Initializes a new instance of the <see cref="TypedStateGroup{TState, TStateDefinition, TStateGroupDefinition}"/> class.
         /// </summary>
-        protected TypedStateGroup()
-            : this(new TStateGroupDefinition())
+        /// <param name="cacheKey">The cacheKey for the state definition</param>
+        protected TypedStateGroup(string cacheKey = null)
+            : base(cacheKey)
         {
         }
 
