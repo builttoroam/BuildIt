@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using BuildIt.States.Completion;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Interfaces.Builder;
+using BuildIt.States.Typed;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.States
 {
@@ -17,6 +19,7 @@ namespace BuildIt.States
     public static class StateHelpers
     {
         private static IDictionary<string, IStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, IStateGroupDefinition>();
+
         private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
 
         /// <summary>
@@ -1395,8 +1398,9 @@ namespace BuildIt.States
             where TState : struct
         {
             private string stateGrouping;
+            private int nodeIndex;
 
-            public ITypedStateGroup<TState> StateGroup { get; set; }
+            public ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>> StateGroup { get; set; }
 
             public string StateGroupTag
             {
@@ -1416,7 +1420,6 @@ namespace BuildIt.States
 
             public bool IsCachedDefinition { get; set; }
 
-            private int nodeIndex;
             public int NodeIndex
             {
                 get => nodeIndex;

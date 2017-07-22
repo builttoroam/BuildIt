@@ -17,7 +17,7 @@ namespace BuildIt.States
         public TElement Element { get; set; }
 
         /// <summary>
-        /// Gets the identifier for the target to apply getters/setters to
+        /// Gets or sets gets the identifier for the target to apply getters/setters to
         /// </summary>
         public string TargetId { get; set; }
 

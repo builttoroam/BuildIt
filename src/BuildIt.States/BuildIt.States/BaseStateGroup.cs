@@ -12,15 +12,30 @@ namespace BuildIt.States
     /// <summary>
     /// Defines a group of states
     /// </summary>
-    public abstract class BaseStateGroup : IStateGroup
+    /// <typeparam name="TStateDefinition">Type of state definition</typeparam>
+    /// <typeparam name="TStateGroupDefinition">Type of group definition</typeparam>
+    public abstract class BaseStateGroup<TStateDefinition, TStateGroupDefinition>
+        : IStateGroup<TStateDefinition, TStateGroupDefinition>
+        where TStateDefinition : class, IStateDefinition, new()
+        where TStateGroupDefinition : class, IStateGroupDefinition<TStateDefinition>, new()
     {
+        private string currentStateName;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseStateGroup"/> class.
+        /// Initializes a new instance of the <see cref="BaseStateGroup{TStateDefinition, TStateGroupDefinition}"/> class.
+        /// </summary>
+        protected BaseStateGroup()
+            : this(new TStateGroupDefinition())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseStateGroup{TStateDefinition, TStateGroupDefinition}"/> class.
         /// </summary>
         /// <param name="groupDefinition">The definition for this stage group</param>
-        protected BaseStateGroup(IStateGroupDefinition groupDefinition)
+        protected BaseStateGroup(TStateGroupDefinition groupDefinition)
         {
-            GroupDefinition = groupDefinition;
+            TypedGroupDefinition = groupDefinition;
         }
 
         /// <summary>
@@ -41,12 +56,17 @@ namespace BuildIt.States
         /// <summary>
         /// Gets the state group definition (including the states that make up the group)
         /// </summary>
-        public IStateGroupDefinition GroupDefinition { get; }
+        public IStateGroupDefinition GroupDefinition => TypedGroupDefinition;
+
+        /// <summary>
+        /// Gets or sets the state group definition (including the states that make up the group)
+        /// </summary>
+        public TStateGroupDefinition TypedGroupDefinition { get; set;  }
 
         /// <summary>
         /// Gets the name of the state group
         /// </summary>
-        public string GroupName => GroupDefinition.GroupName;
+        public string GroupName => TypedGroupDefinition.GroupName;
 
         /// <summary>
         /// Gets or sets dependency container for registering and retrieving types
@@ -58,16 +78,34 @@ namespace BuildIt.States
         /// </summary>
         public IUIExecutionContext UIContext { get; set; }
 
-        /// <summary>
-        /// Gets or sets the name (unique in this group) of the current state
+       /// <summary>
+        /// Gets or sets the current state name
         /// </summary>
-        public virtual string CurrentStateName { get; protected set; }
+        public virtual string CurrentStateName
+        {
+            get => currentStateName;
+            protected set
+            {
+                CurrentTypedStateDefinition = (from s in GroupDefinition.States
+                    let def = s.Value
+                    where def?.StateName == value
+                    select def).FirstOrDefault() as TStateDefinition;
+                if (CurrentTypedStateDefinition != null)
+                {
+                    currentStateName = CurrentTypedStateDefinition.StateName;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets returns the state definition for the current state
         /// </summary>
-        public IStateDefinition CurrentStateDefinition
-            => !IsDefaultState(CurrentStateName) ? GroupDefinition.StateDefinition(CurrentStateName) : null;
+        public IStateDefinition CurrentStateDefinition => CurrentTypedStateDefinition;
+
+        /// <summary>
+        /// Gets or sets gets returns the state definition for the current state
+        /// </summary>
+        public TStateDefinition CurrentTypedStateDefinition { get; protected set; }
 
         /// <summary>
         /// Gets returns information about the data entity associated with the current state
@@ -123,6 +161,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
+        /// Gets the targets to be used when changing state
+        /// </summary>
+        public IDictionary<string, object> StateValueTargets { get; } = new Dictionary<string, object>();
+
+        /// <summary>
         /// Gets cache of state data entities
         /// </summary>
         private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
@@ -137,12 +180,6 @@ namespace BuildIt.States
         /// Gets the history stack of state names
         /// </summary>
         private Stack<string> History { get; } = new Stack<string>();
-
-        /// <summary>
-        /// Gets the targets to be used when changing state
-        /// </summary>
-        public IDictionary<string, object> StateValueTargets { get; } = new Dictionary<string, object>();
-
 
         /// <summary>
         /// Add and start watching a state trigger
@@ -313,7 +350,7 @@ namespace BuildIt.States
                 }
             }
 
-            var newStateDef = GroupDefinition.StateDefinition(newState);
+            var newStateDef = GroupDefinition.StateDefinitionFromName(newState);
             if (newStateDef?.AboutToChangeTo != null)
             {
                 "Invoking 'AboutToChangeTo' on current state definition".Log();
@@ -377,7 +414,7 @@ namespace BuildIt.States
                 await leaving.ChangingFrom();
             }
 
-            var newStateDef = GroupDefinition.StateDefinition(newState);
+            var newStateDef = GroupDefinition.StateDefinitionFromName(newState);
             var hasData = !string.IsNullOrWhiteSpace(dataAsJson);
 
             if (newStateDef?.ChangingTo != null)
@@ -412,7 +449,7 @@ namespace BuildIt.States
                 isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
             }
 
-            var newStateDef = GroupDefinition.StateDefinition(newState); // States.SafeValue(newState);
+            var newStateDef = GroupDefinition.StateDefinitionFromName(newState); // States.SafeValue(newState);
             var newStateDataWrapper = newStateDef?.UntypedStateDataWrapper;
 
             if (newStateDataWrapper != null)
@@ -507,7 +544,7 @@ namespace BuildIt.States
         protected virtual async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions)
 #pragma warning restore 1998
         {
-            var oldStateDef = GroupDefinition.StateDefinition(oldState);
+            var oldStateDef = GroupDefinition.StateDefinitionFromName(oldState);
             if (oldStateDef?.ChangedFrom != null)
             {
                 "Invoking ChangedFrom on old state definition".Log();

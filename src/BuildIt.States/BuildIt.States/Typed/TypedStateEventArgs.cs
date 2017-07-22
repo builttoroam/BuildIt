@@ -1,4 +1,4 @@
-﻿namespace BuildIt.States
+﻿namespace BuildIt.States.Typed
 {
     /// <summary>
     /// Event args for a state change

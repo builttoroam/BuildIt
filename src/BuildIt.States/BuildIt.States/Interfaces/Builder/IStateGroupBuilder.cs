@@ -1,3 +1,5 @@
+using BuildIt.States.Typed.Enum;
+
 namespace BuildIt.States.Interfaces.Builder
 {
     /// <summary>
@@ -10,7 +12,7 @@ namespace BuildIt.States.Interfaces.Builder
         /// <summary>
         /// Gets the typed state group
         /// </summary>
-        ITypedStateGroup<TState> StateGroup { get; }
+        ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>> StateGroup { get; }
 
         /// <summary>
         /// Gets Optional caching tag for state group
@@ -23,7 +25,7 @@ namespace BuildIt.States.Interfaces.Builder
         bool IsCachedDefinition { get; }
 
         /// <summary>
-        /// The node index for determining which target element to use for specific node
+        /// Gets or sets the node index for determining which target element to use for specific node
         /// </summary>
         int NodeIndex { get; set; }
     }

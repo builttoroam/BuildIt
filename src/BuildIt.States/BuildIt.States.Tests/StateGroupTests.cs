@@ -1,11 +1,82 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BuildIt.States.Typed;
+using BuildIt.States.Typed.Enum;
+using BuildIt.States.Typed.String;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BuildIt.States.Tests
 {
     [TestClass]
-    public class StateGroupTests: BaseStateTests
+    public class CustomStateTypeTests : BaseStateTests
+    {
+        private class CustomStateType
+        {
+            public CustomStateType()
+            {
+            }
+
+            public CustomStateType(Guid id)
+            {
+                Id = id;
+            }
+            public Guid Id { get; } = Guid.NewGuid();
+        }
+
+        private class CustomStateDefinition : TypedStateDefinition<CustomStateType>
+        {
+            public CustomStateDefinition()
+            {
+
+            }
+
+            public override string StateName
+            {
+                get => State.Id.ToString();
+//                set => State.Id = Guid.Parse(value);
+            }
+        }
+
+        private class CustomStateGroupDefinition : TypedStateGroupDefinition<CustomStateType, CustomStateDefinition>
+        {
+            public CustomStateGroupDefinition()
+            { }
+        }
+
+        private class CustomStateGroup : TypedStateGroup<CustomStateType, CustomStateDefinition, CustomStateGroupDefinition>
+        {
+
+        }
+
+        [TestMethod]
+        public async Task TestInvalidStateGroupCreationNullName()
+        {
+            var sg = new CustomStateGroup();
+            Assert.IsNotNull(sg.TypedGroupDefinition);
+
+            var s1 = sg.TypedGroupDefinition.DefineTypedState(new CustomStateType());
+            var s2 = sg.TypedGroupDefinition.DefineTypedState(new CustomStateType());
+            var s3 = sg.TypedGroupDefinition.DefineTypedState(new CustomStateType());
+
+            Assert.IsNull(sg.CurrentState);
+            Assert.AreEqual(3, sg.TypedGroupDefinition.States.Count);
+
+            await sg.ChangeToStateByName(s1.StateName);
+            Assert.AreSame(s1.State, sg.CurrentState);
+            Assert.AreSame(s1,sg.CurrentStateDefinition);
+
+            await sg.ChangeToStateByName(s2.StateName);
+            Assert.AreSame(s2.State, sg.CurrentState);
+            Assert.AreSame(s2, sg.CurrentStateDefinition);
+
+            await sg.ChangeToStateByName(s3.StateName);
+            Assert.AreSame(s3.State, sg.CurrentState);
+            Assert.AreSame(s3, sg.CurrentStateDefinition);
+        }
+    }
+
+    [TestClass]
+    public class StateGroupTests : BaseStateTests
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -80,9 +151,9 @@ namespace BuildIt.States.Tests
             var groupName = "test";
             var sg = new StateGroup(groupName);
             var stateName = "one";
-            var sd = sg.TypedGroupDefinition.DefineTypedState(stateName);
+            var sd = sg.TypedGroupDefinition.DefineStateFromName(stateName);
             Assert.IsNotNull(sd);
-            Assert.AreEqual(stateName,sd.StateName);
+            Assert.AreEqual(stateName, sd.StateName);
             Assert.IsTrue(string.IsNullOrEmpty(sg.CurrentStateName));
             Assert.IsNull(sg.CurrentStateDefinition);
             Assert.IsNull(sg.CurrentStateData);
@@ -104,7 +175,7 @@ namespace BuildIt.States.Tests
             Assert.IsNull(esg.CurrentStateDataWrapper);
             await esg.ChangeToState(Test1State.OnlyState);
             Assert.AreEqual(nameof(Test1State.OnlyState), esg.CurrentStateName);
-            Assert.AreEqual(Test1State.OnlyState,esg.CurrentState);
+            Assert.AreEqual(Test1State.OnlyState, esg.CurrentState);
             Assert.AreEqual(esd, esg.CurrentStateDefinition);
             Assert.AreEqual(esd, esg.CurrentTypedStateDefinition);
             Assert.IsNull(esg.CurrentStateData);
@@ -127,9 +198,9 @@ namespace BuildIt.States.Tests
 
         }
 
-        public class DummyStateData: NotifyBase
+        public class DummyStateData : NotifyBase
         {
-            
+
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Collections.ObjectModel;
 
 namespace States.Sample.Core
 {
-/// <summary>
-/// The loading states
-/// </summary>
+    /// <summary>
+    /// The loading states
+    /// </summary>
     public enum LoadingStates
     {
         /// <summary>
@@ -57,15 +57,17 @@ namespace States.Sample.Core
         /// </summary>
         Large
     }
-  public enum ItemStates
-        {
-            Base,
-            IsEnabled,
-            IsNotEnabled
-        }
-    public class RandomItem:NotifyBase
+
+    public enum ItemStates
     {
-      
+        Base,
+        IsEnabled,
+        IsNotEnabled
+    }
+
+    public class RandomItem : NotifyBase
+    {
+
 
         public IStateManager StateManager { get; } = new StateManager();
 
@@ -75,7 +77,7 @@ namespace States.Sample.Core
                 .Group<ItemStates>("cacheRandomItemGroup")
                 .DefineState(ItemStates.IsEnabled)
                     .Target(this)
-                    .Change(x=>x.IsEnabled)
+                    .Change(x => x.IsEnabled)
                     .ToValue(true)
                 .DefineState(ItemStates.IsNotEnabled);
 

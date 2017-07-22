@@ -34,6 +34,7 @@
     <Compile Remove="Interfaces\IEnumStateGroup.cs" />
     <Compile Remove="Interfaces\INotifyEnumStateChanging.cs" />
     <Compile Remove="Interfaces\ITypedStateGroupDefinition_old.cs" />
+    <Compile Remove="TypedStateGroupDefinition{TState}.cs" />
     <Compile Remove="TypedStateGroup`1.cs" />
   </ItemGroup>
 

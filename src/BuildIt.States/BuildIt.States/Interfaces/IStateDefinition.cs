@@ -10,9 +10,9 @@ namespace BuildIt.States.Interfaces
     public interface IStateDefinition
     {
         /// <summary>
-        /// Gets the name of the state
+        /// Gets or sets gets the name of the state
         /// </summary>
-        string StateName { get; }
+        string StateName { get; set; }
 
         /// <summary>
         /// Gets a list of triggers that can be used to determine if the
@@ -72,9 +72,9 @@ namespace BuildIt.States.Interfaces
         IList<IStateValue> Values { get; }
 
         /// <summary>
-        /// Gets any state data (eg view model) that might be associated with the state
+        /// Gets or sets gets any state data (eg view model) that might be associated with the state
         /// </summary>
-        IStateDefinitionDataWrapper UntypedStateDataWrapper { get; }
+        IStateDefinitionDataWrapper UntypedStateDataWrapper { get; set; }
 
         /// <summary>
         /// Implements the transition, setting values and recording the default values

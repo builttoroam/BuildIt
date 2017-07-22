@@ -7,23 +7,17 @@ namespace BuildIt.States.Interfaces
     /// State group where the type of the state information is defined
     /// </summary>
     /// <typeparam name="TState">The type that's used to define the state</typeparam>
-    public interface ITypedStateGroup<TState>
-    : IStateGroup, INotifyTypedStateChanged<TState>, INotifyTypedStateChanging<TState>
+    /// <typeparam name="TStateDefinition">The type of the state definition</typeparam>
+    /// <typeparam name="TStateGroupDefinition">The type of the group definition</typeparam>
+    public interface ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>
+    : IStateGroup<TStateDefinition, TStateGroupDefinition>, INotifyTypedStateChanged<TState>, INotifyTypedStateChanging<TState>
+        where TStateDefinition : class, IStateDefinition, new()
+        where TStateGroupDefinition : class, IStateGroupDefinition<TStateDefinition>, new()
     {
-        /// <summary>
-        /// Gets the state group definition (including the states that make up the group)
-        /// </summary>
-        ITypedStateGroupDefinition<TState> TypedGroupDefinition { get; }
-
         /// <summary>
         /// Gets the current state name
         /// </summary>
         TState CurrentState { get; }
-
-        /// <summary>
-        /// Gets the current state name
-        /// </summary>
-        ITypedStateDefinition<TState> CurrentTypedStateDefinition { get; }
 
         /// <summary>
         /// Change to typed state

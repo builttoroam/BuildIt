@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.States
 {
@@ -46,10 +47,10 @@ namespace BuildIt.States
         /// </summary>
         /// <typeparam name="TState">The type (enum) to look up the state group</typeparam>
         /// <returns>The typed state group</returns>
-        public ITypedStateGroup<TState> TypedStateGroup<TState>()
+        public ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>> TypedStateGroup<TState>()
             where TState : struct
         {
-            return StateGroup(typeof(TState).Name) as ITypedStateGroup<TState>;
+            return StateGroup(typeof(TState).Name) as ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>>;
         }
 
         /// <summary>

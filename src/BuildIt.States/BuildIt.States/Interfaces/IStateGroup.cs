@@ -8,6 +8,30 @@ namespace BuildIt.States.Interfaces
     /// <summary>
     /// Defines a set of states
     /// </summary>
+    /// <typeparam name="TStateDefinition">Type of the state definition</typeparam>
+    /// <typeparam name="TStateGroupDefinition">Type of the group definition</typeparam>
+    public interface IStateGroup<
+        // ReSharper disable once TypeParameterCanBeVariant - Not required
+        TStateDefinition,
+        // ReSharper disable once TypeParameterCanBeVariant - Not required
+        TStateGroupDefinition> : IStateGroup
+        where TStateDefinition : class, IStateDefinition, new()
+        where TStateGroupDefinition : class, IStateGroupDefinition<TStateDefinition>, new()
+    {
+        /// <summary>
+        /// Gets the state group definition (including the states that make up the group)
+        /// </summary>
+        TStateGroupDefinition TypedGroupDefinition { get; }
+
+        /// <summary>
+        /// Gets the current state name
+        /// </summary>
+        TStateDefinition CurrentTypedStateDefinition { get; }
+    }
+
+    /// <summary>
+    /// Defines a set of states
+    /// </summary>
     public interface IStateGroup :
         IRequiresUIAccess,
         IRegisterDependencies,
@@ -62,7 +86,7 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Gets the targets to be used when changing state
         /// </summary>
-        IDictionary<string,object> StateValueTargets { get; }
+        IDictionary<string, object> StateValueTargets { get; }
 
         /// <summary>
         /// Instigates a change to a state

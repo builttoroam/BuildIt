@@ -7,12 +7,15 @@ namespace BuildIt.States
     /// <summary>
     /// Definition of a state group
     /// </summary>
-    public abstract class BaseStateGroupDefinition : IStateGroupDefinition
+    /// <typeparam name="TStateDefinition">The type of the state definitions to create</typeparam>
+    public abstract class BaseStateGroupDefinition<TStateDefinition>
+        : IStateGroupDefinition<TStateDefinition>
+        where TStateDefinition : class, IStateDefinition, new()
     {
         /// <summary>
-        /// Gets the name of the state group
+        /// Gets or sets the name of the state group
         /// </summary>
-        public abstract string GroupName { get; }
+        public virtual string GroupName { get; set; }
 
         /// <summary>
         /// Gets dictionary of states that can be transitioned to
@@ -31,11 +34,56 @@ namespace BuildIt.States
         /// <summary>
         /// Retrieve state definition based on state name
         /// </summary>
-        /// <param name="state">The state name</param>
+        /// <param name="stateName">The state name</param>
         /// <returns>New state definition</returns>
-        public IStateDefinition StateDefinition(string state)
+        IStateDefinition IStateGroupDefinition.StateDefinitionFromName(string stateName)
         {
-            return string.IsNullOrWhiteSpace(state) ? null : States.SafeValue(state);
+            return StateDefinitionFromName(stateName);
+        }
+
+        /// <summary>
+        /// Retrieve state definition based on state name
+        /// </summary>
+        /// <param name="stateName">The state name</param>
+        /// <returns>New state definition</returns>
+        public virtual TStateDefinition StateDefinitionFromName(string stateName)
+        {
+            return string.IsNullOrWhiteSpace(stateName) ? default(TStateDefinition) : States.SafeValue(stateName) as TStateDefinition;
+        }
+
+        /// <summary>
+        /// Defines a new typed state definition
+        /// </summary>
+        /// <param name="stateDefinition">The typed state definition to define</param>
+        /// <returns>The defined state definition (maybe existing definition if already defined)</returns>
+        public TStateDefinition DefineTypedState(TStateDefinition stateDefinition)
+        {
+            if (stateDefinition == null)
+            {
+                "Can't define null state definition".Log();
+                return null;
+            }
+
+            var existing = StateDefinitionFromName(stateDefinition.StateName);
+            if (existing != null)
+            {
+                $"State definition already defined, returning existing instance - {existing.GetType().Name}".Log();
+                return existing;
+            }
+
+            $"Defining state of type {stateDefinition.GetType().Name}".Log();
+            States[stateDefinition.StateName] = stateDefinition;
+            return stateDefinition;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a state definition
+        /// </summary>
+        /// <returns>The state definition</returns>
+        protected virtual TStateDefinition CreateDefinition()
+        {
+            var stateDef = new TStateDefinition();
+            return stateDef;
         }
     }
 }

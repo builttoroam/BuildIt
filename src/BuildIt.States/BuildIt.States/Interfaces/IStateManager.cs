@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.States.Interfaces
 {
@@ -34,7 +35,7 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state group</typeparam>
         /// <returns>The state group</returns>
-        ITypedStateGroup<TState> TypedStateGroup<TState>()
+        ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>> TypedStateGroup<TState>()
             where TState : struct;
 
         /// <summary>

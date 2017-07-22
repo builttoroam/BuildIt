@@ -1,4 +1,5 @@
 ﻿using System;
+using BuildIt.States.Typed;
 
 namespace BuildIt.States.Interfaces
 {

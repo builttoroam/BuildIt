@@ -19,9 +19,9 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Gets the name of the state (should be unique)
+        /// Gets or sets gets the name of the state (should be unique)
         /// </summary>
-        public abstract string StateName { get; }
+        public virtual string StateName { get; set; }
 
         /// <summary>
         /// Gets the triggers that are available for the state

@@ -1,14 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reflection;
+using BuildIt.States.Interfaces;
 
-namespace BuildIt.States
+namespace BuildIt.States.Typed.Enum
 {
     /// <summary>
     /// Definition of a enum state group
     /// </summary>
-    /// /// <typeparam name="TState">The enum type</typeparam>
-    public class EnumStateGroupDefinition<TState> : TypedStateGroupDefinition<TState>
+    /// <typeparam name="TState">The state type</typeparam>
+    public class EnumStateGroupDefinition<TState>
+        : TypedStateGroupDefinition<TState, EnumStateDefinition<TState>>
         where TState : struct
     {
         /// <summary>
@@ -25,21 +26,14 @@ namespace BuildIt.States
         /// <summary>
         /// Defines all states for the enum type
         /// </summary>
-        public override void DefineAllStates()
+        public void DefineAllStates()
         {
-            var vals = Enum.GetValues(typeof(TState));
+            var vals = System.Enum.GetValues(typeof(TState));
             foreach (var enumVal in vals)
             {
                 $"Defining state {enumVal}".Log();
                 DefineTypedState((TState)enumVal);
             }
         }
-
-        /// <summary>
-        /// Returns a state from the state name
-        /// </summary>
-        /// <param name="stateName">The state name to parse</param>
-        /// <returns>The state</returns>
-        public override TState FromString(string stateName) => Utilities.EnumParse<TState>(stateName);
     }
 }
