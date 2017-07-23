@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using BuildIt.States;
+using BuildIt.States.Interfaces;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     /// <summary>
     /// Group of visual states in xaml
@@ -22,6 +24,11 @@ namespace BuildIt.Forms.Core
             : base(groups)
         {
         }
+
+        /// <summary>
+        /// Gets the State manager that will be used to manage currrent states for the visual state groups
+        /// </summary>
+        public IStateManager StateManager { get; } = new StateManager();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VisualStateGroups"/> class from a single visual state group

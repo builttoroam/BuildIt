@@ -1,15 +1,15 @@
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms.Animations
 {
-    public class FadeAnimation : StateAnimation
+    public class RotateXAnimation : StateAnimation
     {
-        public double Opacity { get; set; }
+        public double Rotation { get; set; }
         public override Task Animate(VisualElement visualElement)
         {
             if (visualElement == null) return null;
-            return visualElement.FadeTo(Opacity, (uint)Duration);
+            return visualElement.RotateXTo(Rotation, (uint)Duration);
         }
     }
 }

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using BuildIt.Forms.Animations;
 using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     public class VisualState : BindableObject
     {

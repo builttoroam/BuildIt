@@ -1,4 +1,4 @@
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     public class Setter : TargettedStateAction
     {

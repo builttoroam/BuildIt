@@ -1,15 +1,15 @@
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms.Animations
 {
-    public class ScaleAnimation : StateAnimation
+    public class FadeAnimation : StateAnimation
     {
-        public double Scale { get; set; }
+        public double Opacity { get; set; }
         public override Task Animate(VisualElement visualElement)
         {
             if (visualElement == null) return null;
-            return visualElement.ScaleTo(Scale, (uint)Duration);
+            return visualElement.FadeTo(Opacity, (uint)Duration);
         }
     }
 }

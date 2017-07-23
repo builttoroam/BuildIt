@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using BuildIt.Forms.Core;
 using System.Windows.Input;
 using Xamarin.Forms.Internals;
 using System.Runtime.CompilerServices;

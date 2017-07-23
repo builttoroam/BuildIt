@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms.Animations
 {
     public class AnimationGroup : BindableObject
     {
@@ -31,10 +30,5 @@ namespace BuildIt.Forms.Core
             return new List<StateAnimation>();
         }
 
-    }
-
-    public abstract class StateAnimation : TargettedStateAction
-    {
-        public abstract Task Animate(VisualElement visualElement);
     }
 }

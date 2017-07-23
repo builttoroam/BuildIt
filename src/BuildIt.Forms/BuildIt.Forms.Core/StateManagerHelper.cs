@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     public static class StateManagerHelper
     {

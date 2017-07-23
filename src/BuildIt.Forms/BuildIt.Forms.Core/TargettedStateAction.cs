@@ -1,6 +1,6 @@
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     public class TargettedStateAction
     {

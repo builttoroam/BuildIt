@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms.Animations
 {
     public class IncrementScaleAnimation : StateAnimation
     {

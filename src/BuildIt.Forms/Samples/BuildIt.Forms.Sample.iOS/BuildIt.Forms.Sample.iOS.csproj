@@ -131,8 +131,8 @@
     <Reference Include="BuildIt.General, Version=1.1.0.30, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\BuildIt.General.1.1.0.30\lib\netstandard1.0\BuildIt.General.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.States, Version=1.1.0.43, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\BuildIt.States.1.1.0.43-beta\lib\xamarinios10\BuildIt.States.dll</HintPath>
+    <Reference Include="BuildIt.States, Version=1.1.0.44, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\BuildIt.States.1.1.0.44-beta\lib\xamarinios10\BuildIt.States.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />

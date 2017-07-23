@@ -1,15 +1,15 @@
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms.Animations
 {
-    public class RotateYAnimation : StateAnimation
+    public class ScaleAnimation : StateAnimation
     {
-        public double Rotation { get; set; }
+        public double Scale { get; set; }
         public override Task Animate(VisualElement visualElement)
         {
             if (visualElement == null) return null;
-            return visualElement.RotateYTo(Rotation, (uint)Duration);
+            return visualElement.ScaleTo(Scale, (uint)Duration);
         }
     }
 }

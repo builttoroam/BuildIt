@@ -180,7 +180,7 @@
       <Version>1.1.0.30</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.43-beta</Version>
+      <Version>1.1.0.44-beta</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.3</Version>

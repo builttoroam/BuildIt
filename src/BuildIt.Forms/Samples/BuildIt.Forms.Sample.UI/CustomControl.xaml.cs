@@ -1,5 +1,4 @@
 ﻿using BuildIt.forms.Sample.Core.ViewModels;
-using BuildIt.Forms.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

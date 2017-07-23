@@ -24,10 +24,7 @@ namespace BuildIt.Forms.Sample.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            var x = new Controls.TouchEffect();
             var y = new BuildIt.Forms.Controls.iOS.TouchEffect();
-            //var y = new TouchRecognizer();
-
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

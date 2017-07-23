@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms.Animations
 {
     [ContentProperty("Animations")]
     public abstract class MultiAnimation : StateAnimation

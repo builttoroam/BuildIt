@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
+             xmlns:local="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
              xmlns:tt="clr-namespace:BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Controls.ContentButton">
     <ContentView.ControlTemplate>
@@ -11,6 +11,7 @@
                 <local:VisualStateManager.VisualStateGroups>
                     <local:VisualStateGroups>
                         <local:VisualStateGroup Name="CommonStates">
+                            <!--DefinitionCacheKey="BuildIt_ContentButtonStates">-->
                             <local:VisualState Name="Normal" />
                             <local:VisualState Name="PointerOver">
                                 <local:VisualState.Setters>

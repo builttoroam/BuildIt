@@ -4,7 +4,7 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     /// <summary>
     /// Static helper class
