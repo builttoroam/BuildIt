@@ -16,16 +16,16 @@ namespace BuildIt.Forms.Sample
         {
             InitializeComponent();
 
-            //var build = new ContainerBuilder();
-            //var container = build.Build();
+            // var build = new ContainerBuilder();
+            // var container = build.Build();
 
-            //var csl = new AutofacServiceLocator(container);
-            //var dcontainer = new AutofacDependencyContainer(container);
-            //using (dcontainer.StartUpdate())
-            //{
+            // var csl = new AutofacServiceLocator(container);
+            // var dcontainer = new AutofacDependencyContainer(container);
+            // using (dcontainer.StartUpdate())
+            // {
             //    dcontainer.Register<CustomBasicDebugLogger, ILogService>();
-            //}
-            //ServiceLocator.SetLocatorProvider(() => csl);
+            // }
+            // ServiceLocator.SetLocatorProvider(() => csl);
 
             MainPage = new BuildIt.Forms.Sample.MainPage();
         }
@@ -33,8 +33,6 @@ namespace BuildIt.Forms.Sample
         protected override void OnStart()
         {
             // Handle when your app starts
-
-            
         }
 
         protected override void OnSleep()
@@ -59,7 +57,6 @@ namespace BuildIt.Forms.Sample
             {
                 base.Exception(message, ex);
                 System.Diagnostics.Debug.WriteLine(message + " " + ex.StackTrace);
-
             }
         }
     }

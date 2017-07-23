@@ -16,9 +16,6 @@ namespace BuildIt.Forms
     /// </summary>
     public static class VisualStateManager
     {
-        private const string VisualStateGroupsPropertyName = "VisualStateGroups";
-        private const string StateManagerPropertyName = "StateManager";
-
         /// <summary>
         /// Gets the visual state groups for a particular element
         /// </summary>
@@ -34,6 +31,19 @@ namespace BuildIt.Forms
                propertyChanging: null,
                coerceValue: null,
                defaultValueCreator: CreateDefaultValue);
+
+        private const string VisualStateGroupsPropertyName = "VisualStateGroups";
+
+        /// <summary>
+        /// Wraps the generation of a state value
+        /// </summary>
+        private interface IStateValueBuilder
+        {
+            /// <summary>
+            /// Gets the current state value
+            /// </summary>
+            IStateValue Value { get; }
+        }
 
         /// <summary>
         /// Transitions the element to the specified state
@@ -94,12 +104,37 @@ namespace BuildIt.Forms
         {
             try
             {
+                // If a content view, the state groups should be appended to the first child
+                // (ie the first element inside the template
+                if (view is ContentView cv)
+                {
+                    view = cv.Children.FirstOrDefault();
+                }
+
                 view.SetValue(VisualStateGroupsProperty, value);
             }
             catch (Exception ex)
             {
                 ex.Log();
             }
+        }
+
+        /// <summary>
+        /// Binds together two state managers
+        /// </summary>
+        /// <param name="element">The element that houses the state manager to be kept up to date</param>
+        /// <param name="stateManager">The state manager to monitor</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public static async Task<IStateBinder> Bind(Element element, IStateManager stateManager)
+        {
+            var groups = VisualStateManager.GetVisualStateGroups(element);
+            if (groups?.StateManager == null)
+            {
+                return null;
+            }
+
+            var binder = await groups.StateManager.Bind(stateManager);
+            return binder;
         }
 
         private static object CreateDefaultValue(BindableObject bindable)
@@ -146,7 +181,7 @@ namespace BuildIt.Forms
                 var isExisting = false;
                 if (!string.IsNullOrWhiteSpace(key))
                 {
-                    sg = new StateGroup(vsgroup.Name,key);
+                    sg = new StateGroup(vsgroup.Name, key);
                     isExisting = sg.TypedGroupDefinition.States.Count != 0;
                 }
                 else
@@ -234,19 +269,14 @@ namespace BuildIt.Forms
             return Task.WhenAll(tasks);
         }
 
-        private static Func<CancelEventArgs, Task> BuildCancellableAnimations(IList<StateAnimation> animations, Element element)
-        {
-            return (cancel) => BuildAnimationTasks(animations, element);
-        }
-
         private static Func<Task> BuildAnimations(IList<StateAnimation> animations, Element element)
         {
             return () => BuildAnimationTasks(animations, element);
         }
 
-        private static async void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values)
+        private static void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values)
         {
-            //await Task.Yield();
+            // await Task.Yield();
             var setterIndex = -1;
             foreach (var setter in state.Setters)
             {
@@ -290,24 +320,8 @@ namespace BuildIt.Forms
             }
         }
 
-        private interface IStateValueBuilder
-        {
-            IStateValue Value { get; }
-        }
-
         private class StateValueBuilder<TElement, TPropertyValue> : IStateValueBuilder
         {
-            public TElement Element { get; set; }
-
-            public string TargetId { get; set; }
-
-            public PropertyInfo Property { get; set; }
-
-            public string RawValue { get; set; }
-            public TypeConverter Converter { get; set; }
-
-            public int Duration { get; set; }
-
             public StateValueBuilder(string targetId, TElement element, PropertyInfo prop, string value, TypeConverter converter, int duration)
             {
                 TargetId = targetId;
@@ -325,7 +339,15 @@ namespace BuildIt.Forms
                     var sv = new StateValue<TElement, TPropertyValue>();
                     sv.Element = Element;
                     sv.TargetId = TargetId;
-                    sv.Key = new Tuple<object, string>(Element, Property.Name);
+                    if (Element != null)
+                    {
+                        sv.Key = new Tuple<object, string>(Element, Property.Name);
+                    }
+                    else
+                    {
+                        sv.Key = new Tuple<object, string>(TargetId, Property.Name);
+                    }
+
                     sv.Getter = (element) =>
                     {
                         var val = Property.GetValue(element);
@@ -345,28 +367,32 @@ namespace BuildIt.Forms
                     if (sv.Setter == null)
                     {
                         sv.Setter = async (element, val) =>
-                          {
-                              if (Duration > 0)
-                              {
-                                  var startTime = DateTime.Now;
-                                  var endTime = startTime.AddMilliseconds(Duration);
-                                  var stepduration = 1000.0 / 60.0; // ~60 frames per sec
-                                  var current = (double)Property.GetValue(element);
-                                  var end = (double)(object)val;
-                                  while (startTime < endTime)
-                                  {
-                                      var remainingSteps = endTime.Subtract(startTime).TotalMilliseconds / stepduration;
-                                      if (remainingSteps <= 0) break;
-                                      var inc = (end - current) / remainingSteps;
-                                      current += inc;
-                                      Property.SetValue(element, current);
-                                      await Task.Delay((int)stepduration);
-                                      startTime = DateTime.Now;
-                                  }
-                              }
+                        {
+                            if (Duration > 0)
+                            {
+                                var startTime = DateTime.Now;
+                                var endTime = startTime.AddMilliseconds(Duration);
+                                var stepduration = 1000.0 / 60.0; // ~60 frames per sec
+                                var current = (double)Property.GetValue(element);
+                                var end = (double)(object)val;
+                                while (startTime < endTime)
+                                {
+                                    var remainingSteps = endTime.Subtract(startTime).TotalMilliseconds / stepduration;
+                                    if (remainingSteps <= 0)
+                                    {
+                                        break;
+                                    }
 
-                              Property.SetValue(element, val);
-                          };
+                                    var inc = (end - current) / remainingSteps;
+                                    current += inc;
+                                    Property.SetValue(element, current);
+                                    await Task.Delay((int)stepduration);
+                                    startTime = DateTime.Now;
+                                }
+                            }
+
+                            Property.SetValue(element, val);
+                        };
                     }
 
                     if (Converter?.CanConvertFrom(typeof(string)) ?? false)
@@ -385,17 +411,22 @@ namespace BuildIt.Forms
                             sv.Value = (TPropertyValue)parse.Invoke(null, new object[] { RawValue });
                         }
                     }
+
                     return sv;
                 }
             }
-        }
 
-        public static async Task<IStateBinder> Bind(Element element, IStateManager stateManager)
-        {
-            var groups = VisualStateManager.GetVisualStateGroups(element);
-            if (groups?.StateManager == null) return null;
-            var binder = await groups.StateManager.Bind(stateManager);
-            return binder;
+            private TElement Element { get; set; }
+
+            private string TargetId { get; set; }
+
+            private PropertyInfo Property { get; set; }
+
+            private string RawValue { get; set; }
+
+            private TypeConverter Converter { get; set; }
+
+            private int Duration { get; set; }
         }
     }
 }

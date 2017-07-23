@@ -10,22 +10,6 @@ namespace BuildIt.Forms
     public class VisualStateGroups : List<VisualStateGroup>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VisualStateGroups"/> class.
-        /// </summary>
-        public VisualStateGroups()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VisualStateGroups"/> class.
-        /// </summary>
-        /// <param name="groups">The visual state groups to add to the groups</param>
-        public VisualStateGroups(IEnumerable<VisualStateGroup> groups)
-            : base(groups)
-        {
-        }
-
-        /// <summary>
         /// Gets the State manager that will be used to manage currrent states for the visual state groups
         /// </summary>
         public IStateManager StateManager { get; } = new StateManager();

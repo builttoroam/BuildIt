@@ -10,9 +10,9 @@
                   BackgroundColor="{TemplateBinding BackgroundColor}">
                 <local:VisualStateManager.VisualStateGroups>
                     <local:VisualStateGroups>
-                        <local:VisualStateGroup Name="CommonStates">
-                            <!--DefinitionCacheKey="BuildIt_ContentButtonStates">-->
-                            <local:VisualState Name="Normal" />
+                        <local:VisualStateGroup Name="CommonStates"
+                            DefinitionCacheKey="BuildIt_ContentButtonStates">
+                            <local:VisualState Name="Normal"/>
                             <local:VisualState Name="PointerOver">
                                 <local:VisualState.Setters>
                                     <local:Setter Value="#33000000"
@@ -23,7 +23,7 @@
                             <local:VisualState Name="Pressed">
                                 <local:VisualState.Setters>
                                     <local:Setter Value="#66000000"
-                                                  Element="{x:Reference RootGrid}"
+                                                  Element="{x:Reference Background}"
                                                   Property="BackgroundColor" />
                                 </local:VisualState.Setters>
                             </local:VisualState>

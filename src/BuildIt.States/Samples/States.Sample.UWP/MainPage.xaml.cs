@@ -63,5 +63,28 @@ namespace States.Sample.UWP
         {
             (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoaded);
         }
+
+        private async void ItemClicked(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as RandomItem;
+            var state = item.StateManager.CurrentState<ItemStates>();
+            switch (state)
+            {
+                case ItemStates.Base:
+                    state = ItemStates.IsEnabled;
+                    break;
+                case ItemStates.IsEnabled:
+                    state = ItemStates.IsEnabledTwo;
+                    break;
+                case ItemStates.IsEnabledTwo:
+                    state = ItemStates.IsNotEnabled;
+                    break;
+                case ItemStates.IsNotEnabled:
+                    state = ItemStates.IsEnabled;
+                    break;
+            }
+
+            await item.StateManager.GoToState(state);
+        }
     }
 }

@@ -1,28 +1,37 @@
+using CoreGraphics;
+using Foundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using UIKit;
 using Xamarin.Forms;
 
-using CoreGraphics;
-using Foundation;
-using UIKit;
-
+#pragma warning disable SA1300 // Element must begin with upper-case letter - iOS platform
 namespace BuildIt.Forms.Controls.iOS
+#pragma warning restore SA1300 // Element must begin with upper-case letter
 {
+    /// <summary>
+    /// Touch recognizer for intercepting touch behaviour
+    /// </summary>
     public class TouchRecognizer : UIGestureRecognizer
     {
-        Element element;        // Forms element for firing events
-        UIView view;            // iOS UIView 
-        BuildIt.Forms.Controls.TouchEffect touchEffect;
-        bool capture;
-
-        static Dictionary<UIView, TouchRecognizer> viewDictionary = 
+        private static Dictionary<UIView, TouchRecognizer> viewDictionary =
             new Dictionary<UIView, TouchRecognizer>();
 
-        static Dictionary<long, TouchRecognizer> idToTouchDictionary = 
+        private static Dictionary<long, TouchRecognizer> idToTouchDictionary =
             new Dictionary<long, TouchRecognizer>();
 
+        private Element element;        // Forms element for firing events
+        private UIView view;            // iOS UIView
+        private BuildIt.Forms.Controls.TouchEffect touchEffect;
+        private bool capture;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TouchRecognizer"/> class.
+        /// </summary>
+        /// <param name="element">The element to add the recognizer to</param>
+        /// <param name="view">The view to connect to</param>
+        /// <param name="touchEffect">The touch events to monitor for</param>
         public TouchRecognizer(Element element, UIView view, BuildIt.Forms.Controls.TouchEffect touchEffect)
         {
             this.element = element;
@@ -32,12 +41,19 @@ namespace BuildIt.Forms.Controls.iOS
             viewDictionary.Add(view, this);
         }
 
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
         public void Detach()
         {
             viewDictionary.Remove(view);
         }
 
-        // touches = touches of interest; evt = all touches of type UITouch
+        /// <summary>
+        /// Touches starts
+        /// </summary>
+        /// <param name="touches">Touches of interest</param>
+        /// <param name="evt">All touches of type UITouch</param>
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             base.TouchesBegan(touches, evt);
@@ -54,6 +70,11 @@ namespace BuildIt.Forms.Controls.iOS
             capture = touchEffect.Capture;
         }
 
+        /// <summary>
+        /// Touch moved
+        /// </summary>
+        /// <param name="touches">The touches of interest</param>
+        /// <param name="evt">All the touches</param>
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             base.TouchesMoved(touches, evt);
@@ -78,6 +99,11 @@ namespace BuildIt.Forms.Controls.iOS
             }
         }
 
+        /// <summary>
+        /// Handle when a touch ends
+        /// </summary>
+        /// <param name="touches">The touches ending</param>
+        /// <param name="evt">The touch event</param>
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
             base.TouchesEnded(touches, evt);
@@ -99,10 +125,16 @@ namespace BuildIt.Forms.Controls.iOS
                         FireEvent(idToTouchDictionary[id], id, TouchActionType.Released, touch, false);
                     }
                 }
+
                 idToTouchDictionary.Remove(id);
             }
         }
 
+        /// <summary>
+        /// Touch cancelled
+        /// </summary>
+        /// <param name="touches">Touches of interest</param>
+        /// <param name="evt">All the touches</param>
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
             base.TouchesCancelled(touches, evt);
@@ -119,11 +151,12 @@ namespace BuildIt.Forms.Controls.iOS
                 {
                     FireEvent(idToTouchDictionary[id], id, TouchActionType.Cancelled, touch, false);
                 }
+
                 idToTouchDictionary.Remove(id);
             }
         }
 
-        void CheckForBoundaryHop(UITouch touch)
+        private void CheckForBoundaryHop(UITouch touch)
         {
             long id = touch.Handle.ToInt64();
 
@@ -134,26 +167,29 @@ namespace BuildIt.Forms.Controls.iOS
             {
                 CGPoint location = touch.LocationInView(view);
 
-                if (new CGRect(new CGPoint(), view.Frame.Size).Contains(location))
+                if (new CGRect(new CGPoint(0.0, 0.0), view.Frame.Size).Contains(location))
                 {
                     recognizerHit = viewDictionary[view];
                 }
             }
+
             if (recognizerHit != idToTouchDictionary[id])
             {
                 if (idToTouchDictionary[id] != null)
                 {
                     FireEvent(idToTouchDictionary[id], id, TouchActionType.Exited, touch, true);
                 }
+
                 if (recognizerHit != null)
                 {
                     FireEvent(recognizerHit, id, TouchActionType.Entered, touch, true);
                 }
+
                 idToTouchDictionary[id] = recognizerHit;
             }
         }
 
-        void FireEvent(TouchRecognizer recognizer, long id, TouchActionType actionType, UITouch touch, bool isInContact)
+        private void FireEvent(TouchRecognizer recognizer, long id, TouchActionType actionType, UITouch touch, bool isInContact)
         {
             // Convert touch location to Xamarin.Forms Point value
             CGPoint cgPoint = touch.LocationInView(recognizer.View);
@@ -163,7 +199,8 @@ namespace BuildIt.Forms.Controls.iOS
             Action<Element, TouchActionEventArgs> onTouchAction = recognizer.touchEffect.OnTouchAction;
 
             // Call that method
-            onTouchAction(recognizer.element,
+            onTouchAction(
+                recognizer.element,
                 new TouchActionEventArgs(id, actionType, xfPoint, isInContact));
         }
     }

@@ -33,8 +33,6 @@ namespace BuildIt.Forms.Sample
             {
                 Binder = await VisualStateManager.Bind(this.Content, itemViewModel?.StateManager);
             }
-
         }
-
     }
 }

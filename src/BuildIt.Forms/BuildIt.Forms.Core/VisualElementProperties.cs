@@ -4,16 +4,26 @@ using Xamarin.Forms;
 
 namespace BuildIt.Forms
 {
+    /// <summary>
+    /// Reference class to aid with setting common properties
+    /// </summary>
     public static class VisualElementProperties
     {
-        public static IDictionary<string, object> Setters = new Dictionary<string, object>
+        private static IDictionary<string, object> Setters { get; } = new Dictionary<string, object>
         {
-            {"IsVisible",  new Action<VisualElement, bool>((VisualElement ve, bool isVisible) => ve.IsVisible=isVisible) }
+            { nameof(VisualElement.IsVisible),  new Action<VisualElement, bool>((ve, isVisible) => ve.IsVisible = isVisible) }
         };
 
-        internal static Action<TElement, TPropertyValue> Lookup<TElement, TPropertyValue>(string name)
+        /// <summary>
+        /// Looks up a property getter
+        /// </summary>
+        /// <typeparam name="TElement">The element type to retrieve</typeparam>
+        /// <typeparam name="TPropertyValue">The property type</typeparam>
+        /// <param name="name">The name of the property</param>
+        /// <returns>The action to retrieve the property value</returns>
+        public static Action<TElement, TPropertyValue> Lookup<TElement, TPropertyValue>(string name)
         {
-            var action = Utilities.SafeValue<string, object, Action<TElement, TPropertyValue>>(Setters, name);
+            var action = Setters.SafeValue<string, object, Action<TElement, TPropertyValue>>(name);
             return action;
         }
     }

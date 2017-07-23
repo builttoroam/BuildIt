@@ -14,30 +14,28 @@ namespace BuildIt.Forms.Sample
 {
     public partial class MainPage : ContentPage
     {
-
         public MainPage()
         {
             InitializeComponent();
 
             BindingContext = new MainViewModel();
 
-            //var x = new Label();
-            //x.TextColor
+            // var x = new Label();
+            // x.TextColor
 
-            //var x = new Button();
-            //x.TextColor
+            // var x = new Button();
+            // x.TextColor
 
-            //var x = new Frame();
-            //x.BackgroundColor;
+            // var x = new Frame();
+            // x.BackgroundColor;
 
-            //var x = new BoxView();
-            //x.Color;
+            // var x = new BoxView();
+            // x.Color;
 
-            //var cv = new ContentView();
-            //cv.BackgroundColor;
+            // var cv = new ContentView();
+            // cv.BackgroundColor;
 
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
-
         }
 
         protected async override void OnAppearing()
@@ -49,13 +47,12 @@ namespace BuildIt.Forms.Sample
             await (BindingContext as MainViewModel).Init();
         }
 
-
         public void ToggleButtonPressed(object sender, EventArgs e)
         {
-            
             (BindingContext as MainViewModel).SwitchStates();
-            //VisualStateManager.GoToState(this, visible ? "Show":"Hide");
+            // VisualStateManager.GoToState(this, visible ? "Show":"Hide");
         }
+
         public void ExpandClicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "DoubleHeight");
@@ -65,6 +62,7 @@ namespace BuildIt.Forms.Sample
         {
             VisualStateManager.GoToState(this, "Default");
         }
+
         public void ButtonClicked(object sender, EventArgs e)
         {
             DisabledButton.IsEnabled = !DisabledButton.IsEnabled;

@@ -16,7 +16,6 @@ using Windows.UI.Xaml.Shapes;
 
 namespace BuildIt.Forms.Sample.UWP
 {
-
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -30,17 +29,17 @@ namespace BuildIt.Forms.Sample.UWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            //var build = new ContainerBuilder();
-            //var container = build.Build();
+            // var build = new ContainerBuilder();
+            // var container = build.Build();
 
-            //var csl = new AutofacServiceLocator(container);
-            //var afContainer = new AutofacDependencyContainer(container);
-            //using (afContainer.StartUpdate())
-            //{
+            // var csl = new AutofacServiceLocator(container);
+            // var afContainer = new AutofacDependencyContainer(container);
+            // using (afContainer.StartUpdate())
+            // {
             //    afContainer.Register<TestDebugLogger, ILogService>();
-            //}
+            // }
 
-            //ServiceLocator.SetLocatorProvider(() => csl);
+            // ServiceLocator.SetLocatorProvider(() => csl);
         }
 
         /// <summary>
@@ -50,7 +49,6 @@ namespace BuildIt.Forms.Sample.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -78,7 +76,7 @@ namespace BuildIt.Forms.Sample.UWP
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    // TODO: Load state from previously suspended application
                 }
 
                 // Place the frame in the current Window
@@ -122,7 +120,7 @@ namespace BuildIt.Forms.Sample.UWP
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+            // TODO: Save application state and stop any background activity
             deferral.Complete();
         }
     }
