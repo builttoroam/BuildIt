@@ -192,8 +192,8 @@ namespace BuildIt.Forms.Controls.iOS
         private void FireEvent(TouchRecognizer recognizer, long id, TouchActionType actionType, UITouch touch, bool isInContact)
         {
             // Convert touch location to Xamarin.Forms Point value
-            CGPoint cgPoint = touch.LocationInView(recognizer.View);
-            Point xfPoint = new Point(cgPoint.X, cgPoint.Y);
+            var touchPoint = touch.LocationInView(recognizer.View);
+            var formsPoint = new Point(touchPoint.X, touchPoint.Y);
 
             // Get the method to call for firing events
             Action<Element, TouchActionEventArgs> onTouchAction = recognizer.touchEffect.OnTouchAction;
@@ -201,7 +201,7 @@ namespace BuildIt.Forms.Controls.iOS
             // Call that method
             onTouchAction(
                 recognizer.element,
-                new TouchActionEventArgs(id, actionType, xfPoint, isInContact));
+                new TouchActionEventArgs(id, actionType, formsPoint, isInContact));
         }
     }
 }
