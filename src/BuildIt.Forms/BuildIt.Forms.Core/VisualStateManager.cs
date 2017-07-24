@@ -198,6 +198,8 @@ namespace BuildIt.Forms
                     return;
                 }
 
+                var elementIds = new Dictionary<Element, string>();
+
                 $"Defining states for group {vsgroup.Name}".Log();
                 foreach (var vstate in vsgroup)
                 {
@@ -207,7 +209,7 @@ namespace BuildIt.Forms
                     vstate.StateGroup = sg;
 
                     "Building state setters".Log();
-                    BuildStateSetters(vsgroup, vstate, view as Element, values);
+                    BuildStateSetters(vsgroup, vstate, view as Element, values, elementIds);
 
                     "Building arriving animations".Log();
                     var arriving = vstate.ArrivingAnimations;
@@ -274,7 +276,7 @@ namespace BuildIt.Forms
             return () => BuildAnimationTasks(animations, element);
         }
 
-        private static void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values)
+        private static void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values, IDictionary<Element, string> elementIds)
         {
             // await Task.Yield();
             var setterIndex = -1;
@@ -305,6 +307,15 @@ namespace BuildIt.Forms
                 }
 
                 var targetId = group.Name + "_" + state.Name + "_" + setterIndex;
+                var existing = elementIds.SafeValue(target.Item1);
+                if (existing != null)
+                {
+                    targetId = existing;
+                }
+                else
+                {
+                    elementIds[target.Item1] = targetId;
+                }
 
                 var builderType = typeof(StateValueBuilder<,>).MakeGenericType(setterTarget.GetType(), targetProp.PropertyType);
 
