@@ -36,7 +36,7 @@ namespace BuildIt.States.Typed
         /// </summary>
         /// <param name="state">The typed state</param>
         /// <returns>The defined state definition (maybe existing definition if already defined)</returns>
-        public TTypedStateDefinition DefineTypedState(TState state)
+        public virtual TTypedStateDefinition DefineTypedState(TState state)
         {
             // Don't ever add the default value (eg Base) state
             if (default(TState)?.Equals(state) ?? false)
