@@ -62,7 +62,7 @@ namespace BuildIt.States
         /// <summary>
         /// Gets or sets the state group definition (including the states that make up the group)
         /// </summary>
-        public TStateGroupDefinition TypedGroupDefinition { get; set;  }
+        public TStateGroupDefinition TypedGroupDefinition { get; set; }
 
         /// <summary>
         /// Gets the name of the state group
@@ -79,7 +79,7 @@ namespace BuildIt.States
         /// </summary>
         public IUIExecutionContext UIContext { get; set; }
 
-       /// <summary>
+        /// <summary>
         /// Gets or sets the current state name
         /// </summary>
         public virtual string CurrentStateName
@@ -88,9 +88,9 @@ namespace BuildIt.States
             protected set
             {
                 CurrentTypedStateDefinition = (from s in GroupDefinition.States
-                    let def = s.Value
-                    where def?.StateName == value
-                    select def).FirstOrDefault() as TStateDefinition;
+                                               let def = s.Value
+                                               where def?.StateName == value
+                                               select def).FirstOrDefault() as TStateDefinition;
                 if (CurrentTypedStateDefinition != null)
                 {
                     currentStateName = CurrentTypedStateDefinition.StateName;
@@ -166,13 +166,13 @@ namespace BuildIt.States
         /// </summary>
         public IDictionary<string, object> StateValueTargets { get; } = new Dictionary<string, object>();
 
-        private static IDictionary<string, TStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, TStateGroupDefinition>();
-
         /// <summary>
         /// Gets cache of state data entities
         /// </summary>
-        private IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
+        protected IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
             new Dictionary<Type, INotifyPropertyChanged>();
+
+        private static IDictionary<string, TStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, TStateGroupDefinition>();
 
         /// <summary>
         /// Gets all triggers defined for the states in this group
@@ -218,6 +218,12 @@ namespace BuildIt.States
                 throw new Exception("History tracking not enabled");
             }
 
+            if (GoToPreviousStateIsBlocked)
+            {
+                "Can't go back as is being blocked".Log();
+                return false;
+            }
+
             return await PerformStateChange(newState, false, useTransitions);
         }
 
@@ -258,7 +264,7 @@ namespace BuildIt.States
         /// <param name="groupToBindTo">The source group (ie changes in the source group update this group)</param>
         /// <param name="bothDirections">Whether updates should flow both directions</param>
         /// <returns>Binder entity that manages the relationship</returns>
-        public async Task<IStateBinder> Bind(IStateGroup groupToBindTo, bool bothDirections = true)
+        public virtual async Task<IStateBinder> Bind(IStateGroup groupToBindTo, bool bothDirections = true)
         {
             var sg = groupToBindTo; // as IStateGroup<TState>; // This includes INotifyStateChanged
             if (sg == null)
@@ -275,7 +281,7 @@ namespace BuildIt.States
         /// Registers any depedencies, including in the defined states and data wrappers
         /// </summary>
         /// <param name="container">The container to register dependencies into</param>
-        public void RegisterDependencies(IDependencyContainer container)
+        public virtual void RegisterDependencies(IDependencyContainer container)
         {
             DependencyContainer = container;
             using (container.StartUpdate())
@@ -469,6 +475,12 @@ namespace BuildIt.States
                     "Registering dependencies".Log();
                     // ReSharper disable once SuspiciousTypeConversion.Global - data entities can implement both interfaces
                     (stateData as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+
+                    // ReSharper disable once SuspiciousTypeConversion.Global //NOT HELPFUL
+                    if (stateData is IInitialise initData)
+                    {
+                        await initData.Initialise();
+                    }
 
                     await newStateDataWrapper.InvokeInitialise(stateData);
                 }
@@ -701,7 +713,7 @@ namespace BuildIt.States
         /// </summary>
         /// <param name="stateDefinition">The state definition</param>
         /// <returns>True if this is the default state</returns>
-        protected bool IsDefaultState(IStateDefinition stateDefinition)
+        protected virtual bool IsDefaultState(IStateDefinition stateDefinition)
         {
             return IsDefaultState(stateDefinition?.StateName);
         }
@@ -711,7 +723,7 @@ namespace BuildIt.States
         /// </summary>
         /// <param name="stateName">The state name</param>
         /// <returns>True if this is the default state</returns>
-        protected bool IsDefaultState(string stateName)
+        protected virtual bool IsDefaultState(string stateName)
         {
             return string.IsNullOrWhiteSpace(stateName);
         }
@@ -719,10 +731,18 @@ namespace BuildIt.States
         /// <summary>
         /// Method for raising the event indicating that going to previous has changed
         /// </summary>
-        protected void OnGoToPreviousStateIsBlockedChanged()
+        protected virtual void OnGoToPreviousStateIsBlockedChanged()
         {
             GoToPreviousStateIsBlockedChanged.SafeRaise(this);
         }
+
+        /// <summary>
+        /// Retrieves any existing entity for a particular entity type
+        /// </summary>
+        /// <param name="stateDataType">The type to use to look up state data</param>
+        /// <returns>The state data (or null)</returns>
+        protected virtual INotifyPropertyChanged Existing(Type stateDataType) =>
+            stateDataType == null ? null : StateDataCache.SafeValue(stateDataType);
 
         private static TStateGroupDefinition CachedOrNewGroupDefinitionByKey(string cacheKey)
         {
@@ -825,13 +845,5 @@ namespace BuildIt.States
         {
             UpdateStatesByTriggers();
         }
-
-        /// <summary>
-        /// Retrieves any existing entity for a particular entity type
-        /// </summary>
-        /// <param name="stateDataType">The type to use to look up state data</param>
-        /// <returns>The state data (or null)</returns>
-        private INotifyPropertyChanged Existing(Type stateDataType) =>
-            stateDataType == null ? null : StateDataCache.SafeValue(stateDataType);
     }
 }
