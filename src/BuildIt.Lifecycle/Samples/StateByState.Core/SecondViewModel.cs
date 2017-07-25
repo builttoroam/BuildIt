@@ -32,7 +32,7 @@ namespace StateByState
     }
 
     public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>,
-        IArriving, IAboutToLeave, ILeaving
+        IArrivingViewModelState, IAboutToLeaveViewModelState, ILeavingViewModelState
     {
         private int extraData;
         private string name = "Bob";

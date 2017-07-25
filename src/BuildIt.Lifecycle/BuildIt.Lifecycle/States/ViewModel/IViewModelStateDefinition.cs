@@ -8,7 +8,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
 {
     public interface IViewModelStateDefinition<TState,TViewModel> 
         :IGenerateViewModel, 
-        IEnumStateDefinition<TState> 
+        ITypedStateDefinition<TState> 
         where TViewModel: INotifyPropertyChanged 
         where TState : struct
     {

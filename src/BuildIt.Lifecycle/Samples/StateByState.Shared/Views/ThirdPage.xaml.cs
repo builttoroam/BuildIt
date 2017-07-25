@@ -4,7 +4,8 @@ using Windows.UI.Xaml.Navigation;
 using BuildIt.Lifecycle;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
-
+using BuildIt.States.Interfaces;
+using System.Linq;
 
 namespace StateByState
 {
@@ -25,7 +26,13 @@ namespace StateByState
 
             var frame = Split.FindName("InnerFrame") as Frame;
 
-            var fn = new FrameNavigation<ThirdStates>(frame, CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
+            var sm = CurrentViewModel.StateManager;
+            var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
+                let tg = sg.GroupDefinition as INotifyTypedStateChanged<ThirdStates>
+                where tg != null
+                select tg).FirstOrDefault();
+
+            var fn = new FrameNavigation<ThirdStates>(frame, grp);// CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
             await CurrentViewModel.Start();
         }
 

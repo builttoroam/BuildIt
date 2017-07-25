@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.17-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.44-beta" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Xamarin.Forms" Version="2.3.4.247" />
+    <PackageReference Include="Xamarin.Forms" Version="2.3.5.256-pre6" />
   </ItemGroup>
 
   <ItemGroup>

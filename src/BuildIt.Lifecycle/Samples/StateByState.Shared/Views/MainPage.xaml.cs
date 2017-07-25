@@ -4,10 +4,12 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using BuildIt.Lifecycle;
 using System;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using BuildIt.General.UI;
 using BuildIt.States;
-using StateTriggerBase = BuildIt.States.StateTriggerBase;
+using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,12 +38,17 @@ namespace StateByState
                 .DefineState(TestStates.Custom)
                 .AddTrigger(new WindowSizeTrigger(this) {MinWidth = 700});
 
-            (sm.StateGroups[typeof(TestStates)] as IStateGroup<TestStates>).StateChanged += MainPage_StateChanged;
+            var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
+                       let tg = sg as INotifyTypedStateChanged<TestStates>
+                       where tg != null
+                       select tg).FirstOrDefault();
+
+            grp.TypedStateChanged += MainPage_StateChanged;
         }
 
-        private void MainPage_StateChanged(object sender, StateEventArgs<TestStates> e)
+        private void MainPage_StateChanged(object sender, TypedStateEventArgs<TestStates> e)
         {
-            Debug.WriteLine($"State: {e.State}");
+            Debug.WriteLine($"State: {e.StateName}");
         }
 
         public MainViewModel CurrentViewModel => DataContext as MainViewModel;
@@ -75,7 +82,7 @@ namespace StateByState
     }
 
 
-    public class WindowSizeTrigger : StateTriggerBase
+    public class WindowSizeTrigger : BuildIt.States.Interfaces.StateTriggerBase
     {
 
         public int MinWidth { get; set; }   

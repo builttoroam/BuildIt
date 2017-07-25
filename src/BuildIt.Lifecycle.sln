@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26621.2
+VisualStudioVersion = 15.0.26711.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D3D02B64-940E-4620-84B8-C2751C345FEA}"
 EndProject
@@ -11,9 +11,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.S
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Lifecycle.Shared", "BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.shproj", "{A0E34142-1554-469E-8F66-0CD7D656BEAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Autofac", "BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj", "{88AE5F64-0F5E-4AD5-B673-1748F25C5458}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle.Autofac", "BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj", "{88AE5F64-0F5E-4AD5-B673-1748F25C5458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.XForms", "BuildIt.Lifecycle\BuildIt.Lifecycle.XForms\BuildIt.Lifecycle.XForms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle.XForms", "BuildIt.Lifecycle\BuildIt.Lifecycle.XForms\BuildIt.Lifecycle.XForms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.UWP", "BuildIt.Lifecycle\BuildIt.Lifecycle.UWP\BuildIt.Lifecycle.UWP.csproj", "{0959F4B6-D9E4-4947-8889-D913A26F4788}"
 EndProject
@@ -186,6 +186,8 @@ Global
 		{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E}.Release|x86.Build.0 = Release|Any CPU
 		{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E}.Release|x86.Deploy.0 = Release|Any CPU
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}.Debug|Any CPU.Build.0 = Debug|x86
+		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}.Debug|ARM.ActiveCfg = Debug|ARM
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}.Debug|ARM.Build.0 = Debug|ARM
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5}.Debug|ARM.Deploy.0 = Debug|ARM
