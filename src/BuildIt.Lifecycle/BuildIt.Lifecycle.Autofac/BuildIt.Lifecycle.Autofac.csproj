@@ -26,8 +26,8 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
-    <PackageReference Include="BuildIt.Autofac" Version="1.1.0.17-beta" />
-    <PackageReference Include="BuildIt.General" Version="1.1.0.15-beta" />
+    <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Autofac;
 using BuildIt;
 using BuildIt.Lifecycle;
+using BuildIt.ServiceLocation;
 using BuildIt.States;
 
 namespace StateByState
