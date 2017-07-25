@@ -2,6 +2,7 @@
 using BuildIt.ServiceLocation;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Interfaces.StateData;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {

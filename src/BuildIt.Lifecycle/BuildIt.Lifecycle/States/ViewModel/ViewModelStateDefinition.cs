@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using BuildIt.ServiceLocation;
 using BuildIt.States;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
@@ -77,8 +78,13 @@ namespace BuildIt.Lifecycle.States.ViewModel
             await ChangedToWithDataViewModel((TViewModel)viewModel,data);
         }
 
-        public ViewModelStateDefinition(TState state) : base(state)
+        public ViewModelStateDefinition()
         {
+            
+        }
+        public ViewModelStateDefinition(TState state) : base()
+        {
+            State = state;
         }
     }
 }

@@ -66,13 +66,14 @@ namespace BuildIt.Lifecycle
                 {
 
                     var groups = sm.StateGroups;
-                    var inotifier = typeof(INotifyEnumStateChanged<>);
+                    var inotifier = typeof(INotifyTypedStateChanged<>);
                     foreach (var stateGroup in groups)
                     {
-                        var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
+                        var stateType= (stateGroup.Value.GroupDefinition).GetType().GenericTypeArguments.FirstOrDefault();
+                        var groupNotifier = inotifier.MakeGenericType(stateType);
                         if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
                         {
-                            var fnt = typeof(FrameNavigation<>).MakeGenericType(stateGroup.Key);
+                            var fnt = typeof(FrameNavigation<>).MakeGenericType(stateType);
                             var fn = Activator.CreateInstance(fnt, frame, stateGroup.Value);
                         }
                     }
