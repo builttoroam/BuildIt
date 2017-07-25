@@ -20,6 +20,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="States\ViewModel\IAboutToLeaveViewModelState.cs" />
+    <Compile Remove="States\ViewModel\IArrivingViewModelState.cs" />
+    <Compile Remove="States\ViewModel\ICanRegisterDependencies.cs" />
+    <Compile Remove="States\ViewModel\IGenerateViewModel.cs" />
+    <Compile Remove="States\ViewModel\IHasCurrentViewModel.cs" />
+    <Compile Remove="States\ViewModel\ILeavingViewModelState.cs" />
+    <Compile Remove="States\ViewModel\IViewModelStateDefinition.cs" />
+    <Compile Remove="States\ViewModel\IViewModelTransitionDefinition.cs" />
+    <Compile Remove="States\ViewModel\ViewModelStateDefinition.cs" />
+    <Compile Remove="States\ViewModel\ViewModelStateGroup.cs" />
+    <Compile Remove="States\ViewModel\ViewModelTransitionDefinition.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.44-beta" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
