@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BuildIt.States.Completion;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Interfaces.Builder;
+using BuildIt.States.Interfaces.StateData;
 using BuildIt.States.Typed;
 using BuildIt.States.Typed.Enum;
 
@@ -1058,6 +1059,27 @@ namespace BuildIt.States
             }
 
             return smInfo;
+        }
+
+        /// <summary>
+        /// Exposes builder to initialize a new state with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of state data</typeparam>
+        /// <typeparam name="TNewStateData">The type of the new state data</typeparam>
+        /// <typeparam name="TData">The type of the data being passed in</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
+        /// <returns>New builder</returns>
+        public static IStateDefinitionWithDataBuilder<TState, TStateData>
+            InitializeNewStateWithData<TState, TStateData, TNewStateData, TData>(
+                this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> smInfo)
+            where TState : struct
+            where TStateData : INotifyPropertyChanged
+            where TNewStateData : INotifyPropertyChanged, IInitialiseWithData<TData>
+        {
+#pragma warning disable 1998  // Convert sync method into async call
+            return smInfo.InitializeNewState<TState, TStateData, TNewStateData, TData>(async (vm, s) => await vm.InitialiseWithData(s));
+#pragma warning restore 1998
         }
 
         /// <summary>
