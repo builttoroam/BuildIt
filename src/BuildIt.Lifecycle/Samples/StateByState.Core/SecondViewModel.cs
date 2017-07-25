@@ -3,6 +3,7 @@ using BuildIt.States;
 using BuildIt.States.Completion;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using BuildIt.States.Interfaces.StateData;
 using CancelEventArgs = BuildIt.CancelEventArgs;
 
 namespace StateByState
@@ -32,7 +33,7 @@ namespace StateByState
     }
 
     public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>,
-        IArrivingViewModelState, IAboutToLeaveViewModelState, ILeavingViewModelState
+        IChangedTo, IAboutToChangeFrom, IChangingFrom
     {
         private int extraData;
         private string name = "Bob";
@@ -145,21 +146,21 @@ namespace StateByState
 
         }
 
-        public async Task Arriving()
+        public async Task ChangedTo()
         {
             await Task.Delay(2000);
             Name += ".... arrived ....";
         }
 
 #pragma warning disable 1998 // sample only
-        public async Task AboutToLeave(CancelEventArgs cancel)
+        public async Task AboutToChangeFrom(CancelEventArgs cancel)
 #pragma warning restore 1998
         {
             //cancel.Cancel = true;
         }
 
 #pragma warning disable 1998 // sample only
-        public async Task Leaving()
+        public async Task ChangingFrom()
 #pragma warning restore 1998
         {
 
