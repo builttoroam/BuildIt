@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
-    "Autofac": "4.6.0",
-    "BuildIt.States": "1.1.0.44-beta",
+    "Autofac": "4.6.1",
+    "BuildIt.States": "1.1.0.48-beta",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",

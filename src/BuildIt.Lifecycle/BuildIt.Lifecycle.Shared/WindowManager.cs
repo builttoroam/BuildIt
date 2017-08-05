@@ -10,6 +10,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using BuildIt.Lifecycle.Interfaces;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
