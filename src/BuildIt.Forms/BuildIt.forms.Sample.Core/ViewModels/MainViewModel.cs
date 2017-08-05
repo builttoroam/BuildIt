@@ -49,10 +49,10 @@ namespace BuildIt.forms.Sample.Core.ViewModels
 
 
 
-    public class MainViewModel : IHasStates
+    public class MainViewModel : NotifyBase, IHasStates
     {
         private ICommand pressedCommand;
-        public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates));
+        public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates,()=>CommandIsEnabled));
 
         public IStateManager StateManager { get; } = new StateManager();
 
@@ -64,6 +64,18 @@ namespace BuildIt.forms.Sample.Core.ViewModels
             StateManager
                 .Group<SampleStates>()
                 .DefineAllStates();
+        }
+
+        private bool commandIsEnabled;
+        public bool CommandIsEnabled
+        {
+            get => commandIsEnabled;
+            set
+            {
+                commandIsEnabled = value;
+                (PressedCommand as Command).ChangeCanExecute();
+                //OnPropertyChanged(()=> PressedCommand);
+            }
         }
 
         private bool visible = true;

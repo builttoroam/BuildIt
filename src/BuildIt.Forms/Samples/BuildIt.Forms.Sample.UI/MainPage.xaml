@@ -185,6 +185,7 @@
                         Clicked="ButtonClicked"
                         HorizontalOptions="Center" />
                 <controls:ContentButton VerticalOptions="Center"
+                                        x:Name="DisabledButton"
                                         Pressed="ToggleButtonPressed"
                                         HorizontalOptions="Center">
 
@@ -198,7 +199,7 @@
                     </StackLayout>
                 </controls:ContentButton>
                 <controls:ContentButton VerticalOptions="Center"
-                                        x:Name="DisabledButton"
+                                        x:Name="DisabledCommandButton"
                                         Command="{Binding PressedCommand}"
                                         HorizontalOptions="Center">
 
