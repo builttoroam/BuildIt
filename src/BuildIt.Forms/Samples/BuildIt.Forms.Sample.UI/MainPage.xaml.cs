@@ -66,6 +66,7 @@ namespace BuildIt.Forms.Sample
         public void ButtonClicked(object sender, EventArgs e)
         {
             DisabledButton.IsEnabled = !DisabledButton.IsEnabled;
+            (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
         }
     }
 }
