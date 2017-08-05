@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces.StateData
@@ -10,7 +11,8 @@ namespace BuildIt.States.Interfaces.StateData
         /// <summary>
         /// Method called when changing from state
         /// </summary>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
-        Task ChangingFrom();
+        Task ChangingFrom(CancellationToken cancelToken);
     }
 }

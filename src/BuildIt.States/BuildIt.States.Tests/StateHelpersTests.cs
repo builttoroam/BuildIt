@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using BuildIt.Autofac;
@@ -30,13 +31,13 @@ namespace BuildIt.States.Tests
         {
             public string InitValue1 { get; set; }
 
-            public Task InitialiseWithData(string data)
+            public Task InitialiseWithData(string data, CancellationToken cancelToken)
             {
                 InitValue1 = data;
                 return Task.CompletedTask;
             }
 
-            public Task InitialiseWithData(int data)
+            public Task InitialiseWithData(int data, CancellationToken cancelToken)
             {
                 InitValue1 = $"Init {data}";
                 return Task.CompletedTask;
@@ -574,7 +575,7 @@ namespace BuildIt.States.Tests
                 .OnCompleteWithData(TestCompletion.Complete1, vm => vm.TestBoolValue)
                 .ChangeState(TestStates.State2);
             builder.DefineStateWithData<TestStates, State2Data>(TestStates.State2)
-                .WhenChangedToWithData((State2Data vm, int d) => vm.InitValue1 = $"Input: {d}");
+                .WhenChangedToWithData((State2Data vm, int d, CancellationToken cancelToken) => vm.InitValue1 = $"Input: {d}");
 
             grp.RegisterDependencies(Container);
 
@@ -615,7 +616,7 @@ namespace BuildIt.States.Tests
                     .OnCompleteWithDataEvent<TestStates, State1Data, TestCompletion, int>(TestCompletion.Complete1)
                         .ChangeState(TestStates.State2)
                             .InitializeNewState<TestStates, State1Data, State2Data, int>(
-                                (vm, d) => vm.InitValue1 = $"Custom init {d}")
+                                (vm, d, cancelToken) => vm.InitValue1 = $"Custom init {d}")
                 .DefineStateWithData<TestStates, State2Data>(TestStates.State2);
             grp.RegisterDependencies(Container);
             await ValidateOnComplete(sm);

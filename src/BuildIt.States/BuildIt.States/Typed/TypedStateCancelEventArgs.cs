@@ -1,4 +1,6 @@
-﻿namespace BuildIt.States.Typed
+﻿using System.Threading;
+
+namespace BuildIt.States.Typed
 {
     /// <summary>
     /// Event args for cancelling a state change
@@ -12,12 +14,12 @@
         /// </summary>
         /// <param name="state">The typed state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
-        /// <param name="isNewState">Whether this is a new state, or go back to previous</param>
-        public TypedStateCancelEventArgs(TState state, bool useTransitions, bool isNewState)
+        /// <param name="isNewState">Whether this is a new state, or go back to previous state</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        public TypedStateCancelEventArgs(TState state, bool useTransitions, bool isNewState, CancellationToken cancelToken)
+            : base(useTransitions, isNewState, cancelToken)
         {
             TypedState = state;
-            UseTransitions = useTransitions;
-            IsNewState = isNewState;
         }
 
         /// <summary>

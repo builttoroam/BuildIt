@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
@@ -31,47 +32,47 @@ namespace BuildIt.States
         /// <summary>
         /// Gets or sets method to be invoked when about to change from the state (cancellable)
         /// </summary>
-        public Func<CancelEventArgs, Task> AboutToChangeFrom { get; set; }
+        public Func<StateCancelEventArgs, Task> AboutToChangeFrom { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when about to change to the state (cancellable)
         /// </summary>
-        public Func<CancelEventArgs, Task> AboutToChangeTo { get; set; }
+        public Func<StateCancelEventArgs, Task> AboutToChangeTo { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when about to change to the state (cancellable)
         /// </summary>
-        public Func<string, CancelEventArgs, Task> AboutToChangeToWithData { get; set; }
+        public Func<string, StateCancelEventArgs, Task> AboutToChangeToWithData { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when changing from the state (not cancellable)
         /// </summary>
-        public Func<Task> ChangingFrom { get; set; }
+        public Func<CancellationToken, Task> ChangingFrom { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when the state transition to this state is about to start (arriving at this state)
         /// </summary>
-        public Func<Task> ChangingTo { get; set; }
+        public Func<CancellationToken, Task> ChangingTo { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when the state transition to this state is about to start (arriving at this state)
         /// </summary>
-        public Func<string, Task> ChangingToWithData { get; set; }
+        public Func<string, CancellationToken, Task> ChangingToWithData { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when the state transition has completed (left this state)
         /// </summary>
-        public Func<Task> ChangedFrom { get; set; }
+        public Func<CancellationToken, Task> ChangedFrom { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when changed to the state
         /// </summary>
-        public Func<Task> ChangedTo { get; set; }
+        public Func<CancellationToken, Task> ChangedTo { get; set; }
 
         /// <summary>
         /// Gets or sets method to be invoked when changed to the state, with data
         /// </summary>
-        public Func<string, Task> ChangedToWithJsonData { get; set; }
+        public Func<string, CancellationToken, Task> ChangedToWithJsonData { get; set; }
 
         /// <summary>
         /// Gets the set of properties to change when entering this state

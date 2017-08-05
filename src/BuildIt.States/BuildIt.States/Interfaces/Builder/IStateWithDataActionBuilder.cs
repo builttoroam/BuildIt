@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 
 namespace BuildIt.States.Interfaces.Builder
 {
@@ -18,25 +19,25 @@ namespace BuildIt.States.Interfaces.Builder
         /// </summary>
         /// <param name="newState">The new typed state</param>
         /// <returns>Method to call</returns>
-        Action<TStateData> WhenChangedToNewState(TState newState);
+        Action<TStateData, CancellationToken> WhenChangedToNewState(TState newState);
 
         /// <summary>
         /// Returns method to call when changing from a state
         /// </summary>
         /// <param name="newState">The typed state</param>
         /// <returns>Method to call</returns>
-        Action<TStateData> WhenChangingFromNewState(TState newState);
+        Action<TStateData, CancellationToken> WhenChangingFromNewState(TState newState);
 
         /// <summary>
         /// Returns method to call when changed to previous state
         /// </summary>
         /// <returns>Method to call</returns>
-        Action<TStateData> WhenChangedToPreviousState();
+        Action<TStateData, CancellationToken> WhenChangedToPreviousState();
 
         /// <summary>
         /// Returns method to call when changing from previous state
         /// </summary>
         /// <returns>Method to call</returns>
-        Action<TStateData> WhenChangingFromPreviousState();
+        Action<TStateData, CancellationToken> WhenChangingFromPreviousState();
     }
 }

@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace BuildIt.States
 {
     /// <summary>
@@ -12,19 +14,35 @@ namespace BuildIt.States
         /// <param name="state">The new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <param name="isNewState">Whether this is a new state, or go back to previous state</param>
-        public StateCancelEventArgs(string state, bool useTransitions, bool isNewState)
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        public StateCancelEventArgs(string state, bool useTransitions, bool isNewState, CancellationToken cancelToken)
+            : this(useTransitions, isNewState, cancelToken)
         {
             StateName = state;
-            UseTransitions = useTransitions;
-            IsNewState = isNewState;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StateCancelEventArgs"/> class.
         /// Empty constructor to support subclassing
         /// </summary>
-        protected StateCancelEventArgs()
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="isNewState">Whether this is a new state, or go back to previous state</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        protected StateCancelEventArgs(bool useTransitions, bool isNewState, CancellationToken cancelToken)
         {
+            UseTransitions = useTransitions;
+            IsNewState = isNewState;
+            CancelToken = cancelToken;
+            if (CancelToken != CancellationToken.None)
+            {
+                CancelToken.Register(() =>
+                {
+                    if (CancelToken.IsCancellationRequested)
+                    {
+                        Cancel = true;
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -33,13 +51,18 @@ namespace BuildIt.States
         public virtual string StateName { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether whether to use transtions
+        /// Gets a value indicating whether whether to use transtions
         /// </summary>
-        public bool UseTransitions { get; protected set; }
+        public bool UseTransitions { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether whether it's a new state
+        /// Gets a value indicating whether whether it's a new state
         /// </summary>
-        public bool IsNewState { get; protected set; }
+        public bool IsNewState { get; }
+
+        /// <summary>
+        /// Gets the cancellation token
+        /// </summary>
+        public CancellationToken CancelToken { get; }
     }
 }
