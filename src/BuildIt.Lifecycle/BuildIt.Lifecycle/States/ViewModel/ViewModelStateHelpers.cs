@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using BuildIt.States;
 using BuildIt;
+using BuildIt.Lifecycle.Interfaces;
 using BuildIt.States.Completion;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Typed;
@@ -342,7 +343,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-           where TViewModel : INotifyPropertyChanged, IViewModelCompletion<DefaultCompletion>
+           where TViewModel : INotifyPropertyChanged, ICompletion<DefaultCompletion>
         {
             if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
 
@@ -363,7 +364,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-           where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+           where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
         {
             if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
@@ -385,7 +386,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-           where TViewModel : INotifyPropertyChanged, IViewModelCompletion<DefaultCompletion>
+           where TViewModel : INotifyPropertyChanged, ICompletion<DefaultCompletion>
         {
             if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
 
@@ -408,7 +409,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-           where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+           where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
         {
             if (smInfo?.Item1 == null || smInfo.Item2 == null) return null;
@@ -500,7 +501,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
         {
             if (smInfo?.Item1 == null ||
@@ -542,7 +543,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
         {
             if (smInfo?.Item1 == null ||
@@ -582,7 +583,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
             where TNewRegion : IApplicationRegion
         {
@@ -624,7 +625,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
         {
             if (smInfo?.Item1 == null ||
@@ -679,7 +680,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
-            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
             where TCompletion : struct
         {
             if (smInfo?.Item1 == null ||
@@ -722,7 +723,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         public class ViewModelStateCompletionWithDataBinder<TViewModel, TCompletion, TData> : StateCompletionBinder<TCompletion>
             where TCompletion : struct
-            where TViewModel : INotifyPropertyChanged, IViewModelCompletion<TCompletion>
+            where TViewModel : INotifyPropertyChanged, ICompletion<TCompletion>
         {
 
             public Func<TViewModel, TData> CompletionData { get; set; }

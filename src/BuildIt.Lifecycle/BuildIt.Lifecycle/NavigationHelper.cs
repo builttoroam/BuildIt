@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 namespace BuildIt.Lifecycle
 {
-    public class NavigationRegistrationHelper
-    {
-        public Type ViewType { get; set; }
-    }
-
     public static class NavigationHelper
     {
         private static IDictionary<string, Type> NavigationIndex { get; } = new Dictionary<string, Type>();

@@ -26,6 +26,7 @@
     <Compile Remove="States\ViewModel\IGenerateViewModel.cs" />
     <Compile Remove="States\ViewModel\IHasCurrentViewModel.cs" />
     <Compile Remove="States\ViewModel\ILeavingViewModelState.cs" />
+    <Compile Remove="States\ViewModel\IViewModelCompletion.cs" />
     <Compile Remove="States\ViewModel\IViewModelStateDefinition.cs" />
     <Compile Remove="States\ViewModel\IViewModelTransitionDefinition.cs" />
     <Compile Remove="States\ViewModel\ViewModelStateDefinition.cs" />
@@ -35,7 +36,7 @@
 
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.44-beta" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.48-beta" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 

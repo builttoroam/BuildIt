@@ -1,29 +1,50 @@
-﻿using System;
-using BuildIt.ServiceLocation;
-using BuildIt.States;
+﻿using BuildIt.ServiceLocation;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Interfaces.StateData;
+using System;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
+    /// <summary>
+    /// Base view model which implements interfaces for registering dependencies and UI access
+    /// </summary>
     public class BaseViewModel:NotifyBase, IRegisterDependencies, IRegisterForUIAccess, IIsAbleToBeBlocked
     {
-        private bool isBlocked = false;
+        private bool isBlocked;
+
+        /// <summary>
+        /// Event to indicate that the blocked status has changed
+        /// </summary>
+        public event EventHandler IsBlockedChanged;
+
+        /// <summary>
+        /// The UI Context
+        /// </summary>
         public IUIExecutionContext UIContext { get; private set; }
+
+        /// <summary>
+        /// Registers the entity for UI access
+        /// </summary>
+        /// <param name="context">The UI Context to use for execution</param>
         public virtual void RegisterForUIAccess(IUIExecutionContext context)
         {
             UIContext = context;
         }
 
+        /// <summary>
+        /// Register dependencies for injection
+        /// </summary>
+        /// <param name="container">The injection container</param>
         public virtual void RegisterDependencies(IDependencyContainer container)
         {
         }
 
-        public event EventHandler IsBlockedChanged;
-
-        public bool IsBlocked
+        /// <summary>
+        /// Gets or sets whether state transitions (back) should be blocked
+        /// </summary>
+        public virtual bool IsBlocked
         {
-            get { return isBlocked; }
+            get => isBlocked;
             set
             {
                 if (value == isBlocked) return;
@@ -32,6 +53,9 @@ namespace BuildIt.Lifecycle.States.ViewModel
             }
         }
 
+        /// <summary>
+        /// Raises the IsBlockedChanged event
+        /// </summary>
         protected void OnIsBlockedChanged()
         {
             IsBlockedChanged.SafeRaise(this);

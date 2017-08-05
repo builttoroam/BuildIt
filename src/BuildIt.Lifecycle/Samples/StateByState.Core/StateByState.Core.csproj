@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.0" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.44-beta" />
+    <PackageReference Include="Autofac" Version="4.6.1" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.48-beta" />
   </ItemGroup>
 
   <ItemGroup>

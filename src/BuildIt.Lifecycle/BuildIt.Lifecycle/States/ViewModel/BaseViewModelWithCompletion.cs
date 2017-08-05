@@ -3,22 +3,41 @@ using BuildIt.States.Completion;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public class BaseViewModelWithCompletion<TCompletion> 
-        : BaseViewModel, 
-        ICompletion<TCompletion>
+    /// <summary>
+    /// Base view model that implements ICompletion
+    /// </summary>
+    /// <typeparam name="TCompletion">The type (enum) of completion event</typeparam>
+    public class BaseViewModelWithCompletion<TCompletion>
+        : BaseViewModel,
+            ICompletion<TCompletion>
         where TCompletion : struct
     {
+        /// <summary>
+        /// The Complete event
+        /// </summary>
         public event EventHandler<CompletionEventArgs<TCompletion>> Complete;
 
-        protected void OnComplete(TCompletion completion)
+        /// <summary>
+        /// Raises the Complete event
+        /// </summary>
+        /// <param name="completion">The completion status</param>
+        protected virtual void OnComplete(TCompletion completion)
         {
-            Complete?.Invoke(this, new CompletionEventArgs<TCompletion> {Completion = completion});
-        }
+            if (default(TCompletion).Equals(completion))
+            {
+                throw new ArgumentException("Can't complete using the default enum value", nameof(completion));
+            }
 
-        protected void OnCompleteWithData<TData>(TCompletion completion, TData data)
+            OnComplete(new CompletionEventArgs<TCompletion> {Completion = completion});
+        }
+        
+        /// <summary>
+        /// Raises the Complete event
+        /// </summary>
+        /// <param name="completionArgs">The completion args</param>
+        protected virtual void OnComplete(CompletionEventArgs<TCompletion> completionArgs)
         {
-            Complete?.Invoke(this, new CompletionWithDataEventArgs<TCompletion, TData> { Completion = completion, Data = data });
+            Complete?.Invoke(this, completionArgs);
         }
-
     }
 }

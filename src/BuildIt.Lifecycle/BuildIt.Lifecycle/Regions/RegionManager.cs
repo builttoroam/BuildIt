@@ -1,15 +1,23 @@
-using BuildIt.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BuildIt.Lifecycle.Interfaces;
+using BuildIt.ServiceLocation;
 using BuildIt.States.Interfaces;
 
-namespace BuildIt.Lifecycle
+namespace BuildIt.Lifecycle.Regions
 {
     public class RegionManager : IRegionManager
     {
-        public Action<IRegionManager, IApplicationRegion> RegionCreated { get; set; }
-        public Action<IRegionManager, IApplicationRegion> RegionIsClosing { get; set; }
+        /// <summary>
+        /// Event for when a region is created
+        /// </summary>
+        public event EventHandler<DualParameterEventArgs<IRegionManager, IApplicationRegion>> RegionCreated;
+
+        /// <summary>
+        /// Event for when a region is closed
+        /// </summary>
+        public event EventHandler<DualParameterEventArgs<IRegionManager, IApplicationRegion>> RegionIsClosed;
 
         protected IDependencyContainer DependencyContainer { get; private set; }
 
@@ -24,9 +32,9 @@ namespace BuildIt.Lifecycle
             RegionTypes.Add(typeof(TRegion));
         }
 
-        public TRegion RegionByType<TRegion>() where TRegion : IApplicationRegion
+        public IEnumerable<TRegion> RegionByType<TRegion>() where TRegion : IApplicationRegion
         {
-            return (TRegion)Regions.Values.FirstOrDefault(x => x.GetType() == typeof(TRegion));
+            return Regions.Values.OfType<TRegion>();
         }
 
         public IApplicationRegion RegionById(string id)
