@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
@@ -106,14 +107,15 @@ namespace BuildIt.States.Typed
         /// <param name="newState">The name of the state being changed to</param>
         /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
         /// <param name="useTransitions">Indicates whether to use transitions</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected override async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions)
+        protected override async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
             try
             {
-                await base.NotifyStateChanged(newState, isNewState, useTransitions);
+                await base.NotifyStateChanged(newState, isNewState, useTransitions, cancelToken);
 
                 if (TypedStateChanged != null)
                 {
@@ -121,7 +123,7 @@ namespace BuildIt.States.Typed
                     await UIContext.RunAsync(() =>
                     {
                         "Raising TypedStateChanged event".Log();
-                        TypedStateChanged?.Invoke(this, new TypedStateEventArgs<TState>(CurrentState, useTransitions, isNewState));
+                        TypedStateChanged?.Invoke(this, new TypedStateEventArgs<TState>(CurrentState, useTransitions, isNewState, cancelToken));
                         "Raising TypedStateChanged event completed".Log();
                     });
                     "TypedStateChanged event completed (after UI context check)".Log();
@@ -145,15 +147,16 @@ namespace BuildIt.States.Typed
         /// <param name="newState">The new state to transition to</param>
         /// <param name="isNewState">Whether this will be a new state or going to previous</param>
         /// <param name="useTransitions">Whether to use transitions or not</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Whether the state change should be cancelled (true)</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected override async Task<bool> NotifyStateChanging(string newState, bool isNewState, bool useTransitions)
+        protected override async Task<bool> NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
             var shouldCancel = false;
             try
             {
-                var statecancel = await base.NotifyStateChanging(newState, isNewState, useTransitions);
+                var statecancel = await base.NotifyStateChanging(newState, isNewState, useTransitions, cancelToken);
                 if (statecancel)
                 {
                     return true;
@@ -164,7 +167,7 @@ namespace BuildIt.States.Typed
                     "Invoking TypedStateChanging event (before UI context check)".Log();
                     await UIContext.RunAsync(() =>
                     {
-                        var cancel = new TypedStateCancelEventArgs<TState>(CurrentState, useTransitions, isNewState);
+                        var cancel = new TypedStateCancelEventArgs<TState>(CurrentState, useTransitions, isNewState, cancelToken);
                         "Raising TypedStateChanging event".Log();
                         TypedStateChanging?.Invoke(this, cancel);
                         "Raising TypedStateChanging event completed".Log();

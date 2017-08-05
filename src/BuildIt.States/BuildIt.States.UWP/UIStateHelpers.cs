@@ -1,4 +1,5 @@
-﻿using BuildIt.States.Interfaces.Builder;
+﻿using System.Threading;
+using BuildIt.States.Interfaces.Builder;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -34,12 +35,12 @@ namespace BuildIt.States.UWP
                     var state = xamlVisualState.Name.EnumParse<TState>();
                     if (!state.Equals(default(TState)))
                     {
-                        vsmGroup.DefineState(state).WhenChangedTo(() =>
+                        vsmGroup.DefineState(state).WhenChangedTo((cancel) =>
                         {
                             var vstate = xamlVisualState;
                             if (xamlVisualStateGroup.CurrentState != vstate)
                             {
-                                VisualStateManager.GoToState(visualStatesRootElement, vstate.Name, true);
+                                VisualStateManager.GoToState(visualStatesRootElement, vstate.Name, cancel == CancellationToken.None || !cancel.IsCancellationRequested);
                             }
                         });
                     }

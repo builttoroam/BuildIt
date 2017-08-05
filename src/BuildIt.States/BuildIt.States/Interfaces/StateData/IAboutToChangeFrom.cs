@@ -12,6 +12,6 @@ namespace BuildIt.States.Interfaces.StateData
         /// </summary>
         /// <param name="cancel">Can cancel the state change</param>
         /// <returns>Task to await</returns>
-        Task AboutToChangeFrom(CancelEventArgs cancel);
+        Task AboutToChangeFrom(StateCancelEventArgs cancel);
     }
 }

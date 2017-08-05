@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces.StateData
@@ -11,7 +12,8 @@ namespace BuildIt.States.Interfaces.StateData
         /// Method called when changed to state, with data
         /// </summary>
         /// <param name="dataAsJson">The data passed into the state</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
-        Task ChangedToWithData(string dataAsJson);
+        Task ChangedToWithData(string dataAsJson, CancellationToken cancelToken);
     }
 }
