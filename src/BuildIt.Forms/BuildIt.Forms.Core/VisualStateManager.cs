@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.Forms.Animations;
 using BuildIt.States;
@@ -256,7 +257,7 @@ namespace BuildIt.Forms
             }
         }
 
-        private static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element)
+        private static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element, CancellationToken cancelToken)
         {
             var tasks = new List<Task>();
 
@@ -264,16 +265,16 @@ namespace BuildIt.Forms
             {
                 var target = element.FindByTarget(animation);
                 var tg = target?.Item1 as VisualElement;
-                var animateTask = animation.Animate(tg ?? (element as VisualElement));
+                var animateTask = animation.Animate(tg ?? (element as VisualElement), cancelToken);
                 tasks.Add(animateTask);
             }
 
             return Task.WhenAll(tasks);
         }
 
-        private static Func<Task> BuildAnimations(IList<StateAnimation> animations, Element element)
+        private static Func<CancellationToken, Task> BuildAnimations(IList<StateAnimation> animations, Element element)
         {
-            return () => BuildAnimationTasks(animations, element);
+            return (cancel) => BuildAnimationTasks(animations, element, cancel);
         }
 
         private static void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values, IDictionary<Element, string> elementIds)

@@ -23,6 +23,30 @@
                                 Target="StatusLabel.Text" />
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
+            </vsm:VisualStateGroup> 
+            <vsm:VisualStateGroup Name="BlueGridStates">
+                <vsm:VisualState Name="RotateLeft">
+                    <vsm:VisualState.ArrivingAnimations>
+                        <anim:AnimationGroup>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:RotateAnimation Rotation="-180"
+                                                      Duration="5000"
+                                                      Target="MultiStateAnimateGrid" />
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                </vsm:VisualState>
+                <vsm:VisualState Name="RotateRight">
+                    <vsm:VisualState.ArrivingAnimations>
+                        <anim:AnimationGroup>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:RotateAnimation Rotation="180"
+                                                      Duration="5000"
+                                                      Target="MultiStateAnimateGrid" />
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                </vsm:VisualState>
             </vsm:VisualStateGroup>
             <vsm:VisualStateGroup Name="GridStates">
                 <vsm:VisualState Name="Default">
@@ -156,8 +180,20 @@
                        x:Name="StatusLabel"
                        TextColor="Red"
                        Text="Hello World - Red!" />
-
-
+                <Grid HeightRequest="100"
+                      WidthRequest="100"
+                      x:Name="MultiStateAnimateGrid"
+                      HorizontalOptions="Start">
+                    <Grid.Effects>
+                        <controls:BackgroundEffect FallbackColor="Blue" />
+                    </Grid.Effects>
+                </Grid>
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Rotate Left"
+                            Clicked="RotateLeftClicked" />
+                    <Button Text="Rotate Right"
+                            Clicked="RotateRightClicked" />
+                </StackLayout>
                 <Grid HeightRequest="100"
                       WidthRequest="100"
                       x:Name="AnimateGrid"

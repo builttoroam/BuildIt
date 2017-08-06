@@ -181,10 +181,10 @@
       <Version>1.1.0.30</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.44-beta</Version>
+      <Version>1.1.0.49-beta</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.3.3</Version>
+      <Version>5.3.4</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>

@@ -58,6 +58,16 @@ namespace BuildIt.Forms.Sample
             VisualStateManager.GoToState(this, "DoubleHeight");
         }
 
+
+        public void RotateLeftClicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "RotateLeft");
+        }
+        public void RotateRightClicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "RotateRight");
+        }
+
         public void DefaultClicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "Default");
