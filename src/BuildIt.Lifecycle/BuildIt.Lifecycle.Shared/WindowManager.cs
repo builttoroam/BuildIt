@@ -28,21 +28,27 @@ namespace BuildIt.Lifecycle
         public WindowManager(IHasRegionManager root)
         {
             RegionManager = root.RegionManager;
-            RegionManager.RegionCreated = RegionManager_RegionCreated;
-            RegionManager.RegionIsClosing = RegionManager_RegionIsClosing;
+            RegionManager.RegionCreated += RegionManager_RegionCreated;
+            RegionManager.RegionIsClosed += RegionManager_RegionIsClosed;
         }
 
-        private void RegionManager_RegionIsClosing(IRegionManager sender, IApplicationRegion e)
+        private void RegionManager_RegionIsClosed(object sender, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
         {
+            IRegionManager mgr = args.Parameter1;
+            IApplicationRegion e = args.Parameter2;
+
             var view = RegionWindows.SafeValue<string, CoreWindow, CoreWindow>(e.RegionId);
             view.Close();
 
         }
 
 #pragma warning disable 1998 // Async required for Windows UWP support for multiple views
-        private async void RegionManager_RegionCreated(IRegionManager sender, IApplicationRegion e)
+        private async void RegionManager_RegionCreated(object sender, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
 #pragma warning restore 1998
         {
+            IRegionManager mgr = args.Parameter1;
+            IApplicationRegion e = args.Parameter2;
+
 #if WINDOWS_UWP
 
             var isPrimary = RegionManager.IsPrimaryRegion(e);
@@ -70,7 +76,8 @@ namespace BuildIt.Lifecycle
                     var inotifier = typeof(INotifyTypedStateChanged<>);
                     foreach (var stateGroup in groups)
                     {
-                        var stateType= (stateGroup.Value.GroupDefinition).GetType().GenericTypeArguments.FirstOrDefault();
+                        var stateType =
+(stateGroup.Value.GroupDefinition).GetType().GenericTypeArguments.FirstOrDefault();
                         var groupNotifier = inotifier.MakeGenericType(stateType);
                         if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
                         {

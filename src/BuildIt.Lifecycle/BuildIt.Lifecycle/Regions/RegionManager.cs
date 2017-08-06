@@ -75,7 +75,7 @@ namespace BuildIt.Lifecycle.Regions
             "Registering dependencies".Log();
             (vm as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
 
-            vm.RegionId = Guid.NewGuid().ToString();
+            //vm.RegionId = Guid.NewGuid().ToString();
 
             Regions[vm.RegionId] = vm;
 
@@ -86,13 +86,13 @@ namespace BuildIt.Lifecycle.Regions
             }
 
             vm.CloseRegion += RegionClosing;
-            RegionCreated?.Invoke(this, vm);
+            RegionCreated?.Invoke(this, new DualParameterEventArgs<IRegionManager, IApplicationRegion>(this, vm));
             return vm;
         }
 
         private void RegionClosing(object sender, EventArgs e)
         {
-            RegionIsClosing?.Invoke(this, sender as IApplicationRegion);
+            RegionIsClosed?.Invoke(this, new DualParameterEventArgs<IRegionManager, IApplicationRegion>(this, sender as IApplicationRegion));
         }
 
         //public UIExecutionContext UIContext { get; } = new UIExecutionContext();
