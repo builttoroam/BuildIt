@@ -147,14 +147,30 @@ namespace BuildIt.States
         /// Expoese a builder for the state definition
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
-        /// <param name="smInfo">The state group builder</param>
+        /// <param name="vsmGroup">Existing state builder</param>
         /// <param name="state">The state</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState> DefineState<TState>(
-            this IStateGroupBuilder<TState> smInfo,
-            TState state)
+                this IStateBuilder vsmGroup,
+                TState state)
             where TState : struct
+        {
+            return vsmGroup?.StateManager.Group<TState>().DefineState(state);
+        }
+
+        /// <summary>
+        /// Expoese a builder for the state definition
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <param name="smInfo">The state group builder</param>
+        /// <param name="state">The state</param>
+        /// <returns>New builder</returns>
+        public static
+        IStateDefinitionBuilder<TState> DefineState<TState>(
+        this IStateGroupBuilder<TState> smInfo,
+        TState state)
+        where TState : struct
         {
             if (smInfo?.StateGroup == null)
             {
@@ -771,13 +787,13 @@ namespace BuildIt.States
         /// <param name="action">The action to be invoked when AboutToChange</param>
         /// <returns>The updated builder</returns>
         public static
-            IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
+            IStateDefinitionBuilder<TState> WhenAboutToChangeFrom<TState>(
            this IStateDefinitionBuilder<TState> smInfo,
-           Action<CancelEventArgs> action)
+           Action<StateCancelEventArgs> action)
             where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.WhenAboutToChange(async cancel => action(cancel));
+            return smInfo.WhenAboutToChangeFrom(async cancel => action(cancel));
 #pragma warning restore 1998
         }
 
@@ -788,9 +804,9 @@ namespace BuildIt.States
         /// <param name="smInfo">The builder to update</param>
         /// <param name="action">The action to be invoked when AboutToChange</param>
         /// <returns>The updated builder</returns>
-        public static IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
+        public static IStateDefinitionBuilder<TState> WhenAboutToChangeFrom<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<CancelEventArgs, Task> action)
+            Func<StateCancelEventArgs, Task> action)
             where TState : struct
         {
             if (smInfo?.State == null)
@@ -845,6 +861,48 @@ namespace BuildIt.States
             stateDefinition.ChangingFrom = action;
             return smInfo;
         }
+
+        /// <summary>
+        /// Defines an action to be called when ChangingFrom the state
+        /// </summary>
+        /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
+        /// <param name="stateDefinition">The builder to update</param>
+        /// <param name="action">The action to be invoked when ChangingFrom</param>
+        /// <returns>The updated builder</returns>
+        public static IStateDefinitionBuilder<TState> WhenChangedFrom<TState>(
+            this IStateDefinitionBuilder<TState> stateDefinition,
+            Action<CancellationToken> action)
+            where TState : struct
+        {
+#pragma warning disable 1998  // Convert sync method into async call
+            return stateDefinition.WhenChangedFrom(async (cancelToken) => action(cancelToken));
+#pragma warning restore 1998
+        }
+
+        /// <summary>
+        /// Define an async action to be called when ChangingFrom the state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state group</typeparam>
+        /// <param name="smInfo">The builder</param>
+        /// <param name="action">The action to be invoked when ChangingFrom</param>
+        /// <returns>Updated builder</returns>
+        public static IStateDefinitionBuilder<TState> WhenChangedFrom<TState>(
+            this IStateDefinitionBuilder<TState> smInfo,
+            Func<CancellationToken, Task> action)
+            where TState : struct
+        {
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
+            var stateDefinition = smInfo.State;
+
+            "Adding Behaviour: ChangedFrom".Log();
+            stateDefinition.ChangedFrom = action;
+            return smInfo;
+        }
+
 
         /// <summary>
         /// Defines an action to be called when ChangedTo the state
@@ -979,7 +1037,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData, CancelEventArgs> action)
+            Action<TStateData, StateCancelEventArgs> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -998,7 +1056,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, CancelEventArgs, Task> action)
+            Func<TStateData, StateCancelEventArgs, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {

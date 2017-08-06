@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Typed;
 using BuildIt.States.Typed.Enum;
@@ -184,6 +185,53 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(esd, esg.CurrentTypedStateDefinition);
             Assert.IsNull(esg.CurrentStateData);
             Assert.IsNull(esg.CurrentStateDataWrapper);
+        }
+
+        [TestMethod]
+        public async Task TestCancelGroup()
+        {
+           var sm = new StateManager();
+            sm.Group<Test2State>()
+                .DefineState(Test2State.State1)
+                .WhenAboutToChangeFrom(async cancel =>
+                {
+                    await Task.Delay(30000, cancel.CancelToken);
+                })
+                .DefineState(Test2State.State2);
+
+            var cancelT = new CancellationTokenSource();
+            await sm.GoToState(Test2State.State1);
+            Assert.AreEqual(Test2State.State1,sm.CurrentState<Test2State>());
+            var waiter = sm.GoToState(Test2State.State2,false,cancelT.Token);
+            cancelT.Cancel();
+            await waiter;
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+
+
+
+            sm = new StateManager();
+            sm.Group<Test2State>()
+                .DefineState(Test2State.State1)
+                .WhenChangedFrom(async cancel =>
+                {
+                    await Task.Delay(30000, cancel);
+                })
+                .DefineState(Test2State.State2);
+
+            cancelT = new CancellationTokenSource();
+            await sm.GoToState(Test2State.State1);
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+            waiter = sm.GoToState(Test2State.State2, false, cancelT.Token);
+            cancelT.Cancel();
+            await waiter;
+            Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
+        }
+
+        public enum Test2State
+        {
+            Base,
+            State1,
+            State2
         }
 
         public enum Test1State

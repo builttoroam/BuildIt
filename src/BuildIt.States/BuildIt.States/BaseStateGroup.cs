@@ -81,6 +81,21 @@ namespace BuildIt.States
         public IUIExecutionContext UIContext { get; set; }
 
         /// <summary>
+        /// Gets or sets the cancellation for the current state transition
+        /// </summary>
+        private CancellationTokenSource StateTransitionCancellation { get; set; }
+
+        /// <summary>
+        /// Gets a semaphore to block concurrent state transitions
+        /// </summary>
+        private SemaphoreSlim StateTransitionSemaphore { get; } = new SemaphoreSlim(1);
+
+        /// <summary>
+        /// Gets a lock protecting access to the state transition cancellation source
+        /// </summary>
+        private object CancellationLock { get; } = new object();
+
+        /// <summary>
         /// Gets or sets the current state name
         /// </summary>
         public virtual string CurrentStateName
@@ -860,42 +875,91 @@ namespace BuildIt.States
         /// <param name="isNewState">Whether this is a new state, or change to previous</param>
         /// <param name="useTransitions">Use transition</param>
         /// <param name="data">Json data to pass into the new state</param>
-        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Indicates successful transition to the newState</returns>
-        private async Task<bool> PerformStateChange(string newState, bool isNewState, bool useTransitions, string data, CancellationToken cancel)
+        private async Task<bool> PerformStateChange(string newState, bool isNewState, bool useTransitions, string data, CancellationToken cancelToken)
         {
-            // Check to see whether this is a change to the same state
-            if (IsCurrentState(newState))
+            var newCancellation = new CancellationTokenSource();
+            var cancel = newCancellation.Token;
+
+            // Cancel and set the new cancellation source
+            // using lock so that there is no opportunity for another thread
+            // to set the source between the previous one being cancelled and
+            // a new one being set
+            lock (CancellationLock)
             {
-                "Transitioning to same state - doing nothing".Log();
+                // Set a new cancellation source
+                var currentCancellation = StateTransitionCancellation;
+
+                // If a cancellation token was passed in, make sure
+                // it's linked to the internal cancellation source
+                if (cancelToken != CancellationToken.None)
+                {
+                    cancelToken.Register(newCancellation.Cancel);
+                }
+
+                StateTransitionCancellation = newCancellation;
+
+                // Cancel any existing state transition
+                currentCancellation?.Cancel();
+            }
+
+            try
+            {
+                await StateTransitionSemaphore.WaitAsync(cancel);
+            }
+            catch (OperationCanceledException ex)
+            {
+                // Wait was cancelled, so we didn't acquire the lock. Just return whether we're in the target state or not
+                ex.LogException();
+                return IsCurrentState(newState);
+            }
+
+            try
+            {
+                // Check to see whether this is a change to the same state
+                if (IsCurrentState(newState))
+                {
+                    "Transitioning to same state - doing nothing".Log();
+                    return true;
+                }
+
+                var current = CurrentStateName;
+                $"Changing state from {current} to {newState} (Transitions: {useTransitions})".Log();
+
+                // Invoke all the methods/events prior to changing state (cancellable!)
+                "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
+                var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions, cancel);
+                if (!success)
+                {
+                    return false;
+                }
+
+                // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
+                "Invoking ChangingFrom before state change".Log();
+                await ChangingFrom(newState, data, isNewState, useTransitions, cancel);
+
+                // Perform the state change
+                "Invoking ChangeCurrentState to perform state change".Log();
+                await ChangeCurrentState(newState, isNewState, useTransitions, cancel);
+
+                // Perform post-change methods
+                "Invoking ChangedToState after state change".Log();
+                await ChangedToState(current, data, isNewState, useTransitions, cancel);
+
+                "ChangeTo completed".Log();
                 return true;
             }
-
-            var current = CurrentStateName;
-            $"Changing state from {current} to {newState} (Transitions: {useTransitions})".Log();
-
-            // Invoke all the methods/events prior to changing state (cancellable!)
-            "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
-            var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions, cancel);
-            if (!success)
+            catch (Exception ex)
             {
-                return false;
+                ex.LogException();
+                return IsCurrentState(newState);
             }
-
-            // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
-            "Invoking ChangingFrom before state change".Log();
-            await ChangingFrom(newState, data, isNewState, useTransitions, cancel);
-
-            // Perform the state change
-            "Invoking ChangeCurrentState to perform state change".Log();
-            await ChangeCurrentState(newState, isNewState, useTransitions, cancel);
-
-            // Perform post-change methods
-            "Invoking ChangedToState after state change".Log();
-            await ChangedToState(newState, data, isNewState, useTransitions, cancel);
-
-            "ChangeTo completed".Log();
-            return true;
+            finally
+            {
+                // Make sure the semaphore is released
+                StateTransitionSemaphore.Release();
+            }
         }
 
         private void Trigger_IsActiveChanged(object sender, EventArgs e)

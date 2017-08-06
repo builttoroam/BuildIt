@@ -1,4 +1,6 @@
-﻿using BuildIt.States;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using BuildIt.States;
 using BuildIt.States.Interfaces;
 using BuildIt.States.UWP;
 using States.Sample.Core;
@@ -38,15 +40,43 @@ namespace States.Sample.UWP
         /// </summary>
         public IStateManager StateManager { get; } = new StateManager();
 
+        public enum Test2State
+        {
+            Base,
+            State1,
+            State2
+        }
+
+
         /// <summary>
         /// Invoked when navigated to the page
         /// </summary>
         /// <param name="e">The navigation args</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoading);
+
+
+
+            var sm = new StateManager();
+            sm.Group<Test2State>()
+                .DefineState(Test2State.State1)
+                .WhenChangedFrom(async cancel =>
+                {
+                    await Task.Delay(30000, cancel);
+                })
+                .DefineState(Test2State.State2);
+
+            var cancelT = new CancellationTokenSource();
+            await sm.GoToState(Test2State.State1);
+            //Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+            var waiter = sm.GoToState(Test2State.State2, false, cancelT.Token);
+            cancelT.Cancel();
+            await waiter;
+            var current = sm.CurrentState<Test2State>();
+            //Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -132,7 +132,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeToState(state, animate);
+            return await group.ChangeToState(state, animate, cancelToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeToStateWithData(state, data, animate);
+            return await group.ChangeToStateWithData(state, data, animate, cancelToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeBackToState(state, animate);
+            return await group.ChangeBackToState(state, animate, cancelToken);
         }
 
 
@@ -234,7 +234,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeToStateByName(stateName, animate);
+            return await group.ChangeToStateByName(stateName, animate, cancelToken);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeToStateByNameWithData(stateName, data, animate);
+            return await group.ChangeToStateByNameWithData(stateName, data, animate, cancelToken);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace BuildIt.States
                 return false;
             }
 
-            return await group.ChangeBackToStateByName(stateName, animate);
+            return await group.ChangeBackToStateByName(stateName, animate, cancelToken);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace BuildIt.States
                 var grp = stateGroup.Value;
                 if (grp.TrackHistory && grp.HasHistory)
                 {
-                    return await grp.ChangeToPrevious(animate);
+                    return await grp.ChangeToPrevious(animate, cancelToken);
                 }
             }
 

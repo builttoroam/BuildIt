@@ -69,9 +69,9 @@ namespace BuildIt.States.Typed
         /// <param name="data">The data to pass to the new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        public async Task<bool> ChangeToStateWithData<TData>(TState findState, TData data, bool useTransitions = true)
+        public Task<bool> ChangeToStateWithData<TData>(TState findState, TData data, bool useTransitions = true)
         {
-            return await ChangeToStateByNameWithData(findState + string.Empty, data, useTransitions);
+            return ChangeToStateWithData(findState, data, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
@@ -80,9 +80,9 @@ namespace BuildIt.States.Typed
         /// <param name="findState">The new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        public async Task<bool> ChangeToState(TState findState, bool useTransitions = true)
+        public Task<bool> ChangeToState(TState findState, bool useTransitions = true)
         {
-            return await ChangeToStateByName(findState + string.Empty, useTransitions);
+            return ChangeToState(findState, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
@@ -91,14 +91,52 @@ namespace BuildIt.States.Typed
         /// <param name="findState">The state to change back to</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        public async Task<bool> ChangeBackToState(TState findState, bool useTransitions = true)
+        public Task<bool> ChangeBackToState(TState findState, bool useTransitions = true)
+        {
+            return ChangeBackToState(findState, useTransitions, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Change to typed state, with data
+        /// </summary>
+        /// <typeparam name="TData">The type of data to pass to new state</typeparam>
+        /// <param name="findState">The new state</param>
+        /// <param name="data">The data to pass to the new state</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Success if change is completed</returns>
+        public async Task<bool> ChangeToStateWithData<TData>(TState findState, TData data, bool useTransitions, CancellationToken cancel)
+        {
+            return await ChangeToStateByNameWithData(findState + string.Empty, data, useTransitions, cancel);
+        }
+
+        /// <summary>
+        /// Change to typed state
+        /// </summary>
+        /// <param name="findState">The new state</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Success if change is completed</returns>
+        public async Task<bool> ChangeToState(TState findState, bool useTransitions, CancellationToken cancel)
+        {
+            return await ChangeToStateByName(findState + string.Empty, useTransitions, cancel);
+        }
+
+        /// <summary>
+        /// Changes back to a typed state
+        /// </summary>
+        /// <param name="findState">The state to change back to</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Success if change is completed</returns>
+        public async Task<bool> ChangeBackToState(TState findState, bool useTransitions, CancellationToken cancel)
         {
             if (TrackHistory == false)
             {
                 throw new Exception("History tracking not enabled");
             }
 
-            return await ChangeBackToStateByName(findState + string.Empty, useTransitions);
+            return await ChangeBackToStateByName(findState + string.Empty, useTransitions, cancel);
         }
 
         /// <summary>
