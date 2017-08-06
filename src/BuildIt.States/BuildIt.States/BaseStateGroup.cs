@@ -391,7 +391,7 @@ namespace BuildIt.States
             if (currentStateDef?.AboutToChangeFrom != null)
             {
                 "Invoking 'AboutToChangeFrom' on current state definition".Log();
-                await currentStateDef.AboutToChangeFrom(cancel);
+                await currentStateDef.AboutToChangeFrom(cancel).SafeAwait();
                 "'AboutToChangeFrom' completed".Log();
             }
 
@@ -405,7 +405,7 @@ namespace BuildIt.States
             if (currentStateDataWrapper != null)
             {
                 "Invoking AboutToChangeFrom for existing state definition".Log();
-                await currentStateDataWrapper.InvokeAboutToChangeFrom(CurrentStateData, cancel);
+                await currentStateDataWrapper.InvokeAboutToChangeFrom(CurrentStateData, cancel).SafeAwait();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
                     "ChangeToState cancelled by existing state definition".Log();
@@ -417,7 +417,7 @@ namespace BuildIt.States
             if (CurrentStateData is IAboutToChangeFrom stateData)
             {
                 "Invoking AboutToLeave".Log();
-                await stateData.AboutToChangeFrom(cancel);
+                await stateData.AboutToChangeFrom(cancel).SafeAwait();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
                     "ChangeToState cancelled by AboutToLeave".Log();
@@ -429,7 +429,7 @@ namespace BuildIt.States
             if (newStateDef?.AboutToChangeTo != null)
             {
                 "Invoking 'AboutToChangeTo' on current state definition".Log();
-                await newStateDef.AboutToChangeTo(cancel);
+                await newStateDef.AboutToChangeTo(cancel).SafeAwait();
                 "'AboutToChangeTo' completed".Log();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
@@ -441,7 +441,7 @@ namespace BuildIt.States
             if (newStateDef?.AboutToChangeToWithData != null)
             {
                 "Invoking 'AboutToChangeTo' on current state definition".Log();
-                await newStateDef.AboutToChangeToWithData(data, cancel);
+                await newStateDef.AboutToChangeToWithData(data, cancel).SafeAwait();
                 "'AboutToChangeTo' completed".Log();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
@@ -474,20 +474,20 @@ namespace BuildIt.States
             if (currentStateDef?.ChangingFrom != null)
             {
                 "Invoking 'ChangingFrom'".Log();
-                await currentStateDef.ChangingFrom(cancelToken);
+                await currentStateDef.ChangingFrom(cancelToken).SafeAwait();
             }
 
             if (currentStateDataWrapper != null)
             {
                 "Invoking ChangingFrom on current state definition".Log();
-                await currentStateDataWrapper.InvokeChangingFrom(CurrentStateData, cancelToken);
+                await currentStateDataWrapper.InvokeChangingFrom(CurrentStateData, cancelToken).SafeAwait();
             }
 
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             if (CurrentStateData is IChangingFrom leaving)
             {
                 "Invoking Leaving on current view model".Log();
-                await leaving.ChangingFrom(cancelToken);
+                await leaving.ChangingFrom(cancelToken).SafeAwait();
             }
 
             var newStateDef = GroupDefinition.StateDefinitionFromName(newState);
@@ -496,13 +496,13 @@ namespace BuildIt.States
             if (newStateDef?.ChangingTo != null)
             {
                 "Invoking 'ChangingTo' on new state definition".Log();
-                await newStateDef.ChangingTo(cancelToken);
+                await newStateDef.ChangingTo(cancelToken).SafeAwait();
             }
 
             if (hasData && newStateDef?.ChangingToWithData != null)
             {
                 "Invoking 'ChangingToWithData' on new state definition".Log();
-                await newStateDef.ChangingToWithData(dataAsJson, cancelToken);
+                await newStateDef.ChangingToWithData(dataAsJson, cancelToken).SafeAwait();
             }
         }
 
@@ -547,10 +547,10 @@ namespace BuildIt.States
                     // ReSharper disable once SuspiciousTypeConversion.Global //NOT HELPFUL
                     if (stateData is IInitialise initData)
                     {
-                        await initData.Initialise(cancelToken);
+                        await initData.Initialise(cancelToken).SafeAwait();
                     }
 
-                    await newStateDataWrapper.InvokeInitialise(stateData, cancelToken);
+                    await newStateDataWrapper.InvokeInitialise(stateData, cancelToken).SafeAwait();
                 }
 
                 // ReSharper disable once SuspiciousTypeConversion.Global - data entities can implement both interfaces
@@ -632,14 +632,14 @@ namespace BuildIt.States
             if (oldStateDef?.ChangedFrom != null)
             {
                 "Invoking ChangedFrom on old state definition".Log();
-                await oldStateDef.ChangedFrom(cancelToken);
+                await oldStateDef.ChangedFrom(cancelToken).SafeAwait();
             }
 
             var oldStateDataWrapper = oldStateDef?.UntypedStateDataWrapper;
             if (oldStateDataWrapper != null)
             {
                 "Invoking ChangedFrom on current state definition".Log();
-                await oldStateDataWrapper.InvokeChangedFrom(CurrentStateData, cancelToken);
+                await oldStateDataWrapper.InvokeChangedFrom(CurrentStateData, cancelToken).SafeAwait();
             }
 
             var currentStateDef = CurrentStateDefinition;
@@ -651,20 +651,20 @@ namespace BuildIt.States
             if (CurrentStateData is IChangedTo arrived)
             {
                 "Invoking Arriving on new ViewModel".Log();
-                await arrived.ChangedTo(cancelToken);
+                await arrived.ChangedTo(cancelToken).SafeAwait();
             }
 
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             if (hasData && CurrentStateData is IChangedToWithData arrivedWithData)
             {
                 "Invoking Arriving on new ViewModel".Log();
-                await arrivedWithData.ChangedToWithData(dataAsJson, cancelToken);
+                await arrivedWithData.ChangedToWithData(dataAsJson, cancelToken).SafeAwait();
             }
 
             if (currentStateDef?.ChangedTo != null)
             {
                 $"State definition found, of type {currentStateDef.GetType().Name}, invoking ChangedTo method".Log();
-                await currentStateDef.ChangedTo(cancelToken);
+                await currentStateDef.ChangedTo(cancelToken).SafeAwait();
                 "ChangedTo completed".Log();
             }
             else
@@ -675,7 +675,7 @@ namespace BuildIt.States
             if (hasData && currentStateDef?.ChangedToWithJsonData != null)
             {
                 $"State definition found, of type {currentStateDef.GetType().Name}, invoking ChangedToWithJsonData method".Log();
-                await currentStateDef.ChangedToWithJsonData(dataAsJson, cancelToken);
+                await currentStateDef.ChangedToWithJsonData(dataAsJson, cancelToken).SafeAwait();
                 "ChangedToWithJsonData completed".Log();
             }
             else
@@ -686,11 +686,11 @@ namespace BuildIt.States
             if (currentStateDataWrapper != null)
             {
                 "Invoking ChangedTo on new state definition".Log();
-                await currentStateDataWrapper.InvokeChangedTo(CurrentStateData, cancelToken);
+                await currentStateDataWrapper.InvokeChangedTo(CurrentStateData, cancelToken).SafeAwait();
 
                 if (hasData)
                 {
-                    await currentStateDataWrapper.InvokeChangedToWithData(CurrentStateData, dataAsJson, cancelToken);
+                    await currentStateDataWrapper.InvokeChangedToWithData(CurrentStateData, dataAsJson, cancelToken).SafeAwait();
                 }
             }
 

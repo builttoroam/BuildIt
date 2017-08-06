@@ -21,6 +21,18 @@ namespace BuildIt.States
     {
         private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
 
+        public static async Task SafeAwait(this Task taskToAwait)
+        {
+            try
+            {
+                await taskToAwait;
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
+        }
+
         /// <summary>
         /// Indicates whether all triggers are active
         /// </summary>
@@ -147,16 +159,16 @@ namespace BuildIt.States
         /// Expoese a builder for the state definition
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
-        /// <param name="vsmGroup">Existing state builder</param>
+        /// <param name="vsm">State Manager</param>
         /// <param name="state">The state</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState> DefineState<TState>(
-                this IStateBuilder vsmGroup,
+                this IStateManager vsm,
                 TState state)
             where TState : struct
         {
-            return vsmGroup?.StateManager.Group<TState>().DefineState(state);
+            return vsm.Group<TState>().DefineState(state);
         }
 
         /// <summary>
