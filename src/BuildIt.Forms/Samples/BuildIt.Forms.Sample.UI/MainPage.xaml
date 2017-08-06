@@ -6,24 +6,35 @@
              xmlns:anim="clr-namespace:BuildIt.Forms.Animations;assembly=BuildIt.Forms.Core"
              xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Sample.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <anim:Storyboard x:Key="FadeToHalf"
+                             Element="{x:Reference MultiStateManualAnimateGrid}">
+                <anim:FadeAnimation Opacity="0.1"
+                                    Duration="5000" />
+                <anim:ScaleAnimation Scale="2"
+                                     Duration="5000" />
+            </anim:Storyboard>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <vsm:VisualStateManager.VisualStateGroups>
         <vsm:VisualStateGroups>
             <vsm:VisualStateGroup Name="SampleStates">
                 <vsm:VisualState Name="Show">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="Shown"
-                                Target="StatusLabel.Text" />
+                                    Target="StatusLabel.Text" />
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
                 <vsm:VisualState Name="Hide">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="false"
-                                Target="HelloLabel.IsVisible" />
+                                    Target="HelloLabel.IsVisible" />
                         <vsm:Setter Value="Hidden"
-                                Target="StatusLabel.Text" />
+                                    Target="StatusLabel.Text" />
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
-            </vsm:VisualStateGroup> 
+            </vsm:VisualStateGroup>
             <vsm:VisualStateGroup Name="BlueGridStates">
                 <vsm:VisualState Name="RotateLeft">
                     <vsm:VisualState.ArrivingAnimations>
@@ -31,7 +42,7 @@
                             <anim:AnimationGroup.PostAnimations>
                                 <anim:RotateAnimation Rotation="-180"
                                                       Duration="5000"
-                                                      Target="MultiStateAnimateGrid" />
+                                                      Element="{x:Reference MultiStateAnimateGrid}" />
                             </anim:AnimationGroup.PostAnimations>
                         </anim:AnimationGroup>
                     </vsm:VisualState.ArrivingAnimations>
@@ -52,26 +63,26 @@
                 <vsm:VisualState Name="Default">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="100"
-                                Target="AnimateGrid.HeightRequest"
-                                Duration="500" />
+                                    Target="AnimateGrid.HeightRequest"
+                                    Duration="500" />
                     </vsm:VisualState.Setters>
                     <vsm:VisualState.ArrivingAnimations>
                         <anim:AnimationGroup>
                             <anim:AnimationGroup.PreAnimations>
                                 <anim:RotateAnimation Rotation="-360"
-                                                 Duration="500"
-                                                 Target="AnimateGrid" />
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
                                 <anim:FadeAnimation Opacity="0"
-                                               Duration="500"
-                                               Target="AnimateGrid" />
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
                             </anim:AnimationGroup.PreAnimations>
                             <anim:AnimationGroup.PostAnimations>
                                 <anim:RotateAnimation Rotation="0"
-                                                 Duration="500"
-                                                 Target="AnimateGrid" />
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
                                 <anim:FadeAnimation Opacity="1"
-                                               Duration="500"
-                                               Target="AnimateGrid" />
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
                             </anim:AnimationGroup.PostAnimations>
                         </anim:AnimationGroup>
                     </vsm:VisualState.ArrivingAnimations>
@@ -80,19 +91,19 @@
 
                             <anim:AnimationGroup.PreAnimations>
                                 <anim:RotateAnimation Rotation="360"
-                                                 Duration="500"
-                                                 Target="AnimateGrid" />
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
                                 <anim:FadeAnimation Opacity="0"
-                                               Duration="500"
-                                               Target="AnimateGrid" />
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
                             </anim:AnimationGroup.PreAnimations>
                             <anim:AnimationGroup.PostAnimations>
                                 <anim:RotateAnimation Rotation="0"
-                                                 Duration="500"
-                                                 Target="AnimateGrid" />
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
                                 <anim:FadeAnimation Opacity="1"
-                                               Duration="500"
-                                               Target="AnimateGrid" />
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
                             </anim:AnimationGroup.PostAnimations>
                         </anim:AnimationGroup>
                     </vsm:VisualState.LeavingAnimations>
@@ -101,32 +112,32 @@
                 <vsm:VisualState Name="DoubleHeight">
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="300"
-                                Target="AnimateGrid.HeightRequest"
-                                Duration="3000" />
+                                    Target="AnimateGrid.HeightRequest"
+                                    Duration="3000" />
                     </vsm:VisualState.Setters>
                     <vsm:VisualState.ArrivingAnimations>
                         <anim:AnimationGroup>
                             <anim:AnimationGroup.PostAnimations>
                                 <anim:ParallelAnimation>
                                     <anim:TranslateAnimation TranslationX="200"
-                                                        Duration="3000"
-                                                        Target="AnimateGrid" />
+                                                             Duration="3000"
+                                                             Target="AnimateGrid" />
                                     <anim:FadeAnimation Opacity="0.2"
-                                                   Duration="750"
-                                                   Target="AnimateGrid" />
+                                                        Duration="750"
+                                                        Target="AnimateGrid" />
                                     <anim:SequenceAnimation>
                                         <anim:RotateAnimation Rotation="135"
-                                                         Duration="750"
-                                                         Target="AnimateGrid" />
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
                                         <anim:RotateAnimation Rotation="0"
-                                                         Duration="750"
-                                                         Target="AnimateGrid" />
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
                                         <anim:RotateAnimation Rotation="135"
-                                                         Duration="750"
-                                                         Target="AnimateGrid" />
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
                                         <anim:RotateAnimation Rotation="0"
-                                                         Duration="750"
-                                                         Target="AnimateGrid" />
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
                                     </anim:SequenceAnimation>
                                 </anim:ParallelAnimation>
                             </anim:AnimationGroup.PostAnimations>
@@ -140,8 +151,8 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ScrollView>
             <!-- Acrylic brushes only in Fall Creators Update -->
@@ -188,11 +199,26 @@
                         <controls:BackgroundEffect FallbackColor="Blue" />
                     </Grid.Effects>
                 </Grid>
+                <Grid HeightRequest="100"
+                      WidthRequest="100"
+                      x:Name="MultiStateManualAnimateGrid"
+                      HorizontalOptions="Start">
+                    <Grid.Effects>
+                        <controls:BackgroundEffect FallbackColor="Red" />
+                    </Grid.Effects>
+                </Grid>
                 <StackLayout Orientation="Horizontal">
                     <Button Text="Rotate Left"
                             Clicked="RotateLeftClicked" />
                     <Button Text="Rotate Right"
                             Clicked="RotateRightClicked" />
+                    <Button Text="Rotate Left Special">
+                        <Button.Triggers>
+                            <EventTrigger Event="Clicked">
+                                <anim:StoryboardTriggerAction Storyboard="{StaticResource FadeToHalf}" />
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
                 </StackLayout>
                 <Grid HeightRequest="100"
                       WidthRequest="100"
@@ -262,7 +288,7 @@
 
 
         <Grid Grid.Column="1">
-            <ListView ItemsSource="{Binding Items}" >
+            <ListView ItemsSource="{Binding Items}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="50">
@@ -275,13 +301,14 @@
         </Grid>
 
         <Grid Grid.Column="2">
-            <ListView ItemsSource="{Binding MoreItems}" >
+            <ListView ItemsSource="{Binding MoreItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="50">
                             <StackLayout>
                                 <Label Text="Hello Xamarin.Forms!" />
-                                <Label Text="Enabled!" IsVisible="{Binding EnabledVisibility}" />
+                                <Label Text="Enabled!"
+                                       IsVisible="{Binding EnabledVisibility}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

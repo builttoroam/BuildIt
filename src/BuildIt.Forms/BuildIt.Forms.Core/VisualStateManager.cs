@@ -257,7 +257,7 @@ namespace BuildIt.Forms
             }
         }
 
-        private static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element, CancellationToken cancelToken)
+        public static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element, CancellationToken cancelToken)
         {
             var tasks = new List<Task>();
 
@@ -272,7 +272,7 @@ namespace BuildIt.Forms
             return Task.WhenAll(tasks);
         }
 
-        private static Func<CancellationToken, Task> BuildAnimations(IList<StateAnimation> animations, Element element)
+        public static Func<CancellationToken, Task> BuildAnimations(IList<StateAnimation> animations, Element element)
         {
             return (cancel) => BuildAnimationTasks(animations, element, cancel);
         }
