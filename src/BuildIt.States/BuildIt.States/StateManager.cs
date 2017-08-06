@@ -123,6 +123,20 @@ namespace BuildIt.States
         /// <param name="animate">Whether to animate the transition</param>
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Whether the transition was successful</returns>
+        public Task<bool> GoToState<TState>(TState state, bool animate = true)
+            where TState : struct
+        {
+            return GoToState(state, animate, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether to animate the transition</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoToState<TState>(TState state, bool animate, CancellationToken cancelToken)
             where TState : struct
         {
@@ -143,6 +157,22 @@ namespace BuildIt.States
         /// <param name="state">The new state to go to</param>
         /// <param name="data">The data to pass to the new state</param>
         /// <param name="animate">Whether the transition should be animated</param>
+        /// <returns>Whether the transition was successful</returns>
+        public Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
+            where TState : struct
+        {
+            return GoToStateWithData(state, data, animate, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Transitions to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of state to go to</typeparam>
+        /// <typeparam name="TData">The type of data to be passed to new state</typeparam>
+        /// <param name="state">The new state to go to</param>
+        /// <param name="data">The data to pass to the new state</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Whether the transition was successful</returns>
         public Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate = true)
             where TState : struct
@@ -193,6 +223,20 @@ namespace BuildIt.States
         /// <param name="animate">Whether the transition should be animated</param>
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Whether the transition was successful</returns>
+        public Task<bool> GoBackToState<TState>(TState state, bool animate = true)
+            where TState : struct
+        {
+            return GoBackToState(state, animate, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
         public async Task<bool> GoBackToState<TState>(TState state, bool animate, CancellationToken cancelToken)
             where TState : struct
         {
@@ -203,6 +247,19 @@ namespace BuildIt.States
             }
 
             return await group.ChangeBackToState(state, animate, cancelToken);
+        }
+
+
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <returns>Whether the transition was successful</returns>
+        public Task<bool> GoToState(string groupName, string stateName, bool animate = true)
+        {
+            return GoToState(groupName, stateName, animate, CancellationToken.None);
         }
 
 
