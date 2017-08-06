@@ -36,7 +36,7 @@ namespace BuildIt.States.Tests
             public override string StateName
             {
                 get => State.Id.ToString();
-//                set => State.Id = Guid.Parse(value);
+                //                set => State.Id = Guid.Parse(value);
             }
         }
 
@@ -66,7 +66,7 @@ namespace BuildIt.States.Tests
 
             await sg.ChangeToStateByName(s1.StateName);
             Assert.AreSame(s1.State, sg.CurrentState);
-            Assert.AreSame(s1,sg.CurrentStateDefinition);
+            Assert.AreSame(s1, sg.CurrentStateDefinition);
 
             await sg.ChangeToStateByName(s2.StateName);
             Assert.AreSame(s2.State, sg.CurrentState);
@@ -98,7 +98,6 @@ namespace BuildIt.States.Tests
         [ExpectedException(typeof(TargetInvocationException))]
         // ReSharper disable once ObjectCreationAsStatement - Intentional
         public void TestInvalidEnumStateGroupNotEnum() => new EnumStateGroup<NotAnEnum>();
-
 
         // NR: Can't invoke this test as method has changed
         //[TestMethod]
@@ -257,7 +256,7 @@ namespace BuildIt.States.Tests
                     case 0:
                     case 1:
                     case 2:
-                        Assert.AreEqual(Test3State.State1,stepStates[i]);
+                        Assert.AreEqual(Test3State.State1, stepStates[i]);
                         break;
                     case 3:
                     case 4:
@@ -277,13 +276,10 @@ namespace BuildIt.States.Tests
 
         }
 
-
-
-
         [TestMethod]
         public async Task TestCancelGroup()
         {
-           var sm = new StateManager();
+            var sm = new StateManager();
             sm.Group<Test2State>()
                 .DefineState(Test2State.State1)
                 .WhenAboutToChangeFrom(async cancel =>
@@ -294,13 +290,11 @@ namespace BuildIt.States.Tests
 
             var cancelT = new CancellationTokenSource();
             await sm.GoToState(Test2State.State1);
-            Assert.AreEqual(Test2State.State1,sm.CurrentState<Test2State>());
-            var waiter = sm.GoToState(Test2State.State2,false,cancelT.Token);
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+            var waiter = sm.GoToState(Test2State.State2, false, cancelT.Token);
             cancelT.Cancel();
             await waiter;
             Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
-
-
 
             sm = new StateManager();
             sm.Group<Test2State>()
