@@ -669,26 +669,6 @@ namespace BuildIt.States.Tests
         }
 
         [TestMethod]
-        public async Task TestOnCompleteChangeStateInitialiseWithDataEvent()
-        {
-            var sm = new StateManager();
-            Assert.AreEqual(0, sm.StateGroups.Count);
-            var builder = sm.Group<TestStates>();
-            var grp = sm.TypedStateGroup<TestStates>();
-
-            builder
-                .DefineStateWithData<TestStates, State1Data>(TestStates.State1)
-                    .OnCompleteWithDataEvent<TestStates, State1Data, TestCompletion, int>(TestCompletion.Complete1)
-                    .ChangeState(TestStates.State2)
-                    .InitializeNewStateWithData<TestStates, State1Data, State2Data, int>()
-                .DefineStateWithData<TestStates, State2Data>(TestStates.State2);
-            grp.RegisterDependencies(Container);
-
-            await ValidateOnComplete(sm);
-        }
-
-
-        [TestMethod]
         public async Task TestOnDefaultCompleteChangeState()
         {
             var sm = new StateManager();
