@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.forms.Sample.Core.ViewModels;
+using BuildIt.Forms.Animations;
 using Xamarin.Forms;
 using BuildIt.Forms.Controls;
 using BuildIt.ServiceLocation;
@@ -58,6 +60,20 @@ namespace BuildIt.Forms.Sample
             VisualStateManager.GoToState(this, "DoubleHeight");
         }
 
+
+        public async void RotateLeftClicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "RotateLeft");
+
+            var sb = Resources["FadeToHalf"] as Storyboard;
+            await sb.Animate(CancellationToken.None);
+        }
+
+        public void RotateRightClicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "RotateRight");
+        }
+
         public void DefaultClicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "Default");
@@ -66,6 +82,7 @@ namespace BuildIt.Forms.Sample
         public void ButtonClicked(object sender, EventArgs e)
         {
             DisabledButton.IsEnabled = !DisabledButton.IsEnabled;
+            (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
         }
     }
 }

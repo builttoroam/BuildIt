@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -12,8 +13,9 @@ namespace BuildIt.Forms.Animations
         /// Animate method
         /// </summary>
         /// <param name="visualElement">The element to animate</param>
+        /// <param name="cancelToken">Cancellation token to cancel animation</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public override async Task Animate(VisualElement visualElement)
+        public override async Task Animate(VisualElement visualElement, CancellationToken cancelToken)
         {
             if (visualElement == null)
             {
@@ -22,9 +24,13 @@ namespace BuildIt.Forms.Animations
 
             foreach (var anim in Animations)
             {
+                if (cancelToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 var target = visualElement.FindByTarget(anim);
                 var tg = target?.Item1 as VisualElement;
-                await anim.Animate(tg ?? visualElement);
+                await anim.Animate(tg ?? visualElement, cancelToken);
             }
         }
     }

@@ -1,14 +1,15 @@
 ﻿{
   "dependencies": {
-    "Autofac": "4.3.0",
+    "Autofac": "4.6.1",
+    "BuildIt.States": "1.1.0.48-beta",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "Newtonsoft.Json": "9.0.1"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
+    "Newtonsoft.Json": "10.0.3"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.10240": {}
   },
   "runtimes": {
     "win10-arm": {},

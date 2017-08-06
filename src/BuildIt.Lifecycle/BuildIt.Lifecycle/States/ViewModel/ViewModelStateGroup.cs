@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using BuildIt.ServiceLocation;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Interfaces.StateData;
+using BuildIt.States.Typed;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
-    public interface IViewModelStateGroup<TState> : IEnumStateGroup<TState>, IHasCurrentViewModel
+    public interface IViewModelStateGroupDefinition<TState, TStateDefinition> : ITypedStateGroupDefinition<TState, TStateDefinition>
         where TState : struct
+        where TStateDefinition : class, ITypedStateDefinition<TState>, new()
     {
         IViewModelStateDefinition<TState, TViewModel> DefineViewModelState<TViewModel>(TState state)
             where TViewModel : INotifyPropertyChanged;
@@ -20,46 +24,61 @@ namespace BuildIt.Lifecycle.States.ViewModel
             where TViewModel : INotifyPropertyChanged;
     }
 
+    public class ViewModelStateGroupDefinition<TState> 
+       : EnumStateGroupDefinition<TState> //, IViewModelStateGroupDefinition<TState, TStateDefinition>
+        where TState : struct
+        //where TStateDefinition : EnumStateDefinition<TState>, new()
+    {
+        //private const string ErrorDontUseDefineState =
+        //    "Use DefineViewModelState instead of DefineState for ViewModelStateManager";
+        //public override ITypedStateDefinition<TState> DefineTypedState(TState state)
+        //{
+        //    throw new Exception(ErrorDontUseDefineState);
+        //}
+
+        //public override ITypedStateDefinition<TState> DefineTypedState(ITypedStateDefinition<TState> stateDefinition)
+        //{
+        //    if (stateDefinition.GetType().GetGenericTypeDefinition() != typeof(ViewModelStateDefinition<,>)) throw new Exception(ErrorDontUseDefineState);
+        //    return base.DefineTypedState(stateDefinition);
+        //}
+
+        public IViewModelStateDefinition<TState, TViewModel> DefineViewModelState<TViewModel>(TState state) 
+            where TViewModel : INotifyPropertyChanged//, new()
+        {
+            var stateDefinition = new ViewModelStateDefinition<TState, TViewModel>(state);
+            return DefineViewModelState<TViewModel, ViewModelStateDefinition<TState, TViewModel>>(stateDefinition);
+        }
+
+        public IViewModelStateDefinition<TState, TViewModel> DefineViewModelState<TViewModel, TViewModelStateDefinition>(TViewModelStateDefinition stateDefinition) 
+            where TViewModel : INotifyPropertyChanged//, new()
+            where TViewModelStateDefinition : EnumStateDefinition<TState>, IViewModelStateDefinition<TState, TViewModel>
+        {
+            $"Defining state for {typeof(TState).Name} with ViewModel type {typeof(TViewModel)}".Log();
+            base.DefineTypedState(stateDefinition);
+            return stateDefinition;
+        }
+    }
+
 
     public class ViewModelStateGroup<TState> :
-        EnumStateGroup<TState>, 
+        TypedStateGroup<TState, EnumStateDefinition<TState>, ViewModelStateGroupDefinition<TState>>, 
         ICanRegisterDependencies,
-        IViewModelStateGroup<TState>,
-        IRegisterForUIAccess
+        IRegisterForUIAccess,
+        IHasCurrentViewModel
         where TState : struct
         
     {
-        public ViewModelStateGroup()
+        public ViewModelStateGroup() : base()
+        {
+            TrackHistory = true;
+        }
+        public ViewModelStateGroup(ViewModelStateGroupDefinition<TState> groupDefinition) : base(groupDefinition)
         {
             TrackHistory = true;
         }
 
 
-        private const string ErrorDontUseDefineState =
-            "Use DefineViewModelState instead of DefineState for ViewModelStateManager";
-        public override IEnumStateDefinition<TState> DefineEnumState(TState state)
-        {
-            throw new Exception(ErrorDontUseDefineState);
-        }
 
-        public override IEnumStateDefinition<TState> DefineEnumState(IEnumStateDefinition<TState> stateDefinition)
-        {
-            if (stateDefinition.GetType().GetGenericTypeDefinition() != typeof(ViewModelStateDefinition<,>)) throw new Exception(ErrorDontUseDefineState);
-            return base.DefineEnumState(stateDefinition);
-        }
-
-        public IViewModelStateDefinition<TState,TViewModel> DefineViewModelState<TViewModel>(TState state) where TViewModel : INotifyPropertyChanged//, new()
-        {
-            var stateDefinition = new ViewModelStateDefinition<TState, TViewModel> (state );
-            return DefineViewModelState(stateDefinition);
-        }
-
-        public IViewModelStateDefinition<TState,TViewModel> DefineViewModelState<TViewModel>(IViewModelStateDefinition<TState, TViewModel> stateDefinition) where TViewModel : INotifyPropertyChanged//, new()
-        {
-            $"Defining state for {typeof(TState).Name} with ViewModel type {typeof(TViewModel)}".Log();
-            base.DefineState(stateDefinition);
-            return stateDefinition;
-        }
 
         #region Migrated to StateGroup
 
@@ -90,107 +109,116 @@ namespace BuildIt.Lifecycle.States.ViewModel
             }
         }
 
-        protected override async Task<bool> ChangeToState(string oldState, string newState, bool isNewState)
-        {
-            // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
-            var aboutVM = CurrentViewModel as IAboutToLeaveViewModelState;
-            var cancel = new CancelEventArgs();
-            if (aboutVM != null)
-            {
-                "Invoking AboutToLeave".Log();
-                await aboutVM.AboutToLeave(cancel);
-                if (cancel.Cancel)
-                {
-                    "ChangeToState cancelled by AboutToLeave".Log();
-                    return false;
-                }
-            }
+        //protected override async Task<bool> AboutToChangeFrom(string newState, string data, bool isNewState, bool useTransitions)
+        //{
+        //    var oldState = CurrentStateName;
+        //    // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
+        //    var aboutVM = CurrentViewModel as IAboutToLeaveViewModelState;
+        //    var cancel = new CancelEventArgs();
+        //    if (aboutVM != null)
+        //    {
+        //        "Invoking AboutToLeave".Log();
+        //        await aboutVM.AboutToLeave(cancel);
+        //        if (cancel.Cancel)
+        //        {
+        //            "ChangeToState cancelled by AboutToLeave".Log();
+        //            return false;
+        //        }
+        //    }
 
-            "Retrieving current state definition".Log();
-            var currentVMStates = !oldState.Equals(default(TState)) ? States[oldState] as IGenerateViewModel : null;
-            if (currentVMStates != null)
-            {
-                "Invoking AboutToChangeFrom for existing state definition".Log();
-                await currentVMStates.InvokeAboutToChangeFromViewModel(CurrentViewModel, cancel);
-                if (cancel.Cancel)
-                {
-                    "ChangeToState cancelled by existing state definition".Log();
-                    return false;
-                }
-            }
+        //    "Retrieving current state definition".Log();
+        //    var currentVMStates = !oldState.Equals(default(TState)) ? TypedGroupDefinition.States[oldState] as IGenerateViewModel : null;
+        //    if (currentVMStates != null)
+        //    {
+        //        "Invoking AboutToChangeFrom for existing state definition".Log();
+        //        await currentVMStates.InvokeAboutToChangeFromViewModel(CurrentViewModel, cancel);
+        //        if (cancel.Cancel)
+        //        {
+        //            "ChangeToState cancelled by existing state definition".Log();
+        //            return false;
+        //        }
+        //    }
 
-            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
-            var leaving = CurrentViewModel as ILeavingViewModelState;
-            if (leaving != null)
-            {
-                "Invoking Leaving on current view model".Log();
-                await leaving.Leaving();
-            }
+        //    var basecancel = await base.AboutToChangeFrom(newState, data, isNewState, useTransitions);
+        //    return basecancel;
+        //}
 
-            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
-            var isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
-            if (isBlockable != null)
-            {
-                "Detaching event handlers for isblocked on current view model".Log();
-                isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
-            }
+        //protected override async Task ChangingFrom(string newState, string dataAsJson, bool isNewState, bool useTransitions)
+        //{
+        //    var oldState = CurrentStateName;
+        //    // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+        //    var leaving = CurrentViewModel as ILeavingViewModelState;
+        //    if (leaving != null)
+        //    {
+        //        "Invoking Leaving on current view model".Log();
+        //        await leaving.Leaving();
+        //    }
 
+        //    // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+        //    var isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
+        //    if (isBlockable != null)
+        //    {
+        //        "Detaching event handlers for isblocked on current view model".Log();
+        //        isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
+        //    }
 
-            if (currentVMStates != null)
-            {
-                "Invoking ChangingFrom on current state definition".Log();
-                await currentVMStates.InvokeChangingFromViewModel(CurrentViewModel);
-            }
+        //    "Retrieving current state definition".Log();
+        //    var currentVMStates = !oldState.Equals(default(TState)) ? TypedGroupDefinition.States[oldState] as IGenerateViewModel : null;
+        //    if (currentVMStates != null)
+        //    {
+        //        "Invoking ChangingFrom on current state definition".Log();
+        //        await currentVMStates.InvokeChangingFromViewModel(CurrentViewModel);
+        //    }
 
-            "Invoking ChangeToState to invoke state change".Log();
-            var ok = await base.ChangeToState(oldState, newState, isNewState);
-            if (!ok)
-            {
-                "ChangeToState aborted".Log();
-                return false;
-            }
-            INotifyPropertyChanged vm = null;
-            if (!newState.Equals(default(TState)))
-            {
-                var current = States[newState] as IGenerateViewModel;
-                var genType = current?.ViewModelType;
+        //    await  base.ChangingFrom(newState, dataAsJson, isNewState, useTransitions);
+        //}
 
-                "Retrieving existing ViewModel for new state".Log();
-                vm = Existing(genType);
-            }
+        //protected override async Task ChangeCurrentState(string newState, bool isNewState, bool useTransitions)
+        //{
+        //    var oldState = CurrentStateName;
 
-            if (vm == null)
-            {
-                var newGen = States[newState] as IGenerateViewModel;
-                if (newGen == null) return false;
-                "Generating ViewModel for new state".Log();
-                vm = newGen.Generate();
+        //    "Invoking ChangeToState to invoke state change".Log();
+        //    await base.ChangeCurrentState(newState, isNewState, useTransitions);
 
-                "Registering dependencies".Log();
-                (vm as ICanRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+        //    INotifyPropertyChanged vm = null;
+        //    if (!newState.Equals(default(TState)))
+        //    {
+        //        var current = TypedGroupDefinition.States[newState] as IGenerateViewModel;
+        //        var genType = current?.ViewModelType;
 
-                await newGen.InvokeInitialiseViewModel(vm);
+        //        "Retrieving existing ViewModel for new state".Log();
+        //        vm = Existing(genType);
+        //    }
 
-                //if (vm.InitialiseViewModel != null)
-                //{
-                //    "Initialising ViewModel".Log();
-                //    await InitialiseViewModel(vm);
-                //}
-            }
-            var requireUI = vm as IRegisterForUIAccess;
-            requireUI?.RegisterForUIAccess(UIContext);
+        //    if (vm == null)
+        //    {
+        //        var newGen = TypedGroupDefinition.States[newState] as IGenerateViewModel;
+        //        if (newGen == null) return;
+        //        "Generating ViewModel for new state".Log();
+        //        vm = newGen.Generate();
 
-            ViewModels[vm.GetType()] = vm;
-            CurrentViewModel = vm;
-            isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
-            if (isBlockable != null)
-            {
-                isBlockable.IsBlockedChanged += IsBlockable_IsBlockedChanged;
-            }
+        //        "Registering dependencies".Log();
+        //        (vm as ICanRegisterDependencies)?.RegisterDependencies(DependencyContainer);
 
+        //        await newGen.InvokeInitialiseViewModel(vm);
 
-            return true;
-        }
+        //        //if (vm.InitialiseViewModel != null)
+        //        //{
+        //        //    "Initialising ViewModel".Log();
+        //        //    await InitialiseViewModel(vm);
+        //        //}
+        //    }
+        //    var requireUI = vm as IRegisterForUIAccess;
+        //    requireUI?.RegisterForUIAccess(UIContext);
+
+        //    ViewModels[vm.GetType()] = vm;
+        //    CurrentViewModel = vm;
+        //    var isBlockable = CurrentViewModel as IIsAbleToBeBlocked;
+        //    if (isBlockable != null)
+        //    {
+        //        isBlockable.IsBlockedChanged += IsBlockable_IsBlockedChanged;
+        //    }
+        //}
 
         private void IsBlockable_IsBlockedChanged(object sender, EventArgs e)
         {
@@ -205,27 +233,50 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 await base.NotifyStateChanged(newState, useTransitions, isNewState);
             });
         }
-        protected override async Task ChangedToState(string newState, string dataAsJson)
-        {
-            await base.ChangedToState(newState,dataAsJson);
 
-            // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
-            var arrived = CurrentViewModel as IArrivingViewModelState;
-            if (arrived != null)
-            {
-                "Invoking Arriving on new ViewModel".Log();
-                await arrived.Arriving();
-            }
+        //protected override async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions)
+        //{
+        //    await base.ChangedToState(oldState, dataAsJson, isNewState, useTransitions);
 
-            var currentVMStates = States[CurrentStateName] as IGenerateViewModel;
-            if (currentVMStates != null)
-            {
-                "Invoking ChangedTo on new state definition".Log();
-                await currentVMStates.InvokeChangedToViewModel(CurrentViewModel);
-                await currentVMStates.InvokeChangedToWithDataViewModel(CurrentViewModel, dataAsJson);
-            }
+        //    // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+        //    var arrived = CurrentViewModel as IArrivingViewModelState;
+        //    if (arrived != null)
+        //    {
+        //        "Invoking Arriving on new ViewModel".Log();
+        //        await arrived.Arriving();
+        //    }
 
-        }
+        //    var currentVMStates = TypedGroupDefinition.States[CurrentStateName] as IGenerateViewModel;
+        //    if (currentVMStates != null)
+        //    {
+        //        "Invoking ChangedTo on new state definition".Log();
+        //        await currentVMStates.InvokeChangedToViewModel(CurrentViewModel);
+        //        await currentVMStates.InvokeChangedToWithDataViewModel(CurrentViewModel, dataAsJson);
+        //    }
+
+        //}
+
+        //protected override async Task ChangeToStateByNameWithData(string newState, string dataAsJson)
+        //{
+        //    await base.ChangeToStateByNameWithData(newState,dataAsJson);
+
+        //    // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
+        //    var arrived = CurrentViewModel as IArrivingViewModelState;
+        //    if (arrived != null)
+        //    {
+        //        "Invoking Arriving on new ViewModel".Log();
+        //        await arrived.Arriving();
+        //    }
+
+        //    var currentVMStates = States[CurrentStateName] as IGenerateViewModel;
+        //    if (currentVMStates != null)
+        //    {
+        //        "Invoking ChangedTo on new state definition".Log();
+        //        await currentVMStates.InvokeChangedToViewModel(CurrentViewModel);
+        //        await currentVMStates.InvokeChangedToWithDataViewModel(CurrentViewModel, dataAsJson);
+        //    }
+
+        //}
 
 
         //protected override async Task ArrivedState(ITransitionDefinition<TState> transition, TState currentState)
@@ -262,7 +313,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             using (DependencyContainer.StartUpdate())
             {
                 //var cb = new ContainerBuilder();
-                foreach (var state in States.Values.OfType<IGenerateViewModel>())
+                foreach (var state in TypedGroupDefinition.States.Values.OfType<IGenerateViewModel>())
                 {
                     DependencyContainer.RegisterType(state.ViewModelType);
                     //cb.RegisterType(state.ViewModelType);

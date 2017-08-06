@@ -13,23 +13,31 @@ using BuildIt.Lifecycle.States;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.Lifecycle
 {
+    public interface IHasStateData
+    {
+        INotifyPropertyChanged CurrentStateData { get; }
+    }
    
 
-    public class FrameNavigation<TState>: IHasStateData
+    public class FrameNavigation<TState> : IHasStateData
         where TState : struct
+        //where TStateDefinition : class, ITypedStateDefinition<TState>, new()
+        //where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
     {
-        public INotifyPropertyChanged CurrentStateData => (StateNotifier as IHasStateData) ?.CurrentStateData;
+        public INotifyPropertyChanged CurrentStateData => (StateNotifier as IStateGroup)?.CurrentStateData;
 
 
-        public INotifyEnumStateChanged<TState> StateNotifier { get; }
+        public INotifyTypedStateChanged<TState> StateNotifier { get; }
 
         private Frame RootFrame { get; }
 
         public FrameNavigation(Frame rootFrame,
-            INotifyEnumStateChanged<TState> stateNotifier)
+                INotifyTypedStateChanged<TState> stateNotifier)
             //,string registerAs = null)
         {
             //var stateManager = hasStateManager.StateManager;
@@ -45,7 +53,7 @@ namespace BuildIt.Lifecycle
 
             //RootFrame.Tag = registerAs;
             StateNotifier = stateNotifier;
-            StateNotifier.EnumStateChanged += StateManager_StateChanged;
+            StateNotifier.TypedStateChanged += StateManager_StateChanged;
         }
 
         private void RootFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
@@ -73,14 +81,15 @@ namespace BuildIt.Lifecycle
             {
 
                 var groups = sm.StateGroups;
-                var inotifier = typeof (INotifyEnumStateChanged<>);
-                var vsct = typeof (VisualStateChanger<>);
+                var inotifier = typeof(EnumStateGroup<>);
+                var vsct = typeof(VisualStateChanger<>);
                 foreach (var stateGroup in groups)
                 {
-                    var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
+                    var typeArg = stateGroup.Value.GetType().GenericTypeArguments.FirstOrDefault();
+                    var groupNotifier = inotifier.MakeGenericType(typeArg);
                     if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
                     {
-                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(stateGroup.Key), pg, stateGroup.Value);
+                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(typeArg), pg, stateGroup.Value);
                     }
                 }
             }
@@ -114,9 +123,9 @@ namespace BuildIt.Lifecycle
 
         }
 
-        private void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
         {
-            var tp = NavigationHelper.TypeForState(e.EnumState);
+            var tp = NavigationHelper.TypeForState(e.TypedState);
 
             if (e.IsNewState)
             {
