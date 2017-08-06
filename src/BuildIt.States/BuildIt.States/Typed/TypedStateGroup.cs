@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 
@@ -68,9 +69,9 @@ namespace BuildIt.States.Typed
         /// <param name="data">The data to pass to the new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        public async Task<bool> ChangeToStateWithData<TData>(TState findState, TData data, bool useTransitions = true)
+        public Task<bool> ChangeToStateWithData<TData>(TState findState, TData data, bool useTransitions = true)
         {
-            return await ChangeToStateByNameWithData(findState + string.Empty, data, useTransitions);
+            return ChangeToStateWithData(findState, data, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
@@ -79,9 +80,9 @@ namespace BuildIt.States.Typed
         /// <param name="findState">The new state</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        public async Task<bool> ChangeToState(TState findState, bool useTransitions = true)
+        public Task<bool> ChangeToState(TState findState, bool useTransitions = true)
         {
-            return await ChangeToStateByName(findState + string.Empty, useTransitions);
+            return ChangeToState(findState, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
@@ -90,14 +91,52 @@ namespace BuildIt.States.Typed
         /// <param name="findState">The state to change back to</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <returns>Success if change is completed</returns>
-        public async Task<bool> ChangeBackToState(TState findState, bool useTransitions = true)
+        public Task<bool> ChangeBackToState(TState findState, bool useTransitions = true)
+        {
+            return ChangeBackToState(findState, useTransitions, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Change to typed state, with data
+        /// </summary>
+        /// <typeparam name="TData">The type of data to pass to new state</typeparam>
+        /// <param name="findState">The new state</param>
+        /// <param name="data">The data to pass to the new state</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Success if change is completed</returns>
+        public async Task<bool> ChangeToStateWithData<TData>(TState findState, TData data, bool useTransitions, CancellationToken cancel)
+        {
+            return await ChangeToStateByNameWithData(findState + string.Empty, data, useTransitions, cancel);
+        }
+
+        /// <summary>
+        /// Change to typed state
+        /// </summary>
+        /// <param name="findState">The new state</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Success if change is completed</returns>
+        public async Task<bool> ChangeToState(TState findState, bool useTransitions, CancellationToken cancel)
+        {
+            return await ChangeToStateByName(findState + string.Empty, useTransitions, cancel);
+        }
+
+        /// <summary>
+        /// Changes back to a typed state
+        /// </summary>
+        /// <param name="findState">The state to change back to</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Success if change is completed</returns>
+        public async Task<bool> ChangeBackToState(TState findState, bool useTransitions, CancellationToken cancel)
         {
             if (TrackHistory == false)
             {
                 throw new Exception("History tracking not enabled");
             }
 
-            return await ChangeBackToStateByName(findState + string.Empty, useTransitions);
+            return await ChangeBackToStateByName(findState + string.Empty, useTransitions, cancel);
         }
 
         /// <summary>
@@ -106,14 +145,15 @@ namespace BuildIt.States.Typed
         /// <param name="newState">The name of the state being changed to</param>
         /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
         /// <param name="useTransitions">Indicates whether to use transitions</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected override async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions)
+        protected override async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
             try
             {
-                await base.NotifyStateChanged(newState, isNewState, useTransitions);
+                await base.NotifyStateChanged(newState, isNewState, useTransitions, cancelToken);
 
                 if (TypedStateChanged != null)
                 {
@@ -121,7 +161,7 @@ namespace BuildIt.States.Typed
                     await UIContext.RunAsync(() =>
                     {
                         "Raising TypedStateChanged event".Log();
-                        TypedStateChanged?.Invoke(this, new TypedStateEventArgs<TState>(CurrentState, useTransitions, isNewState));
+                        TypedStateChanged?.Invoke(this, new TypedStateEventArgs<TState>(CurrentState, useTransitions, isNewState, cancelToken));
                         "Raising TypedStateChanged event completed".Log();
                     });
                     "TypedStateChanged event completed (after UI context check)".Log();
@@ -145,15 +185,16 @@ namespace BuildIt.States.Typed
         /// <param name="newState">The new state to transition to</param>
         /// <param name="isNewState">Whether this will be a new state or going to previous</param>
         /// <param name="useTransitions">Whether to use transitions or not</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Whether the state change should be cancelled (true)</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected override async Task<bool> NotifyStateChanging(string newState, bool isNewState, bool useTransitions)
+        protected override async Task<bool> NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
             var shouldCancel = false;
             try
             {
-                var statecancel = await base.NotifyStateChanging(newState, isNewState, useTransitions);
+                var statecancel = await base.NotifyStateChanging(newState, isNewState, useTransitions, cancelToken);
                 if (statecancel)
                 {
                     return true;
@@ -164,7 +205,7 @@ namespace BuildIt.States.Typed
                     "Invoking TypedStateChanging event (before UI context check)".Log();
                     await UIContext.RunAsync(() =>
                     {
-                        var cancel = new TypedStateCancelEventArgs<TState>(CurrentState, useTransitions, isNewState);
+                        var cancel = new TypedStateCancelEventArgs<TState>(CurrentState, useTransitions, isNewState, cancelToken);
                         "Raising TypedStateChanging event".Log();
                         TypedStateChanging?.Invoke(this, cancel);
                         "Raising TypedStateChanging event completed".Log();

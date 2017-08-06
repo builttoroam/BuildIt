@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Typed;
 using BuildIt.States.Typed.Enum;
@@ -34,7 +36,7 @@ namespace BuildIt.States.Tests
             public override string StateName
             {
                 get => State.Id.ToString();
-//                set => State.Id = Guid.Parse(value);
+                //                set => State.Id = Guid.Parse(value);
             }
         }
 
@@ -64,7 +66,7 @@ namespace BuildIt.States.Tests
 
             await sg.ChangeToStateByName(s1.StateName);
             Assert.AreSame(s1.State, sg.CurrentState);
-            Assert.AreSame(s1,sg.CurrentStateDefinition);
+            Assert.AreSame(s1, sg.CurrentStateDefinition);
 
             await sg.ChangeToStateByName(s2.StateName);
             Assert.AreSame(s2.State, sg.CurrentState);
@@ -96,7 +98,6 @@ namespace BuildIt.States.Tests
         [ExpectedException(typeof(TargetInvocationException))]
         // ReSharper disable once ObjectCreationAsStatement - Intentional
         public void TestInvalidEnumStateGroupNotEnum() => new EnumStateGroup<NotAnEnum>();
-
 
         // NR: Can't invoke this test as method has changed
         //[TestMethod]
@@ -184,6 +185,146 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(esd, esg.CurrentTypedStateDefinition);
             Assert.IsNull(esg.CurrentStateData);
             Assert.IsNull(esg.CurrentStateDataWrapper);
+        }
+
+        [TestMethod]
+        public async Task TestStagesOfStateTransitions()
+        {
+            var steps = new List<int>();
+            var stepStates = new List<Test3State>();
+
+            var sm = new StateManager();
+            sm.DefineState(Test3State.State1)
+                .WhenChangedTo(cancel =>
+                {
+                    steps.Add(0);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .WhenAboutToChangeFrom(cancel =>
+                {
+                    steps.Add(1);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .WhenChangingFrom(cancel =>
+                {
+                    steps.Add(2);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .WhenChangedFrom(cancel =>
+                {
+                    steps.Add(3);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .DefineState(Test3State.State2)
+                .WhenChangedTo(cancel =>
+                {
+                    steps.Add(4);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .WhenAboutToChangeFrom(cancel =>
+                {
+                    steps.Add(5);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .WhenChangingFrom(cancel =>
+                {
+                    steps.Add(6);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .WhenChangedFrom(cancel =>
+                {
+                    steps.Add(7);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                })
+                .DefineState(Test3State.State3)
+                .WhenChangedTo(cancel =>
+                {
+                    steps.Add(8);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                });
+
+            await sm.GoToState(Test3State.State1);
+            await sm.GoToState(Test3State.State2);
+            await sm.GoToState(Test3State.State3);
+            Assert.AreEqual(9, steps.Count);
+            Assert.AreEqual(9, stepStates.Count);
+            for (var i = 0; i < steps.Count; i++)
+            {
+                Assert.AreEqual(i, steps[i]);
+                switch (i)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        Assert.AreEqual(Test3State.State1, stepStates[i]);
+                        break;
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        Assert.AreEqual(Test3State.State2, stepStates[i]);
+                        break;
+                    case 7:
+                    case 8:
+                        Assert.AreEqual(Test3State.State3, stepStates[i]);
+                        break;
+                    default:
+                        Assert.Fail("Invalid step");
+                        break;
+                }
+            }
+
+        }
+
+        [TestMethod]
+        public async Task TestCancelGroup()
+        {
+            var sm = new StateManager();
+            sm.Group<Test2State>()
+                .DefineState(Test2State.State1)
+                .WhenAboutToChangeFrom(async cancel =>
+                {
+                    await Task.Delay(30000, cancel.CancelToken);
+                })
+                .DefineState(Test2State.State2);
+
+            var cancelT = new CancellationTokenSource();
+            await sm.GoToState(Test2State.State1);
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+            var waiter = sm.GoToState(Test2State.State2, false, cancelT.Token);
+            cancelT.Cancel();
+            await waiter;
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+
+            sm = new StateManager();
+            sm.Group<Test2State>()
+                .DefineState(Test2State.State1)
+                .WhenChangingFrom(async cancel =>
+                {
+                    await Task.Delay(30000, cancel);
+                })
+                .DefineState(Test2State.State2);
+
+            cancelT = new CancellationTokenSource();
+            await sm.GoToState(Test2State.State1);
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+            waiter = sm.GoToState(Test2State.State2, false, cancelT.Token);
+            cancelT.Cancel();
+            await waiter;
+            Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
+        }
+        public enum Test3State
+        {
+            Base,
+            State1,
+            State2,
+            State3
+        }
+        public enum Test2State
+        {
+            Base,
+            State1,
+            State2
         }
 
         public enum Test1State

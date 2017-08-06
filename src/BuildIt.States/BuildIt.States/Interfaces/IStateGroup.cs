@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces
@@ -97,6 +98,15 @@ namespace BuildIt.States.Interfaces
         Task<bool> ChangeToStateByName(string newState, bool useTransitions = true);
 
         /// <summary>
+        /// Instigates a change to a state
+        /// </summary>
+        /// <param name="newState">The state to change to</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Successful change to state</returns>
+        Task<bool> ChangeToStateByName(string newState, bool useTransitions, CancellationToken cancel);
+
+        /// <summary>
         /// Instigates a change to state, passing data into new state
         /// </summary>
         /// <typeparam name="TData">The type of data to pass into the new state</typeparam>
@@ -107,6 +117,17 @@ namespace BuildIt.States.Interfaces
         Task<bool> ChangeToStateByNameWithData<TData>(string newState, TData data, bool useTransitions = true);
 
         /// <summary>
+        /// Instigates a change to state, passing data into new state
+        /// </summary>
+        /// <typeparam name="TData">The type of data to pass into the new state</typeparam>
+        /// <param name="newState">The new state</param>
+        /// <param name="data">The data to pass into the new state</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Successful change to state</returns>
+        Task<bool> ChangeToStateByNameWithData<TData>(string newState, TData data, bool useTransitions, CancellationToken cancel);
+
+        /// <summary>
         /// Change to state by going back in history
         /// </summary>
         /// <param name="newState">The new state</param>
@@ -115,11 +136,28 @@ namespace BuildIt.States.Interfaces
         Task<bool> ChangeBackToStateByName(string newState, bool useTransitions = true);
 
         /// <summary>
+        /// Change to state by going back in history
+        /// </summary>
+        /// <param name="newState">The new state</param>
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Successful change to state</returns>
+        Task<bool> ChangeBackToStateByName(string newState, bool useTransitions, CancellationToken cancel);
+
+        /// <summary>
         /// Change to the previous state - will fail if go to previous is being blocked
         /// </summary>
         /// <param name="useTransitions">Whether to use transitions </param>
         /// <returns>Successful change to previous state</returns>
         Task<bool> ChangeToPrevious(bool useTransitions = true);
+
+        /// <summary>
+        /// Change to the previous state - will fail if go to previous is being blocked
+        /// </summary>
+        /// <param name="useTransitions">Whether to use transitions </param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Successful change to previous state</returns>
+        Task<bool> ChangeToPrevious(bool useTransitions, CancellationToken cancel);
 
         /// <summary>
         /// Binds state groups

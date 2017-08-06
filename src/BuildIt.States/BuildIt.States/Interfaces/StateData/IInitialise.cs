@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces.StateData
@@ -10,7 +11,8 @@ namespace BuildIt.States.Interfaces.StateData
         /// <summary>
         /// Method called after construction
         /// </summary>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to await</returns>
-        Task Initialise();
+        Task Initialise(CancellationToken cancelToken);
     }
 }

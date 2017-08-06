@@ -35,9 +35,9 @@ namespace States.Sample.Core
             for (int i = 0; i < 1000; i++)
             {
                 var item = new RandomItem {
-                    Output1 = Guid.NewGuid() + "",
-                    Output2 = Guid.NewGuid() + "",
-                    Output3 = Guid.NewGuid() + ""
+                    Output1 = Guid.NewGuid() + string.Empty,
+                    Output2 = Guid.NewGuid() + string.Empty,
+                    Output3 = Guid.NewGuid() + string.Empty
                 };
                 var enabled = (rnd.Next(0, 1000) < 500);
                 RandomItems.Add(item);
