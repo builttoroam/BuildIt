@@ -21,6 +21,11 @@ namespace BuildIt.States
     {
         private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
 
+        /// <summary>
+        /// Helper method for ensuring no leakage of exceptions
+        /// </summary>
+        /// <param name="taskToAwait">The task to await (wrap in try-catch)</param>
+        /// <returns>Task to await</returns>
         public static async Task SafeAwait(this Task taskToAwait)
         {
             try
