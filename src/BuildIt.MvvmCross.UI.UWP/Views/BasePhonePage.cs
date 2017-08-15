@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using BuildIt.MvvmCross.Interfaces;
 using BuildIt.MvvmCross.ViewModels;
-using MvvmCross.WindowsUWP.Views;
+using MvvmCross.Uwp.Views;
 #if NETFX_CORE
 #if !WIN8
 #else
