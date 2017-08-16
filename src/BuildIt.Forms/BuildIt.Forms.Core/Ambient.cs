@@ -4,25 +4,54 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
+    /// <summary>
+    /// Includes attached properties that will cascade to all nested elements (eg forecolor)
+    /// </summary>
     public class Ambient
     {
-        public static readonly BindableProperty ForeColorProperty =
-            BindableProperty.CreateAttached("ForeColor", typeof(Color),
-                typeof(Ambient), Color.Transparent, BindingMode.OneWayToSource, null, ColorChanged);
+        /// <summary>
+        /// Foreground color - used for nested Label elements
+        /// </summary>
+        public static readonly BindableProperty ForeColorProperty = BindableProperty.CreateAttached(ForeColorPropertyName, typeof(Color), typeof(Ambient), Color.Transparent, BindingMode.OneWayToSource, null, ColorChanged);
+
+        private const string ForeColorPropertyName = "ForeColor";
+
+        private static IDictionary<Type, FieldInfo> ColorProperties { get; } = new Dictionary<Type, FieldInfo>();
+
+        /// <summary>
+        /// Gets the forecolor set on an element
+        /// </summary>
+        /// <param name="view">The element to get the forecolor of</param>
+        /// <returns>The foreground color</returns>
+        public static Color GetForeColor(BindableObject view)
+        {
+            return (Color)view.GetValue(ForeColorProperty);
+        }
+
+        /// <summary>
+        /// Sets the forecolor property on a specific element
+        /// </summary>
+        /// <param name="view">The element</param>
+        /// <param name="value">The color to set</param>
+        public static void SetForeColor(BindableObject view, Color value)
+        {
+            view.SetValue(ForeColorProperty, value);
+        }
 
         private static void ColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var clr = (Color)newValue;
             ApplyForeColor(bindable, clr);
-
         }
 
-        private static IDictionary<Type, FieldInfo> ColorProperties { get; } = new Dictionary<Type, FieldInfo>();
         private static void ApplyForeColor(BindableObject bindable, Color foreColor)
         {
-            if (bindable == null) return;
+            if (bindable == null)
+            {
+                return;
+            }
 
             var objType = bindable.GetType();
             FieldInfo colorProp = null;
@@ -32,32 +61,32 @@ namespace BuildIt.Forms.Core
                 ColorProperties[objType] = colorProp;
             }
 
-            if (colorProp != null)
+            var prop = colorProp?.GetValue(bindable) as BindableProperty;
+            if (prop != null)
             {
-                var prop = colorProp.GetValue(bindable) as BindableProperty;
-                if (prop != null)
+                var currentVal = bindable.GetValue(prop);
+                if (currentVal == null || (Color)currentVal == default(Color))
                 {
-                    var currentVal = bindable.GetValue(prop);
-                    if (currentVal == null || (Color)currentVal == default(Color))
-                    {
-                        bindable.SetValue(prop, foreColor);
-                    }
+                    bindable.SetValue(prop, foreColor);
                 }
             }
 
             var element = bindable as Layout;
-            if (element != null)
+            if (element == null)
             {
-                foreach (var emt in element.Children)
-                {
-                    ApplyForeColor(emt, foreColor);
-                }
-                var clr = foreColor;
-                element.ChildAdded += (s, e) =>
-                {
-                    ApplyForeColor(e.Element as BindableObject, clr);
-                };
+                return;
             }
+
+            foreach (var emt in element.Children)
+            {
+                ApplyForeColor(emt, foreColor);
+            }
+
+            var clr = foreColor;
+            element.ChildAdded += (s, e) =>
+            {
+                ApplyForeColor(e.Element, clr);
+            };
         }
     }
 }

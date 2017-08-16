@@ -8,18 +8,23 @@ using Xamarin.Forms.Platform.UWP;
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.FontEffect), "FontEffect")]
 namespace BuildIt.Forms.Controls.UWP
 {
+    /// <summary>
+    /// Effect for specifying font on Label elements
+    /// </summary>
     public class FontEffect : PlatformEffect
     {
-        FrameworkElement frameworkElement;
-        BuildIt.Forms.Controls.FontEffect effect;
+        private FrameworkElement frameworkElement;
+        private BuildIt.Forms.Controls.FontEffect effect;
 
-
+        /// <summary>
+        /// Attach the effect
+        /// </summary>
         protected override void OnAttached()
         {
             try
             {
                 // Get the Windows FrameworkElement corresponding to the Element that the effect is attached to
-                frameworkElement = Control == null ? Container : Control;
+                frameworkElement = Control ?? Container;
 
                 // Get access to the TouchEffect class in the PCL
                 effect = (BuildIt.Forms.Controls.FontEffect)Element.Effects.
@@ -28,7 +33,6 @@ namespace BuildIt.Forms.Controls.UWP
                 if (effect != null && frameworkElement != null)
                 {
                     (this.Element as Label).FontFamily = "/Assets/Fonts/" + effect.FontName;
-
                 }
             }
             catch (Exception ex)
@@ -37,9 +41,11 @@ namespace BuildIt.Forms.Controls.UWP
             }
         }
 
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
         protected override void OnDetached()
         {
         }
     }
 }
-

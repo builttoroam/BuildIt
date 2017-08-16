@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildIt.States.Interfaces
@@ -15,26 +16,26 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Gets or sets method to initialize the data entity
         /// </summary>
-        Func<TData, Task> Initialise { get; set; }
+        Func<TData, CancellationToken, Task> Initialise { get; set; }
 
         /// <summary>
         /// Gets or sets method to invoke when about to change from the data entity
         /// </summary>
-        Func<TData, CancelEventArgs, Task> AboutToChangeFrom { get; set; }
+        Func<TData, StateCancelEventArgs, Task> AboutToChangeFrom { get; set; }
 
         /// <summary>
         /// Gets or sets method to invoke when changing from the data entity (eg leaving view model)
         /// </summary>
-        Func<TData, Task> ChangingFrom { get; set; }
+        Func<TData, CancellationToken, Task> ChangingFrom { get; set; }
 
         /// <summary>
         /// Gets or sets method to invoke when change to the data entity (eg arriving at view model)
         /// </summary>
-        Func<TData, Task> ChangedTo { get; set; }
+        Func<TData, CancellationToken, Task> ChangedTo { get; set; }
 
         /// <summary>
         /// Gets or sets method to invoke when change to a data entity with data (eg data to be passed into view model)
         /// </summary>
-        Func<TData, string, Task> ChangedToWithData { get; set; }
+        Func<TData, string, CancellationToken, Task> ChangedToWithData { get; set; }
     }
 }

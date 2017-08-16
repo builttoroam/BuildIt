@@ -7,8 +7,8 @@
     public interface ITypedStateDefinition<TState> : IStateDefinition
     {
         /// <summary>
-        /// Gets the name of the state
+        /// Gets or sets gets the name of the state
         /// </summary>
-        TState State { get; }
+        TState State { get; set;  }
     }
 }

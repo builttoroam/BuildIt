@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
+             xmlns:local="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
              xmlns:tt="clr-namespace:BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Controls.ContentButton">
     <ContentView.ControlTemplate>
@@ -10,8 +10,9 @@
                   BackgroundColor="{TemplateBinding BackgroundColor}">
                 <local:VisualStateManager.VisualStateGroups>
                     <local:VisualStateGroups>
-                        <local:VisualStateGroup Name="CommonStates">
-                            <local:VisualState Name="Normal" />
+                        <local:VisualStateGroup Name="CommonStates"
+                            DefinitionCacheKey="BuildIt_ContentButtonStates">
+                            <local:VisualState Name="Normal"/>
                             <local:VisualState Name="PointerOver">
                                 <local:VisualState.Setters>
                                     <local:Setter Value="#33000000"
@@ -22,7 +23,7 @@
                             <local:VisualState Name="Pressed">
                                 <local:VisualState.Setters>
                                     <local:Setter Value="#66000000"
-                                                  Element="{x:Reference RootGrid}"
+                                                  Element="{x:Reference Background}"
                                                   Property="BackgroundColor" />
                                 </local:VisualState.Setters>
                             </local:VisualState>

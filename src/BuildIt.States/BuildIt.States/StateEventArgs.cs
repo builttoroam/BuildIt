@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace BuildIt.States
 {
@@ -14,19 +15,25 @@ namespace BuildIt.States
         /// <param name="state">The state name</param>
         /// <param name="useTransitions">Whether to use transitions</param>
         /// <param name="isNewState">Whether this is a new state or going back to existing</param>
-        public StateEventArgs(string state, bool useTransitions, bool isNewState)
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        public StateEventArgs(string state, bool useTransitions, bool isNewState, CancellationToken cancelToken)
+            : this(useTransitions, isNewState, cancelToken)
         {
             StateName = state;
-            UseTransitions = useTransitions;
-            IsNewState = isNewState;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StateEventArgs"/> class.
         /// Empty constructor to support subclassing
         /// </summary>
-        protected StateEventArgs()
+        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <param name="isNewState">Whether this is a new state, or go back to previous state</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        protected StateEventArgs(bool useTransitions, bool isNewState, CancellationToken cancelToken)
         {
+            UseTransitions = useTransitions;
+            IsNewState = isNewState;
+            CancelToken = cancelToken;
         }
 
         /// <summary>
@@ -35,13 +42,18 @@ namespace BuildIt.States
         public virtual string StateName { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether whether to use transitions
+        /// Gets a value indicating whether whether to use transitions
         /// </summary>
-        public bool UseTransitions { get; protected set; }
+        public bool UseTransitions { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether whether it's a new state or going to a previous state
+        /// Gets a value indicating whether whether it's a new state or going to a previous state
         /// </summary>
-        public bool IsNewState { get; protected set; }
+        public bool IsNewState { get; }
+
+        /// <summary>
+        /// Gets the cancellation token
+        /// </summary>
+        public CancellationToken CancelToken { get; }
     }
 }

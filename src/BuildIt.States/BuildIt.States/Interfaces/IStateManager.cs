@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.States.Interfaces
 {
@@ -34,7 +36,7 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state group</typeparam>
         /// <returns>The state group</returns>
-        ITypedStateGroup<TState> TypedStateGroup<TState>()
+        ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>> TypedStateGroup<TState>()
             where TState : struct;
 
         /// <summary>
@@ -75,6 +77,16 @@ namespace BuildIt.States.Interfaces
         Task<bool> GoToState(string groupName, string stateName, bool animate = true);
 
         /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoToState(string groupName, string stateName, bool animate, CancellationToken cancelToken);
+
+        /// <summary>
         /// Go to a new state, passing in data
         /// </summary>
         /// <typeparam name="TData">The type of data to be passed to the new state</typeparam>
@@ -86,6 +98,18 @@ namespace BuildIt.States.Interfaces
         Task<bool> GoToStateWithData<TData>(string groupName, string stateName, TData data, bool animate = true);
 
         /// <summary>
+        /// Go to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TData">The type of data to be passed to the new state</typeparam>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="data">The data to be passed in</param>
+        /// <param name="animate">Whether to animate transition</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoToStateWithData<TData>(string groupName, string stateName, TData data, bool animate, CancellationToken cancelToken);
+
+        /// <summary>
         /// Go to state by going back over history of state changes
         /// </summary>
         /// <param name="groupName">The state group name</param>
@@ -95,6 +119,16 @@ namespace BuildIt.States.Interfaces
         Task<bool> GoBackToState(string groupName, string stateName, bool animate = true);
 
         /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <param name="groupName">The state group name</param>
+        /// <param name="stateName">The state name</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoBackToState(string groupName, string stateName, bool animate, CancellationToken cancelToken);
+
+        /// <summary>
         /// Go to a new state
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
@@ -102,6 +136,17 @@ namespace BuildIt.States.Interfaces
         /// <param name="animate">Whether to animate the transition</param>
         /// <returns>Whether the transition was successful</returns>
         Task<bool> GoToState<TState>(TState state, bool animate = true)
+            where TState : struct;
+
+        /// <summary>
+        /// Go to a new state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether to animate the transition</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoToState<TState>(TState state, bool animate, CancellationToken cancelToken)
             where TState : struct;
 
         /// <summary>
@@ -117,6 +162,19 @@ namespace BuildIt.States.Interfaces
             where TState : struct;
 
         /// <summary>
+        /// Transitions to a new state, passing in data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of state to go to</typeparam>
+        /// <typeparam name="TData">The type of data to be passed to new state</typeparam>
+        /// <param name="state">The new state to go to</param>
+        /// <param name="data">The data to pass to the new state</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoToStateWithData<TState, TData>(TState state, TData data, bool animate, CancellationToken cancelToken)
+            where TState : struct;
+
+        /// <summary>
         /// Go to state by going back over history of state changes
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
@@ -127,11 +185,30 @@ namespace BuildIt.States.Interfaces
             where TState : struct;
 
         /// <summary>
+        /// Go to state by going back over history of state changes
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state to go to</typeparam>
+        /// <param name="state">The state to go to</param>
+        /// <param name="animate">Whether the transition should be animated</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoBackToState<TState>(TState state, bool animate, CancellationToken cancelToken)
+            where TState : struct;
+
+        /// <summary>
         /// Go back to the previous state
         /// </summary>
         /// <param name="animate">whether to animate the transition</param>
         /// <returns>Whether the transition was successful</returns>
         Task<bool> GoBackToPreviousState(bool animate = true);
+
+        /// <summary>
+        /// Go back to the previous state
+        /// </summary>
+        /// <param name="animate">whether to animate the transition</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the transition was successful</returns>
+        Task<bool> GoBackToPreviousState(bool animate, CancellationToken cancelToken);
 
         /// <summary>
         /// Bind two different state managers

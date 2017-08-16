@@ -4,19 +4,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
 using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
 {
 
 
-    public class FrameNavigation<TState> : IHasStateData
+    public class FrameNavigation<TState> 
         where TState : struct
     {
-        public INotifyPropertyChanged CurrentStateData => (StateNotifier as IHasStateData)?.CurrentStateData;
+        public INotifyPropertyChanged CurrentStateData => (StateNotifier as IStateGroup)?.CurrentStateData;
 
 
-        public INotifyEnumStateChanged<TState> StateNotifier { get; }
+        public INotifyTypedStateChanged<TState> StateNotifier { get; }
 
         private IStateManager StateManager { get; }
 
@@ -27,7 +28,7 @@ namespace BuildIt.Lifecycle
         //,string registerAs = null)
         {
             StateManager = sm;
-            var stateNotifier = sm.StateGroups[typeof(TState)] as INotifyEnumStateChanged<TState>;
+            var stateNotifier = sm.TypedStateGroup<TState>();
             //var stateManager = hasStateManager.StateManager;
             //if (string.IsNullOrWhiteSpace( registerAs ))
             //{
@@ -42,7 +43,7 @@ namespace BuildIt.Lifecycle
 
             //RootFrame.Tag = registerAs;
             StateNotifier = stateNotifier;
-            StateNotifier.EnumStateChanged += StateManager_StateChanged;
+            StateNotifier.TypedStateChanged += StateManager_StateChanged;
 
             sm.GoToPreviousStateIsBlockedChanged += Sm_GoToPreviousStateIsBlockedChanged;
         }
@@ -79,15 +80,17 @@ namespace BuildIt.Lifecycle
 
 
             var groups = sm.StateGroups;
-            var inotifier = typeof(INotifyEnumStateChanged<>);
+            var inotifier = typeof(INotifyTypedStateChanged<>);
             var vsct = typeof(VisualStateChanger<>);
             foreach (var stateGroup in groups)
             {
-                var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
-                if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
-                {
-                    var vsc = Activator.CreateInstance(vsct.MakeGenericType(stateGroup.Key), pgHasNotifier, stateGroup.Value);
-                }
+                // TODO: FIX
+
+                //var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
+                //if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
+                //{
+                //    var vsc = Activator.CreateInstance(vsct.MakeGenericType(stateGroup.Key), pgHasNotifier, stateGroup.Value);
+                //}
             }
 
 
@@ -121,9 +124,9 @@ namespace BuildIt.Lifecycle
 
         }
 
-        private async void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
+        private async void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
         {
-            var tp = NavigationHelper.TypeForState(e.EnumState);
+            var tp = NavigationHelper.TypeForState(e.TypedState);
 
             if (e.IsNewState)
             {

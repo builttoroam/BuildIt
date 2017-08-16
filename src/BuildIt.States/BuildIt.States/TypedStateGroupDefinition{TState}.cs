@@ -9,7 +9,8 @@ namespace BuildIt.States
     /// Definition of a typed state group
     /// </summary>
     /// <typeparam name="TState">The state type</typeparam>
-    public class TypedStateGroupDefinition<TState> : BaseStateGroupDefinition, ITypedStateGroupDefinition<TState>
+    public class TypedStateGroupDefinition<TState, TTypedStateDefinition> : BaseStateGroupDefinition<TTypedStateDefinition>, ITypedStateGroupDefinition<TState>
+        where TTypedStateDefinition : ITypedStateDefinition<TState>, IStateDefinition, new()
     {
         /// <summary>
         /// Gets the name of the state group (based on enum type)
@@ -127,5 +128,37 @@ namespace BuildIt.States
         /// <param name="stateName">The state name</param>
         /// <returns>The parsed state</returns>
         public virtual TState FromString(string stateName) => default(TState);
+
+        /// <summary>
+        /// Create a new state definition based on a state
+        /// </summary>
+        /// <param name="state">The state</param>
+        /// <returns>The new state definition</returns>
+        protected virtual TTypedStateDefinition CreateDefinitionFromState(TState state)
+        {
+            var stateDef = CreateDefinition();
+            stateDef.State = state;
+            return stateDef;
+        }
+
+        /// <summary>
+        /// Creates a new state definition based on the name of the state
+        /// </summary>
+        /// <param name="state">The name of the state to create</param>
+        /// <returns>The created state</returns>
+        protected override TTypedStateDefinition CreateDefinitionFromName(string state)
+        {
+            return CreateDefinitionFromState(FromString(state));
+        }
+
+        /// <summary>
+        /// Creates a new instance of a state definition
+        /// </summary>
+        /// <returns>The state definition</returns>
+        protected override TTypedStateDefinition CreateDefinition()
+        {
+            var stateDef = new TTypedStateDefinition();
+            return stateDef;
+        }
     }
 }

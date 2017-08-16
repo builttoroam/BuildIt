@@ -8,21 +8,23 @@ using Windows.UI.Xaml.Controls;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
+using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.Lifecycle
 {
-    public class VisualStateChanger<TState>:IStateBinder
+    public class VisualStateChanger<TState> :IStateBinder
         where TState : struct
     {
-        public INotifyEnumStateChanged<TState> ChangeNotifier { get; }
+        public INotifyTypedStateChanged<TState> ChangeNotifier { get; }
 
         private Control VisualStateRoot { get; }
 
-        public VisualStateChanger(Control visualStateRoot, INotifyEnumStateChanged<TState> changeNotifier)
+        public VisualStateChanger(Control visualStateRoot, INotifyTypedStateChanged<TState> changeNotifier)
         {
             VisualStateRoot = visualStateRoot;
             ChangeNotifier = changeNotifier;
-            ChangeNotifier.EnumStateChanged += StateManager_StateChanged;
+            
 
             var control = (VisualStateRoot as UserControl)?.Content as FrameworkElement;
             if (control == null)
@@ -40,19 +42,29 @@ namespace BuildIt.Lifecycle
 
         private void VisualStateGroupOnCurrentStateChanged(object sender, VisualStateChangedEventArgs e)
         {
-            var newState = e.NewState?.Name.EnumParse<TState>()??default(TState);
-            if (newState.Equals(default(TState))) return;
-            (ChangeNotifier as IEnumStateGroup<TState>)?.ChangeTo(newState, false);
+            //var newState = e.NewState?.Name.EnumParse<TState>()??default(TState);
+            //if (newState.Equals(default(TState))) return;
+            (ChangeNotifier as IStateGroup)?.ChangeToStateByName(e.NewState?.Name, false);
         }
 
-        private void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
         {
-            VisualStateManager.GoToState(VisualStateRoot, e.EnumState.ToString(), e.UseTransitions);
+            VisualStateManager.GoToState(VisualStateRoot, e.TypedState.ToString(), e.UseTransitions);
+        }
+
+        public async Task Bind()
+        {
+            ChangeNotifier.TypedStateChanged += StateManager_StateChanged;
         }
 
         public void Unbind()
         {
-            ChangeNotifier.EnumStateChanged -= StateManager_StateChanged;
+            ChangeNotifier.TypedStateChanged -= StateManager_StateChanged;
+        }
+
+        public void Dispose()
+        {
+            Unbind();
         }
     }
 
@@ -88,20 +100,31 @@ namespace BuildIt.Lifecycle
 
                 var groups = VisualStateManager.GetVisualStateGroups(rootPage.Content as FrameworkElement);
 
-                var inotifier = typeof(INotifyEnumStateChanged<>);
+                var inotifier = typeof(EnumStateGroup<>);
                 var vsct = typeof(VisualStateChanger<>);
 
                 foreach (var kvp in manager.StateGroups)
                 {
-                    var sg = groups.FirstOrDefault(grp => grp.Name == kvp.Key.Name);
+                    var sg = groups.FirstOrDefault(grp => grp.Name == kvp.Key);
                     if (sg == null) continue;
 
-                    var groupNotifier = inotifier.MakeGenericType(kvp.Key);
+                    var typeArg = kvp.Value.GetType().GenericTypeArguments.FirstOrDefault();
+
+
+                    var groupNotifier = inotifier.MakeGenericType(typeArg);
                     if (kvp.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
                     {
-                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(kvp.Key), rootPage, kvp.Value) as IStateBinder;
+                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(typeArg), rootPage, kvp.Value) as IStateBinder;
                         GroupBinders.Add(vsc);
                     }
+                }
+            }
+
+            public async Task Bind()
+            {
+                foreach (var groupBinder in GroupBinders)
+                {
+                    await groupBinder.Bind();
                 }
             }
 
@@ -111,6 +134,11 @@ namespace BuildIt.Lifecycle
                 {
                     groupBinder.Unbind();
                 }
+            }
+
+            public void Dispose()
+            {
+                Unbind();
             }
         }
 

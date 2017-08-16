@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:vsm="clr-namespace:BuildIt.Forms.Core;assembly=BuildIt.Forms.Core"
-
+             xmlns:vsm="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
              x:Class="BuildIt.Forms.Sample.ListViewItemControl">
     <ContentView.Content>
         <StackLayout>
@@ -24,7 +23,8 @@
             </vsm:VisualStateManager.VisualStateGroups>
 
             <Label Text="Hello Xamarin.Forms!" />
-            <Label Text="Enabled!" x:Name="EnabledLabel" />
+            <Label Text="Enabled!"
+                   x:Name="EnabledLabel" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>

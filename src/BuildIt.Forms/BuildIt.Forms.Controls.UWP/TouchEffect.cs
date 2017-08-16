@@ -11,16 +11,22 @@ using Xamarin.Forms.Platform.UWP;
 
 namespace BuildIt.Forms.Controls.UWP
 {
+    /// <summary>
+    /// Effect for detecting touch input
+    /// </summary>
     public class TouchEffect : PlatformEffect
     {
-        FrameworkElement frameworkElement;
-        BuildIt.Forms.Controls.TouchEffect effect;
-        Action<Element, TouchActionEventArgs> onTouchAction;
+        private FrameworkElement frameworkElement;
+        private BuildIt.Forms.Controls.TouchEffect effect;
+        private Action<Element, TouchActionEventArgs> onTouchAction;
 
+        /// <summary>
+        /// Attach the effect
+        /// </summary>
         protected override void OnAttached()
         {
             // Get the Windows FrameworkElement corresponding to the Element that the effect is attached to
-            frameworkElement = Control == null ? Container : Control;
+            frameworkElement = Control ?? Container;
 
             // Get access to the TouchEffect class in the PCL
             effect = (BuildIt.Forms.Controls.TouchEffect)Element.Effects.
@@ -41,26 +47,31 @@ namespace BuildIt.Forms.Controls.UWP
             }
         }
 
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
         protected override void OnDetached()
         {
-            if (onTouchAction != null)
+            if (onTouchAction == null)
             {
-                // Release event handlers on FrameworkElement
-                frameworkElement.PointerEntered -= OnPointerEntered;
-                frameworkElement.PointerPressed -= OnPointerPressed;
-                frameworkElement.PointerMoved -= OnPointerMoved;
-                frameworkElement.PointerReleased -= OnPointerReleased;
-                frameworkElement.PointerExited -= OnPointerEntered;
-                frameworkElement.PointerCanceled -= OnPointerCancelled;
+                return;
             }
+
+            // Release event handlers on FrameworkElement
+            frameworkElement.PointerEntered -= OnPointerEntered;
+            frameworkElement.PointerPressed -= OnPointerPressed;
+            frameworkElement.PointerMoved -= OnPointerMoved;
+            frameworkElement.PointerReleased -= OnPointerReleased;
+            frameworkElement.PointerExited -= OnPointerEntered;
+            frameworkElement.PointerCanceled -= OnPointerCancelled;
         }
 
-        void OnPointerEntered(object sender, PointerRoutedEventArgs args)
+        private void OnPointerEntered(object sender, PointerRoutedEventArgs args)
         {
             CommonHandler(sender, TouchActionType.Entered, args);
         }
 
-        void OnPointerPressed(object sender, PointerRoutedEventArgs args)
+        private void OnPointerPressed(object sender, PointerRoutedEventArgs args)
         {
             CommonHandler(sender, TouchActionType.Pressed, args);
 
@@ -71,35 +82,32 @@ namespace BuildIt.Forms.Controls.UWP
             }
         }
 
-        void OnPointerMoved(object sender, PointerRoutedEventArgs args)
+        private void OnPointerMoved(object sender, PointerRoutedEventArgs args)
         {
             CommonHandler(sender, TouchActionType.Moved, args);
         }
 
-        void OnPointerReleased(object sender, PointerRoutedEventArgs args)
+        private void OnPointerReleased(object sender, PointerRoutedEventArgs args)
         {
             CommonHandler(sender, TouchActionType.Released, args);
         }
 
-        void OnPointerExited(object sender, PointerRoutedEventArgs args)
+        private void OnPointerExited(object sender, PointerRoutedEventArgs args)
         {
             CommonHandler(sender, TouchActionType.Exited, args);
         }
 
-        void OnPointerCancelled(object sender, PointerRoutedEventArgs args)
+        private void OnPointerCancelled(object sender, PointerRoutedEventArgs args)
         {
             CommonHandler(sender, TouchActionType.Cancelled, args);
         }
 
-        void CommonHandler(object sender, TouchActionType touchActionType, PointerRoutedEventArgs args)
+        private void CommonHandler(object sender, TouchActionType touchActionType, PointerRoutedEventArgs args)
         {
             PointerPoint pointerPoint = args.GetCurrentPoint(sender as UIElement);
-            Windows.Foundation.Point windowsPoint = pointerPoint.Position;  
+            Windows.Foundation.Point windowsPoint = pointerPoint.Position;
 
-            onTouchAction(Element, new TouchActionEventArgs(args.Pointer.PointerId,
-                                                            touchActionType,
-                                                            new Point(windowsPoint.X, windowsPoint.Y),
-                                                            args.Pointer.IsInContact));
+            onTouchAction(Element, new TouchActionEventArgs(args.Pointer.PointerId, touchActionType, new Point(windowsPoint.X, windowsPoint.Y), args.Pointer.IsInContact));
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
     /// <summary>
     /// Static helper class
@@ -23,11 +23,6 @@ namespace BuildIt.Forms.Core
             string prop = null;
             if (setter.Element != null)
             {
-                if (string.IsNullOrWhiteSpace(setter.Property))
-                {
-                    return null;
-                }
-
                 setterTarget = setter.Element;
                 prop = setter.Property;
             }
@@ -43,6 +38,13 @@ namespace BuildIt.Forms.Core
                 var name = Enumerable.FirstOrDefault<string>(target);
                 prop = Enumerable.Skip<string>(target, 1).FirstOrDefault();
                 setterTarget = element.FindByName<Element>(name);
+
+                if (setterTarget == null && string.IsNullOrWhiteSpace(prop))
+                {
+                    setterTarget = element;
+                    prop = name;
+                }
+
                 if (setterTarget == null)
                 {
                     var cv = element as ContentView;

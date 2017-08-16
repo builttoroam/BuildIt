@@ -1,22 +1,26 @@
 using System.Collections.Generic;
 using BuildIt.States.Interfaces;
 
-namespace BuildIt.Forms.Core
+namespace BuildIt.Forms
 {
+    /// <summary>
+    /// Represents a list of visual states
+    /// </summary>
     public class VisualStateGroup : List<VisualState>
     {
+        /// <summary>
+        /// Gets or sets the corresponding state group
+        /// </summary>
         public IStateGroup StateGroup { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the visual state group
+        /// </summary>
         public string Name { get; set; }
 
-        public VisualState CurrentState { get; set; }
-
+        /// <summary>
+        /// Gets or sets the cache key for reusuing group definitions
+        /// </summary>
         public string DefinitionCacheKey { get; set; }
-
-        public VisualStateGroup()
-        {
-
-        }
-
     }
 }

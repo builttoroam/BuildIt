@@ -5,10 +5,18 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.iOS.FontEffect), "FontEffect")]
+#pragma warning disable SA1300 // Element must begin with upper-case letter - iOS platform
 namespace BuildIt.Forms.Controls.iOS
+#pragma warning restore SA1300 // Element must begin with upper-case letter
 {
+    /// <summary>
+    /// Effect for specifying font
+    /// </summary>
     public class FontEffect : PlatformEffect
     {
+        /// <summary>
+        /// Attach the effect
+        /// </summary>
         protected override void OnAttached()
         {
             try
@@ -29,6 +37,9 @@ namespace BuildIt.Forms.Controls.iOS
             }
         }
 
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
         protected override void OnDetached()
         {
         }

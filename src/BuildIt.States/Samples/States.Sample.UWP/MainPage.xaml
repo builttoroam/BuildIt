@@ -80,12 +80,17 @@
 
         <ListView Grid.Row="1"
                   Grid.ColumnSpan="2"
+                  SelectionMode="None"
+                  IsItemClickEnabled="True"
+                  ItemClick="ItemClicked"
                   ItemsSource="{Binding RandomItems}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding Output1}" FontWeight="Bold" />
                         <TextBlock Text="{Binding Output2}" Visibility="{Binding IsEnabled, Converter={StaticResource BoolVisibilityConverter}}" />
+                        <TextBlock Text="{Binding Output3}" FontStyle="Italic"
+                                   Visibility="{Binding IsTwoEnabled, Converter={StaticResource BoolVisibilityConverter}}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

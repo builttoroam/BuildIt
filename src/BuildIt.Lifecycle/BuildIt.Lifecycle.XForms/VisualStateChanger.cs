@@ -1,6 +1,7 @@
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
 using Xamarin.Forms;
 
 namespace BuildIt.Lifecycle
@@ -8,20 +9,20 @@ namespace BuildIt.Lifecycle
     public class VisualStateChanger<TState>
         where TState : struct
     {
-        public INotifyEnumStateChanged<TState> ChangeNotifier { get; }
+        public INotifyTypedStateChanged<TState> ChangeNotifier { get; }
 
         private IStateManager VisualStateManager { get; }
 
-        public VisualStateChanger(IHasStates visualStateRoot, INotifyEnumStateChanged<TState> changeNotifier)
+        public VisualStateChanger(IHasStates visualStateRoot, INotifyTypedStateChanged<TState> changeNotifier)
         {
             VisualStateManager = visualStateRoot.StateManager;
             ChangeNotifier = changeNotifier;
-            ChangeNotifier.EnumStateChanged += StateManager_StateChanged;
+            ChangeNotifier.TypedStateChanged += StateManager_StateChanged;
         }
 
-        private void StateManager_StateChanged(object sender, EnumStateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
         {
-            VisualStateManager.GoToState(e.EnumState, e.UseTransitions);
+            VisualStateManager.GoToState(e.TypedState, e.UseTransitions);
         }
     }
 

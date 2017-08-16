@@ -1,13 +1,16 @@
+using BuildIt.States.Completion;
+using BuildIt.States.Interfaces;
+using BuildIt.States.Interfaces.Builder;
+using BuildIt.States.Interfaces.StateData;
+using BuildIt.States.Typed.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.States.Completion;
-using BuildIt.States.Interfaces;
-using BuildIt.States.Interfaces.Builder;
 
 namespace BuildIt.States
 {
@@ -16,8 +19,24 @@ namespace BuildIt.States
     /// </summary>
     public static class StateHelpers
     {
-        private static IDictionary<string, IStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, IStateGroupDefinition>();
         private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Helper method for ensuring no leakage of exceptions
+        /// </summary>
+        /// <param name="taskToAwait">The task to await (wrap in try-catch)</param>
+        /// <returns>Task to await</returns>
+        public static async Task SafeAwait(this Task taskToAwait)
+        {
+            try
+            {
+                await taskToAwait;
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
+        }
 
         /// <summary>
         /// Indicates whether all triggers are active
@@ -49,31 +68,22 @@ namespace BuildIt.States
                 return null;
             }
 
-            bool isCachedDefinition = false;
+            var isCachedDefinition = false;
             var existing = vsm.TypedStateGroup<TState>(); // StateGroups.SafeValue(typeof(TState)) as IStateGroup<TState>;
+            // ReSharper disable once InvertIf - Ignore this since the contents of the if statement modifies the variables used to gen new StateGroupBuilder
             if (existing == null)
             {
                 if (!string.IsNullOrWhiteSpace(groupDefinitionKey))
                 {
-                    var cached = CachedGroupDefinitions.SafeValue<string, IStateGroupDefinition, EnumStateGroupDefinition<TState>>(groupDefinitionKey);
-                    if (cached == null)
-                    {
-                        existing = new EnumStateGroup<TState>();
-                        CachedGroupDefinitions[groupDefinitionKey] = existing.GroupDefinition;
-                    }
-                    else
-                    {
-                        isCachedDefinition = true;
-                        existing = new EnumStateGroup<TState>(cached);
-                    }
+                    existing = new EnumStateGroup<TState>(groupDefinitionKey);
+                    isCachedDefinition = existing.TypedGroupDefinition.States.Count != 0;
                 }
-
-                if (existing == null)
+                else
                 {
                     existing = new EnumStateGroup<TState>();
                 }
 
-                vsm?.AddStateGroup(existing);
+                vsm.AddStateGroup(existing);
             }
 
             return new StateGroupBuilder<TState>
@@ -96,12 +106,7 @@ namespace BuildIt.States
             this IStateBuilder vsmGroup)
             where TState : struct
         {
-            if (vsmGroup == null)
-            {
-                return null;
-            }
-
-            return vsmGroup.StateManager.Group<TState>();
+            return vsmGroup?.StateManager.Group<TState>();
         }
 
         /// <summary>
@@ -127,6 +132,19 @@ namespace BuildIt.States
         /// Defines all states for a group
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the group to build</typeparam>
+        /// <param name="vsmGroup">Existing state builder</param>
+        /// <returns>A state group builder (or null)</returns>
+        public static IStateGroupBuilder<TState> DefineAllStates<TState>(
+            this IStateBuilder vsmGroup)
+            where TState : struct
+        {
+            return vsmGroup?.StateManager.Group<TState>().DefineAllStates();
+        }
+
+        /// <summary>
+        /// Defines all states for a group
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the group to build</typeparam>
         /// <param name="vsmGroup">Existing group builder</param>
         /// <returns>A state group builder (or null)</returns>
         public static IStateGroupBuilder<TState> DefineAllStates<TState>(
@@ -146,22 +164,43 @@ namespace BuildIt.States
         /// Expoese a builder for the state definition
         /// </summary>
         /// <typeparam name="TState">The type (enum) of the state</typeparam>
-        /// <param name="smInfo">The state group builder</param>
+        /// <param name="vsm">State Manager</param>
         /// <param name="state">The state</param>
         /// <returns>New builder</returns>
         public static
             IStateDefinitionBuilder<TState> DefineState<TState>(
-            this IStateGroupBuilder<TState> smInfo,
-            TState state)
+                this IStateManager vsm,
+                TState state)
             where TState : struct
         {
-            if (smInfo?.IsCachedDefinition ?? false)
+            return vsm.Group<TState>().DefineState(state);
+        }
+
+        /// <summary>
+        /// Expoese a builder for the state definition
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <param name="smInfo">The state group builder</param>
+        /// <param name="state">The state</param>
+        /// <returns>New builder</returns>
+        public static
+        IStateDefinitionBuilder<TState> DefineState<TState>(
+        this IStateGroupBuilder<TState> smInfo,
+        TState state)
+        where TState : struct
+        {
+            if (smInfo?.StateGroup == null)
+            {
+                return null;
+            }
+
+            if (smInfo.IsCachedDefinition)
             {
                 return new StateDefinitionBuilder<TState>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag };
             }
 
-            var vs = smInfo?.StateGroup.TypedGroupDefinition.DefineTypedState(state);
+            var vs = smInfo.StateGroup.TypedGroupDefinition.DefineTypedState(state);
             if (vs == null)
             {
                 return null;
@@ -501,7 +540,7 @@ namespace BuildIt.States
                 return null;
             }
 
-            if (smInfo?.IsCachedDefinition ?? false)
+            if (smInfo.IsCachedDefinition)
             {
                 return new StateDefinitionValueTargetBuilder<TState, TElement>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag, Target = element };
@@ -543,7 +582,7 @@ namespace BuildIt.States
             var targetId = smInfo.StateGroupTag + "_" + smInfo.NodeIndex;
             smInfo.StateGroup.StateValueTargets[targetId] = smInfo.Target;
 
-            if (smInfo?.IsCachedDefinition ?? false)
+            if (smInfo.IsCachedDefinition)
             {
                 return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition };
@@ -610,7 +649,7 @@ namespace BuildIt.States
                 smInfo.StateGroup.StateValueTargets[targetId] = smInfo.Target;
             }
 
-            if (smInfo?.IsCachedDefinition ?? false)
+            if (smInfo.IsCachedDefinition)
             {
                 return new StateDefinitionValueBuilder<TState, TElement, TPropertyValue>
                 { StateGroup = smInfo.StateGroup, IsCachedDefinition = smInfo.IsCachedDefinition, StateGroupTag = smInfo.StateGroupTag };
@@ -765,13 +804,13 @@ namespace BuildIt.States
         /// <param name="action">The action to be invoked when AboutToChange</param>
         /// <returns>The updated builder</returns>
         public static
-            IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
+            IStateDefinitionBuilder<TState> WhenAboutToChangeFrom<TState>(
            this IStateDefinitionBuilder<TState> smInfo,
-           Action<CancelEventArgs> action)
+           Action<StateCancelEventArgs> action)
             where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.WhenAboutToChange(async cancel => action(cancel));
+            return smInfo.WhenAboutToChangeFrom(async cancel => action(cancel));
 #pragma warning restore 1998
         }
 
@@ -782,9 +821,9 @@ namespace BuildIt.States
         /// <param name="smInfo">The builder to update</param>
         /// <param name="action">The action to be invoked when AboutToChange</param>
         /// <returns>The updated builder</returns>
-        public static IStateDefinitionBuilder<TState> WhenAboutToChange<TState>(
+        public static IStateDefinitionBuilder<TState> WhenAboutToChangeFrom<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<CancelEventArgs, Task> action)
+            Func<StateCancelEventArgs, Task> action)
             where TState : struct
         {
             if (smInfo?.State == null)
@@ -808,11 +847,11 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangingFrom<TState>(
             this IStateDefinitionBuilder<TState> stateDefinition,
-            Action action)
+            Action<CancellationToken> action)
             where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return stateDefinition.WhenChangingFrom(async () => action());
+            return stateDefinition.WhenChangingFrom(async (cancelToken) => action(cancelToken));
 #pragma warning restore 1998
         }
 
@@ -825,7 +864,7 @@ namespace BuildIt.States
         /// <returns>Updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangingFrom<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<Task> action)
+            Func<CancellationToken, Task> action)
             where TState : struct
         {
             if (smInfo?.State == null)
@@ -841,6 +880,48 @@ namespace BuildIt.States
         }
 
         /// <summary>
+        /// Defines an action to be called when ChangingFrom the state
+        /// </summary>
+        /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
+        /// <param name="stateDefinition">The builder to update</param>
+        /// <param name="action">The action to be invoked when ChangingFrom</param>
+        /// <returns>The updated builder</returns>
+        public static IStateDefinitionBuilder<TState> WhenChangedFrom<TState>(
+            this IStateDefinitionBuilder<TState> stateDefinition,
+            Action<CancellationToken> action)
+            where TState : struct
+        {
+#pragma warning disable 1998  // Convert sync method into async call
+            return stateDefinition.WhenChangedFrom(async (cancelToken) => action(cancelToken));
+#pragma warning restore 1998
+        }
+
+        /// <summary>
+        /// Define an async action to be called when ChangingFrom the state
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state group</typeparam>
+        /// <param name="smInfo">The builder</param>
+        /// <param name="action">The action to be invoked when ChangingFrom</param>
+        /// <returns>Updated builder</returns>
+        public static IStateDefinitionBuilder<TState> WhenChangedFrom<TState>(
+            this IStateDefinitionBuilder<TState> smInfo,
+            Func<CancellationToken, Task> action)
+            where TState : struct
+        {
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
+            var stateDefinition = smInfo.State;
+
+            "Adding Behaviour: ChangedFrom".Log();
+            stateDefinition.ChangedFrom = action;
+            return smInfo;
+        }
+
+
+        /// <summary>
         /// Defines an action to be called when ChangedTo the state
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
@@ -849,11 +930,11 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangedTo<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Action action)
+            Action<CancellationToken> action)
             where TState : struct
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.WhenChangedTo(async () => action());
+            return smInfo.WhenChangedTo(async (cancelToken) => action(cancelToken));
 #pragma warning restore 1998
         }
 
@@ -866,7 +947,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionBuilder<TState> WhenChangedTo<TState>(
             this IStateDefinitionBuilder<TState> smInfo,
-            Func<Task> action)
+            Func<CancellationToken, Task> action)
             where TState : struct
         {
             if (smInfo?.State == null)
@@ -920,12 +1001,12 @@ namespace BuildIt.States
             IStateDefinitionWithDataBuilder<TState, TStateData>
             Initialise<TState, TStateData>(
                 this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-                Action<TStateData> action)
+                Action<TStateData, CancellationToken> action)
                 where TState : struct
                 where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998 // Convert sync method into async call
-            return smInfo.Initialise(async vm => action(vm));
+            return smInfo.Initialise(async (vm, cancelToken) => action(vm, cancelToken));
 #pragma warning restore 1998
         }
 
@@ -939,7 +1020,7 @@ namespace BuildIt.States
         /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> Initialise<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, Task> action)
+            Func<TStateData, CancellationToken, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -973,7 +1054,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData, CancelEventArgs> action)
+            Action<TStateData, StateCancelEventArgs> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -992,7 +1073,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, CancelEventArgs, Task> action)
+            Func<TStateData, StateCancelEventArgs, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -1026,12 +1107,12 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangingFrom<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData> action)
+            Action<TStateData, CancellationToken> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.WhenChangingFrom(async vm => action(vm));
+            return smInfo.WhenChangingFrom(async (vm, cancelToken) => action(vm, cancelToken));
 #pragma warning restore 1998
         }
 
@@ -1045,7 +1126,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangingFrom<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, Task> action)
+            Func<TStateData, CancellationToken, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -1077,18 +1158,39 @@ namespace BuildIt.States
         /// <typeparam name="TNewStateData">The type of the new state data</typeparam>
         /// <typeparam name="TData">The type of the data being passed in</typeparam>
         /// <param name="smInfo">The state definition builder</param>
+        /// <returns>New builder</returns>
+        public static IStateDefinitionWithDataBuilder<TState, TStateData>
+            InitializeNewStateWithData<TState, TStateData, TNewStateData, TData>(
+                this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> smInfo)
+            where TState : struct
+            where TStateData : INotifyPropertyChanged
+            where TNewStateData : INotifyPropertyChanged, IInitialiseWithData<TData>
+        {
+#pragma warning disable 1998  // Convert sync method into async call
+            return smInfo.InitializeNewState<TState, TStateData, TNewStateData, TData>(async (vm, s, cancelToken) => await vm.InitialiseWithData(s, cancelToken));
+#pragma warning restore 1998
+        }
+
+        /// <summary>
+        /// Exposes builder to initialize a new state with data
+        /// </summary>
+        /// <typeparam name="TState">The type (enum) of the state</typeparam>
+        /// <typeparam name="TStateData">The type of state data</typeparam>
+        /// <typeparam name="TNewStateData">The type of the new state data</typeparam>
+        /// <typeparam name="TData">The type of the data being passed in</typeparam>
+        /// <param name="smInfo">The state definition builder</param>
         /// <param name="action">The action to invoke to pass data into the state data</param>
         /// <returns>New builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             InitializeNewState<TState, TStateData, TNewStateData, TData>(
     this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> smInfo,
-    Action<TNewStateData, TData> action)
+    Action<TNewStateData, TData, CancellationToken> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
             where TNewStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.InitializeNewState<TState, TStateData, TNewStateData, TData>(async (vm, s) => action(vm, s));
+            return smInfo.InitializeNewState<TState, TStateData, TNewStateData, TData>(async (vm, s, cancelToken) => action(vm, s, cancelToken));
 #pragma warning restore 1998
         }
 
@@ -1105,7 +1207,7 @@ namespace BuildIt.States
         public static IStateDefinitionWithDataBuilder<TState, TStateData>
             InitializeNewState<TState, TStateData, TNewStateData, TData>(
             this IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TData> existingInfo,
-            Func<TNewStateData, TData, Task> action)
+            Func<TNewStateData, TData, CancellationToken, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
             where TNewStateData : INotifyPropertyChanged
@@ -1121,10 +1223,10 @@ namespace BuildIt.States
 
             "Adding Behaviour: ChangedToWithDataViewModel".Log();
 
-            var modAction = new Func<TNewStateData, string, Task>((vm, d) =>
+            var modAction = new Func<TNewStateData, string, CancellationToken, Task>((vm, d, cancelToken) =>
             {
                 var data = d.DecodeJson<TData>();
-                return action(vm, data);
+                return action(vm, data, cancelToken);
             });
 
             if (action == null)
@@ -1149,12 +1251,12 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedTo<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData> action)
+            Action<TStateData, CancellationToken> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.WhenChangedTo(async vm => action(vm));
+            return smInfo.WhenChangedTo(async (vm, cancelToken) => action(vm, cancelToken));
 #pragma warning restore 1998
         }
 
@@ -1168,7 +1270,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedTo<TState, TStateData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, Task> action)
+            Func<TStateData, CancellationToken, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -1204,12 +1306,12 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedToWithData<TState, TStateData, TData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData, TData> action)
+            Action<TStateData, TData, CancellationToken> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
 #pragma warning disable 1998  // Convert sync method into async call
-            return smInfo.WhenChangedToWithData<TState, TStateData, TData>(async (vm, s) => action(vm, s));
+            return smInfo.WhenChangedToWithData<TState, TStateData, TData>(async (vm, s, cancelToken) => action(vm, s, cancelToken));
 #pragma warning restore 1998
         }
 
@@ -1224,7 +1326,7 @@ namespace BuildIt.States
         /// <returns>The updated builder</returns>
         public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenChangedToWithData<TState, TStateData, TData>(
             this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, TData, Task> action)
+            Func<TStateData, TData, CancellationToken, Task> action)
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
@@ -1237,10 +1339,10 @@ namespace BuildIt.States
 
             "Adding Behaviour: ChangedToWithDataViewModel".Log();
 
-            var modAction = new Func<TStateData, string, Task>((vm, d) =>
+            var modAction = new Func<TStateData, string, CancellationToken, Task>((vm, d, cancelToken) =>
             {
                 var data = d.DecodeJson<TData>();
-                return action(vm, data);
+                return action(vm, data, cancelToken);
             });
 
             if (action == null)
@@ -1304,13 +1406,7 @@ namespace BuildIt.States
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo == null)
-            {
-                return null;
-            }
-
-            var returnd = smInfo
-                .WhenChangedTo(smInfo.WhenChangedToNewState(stateToChangeTo))
+            var returnd = smInfo?.WhenChangedTo(smInfo.WhenChangedToNewState(stateToChangeTo))
                 .WhenChangingFrom(smInfo.WhenChangingFromNewState(stateToChangeTo))
                 .IncludeStateInit<TState, TStateData, TData>(stateToChangeTo);
 
@@ -1333,13 +1429,7 @@ namespace BuildIt.States
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo == null)
-            {
-                return null;
-            }
-
-            var returnd = smInfo
-                .WhenChangedTo(smInfo.WhenChangedToNewState(stateToChangeTo))
+            var returnd = smInfo?.WhenChangedTo(smInfo.WhenChangedToNewState(stateToChangeTo))
                 .WhenChangingFrom(smInfo.WhenChangingFromNewState(stateToChangeTo));
 
             return returnd;
@@ -1357,13 +1447,7 @@ namespace BuildIt.States
             where TState : struct
             where TStateData : INotifyPropertyChanged
         {
-            if (smInfo == null)
-            {
-                return null;
-            }
-
-            var returnd = smInfo
-                .WhenChangedTo(smInfo.WhenChangedToPreviousState())
+            var returnd = smInfo?.WhenChangedTo(smInfo.WhenChangedToPreviousState())
                 .WhenChangingFrom(smInfo.WhenChangingFromPreviousState());
 
             return returnd;
@@ -1395,8 +1479,9 @@ namespace BuildIt.States
             where TState : struct
         {
             private string stateGrouping;
+            private int nodeIndex;
 
-            public ITypedStateGroup<TState> StateGroup { get; set; }
+            public ITypedStateGroup<TState, EnumStateDefinition<TState>, EnumStateGroupDefinition<TState>> StateGroup { get; set; }
 
             public string StateGroupTag
             {
@@ -1416,7 +1501,6 @@ namespace BuildIt.States
 
             public bool IsCachedDefinition { get; set; }
 
-            private int nodeIndex;
             public int NodeIndex
             {
                 get => nodeIndex;
@@ -1492,41 +1576,41 @@ namespace BuildIt.States
 
             private EventHandler PreviousHandler { get; set; }
 
-            public Action<TData> WhenChangedToNewState(TState newState)
+            public Action<TData, CancellationToken> WhenChangedToNewState(TState newState)
             {
                 var changeStateAction = HandlerCache.BuildHandler(newState, Create);
 
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     Subscribe(vm, changeStateAction);
                 };
             }
 
-            public Action<TData> WhenChangingFromNewState(TState newState)
+            public Action<TData, CancellationToken> WhenChangingFromNewState(TState newState)
             {
                 var changeStateAction = HandlerCache.BuildHandler(newState, Create); // BuildHandler(newState);
 
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     Unsubscribe(vm, changeStateAction);
                 };
             }
 
-            public Action<TData> WhenChangedToPreviousState()
+            public Action<TData, CancellationToken> WhenChangedToPreviousState()
             {
                 var changeStateAction = CreatePrevious();
 
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     Subscribe(vm, changeStateAction);
                 };
             }
 
-            public Action<TData> WhenChangingFromPreviousState()
+            public Action<TData, CancellationToken> WhenChangingFromPreviousState()
             {
                 var changeStateAction = CreatePrevious();
 
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     Unsubscribe(vm, changeStateAction);
                 };
@@ -1534,11 +1618,12 @@ namespace BuildIt.States
 
             private EventHandler Create(TState newState)
             {
-                EventHandler changeStateAction = (s, e) =>
+                void ChangeStateAction(object s, EventArgs e)
                 {
                     StateManager.GoToState(newState);
-                };
-                return changeStateAction;
+                }
+
+                return ChangeStateAction;
             }
 
             private EventHandler CreatePrevious()
@@ -1588,7 +1673,8 @@ namespace BuildIt.States
         }
 
         private abstract class StateWithDataCompletionBaseBuilder<TState, TStateData, TCompletion, TCompletionArgs> :
-            StateCompletionBuilder<TState, TCompletion>
+            StateCompletionBuilder<TState, TCompletion>,
+            IStateWithDataActionBuilder<TState, TStateData>
             where TState : struct
             where TCompletion : struct
             where TStateData : INotifyPropertyChanged
@@ -1602,7 +1688,7 @@ namespace BuildIt.States
             private EventHandlerCache<TState, EventHandler<TCompletionArgs>> HandlerCache { get; }
                 = new EventHandlerCache<TState, EventHandler<TCompletionArgs>>();
 
-            public Action<TStateData> WhenChangedToNewState(TState newState)
+            public Action<TStateData, CancellationToken> WhenChangedToNewState(TState newState)
             {
                 var changeStateAction = HandlerCache.BuildHandler(newState, Create);
 
@@ -1613,7 +1699,7 @@ namespace BuildIt.States
                 // };
             }
 
-            public Action<TStateData> WhenChangingFromNewState(TState newState)
+            public Action<TStateData, CancellationToken> WhenChangingFromNewState(TState newState)
             {
                 var changeStateAction = HandlerCache.BuildHandler(newState, Create);
 
@@ -1624,7 +1710,7 @@ namespace BuildIt.States
                 // };
             }
 
-            public Action<TStateData> WhenChangedToPreviousState()
+            public Action<TStateData, CancellationToken> WhenChangedToPreviousState()
             {
                 var changeStateAction = CreatePrevious();
 
@@ -1635,7 +1721,7 @@ namespace BuildIt.States
                 // };
             }
 
-            public Action<TStateData> WhenChangingFromPreviousState()
+            public Action<TStateData, CancellationToken> WhenChangingFromPreviousState()
             {
                 var changeStateAction = CreatePrevious();
 
@@ -1647,38 +1733,38 @@ namespace BuildIt.States
                 // };
             }
 
-            protected abstract Action<TStateData> WireHandlerNewState(EventHandler<TCompletionArgs> complete);
+            protected abstract Action<TStateData, CancellationToken> WireHandlerNewState(EventHandler<TCompletionArgs> complete);
 
-            protected abstract Action<TStateData> UnwireHandlerNewState(EventHandler<TCompletionArgs> complete);
+            protected abstract Action<TStateData, CancellationToken> UnwireHandlerNewState(EventHandler<TCompletionArgs> complete);
 
-            protected abstract Action<TStateData> WireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
+            protected abstract Action<TStateData, CancellationToken> WireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
 
-            protected abstract Action<TStateData> UnwireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
+            protected abstract Action<TStateData, CancellationToken> UnwireHandlerPreviousState(EventHandler<TCompletionArgs> complete);
 
             protected virtual EventHandler<TCompletionArgs> Create(TState newState)
             {
-                EventHandler<TCompletionArgs> changeStateAction = (s, e) =>
+                void ChangeStateAction(object s, TCompletionArgs e)
                 {
                     if (e.Completion.Equals(Completion))
                     {
                         StateManager.GoToState(newState);
                     }
-                };
+                }
 
-                return changeStateAction;
+                return ChangeStateAction;
             }
 
             protected virtual EventHandler<TCompletionArgs> InternalCreatePrevious()
             {
-                EventHandler<TCompletionArgs> changeStateAction = (s, e) =>
+                void ChangeStateAction(object s, TCompletionArgs e)
                 {
                     if (e.Completion.Equals(Completion))
                     {
                         StateManager.GoBackToPreviousState();
                     }
-                };
+                }
 
-                return changeStateAction;
+                return ChangeStateAction;
             }
 
             private EventHandler<TCompletionArgs> CreatePrevious()
@@ -1700,33 +1786,33 @@ namespace BuildIt.States
             where TCompletion : struct
             where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
         {
-            protected override Action<TStateData> WireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            protected override Action<TStateData, CancellationToken> WireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.Complete += complete;
                 };
             }
 
-            protected override Action<TStateData> UnwireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            protected override Action<TStateData, CancellationToken> UnwireHandlerNewState(EventHandler<CompletionEventArgs<TCompletion>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.Complete -= complete;
                 };
             }
 
-            protected override Action<TStateData> WireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            protected override Action<TStateData, CancellationToken> WireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.Complete += complete;
                 };
             }
 
-            protected override Action<TStateData> UnwireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
+            protected override Action<TStateData, CancellationToken> UnwireHandlerPreviousState(EventHandler<CompletionEventArgs<TCompletion>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.Complete -= complete;
                 };
@@ -1740,33 +1826,33 @@ namespace BuildIt.States
             where TCompletion : struct
             where TStateData : INotifyPropertyChanged, ICompletionWithData<TCompletion, TData>
         {
-            protected override Action<TStateData> WireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            protected override Action<TStateData, CancellationToken> WireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.CompleteWithData += complete;
                 };
             }
 
-            protected override Action<TStateData> UnwireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            protected override Action<TStateData, CancellationToken> UnwireHandlerNewState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.CompleteWithData -= complete;
                 };
             }
 
-            protected override Action<TStateData> WireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            protected override Action<TStateData, CancellationToken> WireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.CompleteWithData += complete;
                 };
             }
 
-            protected override Action<TStateData> UnwireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
+            protected override Action<TStateData, CancellationToken> UnwireHandlerPreviousState(EventHandler<CompletionWithDataEventArgs<TCompletion, TData>> complete)
             {
-                return vm =>
+                return (vm, cancelToken) =>
                 {
                     vm.CompleteWithData -= complete;
                 };
@@ -1820,15 +1906,15 @@ namespace BuildIt.States
 
             protected override EventHandler<CompletionEventArgs<TCompletion>> InternalCreatePrevious()
             {
-                EventHandler<CompletionEventArgs<TCompletion>> changeStateAction = (s, e) =>
+                void ChangeStateAction(object s, CompletionEventArgs<TCompletion> e)
                 {
                     if (e.Completion.Equals(Completion))
                     {
                         StateManager.GoBackToPreviousState();
                     }
-                };
+                }
 
-                return changeStateAction;
+                return ChangeStateAction;
             }
         }
 

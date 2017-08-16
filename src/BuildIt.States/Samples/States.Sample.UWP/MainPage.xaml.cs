@@ -1,4 +1,6 @@
-﻿using BuildIt.States;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using BuildIt.States;
 using BuildIt.States.Interfaces;
 using BuildIt.States.UWP;
 using States.Sample.Core;
@@ -62,6 +64,35 @@ namespace States.Sample.UWP
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             (DataContext as MainViewModel)?.StateManager.GoToState(LoadingStates.UILoaded);
+        }
+
+        private async void ItemClicked(object sender, ItemClickEventArgs e)
+        {
+#pragma warning disable SA1119 // Statement must not use unnecessary parenthesis - warning is an error - parenthesis are required here
+            if (!(e.ClickedItem is RandomItem item))
+#pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
+            {
+                return;
+            }
+
+            var state = item.StateManager.CurrentState<ItemStates>();
+            switch (state)
+            {
+                case ItemStates.Base:
+                    state = ItemStates.IsEnabled;
+                    break;
+                case ItemStates.IsEnabled:
+                    state = ItemStates.IsEnabledTwo;
+                    break;
+                case ItemStates.IsEnabledTwo:
+                    state = ItemStates.IsNotEnabled;
+                    break;
+                case ItemStates.IsNotEnabled:
+                    state = ItemStates.IsEnabled;
+                    break;
+            }
+
+            await item.StateManager.GoToState(state);
         }
     }
 }

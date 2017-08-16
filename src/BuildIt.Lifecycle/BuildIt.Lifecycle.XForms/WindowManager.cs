@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using BuildIt.Lifecycle.Interfaces;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
@@ -43,11 +43,11 @@ namespace BuildIt.Lifecycle
         {
             NavigationRoot=navRoot;
             RegionManager = root.RegionManager;
-            RegionManager.RegionCreated = RegionManager_RegionCreated;
-            RegionManager.RegionIsClosing = RegionManager_RegionIsClosing;
+            RegionManager.RegionCreated += RegionManager_RegionCreated;
+            RegionManager.RegionIsClosed+= RegionManager_RegionIsClosing;
         }
 
-        private void RegionManager_RegionIsClosing(IRegionManager sender, IApplicationRegion e)
+        private void RegionManager_RegionIsClosing(object source, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
         {
             //var view = Windows.SafeDictionaryValue<string, CoreWindow, CoreWindow>(e.Parameter1.RegionId);
             //view.Close();
@@ -55,10 +55,11 @@ namespace BuildIt.Lifecycle
         }
 
 #pragma warning disable 1998 // Async required for Windows UWP support for multiple views
-        private async void RegionManager_RegionCreated(IRegionManager sender, IApplicationRegion e)
+        private async void RegionManager_RegionCreated(object source, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
 #pragma warning restore 1998
         {
-
+            IRegionManager sender = args.Parameter1;
+            IApplicationRegion e = args.Parameter2;
             //var newViewId = 0;
             e.RegisterForUIAccess(new FormsUIContext());
 
@@ -91,15 +92,16 @@ namespace BuildIt.Lifecycle
             {
 
                 var groups = sm.StateGroups;
-                var inotifier = typeof(INotifyEnumStateChanged<>);
+                var inotifier = typeof(INotifyTypedStateChanged<>);
                 foreach (var stateGroup in groups)
                 {
-                    var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
-                    if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
-                    {
-                        var fnt = typeof(FrameNavigation<>).MakeGenericType(stateGroup.Key);
-                        var fn = Activator.CreateInstance(fnt, NavigationRoot, sm);
-                    }
+                    // TODO: FIX
+                    //var groupNotifier = inotifier.MakeGenericType(stateGroup.Key);
+                    //if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
+                    //{
+                    //    var fnt = typeof(FrameNavigation<>).MakeGenericType(stateGroup.Key);
+                    //    var fn = Activator.CreateInstance(fnt, NavigationRoot, sm);
+                    //}
                 }
             }
 

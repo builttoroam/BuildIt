@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BuildIt.Forms;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
-using BuildIt.Forms.Core;
 using BuildIt.forms.Sample.Core.ViewModels;
 
 using Xamarin.Forms;
@@ -34,8 +33,6 @@ namespace BuildIt.Forms.Sample
             {
                 Binder = await VisualStateManager.Bind(this.Content, itemViewModel?.StateManager);
             }
-
         }
-
     }
 }

@@ -6,96 +6,6 @@ using System.Collections.ObjectModel;
 
 namespace States.Sample.Core
 {
-/// <summary>
-/// The loading states
-/// </summary>
-    public enum LoadingStates
-    {
-        /// <summary>
-        /// Default state
-        /// </summary>
-        Base,
-
-        /// <summary>
-        /// Loading data
-        /// </summary>
-        UILoading,
-
-        /// <summary>
-        /// Data loaded
-        /// </summary>
-        UILoaded,
-
-        /// <summary>
-        /// Data failed to load
-        /// </summary>
-        UILoadingFailed
-    }
-
-    /// <summary>
-    /// States for different screen sizes
-    /// </summary>
-    public enum SizeStates
-    {
-        /// <summary>
-        /// Default
-        /// </summary>
-        Base,
-
-        /// <summary>
-        /// Narrow screen
-        /// </summary>
-        Narrow,
-
-        /// <summary>
-        /// Normal scree
-        /// </summary>
-        Normal,
-
-        /// <summary>
-        /// Large scree
-        /// </summary>
-        Large
-    }
-  public enum ItemStates
-        {
-            Base,
-            IsEnabled,
-            IsNotEnabled
-        }
-    public class RandomItem:NotifyBase
-    {
-      
-
-        public IStateManager StateManager { get; } = new StateManager();
-
-        public RandomItem()
-        {
-            StateManager
-                .Group<ItemStates>("cacheRandomItemGroup")
-                .DefineState(ItemStates.IsEnabled)
-                    .Target(this)
-                    .Change(x=>x.IsEnabled)
-                    .ToValue(true)
-                .DefineState(ItemStates.IsNotEnabled);
-
-        }
-
-        public string Output1 { get; set; }
-        public string Output2 { get; set; }
-
-        private bool isEnabled;
-        public bool IsEnabled
-        {
-            get => isEnabled;
-            set
-            {
-                isEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
     /// <summary>
     /// The view model for the main page
     /// </summary>
@@ -124,7 +34,11 @@ namespace States.Sample.Core
             var rnd = new Random();
             for (int i = 0; i < 1000; i++)
             {
-                var item = new RandomItem { Output1 = Guid.NewGuid() + "", Output2 = Guid.NewGuid() + "" };
+                var item = new RandomItem {
+                    Output1 = Guid.NewGuid() + string.Empty,
+                    Output2 = Guid.NewGuid() + string.Empty,
+                    Output3 = Guid.NewGuid() + string.Empty
+                };
                 var enabled = (rnd.Next(0, 1000) < 500);
                 RandomItems.Add(item);
                 item.StateManager.GoToState(enabled ? ItemStates.IsEnabled : ItemStates.IsNotEnabled);

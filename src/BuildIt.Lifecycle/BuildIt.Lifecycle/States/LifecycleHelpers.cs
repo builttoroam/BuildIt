@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using BuildIt.Lifecycle.Interfaces;
 using BuildIt.States;
 using BuildIt.States.Completion;
+using BuildIt.States.Interfaces.Builder;
 
 namespace BuildIt.Lifecycle.States
 {

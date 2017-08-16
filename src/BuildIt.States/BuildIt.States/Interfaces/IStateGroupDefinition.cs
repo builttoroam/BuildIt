@@ -6,6 +6,22 @@ namespace BuildIt.States.Interfaces
     /// <summary>
     /// Defines a state group (not an instance of a state group)
     /// </summary>
+    /// <typeparam name="TStateDefinition">The type of state definitions</typeparam>
+    // ReSharper disable once TypeParameterCanBeVariant - Not required
+    public interface IStateGroupDefinition<TStateDefinition> : IStateGroupDefinition
+        where TStateDefinition : class, IStateDefinition, new()
+    {
+        /// <summary>
+        /// Retrieve state definition based on state name
+        /// </summary>
+        /// <param name="stateName">The state name</param>
+        /// <returns>New state definition</returns>
+        new TStateDefinition StateDefinitionFromName(string stateName);
+    }
+
+    /// <summary>
+    /// Defines a state group (not an instance of a state group)
+    /// </summary>
     public interface IStateGroupDefinition
     {
         /// <summary>
@@ -26,8 +42,8 @@ namespace BuildIt.States.Interfaces
         /// <summary>
         /// Retrieve state definition based on state name
         /// </summary>
-        /// <param name="state">The state name</param>
+        /// <param name="stateName">The state name</param>
         /// <returns>New state definition</returns>
-        IStateDefinition StateDefinition(string state);
+        IStateDefinition StateDefinitionFromName(string stateName);
     }
 }
