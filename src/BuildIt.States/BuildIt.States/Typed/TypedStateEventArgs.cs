@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States.Typed
 {
@@ -6,7 +7,7 @@ namespace BuildIt.States.Typed
     /// Event args for a state change
     /// </summary>
     /// <typeparam name="TState">The type (enum) fo the state</typeparam>
-    public class TypedStateEventArgs<TState> : StateEventArgs
+    public class TypedStateEventArgs<TState> : StateEventArgs, ITypedStateEventArgs<TState>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TypedStateEventArgs{TState}"/> class.

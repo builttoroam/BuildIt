@@ -205,7 +205,6 @@ namespace BuildIt.States
             return await group.ChangeBackToState(state, animate, cancelToken);
         }
 
-
         /// <summary>
         /// Go to a new state
         /// </summary>

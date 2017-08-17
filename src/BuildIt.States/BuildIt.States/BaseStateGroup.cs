@@ -46,14 +46,24 @@ namespace BuildIt.States
         public event EventHandler GoToPreviousStateIsBlockedChanged;
 
         /// <summary>
-        /// Event indicating that the current state for this group has changed
-        /// </summary>
-        public event EventHandler<StateEventArgs> StateChanged;
-
-        /// <summary>
         /// Event indicating that the current state for this group is about to change
         /// </summary>
-        public event EventHandler<StateCancelEventArgs> StateChanging;
+        public event EventHandler<IStateCancelEventArgs> StateAboutToChange;
+
+        /// <summary>
+        /// Event indicating that the current state for this group is changing
+        /// </summary>
+        public event EventHandler<IStateEventArgs> StateChanging;
+
+        /// <summary>
+        /// Event indicating that the current state for this group has changed
+        /// </summary>
+        public event EventHandler<IStateEventArgs> StateChanged;
+
+        /// <summary>
+        /// Event indicating that the state change has completed
+        /// </summary>
+        public event EventHandler<IStateEventArgs> StateChangeComplete;
 
         /// <summary>
         /// Gets the state group definition (including the states that make up the group)
@@ -79,21 +89,6 @@ namespace BuildIt.States
         /// Gets or sets context for doing UI tasks
         /// </summary>
         public IUIExecutionContext UIContext { get; set; }
-
-        /// <summary>
-        /// Gets or sets the cancellation for the current state transition
-        /// </summary>
-        private CancellationTokenSource StateTransitionCancellation { get; set; }
-
-        /// <summary>
-        /// Gets a semaphore to block concurrent state transitions
-        /// </summary>
-        private SemaphoreSlim StateTransitionSemaphore { get; } = new SemaphoreSlim(1);
-
-        /// <summary>
-        /// Gets a lock protecting access to the state transition cancellation source
-        /// </summary>
-        private object CancellationLock { get; } = new object();
 
         /// <summary>
         /// Gets or sets the current state name
@@ -189,6 +184,21 @@ namespace BuildIt.States
             new Dictionary<Type, INotifyPropertyChanged>();
 
         private static IDictionary<string, TStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, TStateGroupDefinition>();
+
+        /// <summary>
+        /// Gets or sets the cancellation for the current state transition
+        /// </summary>
+        private CancellationTokenSource StateTransitionCancellation { get; set; }
+
+        /// <summary>
+        /// Gets a semaphore to block concurrent state transitions
+        /// </summary>
+        private SemaphoreSlim StateTransitionSemaphore { get; } = new SemaphoreSlim(1);
+
+        /// <summary>
+        /// Gets a lock protecting access to the state transition cancellation source
+        /// </summary>
+        private object CancellationLock { get; } = new object();
 
         /// <summary>
         /// Gets all triggers defined for the states in this group
@@ -374,12 +384,12 @@ namespace BuildIt.States
         /// <returns>Success indicator</returns>
         protected virtual async Task<bool> AboutToChangeFrom(string newState, string data, bool isNewState, bool useTransitions, CancellationToken cancelToken)
         {
-            var current = CurrentStateName;
+            // var current = CurrentStateName;
             var currentStateDef = CurrentStateDefinition;
             var currentStateDataWrapper = CurrentStateDataWrapper;
 
             // Raise an event before changing state
-            var cancelChange = await NotifyStateChanging(current, isNewState, useTransitions, cancelToken);
+            var cancelChange = await NotifyStateAboutToChange(newState, isNewState, useTransitions, cancelToken);
             if (cancelChange || cancelToken.IsCancellationRequested)
             {
                 return false;
@@ -470,6 +480,8 @@ namespace BuildIt.States
         {
             var currentStateDef = CurrentStateDefinition;
             var currentStateDataWrapper = CurrentStateDataWrapper;
+
+            await NotifyStateChanging(newState, isNewState, useTransitions, cancelToken);
 
             if (currentStateDef?.ChangingFrom != null)
             {
@@ -609,6 +621,8 @@ namespace BuildIt.States
 
             // Perform state transitions - adjust all the properties etc
             CurrentStateDefinition?.TransitionTo(StateValueTargets, GroupDefinition.DefaultValues);
+
+            await NotifyStateChanged(newState, isNewState, useTransitions, cancelToken);
         }
 
         /// <summary>
@@ -695,7 +709,65 @@ namespace BuildIt.States
             }
 
             // Raise event after state changed
-            await NotifyStateChanged(CurrentStateName, isNewState, useTransitions, cancelToken);
+            await NotifyStateChangeComplete(CurrentStateName, isNewState, useTransitions, cancelToken);
+        }
+
+        /// <summary>
+        /// Overridable method to raise the StateAboutToChange event
+        /// </summary>
+        /// <param name="newState">The new state to transition to</param>
+        /// <param name="isNewState">Whether this will be a new state or going to previous</param>
+        /// <param name="useTransitions">Whether to use transitions or not</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the state change should be cancelled (true)</returns>
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        protected virtual async Task<bool> NotifyStateAboutToChange(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
+#pragma warning restore 1998
+        {
+            var shouldCancel = false;
+            try
+            {
+                "Invoking StateAboutToChange event".Log();
+                var cancelArgs = new StateCancelEventArgs(newState, useTransitions, isNewState, cancelToken);
+                await RaiseStateEvent(StateAboutToChange, cancelArgs);
+                shouldCancel = cancelArgs.Cancel;
+                "StateAboutToChange event completed".Log();
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                // Ignore any errors caused by the event being raised, as
+                // the state change has still occurred
+            }
+
+            return shouldCancel;
+        }
+
+        /// <summary>
+        /// Overridable method to raise StateChanging event
+        /// </summary>
+        /// <param name="newState">The name of the state being changed to</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
+        /// <param name="useTransitions">Indicates whether to use transitions</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Task to be awaited</returns>
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        protected virtual async Task NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
+#pragma warning restore 1998
+        {
+            try
+            {
+                "Invoking StateChanging event".Log();
+                var args = new StateEventArgs(newState, useTransitions, isNewState, cancelToken);
+                await RaiseStateEvent(StateChanging, args);
+                "StateChanging event completed".Log();
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                // Ignore any errors caused by the event being raised, as
+                // the state change has still occurred
+            }
         }
 
         /// <summary>
@@ -712,21 +784,10 @@ namespace BuildIt.States
         {
             try
             {
-                if (StateChanged != null)
-                {
-                    "Invoking StateChanged event (before UI context check)".Log();
-                    await UIContext.RunAsync(() =>
-                    {
-                        "Raising StateChanged event".Log();
-                        StateChanged?.Invoke(this, new StateEventArgs(CurrentStateName, useTransitions, isNewState, cancelToken));
-                        "Raising StateChanged event completed".Log();
-                    });
-                    "StateChanged event completed (after UI context check)".Log();
-                }
-                else
-                {
-                    "Nothing listening to StateChanged".Log();
-                }
+                "Invoking StateChanged event".Log();
+                var args = new StateEventArgs(newState, useTransitions, isNewState, cancelToken);
+                await RaiseStateEvent(StateChanged, args);
+                "StateChanged event completed".Log();
             }
             catch (Exception ex)
             {
@@ -737,37 +798,23 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Overridable method to raise the StateChanging event
+        /// Overridable method to raise StateChangeComplete event
         /// </summary>
-        /// <param name="newState">The new state to transition to</param>
-        /// <param name="isNewState">Whether this will be a new state or going to previous</param>
-        /// <param name="useTransitions">Whether to use transitions or not</param>
+        /// <param name="newState">The name of the state being changed to</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
+        /// <param name="useTransitions">Indicates whether to use transitions</param>
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Whether the state change should be cancelled (true)</returns>
+        /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected virtual async Task<bool> NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
+        protected virtual async Task NotifyStateChangeComplete(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
-            var shouldCancel = false;
             try
             {
-                if (StateChanging != null)
-                {
-                    "Invoking StateChanging event (before UI context check)".Log();
-                    await UIContext.RunAsync(() =>
-                    {
-                        var cancel = new StateCancelEventArgs(CurrentStateName, useTransitions, isNewState, cancelToken);
-                        "Raising StateChanging event".Log();
-                        StateChanging?.Invoke(this, cancel);
-                        "Raising StateChanging event completed".Log();
-                        shouldCancel = cancel.Cancel;
-                    });
-                    "StateChanging event completed (after UI context check)".Log();
-                }
-                else
-                {
-                    "Nothing listening to StateChanging".Log();
-                }
+                "Invoking StateChangeComplete event".Log();
+                var args = new StateEventArgs(newState, useTransitions, isNewState, cancelToken);
+                await RaiseStateEvent(StateChangeComplete, args);
+                "StateChangeComplete event completed".Log();
             }
             catch (Exception ex)
             {
@@ -775,8 +822,6 @@ namespace BuildIt.States
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
-
-            return shouldCancel;
         }
 
         /// <summary>
@@ -831,6 +876,37 @@ namespace BuildIt.States
             var def = new TStateGroupDefinition();
             CachedGroupDefinitions[cacheKey] = def;
             return def;
+        }
+
+        private async Task RaiseStateEvent<TStateEventArgs>(EventHandler<TStateEventArgs> eventToRaise, TStateEventArgs args)
+            where TStateEventArgs : IStateEventArgs
+        {
+            try
+            {
+                var localRef = eventToRaise;
+                if (localRef != null)
+                {
+                    "Invoking event (before UI context check)".Log();
+                    await UIContext.RunAsync(async () =>
+                    {
+                        "Raising event".Log();
+                        localRef.Invoke(this, args);
+                        "Raising event completed - waiting for lock to be release".Log();
+                        await args.CompleteEvent();
+                    });
+                    "event completed (after UI context check)".Log();
+                }
+                else
+                {
+                    "Nothing listening to event".Log();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                // Ignore any errors caused by the event being raised, as
+                // the state change has still occurred
+            }
         }
 
         private async void UpdateStatesByTriggers()

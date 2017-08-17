@@ -36,8 +36,7 @@ namespace BuildIt.States.Interfaces
     public interface IStateGroup :
         IRequiresUIAccess,
         IRegisterDependencies,
-        INotifyStateChanged,
-        INotifyStateChanging
+        INotifyStateChange
     {
         /// <summary>
         /// Event indicating the go to previous blocked status has changed

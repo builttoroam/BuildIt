@@ -920,7 +920,6 @@ namespace BuildIt.States
             return smInfo;
         }
 
-
         /// <summary>
         /// Defines an action to be called when ChangedTo the state
         /// </summary>

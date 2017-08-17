@@ -16,7 +16,7 @@ namespace BuildIt.States.Interfaces
         /// </summary>
         /// <param name="stateName">The state name</param>
         /// <returns>New state definition</returns>
-        new TStateDefinition StateDefinitionFromName(string stateName);
+        TStateDefinition TypedStateDefinitionFromName(string stateName);
     }
 
     /// <summary>

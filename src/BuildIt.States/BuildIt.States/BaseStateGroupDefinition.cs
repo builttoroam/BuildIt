@@ -36,9 +36,9 @@ namespace BuildIt.States
         /// </summary>
         /// <param name="stateName">The state name</param>
         /// <returns>New state definition</returns>
-        IStateDefinition IStateGroupDefinition.StateDefinitionFromName(string stateName)
+        public virtual IStateDefinition StateDefinitionFromName(string stateName)
         {
-            return StateDefinitionFromName(stateName);
+            return TypedStateDefinitionFromName(stateName);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace BuildIt.States
         /// </summary>
         /// <param name="stateName">The state name</param>
         /// <returns>New state definition</returns>
-        public virtual TStateDefinition StateDefinitionFromName(string stateName)
+        public virtual TStateDefinition TypedStateDefinitionFromName(string stateName)
         {
             return string.IsNullOrWhiteSpace(stateName) ? default(TStateDefinition) : States.SafeValue(stateName) as TStateDefinition;
         }
@@ -68,7 +68,7 @@ namespace BuildIt.States
             if (existing != null)
             {
                 $"State definition already defined, returning existing instance - {existing.GetType().Name}".Log();
-                return existing;
+                return existing as TStateDefinition;
             }
 
             $"Defining state of type {stateDefinition.GetType().Name}".Log();

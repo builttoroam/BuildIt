@@ -35,14 +35,24 @@ namespace BuildIt.States.Typed
         }
 
         /// <summary>
-        /// Typed state changed event
+        /// Event indicating that the current state for this group is about to change
         /// </summary>
-        public event EventHandler<TypedStateEventArgs<TState>> TypedStateChanged;
+        public event EventHandler<ITypedStateCancelEventArgs<TState>> TypedStateAboutToChange;
 
         /// <summary>
-        /// Typed state changing event
+        /// Event indicating that the current state for this group is changing
         /// </summary>
-        public event EventHandler<TypedStateCancelEventArgs<TState>> TypedStateChanging;
+        public event EventHandler<ITypedStateEventArgs<TState>> TypedStateChanging;
+
+        /// <summary>
+        /// Event indicating that the current state for this group has changed
+        /// </summary>
+        public event EventHandler<ITypedStateEventArgs<TState>> TypedStateChanged;
+
+        /// <summary>
+        /// Event indicating that the state change has completed
+        /// </summary>
+        public event EventHandler<ITypedStateEventArgs<TState>> TypedStateChangeComplete;
 
         /// <summary>
         /// Gets or sets the current typed state
@@ -140,7 +150,85 @@ namespace BuildIt.States.Typed
         }
 
         /// <summary>
-        /// Overridable method to raise StateChanged event
+        /// Overrides method to raise the StateAboutToChange event
+        /// </summary>
+        /// <param name="newState">The new state to transition to</param>
+        /// <param name="isNewState">Whether this will be a new state or going to previous</param>
+        /// <param name="useTransitions">Whether to use transitions or not</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Whether the state change should be cancelled (true)</returns>
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        protected override async Task<bool> NotifyStateAboutToChange(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
+#pragma warning restore 1998
+        {
+            var shouldCancel = false;
+            try
+            {
+                shouldCancel = await base.NotifyStateAboutToChange(newState, isNewState, useTransitions, cancelToken);
+                if (shouldCancel)
+                {
+                    return true;
+                }
+
+                "Invoking Typed StateAboutToChange event".Log();
+                var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
+                if (state == null)
+                {
+                    return false;
+                }
+
+                var cancelArgs = new TypedStateCancelEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
+                await RaiseTypedStateEvent(TypedStateAboutToChange, cancelArgs);
+                shouldCancel = cancelArgs.Cancel;
+                "Typed StateAboutToChange event completed".Log();
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                // Ignore any errors caused by the event being raised, as
+                // the state change has still occurred
+            }
+
+            return shouldCancel;
+        }
+
+        /// <summary>
+        /// Overrides method to raise StateChanging event
+        /// </summary>
+        /// <param name="newState">The name of the state being changed to</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
+        /// <param name="useTransitions">Indicates whether to use transitions</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
+        /// <returns>Task to be awaited</returns>
+#pragma warning disable 1998 // Returns a Task so that overrides can do async work
+        protected override async Task NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
+#pragma warning restore 1998
+        {
+            try
+            {
+                await base.NotifyStateChanging(newState, isNewState, useTransitions, cancelToken);
+
+                "Invoking Typed StateChanging event".Log();
+                var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
+                if (state == null)
+                {
+                    return;
+                }
+
+                var args = new TypedStateEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
+                await RaiseTypedStateEvent(TypedStateChanging, args);
+                "Typed StateChanging event completed".Log();
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                // Ignore any errors caused by the event being raised, as
+                // the state change has still occurred
+            }
+        }
+
+        /// <summary>
+        /// Overrides method to raise StateChanged event
         /// </summary>
         /// <param name="newState">The name of the state being changed to</param>
         /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
@@ -155,21 +243,16 @@ namespace BuildIt.States.Typed
             {
                 await base.NotifyStateChanged(newState, isNewState, useTransitions, cancelToken);
 
-                if (TypedStateChanged != null)
+                "Invoking Typed StateChanged event".Log();
+                var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
+                if (state == null)
                 {
-                    "Invoking TypedStateChanged event (before UI context check)".Log();
-                    await UIContext.RunAsync(() =>
-                    {
-                        "Raising TypedStateChanged event".Log();
-                        TypedStateChanged?.Invoke(this, new TypedStateEventArgs<TState>(CurrentState, useTransitions, isNewState, cancelToken));
-                        "Raising TypedStateChanged event completed".Log();
-                    });
-                    "TypedStateChanged event completed (after UI context check)".Log();
+                    return;
                 }
-                else
-                {
-                    "Nothing listening to TypedStateChanged".Log();
-                }
+
+                var args = new TypedStateEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
+                await RaiseTypedStateEvent(TypedStateChanged, args);
+                "Typed StateChanged event completed".Log();
             }
             catch (Exception ex)
             {
@@ -180,42 +263,61 @@ namespace BuildIt.States.Typed
         }
 
         /// <summary>
-        /// Overridable method to raise the StateChanging event
+        /// Overrides method to raise StateChangeComplete event
         /// </summary>
-        /// <param name="newState">The new state to transition to</param>
-        /// <param name="isNewState">Whether this will be a new state or going to previous</param>
-        /// <param name="useTransitions">Whether to use transitions or not</param>
+        /// <param name="newState">The name of the state being changed to</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
+        /// <param name="useTransitions">Indicates whether to use transitions</param>
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Whether the state change should be cancelled (true)</returns>
+        /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
-        protected override async Task<bool> NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
+        protected override async Task NotifyStateChangeComplete(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
-            var shouldCancel = false;
             try
             {
-                var statecancel = await base.NotifyStateChanging(newState, isNewState, useTransitions, cancelToken);
-                if (statecancel)
+                await base.NotifyStateChangeComplete(newState, isNewState, useTransitions, cancelToken);
+
+                "Invoking Typed StateChangeComplete event".Log();
+                var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
+                if (state == null)
                 {
-                    return true;
+                    return;
                 }
 
-                if (TypedStateChanging != null)
+                var args = new TypedStateEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
+                await RaiseTypedStateEvent(TypedStateChangeComplete, args);
+                "Typed StateChangeComplete event completed".Log();
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+                // Ignore any errors caused by the event being raised, as
+                // the state change has still occurred
+            }
+        }
+
+        private async Task RaiseTypedStateEvent<TStateEventArgs>(EventHandler<TStateEventArgs> eventToRaise, TStateEventArgs args)
+            where TStateEventArgs : ITypedStateEventArgs<TState>
+        {
+            try
+            {
+                var localReferenceToEvent = eventToRaise;
+                if (localReferenceToEvent != null)
                 {
-                    "Invoking TypedStateChanging event (before UI context check)".Log();
-                    await UIContext.RunAsync(() =>
+                    "Invoking event (before UI context check)".Log();
+                    await UIContext.RunAsync(async () =>
                     {
-                        var cancel = new TypedStateCancelEventArgs<TState>(CurrentState, useTransitions, isNewState, cancelToken);
-                        "Raising TypedStateChanging event".Log();
-                        TypedStateChanging?.Invoke(this, cancel);
-                        "Raising TypedStateChanging event completed".Log();
-                        shouldCancel = cancel.Cancel;
+                        "Raising event".Log();
+                        localReferenceToEvent.Invoke(this, args);
+                        "Raising event completed - waiting for lock to be release".Log();
+                        await args.CompleteEvent();
                     });
-                    "TypedStateChanging event completed (after UI context check)".Log();
+                    "event completed (after UI context check)".Log();
                 }
                 else
                 {
-                    "Nothing listening to TypedStateChanging".Log();
+                    "Nothing listening to event".Log();
                 }
             }
             catch (Exception ex)
@@ -224,8 +326,6 @@ namespace BuildIt.States.Typed
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
-
-            return shouldCancel;
         }
     }
 }

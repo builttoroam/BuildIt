@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States.Typed
 {
@@ -6,7 +7,7 @@ namespace BuildIt.States.Typed
     /// Event args for cancelling a state change
     /// </summary>
     /// <typeparam name="TState">The type of the state</typeparam>
-    public class TypedStateCancelEventArgs<TState> : StateCancelEventArgs
+    public class TypedStateCancelEventArgs<TState> : StateCancelEventArgs, ITypedStateCancelEventArgs<TState>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TypedStateCancelEventArgs{TState}"/> class.
