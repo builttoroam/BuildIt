@@ -883,14 +883,14 @@ namespace BuildIt.States
         {
             try
             {
-                var localReferenceToEvent = eventToRaise;
-                if (localReferenceToEvent != null)
+                var localRef = eventToRaise;
+                if (localRef != null)
                 {
                     "Invoking event (before UI context check)".Log();
                     await UIContext.RunAsync(async () =>
                     {
                         "Raising event".Log();
-                        localReferenceToEvent.Invoke(this, args);
+                        localRef.Invoke(this, args);
                         "Raising event completed - waiting for lock to be release".Log();
                         await args.CompleteEvent();
                     });
