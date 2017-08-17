@@ -11,7 +11,7 @@ namespace BuildIt.States.Interfaces
     /// <typeparam name="TStateDefinition">The type of the state definition</typeparam>
     /// <typeparam name="TStateGroupDefinition">The type of the group definition</typeparam>
     public interface ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>
-    : IStateGroup<TStateDefinition, TStateGroupDefinition>, INotifyTypedStateChanged<TState>, INotifyTypedStateChanging<TState>
+    : IStateGroup<TStateDefinition, TStateGroupDefinition>, INotifyTypedStateChange<TState>
         where TStateDefinition : class, IStateDefinition, new()
         where TStateGroupDefinition : class, IStateGroupDefinition<TStateDefinition>, new()
     {

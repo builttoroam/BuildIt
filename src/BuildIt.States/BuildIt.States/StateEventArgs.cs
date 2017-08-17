@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
+using BuildIt.States.Interfaces;
 
 namespace BuildIt.States
 {
@@ -55,5 +57,31 @@ namespace BuildIt.States
         /// Gets the cancellation token
         /// </summary>
         public CancellationToken CancelToken { get; }
+
+        private EventDeferral Deferral { get; set; }
+
+        /// <summary>
+        /// Allows the event to be deferred until processing complete
+        /// </summary>
+        /// <returns>deferral entity</returns>
+        public EventDeferral Defer()
+        {
+            var semaphore = new SemaphoreSlim(1);
+            Deferral = new EventDeferral(semaphore);
+            return Deferral;
+        }
+
+        /// <summary>
+        /// Allows the event to be completed
+        /// </summary>
+        /// <returns>Task to await</returns>
+        public async Task CompleteEvent()
+        {
+            var deferral = Deferral?.Deferral;
+            if (deferral != null)
+            {
+                await deferral.WaitAsync();
+            }
+        }
     }
 }

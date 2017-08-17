@@ -68,12 +68,12 @@ namespace BuildIt.States
             dest.StateChanged += Dest_StateChanged;
         }
 
-        private async void Source_StateChanged(object sender, StateEventArgs e)
+        private async void Source_StateChanged(object sender, IStateEventArgs e)
         {
             await UpdateState(Target, e.StateName, e.IsNewState, e.UseTransitions);
         }
 
-        private async void Dest_StateChanged(object sender, StateEventArgs e)
+        private async void Dest_StateChanged(object sender, IStateEventArgs e)
         {
             await UpdateState(Source, e.StateName, e.IsNewState, e.UseTransitions);
         }

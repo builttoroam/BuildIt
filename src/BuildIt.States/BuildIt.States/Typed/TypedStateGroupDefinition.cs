@@ -23,12 +23,12 @@ namespace BuildIt.States.Typed
         /// Gets the typed state definitions
         /// </summary>
         public IReadOnlyDictionary<TState, ITypedStateDefinition<TState>> TypedStates => (from s in States
-                                                                                          let ts = s.Value as ITypedStateDefinition<TState>
-                                                                                          select new
-                                                                                          {
-                                                                                              Key = ts.State,
-                                                                                              Value = ts
-                                                                                          })
+                let ts = s.Value as ITypedStateDefinition<TState>
+                select new
+                {
+                    Key = ts.State,
+                    Value = ts
+                })
             .ToDictionary(x => x.Key, y => y.Value);
 
         /// <summary>
@@ -56,7 +56,8 @@ namespace BuildIt.States.Typed
         /// <typeparam name="TStateData">The type of the data</typeparam>
         /// <param name="state">The state</param>
         /// <returns>The defined state definition (maybe existing definition if already defined)</returns>
-        public virtual ITypedStateDefinitionWithData<TState, TTypedStateDefinition, TStateData> DefineTypedStateWithData<TStateData>(TState state)
+        public virtual ITypedStateDefinitionWithData<TState, TTypedStateDefinition, TStateData>
+            DefineTypedStateWithData<TStateData>(TState state)
             where TStateData : INotifyPropertyChanged
         {
             // Don't ever add the default value (eg Base) state
@@ -67,10 +68,14 @@ namespace BuildIt.States.Typed
             }
 
             $"Defining state for {typeof(TState).Name} with data type {typeof(TStateData)}".Log();
-            var stateDefinition = CreateDefinitionFromStateWithData(state, new StateDefinitionTypedDataWrapper<TStateData>()); // new TypedStateDefinition<TState>(state)
+            var stateDefinition =
+                CreateDefinitionFromStateWithData(state, new StateDefinitionTypedDataWrapper<TStateData>()); // new TypedStateDefinition<TState>(state)
             // stateDefinition.UntypedStateDataWrapper = new StateDefinitionTypedDataWrapper<TStateData>();
             var stateDef = DefineTypedState(stateDefinition);
-            return new TypedStateDefinitionWithDataWrapper<TState, TTypedStateDefinition, TStateData> { State = stateDef };
+            return new TypedStateDefinitionWithDataWrapper<TState, TTypedStateDefinition, TStateData>
+            {
+                State = stateDef
+            };
         }
 
         /// <summary>
@@ -102,7 +107,9 @@ namespace BuildIt.States.Typed
         /// <param name="state">The state</param>
         /// <param name="dataWrapper">The data wrapper</param>
         /// <returns>The new state definition</returns>
-        public virtual TTypedStateDefinition CreateDefinitionFromStateWithData<TData>(TState state, IStateDefinitionTypedDataWrapper<TData> dataWrapper)
+        public virtual TTypedStateDefinition CreateDefinitionFromStateWithData<TData>(
+            TState state,
+            IStateDefinitionTypedDataWrapper<TData> dataWrapper)
             where TData : INotifyPropertyChanged
         {
             var stateDef = CreateDefinitionFromState(state);
