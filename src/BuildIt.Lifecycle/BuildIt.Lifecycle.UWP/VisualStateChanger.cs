@@ -76,7 +76,11 @@ namespace BuildIt.Lifecycle
             return new NavigationRegistrationHelper {ViewType = typeof (TView)};
         }
 
-
+        public static NavigationRegistrationHelper RegisterView<TView>(this Application app) where TView : Page
+        {
+            return new NavigationRegistrationHelper { ViewType = typeof(TView) };
+        }
+        
     }
 
     public static class UWPLifecycleHelpers

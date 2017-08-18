@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26711.1
+VisualStudioVersion = 15.0.26730.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D3D02B64-940E-4620-84B8-C2751C345FEA}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Lifecycle.Shared", "BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.shproj", "{A0E34142-1554-469E-8F66-0CD7D656BEAE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle.Autofac", "BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj", "{88AE5F64-0F5E-4AD5-B673-1748F25C5458}"
 EndProject
@@ -19,9 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.UWP", "Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Tests", "BuildIt.Lifecycle\BuildIt.Lifecycle.Tests\BuildIt.Lifecycle.Tests.csproj", "{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StateByState.Shared", "BuildIt.Lifecycle\Samples\StateByState.Shared\StateByState.Shared.shproj", "{0914A06A-1A69-455F-8D93-2273C08A9143}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Core", "BuildIt.Lifecycle\Samples\StateByState.Core\StateByState.Core.csproj", "{B03072FE-40A3-4507-BFD1-C904BB0FE1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateByState.Core", "BuildIt.Lifecycle\Samples\StateByState.Core\StateByState.Core.csproj", "{B03072FE-40A3-4507-BFD1-C904BB0FE1FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateByState.Android", "BuildIt.Lifecycle\Samples\StateByState.Android\StateByState.Android.csproj", "{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E}"
 EndProject
@@ -44,13 +40,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{9E982427
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		BuildIt.Lifecycle\Samples\StateByState.Shared\StateByState.Shared.projitems*{0914a06a-1a69-455f-8d93-2273c08a9143}*SharedItemsImports = 13
-		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{0959f4b6-d9e4-4947-8889-d913a26f4788}*SharedItemsImports = 4
-		BuildIt.Lifecycle\Samples\StateByState.Shared\StateByState.Shared.projitems*{24b24ff9-10fc-4b8d-89a1-6c16ac1086d5}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{88ae5f64-0f5e-4ad5-b673-1748f25c5458}*SharedItemsImports = 4
-		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{fa40c3d1-c786-4a96-89d3-78d3af17a437}*SharedItemsImports = 4
 	EndGlobalSection
@@ -272,7 +264,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0914A06A-1A69-455F-8D93-2273C08A9143} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
 		{B03072FE-40A3-4507-BFD1-C904BB0FE1FA} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
 		{45C05832-2CDD-4E21-B592-D2FDDC3CCF5E} = {D3D02B64-940E-4620-84B8-C2751C345FEA}
 		{24B24FF9-10FC-4B8D-89A1-6C16AC1086D5} = {D3D02B64-940E-4620-84B8-C2751C345FEA}

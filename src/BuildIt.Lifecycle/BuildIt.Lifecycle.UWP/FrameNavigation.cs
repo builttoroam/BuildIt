@@ -18,13 +18,8 @@ using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.Lifecycle
 {
-    public interface IHasStateData
-    {
-        INotifyPropertyChanged CurrentStateData { get; }
-    }
-   
 
-    public class FrameNavigation<TState> : IHasStateData
+    public class FrameNavigation<TState> 
         where TState : struct
         //where TStateDefinition : class, ITypedStateDefinition<TState>, new()
         //where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()

@@ -25,7 +25,7 @@ namespace BuildIt.Lifecycle.Regions
 
         private IApplicationRegion PrimaryRegion { get; set; }
 
-        private List<Type> RegionTypes { get; set; } = new List<Type>();
+        private List<Type> RegionTypes { get; } = new List<Type>();
 
         public void DefineRegion<TRegion>() where TRegion : IApplicationRegion
         {

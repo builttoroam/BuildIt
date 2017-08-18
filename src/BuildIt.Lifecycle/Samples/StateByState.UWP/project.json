@@ -7,8 +7,8 @@
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
     "Newtonsoft.Json": "10.0.3"
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.4",
     "MvvmCross": "5.1.1"
   },
   "frameworks": {

@@ -99,6 +99,34 @@
     </Compile>
     <Compile Include="CustomSplitView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Special.cs" />
+    <Compile Include="Views\FourthPage.xaml.cs">
+      <DependentUpon>FourthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SecondPage.xaml.cs">
+      <DependentUpon>SecondPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SeparatePage.xaml.cs">
+      <DependentUpon>SeparatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThirdFourPage.xaml.cs">
+      <DependentUpon>ThirdFourPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThirdPage.xaml.cs">
+      <DependentUpon>ThirdPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThirdThreePage.xaml.cs">
+      <DependentUpon>ThirdThreePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThirdTwoPage.xaml.cs">
+      <DependentUpon>ThirdTwoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThrirdOnePage.xaml.cs">
+      <DependentUpon>ThrirdOnePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -139,7 +167,44 @@
       <Name>StateByState.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\StateByState.Shared\StateByState.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <Page Include="Views\FourthPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SecondPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SeparatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ThirdFourPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ThirdPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ThirdThreePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ThirdTwoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ThrirdOnePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
