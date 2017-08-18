@@ -1,8 +1,8 @@
 ﻿{
   "dependencies": {
     "BuildIt.General": "1.1.0.30",
-    "BuildIt.States": "1.1.0.49-beta",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.4",
+    "BuildIt.States": "1.1.0.58-beta",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
     "Newtonsoft.Json": "10.0.3",
     "StyleCop.Analyzers": "1.0.2",
     "Xamarin.Forms": "2.4.0.266-pre1"

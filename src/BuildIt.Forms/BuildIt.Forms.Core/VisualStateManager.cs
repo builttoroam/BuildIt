@@ -138,6 +138,39 @@ namespace BuildIt.Forms
             return binder;
         }
 
+        /// <summary>
+        /// Builds the animation task for the series of animations
+        /// </summary>
+        /// <param name="animations">The list of animations</param>
+        /// <param name="element">The element to animate</param>
+        /// <param name="cancelToken">The cancellation token</param>
+        /// <returns>Task to await</returns>
+        public static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element, CancellationToken cancelToken)
+        {
+            var tasks = new List<Task>();
+
+            foreach (var animation in animations)
+            {
+                var target = element.FindByTarget(animation);
+                var tg = target?.Item1 as VisualElement;
+                var animateTask = animation.Animate(tg ?? (element as VisualElement), cancelToken);
+                tasks.Add(animateTask);
+            }
+
+            return Task.WhenAll(tasks);
+        }
+
+        /// <summary>
+        /// Returns a function that build animations for an element
+        /// </summary>
+        /// <param name="animations">The animations to use</param>
+        /// <param name="element">The element to animat</param>
+        /// <returns>The function to build an animations task</returns>
+        public static Func<CancellationToken, Task> BuildAnimations(IList<StateAnimation> animations, Element element)
+        {
+            return (cancel) => BuildAnimationTasks(animations, element, cancel);
+        }
+
         private static object CreateDefaultValue(BindableObject bindable)
         {
             "Creating empty visual state group".Log();
@@ -255,26 +288,6 @@ namespace BuildIt.Forms
                     sg.StateValueTargets[targetId] = target.Item1;
                 }
             }
-        }
-
-        public static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element, CancellationToken cancelToken)
-        {
-            var tasks = new List<Task>();
-
-            foreach (var animation in animations)
-            {
-                var target = element.FindByTarget(animation);
-                var tg = target?.Item1 as VisualElement;
-                var animateTask = animation.Animate(tg ?? (element as VisualElement), cancelToken);
-                tasks.Add(animateTask);
-            }
-
-            return Task.WhenAll(tasks);
-        }
-
-        public static Func<CancellationToken, Task> BuildAnimations(IList<StateAnimation> animations, Element element)
-        {
-            return (cancel) => BuildAnimationTasks(animations, element, cancel);
         }
 
         private static void BuildStateSetters(VisualStateGroup group, VisualState state, Element element, IList<IStateValue> values, IDictionary<Element, string> elementIds)

@@ -28,6 +28,7 @@ namespace BuildIt.Forms.Animations
                 {
                     return;
                 }
+
                 var target = visualElement.FindByTarget(anim);
                 var tg = target?.Item1 as VisualElement;
                 await anim.Animate(tg ?? visualElement, cancelToken);

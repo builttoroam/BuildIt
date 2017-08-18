@@ -5,6 +5,9 @@ using Xamarin.Forms;
 
 namespace BuildIt.Forms.Animations
 {
+    /// <summary>
+    /// Animation storyboard
+    /// </summary>
     [ContentProperty(nameof(Animations))]
     public class Storyboard : BindableObject
     {
@@ -29,10 +32,16 @@ namespace BuildIt.Forms.Animations
             set => SetValue(AnimationsProperty, value);
         }
 
+        /// <summary>
+        /// Triggers the animation
+        /// </summary>
+        /// <param name="cancelToken">Cancellation token</param>
+        /// <returns>Task to await</returns>
         public async Task Animate(CancellationToken cancelToken)
         {
-            await VisualStateManager.BuildAnimationTasks(Animations, Element,cancelToken);
+            await VisualStateManager.BuildAnimationTasks(Animations, Element, cancelToken);
         }
+
         private static object CreateDefaultAnimations(BindableObject bindable)
         {
             return new List<StateAnimation>();
