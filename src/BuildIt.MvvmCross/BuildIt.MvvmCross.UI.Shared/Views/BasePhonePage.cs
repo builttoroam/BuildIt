@@ -10,9 +10,9 @@ using Windows.UI.Xaml.Navigation;
 using BuildIt.MvvmCross.Interfaces;
 using BuildIt.MvvmCross.ViewModels;
 using BuildIt;
-
 #if WINDOWS_UWP
-using MvvmCross.WindowsUWP.Views;
+using MvvmCross.Uwp.Views;
+
 #else
 using MvvmCross.WindowsCommon.Views;
 #endif
