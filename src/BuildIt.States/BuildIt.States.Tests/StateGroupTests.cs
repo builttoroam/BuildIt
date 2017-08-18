@@ -276,6 +276,127 @@ namespace BuildIt.States.Tests
 
         }
 
+
+        [TestMethod]
+        public async Task TestStagesOfStateTransitionEvents()
+        {
+            var steps = new List<int>();
+            var stepStates = new List<Test3State>();
+
+            var sm = new StateManager();
+            sm.DefineState(Test3State.State1)
+                .DefineState(Test3State.State2)
+                .DefineState(Test3State.State3);
+
+            var group = sm.TypedStateGroup<Test3State>();
+            bool hasCancelled = false;
+            bool typedHasCancelled = false;
+            group.StateAboutToChange += (s, e) =>
+            {
+                if (!typedHasCancelled)
+                {
+                    typedHasCancelled = true;
+                    e.Cancel = true;
+                    steps.Add(0);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                }
+                else
+                {
+                    if (!hasCancelled)
+                    {
+                        steps.Add(1);
+                    }
+                    else
+                    {
+                        steps.Add(3);
+                    }
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                }
+            };
+            group.TypedStateAboutToChange += (s, e) =>
+            {
+                if (!hasCancelled)
+                {
+                    hasCancelled = true;
+                    e.Cancel = true;
+                    steps.Add(2);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                }
+                else
+                {
+                    steps.Add(4);
+                    stepStates.Add(sm.CurrentState<Test3State>());
+                }
+            };
+            group.StateChanging += (s, e) =>
+            {
+                steps.Add(5);
+                stepStates.Add(sm.CurrentState<Test3State>());
+            };
+            group.TypedStateChanging += (s, e) =>
+            {
+                steps.Add(6);
+                stepStates.Add(sm.CurrentState<Test3State>());
+            };
+            group.StateChanged += (s, e) =>
+            {
+                steps.Add(7);
+                stepStates.Add(sm.CurrentState<Test3State>());
+            };
+            group.TypedStateChanged += (s, e) =>
+            {
+                steps.Add(8);
+                stepStates.Add(sm.CurrentState<Test3State>());
+            };
+            group.StateChangeComplete += (s, e) =>
+            {
+                steps.Add(9);
+                stepStates.Add(sm.CurrentState<Test3State>());
+            };
+            group.TypedStateChangeComplete += (s, e) =>
+            {
+                steps.Add(10);
+                stepStates.Add(sm.CurrentState<Test3State>());
+            };
+
+            
+            await sm.GoToState(Test3State.State1);
+            Assert.AreEqual(1, steps.Count);
+            Assert.AreEqual(Test3State.Base, sm.CurrentState<Test3State>());
+            await sm.GoToState(Test3State.State1);
+            Assert.AreEqual(3, steps.Count);
+            Assert.AreEqual(Test3State.Base, sm.CurrentState<Test3State>());
+            await sm.GoToState(Test3State.State1);
+            Assert.AreEqual(11, steps.Count);
+            Assert.AreEqual(11, stepStates.Count);
+            for (var i = 0; i < steps.Count; i++)
+            {
+                Assert.AreEqual(i, steps[i]);
+                switch (i)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        Assert.AreEqual(Test3State.Base, stepStates[i]);
+                        break;
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        Assert.AreEqual(Test3State.State1, stepStates[i]);
+                        break;
+                    default:
+                        Assert.Fail("Invalid step");
+                        break;
+                }
+            }
+
+        }
+
         [TestMethod]
         public async Task TestCancelGroup()
         {
