@@ -4,15 +4,27 @@ using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle
 {
+    /// <summary>
+    /// Base definition of an application in the lifecycle model
+    /// </summary>
     public class BaseApplication
     {
-        public async Task Startup(ServiceLocatorProvider locatorProvider,
+        /// <summary>
+        /// Gets the dependency container for registering dependencies
+        /// </summary>
+        protected IDependencyContainer DependencyContainer { get; private set; }
+
+        /// <summary>
+        /// The startup process
+        /// </summary>
+        /// <param name="container">The dependency container</param>
+        /// <param name="buildDependencies">An action delegate to define additioanl dependencies</param>
+        /// <returns>Task to await</returns>
+        public async Task Startup(
             IDependencyContainer container,
             Action<IDependencyContainer> buildDependencies = null)
         {
             await CommenceStartup();
-
-            //            var builder = new ContainerBuilder();
 
             using (container.StartUpdate())
             {
@@ -21,52 +33,59 @@ namespace BuildIt.Lifecycle
 
                 buildDependencies?.Invoke(container);
 
-                //// Perform registrations and build the container.
-                //var container = builder.Build();
-
                 await BuildCoreDependencies(container);
             }
-
-            // Set the service locator to an AutofacServiceLocator.
-            //var csl = new AutofacServiceLocator(container);
-            //ServiceLocator.SetLocatorProvider(() => csl);
-            ServiceLocator.SetLocatorProvider(locatorProvider);
 
             await CompleteStartup();
         }
 
+        /// <summary>
+        /// Register additional dependencies
+        /// </summary>
+        /// <param name="build">The action to invoke to build dependencies</param>
+        public virtual void RegisterAdditionalDependencies(Action<IDependencyContainer> build)
+        {
+            build?.Invoke(DependencyContainer);
+        }
+
+        /// <summary>
+        /// Commences the startup process
+        /// </summary>
+        /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Async so it can be overridden
         protected virtual async Task CommenceStartup()
 #pragma warning restore 1998
         {
         }
 
+        /// <summary>
+        /// Completes the startup process
+        /// </summary>
+        /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Async so it can be overridden
         protected virtual async Task CompleteStartup()
 #pragma warning restore 1998
         {
         }
 
+        /// <summary>
+        /// Registers dependencies
+        /// </summary>
+        /// <param name="builder">The dependency container builder</param>
         protected virtual void RegisterDependencies(IDependencyContainer builder)
         {
-
         }
 
-        protected IDependencyContainer DependencyContainer { get; private set; }
+        /// <summary>
+        /// Tracks the dependency container
+        /// </summary>
+        /// <param name="container">The dependency container</param>
+        /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Async so it can be overridden
         protected virtual async Task BuildCoreDependencies(IDependencyContainer container)
 #pragma warning restore 1998
         {
             DependencyContainer = container;
         }
-
-        public void RegisterAdditionalDependencies(Action<IDependencyContainer> build)
-        {
-            //var cb = new ContainerBuilder();
-            build?.Invoke(DependencyContainer);
-            //cb.Update(DependencyContainer);
-
-        }
-
     }
 }

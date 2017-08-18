@@ -44,8 +44,8 @@ namespace StateByState
 
 
             // Associate main region states with corresponding native pages
-            LifecycleHelper.RegisterView<MainPage>().ForState(MainRegionView.Main);
-            LifecycleHelper.RegisterView<SecondPage>().ForState(MainRegionView.Second);
+            this.RegisterView<MainPage>().ForState(MainRegionView.Main);
+            this.RegisterView<SecondPage>().ForState(MainRegionView.Second);
             LifecycleHelper.RegisterView<ThirdPage>().ForState(MainRegionView.Third);
             LifecycleHelper.RegisterView<FourthPage>().ForState(MainRegionView.Fourth);
 

@@ -17,7 +17,9 @@ namespace BuildIt.Lifecycle
             var container = build.Build();
             var csl = new AutofacServiceLocator(container);
 
-            await application.Startup(() => csl, new AutofacDependencyContainer(container), buildDependencies);
+            ServiceLocator.SetLocatorProvider(() => csl);
+
+            await application.Startup( new AutofacDependencyContainer(container), buildDependencies);
         }
     }
 }

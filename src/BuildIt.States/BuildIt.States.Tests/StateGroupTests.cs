@@ -276,7 +276,6 @@ namespace BuildIt.States.Tests
 
         }
 
-
         [TestMethod]
         public async Task TestStagesOfStateTransitionEvents()
         {
@@ -359,7 +358,6 @@ namespace BuildIt.States.Tests
                 stepStates.Add(sm.CurrentState<Test3State>());
             };
 
-            
             await sm.GoToState(Test3State.State1);
             Assert.AreEqual(1, steps.Count);
             Assert.AreEqual(Test3State.Base, sm.CurrentState<Test3State>());
@@ -394,7 +392,6 @@ namespace BuildIt.States.Tests
                         break;
                 }
             }
-
         }
 
         [TestMethod]
