@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Android.App;
 using Android.Content;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
 
 namespace StateByState.Android
 {
@@ -36,9 +38,9 @@ namespace StateByState.Android
             //StateManager.StateChanged += StateManager_StateChanged;
         }
 
-        private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
         {
-            var tp = NavigationIndex[e.State];
+            var tp = NavigationIndex[e.TypedState];
             var intent = new Intent(RootActivity, tp);
             intent.PutExtra("Tag", RootActivity.Tag);
             RootActivity.StartActivity(intent);

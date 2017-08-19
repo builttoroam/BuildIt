@@ -2,6 +2,7 @@
 using BuildIt.States;
 using BuildIt.States.Completion;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces.StateData;
 using CancelEventArgs = BuildIt.CancelEventArgs;
@@ -146,21 +147,21 @@ namespace StateByState
 
         }
 
-        public async Task ChangedTo()
+        public async Task ChangedTo(CancellationToken token)
         {
             await Task.Delay(2000);
             Name += ".... arrived ....";
         }
 
 #pragma warning disable 1998 // sample only
-        public async Task AboutToChangeFrom(CancelEventArgs cancel)
+        public async Task AboutToChangeFrom(StateCancelEventArgs cancel)
 #pragma warning restore 1998
         {
             //cancel.Cancel = true;
         }
 
 #pragma warning disable 1998 // sample only
-        public async Task ChangingFrom()
+        public async Task ChangingFrom(CancellationToken token)
 #pragma warning restore 1998
         {
 

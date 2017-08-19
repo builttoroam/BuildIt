@@ -28,7 +28,7 @@ namespace StateByState
 
             var sm = CurrentViewModel.StateManager;
             var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
-                let tg = sg.GroupDefinition as INotifyTypedStateChanged<ThirdStates>
+                let tg = sg.GroupDefinition as INotifyTypedStateChange<ThirdStates>
                 where tg != null
                 select tg).FirstOrDefault();
 

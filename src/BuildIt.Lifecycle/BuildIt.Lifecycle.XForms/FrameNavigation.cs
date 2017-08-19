@@ -17,7 +17,7 @@ namespace BuildIt.Lifecycle
         public INotifyPropertyChanged CurrentStateData => (StateNotifier as IStateGroup)?.CurrentStateData;
 
 
-        public INotifyTypedStateChanged<TState> StateNotifier { get; }
+        public INotifyTypedStateChange<TState> StateNotifier { get; }
 
         private IStateManager StateManager { get; }
 
@@ -80,7 +80,7 @@ namespace BuildIt.Lifecycle
 
 
             var groups = sm.StateGroups;
-            var inotifier = typeof(INotifyTypedStateChanged<>);
+            var inotifier = typeof(INotifyTypedStateChange<>);
             var vsct = typeof(VisualStateChanger<>);
             foreach (var stateGroup in groups)
             {
@@ -124,7 +124,7 @@ namespace BuildIt.Lifecycle
 
         }
 
-        private async void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
+        private async void StateManager_StateChanged(object sender, ITypedStateEventArgs<TState> e)
         {
             var tp = NavigationHelper.TypeForState(e.TypedState);
 

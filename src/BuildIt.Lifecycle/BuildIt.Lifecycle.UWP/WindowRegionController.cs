@@ -47,7 +47,7 @@ namespace BuildIt.Lifecycle
             {
 
                 var groups = sm.StateGroups;
-                var inotifier = typeof(INotifyTypedStateChanged<>);
+                var inotifier = typeof(INotifyTypedStateChange<>);
                 foreach (var stateGroup in groups)
                 {
                     var stateType =
