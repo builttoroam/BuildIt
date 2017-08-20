@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-monoandroid10+net45+win+win81+wp8+wpa81+xamarinios10+xamarinmac20</PackageTargetFallback>
     <AssemblyName>BuildIt.Forms.Sample</AssemblyName>
     <RootNamespace>BuildIt.Forms.Sample</RootNamespace>
   </PropertyGroup>

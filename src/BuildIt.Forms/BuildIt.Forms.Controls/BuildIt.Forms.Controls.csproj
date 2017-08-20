@@ -50,6 +50,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="DesignTimeControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 

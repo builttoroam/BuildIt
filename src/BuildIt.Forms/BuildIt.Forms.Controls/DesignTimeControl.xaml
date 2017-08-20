@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:tt="clr-namespace:BuildIt.Forms.Controls"
+             x:Class="BuildIt.Forms.Controls.DesignTimeControl">
+    <ContentView.Content>
+        <Grid VerticalOptions="End"
+              BackgroundColor="White">
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="StartAndExpand"
+                         VerticalOptions="End">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid >
+                        <Grid.Effects>
+                            <tt:TouchEffect Capture="True"
+                                            TouchAction="ExitDesignTime" />
+                        </Grid.Effects>
+                    </Grid>
+                    <BoxView Grid.Row="1"
+                             Color="Blue"
+                             HorizontalOptions="Start"
+                             VerticalOptions="End"
+                             HeightRequest="20"
+                             WidthRequest="20">
+                        <BoxView.Effects>
+                            <tt:TouchEffect Capture="True"
+                                            TouchAction="LaunchDesignTime" />
+                        </BoxView.Effects>
+                    </BoxView>
+                </Grid>
+                <Grid VerticalOptions="Fill"
+                      HorizontalOptions="Start"
+                      x:Name="Groups"
+                      IsVisible="false"
+                      >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Text="Groups"
+                           FontAttributes="Bold" />
+                    <ListView x:Name="StateGroupList"
+                              
+                              Grid.Row="1"
+                              ItemsSource="{Binding Groups}"
+                              ItemSelected="GroupSelectionChanged"
+                              RowHeight="30"
+                              WidthRequest="150"
+                              VerticalOptions="Start">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Label Text="{Binding GroupName}" />
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+                <Grid VerticalOptions="Fill"
+                      HorizontalOptions="Start"
+                      x:Name="States"
+                      IsVisible="false"
+                      >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Text="States"
+                           FontAttributes="Bold" />
+
+                    <ListView x:Name="StatesList"
+                              Grid.Row="1"
+                              
+                              ItemsSource="{Binding States}"
+                              RowHeight="30"
+                              WidthRequest="150"
+                              ItemSelected="StateSelectionChanged"
+                              VerticalOptions="Start">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Label Text="{Binding StateName}" />
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </StackLayout>
+            <!--<Label Text="Hello Xamarin.Forms!" />-->
+        </Grid>
+    </ContentView.Content>
+</ContentView>
