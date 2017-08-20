@@ -22,11 +22,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\designbuttonicon.png" />
     <None Remove="ContentButton.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\designbuttonicon.png" />
   </ItemGroup>
 
   <!--<ItemGroup>

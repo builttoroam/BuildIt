@@ -24,7 +24,7 @@ namespace BuildIt.Forms.Controls
             InitializeComponent();
         }
 
-        protected void LaunchDesignTime(object sender, object args)
+        protected async void LaunchDesignTime(object sender, object args)
         {
             var touchArgs = args as TouchActionEventArgs;
             if (touchArgs == null ||
@@ -32,10 +32,10 @@ namespace BuildIt.Forms.Controls
             {
                 return;
             }
-
-            Groups.IsVisible = true;
+            "Launching".Log();
+            await VisualStateManager.GoToState(this, "GroupsVisible");
         }
-        protected void ExitDesignTime(object sender, object args)
+        protected async void ExitDesignTime(object sender, object args)
         {
             var touchArgs = args as TouchActionEventArgs;
             if (touchArgs == null ||
@@ -47,7 +47,7 @@ namespace BuildIt.Forms.Controls
             StatesList.SelectedItem = null;
 
             StateGroupList.SelectedItem = null;
-            Groups.IsVisible = false;
+            await VisualStateManager.GoToState(this, "GroupsHidden");
         }
 
         public void GroupSelectionChanged(object sender, SelectedItemChangedEventArgs e)
@@ -92,7 +92,8 @@ namespace BuildIt.Forms.Controls
             StatesList.SelectedItem = null;
 
             StateGroupList.SelectedItem = null;
-            Groups.IsVisible = false;
+           await VisualStateManager.GoToState(this, "GroupsHidden");
+
 
             if (design == null || state == null)
             {
@@ -151,5 +152,23 @@ namespace BuildIt.Forms.Controls
 
         private IStateManager StateManager { get; }
 
+    }
+
+    [ContentProperty("Source")]
+    public class ImageResourceExtension : IMarkupExtension
+    {
+        public string Source { get; set; }
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (Source == null)
+            {
+                return null;
+            }
+            // Do your translation lookup here, using whatever method you require
+            var imageSource = ImageSource.FromResource(Source);
+
+            return imageSource;
+        }
     }
 }
