@@ -38,6 +38,8 @@ namespace BuildIt.Forms.Sample
             // cv.BackgroundColor;
 
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
+
+            DesignTimeInfo.BindingContext = new DesignInfo(this);
         }
 
         protected async override void OnAppearing()
@@ -85,4 +87,6 @@ namespace BuildIt.Forms.Sample
             (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
         }
     }
+
+   
 }

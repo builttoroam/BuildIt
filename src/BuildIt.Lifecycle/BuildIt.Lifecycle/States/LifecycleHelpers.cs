@@ -13,8 +13,8 @@ namespace BuildIt.Lifecycle.States
 
             IStateDefinitionWithDataBuilder<TState, TStateData>
             CloseRegion<TState, TStateData, TCompletion>(
-    this 
-            IStateWithDataCompletionBuilder<TState,TStateData,TCompletion> smInfo,
+    this
+            IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> smInfo,
     IApplicationRegion region)
     where TState : struct
     where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
@@ -35,11 +35,11 @@ namespace BuildIt.Lifecycle.States
 
             var smreturn = smInfo;
 
-            var returnd = smreturn.WhenChangedTo(vm =>
+            var returnd = smreturn.WhenChangedTo((vm,cancel) =>
             {
                 vm.Complete += changeStateAction;
             })
-                .WhenChangingFrom(vm =>
+                .WhenChangingFrom((vm, cancel) =>
                 {
                     vm.Complete -= changeStateAction;
                 });
@@ -49,9 +49,9 @@ namespace BuildIt.Lifecycle.States
 
         public static
             IStateDefinitionWithDataBuilder<TState, TStateData>
-            
+
             LaunchRegion<TState, TStateData, TCompletion, TNewRegion>(
-            this IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> smInfo, 
+            this IStateWithDataCompletionBuilder<TState, TStateData, TCompletion> smInfo,
             IApplicationRegion region, TypeRef.TypeWrapper<TNewRegion> wrapper)
             where TState : struct
             where TStateData : INotifyPropertyChanged, ICompletion<TCompletion>
@@ -73,11 +73,11 @@ namespace BuildIt.Lifecycle.States
 
             var smreturn = smInfo;
 
-            var returnd = smreturn.WhenChangedTo(vm =>
+            var returnd = smreturn.WhenChangedTo((vm, cancel) =>
             {
                 vm.Complete += changeStateAction;
             })
-                .WhenChangingFrom(vm =>
+                .WhenChangingFrom( (vm, cancel) =>
                 {
                     vm.Complete -= changeStateAction;
                 });

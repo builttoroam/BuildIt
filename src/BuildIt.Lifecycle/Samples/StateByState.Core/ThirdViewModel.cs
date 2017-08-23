@@ -41,11 +41,11 @@ namespace StateByState
                 .DefineStateWithData<ThirdStates, ThirdTwoViewModel>(ThirdStates.Two)
                 .DefineStateWithData<ThirdStates, ThirdThreViewModel>(ThirdStates.Three)
                 .DefineStateWithData<ThirdStates, ThirdFourViewModel>(ThirdStates.Four)
-                    .WhenChangedTo(vm =>
+                    .WhenChangedTo((vm, cancel) =>
                     {
                         vm.Done += Vm_Done;
                     }).
-                    WhenChangingFrom(vm =>
+                    WhenChangingFrom((vm, cancel) =>
                     {
                         vm.Done -= Vm_Done;
                     });

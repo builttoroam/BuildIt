@@ -9,18 +9,18 @@ namespace BuildIt.Lifecycle
     public class VisualStateChanger<TState>
         where TState : struct
     {
-        public INotifyTypedStateChanged<TState> ChangeNotifier { get; }
+        public INotifyTypedStateChange<TState> ChangeNotifier { get; }
 
         private IStateManager VisualStateManager { get; }
 
-        public VisualStateChanger(IHasStates visualStateRoot, INotifyTypedStateChanged<TState> changeNotifier)
+        public VisualStateChanger(IHasStates visualStateRoot, INotifyTypedStateChange<TState> changeNotifier)
         {
             VisualStateManager = visualStateRoot.StateManager;
             ChangeNotifier = changeNotifier;
             ChangeNotifier.TypedStateChanged += StateManager_StateChanged;
         }
 
-        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, ITypedStateEventArgs<TState> e)
         {
             VisualStateManager.GoToState(e.TypedState, e.UseTransitions);
         }

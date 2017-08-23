@@ -27,12 +27,12 @@ namespace BuildIt.Lifecycle
         public INotifyPropertyChanged CurrentStateData => (StateNotifier as IStateGroup)?.CurrentStateData;
 
 
-        public INotifyTypedStateChanged<TState> StateNotifier { get; }
+        public INotifyTypedStateChange<TState> StateNotifier { get; }
 
         private Frame RootFrame { get; }
 
         public FrameNavigation(Frame rootFrame,
-                INotifyTypedStateChanged<TState> stateNotifier)
+                INotifyTypedStateChange<TState> stateNotifier)
             //,string registerAs = null)
         {
             //var stateManager = hasStateManager.StateManager;
@@ -118,7 +118,7 @@ namespace BuildIt.Lifecycle
 
         }
 
-        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, ITypedStateEventArgs<TState> e)
         {
             var tp = NavigationHelper.TypeForState(e.TypedState);
 

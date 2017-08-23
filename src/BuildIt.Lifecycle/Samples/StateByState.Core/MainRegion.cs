@@ -32,7 +32,7 @@ namespace StateByState
     public enum SimpleTest
     {
         Base,
-        Test1, 
+        Test1,
         Test2
     }
 
@@ -49,24 +49,24 @@ namespace StateByState
 
             StateManager.Group<MainRegionView>().WithHistory()
                 .DefineStateWithData<MainRegionView, MainViewModel>(MainRegionView.Main)
-                            
-                            .OnCompleteWithData(MainCompletion.Page2,vm=>vm.TickCount)
+
+                            .OnCompleteWithData(MainCompletion.Page2, vm => vm.TickCount)
                                 .ChangeState(MainRegionView.Second)
                             .OnEvent((vm, a) => vm.UnableToComplete += a,
                                     (vm, a) => vm.UnableToComplete -= a)
                                 .ChangeState(MainRegionView.Third)
                             .OnComplete(MainCompletion.NewRegion)
                                 .LaunchRegion(this, TypeRef.Get<SecondaryApplication>())
-                            .OnCompleteWithDataEvent<MainRegionView,MainViewModel,MainCompletion,int>(MainCompletion.Page4)
+                            .OnCompleteWithDataEvent<MainRegionView, MainViewModel, MainCompletion, int>(MainCompletion.Page4)
                                 .ChangeState(MainRegionView.Fourth)
-                                    .InitializeNewState < MainRegionView,MainViewModel,FourthViewModel,int>(
-                                        (vm,d)=>vm.InitValue=$"Started with {d}")
-                            .Initialise(async vm =>
+                                    .InitializeNewState<MainRegionView, MainViewModel, FourthViewModel, int>(
+                                        (vm, d, cancel) => vm.InitValue = $"Started with {d}")
+                            .Initialise(async (vm, cancel) =>
                             {
                                 "VM State: Init".Log();
                                 await vm.Init();
                             })
-                            .WhenChangedTo(async vm =>
+                            .WhenChangedTo(async (vm, cancel) =>
                             {
                                 "VM State: When Changed To".Log();
                                 //  vm.Completed += State_Completed;
@@ -81,20 +81,20 @@ namespace StateByState
                                 //vm.Completed -= State_Completed;
                                 //vm.UnableToComplete -= State_UnableToCompleted;
                             })
-//                        .AsState()
-                            .WhenAboutToChange(cancel => $"State: About to Change - {cancel.Cancel}".Log())
+                            //                        .AsState()
+                            .WhenAboutToChangeFrom(cancel => $"State: About to Change - {cancel.Cancel}".Log())
 #pragma warning disable 1998
-                            .WhenChangingFrom(async () => "State: Changing".Log())
+                            .WhenChangingFrom(async (cancel) => "State: Changing".Log())
 #pragma warning restore 1998
-                            .WhenChangedTo(() => Debug.WriteLine("State: Changing"))
-//                        .AsStateWithStateData<MainRegionView, MainViewModel>()
-//                        .EndState()
+                            .WhenChangedTo((cancel) => Debug.WriteLine("State: Changing"))
+                                    //                        .AsStateWithStateData<MainRegionView, MainViewModel>()
+                                    //                        .EndState()
 
                                     .DefineStateWithData<MainRegionView, SecondViewModel>(MainRegionView.Second)
                                         .OnComplete(DefaultCompletion.Complete)
                                         .ChangeToPreviousState()
-                                        .Initialise(async vm => await vm.InitSecond())
-                                        .WhenChangedTo(vm =>
+                                        .Initialise(async (vm, cancel) => await vm.InitSecond())
+                                        .WhenChangedTo((vm, cancel) =>
                                         {
                                             //vm.SecondCompleted += SecondCompleted;
 
@@ -108,25 +108,25 @@ namespace StateByState
                                                 });
                                             });
                                         })
-                                        .WhenChangedToWithData<MainRegionView, SecondViewModel, int>((vm, data) =>
+                                        .WhenChangedToWithData<MainRegionView, SecondViewModel, int>((vm, data, cancel) =>
                                          {
                                              vm.ExtraData = data;
                                          })
-                                        .WhenChangingFrom(vm =>
+                                        .WhenChangingFrom((vm, cancel) =>
                                         {
                                             //vm.SecondCompleted -= SecondCompleted;
                                         })
                                     //.EndState()
                                     .DefineStateWithData<MainRegionView, ThirdViewModel>(MainRegionView.Third)
-                                        .WhenChangedTo(vm =>
+                                        .WhenChangedTo((vm, cancel) =>
                                         {
                                             vm.ThirdCompleted += ThirdCompleted;
                                         })
-                                        .WhenChangingFrom(vm =>
+                                        .WhenChangingFrom((vm, cancel) =>
                                         {
                                             vm.ThirdCompleted -= ThirdCompleted;
                                         });
-                                    //.EndState();
+            //.EndState();
 
 
 

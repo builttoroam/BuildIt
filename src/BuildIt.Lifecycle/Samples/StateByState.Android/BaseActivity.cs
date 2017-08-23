@@ -5,6 +5,7 @@ using Android.OS;
 using BuildIt;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
+using BuildIt.States.Interfaces;
 
 namespace StateByState.Android
 {
@@ -26,8 +27,8 @@ namespace StateByState.Android
             if (mgr == null) return;
 
             var props = mgr.GetType().GetTypeInfo().DeclaredProperties.FirstOrDefault(p => p.Name == "StateManager");
-            var manager = props?.GetValue(mgr) as IHasCurrentViewModel;
-            var dc = manager?.CurrentViewModel;
+            var manager = props?.GetValue(mgr) as IStateGroup;
+            var dc = manager?.CurrentStateData;
             DataContext = dc;
             
             var actpps = this.GetType().GetTypeInfo().DeclaredProperties;

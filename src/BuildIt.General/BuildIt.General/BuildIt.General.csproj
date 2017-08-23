@@ -4,7 +4,6 @@
     <TargetFramework>netstandard1.0</TargetFramework>
     <AssemblyName>BuildIt.General</AssemblyName>
     <PackageId>BuildIt.General</PackageId>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>

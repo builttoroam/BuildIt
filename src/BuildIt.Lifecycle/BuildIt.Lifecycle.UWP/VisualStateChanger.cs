@@ -16,11 +16,11 @@ namespace BuildIt.Lifecycle
     public class VisualStateChanger<TState> :IStateBinder
         where TState : struct
     {
-        public INotifyTypedStateChanged<TState> ChangeNotifier { get; }
+        public INotifyTypedStateChange<TState> ChangeNotifier { get; }
 
         private Control VisualStateRoot { get; }
 
-        public VisualStateChanger(Control visualStateRoot, INotifyTypedStateChanged<TState> changeNotifier)
+        public VisualStateChanger(Control visualStateRoot, INotifyTypedStateChange<TState> changeNotifier)
         {
             VisualStateRoot = visualStateRoot;
             ChangeNotifier = changeNotifier;
@@ -47,7 +47,7 @@ namespace BuildIt.Lifecycle
             (ChangeNotifier as IStateGroup)?.ChangeToStateByName(e.NewState?.Name, false);
         }
 
-        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, ITypedStateEventArgs<TState> e)
         {
             VisualStateManager.GoToState(VisualStateRoot, e.TypedState.ToString(), e.UseTransitions);
         }

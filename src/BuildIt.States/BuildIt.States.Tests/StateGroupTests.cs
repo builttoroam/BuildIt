@@ -431,6 +431,44 @@ namespace BuildIt.States.Tests
             await waiter;
             Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
         }
+
+
+        [TestMethod]
+        public async Task TestCancelSameStateGroup()
+        {
+            var slim = new SemaphoreSlim(0);
+            var sm = new StateManager();
+            var cancelled = false;
+            var transitionCount = 0;
+            sm.Group<Test2State>()
+                .DefineState(Test2State.State1)
+                .WhenAboutToChangeFrom(async cancel =>
+                {
+                    transitionCount++;
+                    try
+                    {
+                        await slim.WaitAsync(cancel.CancelToken);
+                    }
+                    catch (Exception)
+                    {
+                        cancelled = true;
+                    }
+                })
+                .DefineState(Test2State.State2);
+
+            await sm.GoToState(Test2State.State1);
+            Assert.AreEqual(Test2State.State1, sm.CurrentState<Test2State>());
+            var firstWaiter = sm.GoToState(Test2State.State2);
+            var waiter = sm.GoToState(Test2State.State2);
+            slim.Release();
+            await firstWaiter;
+            await waiter;
+            Assert.IsFalse(cancelled);
+            Assert.AreEqual(1, transitionCount);
+            Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
+
+
+        }
         public enum Test3State
         {
             Base,
