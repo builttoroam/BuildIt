@@ -2187,8 +2187,26 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f020053
 			public static int avd_hide_password = 2130837587;
 			
+			// aapt resource value: 0x7f02010d
+			public static int avd_hide_password_1 = 2130837773;
+			
+			// aapt resource value: 0x7f02010e
+			public static int avd_hide_password_2 = 2130837774;
+			
+			// aapt resource value: 0x7f02010f
+			public static int avd_hide_password_3 = 2130837775;
+			
 			// aapt resource value: 0x7f020054
 			public static int avd_show_password = 2130837588;
+			
+			// aapt resource value: 0x7f020110
+			public static int avd_show_password_1 = 2130837776;
+			
+			// aapt resource value: 0x7f020111
+			public static int avd_show_password_2 = 2130837777;
+			
+			// aapt resource value: 0x7f020112
+			public static int avd_show_password_3 = 2130837778;
 			
 			// aapt resource value: 0x7f020055
 			public static int design_bottom_navigation_item_background = 2130837589;
