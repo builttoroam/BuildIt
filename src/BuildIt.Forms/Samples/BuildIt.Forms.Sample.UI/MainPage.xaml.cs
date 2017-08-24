@@ -22,21 +22,6 @@ namespace BuildIt.Forms.Sample
 
             BindingContext = new MainViewModel();
 
-            // var x = new Label();
-            // x.TextColor
-
-            // var x = new Button();
-            // x.TextColor
-
-            // var x = new Frame();
-            // x.BackgroundColor;
-
-            // var x = new BoxView();
-            // x.Color;
-
-            // var cv = new ContentView();
-            // cv.BackgroundColor;
-
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
 
             DesignTimeInfo.BindingContext = new DesignInfo(this);

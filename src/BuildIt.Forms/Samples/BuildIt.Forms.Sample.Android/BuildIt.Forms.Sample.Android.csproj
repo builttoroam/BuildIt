@@ -56,11 +56,11 @@
     <Reference Include="BuildIt.Autofac, Version=1.1.0.32, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\BuildIt.Autofac.1.1.0.32\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.General, Version=1.1.0.30, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\BuildIt.General.1.1.0.30\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    <Reference Include="BuildIt.General, Version=1.1.0.65, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\BuildIt.General.1.1.0.65\lib\netstandard1.0\BuildIt.General.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.States, Version=1.1.0.58, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\BuildIt.States.1.1.0.58-beta\lib\monoandroid\BuildIt.States.dll</HintPath>
+    <Reference Include="BuildIt.States, Version=1.1.0.66, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\BuildIt.States.1.1.0.66\lib\netstandard1.0\BuildIt.States.dll</HintPath>
     </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Xamarin.Forms.2.4.0.266-pre1\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>

@@ -720,13 +720,7 @@ namespace BuildIt.Forms.Sample.Droid
 			global::BuildIt.Forms.Controls.Resource.Drawable.abc_textfield_search_material = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.abc_textfield_search_material;
 			global::BuildIt.Forms.Controls.Resource.Drawable.abc_vector_test = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.abc_vector_test;
 			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_hide_password;
-			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password_1 = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_hide_password_1;
-			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password_2 = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_hide_password_2;
-			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password_3 = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_hide_password_3;
 			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_show_password;
-			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password_1 = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_show_password_1;
-			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password_2 = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_show_password_2;
-			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password_3 = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.avd_show_password_3;
 			global::BuildIt.Forms.Controls.Resource.Drawable.design_bottom_navigation_item_background = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::BuildIt.Forms.Controls.Resource.Drawable.design_fab_background = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.design_fab_background;
 			global::BuildIt.Forms.Controls.Resource.Drawable.design_ic_visibility = global::BuildIt.Forms.Sample.Droid.Resource.Drawable.design_ic_visibility;
@@ -4313,26 +4307,8 @@ namespace BuildIt.Forms.Sample.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f02010e
-			public const int avd_hide_password_1 = 2130837774;
-			
-			// aapt resource value: 0x7f02010f
-			public const int avd_hide_password_2 = 2130837775;
-			
-			// aapt resource value: 0x7f020110
-			public const int avd_hide_password_3 = 2130837776;
-			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
-			
-			// aapt resource value: 0x7f020111
-			public const int avd_show_password_1 = 2130837777;
-			
-			// aapt resource value: 0x7f020112
-			public const int avd_show_password_2 = 2130837778;
-			
-			// aapt resource value: 0x7f020113
-			public const int avd_show_password_3 = 2130837779;
 			
 			// aapt resource value: 0x7f020055
 			public const int design_bottom_navigation_item_background = 2130837589;

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
@@ -11,7 +9,7 @@ using Xamarin.Forms.Xaml;
 namespace BuildIt.Forms.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DesignTimeControl : ContentView
+    public partial class DesignTimeControl
     {
         public DesignTimeControl()
         {
@@ -24,30 +22,9 @@ namespace BuildIt.Forms.Controls
             InitializeComponent();
         }
 
-        protected async void LaunchDesignTime(object sender, object args)
+        private void DesignTimeControl_BindingContextChanged(object sender, System.EventArgs e)
         {
-            var touchArgs = args as TouchActionEventArgs;
-            if (touchArgs == null ||
-                touchArgs.Type != TouchActionType.Pressed)
-            {
-                return;
-            }
-            "Launching".Log();
-            await VisualStateManager.GoToState(this, "GroupsVisible");
-        }
-        protected async void ExitDesignTime(object sender, object args)
-        {
-            var touchArgs = args as TouchActionEventArgs;
-            if (touchArgs == null ||
-                touchArgs.Type != TouchActionType.Pressed)
-            {
-                return;
-            }
-
-            StatesList.SelectedItem = null;
-
-            StateGroupList.SelectedItem = null;
-            await VisualStateManager.GoToState(this, "GroupsHidden");
+            throw new System.NotImplementedException();
         }
 
         public void GroupSelectionChanged(object sender, SelectedItemChangedEventArgs e)
@@ -92,8 +69,7 @@ namespace BuildIt.Forms.Controls
             StatesList.SelectedItem = null;
 
             StateGroupList.SelectedItem = null;
-           await VisualStateManager.GoToState(this, "GroupsHidden");
-
+            await VisualStateManager.GoToState(this, "GroupsHidden");
 
             if (design == null || state == null)
             {
@@ -105,70 +81,33 @@ namespace BuildIt.Forms.Controls
             await VisualStateManager.GoToState(design.Element, state.StateName);
             "SateList selection changed - END".Log();
         }
-    }
 
-    public class DesignInfo : NotifyBase
-    {
-        private IStateGroup[] groups;
-        private IStateGroup selectedGroup;
-        private IStateDefinition[] states;
-
-        public DesignInfo(Element element)
+        protected async void LaunchDesignTime(object sender, object args)
         {
-            Element = element;
-            var sm = VisualStateManager.GetVisualStateGroups(element);
-            StateManager = sm.StateManager;
+            var touchArgs = args as TouchActionEventArgs;
+            if (touchArgs == null ||
+                touchArgs.Type != TouchActionType.Pressed)
+            {
+                return;
+            }
+
+            "Launching".Log();
+            await VisualStateManager.GoToState(this, "GroupsVisible");
         }
 
-        public Element Element { get; set; }
-
-        public IStateGroup[] Groups => groups ?? (groups = StateManager.StateGroups.Select(x => x.Value).ToArray());
-
-        public IStateDefinition[] States
+        protected async void ExitDesignTime(object sender, object args)
         {
-            get { return states; }
-            set
+            var touchArgs = args as TouchActionEventArgs;
+            if (touchArgs == null ||
+                touchArgs.Type != TouchActionType.Pressed)
             {
-                states = value;
-                OnPropertyChanged();
+                return;
             }
-        }
 
-        public IStateGroup SelectedGroup
-        {
-            get { return selectedGroup; }
-            set
-            {
-                selectedGroup = value;
-                if (selectedGroup == null)
-                {
-                    return;
-                }
+            StatesList.SelectedItem = null;
 
-                States = selectedGroup.GroupDefinition.States.Select(x => x.Value).ToArray();
-            }
-        }
-
-
-        private IStateManager StateManager { get; }
-
-    }
-
-    [ContentProperty("Source")]
-    public class ImageResourceExtension : IMarkupExtension
-    {
-        public string Source { get; set; }
-
-        public object ProvideValue(IServiceProvider serviceProvider)
-        {
-            if (Source == null)
-            {
-                return null;
-            }
-            // Do your translation lookup here, using whatever method you require
-            var imageSource = ImageSource.FromResource(Source);
-
-            return imageSource;
+            StateGroupList.SelectedItem = null;
+            await VisualStateManager.GoToState(this, "GroupsHidden");
         }
     }
 }
