@@ -24,7 +24,18 @@ namespace BuildIt.Forms.Sample
 
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
 
-            DesignTimeInfo.BindingContext = new DesignInfo(this);
+          //  DesignTimeInfo.BindingContext = new DesignInfo(this);
+
+            this.AddDesignAction("Test", async () =>
+            {
+                HelloWorldText.Text = "Hi Everyone!";
+                "Hi changed".Log();
+                await VisualStateManager.GoToState(this, "RotateRight");
+                "Hi changed back".Log();
+                HelloWorldText.Text = "Well, maybe not everyone";
+                await VisualStateManager.GoToState(this, "RotateLeft");
+                "Ending".Log();
+            });
         }
 
         protected async override void OnAppearing()

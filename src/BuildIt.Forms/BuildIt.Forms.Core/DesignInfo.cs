@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 
-namespace BuildIt.Forms.Controls
+namespace BuildIt.Forms
 {
     /// <summary>
     /// Supporting class for the DesignTimeControl (shouldn't be used in isolation)
@@ -28,6 +30,11 @@ namespace BuildIt.Forms.Controls
         /// Gets the element with the visual states
         /// </summary>
         public Element Element { get; }
+
+        /// <summary>
+        /// Gets a collection of design actions
+        /// </summary>
+        public ObservableCollection<Tuple<string, Action>> DesignActions { get; } = new ObservableCollection<Tuple<string, Action>>();
 
         /// <summary>
         /// Gets the state groups that are available
@@ -66,5 +73,15 @@ namespace BuildIt.Forms.Controls
         }
 
         private IStateManager StateManager { get; }
+
+        /// <summary>
+        /// Adds a design action
+        /// </summary>
+        /// <param name="actionTitle">The title of the action</param>
+        /// <param name="action">The action to perform</param>
+        public void AddDesignAction(string actionTitle, Action action)
+        {
+            DesignActions.Add(new Tuple<string, Action>(actionTitle, action));
+        }
     }
 }

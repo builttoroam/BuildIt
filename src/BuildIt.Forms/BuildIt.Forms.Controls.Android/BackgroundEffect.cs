@@ -23,7 +23,7 @@ namespace BuildIt.Forms.Controls.Droid
             var view = Control ?? Container;
 
             // Get access to the TouchEffect class in the PCL
-            var effect = (Controls.BackgroundEffect)Element.Effects.FirstOrDefault(e => e is Controls.BackgroundEffect);
+            var effect = (Forms.BackgroundEffect)Element.Effects.FirstOrDefault(e => e is Forms.BackgroundEffect);
             if (effect?.FallbackColor != null)
             {
                 view.SetBackgroundColor(new Android.Graphics.Color(

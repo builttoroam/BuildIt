@@ -14,7 +14,7 @@ namespace BuildIt.Forms.Controls.UWP
     public class FontEffect : PlatformEffect
     {
         private FrameworkElement frameworkElement;
-        private BuildIt.Forms.Controls.FontEffect effect;
+        private Forms.FontEffect effect;
 
         /// <summary>
         /// Attach the effect
@@ -27,8 +27,8 @@ namespace BuildIt.Forms.Controls.UWP
                 frameworkElement = Control ?? Container;
 
                 // Get access to the TouchEffect class in the PCL
-                effect = (BuildIt.Forms.Controls.FontEffect)Element.Effects.
-                            FirstOrDefault(e => e is BuildIt.Forms.Controls.FontEffect);
+                effect = (Forms.FontEffect)Element.Effects.
+                            FirstOrDefault(e => e is Forms.FontEffect);
 
                 if (effect != null && frameworkElement != null)
                 {

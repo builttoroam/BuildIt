@@ -23,7 +23,7 @@ namespace BuildIt.Forms.Controls.Droid
 
         private Android.Views.View view;
         private Element formsElement;
-        private BuildIt.Forms.Controls.TouchEffect pclTouchEffect;
+        private Forms.TouchEffect pclTouchEffect;
         private bool capture;
         private Func<double, double> fromPixels;
         private int[] twoIntArray = new int[2];
@@ -37,9 +37,9 @@ namespace BuildIt.Forms.Controls.Droid
             view = Control ?? Container;
 
             // Get access to the TouchEffect class in the PCL
-            BuildIt.Forms.Controls.TouchEffect touchEffect =
-                (BuildIt.Forms.Controls.TouchEffect)Element.Effects.
-                    FirstOrDefault(e => e is BuildIt.Forms.Controls.TouchEffect);
+            Forms.TouchEffect touchEffect =
+                (Forms.TouchEffect)Element.Effects.
+                    FirstOrDefault(e => e is Forms.TouchEffect);
 
             if (touchEffect == null || view == null)
             {

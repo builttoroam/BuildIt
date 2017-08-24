@@ -21,8 +21,8 @@ namespace BuildIt.Forms.Controls.UWP
             var frameworkElement = Control ?? Container;
 
             // Get access to the TouchEffect class in the PCL
-            var effect = (Controls.BackgroundEffect)Element.Effects.
-                        FirstOrDefault(e => e is Controls.BackgroundEffect);
+            var effect = (Forms.BackgroundEffect)Element.Effects.
+                        FirstOrDefault(e => e is Forms.BackgroundEffect);
 
             var gd = frameworkElement as LayoutRenderer;
             if (gd == null)

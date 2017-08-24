@@ -23,7 +23,7 @@ namespace BuildIt.Forms.Controls.iOS
 
         private Element element;        // Forms element for firing events
         private UIView view;            // iOS UIView
-        private BuildIt.Forms.Controls.TouchEffect touchEffect;
+        private Forms.TouchEffect touchEffect;
         private bool capture;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace BuildIt.Forms.Controls.iOS
         /// <param name="element">The element to add the recognizer to</param>
         /// <param name="view">The view to connect to</param>
         /// <param name="touchEffect">The touch events to monitor for</param>
-        public TouchRecognizer(Element element, UIView view, BuildIt.Forms.Controls.TouchEffect touchEffect)
+        public TouchRecognizer(Element element, UIView view, Forms.TouchEffect touchEffect)
         {
             this.element = element;
             this.view = view;

@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace BuildIt.Forms.Controls
+namespace BuildIt.Forms
 {
     /// <summary>
     /// An extension to load embedded images
