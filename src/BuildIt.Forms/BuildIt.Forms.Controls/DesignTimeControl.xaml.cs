@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using BuildIt.States.Interfaces;
 using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
-using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace BuildIt.Forms.Controls
 {
+    /// <summary>
+    /// A control that allows developers to force visual state changes
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DesignTimeControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DesignTimeControl"/> class.
+        /// </summary>
         public DesignTimeControl()
         {
             // Only show the design time control if the debugger is attached
@@ -22,11 +25,11 @@ namespace BuildIt.Forms.Controls
             InitializeComponent();
         }
 
-        private void DesignTimeControl_BindingContextChanged(object sender, System.EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        /// <summary>
+        /// Handles the selection changed event for groups
+        /// </summary>
+        /// <param name="sender">The listview containing groups</param>
+        /// <param name="e">The selection change</param>
         public void GroupSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
             "StateGroupList selection changed".Log();
@@ -53,6 +56,11 @@ namespace BuildIt.Forms.Controls
             "SateGroupList selection changed - END".Log();
         }
 
+        /// <summary>
+        /// The selection changed handler for states
+        /// </summary>
+        /// <param name="sender">The listview of states</param>
+        /// <param name="e">The selection change</param>
         public async void StateSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
             "StateList selection changed".Log();
@@ -82,6 +90,11 @@ namespace BuildIt.Forms.Controls
             "SateList selection changed - END".Log();
         }
 
+        /// <summary>
+        /// Launches the state picker
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="args">The event args</param>
         protected async void LaunchDesignTime(object sender, object args)
         {
             var touchArgs = args as TouchActionEventArgs;
@@ -95,6 +108,11 @@ namespace BuildIt.Forms.Controls
             await VisualStateManager.GoToState(this, "GroupsVisible");
         }
 
+        /// <summary>
+        /// Exits the state picker
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="args">The event args</param>
         protected async void ExitDesignTime(object sender, object args)
         {
             var touchArgs = args as TouchActionEventArgs;

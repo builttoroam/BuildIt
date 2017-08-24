@@ -4,12 +4,19 @@ using Xamarin.Forms;
 
 namespace BuildIt.Forms.Controls
 {
+    /// <summary>
+    /// Supporting class for the DesignTimeControl (shouldn't be used in isolation)
+    /// </summary>
     public class DesignInfo : NotifyBase
     {
         private IStateGroup[] groups;
         private IStateGroup selectedGroup;
         private IStateDefinition[] states;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DesignInfo"/> class.
+        /// </summary>
+        /// <param name="element">The element which contains the visual states</param>
         public DesignInfo(Element element)
         {
             Element = element;
@@ -17,16 +24,22 @@ namespace BuildIt.Forms.Controls
             StateManager = sm.StateManager;
         }
 
-        public Element Element { get; set; }
+        /// <summary>
+        /// Gets the element with the visual states
+        /// </summary>
+        public Element Element { get; }
 
+        /// <summary>
+        /// Gets the state groups that are available
+        /// </summary>
         public IStateGroup[] Groups => groups ?? (groups = StateManager.StateGroups.Select(x => x.Value).ToArray());
 
+        /// <summary>
+        /// Gets or sets the states available in the currently selected group
+        /// </summary>
         public IStateDefinition[] States
         {
-            get
-            {
-                return states;
-            }
+            get => states;
             set
             {
                 states = value;
@@ -34,12 +47,12 @@ namespace BuildIt.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the selected group
+        /// </summary>
         public IStateGroup SelectedGroup
         {
-            get
-            {
-                return selectedGroup;
-            }
+            get => selectedGroup;
             set
             {
                 selectedGroup = value;
