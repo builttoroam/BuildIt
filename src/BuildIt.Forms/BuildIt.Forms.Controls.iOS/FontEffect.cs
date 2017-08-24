@@ -22,8 +22,8 @@ namespace BuildIt.Forms.Controls.iOS
             try
             {
                 // Get access to the TouchEffect class in the PCL
-                var effect = (BuildIt.Forms.Controls.FontEffect)Element.Effects.
-                            FirstOrDefault(e => e is BuildIt.Forms.Controls.FontEffect);
+                var effect = (Forms.FontEffect)Element.Effects.
+                            FirstOrDefault(e => e is Forms.FontEffect);
 
                 var pieces = effect.FontName?.Split('#');
                 if ((pieces?.Length ?? 0) > 0)

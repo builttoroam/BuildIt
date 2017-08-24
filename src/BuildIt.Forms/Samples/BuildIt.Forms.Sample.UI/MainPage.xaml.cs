@@ -24,7 +24,7 @@ namespace BuildIt.Forms.Sample
 
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
 
-            DesignTimeInfo.BindingContext = new DesignInfo(this);
+          //  DesignTimeInfo.BindingContext = new DesignInfo(this);
         }
 
         protected async override void OnAppearing()

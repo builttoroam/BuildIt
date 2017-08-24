@@ -95,6 +95,37 @@ namespace BuildIt.Forms
                     view = cv.Children.FirstOrDefault();
                 }
 
+                if (view is ContentPage page)
+                {
+                    var content = page.Content as Grid;
+                    if (content != null)
+                    {
+                        var hasDtc = content.Children.Any(x => x is DesignTimeControl);
+                        if (!hasDtc)
+                        {
+                            var dtc = new DesignTimeControl
+                            {
+                                HorizontalOptions = LayoutOptions.Start,
+                                VerticalOptions = LayoutOptions.End,
+                                Margin = new Thickness(12, 0, 0, 12)
+                            };
+
+                            if (content.ColumnDefinitions.Count > 0)
+                            {
+                                Grid.SetColumnSpan(dtc, content.ColumnDefinitions.Count);
+                            }
+
+                            if (content.RowDefinitions.Count > 0)
+                            {
+                                Grid.SetRowSpan(dtc, content.RowDefinitions.Count);
+                            }
+
+                            content.Children.Add(dtc);
+                            dtc.BindingContext = new DesignInfo(page);
+                        }
+                    }
+                }
+
                 return (VisualStateGroups)view.GetValue(VisualStateGroupsProperty);
             }
             catch (Exception ex)

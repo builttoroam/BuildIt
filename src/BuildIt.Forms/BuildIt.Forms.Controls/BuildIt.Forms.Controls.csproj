@@ -21,17 +21,32 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <None Remove="Assets\designbuttonicon.png" />
+    <Compile Remove="BackgroundEffect.cs" />
+    <Compile Remove="DesignInfo.cs" />
+    <Compile Remove="DesignTimeControl.xaml.cs" />
+    <Compile Remove="FontEffect.cs" />
+    <Compile Remove="Fonts.cs" />
+    <Compile Remove="ImageResourceExtension.cs" />
+    <Compile Remove="TouchActionEventArgs.cs" />
+    <Compile Remove="TouchActionEventHandler.cs" />
+    <Compile Remove="TouchActionType.cs" />
+    <Compile Remove="TouchEffect.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Remove="DesignTimeControl.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ContentButton.xaml" />
+    <None Remove="DesignTimeControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\designbuttonicon.png" />
   </ItemGroup>
 
   <!--<ItemGroup>
@@ -52,12 +67,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="DesignTimeControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>

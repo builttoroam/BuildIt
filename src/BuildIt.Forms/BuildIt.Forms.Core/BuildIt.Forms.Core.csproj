@@ -24,10 +24,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\designbuttonicon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.65" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.66" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="2.4.0.266-pre1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DesignTimeControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

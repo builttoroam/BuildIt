@@ -1,0 +1,36 @@
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace BuildIt.Forms
+{
+    /// <summary>
+    /// An extension to load embedded images
+    /// </summary>
+    [ContentProperty("Source")]
+    public class ImageResourceExtension : IMarkupExtension
+    {
+        /// <summary>
+        /// Gets or sets the path to the embedded image
+        /// </summary>
+        public string Source { get; set; }
+
+        /// <summary>
+        /// Provides the image source
+        /// </summary>
+        /// <param name="serviceProvider">The service provider</param>
+        /// <returns>The image source</returns>
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (Source == null)
+            {
+                return null;
+            }
+
+            // Do your translation lookup here, using whatever method you require
+            var imageSource = ImageSource.FromResource(Source);
+
+            return imageSource;
+        }
+    }
+}

@@ -26,8 +26,8 @@ namespace BuildIt.Forms.Controls.Droid
             {
                 var view = Control ?? Container;
 
-                var effect = (BuildIt.Forms.Controls.FontEffect)Element.Effects.
-                         FirstOrDefault(e => e is BuildIt.Forms.Controls.FontEffect);
+                var effect = (Forms.FontEffect)Element.Effects.
+                         FirstOrDefault(e => e is Forms.FontEffect);
                 FileName = effect?.FontName.Split('#').FirstOrDefault();
                 if (string.IsNullOrWhiteSpace(FileName))
                 {

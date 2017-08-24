@@ -17,7 +17,7 @@ namespace BuildIt.Forms.Controls.UWP
     public class TouchEffect : PlatformEffect
     {
         private FrameworkElement frameworkElement;
-        private BuildIt.Forms.Controls.TouchEffect effect;
+        private Forms.TouchEffect effect;
         private Action<Element, TouchActionEventArgs> onTouchAction;
 
         /// <summary>
@@ -29,8 +29,8 @@ namespace BuildIt.Forms.Controls.UWP
             frameworkElement = Control ?? Container;
 
             // Get access to the TouchEffect class in the PCL
-            effect = (BuildIt.Forms.Controls.TouchEffect)Element.Effects.
-                        FirstOrDefault(e => e is BuildIt.Forms.Controls.TouchEffect);
+            effect = (Forms.TouchEffect)Element.Effects.
+                        FirstOrDefault(e => e is Forms.TouchEffect);
 
             if (effect != null && frameworkElement != null)
             {
