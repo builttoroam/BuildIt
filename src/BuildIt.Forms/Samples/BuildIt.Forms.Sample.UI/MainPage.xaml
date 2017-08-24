@@ -245,6 +245,7 @@
                 </Grid>
                 <Button Text="Hello World!"
                         Clicked="ButtonClicked"
+                        x:Name="HelloWorldText"
                         HorizontalOptions="Center" />
                 <controls:ContentButton VerticalOptions="Center"
                                         x:Name="DisabledButton"
@@ -316,11 +317,5 @@
             </ListView>
 
         </Grid>
-
-        <!--<controls:DesignTimeControl x:Name="DesignTimeInfo"
-                                    Grid.ColumnSpan="3"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="End"
-                                    Margin="12,0,0,12" />-->
     </Grid>
 </ContentPage>

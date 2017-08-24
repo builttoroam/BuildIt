@@ -67,14 +67,14 @@ namespace BuildIt.Forms
                 return;
             }
 
-            // TODO: This is a hack because there's an issue with the state manager
-            // that cancels a current transition if we attempt to transition to the same
-            // state again
-            var current = manager.CurrentState(state.State.StateGroup.GroupName);
-            if (current == state.State.Name)
-            {
-                return;
-            }
+            //// TODO: This is a hack because there's an issue with the state manager
+            //// that cancels a current transition if we attempt to transition to the same
+            //// state again
+            //var current = manager.CurrentState(state.State.StateGroup.GroupName);
+            //if (current == state.State.Name)
+            //{
+            //    return;
+            //}
 
             await manager.GoToVisualState(state.State);
         }

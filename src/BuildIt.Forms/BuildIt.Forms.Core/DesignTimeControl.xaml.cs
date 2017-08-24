@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -26,34 +27,65 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
+        /// Handles the selection changed event for design actions
+        /// </summary>
+        /// <param name="sender">The listview containing design actions</param>
+        /// <param name="e">The selection change</param>
+        public void DesignActionSelectionChanged(object sender, SelectedItemChangedEventArgs e)
+        {
+            try
+            {
+                var action = e.SelectedItem as Tuple<string, Action>;
+                $"Running design action {action?.Item1}".Log();
+                action?.Item2();
+
+                if (sender is ListView lv)
+                {
+                    lv.SelectedItem = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
+        }
+
+        /// <summary>
         /// Handles the selection changed event for groups
         /// </summary>
         /// <param name="sender">The listview containing groups</param>
         /// <param name="e">The selection change</param>
         public void GroupSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
-            "StateGroupList selection changed".Log();
-
-            if (e.SelectedItem == null)
+            try
             {
-                "StateGroupList no selection".Log();
-                States.IsVisible = false;
-                return;
-            }
+                "StateGroupList selection changed".Log();
 
-            var design = (sender as Element)?.BindingContext as DesignInfo;
-            var group = e.SelectedItem as IStateGroup;
-            if (design == null || group == null)
+                if (e.SelectedItem == null)
+                {
+                    "StateGroupList no selection".Log();
+                    States.IsVisible = false;
+                    return;
+                }
+
+                var design = (sender as Element)?.BindingContext as DesignInfo;
+                var group = e.SelectedItem as IStateGroup;
+                if (design == null || group == null)
+                {
+                    "no context or group".Log();
+                    return;
+                }
+
+                ("Group: " + group.GroupName).Log();
+                design.SelectedGroup = group;
+                States.IsVisible = true;
+
+                "SateGroupList selection changed - END".Log();
+            }
+            catch (Exception ex)
             {
-                "no context or group".Log();
-                return;
+                ex.LogException();
             }
-
-            ("Group: " + group.GroupName).Log();
-            design.SelectedGroup = group;
-            States.IsVisible = true;
-
-            "SateGroupList selection changed - END".Log();
         }
 
         /// <summary>
@@ -63,31 +95,38 @@ namespace BuildIt.Forms
         /// <param name="e">The selection change</param>
         public async void StateSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
-            "StateList selection changed".Log();
-
-            if (e.SelectedItem == null)
+            try
             {
-                "StateList no selection".Log();
-                return;
-            }
+                "StateList selection changed".Log();
 
-            var design = (sender as Element)?.BindingContext as DesignInfo;
-            var state = e.SelectedItem as IStateDefinition;
+                if (e.SelectedItem == null)
+                {
+                    "StateList no selection".Log();
+                    return;
+                }
 
-            StatesList.SelectedItem = null;
+                var design = (sender as Element)?.BindingContext as DesignInfo;
+                var state = e.SelectedItem as IStateDefinition;
 
-            StateGroupList.SelectedItem = null;
-            await VisualStateManager.GoToState(this, "GroupsHidden");
+                StatesList.SelectedItem = null;
 
-            if (design == null || state == null)
-            {
-                "No context or state".Log();
-                return;
-            }
+                StateGroupList.SelectedItem = null;
+                await VisualStateManager.GoToState(this, "GroupsHidden");
+
+                if (design == null || state == null)
+                {
+                    "No context or state".Log();
+                    return;
+                }
 
             ("State: " + state.StateName).Log();
-            await VisualStateManager.GoToState(design.Element, state.StateName);
-            "SateList selection changed - END".Log();
+                await VisualStateManager.GoToState(design.Element, state.StateName);
+                "SateList selection changed - END".Log();
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         /// <summary>
@@ -97,15 +136,22 @@ namespace BuildIt.Forms
         /// <param name="args">The event args</param>
         protected async void LaunchDesignTime(object sender, object args)
         {
-            var touchArgs = args as TouchActionEventArgs;
-            if (touchArgs == null ||
-                touchArgs.Type != TouchActionType.Pressed)
+            try
             {
-                return;
-            }
+                var touchArgs = args as TouchActionEventArgs;
+                if (touchArgs == null ||
+                    touchArgs.Type != TouchActionType.Pressed)
+                {
+                    return;
+                }
 
-            "Launching".Log();
-            await VisualStateManager.GoToState(this, "GroupsVisible");
+                "Launching".Log();
+                await VisualStateManager.GoToState(this, "GroupsVisible");
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         /// <summary>
@@ -115,17 +161,24 @@ namespace BuildIt.Forms
         /// <param name="args">The event args</param>
         protected async void ExitDesignTime(object sender, object args)
         {
-            var touchArgs = args as TouchActionEventArgs;
-            if (touchArgs == null ||
-                touchArgs.Type != TouchActionType.Pressed)
+            try
             {
-                return;
+                var touchArgs = args as TouchActionEventArgs;
+                if (touchArgs == null ||
+                    touchArgs.Type != TouchActionType.Pressed)
+                {
+                    return;
+                }
+
+                StatesList.SelectedItem = null;
+
+                StateGroupList.SelectedItem = null;
+                await VisualStateManager.GoToState(this, "GroupsHidden");
             }
-
-            StatesList.SelectedItem = null;
-
-            StateGroupList.SelectedItem = null;
-            await VisualStateManager.GoToState(this, "GroupsHidden");
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
     }
 }
