@@ -5,9 +5,7 @@
              x:Class="BuildIt.Forms.DesignTimeControl">
     <ContentView.Content>
 
-        <Grid VerticalOptions="End"
-              x:Name="Root"
-              BackgroundColor="Transparent">
+        <Grid BackgroundColor="Transparent">
             <tt:VisualStateManager.VisualStateGroups>
                 <tt:VisualStateGroups>
                     <tt:VisualStateGroup Name="DesignStates">
@@ -18,13 +16,13 @@
                                            Element="{x:Reference Border}"
                                            Property="IsVisible" />
                                 <tt:Setter Value="true"
+                                           Element="{x:Reference Title}"
+                                           Property="IsVisible" />
+                                <tt:Setter Value="true"
                                            Element="{x:Reference StatesAndActions}"
                                            Property="IsVisible" />
                                 <tt:Setter Value="true"
-                                           Element="{x:Reference Logo}"
-                                           Property="IsVisible" />
-                                <tt:Setter Value="true"
-                                           Element="{x:Reference Groups}"
+                                           Element="{x:Reference PageBackground}"
                                            Property="IsVisible" />
                                 <tt:Setter Value="false"
                                            Element="{x:Reference Switcher}"
@@ -37,131 +35,142 @@
                     </tt:VisualStateGroup>
                 </tt:VisualStateGroups>
             </tt:VisualStateManager.VisualStateGroups>
-            <BoxView Color="#FF00B9F2"
-                     x:Name="Border"
-                     IsVisible="false"
-                     />
-            <Grid Margin="1"
-                  BackgroundColor="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="20" />
-                </Grid.RowDefinitions>
-                <Grid HorizontalOptions="Start"
-                      WidthRequest="20">
-                    <Grid.Effects>
-                        <tt:TouchEffect Capture="True"
-                                        TouchAction="ExitDesignTime" />
-                    </Grid.Effects>
-                </Grid>
-                <StackLayout Orientation="Horizontal"
-                             HorizontalOptions="StartAndExpand"
-                             Margin="20,0,0,0"
-                             x:Name="StatesAndActions"
-                             IsVisible="false"
+            <Grid IsVisible="false"
+                  x:Name="PageBackground">
+                <Grid.Effects>
+                    <tt:TouchEffect TouchAction="ExitDesignTime" />
+                </Grid.Effects>
+                <Grid BackgroundColor="#FF00B9F2"
+                      Opacity="0.05" />
+                <StackLayout Margin="5"
+                             HorizontalOptions="EndAndExpand"
                              VerticalOptions="End">
-                    <Grid VerticalOptions="Fill"
-                          HorizontalOptions="Start"
-                          x:Name="Groups"
-                          IsVisible="false">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Label Text="Groups"
-                               FontAttributes="Bold" />
-                        <ListView x:Name="StateGroupList"
-                                  Grid.Row="1"
-                                  ItemsSource="{Binding Groups}"
-                                  ItemSelected="GroupSelectionChanged"
-                                  RowHeight="30"
-                                  WidthRequest="150"
-                                  VerticalOptions="Start">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Text="{Binding GroupName}" />
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <Label Text="Design Actions"
-                               FontAttributes="Bold"
-                               Grid.Row="2" />
-                        <ListView Grid.Row="3"
-                                  ItemsSource="{Binding DesignActions}"
-                                  ItemSelected="DesignActionSelectionChanged"
-                                  RowHeight="30"
-                                  WidthRequest="150"
-                                  VerticalOptions="Start">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Text="{Binding Item1}" />
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                    <Grid VerticalOptions="Fill"
-                          HorizontalOptions="Start"
-                          x:Name="States"
-                          IsVisible="false">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Label Text="States"
-                               FontAttributes="Bold" />
-
-                        <ListView x:Name="StatesList"
-                                  Grid.Row="1"
-                                  ItemsSource="{Binding States}"
-                                  RowHeight="30"
-                                  WidthRequest="150"
-                                  ItemSelected="StateSelectionChanged"
-                                  VerticalOptions="Start">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Text="{Binding StateName}" />
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
+                    <Label Text="BuildIt Forms developed by" />
+                    <Image HeightRequest="30"
+                           Aspect="AspectFill"
+                           Source="{tt:ImageResource BuildIt.Forms.Assets.btrlogo.png}">
+                        <Grid.Effects>
+                            <tt:TouchEffect TouchAction="LaunchBuiltToRoamWebsite" />
+                        </Grid.Effects>
+                    </Image>
                 </StackLayout>
-
-                <Grid Grid.Row="1"
-                      x:Name="Logo"
-                      IsVisible="false"
-                      HorizontalOptions="EndAndExpand"
-                      VerticalOptions="End"
-                      >
-                    <Image  Margin="3"
-                            HeightRequest="15"
-                            Aspect="AspectFill"
-                            Source="{tt:ImageResource BuildIt.Forms.Assets.btrlogo.png}" />
-                </Grid>
-
-                <Image Grid.Row="1"
-                       HorizontalOptions="Start"
-                       VerticalOptions="End"
-                       HeightRequest="20"
-                       x:Name="Switcher"
-                       WidthRequest="20"
-                       Aspect="AspectFill"
-                       Source="{tt:ImageResource BuildIt.Forms.Assets.designbuttonicon.png}">
-                    <Image.Effects>
-                        <tt:TouchEffect Capture="True"
-                                        TouchAction="LaunchDesignTime" />
-                    </Image.Effects>
-                </Image>
             </Grid>
+            <Grid VerticalOptions="End"
+                  HorizontalOptions="Start"
+                  Margin="12,0,0,12">
 
-            <!--<Label Text="Hello Xamarin.Forms!" />-->
+                <BoxView Color="#FF00B9F2"
+                         x:Name="Border"
+                         IsVisible="false" />
+                <Grid Margin="2"
+                      BackgroundColor="Transparent"
+                      x:Name="Root">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid HeightRequest="20"
+                          x:Name="Title"
+                          IsVisible="false"
+                          Margin="3">
+                        <Label Text="Select a state to switch to:"
+                               FontAttributes="Bold" />
+                    </Grid>
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="StartAndExpand"
+                                 Grid.Row="1"
+                                 Margin="3,0,0,0"
+                                 x:Name="StatesAndActions"
+                                 IsVisible="false"
+                                 VerticalOptions="End">
+                        <Grid VerticalOptions="Fill"
+                              HorizontalOptions="Start">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Label Text="Groups"
+                                   FontAttributes="Bold" />
+                            <ListView x:Name="StateGroupList"
+                                      Grid.Row="1"
+                                      ItemsSource="{Binding Groups}"
+                                      ItemSelected="GroupSelectionChanged"
+                                      RowHeight="30"
+                                      WidthRequest="150"
+                                      VerticalOptions="Start">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Text="{Binding GroupName}" />
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <Label Text="Design Actions"
+                                   FontAttributes="Bold"
+                                   Grid.Row="2" />
+                            <ListView Grid.Row="3"
+                                      ItemsSource="{Binding DesignActions}"
+                                      ItemSelected="DesignActionSelectionChanged"
+                                      RowHeight="30"
+                                      WidthRequest="150"
+                                      VerticalOptions="Start">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Text="{Binding Item1}" />
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                        <Grid VerticalOptions="Fill"
+                              HorizontalOptions="Start"
+                              x:Name="States"
+                              IsVisible="false">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Label Text="States"
+                                   FontAttributes="Bold" />
+
+                            <ListView x:Name="StatesList"
+                                      Grid.Row="1"
+                                      ItemsSource="{Binding States}"
+                                      RowHeight="30"
+                                      WidthRequest="150"
+                                      ItemSelected="StateSelectionChanged"
+                                      VerticalOptions="Start">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Text="{Binding StateName}" />
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </StackLayout>
+
+
+
+                    <Image Grid.Row="1"
+                           HorizontalOptions="Start"
+                           VerticalOptions="End"
+                           HeightRequest="20"
+                           x:Name="Switcher"
+                           WidthRequest="20"
+                           Aspect="AspectFill"
+                           Source="{tt:ImageResource BuildIt.Forms.Assets.designbuttonicon.png}">
+                        <Image.Effects>
+                            <tt:TouchEffect TouchAction="LaunchDesignTime" />
+                        </Image.Effects>
+                    </Image>
+                </Grid>
+            </Grid>
         </Grid>
     </ContentView.Content>
 </ContentView>

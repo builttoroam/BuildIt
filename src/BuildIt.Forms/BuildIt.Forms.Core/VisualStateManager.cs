@@ -105,9 +105,9 @@ namespace BuildIt.Forms
                         {
                             var dtc = new DesignTimeControl
                             {
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.End,
-                                Margin = new Thickness(12, 0, 0, 12)
+                                //HorizontalOptions = LayoutOptions.Start,
+                                //VerticalOptions = LayoutOptions.End,
+                                //Margin = new Thickness(12, 0, 0, 12)
                             };
 
                             if (content.ColumnDefinitions.Count > 0)

@@ -26,15 +26,24 @@ namespace BuildIt.Forms
             InitializeComponent();
         }
 
+        private enum DesignStates
+        {
+            Base,
+            GroupsHidden,
+            GroupsVisible
+        }
+
         /// <summary>
         /// Handles the selection changed event for design actions
         /// </summary>
         /// <param name="sender">The listview containing design actions</param>
         /// <param name="e">The selection change</param>
-        public void DesignActionSelectionChanged(object sender, SelectedItemChangedEventArgs e)
+        public async void DesignActionSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
             try
             {
+                await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
+
                 var action = e.SelectedItem as Tuple<string, Action>;
                 $"Running design action {action?.Item1}".Log();
                 action?.Item2();
@@ -111,7 +120,7 @@ namespace BuildIt.Forms
                 StatesList.SelectedItem = null;
 
                 StateGroupList.SelectedItem = null;
-                await VisualStateManager.GoToState(this, "GroupsHidden");
+                await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
 
                 if (design == null || state == null)
                 {
@@ -119,7 +128,7 @@ namespace BuildIt.Forms
                     return;
                 }
 
-            ("State: " + state.StateName).Log();
+                ("State: " + state.StateName).Log();
                 await VisualStateManager.GoToState(design.Element, state.StateName);
                 "SateList selection changed - END".Log();
             }
@@ -146,7 +155,31 @@ namespace BuildIt.Forms
                 }
 
                 "Launching".Log();
-                await VisualStateManager.GoToState(this, "GroupsVisible");
+                await VisualStateManager.GoToState(this, DesignStates.GroupsVisible.ToString());
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
+        }
+
+        /// <summary>
+        /// Launches the Built to Roam website
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="args">The event args</param>
+        protected void LaunchBuiltToRoamWebsite(object sender, object args)
+        {
+            try
+            {
+                var touchArgs = args as TouchActionEventArgs;
+                if (touchArgs == null ||
+                    touchArgs.Type != TouchActionType.Pressed)
+                {
+                    return;
+                }
+
+                Device.OpenUri(new Uri("https://www.builttoroam.com"));
             }
             catch (Exception ex)
             {
@@ -173,7 +206,7 @@ namespace BuildIt.Forms
                 StatesList.SelectedItem = null;
 
                 StateGroupList.SelectedItem = null;
-                await VisualStateManager.GoToState(this, "GroupsHidden");
+                await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
             }
             catch (Exception ex)
             {
