@@ -68,46 +68,95 @@ namespace BuildIt.Forms.Controls.UWP
 
         private void OnPointerEntered(object sender, PointerRoutedEventArgs args)
         {
-            CommonHandler(sender, TouchActionType.Entered, args);
+            try
+            {
+                CommonHandler(sender, TouchActionType.Entered, args);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         private void OnPointerPressed(object sender, PointerRoutedEventArgs args)
         {
-            CommonHandler(sender, TouchActionType.Pressed, args);
-
-            // Check setting of Capture property
-            if (effect.Capture)
+            try
             {
-                (sender as FrameworkElement).CapturePointer(args.Pointer);
+                CommonHandler(sender, TouchActionType.Pressed, args);
+
+                // Check setting of Capture property
+                if (effect.Capture)
+                {
+                    (sender as FrameworkElement).CapturePointer(args.Pointer);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
             }
         }
 
         private void OnPointerMoved(object sender, PointerRoutedEventArgs args)
         {
-            CommonHandler(sender, TouchActionType.Moved, args);
+            try
+            {
+                CommonHandler(sender, TouchActionType.Moved, args);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         private void OnPointerReleased(object sender, PointerRoutedEventArgs args)
         {
-            CommonHandler(sender, TouchActionType.Released, args);
+            try
+            {
+                CommonHandler(sender, TouchActionType.Released, args);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         private void OnPointerExited(object sender, PointerRoutedEventArgs args)
         {
-            CommonHandler(sender, TouchActionType.Exited, args);
+            try
+            {
+                CommonHandler(sender, TouchActionType.Exited, args);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         private void OnPointerCancelled(object sender, PointerRoutedEventArgs args)
         {
-            CommonHandler(sender, TouchActionType.Cancelled, args);
+            try
+            {
+                CommonHandler(sender, TouchActionType.Cancelled, args);
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
 
         private void CommonHandler(object sender, TouchActionType touchActionType, PointerRoutedEventArgs args)
         {
-            PointerPoint pointerPoint = args.GetCurrentPoint(sender as UIElement);
-            Windows.Foundation.Point windowsPoint = pointerPoint.Position;
+            try
+            {
+                PointerPoint pointerPoint = args.GetCurrentPoint(sender as UIElement);
+                Windows.Foundation.Point windowsPoint = pointerPoint.Position;
 
-            onTouchAction(Element, new TouchActionEventArgs(args.Pointer.PointerId, touchActionType, new Point(windowsPoint.X, windowsPoint.Y), args.Pointer.IsInContact));
+                onTouchAction(Element, new TouchActionEventArgs(args.Pointer.PointerId, touchActionType, new Point(windowsPoint.X, windowsPoint.Y), args.Pointer.IsInContact));
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
+            }
         }
     }
 }

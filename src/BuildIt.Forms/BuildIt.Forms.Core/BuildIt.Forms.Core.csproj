@@ -20,10 +20,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\btrlogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\btrlogo.png" />
     <EmbeddedResource Include="Assets\designbuttonicon.png" />
   </ItemGroup>
 
