@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>BuildIt.General</id>
-    <version>$version$</version>
+    <version>1.0.0</version>
     <title>BuildIt General</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
@@ -32,5 +32,8 @@
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.dll" target="lib\uap10" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.pdb" target="lib\uap10" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.xml" target="lib\uap10" />
+
+    <file src="BuildIt.General\**\*.cs" target="src\BuildIt.General" exclude="BuildIt.General\obj\**\*.cs" />
+    <file src="BuildIt.General.UWP\**\*.cs" target="src\BuildIt.General.UWP" exclude="BuildIt.General.UWP\obj\**\*.cs"/>
   </files>
 </package>
