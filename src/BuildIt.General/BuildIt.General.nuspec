@@ -32,5 +32,8 @@
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.dll" target="lib\uap10" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.pdb" target="lib\uap10" />
     <file src="BuildIt.General.UWP\bin\Release\BuildIt.General.UWP.xml" target="lib\uap10" />
+
+    <file src="BuildIt.General\**\*.cs" target="src\BuildIt.General\BuildIt.General" exclude="BuildIt.General\obj\**\*.cs" />
+    <file src="BuildIt.General.UWP\**\*.cs" target="src\BuildIt.General\BuildIt.General.UWP" exclude="BuildIt.General.UWP\obj\**\*.cs"/>
   </files>
 </package>
