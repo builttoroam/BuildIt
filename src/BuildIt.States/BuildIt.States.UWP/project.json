@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "BuildIt.General": "1.1.0.65",
+    "BuildIt.General": "1.1.0.74",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
     "Newtonsoft.Json": "10.0.3",
     "StyleCop.Analyzers": "1.0.2"
