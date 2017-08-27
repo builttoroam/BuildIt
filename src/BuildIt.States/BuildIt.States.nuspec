@@ -9,7 +9,7 @@
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
-    <description>This library contains a number of helper methods and functions to make working with visual states easier</description>
+    <description>This library contains a number of helper methods and functions to make working with application states easier</description>
     <copyright>Copyright © 2017</copyright>
     <tags>BuildIt, States</tags>
     <dependencies>
@@ -17,14 +17,6 @@
         <dependency id="BuildIt.General" version="1.1.0.65" />
         <dependency id="Newtonsoft.Json" version="10.0.3" />
       </group>
-      <!--<group targetFramework="monoandroid">
-        <dependency id="BuildIt.General" version="1.1.0.64-beta" />
-        <dependency id="Newtonsoft.Json" version="10.0.3" />
-      </group>
-      <group targetFramework="xamarinios">
-        <dependency id="BuildIt.General" version="1.1.0.64-beta" />
-        <dependency id="Newtonsoft.Json" version="10.0.3" />
-      </group>-->
       <group targetFramework="uap">
         <dependency id="BuildIt.General" version="1.1.0.65" />
         <dependency id="Newtonsoft.Json" version="10.0.3" />
@@ -37,16 +29,6 @@
     <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\netstandard1.0" />
     <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\netstandard1.0" />
 
-
-    <!--<file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\monoandroid" />
-    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\monoandroid" />
-    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\monoandroid" />
-
-    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\xamarinios10" />
-    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\xamarinios10" />
-    <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\xamarinios10" />-->
-
-
     <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\uap" />
     <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.pdb" target="lib\uap" />
     <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.xml" target="lib\uap" />
@@ -54,5 +36,7 @@
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.pdb" target="lib\uap" />
     <file src="BuildIt.States.UWP\bin\Release\BuildIt.States.UWP.xml" target="lib\uap" />
 
+    <file src="BuildIt.States\**\*.cs" target="src\BuildIt.States\BuildIt.States" exclude="BuildIt.States\obj\**\*.cs" />
+    <file src="BuildIt.States.UWP\**\*.cs" target="src\BuildIt.States\BuildIt.States.UWP" exclude="BuildIt.States.UWP\obj\**\*.cs"/>
   </files>
 </package>
