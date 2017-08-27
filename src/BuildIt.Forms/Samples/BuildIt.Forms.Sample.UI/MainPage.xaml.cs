@@ -83,6 +83,4 @@ namespace BuildIt.Forms.Sample
             (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
         }
     }
-
-   
 }

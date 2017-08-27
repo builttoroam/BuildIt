@@ -13,8 +13,8 @@
     <copyright>Copyright © 2017</copyright>
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
     <dependencies>
-      <dependency id="BuildIt.General" version="1.1.0.65" />
-      <dependency id="BuildIt.States" version="1.1.0.66" />
+      <dependency id="BuildIt.General" version="1.1.0.75" />
+      <dependency id="BuildIt.States" version="1.1.0.75" />
       <dependency id="Xamarin.Forms" version="2.4.0.266-pre1" />
     </dependencies>
   </metadata>
@@ -44,6 +44,12 @@
     <file src="BuildIt.Forms.Controls\bin\Release\netstandard1.4\BuildIt.Forms.Controls.pdb" target="lib\MonoAndroid10" />
     <file src="BuildIt.Forms.Controls.Android\bin\Release\BuildIt.Forms.Controls.Android.dll" target="lib\MonoAndroid10" />
     <file src="BuildIt.Forms.Controls.Android\bin\Release\BuildIt.Forms.Controls.Android.pdb" target="lib\MonoAndroid10" />
+
+    <file src="BuildIt.Forms.Core\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Core" exclude="BuildIt.Forms.Core\obj\**\*.cs" />
+    <file src="BuildIt.Forms.Controls\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Controls" exclude="BuildIt.Forms.Controls\obj\**\*.cs" />
+    <file src="BuildIt.Forms.Controls.iOS\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Controls.iOS" exclude="BuildIt.Forms.Controls.iOS\obj\**\*.cs" />
+    <file src="BuildIt.Forms.Controls.Android\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Controls.Android" exclude="BuildIt.Forms.Controls.Android\obj\**\*.cs" />
+    <file src="BuildIt.Forms.Controls.UWP\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Controls.UWP" exclude="BuildIt.Forms.Controls.UWP\obj\**\*.cs" />
   </files>
 </package>
 

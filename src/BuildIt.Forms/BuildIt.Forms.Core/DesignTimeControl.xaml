@@ -5,7 +5,7 @@
              x:Class="BuildIt.Forms.DesignTimeControl">
     <ContentView.Content>
 
-        <Grid BackgroundColor="Transparent">
+        <Grid >
             <tt:VisualStateManager.VisualStateGroups>
                 <tt:VisualStateGroups>
                     <tt:VisualStateGroup Name="DesignStates">
@@ -37,11 +37,13 @@
             </tt:VisualStateManager.VisualStateGroups>
             <Grid IsVisible="false"
                   x:Name="PageBackground">
-                <Grid.Effects>
-                    <tt:TouchEffect TouchAction="ExitDesignTime" />
-                </Grid.Effects>
+
                 <Grid BackgroundColor="#FF00B9F2"
-                      Opacity="0.05" />
+                      Opacity="0.05">
+                    <Grid.Effects>
+                        <tt:TouchEffect TouchAction="ExitDesignTime" />
+                    </Grid.Effects>
+                </Grid>
                 <StackLayout Margin="5"
                              HorizontalOptions="EndAndExpand"
                              VerticalOptions="End">

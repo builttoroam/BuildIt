@@ -46,7 +46,7 @@ namespace BuildIt.Forms
 
             view.Effects.Add(new FontEffect() { FontName = newValue as string });
 
-            (view as VisualElement).PropertyChanged += Fonts_PropertyChanged;
+           // (view as VisualElement).PropertyChanged += Fonts_PropertyChanged;
         }
 
         private static void Fonts_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

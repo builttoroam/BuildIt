@@ -19,6 +19,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.4\BuildIt.Forms.Controls.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
 
@@ -49,6 +51,10 @@
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="fontawesome-webfont.ttf" />
+  </ItemGroup>
+
   <!--<ItemGroup>
     <EmbeddedResource Include="ContentButton.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -59,8 +65,8 @@
   </ItemGroup>-->
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.65" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.66" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="2.4.0.266-pre1" />
   </ItemGroup>

@@ -149,7 +149,7 @@ namespace BuildIt.Forms
             {
                 var touchArgs = args as TouchActionEventArgs;
                 if (touchArgs == null ||
-                    touchArgs.Type != TouchActionType.Pressed)
+                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
                 {
                     return;
                 }
@@ -174,7 +174,7 @@ namespace BuildIt.Forms
             {
                 var touchArgs = args as TouchActionEventArgs;
                 if (touchArgs == null ||
-                    touchArgs.Type != TouchActionType.Pressed)
+                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
                 {
                     return;
                 }
@@ -198,7 +198,7 @@ namespace BuildIt.Forms
             {
                 var touchArgs = args as TouchActionEventArgs;
                 if (touchArgs == null ||
-                    touchArgs.Type != TouchActionType.Pressed)
+                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
                 {
                     return;
                 }
