@@ -19,5 +19,12 @@ namespace BuildIt.Forms
         /// Gets or sets the font name eg fontawesome-webfont.ttf#FontAwesome
         /// </summary>
         public string FontName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the font is embedded in the current assembly
+        /// </summary>
+        public bool IsEmbedded { get; set; }
+
+        public object Parent { get; set; }
     }
 }

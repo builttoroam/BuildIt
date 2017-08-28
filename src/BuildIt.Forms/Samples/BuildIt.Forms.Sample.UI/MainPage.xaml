@@ -154,36 +154,23 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ScrollView>
-            <!-- Acrylic brushes only in Fall Creators Update -->
-            <!--<Grid.Effects>
+        <!-- Acrylic brushes only in Fall Creators Update -->
+        <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush"/>
         </Grid.Effects>-->
+        <ScrollView>
+
             <StackLayout vsm:Ambient.ForeColor="Blue"
                          Margin="20">
+                <controls:IconButton Icon="&#xF04B;"></controls:IconButton>
+
                 <Grid HeightRequest="200"
                       BackgroundColor="Pink">
-                    <!--<Grid.Effects>
-                    <controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />
-                </Grid.Effects>-->
                     <Label FontSize="30"
                            x:Name="HelloLabel"
                            Text="Hello World - Blue! &#xF04B;"
-                           vsm:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome">
-                        <!--<Label.Effects>
-                    <controls:BackgroundEffect FallbackColor="Pink" />-->
-                        <!--<controls:FontEffect />-->
-                        <!--FontName="fontawesome-webfont.ttf#FontAwesome" />-->
-                        <!--controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"-->
+                           vsm:Fonts.FontFamily="fontawesome-head.ttf#FontAwesome">
 
-                        <!--</Label.Effects>-->
-                        <!--<Label.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <OnPlatform.iOS>FontAwesome</OnPlatform.iOS>
-                        <OnPlatform.Android></OnPlatform.Android>
-                        <OnPlatform.WinPhone>/Assets/Fonts/fontawesome-webfont.ttf#FontAwesome</OnPlatform.WinPhone>
-                    </OnPlatform>
-                </Label.FontFamily>-->
                     </Label>
                 </Grid>
 
@@ -225,7 +212,6 @@
                       x:Name="AnimateGrid"
                       HorizontalOptions="Start">
                     <Grid.Effects>
-                        <!--<controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />-->
                         <vsm:BackgroundEffect FallbackColor="Green" />
                     </Grid.Effects>
                 </Grid>
@@ -237,7 +223,7 @@
                 </StackLayout>
                 <Grid Padding="80">
                     <Grid.Effects>
-                        <!--<controls:BackgroundEffect FallbackColor="Red" />-->
+                        <vsm:BackgroundEffect FallbackColor="Red" />
                     </Grid.Effects>
                     <Button Text="Hello World!"
                             Clicked="ButtonClicked"
@@ -276,11 +262,10 @@
                     </StackLayout>
                 </controls:ContentButton>
 
-                <controls:IconButton Icon="&#xF04B;"></controls:IconButton>
 
                 <local:CustomControl x:Name="Custom">
                     <local:CustomControl.Effects>
-                        <!--<controls:BackgroundEffect FallbackColor="Blue"/>-->
+                        <vsm:BackgroundEffect FallbackColor="Blue" />
                     </local:CustomControl.Effects>
                 </local:CustomControl>
             </StackLayout>
