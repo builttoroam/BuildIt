@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using BuildIt;
 
-
 namespace BuildItSynchronizationSample.Core
 {
     public class MainViewModel : NotifyBase
@@ -26,7 +25,6 @@ namespace BuildItSynchronizationSample.Core
                 }
             }
         }
-
 
         public MainViewModel()
         {

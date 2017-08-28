@@ -11,7 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{3FE1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildItSynchronizationSample.UWP", "BuildIt.Synchronization\Samples\BuildItSynchronizationSample.UWP\BuildItSynchronizationSample.UWP.csproj", "{F27A9FAF-183B-4587-9659-49212481D183}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildItSynchronizationSample.Core", "BuildIt.Synchronization\Samples\BuildItSynchronizationSample.Core\BuildItSynchronizationSample.Core.csproj", "{A36575BC-BA66-4F78-94B5-E10370ACCE6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildItSynchronizationSample.Core", "BuildIt.Synchronization\Samples\BuildItSynchronizationSample.Core\BuildItSynchronizationSample.Core.csproj", "{A36575BC-BA66-4F78-94B5-E10370ACCE6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspec", "Nuspec", "{6C79616B-027B-4AF5-B45B-12D6826E3B52}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Synchronization\BuildIt.Synchronization.nuspec = BuildIt.Synchronization\BuildIt.Synchronization.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

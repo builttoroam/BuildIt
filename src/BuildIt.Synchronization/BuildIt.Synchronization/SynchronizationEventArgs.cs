@@ -3,41 +3,42 @@ using Microsoft;
 
 namespace BuildIt.Synchronization
 {
-    public class SynchronizationEventArgs<TSynchronizationStages> : EventArgs,ISynchronizationEventArgs
+    public class SynchronizationEventArgs<TSynchronizationStages> : EventArgs, ISynchronizationEventArgs
         where TSynchronizationStages : struct
     {
-
-        public static ISynchronizationEventArgs Build(SyncAction action,
-            TSynchronizationStages? stage=null,
-            ISynchronizationEventArgs child=null,
+        public static ISynchronizationEventArgs Build(
+            SyncAction action,
+            TSynchronizationStages? stage = null,
+            ISynchronizationEventArgs child = null,
             double? percentageComplete = null,
-            Exception error = null){
-
-       
-                var args = new SynchronizationEventArgs<TSynchronizationStages>
-                {
-                    PercentageComplete = percentageComplete??0.0,
-                    Stage = stage,
-                    Action = action,
-                    Error = error,
-                    ChildStage=child
-                };
+            Exception error = null)
+        {
+            var args = new SynchronizationEventArgs<TSynchronizationStages>
+            {
+                PercentageComplete = percentageComplete ?? 0.0,
+                Stage = stage,
+                Action = action,
+                Error = error,
+                ChildStage = child
+            };
 
             return args;
-            }
+        }
 
         public ISynchronizationEventArgs Progress(SyncAction action, double? percent = null, ISynchronizationEventArgs child = null, Exception error = null)
         {
             Action = action;
             if (percent.HasValue)
             {
-                PercentageComplete = percent??0;
+                PercentageComplete = percent ?? 0;
             }
+
             ChildStage = child;
             if (Error != null)
             {
                 Error = error;
             }
+
             return this;
         }
 
@@ -81,7 +82,7 @@ namespace BuildIt.Synchronization
                 message += " " + Stage;
             }
 
-                message += string.Format(" {0}%", PercentageComplete);
+            message += string.Format(" {0}%", PercentageComplete);
 
             if (Error != null)
             {
@@ -93,24 +94,12 @@ namespace BuildIt.Synchronization
                 message += " [" + ChildStage + " ]";
             }
 
-            if (!string.IsNullOrWhiteSpace(message)) return message;
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                return message;
+            }
+
             return base.ToString();
         }
-    }
-
-
-    public interface ISynchronizationEventArgs
-    {
-        SyncAction Action { get; set; }
-
-        double PercentageComplete { get; set; }
-
-        Exception Error { get; set; }
-
-        ISynchronizationEventArgs ChildStage { get; set; }
-
-        ISynchronizationEventArgs Progress(SyncAction action, double? percent = null, ISynchronizationEventArgs child = null, Exception error = null);
-
-        
     }
 }
