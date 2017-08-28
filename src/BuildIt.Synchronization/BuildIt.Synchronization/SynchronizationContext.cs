@@ -22,6 +22,7 @@ namespace BuildIt.Synchronization
         ISynchronizationContext<TSynchronizationStages>
         where TSynchronizationStages : struct
     {
+        private const double OneHundred = 100;
 
         public event EventHandler<SynchronizationEventArgs<TSynchronizationStages>> SynchronizationChanged;
 
@@ -138,12 +139,12 @@ namespace BuildIt.Synchronization
                 if (steps == null || steps.Length == 0)
                 {
                     OnSynchronizationChanged(SyncAction.Start, percentageComplete: 0.0);
-                    OnSynchronizationChanged(SyncAction.End, percentageComplete: 1.0);
+                    OnSynchronizationChanged(SyncAction.End, percentageComplete: OneHundred);
                     return;
                 }
 
                 var percentage = 0.0;
-                var increment = 1.0 / (double)steps.Length;
+                var increment = (1.0 / (double)steps.Length) * 100.0;
                 OnSynchronizationChanged(SyncAction.Start, percentageComplete: 0.0);
                 foreach (var step in steps)
                 {
@@ -192,7 +193,7 @@ namespace BuildIt.Synchronization
 
                         
                         percentage += increment;
-                        OnSynchronizationChanged(SyncAction.Progress, null,progEvent.Progress(SyncAction.Progress,1.0), percentage);
+                        OnSynchronizationChanged(SyncAction.Progress, null,progEvent.Progress(SyncAction.Progress,OneHundred), percentage);
                         OnSynchronizationChanged(SyncAction.Progress, null, progEvent.Progress(SyncAction.End), percentage);
                     }
                     catch (Exception ex)
@@ -201,7 +202,7 @@ namespace BuildIt.Synchronization
                         throw;
                     }
                 }
-                OnSynchronizationChanged(SyncAction.End, percentageComplete: 1.0);
+                OnSynchronizationChanged(SyncAction.End, percentageComplete: OneHundred);
             }
             catch (Exception ex)
             {
