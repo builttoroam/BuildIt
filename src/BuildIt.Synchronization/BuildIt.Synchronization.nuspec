@@ -18,9 +18,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.Synchronization\bin\Release\BuildIt.Synchronization.dll" target="lib\netstandard1.0" />
-    <file src="BuildIt.Synchronization\bin\Release\BuildIt.Synchronization.pdb" target="lib\netstandard1.0" />
-    <file src="BuildIt.Synchronization\bin\Release\BuildIt.Synchronization.xml" target="lib\netstandard1.0" />
+    <file src="BuildIt.Synchronization\bin\Release\netstandard1.0\BuildIt.Synchronization.dll" target="lib\netstandard1.0" />
+    <file src="BuildIt.Synchronization\bin\Release\netstandard1.0\BuildIt.Synchronization.pdb" target="lib\netstandard1.0" />
+    <file src="BuildIt.Synchronization\bin\Release\netstandard1.0\BuildIt.Synchronization.xml" target="lib\netstandard1.0" />
 
     <file src="BuildIt.Synchronization\**\*.cs" target="src\BuildIt.Synchronization\BuildIt.Synchronization" exclude="BuildIt.Synchronization\obj\**\*.cs" />
   </files>
