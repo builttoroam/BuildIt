@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 
 namespace BuildIt.Synchronization
 {
-    public enum SyncAction
-    {
-        None,
-        Start,
-        Progress,
-        End,
-        Error,
-        Cancel
-    }
-
+    /// <summary>
+    /// Context for tracking synchronisation
+    /// </summary>
+    /// <typeparam name="TSynchronizationStages">The type defining the states</typeparam>
     public class SynchronizationContext<TSynchronizationStages> :
         INotifySynchronizationChanged<TSynchronizationStages>,
         ISynchronizationContext<TSynchronizationStages>
@@ -24,13 +18,25 @@ namespace BuildIt.Synchronization
     {
         private const double OneHundred = 100;
 
+        /// <summary>
+        /// Event stating that synchronization has changed
+        /// </summary>
         public event EventHandler<SynchronizationEventArgs<TSynchronizationStages>> SynchronizationChanged;
 
-        public async Task Synchronize(TSynchronizationStages stagesToSynchronize,
+        /// <summary>
+        /// Triggers synchronization
+        /// </summary>
+        /// <param name="stagesToSynchronize">The states to sync</param>
+        /// <param name="cancelExistingSynchronization">Whether to cancel any existing syncs that are in progress</param>
+        /// <param name="waitForSynchronizationToComplete">Whether to wait for sync to complete</param>
+        /// <returns>Task to await</returns>
+        public async Task Synchronize(
+            TSynchronizationStages stagesToSynchronize,
             bool cancelExistingSynchronization = false,
             bool waitForSynchronizationToComplete = false)
         {
-            var syncTask = InternalSync(stagesToSynchronize,
+            var syncTask = InternalSync(
+                stagesToSynchronize,
                 cancelExistingSynchronization);
             if (waitForSynchronizationToComplete)
             {
@@ -47,22 +53,35 @@ namespace BuildIt.Synchronization
             }
         }
 
-        public void OnSynchronizationChanged(SyncAction action,
-            TSynchronizationStages? stage=null,
-            ISynchronizationEventArgs child=null,
+        /// <summary>
+        /// Raises synchronization state changed
+        /// </summary>
+        /// <param name="action">The sync action</param>
+        /// <param name="stage">The sync stage</param>
+        /// <param name="child">The child event</param>
+        /// <param name="percentageComplete">The percent complet (approx)</param>
+        /// <param name="error">Whether there has been an exception</param>
+        public void OnSynchronizationChanged(
+            SyncAction action,
+            TSynchronizationStages? stage = null,
+            ISynchronizationEventArgs child = null,
             double? percentageComplete = null,
             Exception error = null)
         {
             var args = new SynchronizationEventArgs<TSynchronizationStages>
             {
-                PercentageComplete = percentageComplete??0,
+                PercentageComplete = percentageComplete ?? 0,
                 Stage = stage,
                 Action = action,
                 Error = error,
-                ChildStage=child
+                ChildStage = child
             };
 
-            if (SynchronizationChanged == null) return;
+            if (SynchronizationChanged == null)
+            {
+                return;
+            }
+
             SynchronizationChanged(this, args);
         }
 
@@ -71,7 +90,8 @@ namespace BuildIt.Synchronization
         private CancellationTokenSource cancellationSource;
         private readonly object cancelLock = new object();
 
-        private async Task InternalSync(TSynchronizationStages stagesToSynchronize,
+        private async Task InternalSync(
+            TSynchronizationStages stagesToSynchronize,
             bool cancelExistingSynchronization)
         {
             try
@@ -87,6 +107,7 @@ namespace BuildIt.Synchronization
                         }
                     }
                 }
+
                 // Force the actual sync to a background thread to avoid blocking any UI
                 await Task.Run(() => BackgroundThreadSync(stagesToSynchronize));
             }
@@ -150,18 +171,21 @@ namespace BuildIt.Synchronization
                 {
                     try
                     {
-                        if (cancel.Token.IsCancellationRequested) return;
+                        if (cancel.Token.IsCancellationRequested)
+                        {
+                            return;
+                        }
 
                         var progEvent = SynchronizationEventArgs<TSynchronizationStages>.Build(
                             SyncAction.Start,
                             step.Stage);
 
-                        OnSynchronizationChanged(SyncAction.Progress, null, progEvent.Progress(SyncAction.Start,0.0), percentage);
+                        OnSynchronizationChanged(SyncAction.Progress, null, progEvent.Progress(SyncAction.Start, 0.0), percentage);
                         OnSynchronizationChanged(SyncAction.Progress, null, progEvent.Progress(SyncAction.Progress), percentage);
                         Action<ISynchronizationEventArgs> callback = percent =>
                         {
                             var inc = increment * percent.PercentageComplete;
-                            OnSynchronizationChanged(SyncAction.Progress,null, percent, percentage + inc);
+                            OnSynchronizationChanged(SyncAction.Progress, null, percent, percentage + inc);
                         };
 
                         step.CancellationToken = cancel.Token;
@@ -169,18 +193,20 @@ namespace BuildIt.Synchronization
                         try
                         {
                             var ok = await step.StepAction(step); // InvokeStepAction(cancel.Token, callback);
-                            if (cancel.Token.IsCancellationRequested) return;
-
-                            if (!ok)
+                            if (cancel.Token.IsCancellationRequested)
                             {
-                                OnSynchronizationChanged(SyncAction.Error,null, progEvent.Progress(SyncAction.Error));
                                 return;
                             }
 
+                            if (!ok)
+                            {
+                                OnSynchronizationChanged(SyncAction.Error, null, progEvent.Progress(SyncAction.Error));
+                                return;
+                            }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
-                            OnSynchronizationChanged(SyncAction.Error, null, progEvent.Progress(SyncAction.Error,error: ex));
+                            OnSynchronizationChanged(SyncAction.Error, null, progEvent.Progress(SyncAction.Error, error: ex));
                             throw;
                         }
                         finally
@@ -190,10 +216,8 @@ namespace BuildIt.Synchronization
                             step.SynchronizationChanged = null;
                         }
 
-
-                        
                         percentage += increment;
-                        OnSynchronizationChanged(SyncAction.Progress, null,progEvent.Progress(SyncAction.Progress,OneHundred), percentage);
+                        OnSynchronizationChanged(SyncAction.Progress, null, progEvent.Progress(SyncAction.Progress, OneHundred), percentage);
                         OnSynchronizationChanged(SyncAction.Progress, null, progEvent.Progress(SyncAction.End), percentage);
                     }
                     catch (Exception ex)
@@ -202,6 +226,7 @@ namespace BuildIt.Synchronization
                         throw;
                     }
                 }
+
                 OnSynchronizationChanged(SyncAction.End, percentageComplete: OneHundred);
             }
             catch (Exception ex)
@@ -230,165 +255,15 @@ namespace BuildIt.Synchronization
 
         private readonly List<ISynchronizationStage<TSynchronizationStages>> synchronizationSteps = new List<ISynchronizationStage<TSynchronizationStages>>();
 
-        public void DefineSynchronizationStep(TSynchronizationStages synchronizationStage, 
+        public void DefineSynchronizationStep(
+            TSynchronizationStages synchronizationStage,
             Func<ISynchronizationStage<TSynchronizationStages>, Task<bool>> stepAction)
         {
-            var wrapper = SyncStepWrapper<TSynchronizationStages>.Build(synchronizationStage,
+            var wrapper = SyncStepWrapper<TSynchronizationStages>.Build(
+                synchronizationStage,
                 stepAction);
-               
+
             synchronizationSteps.Add(wrapper);
         }
-        
-    }
-
-    public interface INotifySynchronizationChanged<TSynchronizationStages> where TSynchronizationStages:struct
-    {
-        
-        event EventHandler<SynchronizationEventArgs<TSynchronizationStages>> SynchronizationChanged;
-
-
-        void OnSynchronizationChanged(SyncAction action,
-            TSynchronizationStages? stage = null,
-            ISynchronizationEventArgs child = null,
-            double? percentageComplete = null,
-            Exception error = null);
-    }
-
-    public class SyncStepWrapper<TStage> : ISynchronizationStage<TStage>
-            where TStage : struct
-    {
-
-        public static ISynchronizationStage<TSyncStage> Build<TSyncStage>(TSyncStage stage,
-            Func<ISynchronizationStage<TSyncStage>,Task<bool>> action
-            ) where TSyncStage:struct
-        {
-            return new SyncStepWrapper<TSyncStage>
-            {
-                Stage = stage,
-                StepAction = action
-            };
-        }
-
-        public TStage Stage { get; private set; }
-        public CancellationToken CancellationToken { get; set; }
-
-        public Action<ISynchronizationEventArgs> SynchronizationChanged { get; set; }
-
-        private double CurrentSubStage { get; set; }
-
-        private double SubStageCount
-        {
-            get { return subStageCount; }
-            set
-            {
-                subStageCount = value;
-                StageIncrement = 1.0 / SubStageCount;
-                CurrentSubStage = -1;
-
-            }
-        }
-
-        private double StageIncrement { get; set; }
-
-        public void RegisterSubStagesCount(int numberOfSubStages)
-        {
-            SubStageCount = numberOfSubStages;
-        }
-
-
-        public void OnSynchronizationChanged(SyncAction action,
-        ISynchronizationEventArgs child = null,
-        double? percentageComplete = null,
-        Exception error = null)
-        {
-            var args = new SynchronizationEventArgs<TStage>
-            {
-                PercentageComplete = percentageComplete??0,
-                Stage = Stage,
-                Action = action,
-                Error = error,
-                ChildStage = child
-            };
-
-            if (SynchronizationChanged == null) return;
-            SynchronizationChanged(args);
-        }
-       
-        public void StartSubStage()
-        {
-            CurrentSubStage++;
-            var progSummary = SynchronizationEventArgs<TStage>.Build(SyncAction.Start, percentageComplete: 0.0);
-            OnSynchronizationChanged(SyncAction.Progress,progSummary, StageIncrement * CurrentSubStage);
-        }
-
-        public void EndSubStage()
-        {
-            var progSummary = SynchronizationEventArgs<TStage>.Build(SyncAction.End, percentageComplete: 1.0);
-            OnSynchronizationChanged(SyncAction.Progress, progSummary, StageIncrement * (CurrentSubStage + 1));
-        }
-
-        public void Progress(double progress)
-        {
-            OnSynchronizationChanged(SyncAction.Progress, null, progress);
-        }
-
-
-        private readonly List<object> synchronizationSteps = new List<object>();
-        private double subStageCount;
-
-
-        public void RegisterSubStages<TSubStage>(params TSubStage[] stages) where TSubStage : struct
-        {
-            synchronizationSteps.AddRange(stages.OfType<object>());
-            SubStageCount = synchronizationSteps.Count;
-        }
-
-
-        public async Task RunSubStage<TSubStage>(TSubStage stage,
-            Func<ISynchronizationStage<TSubStage>, Task<bool>> stageAction) where TSubStage : struct
-        {
-            var progSummary = SynchronizationEventArgs<TSubStage>.Build(SyncAction.Start, stage, percentageComplete: 0.0);
-            try
-            {
-                var idx = synchronizationSteps.IndexOf(stage);
-                var progress = StageIncrement*idx;
-
-
-                OnSynchronizationChanged(SyncAction.Progress, progSummary, progress);
-                OnSynchronizationChanged(SyncAction.Progress, progSummary.Progress(SyncAction.Progress), progress);
-
-                var subAction = SyncStepWrapper<TSubStage>.Build(
-                    stage, stageAction);
-                subAction.CancellationToken = CancellationToken;
-
-                Action<ISynchronizationEventArgs> callback = percent =>
-                {
-                    var inc = StageIncrement * percent.PercentageComplete;
-                    OnSynchronizationChanged(SyncAction.Progress,percent,  progress + inc);
-                };
-                subAction.SynchronizationChanged = callback;
-
-                try
-                {
-                    await stageAction(subAction);
-                }
-                finally
-                {
-                    subAction.CancellationToken = default(CancellationToken);
-                    subAction.SynchronizationChanged = null;
-                }
-                OnSynchronizationChanged(SyncAction.Progress, progSummary.Progress(SyncAction.Progress,1.0), progress + StageIncrement);
-                OnSynchronizationChanged(SyncAction.Progress, progSummary.Progress(SyncAction.End,1.0), progress + StageIncrement);
-            }
-            catch (Exception ex)
-            {
-                // Swallow any step exception, but return false to indicate sync should abort;
-                OnSynchronizationChanged(SyncAction.Progress, progSummary.Progress(SyncAction.Error));
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
-        public Func<ISynchronizationStage<TStage>, Task<bool>> StepAction { get; set; }
-
     }
 }

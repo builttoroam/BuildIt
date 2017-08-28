@@ -1038,6 +1038,7 @@ namespace BuildItSynchronizationSample.Core.Annotations
       {
         BaseType = baseType;
       }
+
       public RazorPageBaseTypeAttribute([NotNull] string baseType, string pageName)
       {
           BaseType = baseType;

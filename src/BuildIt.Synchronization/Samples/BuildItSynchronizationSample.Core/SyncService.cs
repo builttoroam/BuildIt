@@ -22,7 +22,6 @@ namespace BuildItSynchronizationSample.Core
 
         public Action<string> ProgressAction { get; set; }
 
-
         private ISynchronizationContext<SyncStages> SynchronizationManager { get; set; }
 
         public SyncService()
@@ -61,6 +60,7 @@ namespace BuildItSynchronizationSample.Core
             await Task.Delay(2000);
             return true;
         }
+
         private async Task<bool> Stage2(ISynchronizationStage<SyncStages> stage)
         {
             Debug.WriteLine("Stage 2");
@@ -68,12 +68,12 @@ namespace BuildItSynchronizationSample.Core
 
             return true;
         }
+
         private async Task<bool> Stage3(ISynchronizationStage<SyncStages> stage)
         {
             Debug.WriteLine("Stage 3");
             await Task.Delay(2000);
             return true;
         }
-
     }
 }
