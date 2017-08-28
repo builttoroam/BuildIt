@@ -2,8 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
-    <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.Synchronization\BuildIt.Synchronization.csproj" />

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using BuildIt;
 
 
 namespace BuildItSynchronizationSample.Core
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : NotifyBase
     {
         private SyncService syncService;
 
@@ -48,13 +47,6 @@ namespace BuildItSynchronizationSample.Core
         public async Task SynchroniseStage1Only()
         {
             await syncService.SynchroniseStage1Only();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
