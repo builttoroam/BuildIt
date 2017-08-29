@@ -30,13 +30,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\btrlogo.png" />
     <EmbeddedResource Include="Assets\designbuttonicon.png" />
+    <EmbeddedResource Include="DesignTimeControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
+  
+  
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.266-pre1" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.269-pre2" />
   </ItemGroup>
 
   <ItemGroup>
