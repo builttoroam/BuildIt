@@ -5,7 +5,7 @@
              x:Class="BuildIt.Forms.DesignTimeControl">
     <ContentView.Content>
 
-        <Grid >
+        <Grid>
             <tt:VisualStateManager.VisualStateGroups>
                 <tt:VisualStateGroups>
                     <tt:VisualStateGroup Name="DesignStates">
