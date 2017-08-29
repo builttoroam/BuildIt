@@ -159,18 +159,21 @@
 
 
 
-                    <Image Grid.Row="1"
-                           HorizontalOptions="Start"
-                           VerticalOptions="End"
-                           HeightRequest="20"
-                           x:Name="Switcher"
-                           WidthRequest="20"
-                           Aspect="AspectFill"
-                           Source="{tt:ImageResource BuildIt.Forms.Assets.designbuttonicon.png}">
-                        <Image.Effects>
-                            <tt:TouchEffect TouchAction="LaunchDesignTime" />
-                        </Image.Effects>
-                    </Image>
+                    <Grid Grid.Row="1"
+                          HorizontalOptions="Start"
+                          VerticalOptions="End"
+                          HeightRequest="20"
+                          x:Name="Switcher"
+                          WidthRequest="20">
+                        <Grid.Effects>
+                            <tt:TouchEffect TouchAction="LaunchDesignTime"
+                                            Capture="true" />
+                        </Grid.Effects>
+
+                        <Image Aspect="AspectFill"
+                               Source="{tt:ImageResource BuildIt.Forms.Assets.designbuttonicon.png}">
+                        </Image>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

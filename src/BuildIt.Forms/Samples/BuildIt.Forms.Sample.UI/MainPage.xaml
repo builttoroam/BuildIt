@@ -166,6 +166,10 @@
 
                 <Grid HeightRequest="200"
                       BackgroundColor="Pink">
+                    <Grid.Effects>
+                        <vsm:TouchEffect Capture="True"
+                                           TouchAction="OnTouchEffectAction" />
+                    </Grid.Effects>
                     <Label FontSize="30"
                            x:Name="HelloLabel"
                            Text="Hello World - Blue! &#xF04B;"
