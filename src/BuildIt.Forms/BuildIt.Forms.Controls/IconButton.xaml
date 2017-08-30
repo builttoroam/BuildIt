@@ -6,7 +6,6 @@
                     x:Name="Root"
                     x:Class="BuildIt.Forms.Controls.IconButton">
     <Grid>
-        <!--local:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"-->
         <Label x:Name="IconLabel"
                Text="{Binding Icon}"
                VerticalOptions="Center"

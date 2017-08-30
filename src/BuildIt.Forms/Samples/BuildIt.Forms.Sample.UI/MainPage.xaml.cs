@@ -82,5 +82,10 @@ namespace BuildIt.Forms.Sample
             DisabledButton.IsEnabled = !DisabledButton.IsEnabled;
             (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
         }
+
+        protected async void OnTouchEffectAction(object sender, object args)
+        {
+            "Touched - mainpage".Log();
+        }
     }
 }

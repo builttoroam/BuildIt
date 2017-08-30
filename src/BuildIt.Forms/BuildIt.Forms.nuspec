@@ -9,13 +9,13 @@
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
-    <description>Adds VisualStateManager to Xamarin.Forms!</description>
+    <description>Adds VisualStateManager, ContentButton and IconButton to Xamarin.Forms!</description>
     <copyright>Copyright © 2017</copyright>
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
     <dependencies>
       <dependency id="BuildIt.General" version="1.1.0.75" />
       <dependency id="BuildIt.States" version="1.1.0.75" />
-      <dependency id="Xamarin.Forms" version="2.4.0.266-pre1" />
+      <dependency id="Xamarin.Forms" version="2.4.0.266-pre2" />
     </dependencies>
   </metadata>
   <files>

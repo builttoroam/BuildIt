@@ -24,29 +24,16 @@
   </PropertyGroup>
 
 
-  <ItemGroup>
-    <Compile Remove="BackgroundEffect.cs" />
-    <Compile Remove="DesignInfo.cs" />
-    <Compile Remove="DesignTimeControl.xaml.cs" />
-    <Compile Remove="FontEffect.cs" />
-    <Compile Remove="Fonts.cs" />
-    <Compile Remove="ImageResourceExtension.cs" />
-    <Compile Remove="TouchActionEventArgs.cs" />
-    <Compile Remove="TouchActionEventHandler.cs" />
-    <Compile Remove="TouchActionType.cs" />
-    <Compile Remove="TouchEffect.cs" />
-  </ItemGroup>
+ <ItemGroup>
+   <EmbeddedResource Include="ContentButton.xaml">
+     <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+   </EmbeddedResource>
+   <EmbeddedResource Include="IconButton.xaml">
+     <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+   </EmbeddedResource>
+ </ItemGroup>
 
-
-  <ItemGroup>
-    <EmbeddedResource Remove="DesignTimeControl.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ContentButton.xaml" />
-    <None Remove="DesignTimeControl.xaml" />
-  </ItemGroup>
-
+ 
   <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
@@ -68,7 +55,7 @@
     <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.266-pre1" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.269-pre2" />
   </ItemGroup>
 
   <ItemGroup>

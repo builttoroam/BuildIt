@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -42,7 +43,7 @@ namespace BuildIt.Forms
         {
             try
             {
-                await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
+                await HideGroups();
 
                 var action = e.SelectedItem as Tuple<string, Action>;
                 $"Running design action {action?.Item1}".Log();
@@ -120,7 +121,7 @@ namespace BuildIt.Forms
                 StatesList.SelectedItem = null;
 
                 StateGroupList.SelectedItem = null;
-                await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
+                await HideGroups();
 
                 if (design == null || state == null)
                 {
@@ -155,12 +156,26 @@ namespace BuildIt.Forms
                 }
 
                 "Launching".Log();
-                await VisualStateManager.GoToState(this, DesignStates.GroupsVisible.ToString());
+                await ShowGroups();
             }
             catch (Exception ex)
             {
                 ex.LogException();
             }
+        }
+
+        private async Task HideGroups()
+        {
+            await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
+            this.HorizontalOptions = LayoutOptions.Start;
+            this.VerticalOptions = LayoutOptions.End;
+        }
+
+        private async Task ShowGroups()
+        {
+            this.HorizontalOptions = LayoutOptions.Fill;
+            this.VerticalOptions = LayoutOptions.Fill;
+            await VisualStateManager.GoToState(this, DesignStates.GroupsVisible.ToString());
         }
 
         /// <summary>
@@ -206,7 +221,7 @@ namespace BuildIt.Forms
                 StatesList.SelectedItem = null;
 
                 StateGroupList.SelectedItem = null;
-                await VisualStateManager.GoToState(this, DesignStates.GroupsHidden.ToString());
+                await HideGroups();
             }
             catch (Exception ex)
             {
