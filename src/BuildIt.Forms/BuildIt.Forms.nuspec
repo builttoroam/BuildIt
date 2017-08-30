@@ -15,7 +15,7 @@
     <dependencies>
       <dependency id="BuildIt.General" version="1.1.0.75" />
       <dependency id="BuildIt.States" version="1.1.0.75" />
-      <dependency id="Xamarin.Forms" version="2.4.0.266-pre2" />
+      <dependency id="Xamarin.Forms" version="2.4.0.269-pre2" />
     </dependencies>
   </metadata>
   <files>
