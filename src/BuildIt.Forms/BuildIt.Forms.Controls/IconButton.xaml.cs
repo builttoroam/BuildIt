@@ -12,7 +12,8 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// The icon to use
         /// </summary>
-        public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(string), typeof(IconButton), default(string));
+        public static readonly BindableProperty IconProperty =
+            BindableProperty.Create("Icon", typeof(string), typeof(IconButton), default(string));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IconButton"/> class.
@@ -29,7 +30,7 @@ namespace BuildIt.Forms.Controls
         /// </summary>
         public string Icon
         {
-            get => (string)GetValue(IconProperty);
+            get => (string) GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
     }

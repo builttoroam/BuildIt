@@ -191,6 +191,11 @@ namespace BuildIt.States
         private CancellationTokenSource StateTransitionCancellation { get; set; }
 
         /// <summary>
+        /// Gets or sets the target state name for the current transition
+        /// </summary>
+        private string StateTransitionDestinationStateName { get; set; }
+
+        /// <summary>
         /// Gets a semaphore to block concurrent state transitions
         /// </summary>
         private SemaphoreSlim StateTransitionSemaphore { get; } = new SemaphoreSlim(1);
@@ -964,20 +969,25 @@ namespace BuildIt.States
             // a new one being set
             lock (CancellationLock)
             {
-                // Set a new cancellation source
-                var currentCancellation = StateTransitionCancellation;
-
-                // If a cancellation token was passed in, make sure
-                // it's linked to the internal cancellation source
-                if (cancelToken != CancellationToken.None)
+                if (string.IsNullOrWhiteSpace(StateTransitionDestinationStateName) ||
+                    StateTransitionDestinationStateName != newState)
                 {
-                    cancelToken.Register(newCancellation.Cancel);
+                    // Set a new cancellation source
+                    var currentCancellation = StateTransitionCancellation;
+
+                    // If a cancellation token was passed in, make sure
+                    // it's linked to the internal cancellation source
+                    if (cancelToken != CancellationToken.None)
+                    {
+                        cancelToken.Register(newCancellation.Cancel);
+                    }
+
+                    StateTransitionCancellation = newCancellation;
+                    StateTransitionDestinationStateName = newState;
+
+                    // Cancel any existing state transition
+                    currentCancellation?.Cancel();
                 }
-
-                StateTransitionCancellation = newCancellation;
-
-                // Cancel any existing state transition
-                currentCancellation?.Cancel();
             }
 
             try
@@ -988,6 +998,7 @@ namespace BuildIt.States
             {
                 // Wait was cancelled, so we didn't acquire the lock. Just return whether we're in the target state or not
                 ex.LogException();
+                StateTransitionDestinationStateName = null;
                 return IsCurrentState(newState);
             }
 
@@ -1035,6 +1046,7 @@ namespace BuildIt.States
             {
                 // Make sure the semaphore is released
                 StateTransitionSemaphore.Release();
+                StateTransitionDestinationStateName = null;
             }
         }
 

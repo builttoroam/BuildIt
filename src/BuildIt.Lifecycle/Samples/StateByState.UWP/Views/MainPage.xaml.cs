@@ -39,14 +39,14 @@ namespace StateByState
                 .AddTrigger(new WindowSizeTrigger(this) {MinWidth = 700});
 
             var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
-                       let tg = sg as INotifyTypedStateChanged<TestStates>
+                       let tg = sg as INotifyTypedStateChange<TestStates>
                        where tg != null
                        select tg).FirstOrDefault();
 
             grp.TypedStateChanged += MainPage_StateChanged;
         }
 
-        private void MainPage_StateChanged(object sender, TypedStateEventArgs<TestStates> e)
+        private void MainPage_StateChanged(object sender, ITypedStateEventArgs<TestStates> e)
         {
             Debug.WriteLine($"State: {e.StateName}");
         }

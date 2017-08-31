@@ -1,6 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("BuildIt.Synchronization")]
 [assembly: AssemblyDescription("Synchronization framework")]
@@ -8,4 +7,3 @@ using System.Reflection;
 [assembly: AssemblyProduct("BuildIt.Synchronization")]
 [assembly: InternalsVisibleTo("BuildIt.Synchronization.Tests")]
 [assembly: InternalsVisibleTo("BuildIt.Synchronization.Explorables")]
-

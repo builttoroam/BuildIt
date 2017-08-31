@@ -45,7 +45,7 @@
         </ControlTemplate>
     </ContentView.ControlTemplate>
     <ContentView.Effects>
-        <tt:TouchEffect Capture="True"
+        <local:TouchEffect Capture="True"
                         TouchAction="OnTouchEffectAction" />
     </ContentView.Effects>
 </ContentView>

@@ -26,7 +26,7 @@ namespace BuildIt.Forms.Controls.iOS
             view = Control ?? Container;
 
             // Get access to the TouchEffect class in the PCL
-            BuildIt.Forms.Controls.TouchEffect effect = (BuildIt.Forms.Controls.TouchEffect)Element.Effects.FirstOrDefault(e => e is BuildIt.Forms.Controls.TouchEffect);
+            Forms.TouchEffect effect = (Forms.TouchEffect)Element.Effects.FirstOrDefault(e => e is Forms.TouchEffect);
 
             if (effect != null && view != null)
             {

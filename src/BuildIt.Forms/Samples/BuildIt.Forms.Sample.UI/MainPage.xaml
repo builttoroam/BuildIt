@@ -148,42 +148,33 @@
             </vsm:VisualStateGroup>
         </vsm:VisualStateGroups>
     </vsm:VisualStateManager.VisualStateGroups>
-    <Grid>
+    <Grid Margin="0,20,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ScrollView>
-            <!-- Acrylic brushes only in Fall Creators Update -->
-            <!--<Grid.Effects>
+        <!-- Acrylic brushes only in Fall Creators Update -->
+        <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush"/>
         </Grid.Effects>-->
+        <ScrollView>
+
             <StackLayout vsm:Ambient.ForeColor="Blue"
                          Margin="20">
+                <controls:IconButton Icon="&#xF04B;"></controls:IconButton>
+
                 <Grid HeightRequest="200"
                       BackgroundColor="Pink">
-                    <!--<Grid.Effects>
-                    <controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />
-                </Grid.Effects>-->
+                    <Grid.Effects>
+                        <vsm:TouchEffect Capture="True"
+                                           TouchAction="OnTouchEffectAction" />
+                    </Grid.Effects>
                     <Label FontSize="30"
                            x:Name="HelloLabel"
                            Text="Hello World - Blue! &#xF04B;"
-                           controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome">
-                        <!--<Label.Effects>
-                    <controls:BackgroundEffect FallbackColor="Pink" />-->
-                        <!--<controls:FontEffect />-->
-                        <!--FontName="fontawesome-webfont.ttf#FontAwesome" />-->
-                        <!--controls:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"-->
+                           vsm:Fonts.FontFamily="fontawesome-head.ttf#FontAwesome">
 
-                        <!--</Label.Effects>-->
-                        <!--<Label.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <OnPlatform.iOS>FontAwesome</OnPlatform.iOS>
-                        <OnPlatform.Android></OnPlatform.Android>
-                        <OnPlatform.WinPhone>/Assets/Fonts/fontawesome-webfont.ttf#FontAwesome</OnPlatform.WinPhone>
-                    </OnPlatform>
-                </Label.FontFamily>-->
                     </Label>
                 </Grid>
 
@@ -196,7 +187,7 @@
                       x:Name="MultiStateAnimateGrid"
                       HorizontalOptions="Start">
                     <Grid.Effects>
-                        <controls:BackgroundEffect FallbackColor="Blue" />
+                        <vsm:BackgroundEffect FallbackColor="Blue" />
                     </Grid.Effects>
                 </Grid>
                 <Grid HeightRequest="100"
@@ -204,7 +195,7 @@
                       x:Name="MultiStateManualAnimateGrid"
                       HorizontalOptions="Start">
                     <Grid.Effects>
-                        <controls:BackgroundEffect FallbackColor="Red" />
+                        <vsm:BackgroundEffect FallbackColor="Red" />
                     </Grid.Effects>
                 </Grid>
                 <StackLayout Orientation="Horizontal">
@@ -225,8 +216,7 @@
                       x:Name="AnimateGrid"
                       HorizontalOptions="Start">
                     <Grid.Effects>
-                        <!--<controls:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome" />-->
-                        <controls:BackgroundEffect FallbackColor="Green" />
+                        <vsm:BackgroundEffect FallbackColor="Green" />
                     </Grid.Effects>
                 </Grid>
                 <StackLayout Orientation="Horizontal">
@@ -237,7 +227,7 @@
                 </StackLayout>
                 <Grid Padding="80">
                     <Grid.Effects>
-                        <!--<controls:BackgroundEffect FallbackColor="Red" />-->
+                        <vsm:BackgroundEffect FallbackColor="Red" />
                     </Grid.Effects>
                     <Button Text="Hello World!"
                             Clicked="ButtonClicked"
@@ -245,6 +235,7 @@
                 </Grid>
                 <Button Text="Hello World!"
                         Clicked="ButtonClicked"
+                        x:Name="HelloWorldText"
                         HorizontalOptions="Center" />
                 <controls:ContentButton VerticalOptions="Center"
                                         x:Name="DisabledButton"
@@ -275,11 +266,10 @@
                     </StackLayout>
                 </controls:ContentButton>
 
-                <controls:IconButton Icon="&#xF04B;"></controls:IconButton>
 
                 <local:CustomControl x:Name="Custom">
                     <local:CustomControl.Effects>
-                        <!--<controls:BackgroundEffect FallbackColor="Blue"/>-->
+                        <vsm:BackgroundEffect FallbackColor="Blue" />
                     </local:CustomControl.Effects>
                 </local:CustomControl>
             </StackLayout>

@@ -2,12 +2,19 @@
 <ctrl:ContentButton xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:ctrl="clr-namespace:BuildIt.Forms.Controls"
+                    xmlns:local="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
+                    x:Name="Root"
                     x:Class="BuildIt.Forms.Controls.IconButton">
     <Grid>
         <Label x:Name="IconLabel"
                Text="{Binding Icon}"
-               ctrl:Fonts.FontFamily="fontawesome-webfont.ttf#FontAwesome"
                VerticalOptions="Center"
-               HorizontalOptions="Center" />
+               HorizontalOptions="Center">
+            <Label.Effects>
+                <local:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome"
+                                  IsEmbedded="true"
+                                  Parent="{x:Reference Root}"/>
+            </Label.Effects>
+        </Label>
     </Grid>
 </ctrl:ContentButton>

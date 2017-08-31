@@ -5,6 +5,8 @@ using BuildIt;
 using BuildIt.States;
 using System;
 using System.Collections.Generic;
+using BuildIt.States.Interfaces;
+using BuildIt.States.Typed;
 
 namespace StateByState.Android
 {
@@ -65,9 +67,9 @@ namespace StateByState.Android
             }
         }
 
-        private void StateManager_StateChanged(object sender, StateEventArgs<TState> e)
+        private void StateManager_StateChanged(object sender, TypedStateEventArgs<TState> e)
         {
-            var state = States.SafeValue(e.State);
+            var state = States.SafeValue(e.TypedState);
             state?.Invoke(e.UseTransitions);
         }
     }

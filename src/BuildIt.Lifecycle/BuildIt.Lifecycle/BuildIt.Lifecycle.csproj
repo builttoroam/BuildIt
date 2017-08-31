@@ -40,9 +40,13 @@
 
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.48-beta" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

@@ -22,7 +22,7 @@
     </array>
     <key>UIAppFonts</key>
     <array>
-      <string>Fonts/fontawesome-webfont.ttf</string>
+      <string>Fonts/fontawesome-head.ttf</string>
     </array>
     <key>MinimumOSVersion</key>
     <string>8.0</string>

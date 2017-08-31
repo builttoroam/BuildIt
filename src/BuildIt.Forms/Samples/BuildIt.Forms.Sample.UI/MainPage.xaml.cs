@@ -22,22 +22,20 @@ namespace BuildIt.Forms.Sample
 
             BindingContext = new MainViewModel();
 
-            // var x = new Label();
-            // x.TextColor
-
-            // var x = new Button();
-            // x.TextColor
-
-            // var x = new Frame();
-            // x.BackgroundColor;
-
-            // var x = new BoxView();
-            // x.Color;
-
-            // var cv = new ContentView();
-            // cv.BackgroundColor;
-
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
+
+          //  DesignTimeInfo.BindingContext = new DesignInfo(this);
+
+            this.AddDesignAction("Test", async () =>
+            {
+                HelloWorldText.Text = "Hi Everyone!";
+                "Hi changed".Log();
+                await VisualStateManager.GoToState(this, "RotateRight");
+                "Hi changed back".Log();
+                HelloWorldText.Text = "Well, maybe not everyone";
+                await VisualStateManager.GoToState(this, "RotateLeft");
+                "Ending".Log();
+            });
         }
 
         protected async override void OnAppearing()
@@ -83,6 +81,11 @@ namespace BuildIt.Forms.Sample
         {
             DisabledButton.IsEnabled = !DisabledButton.IsEnabled;
             (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
+        }
+
+        protected async void OnTouchEffectAction(object sender, object args)
+        {
+            "Touched - mainpage".Log();
         }
     }
 }

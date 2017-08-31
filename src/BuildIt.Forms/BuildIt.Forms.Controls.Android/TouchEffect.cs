@@ -23,7 +23,7 @@ namespace BuildIt.Forms.Controls.Droid
 
         private Android.Views.View view;
         private Element formsElement;
-        private BuildIt.Forms.Controls.TouchEffect pclTouchEffect;
+        private Forms.TouchEffect pclTouchEffect;
         private bool capture;
         private Func<double, double> fromPixels;
         private int[] twoIntArray = new int[2];
@@ -36,10 +36,13 @@ namespace BuildIt.Forms.Controls.Droid
             // Get the Android View corresponding to the Element that the effect is attached to
             view = Control ?? Container;
 
+            //var type = view.GetType().Name;
+            //type.Log();
+
             // Get access to the TouchEffect class in the PCL
-            BuildIt.Forms.Controls.TouchEffect touchEffect =
-                (BuildIt.Forms.Controls.TouchEffect)Element.Effects.
-                    FirstOrDefault(e => e is BuildIt.Forms.Controls.TouchEffect);
+            Forms.TouchEffect touchEffect =
+                (Forms.TouchEffect)Element.Effects.
+                    FirstOrDefault(e => e is Forms.TouchEffect);
 
             if (touchEffect == null || view == null)
             {
@@ -50,10 +53,26 @@ namespace BuildIt.Forms.Controls.Droid
 
             formsElement = Element;
 
+            var fview = formsElement as Xamarin.Forms.View;
+            if (fview != null)
+            {
+                fview.InputTransparent = true;
+            }
+
             pclTouchEffect = touchEffect;
 
             // Save fromPixels function
             fromPixels = view.Context.FromPixels;
+
+            //var renderer = view as IVisualElementRenderer;
+            //if (renderer != null)
+            //{
+            //    var ctrl = renderer.View;
+            //    if (ctrl != null)
+            //    {
+            //        ctrl.Touch += OnTouch;
+            //    }
+            //}
 
             // Set event handler on View
             view.Touch += OnTouch;
@@ -75,48 +94,70 @@ namespace BuildIt.Forms.Controls.Droid
 
         private void OnTouch(object sender, Android.Views.View.TouchEventArgs args)
         {
-            // Two object common to all the events
-            Android.Views.View senderView = sender as Android.Views.View;
-            MotionEvent motionEvent = args.Event;
-
-            // Get the pointer index
-            int pointerIndex = motionEvent.ActionIndex;
-
-            // Get the id that identifies a finger over the course of its progress
-            int id = motionEvent.GetPointerId(pointerIndex);
-
-            senderView.GetLocationOnScreen(twoIntArray);
-            var screenPointerCoords = new Point(
-                twoIntArray[0] + motionEvent.GetX(pointerIndex),
-                twoIntArray[1] + motionEvent.GetY(pointerIndex));
-
-            // Use ActionMasked here rather than Action to reduce the number of possibilities
-            switch (args.Event.ActionMasked)
+            try
             {
-                case MotionEventActions.Down:
-                case MotionEventActions.PointerDown:
-                    FireEvent(this, id, TouchActionType.Pressed, screenPointerCoords, true);
+                // Two object common to all the events
+                Android.Views.View senderView = sender as Android.Views.View;
+                MotionEvent motionEvent = args.Event;
 
-                    idToEffectDictionary.Add(id, this);
+                // Get the pointer index
+                int pointerIndex = motionEvent.ActionIndex;
 
-                    capture = pclTouchEffect.Capture;
-                    break;
+                // Get the id that identifies a finger over the course of its progress
+                int id = motionEvent.GetPointerId(pointerIndex);
 
-                case MotionEventActions.Move:
-                    // Multiple Move events are bundled, so handle them in a loop
-                    for (pointerIndex = 0; pointerIndex < motionEvent.PointerCount; pointerIndex++)
-                    {
-                        id = motionEvent.GetPointerId(pointerIndex);
+                senderView.GetLocationOnScreen(twoIntArray);
+                var screenPointerCoords = new Point(
+                    twoIntArray[0] + motionEvent.GetX(pointerIndex),
+                    twoIntArray[1] + motionEvent.GetY(pointerIndex));
 
+                // Use ActionMasked here rather than Action to reduce the number of possibilities
+                switch (args.Event.ActionMasked)
+                {
+                    case MotionEventActions.Down:
+                    case MotionEventActions.PointerDown:
+                        FireEvent(this, id, TouchActionType.Pressed, screenPointerCoords, true);
+
+                        idToEffectDictionary.Add(id, this);
+
+                        capture = pclTouchEffect.Capture;
+                        break;
+
+                    case MotionEventActions.Move:
+                        // Multiple Move events are bundled, so handle them in a loop
+                        for (pointerIndex = 0; pointerIndex < motionEvent.PointerCount; pointerIndex++)
+                        {
+                            id = motionEvent.GetPointerId(pointerIndex);
+
+                            if (capture)
+                            {
+                                senderView.GetLocationOnScreen(twoIntArray);
+
+                                screenPointerCoords = new Point(
+                                    twoIntArray[0] + motionEvent.GetX(pointerIndex),
+                                    twoIntArray[1] + motionEvent.GetY(pointerIndex));
+
+                                FireEvent(this, id, TouchActionType.Moved, screenPointerCoords, true);
+                            }
+                            else
+                            {
+                                CheckForBoundaryHop(id, screenPointerCoords);
+
+                                if (idToEffectDictionary[id] != null)
+                                {
+                                    FireEvent(idToEffectDictionary[id], id, TouchActionType.Moved, screenPointerCoords,
+                                        true);
+                                }
+                            }
+                        }
+
+                        break;
+
+                    case MotionEventActions.Up:
+                    case MotionEventActions.Pointer1Up:
                         if (capture)
                         {
-                            senderView.GetLocationOnScreen(twoIntArray);
-
-                            screenPointerCoords = new Point(
-                                twoIntArray[0] + motionEvent.GetX(pointerIndex),
-                                                            twoIntArray[1] + motionEvent.GetY(pointerIndex));
-
-                            FireEvent(this, id, TouchActionType.Moved, screenPointerCoords, true);
+                            FireEvent(this, id, TouchActionType.Released, screenPointerCoords, false);
                         }
                         else
                         {
@@ -124,47 +165,35 @@ namespace BuildIt.Forms.Controls.Droid
 
                             if (idToEffectDictionary[id] != null)
                             {
-                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Moved, screenPointerCoords, true);
+                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Released, screenPointerCoords,
+                                    false);
                             }
                         }
-                    }
 
-                    break;
+                        idToEffectDictionary.Remove(id);
+                        break;
 
-                case MotionEventActions.Up:
-                case MotionEventActions.Pointer1Up:
-                    if (capture)
-                    {
-                        FireEvent(this, id, TouchActionType.Released, screenPointerCoords, false);
-                    }
-                    else
-                    {
-                        CheckForBoundaryHop(id, screenPointerCoords);
-
-                        if (idToEffectDictionary[id] != null)
+                    case MotionEventActions.Cancel:
+                        if (capture)
                         {
-                            FireEvent(idToEffectDictionary[id], id, TouchActionType.Released, screenPointerCoords, false);
+                            FireEvent(this, id, TouchActionType.Cancelled, screenPointerCoords, false);
                         }
-                    }
-
-                    idToEffectDictionary.Remove(id);
-                    break;
-
-                case MotionEventActions.Cancel:
-                    if (capture)
-                    {
-                        FireEvent(this, id, TouchActionType.Cancelled, screenPointerCoords, false);
-                    }
-                    else
-                    {
-                        if (idToEffectDictionary[id] != null)
+                        else
                         {
-                            FireEvent(idToEffectDictionary[id], id, TouchActionType.Cancelled, screenPointerCoords, false);
+                            if (idToEffectDictionary[id] != null)
+                            {
+                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Cancelled, screenPointerCoords,
+                                    false);
+                            }
                         }
-                    }
 
-                    idToEffectDictionary.Remove(id);
-                    break;
+                        idToEffectDictionary.Remove(id);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogException();
             }
         }
 

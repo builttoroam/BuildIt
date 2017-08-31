@@ -19,14 +19,27 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.4\BuildIt.Forms.Controls.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
+
+ <ItemGroup>
+   <EmbeddedResource Include="ContentButton.xaml">
+     <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+   </EmbeddedResource>
+   <EmbeddedResource Include="IconButton.xaml">
+     <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+   </EmbeddedResource>
+ </ItemGroup>
+
+ 
   <ItemGroup>
-    <None Remove="ContentButton.xaml" />
+    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+    <EmbeddedResource Include="fontawesome-webfont.ttf" />
   </ItemGroup>
 
   <!--<ItemGroup>
@@ -39,14 +52,18 @@
   </ItemGroup>-->
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.266-pre1" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.269-pre2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

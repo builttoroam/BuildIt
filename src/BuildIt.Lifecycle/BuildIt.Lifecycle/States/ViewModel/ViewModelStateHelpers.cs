@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States;
 using BuildIt;
@@ -115,7 +116,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             this Tuple<IStateManager,
             ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>,
             ITypedStateDefinitionWithData<TState, TStateDefinition, TViewModel>> smInfo,
-            Func<TViewModel, Task> action)
+            Func<TViewModel, CancellationToken, Task> action)
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
@@ -123,7 +124,10 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         {
             var stateDefinition = smInfo?.Item3?.StateData;
-            if (stateDefinition == null) return null;
+            if (stateDefinition == null)
+            {
+                return null;
+            }
 
             "Adding Initialization".Log();
             if (stateDefinition.Initialise == null || action == null)
@@ -203,14 +207,17 @@ namespace BuildIt.Lifecycle.States.ViewModel
             WhenChangingFrom<TState, TStateDefinition, TStateGroupDefinition, TViewModel>(
             this Tuple<IStateManager, ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>, 
                 ITypedStateDefinitionWithData<TState, TStateDefinition, TViewModel>> smInfo,
-            Func<TViewModel, Task> action) 
+            Func<TViewModel, CancellationToken, Task> action) 
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
             where TViewModel : INotifyPropertyChanged
         {
             var stateDefinition = smInfo?.Item3?.StateData;
-            if (stateDefinition == null) return null;
+            if (stateDefinition == null)
+            {
+                return null;
+            }
 
             "Adding Behaviour: ChangingFromViewModel".Log();
             if (stateDefinition.ChangingFrom == null || action == null)
@@ -245,14 +252,17 @@ namespace BuildIt.Lifecycle.States.ViewModel
             WhenChangedTo<TState, TStateDefinition, TStateGroupDefinition, TViewModel>(
             this Tuple<IStateManager, ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>, 
                 ITypedStateDefinitionWithData<TState, TStateDefinition, TViewModel>> smInfo,
-            Func<TViewModel, Task> action) 
+            Func<TViewModel, CancellationToken, Task> action)
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
             where TViewModel : INotifyPropertyChanged
         {
             var stateDefinition = smInfo?.Item3?.StateData;
-            if (stateDefinition == null) return null;
+            if (stateDefinition == null)
+            {
+                return null;
+            }
 
             "Adding Behaviour: ChangedToViewModel".Log();
 
@@ -264,6 +274,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
             {
                 stateDefinition.ChangedTo += action;
             }
+
             return smInfo;
         }
 
@@ -282,7 +293,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
         public static Tuple<IStateManager, ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>, ITypedStateDefinitionWithData<TState, TStateDefinition, TViewModel>> WhenChangedToWithData<TState, TStateDefinition, TStateGroupDefinition, TViewModel, TData>(
             this Tuple<IStateManager, ITypedStateGroup<TState, TStateDefinition, TStateGroupDefinition>, ITypedStateDefinitionWithData<TState, TStateDefinition, TViewModel>> smInfo,
-            Func<TViewModel, TData, Task> action)
+            Func<TViewModel, TData, CancellationToken, Task> action)
             where TState : struct
             where TStateDefinition : class, ITypedStateDefinition<TState>, new()
             where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
@@ -293,10 +304,10 @@ namespace BuildIt.Lifecycle.States.ViewModel
 
             "Adding Behaviour: ChangedToWithDataViewModel".Log();
 
-            var modAction = new Func<TViewModel, string, Task>((vm, d) =>
+            var modAction = new Func<TViewModel, string, CancellationToken, Task>((vm, d, cancel) =>
            {
                var data = d.DecodeJson<TData>();
-               return action(vm, data);
+               return action(vm, data, cancel);
            });
 
             if (action == null)

@@ -10,8 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
-    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

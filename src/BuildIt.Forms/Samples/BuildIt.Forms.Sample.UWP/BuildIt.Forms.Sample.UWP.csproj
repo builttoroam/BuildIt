@@ -106,7 +106,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="Assets\Fonts\fontawesome-webfont.ttf">
+    <Content Include="Assets\Fonts\fontawesome-head.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="BuildIt.Forms.Sample.UWP_TemporaryKey.pfx" />
@@ -178,10 +178,10 @@
       <Version>1.1.0.32</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.30</Version>
+      <Version>1.1.0.75</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.58-beta</Version>
+      <Version>1.1.0.75</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
@@ -190,7 +190,7 @@
       <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>2.4.0.266-pre1</Version>
+      <Version>2.4.0.269-pre2</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

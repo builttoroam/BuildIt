@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-monoandroid10+net45+win+win81+wp8+wpa81+xamarinios10+xamarinmac20</PackageTargetFallback>
     <AssemblyName>BuildIt.Forms.Sample</AssemblyName>
     <RootNamespace>BuildIt.Forms.Sample</RootNamespace>
   </PropertyGroup>
@@ -10,13 +9,15 @@
   <ItemGroup>
     <None Remove="CustomControl.xaml" />
     <None Remove="ListViewItemControl.xaml" />
+    <None Remove="App.xaml"/>
+    <None Remove="MainPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
-  <!--<ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="App.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -29,14 +30,14 @@
     <EmbeddedResource Include="MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>-->
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.1" />
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
-    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.266-pre1" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.269-pre2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +56,10 @@
     <Compile Update="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
