@@ -31,11 +31,14 @@ using Point = Android.Graphics.Point;
 using Android.Runtime;
 using Android.Util;
 using Size = Android.Util.Size;
+using View = Android.Views.View;
+//using FragmentManager = Android.Support.V4.App.FragmentManager;
+using FragmentManager = Android.App.FragmentManager;
 
 [assembly:ExportRenderer (typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace BuildIt.AR.FormsSamples.Android
 {
-	public class CameraPageRenderer : PageRenderer, TextureView.ISurfaceTextureListener, ActivityCompat.IOnRequestPermissionsResultCallback
+	public class CameraPageRenderer : PageRenderer, TextureView.ISurfaceTextureListener, ActivityCompat.IOnRequestPermissionsResultCallback, IManageFragments, View.IOnClickListener
     {
         global::Android.Hardware.Camera camera;
         global::Android.Widget.Button takePhotoButton;
@@ -75,6 +78,8 @@ namespace BuildIt.AR.FormsSamples.Android
         // An additional thread for running tasks that shouldn't block the UI.
         private HandlerThread mBackgroundThread;
 
+        FragmentManager fragmentManager;
+
         bool flashOn;
         byte[] imageBytes;
 
@@ -90,7 +95,7 @@ namespace BuildIt.AR.FormsSamples.Android
             try
             {
                 SetupUserInterface();
-                SetupEventHandlers();
+                //SetupEventHandlers();
                 AddView(view);
             }
             catch (Exception ex)
@@ -102,11 +107,12 @@ namespace BuildIt.AR.FormsSamples.Android
         void SetupUserInterface()
         {
             activity = this.Context as Activity;
-            view = activity.LayoutInflater.Inflate(Resource.Layout.CameraLayout, this, false);
+            view = activity.LayoutInflater.Inflate(Resource.Layout.activity_camera, this, false);
             cameraType = CameraFacing.Back;
+            FragmentManager.BeginTransaction().Replace(Resource.Id.container, Camera2BasicFragment.NewInstance()).Commit();
 
-            textureView = view.FindViewById<TextureView>(Resource.Id.textureView);
-            textureView.SurfaceTextureListener = this;
+            //textureView = view.FindViewById<TextureView>(Resource.Id.textureView);
+            //textureView.SurfaceTextureListener = this;
         }
 
         void SetupEventHandlers()
@@ -445,6 +451,16 @@ namespace BuildIt.AR.FormsSamples.Android
         public void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             throw new NotImplementedException();
+        }
+
+        FragmentManager FragmentManager => fragmentManager ?? (fragmentManager = ((FormsAppCompatActivity)Context).FragmentManager);
+
+        public void SetFragmentManager(FragmentManager childFragmentManager)
+        {
+            if (fragmentManager == null)
+            {
+                this.fragmentManager = childFragmentManager;
+            }
         }
     }
 }

@@ -190,6 +190,7 @@
     <Compile Include="CompareSizesByArea.cs" />
     <Compile Include="ConfirmationDialog.cs" />
     <Compile Include="ErrorDialog.cs" />
+    <Compile Include="IManageFragments.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Listeners\Camera2BasicSurfaceTextureListener.cs" />
     <Compile Include="Listeners\CameraCaptureListener.cs" />
@@ -269,7 +270,9 @@
     <AndroidResource Include="Resources\values\template-styles.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\base-strings.xml" />
+    <AndroidResource Include="Resources\values\base-strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_action_info.png" />
