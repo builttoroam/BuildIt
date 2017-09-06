@@ -4,6 +4,7 @@ using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ResolutionGroupName("BuildIt")]
@@ -14,6 +15,7 @@ namespace BuildIt.Forms.Controls.UWP
     /// <summary>
     /// Effect for detecting touch input
     /// </summary>
+    [Preserve]
     public class TouchEffect : PlatformEffect
     {
         private FrameworkElement frameworkElement;

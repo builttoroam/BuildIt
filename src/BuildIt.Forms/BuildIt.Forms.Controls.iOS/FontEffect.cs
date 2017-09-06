@@ -15,6 +15,7 @@ namespace BuildIt.Forms.Controls.iOS
     /// <summary>
     /// Effect for specifying font
     /// </summary>
+    [Preserve]
     public class FontEffect : PlatformEffect
     {
         private bool IsEmbedded { get; set; }
