@@ -2,6 +2,7 @@
 using System.Linq;
 using Windows.UI.Xaml.Media;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.BackgroundEffect), "BackgroundEffect")]
@@ -10,6 +11,7 @@ namespace BuildIt.Forms.Controls.UWP
     /// <summary>
     /// Effect for setting background on elements that don't support background
     /// </summary>
+    [Preserve]
     public class BackgroundEffect : PlatformEffect
     {
         /// <summary>
