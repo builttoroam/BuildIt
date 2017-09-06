@@ -2,6 +2,7 @@
 using BuildIt.Forms.Controls.iOS;
 using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportEffect(typeof(BackgroundEffect), nameof(BackgroundEffect))]
@@ -15,6 +16,7 @@ namespace BuildIt.Forms.Controls.iOS
     /// attribute exposed on them). Can specify either/or a resource (eg XAML resource name) or
     /// fallback color.
     /// </summary>
+    [Preserve]
     public class BackgroundEffect : PlatformEffect
     {
         private UIView view;

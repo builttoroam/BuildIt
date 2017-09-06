@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.Droid.FontEffect), nameof(BuildIt.Forms.Controls.Droid.FontEffect))]
@@ -15,6 +16,7 @@ namespace BuildIt.Forms.Controls.Droid
     /// <summary>
     /// Font effect, used to specify font family for visual elements
     /// </summary>
+    [Preserve]
     public class FontEffect : PlatformEffect
     {
         private static IDictionary<string, Typeface> Fonts { get; } = new Dictionary<string, Typeface>();
