@@ -14,7 +14,10 @@ namespace BuildIt
         private static ILogService logService;
         private static bool hasLookedForLogService;
 
-        private static ILogService LogService
+        /// <summary>
+        /// Gets or sets the LogService instance
+        /// </summary>
+        public static ILogService LogService
         {
             get
             {
@@ -26,6 +29,12 @@ namespace BuildIt
                     }
 
                     hasLookedForLogService = true;
+
+                    if (!ServiceLocator.IsLocationProviderSet)
+                    {
+                        return null;
+                    }
+
                     return logService ?? (logService = ServiceLocator.Current.GetInstance<ILogService>());
                 }
                 catch (Exception ex)
@@ -34,6 +43,7 @@ namespace BuildIt
                     return null;
                 }
             }
+            set => logService = value;
         }
 
         /// <summary>
@@ -85,7 +95,7 @@ namespace BuildIt
             }
         }
 
-    private static void InternalWriteLog(string message)
+        private static void InternalWriteLog(string message)
         {
             try
             {

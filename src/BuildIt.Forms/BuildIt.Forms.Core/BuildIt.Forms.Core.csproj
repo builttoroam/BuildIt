@@ -20,6 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Fonts.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\btrlogo.png" />
   </ItemGroup>
 

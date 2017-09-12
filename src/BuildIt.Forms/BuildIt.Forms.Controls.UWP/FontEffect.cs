@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.FontEffect), "FontEffect")]
@@ -17,6 +18,7 @@ namespace BuildIt.Forms.Controls.UWP
     /// <summary>
     /// Effect for specifying font on Label elements
     /// </summary>
+    [Preserve]
     public class FontEffect : PlatformEffect
     {
         private static IDictionary<string, FontFamily> Fonts { get; } = new Dictionary<string, FontFamily>();
