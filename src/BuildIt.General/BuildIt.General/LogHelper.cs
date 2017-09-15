@@ -1,8 +1,12 @@
-using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using BuildIt.Logging;
 using BuildIt.ServiceLocation;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BuildIt
 {
@@ -11,13 +15,14 @@ namespace BuildIt
     /// </summary>
     public static class LogHelper
     {
-        private static ILogService logService;
+        private static ILoggerService logService;
         private static bool hasLookedForLogService;
+        private static int wakeUpLock;
 
         /// <summary>
         /// Gets or sets the LogService instance
         /// </summary>
-        public static ILogService LogService
+        public static ILoggerService LogService
         {
             get
             {
@@ -35,7 +40,7 @@ namespace BuildIt
                         return null;
                     }
 
-                    return logService ?? (logService = ServiceLocator.Current.GetInstance<ILogService>());
+                    return logService ?? (logService = ServiceLocator.Current.GetInstance<ILoggerService>());
                 }
                 catch (Exception ex)
                 {
@@ -46,30 +51,49 @@ namespace BuildIt
             set => logService = value;
         }
 
+        private static Queue<ILogEntry> LogQueue { get; } = new Queue<ILogEntry>();
+
+        private static AutoResetEvent LogWaiter { get; } = new AutoResetEvent(false);
+
         /// <summary>
         /// Logs information about an entity
         /// </summary>
         /// <typeparam name="TEntity">The type of entity to write</typeparam>
         /// <param name="entity">The entity to write (serialized)</param>
-        /// <param name="caller">The name of the calling method</param>
-        public static void Log<TEntity>(this TEntity entity, [CallerMemberName] string caller = null)
-        {
-            var json = JsonConvert.SerializeObject(entity);
-
-            // ReSharper disable once ExplicitCallerInfoArgument // Ignore that argument can be null
-            Log(typeof(TEntity).Name + ": " + json, caller);
-        }
-
-        /// <summary>
-        /// Log out a message
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        /// <param name="caller">The name of the calling method</param>
-        public static void Log(this string message, [CallerMemberName] string caller = null)
+        /// <param name="message">The message to be logged (optional)</param>
+        /// <param name="categories">The category to be logged  (optional)</param>
+        /// <param name="metadata">The metadata to be logged  (optional)</param>
+        /// <param name="level">The log level to log (optional but defaults to Information)</param>
+        /// <param name="assembly">The assembly name to be logged  (optional) </param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        public static void LogEntity<TEntity>(this TEntity entity, string message = null, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Information, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
             {
-                InternalWriteLog("[" + caller + "] " + message);
+                var entry = new TypedLogEntry<TEntity>(level, assembly?.GetName().Name, caller, entity, message, null, metadata, categories);
+                InternalWriteLog(entry);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Logs a message
+        /// </summary>
+        /// <param name="message">The message to be logged (optional)</param>
+        /// <param name="categories">The category to be logged  (optional)</param>
+        /// <param name="metadata">The metadata to be logged  (optional)</param>
+        /// <param name="level">The log level to log (optional but defaults to Information)</param>
+        /// <param name="assembly">The assembly name to be logged  (optional) </param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        public static void Log(this string message, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Information, Assembly assembly = null, [CallerMemberName] string caller = null)
+        {
+            try
+            {
+                var entry = new LogEntry(level, assembly?.GetName().Name, caller, message, null, metadata, categories);
+                InternalWriteLog(entry);
             }
             catch (Exception ex)
             {
@@ -80,14 +104,41 @@ namespace BuildIt
         /// <summary>
         /// Logs an exception
         /// </summary>
-        /// <param name="ex">The exception to log</param>
+        /// <param name="exception">The exception to log</param>
         /// <param name="message">The message (optional) to log</param>
+        /// <param name="categories">The category to be logged  (optional)</param>
+        /// <param name="metadata">The metadata to be logged  (optional)</param>
+        /// <param name="level">The log level to log (optional but defaults to Information)</param>
+        /// <param name="assembly">The assembly name to be logged  (optional) </param>
         /// <param name="caller">The calling method</param>
-        public static void LogException(this Exception ex, string message = null, [CallerMemberName] string caller = null)
+        public static void LogException(this Exception exception, string message, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
             {
-                InternalWriteException(caller + ": " + message, ex);
+                var entry = new LogEntry(level, assembly?.GetName().Name, caller, message, exception, metadata, categories);
+                InternalWriteLog(entry);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private static void InternalWriteLog(ILogEntry log)
+        {
+            try
+            {
+                if (LogService == null || log == null)
+                {
+                    return;
+                }
+
+                LogQueue.Enqueue(log);
+                LogWaiter.Set();
+                if (Interlocked.CompareExchange(ref wakeUpLock, 1, 0) == 0)
+                {
+                    Task.Run(() => WakeUp());
+                }
             }
             catch (Exception ext)
             {
@@ -95,29 +146,43 @@ namespace BuildIt
             }
         }
 
-        private static void InternalWriteLog(string message)
+        private static async void WakeUp()
         {
             try
             {
-                Debug.WriteLine(message);
-                LogService?.Debug(message);
-            }
-            catch (Exception ext)
-            {
-                Debug.WriteLine(ext.Message);
-            }
-        }
+                while (LogQueue.Count > 0)
+                {
+                    var entry = LogQueue.Dequeue();
+                    if (entry == null)
+                    {
+                        return;
+                    }
 
-        private static void InternalWriteException(string message, Exception ex)
-        {
-            try
-            {
-                Debug.WriteLine($"Exception ({message}): {ex.Message}");
-                LogService?.Exception(message, ex);
+                    if (LogService.Filter != null)
+                    {
+                        var ok = await LogService.Filter.IncludeLog(entry);
+                        if (!ok)
+                        {
+                            continue;
+                        }
+                    }
+
+                    await LogService.Log(entry);
+
+                    if (LogQueue.Count == 0)
+                    {
+                        LogWaiter.WaitOne();
+                    }
+                }
             }
-            catch (Exception ext)
+            catch (Exception ex)
             {
-                Debug.WriteLine("Exception: " + ext.Message);
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                LogWaiter.Reset();
+                Interlocked.Exchange(ref wakeUpLock, 0);
             }
         }
     }
