@@ -92,6 +92,7 @@ namespace BuildIt.Logging
                 sb.Append(" - " + Message);
             }
 
+            sb.AppendLine();
             if (Exception != null)
             {
                 sb.AppendLine(Exception.Message);

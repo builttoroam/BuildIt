@@ -40,7 +40,7 @@ namespace BuildIt
                         return null;
                     }
 
-                    return logService ?? (logService = ServiceLocator.Current.GetInstance<ILoggerService>());
+                    return logService ?? (LogService = ServiceLocator.Current.GetInstance<ILoggerService>());
                 }
                 catch (Exception ex)
                 {
@@ -48,7 +48,12 @@ namespace BuildIt
                     return null;
                 }
             }
-            set => logService = value;
+
+            set
+            {
+                logService = value;
+                hasLookedForLogService = true;
+            }
         }
 
         private static Queue<ILogEntry> LogQueue { get; } = new Queue<ILogEntry>();
@@ -111,7 +116,7 @@ namespace BuildIt
         /// <param name="level">The log level to log (optional but defaults to Information)</param>
         /// <param name="assembly">The assembly name to be logged  (optional) </param>
         /// <param name="caller">The calling method</param>
-        public static void LogException(this Exception exception, string message, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
+        public static void LogException(this Exception exception, string message = null, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
             {
@@ -134,10 +139,13 @@ namespace BuildIt
                 }
 
                 LogQueue.Enqueue(log);
-                LogWaiter.Set();
                 if (Interlocked.CompareExchange(ref wakeUpLock, 1, 0) == 0)
                 {
                     Task.Run(() => WakeUp());
+                }
+                else
+                {
+                    LogWaiter.Set();
                 }
             }
             catch (Exception ext)
