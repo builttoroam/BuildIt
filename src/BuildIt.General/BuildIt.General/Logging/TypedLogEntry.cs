@@ -36,6 +36,8 @@ namespace BuildIt.Logging
         /// </summary>
         public TEntity Entity { get; }
 
+        private PropertyInfo[] Properties => properties ?? (properties = BuildProperties());
+
         /// <summary>
         /// Adds entity information
         /// </summary>
@@ -58,8 +60,6 @@ namespace BuildIt.Logging
 
             return sb.ToString();
         }
-
-        private PropertyInfo[] Properties => properties ?? (properties = BuildProperties());
 
         private PropertyInfo[] BuildProperties()
         {

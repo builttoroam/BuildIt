@@ -56,6 +56,11 @@ namespace BuildIt
             }
         }
 
+        /// <summary>
+        /// Gets or sets a simple log output handler
+        /// </summary>
+        public static Action<string> LogOutput { get; set; }
+
         private static Queue<ILogEntry> LogQueue { get; } = new Queue<ILogEntry>();
 
         private static AutoResetEvent LogWaiter { get; } = new AutoResetEvent(false);
@@ -133,7 +138,12 @@ namespace BuildIt
         {
             try
             {
-                if (LogService == null || log == null)
+                if (log == null)
+                {
+                    return;
+                }
+
+                if (LogService == null && LogOutput == null)
                 {
                     return;
                 }
@@ -166,16 +176,28 @@ namespace BuildIt
                         return;
                     }
 
-                    if (LogService.Filter != null)
+                    try
                     {
-                        var ok = await LogService.Filter.IncludeLog(entry);
-                        if (!ok)
+                        if (LogService.Filter != null)
                         {
-                            continue;
+                            var ok = await LogService.Filter.IncludeLog(entry);
+                            if (!ok)
+                            {
+                                continue;
+                            }
+                        }
+
+                        LogOutput?.Invoke(entry.ToString());
+
+                        if (LogService != null)
+                        {
+                            await LogService.Log(entry);
                         }
                     }
-
-                    await LogService.Log(entry);
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
 
                     if (LogQueue.Count == 0)
                     {

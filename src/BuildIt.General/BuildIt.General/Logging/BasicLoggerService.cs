@@ -21,29 +21,6 @@ namespace BuildIt.Logging
         public Func<ILogEntry, Task> LogOutput { get; set; }
 
         /// <summary>
-        /// Writes information to the debugger
-        /// </summary>
-        /// <param name="message">The message to write</param>
-        public virtual void Debug(string message)
-        {
-            // NB: This is a null operation in the release method - this stub is only
-            // here to facilitate debugging the General library
-            System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        /// <summary>
-        /// Writes exception information to debugger
-        /// </summary>
-        /// <param name="message">The message to write</param>
-        /// <param name="ex">The exception to write out</param>
-        public virtual void Exception(string message, Exception ex)
-        {
-            // NB: This is a null operation in the release method - this stub is only
-            // here to facilitate debugging the General library
-            System.Diagnostics.Debug.WriteLine("Exception:" + ex.Message + " - " + message);
-        }
-
-        /// <summary>
         /// Handles logging the item (called by the logging infrastructure)
         /// </summary>
         /// <param name="logItem">The item to be logged</param>
