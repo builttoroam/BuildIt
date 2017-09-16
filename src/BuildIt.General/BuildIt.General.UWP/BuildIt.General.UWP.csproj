@@ -28,7 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\BuildIt.General.UWP.XML</DocumentationFile>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,7 +40,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\BuildIt.General.UWP.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -52,7 +52,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <DocumentationFile>bin\x86\Debug\BuildIt.General.UWP.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -65,7 +65,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <DocumentationFile>bin\x86\Release\BuildIt.General.UWP.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
@@ -80,7 +80,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <DocumentationFile>bin\ARM\Debug\BuildIt.General.UWP.XML</DocumentationFile>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -92,7 +92,7 @@
     <PlatformTarget>ARM</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <DocumentationFile>bin\ARM\Release\BuildIt.General.UWP.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
@@ -106,7 +106,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <DocumentationFile>bin\x64\Debug\BuildIt.General.UWP.XML</DocumentationFile>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -118,12 +118,12 @@
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <DocumentationFile>bin\x64\Release\BuildIt.General.UWP.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    </PropertyGroup>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
