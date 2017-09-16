@@ -90,6 +90,24 @@ namespace BuildIt
         }
 
         /// <summary>
+        /// Logs a message - for backward compatibility
+        /// </summary>
+        /// <param name="message">The message to be logged (optional)</param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        public static void Log(this string message, string caller)
+        {
+            try
+            {
+                var entry = new LogEntry(LogLevel.Information, null, caller, message, null, null, null);
+                InternalWriteLog(entry);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Logs a message
         /// </summary>
         /// <param name="message">The message to be logged (optional)</param>
