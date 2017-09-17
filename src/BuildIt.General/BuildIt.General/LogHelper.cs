@@ -228,7 +228,7 @@ namespace BuildIt
 
                     try
                     {
-                        if (LogService.Filter != null)
+                        if (LogService?.Filter != null)
                         {
                             var ok = await LogService.Filter.IncludeLog(entry);
                             if (!ok)
