@@ -71,8 +71,8 @@ namespace BuildIt
         /// <typeparam name="TEntity">The type of entity to write</typeparam>
         /// <param name="entity">The entity to write (serialized)</param>
         /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
-        [Obsolete("Use LogEntity")]
-        public static void Log<TEntity>(this TEntity entity, string caller)
+        [Obsolete("Use LogEntity()")]
+        public static void Log<TEntity>(this TEntity entity, [CallerMemberName] string caller = null)
         {
             // ReSharper disable once ExplicitCallerInfoArgument - backward compat
             entity.LogEntity(null, null, null, LogLevel.Information, null, caller);
@@ -107,11 +107,11 @@ namespace BuildIt
         /// </summary>
         /// <param name="message">The message to be logged (optional)</param>
         /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
-        [Obsolete("Use Log()")]
-        public static void Log(this string message, string caller)
+        [Obsolete("Use LogMessage()")]
+        public static void Log(this string message, [CallerMemberName] string caller = null)
         {
             // ReSharper disable once ExplicitCallerInfoArgument - backward compat
-            message.Log(null, null, LogLevel.Information, null, caller);
+            message.LogMessage(null, null, LogLevel.Information, null, caller);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace BuildIt
         /// <param name="level">The log level to log (optional but defaults to Information)</param>
         /// <param name="assembly">The assembly name to be logged  (optional) </param>
         /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
-        public static void Log(this string message, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Information, Assembly assembly = null, [CallerMemberName] string caller = null)
+        public static void LogMessage(this string message, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Information, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
             {
@@ -140,38 +140,26 @@ namespace BuildIt
         /// Logs an exception - for backward compatibility
         /// </summary>
         /// <param name="exception">The exception to log</param>
-        /// <param name="caller">The calling method</param>
-        [Obsolete("Use LogException()")]
-        public static void LogException(this Exception exception, string caller)
-        {
-            // ReSharper disable once ExplicitCallerInfoArgument - backward compat
-            exception.LogException(null, null, null, LogLevel.Error, null, caller);
-        }
-
-        /// <summary>
-        /// Logs an exception - for backward compatibility
-        /// </summary>
-        /// <param name="exception">The exception to log</param>
         /// <param name="message">The message (optional) to log</param>
         /// <param name="caller">The calling method</param>
-        [Obsolete("Use LogException()")]
-        public static void LogException(this Exception exception, string message, string caller)
+        [Obsolete("Use LogError()")]
+        public static void LogException(this Exception exception, string message = null, [CallerMemberName] string caller = null)
         {
             // ReSharper disable once ExplicitCallerInfoArgument - backward compat
-            exception.LogException(null, message, null, LogLevel.Error, null, caller);
+            exception.LogError(message, null, null, LogLevel.Error, null, caller);
         }
 
         /// <summary>
         /// Logs an exception
         /// </summary>
         /// <param name="exception">The exception to log</param>
-        /// <param name="categories">The category to be logged  (optional)</param>
         /// <param name="message">The message (optional) to log</param>
+        /// <param name="categories">The category to be logged  (optional)</param>
         /// <param name="metadata">The metadata to be logged  (optional)</param>
         /// <param name="level">The log level to log (optional but defaults to Information)</param>
         /// <param name="assembly">The assembly name to be logged  (optional) </param>
         /// <param name="caller">The calling method</param>
-        public static void LogException(this Exception exception, string[] categories = null, string message = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
+        public static void LogError(this Exception exception, string message = null, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
             {

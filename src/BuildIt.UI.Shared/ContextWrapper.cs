@@ -38,7 +38,7 @@ namespace BuildIt.General.UI
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
     }
