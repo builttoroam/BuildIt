@@ -70,6 +70,19 @@ namespace BuildIt
         /// </summary>
         /// <typeparam name="TEntity">The type of entity to write</typeparam>
         /// <param name="entity">The entity to write (serialized)</param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        [Obsolete("Use LogEntity")]
+        public static void Log<TEntity>(this TEntity entity, string caller)
+        {
+            // ReSharper disable once ExplicitCallerInfoArgument - backward compat
+            entity.LogEntity(null, null, null, LogLevel.Information, null, caller);
+        }
+
+        /// <summary>
+        /// Logs information about an entity
+        /// </summary>
+        /// <typeparam name="TEntity">The type of entity to write</typeparam>
+        /// <param name="entity">The entity to write (serialized)</param>
         /// <param name="message">The message to be logged (optional)</param>
         /// <param name="categories">The category to be logged  (optional)</param>
         /// <param name="metadata">The metadata to be logged  (optional)</param>
@@ -94,17 +107,11 @@ namespace BuildIt
         /// </summary>
         /// <param name="message">The message to be logged (optional)</param>
         /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        [Obsolete("Use Log()")]
         public static void Log(this string message, string caller)
         {
-            try
-            {
-                var entry = new LogEntry(LogLevel.Information, null, caller, message, null, null, null);
-                InternalWriteLog(entry);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            // ReSharper disable once ExplicitCallerInfoArgument - backward compat
+            message.Log(null, null, LogLevel.Information, null, caller);
         }
 
         /// <summary>
@@ -127,6 +134,18 @@ namespace BuildIt
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Logs an exception - for backward compatibility
+        /// </summary>
+        /// <param name="exception">The exception to log</param>
+        /// <param name="caller">The calling method</param>
+        [Obsolete("Use LogException()")]
+        public static void LogException(this Exception exception, string caller)
+        {
+            // ReSharper disable once ExplicitCallerInfoArgument - backward compat
+            exception.LogException(null, null, null, LogLevel.Error, null, caller);
         }
 
         /// <summary>
