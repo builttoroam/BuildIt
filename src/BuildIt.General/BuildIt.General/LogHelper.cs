@@ -149,16 +149,29 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Logs an exception
+        /// Logs an exception - for backward compatibility
         /// </summary>
         /// <param name="exception">The exception to log</param>
         /// <param name="message">The message (optional) to log</param>
+        /// <param name="caller">The calling method</param>
+        [Obsolete("Use LogException()")]
+        public static void LogException(this Exception exception, string message, string caller)
+        {
+            // ReSharper disable once ExplicitCallerInfoArgument - backward compat
+            exception.LogException(null, message, null, LogLevel.Error, null, caller);
+        }
+
+        /// <summary>
+        /// Logs an exception
+        /// </summary>
+        /// <param name="exception">The exception to log</param>
         /// <param name="categories">The category to be logged  (optional)</param>
+        /// <param name="message">The message (optional) to log</param>
         /// <param name="metadata">The metadata to be logged  (optional)</param>
         /// <param name="level">The log level to log (optional but defaults to Information)</param>
         /// <param name="assembly">The assembly name to be logged  (optional) </param>
         /// <param name="caller">The calling method</param>
-        public static void LogException(this Exception exception, string message = null, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
+        public static void LogException(this Exception exception, string[] categories = null, string message = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
             {
