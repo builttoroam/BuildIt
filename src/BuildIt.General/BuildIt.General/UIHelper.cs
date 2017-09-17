@@ -79,7 +79,7 @@ namespace BuildIt
         {
             if (context == null)
             {
-                "UI Context not defined, running action on current thread".Log();
+                "UI Context not defined, running action on current thread".LogMessage();
                 await action();
                 return;
             }

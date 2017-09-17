@@ -51,11 +51,18 @@ namespace BuildIt.Logging
 
             var sb = new StringBuilder(base.ToString());
 
-            var typeName = typeof(TEntity).Name;
-            foreach (var prop in Properties)
+            if (typeof(TEntity).GetTypeInfo().IsClass)
             {
-                var val = prop.GetValue(Entity);
-                sb.AppendLine($"Entity<{typeName}>: {prop.Name} - {val}");
+                var typeName = typeof(TEntity).Name;
+                foreach (var prop in Properties)
+                {
+                    var val = prop.GetValue(Entity);
+                    sb.AppendLine($"Entity<{typeName}>: {prop.Name} - {val}");
+                }
+            }
+            else
+            {
+                sb.AppendLine(Entity.ToString());
             }
 
             return sb.ToString();
