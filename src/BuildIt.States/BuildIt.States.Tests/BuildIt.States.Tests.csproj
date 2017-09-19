@@ -52,21 +52,14 @@
     <Compile Include="StateGroupTests.cs" />
     <Compile Include="StateHelpersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestDebugLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="BuildIt.Autofac, Version=1.1.0.32, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.Autofac.1.1.0.32\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="BuildIt.General, Version=1.1.0.75, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.General.1.1.0.75\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    <Reference Include="BuildIt.General, Version=1.1.0.92, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BuildIt.General.1.1.0.92\lib\netstandard1.0\BuildIt.General.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>

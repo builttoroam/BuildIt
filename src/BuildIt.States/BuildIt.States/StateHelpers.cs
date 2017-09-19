@@ -21,6 +21,8 @@ namespace BuildIt.States
     {
         private static IDictionary<string, int> CachedGroupNodeIndex { get; } = new Dictionary<string, int>();
 
+        private static Assembly StatesAssemblyForLogging { get; } = typeof(StateHelpers).GetTypeInfo().Assembly;
+
         /// <summary>
         /// Helper method for ensuring no leakage of exceptions
         /// </summary>
@@ -34,7 +36,7 @@ namespace BuildIt.States
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
             }
         }
 
@@ -833,7 +835,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.State;
 
-            "Adding Behaviour: AboutToChangeFrom".Log();
+            "Adding Behaviour: AboutToChangeFrom".LogStateInfo();
             stateDefinition.AboutToChangeFrom = action;
             return smInfo;
         }
@@ -874,7 +876,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.State;
 
-            "Adding Behaviour: ChangingFrom".Log();
+            "Adding Behaviour: ChangingFrom".LogStateInfo();
             stateDefinition.ChangingFrom = action;
             return smInfo;
         }
@@ -915,7 +917,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.State;
 
-            "Adding Behaviour: ChangedFrom".Log();
+            "Adding Behaviour: ChangedFrom".LogStateInfo();
             stateDefinition.ChangedFrom = action;
             return smInfo;
         }
@@ -956,7 +958,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.State;
 
-            "Adding Behaviour: ChangedTo".Log();
+            "Adding Behaviour: ChangedTo".LogStateInfo();
             stateDefinition.ChangedTo = action;
             return smInfo;
         }
@@ -1030,7 +1032,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.StateDataWrapper;
 
-            "Adding Initialization".Log();
+            "Adding Initialization".LogStateInfo();
             if (stateDefinition.Initialise == null || action == null)
             {
                 stateDefinition.Initialise = action;
@@ -1083,7 +1085,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.StateDataWrapper;
 
-            "Adding Behaviour: AboutToChangeFromViewModel".Log();
+            "Adding Behaviour: AboutToChangeFromViewModel".LogStateInfo();
             if (stateDefinition.AboutToChangeFrom == null || action == null)
             {
                 stateDefinition.AboutToChangeFrom = action;
@@ -1136,7 +1138,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.StateDataWrapper;
 
-            "Adding Behaviour: ChangingFromViewModel".Log();
+            "Adding Behaviour: ChangingFromViewModel".LogStateInfo();
             if (stateDefinition.ChangingFrom == null || action == null)
             {
                 stateDefinition.ChangingFrom = action;
@@ -1220,7 +1222,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.StateDataWrapper;
 
-            "Adding Behaviour: ChangedToWithDataViewModel".Log();
+            "Adding Behaviour: ChangedToWithDataViewModel".LogStateInfo();
 
             var modAction = new Func<TNewStateData, string, CancellationToken, Task>((vm, d, cancelToken) =>
             {
@@ -1280,7 +1282,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.StateDataWrapper;
 
-            "Adding Behaviour: ChangedToViewModel".Log();
+            "Adding Behaviour: ChangedToViewModel".LogStateInfo();
 
             if (stateDefinition.ChangedTo == null || action == null)
             {
@@ -1336,7 +1338,7 @@ namespace BuildIt.States
 
             var stateDefinition = smInfo.StateDataWrapper;
 
-            "Adding Behaviour: ChangedToWithDataViewModel".Log();
+            "Adding Behaviour: ChangedToWithDataViewModel".LogStateInfo();
 
             var modAction = new Func<TStateData, string, CancellationToken, Task>((vm, d, cancelToken) =>
             {
@@ -1450,6 +1452,25 @@ namespace BuildIt.States
                 .WhenChangingFrom(smInfo.WhenChangingFromPreviousState());
 
             return returnd;
+        }
+
+        /// <summary>
+        /// Quick log for states messages
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        internal static void LogStateInfo(this string message)
+        {
+            message.LogMessage(assembly: StatesAssemblyForLogging);
+        }
+
+        /// <summary>
+        /// Quick log for states messages
+        /// </summary>
+        /// <param name="exception">The exception to log</param>
+        /// <param name="message">The message to log</param>
+        internal static void LogStateException(this Exception exception, string message = null)
+        {
+            exception.LogError(assembly: StatesAssemblyForLogging, message: message);
         }
 
         private static IStateDefinitionWithDataChangeStateWithDataBuilder<TState, TStateData, TNewStateData>
@@ -1918,6 +1939,5 @@ namespace BuildIt.States
         }
 
         #endregion
-
     }
 }

@@ -55,10 +55,10 @@ namespace BuildIt.States
         /// <returns>The generated instance of state data</returns>
         public INotifyPropertyChanged Generate()
         {
-            $"Creating instance of {typeof(TData).Name}".Log();
+            $"Creating instance of {typeof(TData).Name}".LogStateInfo();
             var vm = ServiceLocator.Current.GetInstance<TData>();
 
-            "State Data generated".Log();
+            "State Data generated".LogStateInfo();
             return vm;
         }
 
@@ -77,7 +77,7 @@ namespace BuildIt.States
 
             if (dataEntity is TData entityData)
             {
-                "Invoking Initialise".Log();
+                "Invoking Initialise".LogStateInfo();
                 await Initialise(entityData, cancelToken);
             }
         }
@@ -97,7 +97,7 @@ namespace BuildIt.States
 
             if (dataEntity is TData entityData)
             {
-                "Invoking AboutToChangeFrom".Log();
+                "Invoking AboutToChangeFrom".LogStateInfo();
                 await AboutToChangeFrom(entityData, cancel);
             }
         }
@@ -117,7 +117,7 @@ namespace BuildIt.States
 
             if (dataEntity is TData entityData)
             {
-                "Invoking ChangingFrom".Log();
+                "Invoking ChangingFrom".LogStateInfo();
                 await ChangingFrom(entityData, cancelToken);
             }
         }
@@ -137,7 +137,7 @@ namespace BuildIt.States
 
             if (dataEntity is TData entityData)
             {
-                "Invoking ChangedFrom".Log();
+                "Invoking ChangedFrom".LogStateInfo();
                 await ChangedFrom(entityData, cancelToken);
             }
         }
@@ -157,7 +157,7 @@ namespace BuildIt.States
 
             if (dataEntity is TData entityData)
             {
-                "Invoking ChangedTo".Log();
+                "Invoking ChangedTo".LogStateInfo();
                 await ChangedTo(entityData, cancelToken);
             }
         }
@@ -178,7 +178,7 @@ namespace BuildIt.States
 
             if (dataEntity is TData entityData)
             {
-                "Invoking ChangedToWithData".Log();
+                "Invoking ChangedToWithData".LogStateInfo();
                 await ChangedToWithData(entityData, data, cancelToken);
             }
         }

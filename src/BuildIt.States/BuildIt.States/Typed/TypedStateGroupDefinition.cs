@@ -41,12 +41,12 @@ namespace BuildIt.States.Typed
             // Don't ever add the default value (eg Base) state
             if (default(TState)?.Equals(state) ?? false)
             {
-                "Attempted to add the default state definition".Log();
+                "Attempted to add the default state definition".LogStateInfo();
                 return null;
             }
 
             var stateDefinition = CreateDefinitionFromState(state); // new TypedStateDefinition<TState>(state);
-            $"Defined state for {state}".Log();
+            $"Defined state for {state}".LogStateInfo();
             return DefineTypedState(stateDefinition);
         }
 
@@ -63,11 +63,11 @@ namespace BuildIt.States.Typed
             // Don't ever add the default value (eg Base) state
             if (default(TState)?.Equals(state) ?? false)
             {
-                "Attempted to add the default state definition".Log();
+                "Attempted to add the default state definition".LogStateInfo();
                 return null;
             }
 
-            $"Defining state for {typeof(TState).Name} with data type {typeof(TStateData)}".Log();
+            $"Defining state for {typeof(TState).Name} with data type {typeof(TStateData)}".LogStateInfo();
             var stateDefinition =
                 CreateDefinitionFromStateWithData(state, new StateDefinitionTypedDataWrapper<TStateData>()); // new TypedStateDefinition<TState>(state)
             // stateDefinition.UntypedStateDataWrapper = new StateDefinitionTypedDataWrapper<TStateData>();

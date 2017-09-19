@@ -31,7 +31,7 @@ namespace BuildIt.States.Typed.Enum
             var vals = System.Enum.GetValues(typeof(TState));
             foreach (var enumVal in vals)
             {
-                $"Defining state {enumVal}".Log();
+                $"Defining state {enumVal}".LogStateInfo();
                 DefineTypedState((TState)enumVal);
             }
         }
