@@ -3,6 +3,7 @@ using BuildIt.Autofac;
 using BuildIt.ServiceLocation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -28,18 +29,6 @@ namespace BuildIt.Forms.Sample.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            // var build = new ContainerBuilder();
-            // var container = build.Build();
-
-            // var csl = new AutofacServiceLocator(container);
-            // var afContainer = new AutofacDependencyContainer(container);
-            // using (afContainer.StartUpdate())
-            // {
-            //    afContainer.Register<TestDebugLogger, ILogService>();
-            // }
-
-            // ServiceLocator.SetLocatorProvider(() => csl);
         }
 
         /// <summary>
@@ -123,12 +112,5 @@ namespace BuildIt.Forms.Sample.UWP
             // TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-    }
-
-    public class TestDebugLogger : BasicDebugLogger
-    {
-        public override void Debug(string message) => System.Diagnostics.Debug.WriteLine(message);
-
-        public override void Exception(string message, Exception ex) => System.Diagnostics.Debug.WriteLine(message + " " + ex.StackTrace);
     }
 }
