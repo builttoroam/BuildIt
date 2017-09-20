@@ -364,11 +364,11 @@ namespace BuildIt.States
         public virtual void RegisterDependencies(IDependencyContainer container)
         {
             DependencyContainer = container;
-            using (container.StartUpdate())
+            using (container?.StartUpdate())
             {
                 foreach (var state in GroupDefinition.States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
                 {
-                    container.RegisterType(state.StateDataType);
+                    container?.RegisterType(state.StateDataType);
                 }
             }
         }

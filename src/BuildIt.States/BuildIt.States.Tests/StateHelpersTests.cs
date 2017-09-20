@@ -12,6 +12,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using BuildIt.Autofac;
 using BuildIt.Logging;
 using BuildIt.Logging.Filters;
 using BuildIt.States.Typed.String;
@@ -118,6 +120,12 @@ namespace BuildIt.States.Tests
         [TestInitialize]
         public void TestInit()
         {
+            var build = new ContainerBuilder();
+            var container = build.Build();
+
+            var csl = new AutofacServiceLocator(container);
+            Container = new AutofacDependencyContainer(container);
+            ServiceLocator.SetLocatorProvider(() => csl);
             LogHelper.LogOutput = entry => Debug.Write(entry);
         }
 
