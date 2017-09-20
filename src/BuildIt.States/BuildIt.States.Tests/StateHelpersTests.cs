@@ -1,11 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using Autofac;
-using BuildIt.Autofac;
-using BuildIt.ServiceLocation;
+﻿using BuildIt.ServiceLocation;
 //using BuildIt.Autofac;
 //using BuildIt.ServiceLocation;
 using BuildIt.States.Completion;
@@ -13,6 +6,17 @@ using BuildIt.States.Interfaces;
 using BuildIt.States.Interfaces.Builder;
 using BuildIt.States.Interfaces.StateData;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Autofac;
+using BuildIt.Autofac;
+using BuildIt.Logging;
+using BuildIt.Logging.Filters;
+using BuildIt.States.Typed.String;
 
 namespace BuildIt.States.Tests
 {
@@ -121,11 +125,8 @@ namespace BuildIt.States.Tests
 
             var csl = new AutofacServiceLocator(container);
             Container = new AutofacDependencyContainer(container);
-            using (Container.StartUpdate())
-            {
-                Container.Register<TestDebugLogger, ILogService>();
-            }
             ServiceLocator.SetLocatorProvider(() => csl);
+            LogHelper.LogOutput = entry => Debug.Write(entry);
         }
 
 
@@ -702,6 +703,59 @@ namespace BuildIt.States.Tests
                 //StateGroups[typeof(TestStates)] 
                 ).CurrentStateData as State1Data;
             Assert.IsNull(newdata);
+        }
+
+        [TestMethod]
+        public async Task TestStateLoggingFilter()
+        {
+            var count = 0;
+            var assembly = typeof(StateHelpers).GetTypeInfo().Assembly.GetName().Name;
+            LogHelper.LogService = new BasicLoggerService
+            {
+                LogOutput = entry =>
+                {
+                    count++;
+                    Assert.AreEqual(assembly, entry.AssemblyName);
+                    return Task.CompletedTask;
+                },
+                Filter = new AssemblyNameLogFilter
+                {
+                    AssemblyName = assembly
+                }
+            };
+
+            var groupName = "test";
+            var sg = new StateGroup(groupName);
+            var stateName = "one";
+            var sd = sg.TypedGroupDefinition.DefineStateFromName(stateName);
+            await sg.ChangeToStateByName(stateName);
+            await Task.Delay(100);
+            Assert.IsTrue(count > 0);
+
+
+            count = 0;
+            LogHelper.LogService = new BasicLoggerService
+            {
+                LogOutput = entry =>
+                {
+                    count++;
+                    Assert.AreNotEqual(assembly, entry.AssemblyName);
+                    return Task.CompletedTask;
+                },
+                Filter = new NotLogFilter
+                {
+                    FilterToInvert = new AssemblyNameLogFilter
+                    {
+                        AssemblyName = assembly
+                    }
+                }
+            };
+
+            sg = new StateGroup(groupName);
+            sd = sg.TypedGroupDefinition.DefineStateFromName(stateName);
+            await sg.ChangeToStateByName(stateName);
+            await Task.Delay(100);
+            Assert.AreEqual(0,count );
         }
     }
 }

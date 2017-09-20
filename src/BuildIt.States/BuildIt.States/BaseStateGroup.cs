@@ -275,7 +275,7 @@ namespace BuildIt.States
 
             if (GoToPreviousStateIsBlocked)
             {
-                "Can't go back as is being blocked".Log();
+                "Can't go back as is being blocked".LogStateInfo();
                 return false;
             }
 
@@ -364,11 +364,11 @@ namespace BuildIt.States
         public virtual void RegisterDependencies(IDependencyContainer container)
         {
             DependencyContainer = container;
-            using (container.StartUpdate())
+            using (container?.StartUpdate())
             {
                 foreach (var state in GroupDefinition.States.Values.Select(x => x.UntypedStateDataWrapper).Where(x => x != null))
                 {
-                    container.RegisterType(state.StateDataType);
+                    container?.RegisterType(state.StateDataType);
                 }
             }
         }
@@ -405,25 +405,25 @@ namespace BuildIt.States
             // Invoke the cancel method associated with the state definition
             if (currentStateDef?.AboutToChangeFrom != null)
             {
-                "Invoking 'AboutToChangeFrom' on current state definition".Log();
+                "Invoking 'AboutToChangeFrom' on current state definition".LogStateInfo();
                 await currentStateDef.AboutToChangeFrom(cancel).SafeAwait();
-                "'AboutToChangeFrom' completed".Log();
+                "'AboutToChangeFrom' completed".LogStateInfo();
             }
 
             if (cancel.Cancel || cancelToken.IsCancellationRequested)
             {
-                "Cancelling state transition invoking 'AboutToChangeFrom'".Log();
+                "Cancelling state transition invoking 'AboutToChangeFrom'".LogStateInfo();
                 return false;
             }
 
-            "Retrieving current state definition".Log();
+            "Retrieving current state definition".LogStateInfo();
             if (currentStateDataWrapper != null)
             {
-                "Invoking AboutToChangeFrom for existing state definition".Log();
+                "Invoking AboutToChangeFrom for existing state definition".LogStateInfo();
                 await currentStateDataWrapper.InvokeAboutToChangeFrom(CurrentStateData, cancel).SafeAwait();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
-                    "ChangeToState cancelled by existing state definition".Log();
+                    "ChangeToState cancelled by existing state definition".LogStateInfo();
                     return false;
                 }
             }
@@ -431,11 +431,11 @@ namespace BuildIt.States
             // ReSharper disable once SuspiciousTypeConversion.Global - NOT HELPFUL
             if (CurrentStateData is IAboutToChangeFrom stateData)
             {
-                "Invoking AboutToLeave".Log();
+                "Invoking AboutToLeave".LogStateInfo();
                 await stateData.AboutToChangeFrom(cancel).SafeAwait();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
-                    "ChangeToState cancelled by AboutToLeave".Log();
+                    "ChangeToState cancelled by AboutToLeave".LogStateInfo();
                     return false;
                 }
             }
@@ -443,24 +443,24 @@ namespace BuildIt.States
             var newStateDef = GroupDefinition.StateDefinitionFromName(newState);
             if (newStateDef?.AboutToChangeTo != null)
             {
-                "Invoking 'AboutToChangeTo' on current state definition".Log();
+                "Invoking 'AboutToChangeTo' on current state definition".LogStateInfo();
                 await newStateDef.AboutToChangeTo(cancel).SafeAwait();
-                "'AboutToChangeTo' completed".Log();
+                "'AboutToChangeTo' completed".LogStateInfo();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
-                    "Cancelling state transition invoking 'AboutToChangeTo'".Log();
+                    "Cancelling state transition invoking 'AboutToChangeTo'".LogStateInfo();
                     return false;
                 }
             }
 
             if (newStateDef?.AboutToChangeToWithData != null)
             {
-                "Invoking 'AboutToChangeTo' on current state definition".Log();
+                "Invoking 'AboutToChangeTo' on current state definition".LogStateInfo();
                 await newStateDef.AboutToChangeToWithData(data, cancel).SafeAwait();
-                "'AboutToChangeTo' completed".Log();
+                "'AboutToChangeTo' completed".LogStateInfo();
                 if (cancel.Cancel || cancelToken.IsCancellationRequested)
                 {
-                    "Cancelling state transition invoking 'AboutToChangeTo'".Log();
+                    "Cancelling state transition invoking 'AboutToChangeTo'".LogStateInfo();
                     return false;
                 }
             }
@@ -490,20 +490,20 @@ namespace BuildIt.States
 
             if (currentStateDef?.ChangingFrom != null)
             {
-                "Invoking 'ChangingFrom'".Log();
+                "Invoking 'ChangingFrom'".LogStateInfo();
                 await currentStateDef.ChangingFrom(cancelToken).SafeAwait();
             }
 
             if (currentStateDataWrapper != null)
             {
-                "Invoking ChangingFrom on current state definition".Log();
+                "Invoking ChangingFrom on current state definition".LogStateInfo();
                 await currentStateDataWrapper.InvokeChangingFrom(CurrentStateData, cancelToken).SafeAwait();
             }
 
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             if (CurrentStateData is IChangingFrom leaving)
             {
-                "Invoking Leaving on current view model".Log();
+                "Invoking Leaving on current view model".LogStateInfo();
                 await leaving.ChangingFrom(cancelToken).SafeAwait();
             }
 
@@ -512,13 +512,13 @@ namespace BuildIt.States
 
             if (newStateDef?.ChangingTo != null)
             {
-                "Invoking 'ChangingTo' on new state definition".Log();
+                "Invoking 'ChangingTo' on new state definition".LogStateInfo();
                 await newStateDef.ChangingTo(cancelToken).SafeAwait();
             }
 
             if (hasData && newStateDef?.ChangingToWithData != null)
             {
-                "Invoking 'ChangingToWithData' on new state definition".Log();
+                "Invoking 'ChangingToWithData' on new state definition".LogStateInfo();
                 await newStateDef.ChangingToWithData(dataAsJson, cancelToken).SafeAwait();
             }
         }
@@ -539,7 +539,7 @@ namespace BuildIt.States
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             if (CurrentStateData is IIsAbleToBeBlocked isBlockable)
             {
-                "Detaching event handlers for isblocked on current view model".Log();
+                "Detaching event handlers for isblocked on current view model".LogStateInfo();
                 isBlockable.IsBlockedChanged -= IsBlockable_IsBlockedChanged;
             }
 
@@ -548,16 +548,16 @@ namespace BuildIt.States
 
             if (newStateDataWrapper != null)
             {
-                "Retrieving existing ViewModel for new state".Log();
+                "Retrieving existing ViewModel for new state".LogStateInfo();
                 var stateData = Existing(newStateDataWrapper.StateDataType);
                 if (stateData == null)
                 {
                     // var newGen = States[newState] as IGenerateViewModel;
                     // if (newGen == null) return false;
-                    "Generating ViewModel for new state".Log();
+                    "Generating ViewModel for new state".LogStateInfo();
                     stateData = newStateDataWrapper.Generate();
 
-                    "Registering dependencies".Log();
+                    "Registering dependencies".LogStateInfo();
                     // ReSharper disable once SuspiciousTypeConversion.Global - data entities can implement both interfaces
                     (stateData as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
 
@@ -588,7 +588,7 @@ namespace BuildIt.States
             }
 
             // Update current state as well as history
-            $"About to updated CurrentState (currently: {CurrentStateName})".Log();
+            $"About to updated CurrentState (currently: {CurrentStateName})".LogStateInfo();
             if (isNewState)
             {
                 // New state - so add to the history
@@ -618,11 +618,11 @@ namespace BuildIt.States
                 if (!(CurrentStateName?.Equals(newState) ?? false))
                 {
                     CurrentStateName = newState;
-                    $"Unable to go back to {newState} as it doesn't exist in the state History".Log();
+                    $"Unable to go back to {newState} as it doesn't exist in the state History".LogStateInfo();
                 }
             }
 
-            $"CurrentState updated (now: {CurrentStateName})".Log();
+            $"CurrentState updated (now: {CurrentStateName})".LogStateInfo();
 
             // Perform state transitions - adjust all the properties etc
             CurrentStateDefinition?.TransitionTo(StateValueTargets, GroupDefinition.DefaultValues);
@@ -650,14 +650,14 @@ namespace BuildIt.States
             var oldStateDef = GroupDefinition.StateDefinitionFromName(oldState);
             if (oldStateDef?.ChangedFrom != null)
             {
-                "Invoking ChangedFrom on old state definition".Log();
+                "Invoking ChangedFrom on old state definition".LogStateInfo();
                 await oldStateDef.ChangedFrom(cancelToken).SafeAwait();
             }
 
             var oldStateDataWrapper = oldStateDef?.UntypedStateDataWrapper;
             if (oldStateDataWrapper != null)
             {
-                "Invoking ChangedFrom on current state definition".Log();
+                "Invoking ChangedFrom on current state definition".LogStateInfo();
                 await oldStateDataWrapper.InvokeChangedFrom(CurrentStateData, cancelToken).SafeAwait();
             }
 
@@ -669,42 +669,42 @@ namespace BuildIt.States
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             if (CurrentStateData is IChangedTo arrived)
             {
-                "Invoking Arriving on new ViewModel".Log();
+                "Invoking Arriving on new ViewModel".LogStateInfo();
                 await arrived.ChangedTo(cancelToken).SafeAwait();
             }
 
             // ReSharper disable once SuspiciousTypeConversion.Global // NOT HELPFUL
             if (hasData && CurrentStateData is IChangedToWithData arrivedWithData)
             {
-                "Invoking Arriving on new ViewModel".Log();
+                "Invoking Arriving on new ViewModel".LogStateInfo();
                 await arrivedWithData.ChangedToWithData(dataAsJson, cancelToken).SafeAwait();
             }
 
             if (currentStateDef?.ChangedTo != null)
             {
-                $"State definition found, of type {currentStateDef.GetType().Name}, invoking ChangedTo method".Log();
+                $"State definition found, of type {currentStateDef.GetType().Name}, invoking ChangedTo method".LogStateInfo();
                 await currentStateDef.ChangedTo(cancelToken).SafeAwait();
-                "ChangedTo completed".Log();
+                "ChangedTo completed".LogStateInfo();
             }
             else
             {
-                "No new state definition".Log();
+                "No new state definition".LogStateInfo();
             }
 
             if (hasData && currentStateDef?.ChangedToWithJsonData != null)
             {
-                $"State definition found, of type {currentStateDef.GetType().Name}, invoking ChangedToWithJsonData method".Log();
+                $"State definition found, of type {currentStateDef.GetType().Name}, invoking ChangedToWithJsonData method".LogStateInfo();
                 await currentStateDef.ChangedToWithJsonData(dataAsJson, cancelToken).SafeAwait();
-                "ChangedToWithJsonData completed".Log();
+                "ChangedToWithJsonData completed".LogStateInfo();
             }
             else
             {
-                "No new state definition".Log();
+                "No new state definition".LogStateInfo();
             }
 
             if (currentStateDataWrapper != null)
             {
-                "Invoking ChangedTo on new state definition".Log();
+                "Invoking ChangedTo on new state definition".LogStateInfo();
                 await currentStateDataWrapper.InvokeChangedTo(CurrentStateData, cancelToken).SafeAwait();
 
                 if (hasData)
@@ -732,15 +732,15 @@ namespace BuildIt.States
             var shouldCancel = false;
             try
             {
-                "Invoking StateAboutToChange event".Log();
+                "Invoking StateAboutToChange event".LogStateInfo();
                 var cancelArgs = new StateCancelEventArgs(newState, useTransitions, isNewState, cancelToken);
                 await RaiseStateEvent(StateAboutToChange, cancelArgs);
                 shouldCancel = cancelArgs.Cancel;
-                "StateAboutToChange event completed".Log();
+                "StateAboutToChange event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -762,14 +762,14 @@ namespace BuildIt.States
         {
             try
             {
-                "Invoking StateChanging event".Log();
+                "Invoking StateChanging event".LogStateInfo();
                 var args = new StateEventArgs(newState, useTransitions, isNewState, cancelToken);
                 await RaiseStateEvent(StateChanging, args);
-                "StateChanging event completed".Log();
+                "StateChanging event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -789,14 +789,14 @@ namespace BuildIt.States
         {
             try
             {
-                "Invoking StateChanged event".Log();
+                "Invoking StateChanged event".LogStateInfo();
                 var args = new StateEventArgs(newState, useTransitions, isNewState, cancelToken);
                 await RaiseStateEvent(StateChanged, args);
-                "StateChanged event completed".Log();
+                "StateChanged event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -816,14 +816,14 @@ namespace BuildIt.States
         {
             try
             {
-                "Invoking StateChangeComplete event".Log();
+                "Invoking StateChangeComplete event".LogStateInfo();
                 var args = new StateEventArgs(newState, useTransitions, isNewState, cancelToken);
                 await RaiseStateEvent(StateChangeComplete, args);
-                "StateChangeComplete event completed".Log();
+                "StateChangeComplete event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -891,24 +891,24 @@ namespace BuildIt.States
                 var localRef = eventToRaise;
                 if (localRef != null)
                 {
-                    "Invoking event (before UI context check)".Log();
+                    "Invoking event (before UI context check)".LogStateInfo();
                     await UIContext.RunAsync(async () =>
                     {
-                        "Raising event".Log();
+                        "Raising event".LogStateInfo();
                         localRef.Invoke(this, args);
-                        "Raising event completed - waiting for lock to be release".Log();
+                        "Raising event completed - waiting for lock to be release".LogStateInfo();
                         await args.CompleteEvent();
                     });
-                    "event completed (after UI context check)".Log();
+                    "event completed (after UI context check)".LogStateInfo();
                 }
                 else
                 {
-                    "Nothing listening to event".Log();
+                    "Nothing listening to event".LogStateInfo();
                 }
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -997,7 +997,7 @@ namespace BuildIt.States
             catch (OperationCanceledException ex)
             {
                 // Wait was cancelled, so we didn't acquire the lock. Just return whether we're in the target state or not
-                ex.LogException();
+                ex.LogStateException();
                 StateTransitionDestinationStateName = null;
                 return IsCurrentState(newState);
             }
@@ -1007,15 +1007,15 @@ namespace BuildIt.States
                 // Check to see whether this is a change to the same state
                 if (IsCurrentState(newState))
                 {
-                    "Transitioning to same state - doing nothing".Log();
+                    "Transitioning to same state - doing nothing".LogStateInfo();
                     return true;
                 }
 
                 var current = CurrentStateName;
-                $"Changing state from {current} to {newState} (Transitions: {useTransitions})".Log();
+                $"Changing state from {current} to {newState} (Transitions: {useTransitions})".LogStateInfo();
 
                 // Invoke all the methods/events prior to changing state (cancellable!)
-                "Invoking AboutToChangeFrom to confirm state change can proceed".Log();
+                "Invoking AboutToChangeFrom to confirm state change can proceed".LogStateInfo();
                 var success = await AboutToChangeFrom(newState, data, isNewState, useTransitions, cancel);
                 if (!success)
                 {
@@ -1023,23 +1023,23 @@ namespace BuildIt.States
                 }
 
                 // Invoke changing methods - not cancellable but allows freeing up resources/event handlers etc
-                "Invoking ChangingFrom before state change".Log();
+                "Invoking ChangingFrom before state change".LogStateInfo();
                 await ChangingFrom(newState, data, isNewState, useTransitions, cancel);
 
                 // Perform the state change
-                "Invoking ChangeCurrentState to perform state change".Log();
+                "Invoking ChangeCurrentState to perform state change".LogStateInfo();
                 await ChangeCurrentState(newState, isNewState, useTransitions, cancel);
 
                 // Perform post-change methods
-                "Invoking ChangedToState after state change".Log();
+                "Invoking ChangedToState after state change".LogStateInfo();
                 await ChangedToState(current, data, isNewState, useTransitions, cancel);
 
-                "ChangeTo completed".Log();
+                "ChangeTo completed".LogStateInfo();
                 return true;
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 return IsCurrentState(newState);
             }
             finally

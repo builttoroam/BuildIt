@@ -30,12 +30,12 @@ namespace BuildIt.States.Typed.String
             // Don't ever add the default value (eg Base) state
             if (string.IsNullOrWhiteSpace(stateName))
             {
-                "Attempted to add the default state definition".Log();
+                "Attempted to add the default state definition".LogStateInfo();
                 return null;
             }
 
             var stateDefinition = CreateDefinitionFromName(stateName);
-            $"Defined state for {stateName}".Log();
+            $"Defined state for {stateName}".LogStateInfo();
             return DefineTypedState(stateDefinition);
         }
     }

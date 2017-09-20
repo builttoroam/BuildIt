@@ -170,7 +170,7 @@ namespace BuildIt.States.Typed
                     return true;
                 }
 
-                "Invoking Typed StateAboutToChange event".Log();
+                "Invoking Typed StateAboutToChange event".LogStateInfo();
                 var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
                 if (state == null)
                 {
@@ -180,11 +180,11 @@ namespace BuildIt.States.Typed
                 var cancelArgs = new TypedStateCancelEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
                 await RaiseTypedStateEvent(TypedStateAboutToChange, cancelArgs);
                 shouldCancel = cancelArgs.Cancel;
-                "Typed StateAboutToChange event completed".Log();
+                "Typed StateAboutToChange event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -208,7 +208,7 @@ namespace BuildIt.States.Typed
             {
                 await base.NotifyStateChanging(newState, isNewState, useTransitions, cancelToken);
 
-                "Invoking Typed StateChanging event".Log();
+                "Invoking Typed StateChanging event".LogStateInfo();
                 var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
                 if (state == null)
                 {
@@ -217,11 +217,11 @@ namespace BuildIt.States.Typed
 
                 var args = new TypedStateEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
                 await RaiseTypedStateEvent(TypedStateChanging, args);
-                "Typed StateChanging event completed".Log();
+                "Typed StateChanging event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -243,7 +243,7 @@ namespace BuildIt.States.Typed
             {
                 await base.NotifyStateChanged(newState, isNewState, useTransitions, cancelToken);
 
-                "Invoking Typed StateChanged event".Log();
+                "Invoking Typed StateChanged event".LogStateInfo();
                 var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
                 if (state == null)
                 {
@@ -252,11 +252,11 @@ namespace BuildIt.States.Typed
 
                 var args = new TypedStateEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
                 await RaiseTypedStateEvent(TypedStateChanged, args);
-                "Typed StateChanged event completed".Log();
+                "Typed StateChanged event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -278,7 +278,7 @@ namespace BuildIt.States.Typed
             {
                 await base.NotifyStateChangeComplete(newState, isNewState, useTransitions, cancelToken);
 
-                "Invoking Typed StateChangeComplete event".Log();
+                "Invoking Typed StateChangeComplete event".LogStateInfo();
                 var state = TypedGroupDefinition.TypedStateDefinitionFromName(newState);
                 if (state == null)
                 {
@@ -287,11 +287,11 @@ namespace BuildIt.States.Typed
 
                 var args = new TypedStateEventArgs<TState>(state.State, useTransitions, isNewState, cancelToken);
                 await RaiseTypedStateEvent(TypedStateChangeComplete, args);
-                "Typed StateChangeComplete event completed".Log();
+                "Typed StateChangeComplete event completed".LogStateInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }
@@ -305,24 +305,24 @@ namespace BuildIt.States.Typed
                 var localReferenceToEvent = eventToRaise;
                 if (localReferenceToEvent != null)
                 {
-                    "Invoking event (before UI context check)".Log();
+                    "Invoking event (before UI context check)".LogStateInfo();
                     await UIContext.RunAsync(async () =>
                     {
-                        "Raising event".Log();
+                        "Raising event".LogStateInfo();
                         localReferenceToEvent.Invoke(this, args);
-                        "Raising event completed - waiting for lock to be release".Log();
+                        "Raising event completed - waiting for lock to be release".LogStateInfo();
                         await args.CompleteEvent();
                     });
-                    "event completed (after UI context check)".Log();
+                    "event completed (after UI context check)".LogStateInfo();
                 }
                 else
                 {
-                    "Nothing listening to event".Log();
+                    "Nothing listening to event".LogStateInfo();
                 }
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogStateException();
                 // Ignore any errors caused by the event being raised, as
                 // the state change has still occurred
             }

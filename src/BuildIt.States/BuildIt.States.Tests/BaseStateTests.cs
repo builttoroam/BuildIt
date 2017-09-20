@@ -1,7 +1,5 @@
-using Autofac;
-using BuildIt.Autofac;
-using BuildIt.ServiceLocation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace BuildIt.States.Tests
 {
@@ -10,16 +8,7 @@ namespace BuildIt.States.Tests
         [TestInitialize]
         public void TestInit()
         {
-            var build = new ContainerBuilder();
-            var container = build.Build();
-
-            var csl = new AutofacServiceLocator(container);
-            var afContainer = new AutofacDependencyContainer(container);
-            using (afContainer.StartUpdate())
-            {
-                afContainer.Register<TestDebugLogger, ILogService>();
-            }
-            ServiceLocator.SetLocatorProvider(() => csl);
+            LogHelper.LogOutput = entry => Debug.Write(entry);
         }
     }
 }

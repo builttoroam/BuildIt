@@ -60,18 +60,18 @@ namespace BuildIt.States
         {
             if (stateDefinition == null)
             {
-                "Can't define null state definition".Log();
+                "Can't define null state definition".LogStateInfo();
                 return null;
             }
 
             var existing = StateDefinitionFromName(stateDefinition.StateName);
             if (existing != null)
             {
-                $"State definition already defined, returning existing instance - {existing.GetType().Name}".Log();
+                $"State definition already defined, returning existing instance - {existing.GetType().Name}".LogStateInfo();
                 return existing as TStateDefinition;
             }
 
-            $"Defining state of type {stateDefinition.GetType().Name}".Log();
+            $"Defining state of type {stateDefinition.GetType().Name}".LogStateInfo();
             States[stateDefinition.StateName] = stateDefinition;
             return stateDefinition;
         }
