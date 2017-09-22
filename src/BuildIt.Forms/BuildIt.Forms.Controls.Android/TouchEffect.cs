@@ -195,7 +195,7 @@ namespace BuildIt.Forms.Controls.Droid
             }
             catch (Exception ex)
             {
-                ex.LogFormsException();
+                ex.LogError();
             }
         }
 

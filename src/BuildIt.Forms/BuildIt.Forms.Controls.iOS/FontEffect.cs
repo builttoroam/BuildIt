@@ -78,11 +78,11 @@ namespace BuildIt.Forms.Controls.iOS
             {
                 var assembly = ParentAssembly;
                 var resourceName = assembly.FullName.Split(',').FirstOrDefault() + "." + fileName;
-                $"Attempting to open resource {resourceName}".LogFormsInfo();
+                $"Attempting to open resource {resourceName}".LogMessage();
                 var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream == null)
                 {
-                    "Resource doesn't exist".LogFormsInfo();
+                    "Resource doesn't exist".LogMessage();
                 }
 
                 var data = new byte[stream.Length];
@@ -91,8 +91,7 @@ namespace BuildIt.Forms.Controls.iOS
                 using (var provider = new CGDataProvider(fontData))
                 using (var nativeFont = CGFont.CreateFromProvider(provider))
                 {
-                    NSError error;
-                    CTFontManager.RegisterGraphicsFont(nativeFont, out error);
+                    CTFontManager.RegisterGraphicsFont(nativeFont, out var error);
                     if (error != null)
                     {
                         Console.WriteLine(error);
@@ -103,7 +102,7 @@ namespace BuildIt.Forms.Controls.iOS
             }
             catch (Exception ex)
             {
-                ex.LogFormsException();
+                ex.LogError();
                 return false;
             }
         }
