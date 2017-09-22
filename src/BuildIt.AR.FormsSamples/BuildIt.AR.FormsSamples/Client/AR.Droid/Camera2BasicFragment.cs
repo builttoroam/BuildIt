@@ -271,7 +271,6 @@ namespace BuildIt.AR.FormsSamples.Android
             }
         }
 
-
         // Sets up member variables related to camera.
         private void SetUpCameraOutputs(int width, int height)
         {
@@ -514,6 +513,7 @@ namespace BuildIt.AR.FormsSamples.Android
                 mCameraDevice.CreateCaptureSession(surfaces, new CameraCaptureSessionCallback(this), null);
 
             }
+
             catch (CameraAccessException e)
             {
                 e.PrintStackTrace();
@@ -696,4 +696,3 @@ namespace BuildIt.AR.FormsSamples.Android
         }
     }
 }
-
