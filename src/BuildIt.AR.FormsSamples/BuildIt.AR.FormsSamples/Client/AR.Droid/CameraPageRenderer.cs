@@ -30,10 +30,10 @@ using View = Android.Views.View;
 //using FragmentManager = Android.Support.V4.App.FragmentManager;
 using FragmentManager = Android.App.FragmentManager;
 
-[assembly:ExportRenderer (typeof(CameraPage), typeof(CameraPageRenderer))]
+[assembly: ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace BuildIt.AR.FormsSamples.Android
 {
-	public class CameraPageRenderer : PageRenderer, TextureView.ISurfaceTextureListener, ActivityCompat.IOnRequestPermissionsResultCallback, IManageFragments, View.IOnClickListener
+    public class CameraPageRenderer : PageRenderer, TextureView.ISurfaceTextureListener, ActivityCompat.IOnRequestPermissionsResultCallback, IManageFragments, View.IOnClickListener
     {
         global::Android.Hardware.Camera camera;
         global::Android.Widget.Button takePhotoButton;
@@ -48,7 +48,7 @@ namespace BuildIt.AR.FormsSamples.Android
         // A {@link Semaphore} to prevent the app from exiting before closing the camera.
         public Semaphore mCameraOpenCloseLock = new Semaphore(1);
         // ID of the current {@link CameraDevice}.
-        private string mCameraId;        
+        private string mCameraId;
         // CameraDevice.StateListener is called when a CameraDevice changes its state
         private CameraStateListener mStateCallback;
         // A {@link Handler} for running tasks in the background.
@@ -86,7 +86,6 @@ namespace BuildIt.AR.FormsSamples.Android
             {
                 return;
             }
-
             try
             {
                 SetupUserInterface();
@@ -288,9 +287,8 @@ namespace BuildIt.AR.FormsSamples.Android
             int w = aspectRatio.Width;
             int h = aspectRatio.Height;
 
-            for (var i = 0; i < choices.Length; i++)
+            foreach (var option in choices)
             {
-                Size option = choices[i];
                 if ((option.Width <= maxWidth) && (option.Height <= maxHeight) &&
                     option.Height == option.Width * h / w)
                 {
@@ -422,14 +420,14 @@ namespace BuildIt.AR.FormsSamples.Android
             {
                 var absolutePath = global::Android.OS.Environment.GetExternalStoragePublicDirectory(global::Android.OS.Environment.DirectoryDcim).AbsolutePath;
                 var folderPath = absolutePath + "/Camera";
-                var filePath = System.IO.Path.Combine(folderPath, string.Format("photo_{0}.jpg", Guid.NewGuid()));
+                var filePath = System.IO.Path.Combine(folderPath, $"photo_{Guid.NewGuid()}.jpg");
 
                 var fileStream = new FileStream(filePath, FileMode.Create);
                 await image.CompressAsync(Bitmap.CompressFormat.Jpeg, 50, fileStream);
                 fileStream.Close();
                 image.Recycle();
 
-                var intent = new global::Android.Content.Intent(global::Android.Content.Intent.ActionMediaScannerScanFile);
+                var intent = new Intent(Intent.ActionMediaScannerScanFile);
                 var file = new Java.IO.File(filePath);
                 var uri = global::Android.Net.Uri.FromFile(file);
                 intent.SetData(uri);
