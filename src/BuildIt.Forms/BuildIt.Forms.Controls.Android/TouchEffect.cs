@@ -39,7 +39,7 @@ namespace BuildIt.Forms.Controls.Droid
             view = Control ?? Container;
 
             //var type = view.GetType().Name;
-            //type.Log();
+            //type.LogFormsInfo();
 
             // Get access to the TouchEffect class in the PCL
             Forms.TouchEffect touchEffect =
@@ -195,7 +195,7 @@ namespace BuildIt.Forms.Controls.Droid
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 

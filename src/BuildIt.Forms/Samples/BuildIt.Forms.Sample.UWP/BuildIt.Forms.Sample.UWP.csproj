@@ -101,7 +101,7 @@
       <Version>1.1.0.92</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.75</Version>
+      <Version>1.1.0.97</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>

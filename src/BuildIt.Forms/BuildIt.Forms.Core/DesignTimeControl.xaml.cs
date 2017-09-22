@@ -46,7 +46,7 @@ namespace BuildIt.Forms
                 await HideGroups();
 
                 var action = e.SelectedItem as Tuple<string, Action>;
-                $"Running design action {action?.Item1}".Log();
+                $"Running design action {action?.Item1}".LogFormsInfo();
                 action?.Item2();
 
                 if (sender is ListView lv)
@@ -56,7 +56,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -69,11 +69,11 @@ namespace BuildIt.Forms
         {
             try
             {
-                "StateGroupList selection changed".Log();
+                "StateGroupList selection changed".LogFormsInfo();
 
                 if (e.SelectedItem == null)
                 {
-                    "StateGroupList no selection".Log();
+                    "StateGroupList no selection".LogFormsInfo();
                     States.IsVisible = false;
                     return;
                 }
@@ -82,19 +82,19 @@ namespace BuildIt.Forms
                 var group = e.SelectedItem as IStateGroup;
                 if (design == null || group == null)
                 {
-                    "no context or group".Log();
+                    "no context or group".LogFormsInfo();
                     return;
                 }
 
-                ("Group: " + group.GroupName).Log();
+                ("Group: " + group.GroupName).LogFormsInfo();
                 design.SelectedGroup = group;
                 States.IsVisible = true;
 
-                "SateGroupList selection changed - END".Log();
+                "SateGroupList selection changed - END".LogFormsInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -107,11 +107,11 @@ namespace BuildIt.Forms
         {
             try
             {
-                "StateList selection changed".Log();
+                "StateList selection changed".LogFormsInfo();
 
                 if (e.SelectedItem == null)
                 {
-                    "StateList no selection".Log();
+                    "StateList no selection".LogFormsInfo();
                     return;
                 }
 
@@ -125,17 +125,17 @@ namespace BuildIt.Forms
 
                 if (design == null || state == null)
                 {
-                    "No context or state".Log();
+                    "No context or state".LogFormsInfo();
                     return;
                 }
 
-                ("State: " + state.StateName).Log();
+                ("State: " + state.StateName).LogFormsInfo();
                 await VisualStateManager.GoToState(design.Element, state.StateName);
-                "SateList selection changed - END".Log();
+                "SateList selection changed - END".LogFormsInfo();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -155,12 +155,12 @@ namespace BuildIt.Forms
                     return;
                 }
 
-                "Launching".Log();
+                "Launching".LogFormsInfo();
                 await ShowGroups();
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -198,7 +198,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -225,7 +225,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
     }

@@ -97,8 +97,7 @@ namespace BuildIt.Forms
 
                 if (view is ContentPage page)
                 {
-                    var content = page.Content as Grid;
-                    if (content != null)
+                    if (page.Content is Grid content)
                     {
                         var hasDtc = content.Children.Any(x => x is DesignTimeControl);
                         if (!hasDtc)
@@ -130,7 +129,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.LogFormsException();
             }
 
             return null;
@@ -156,7 +155,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.LogFormsException();
             }
         }
 
@@ -213,7 +212,7 @@ namespace BuildIt.Forms
 
         private static object CreateDefaultValue(BindableObject bindable)
         {
-            "Creating empty visual state group".Log();
+            "Creating empty visual state group".LogFormsInfo();
             return new VisualStateGroups();
         }
 
@@ -221,12 +220,12 @@ namespace BuildIt.Forms
         {
             try
             {
-                "Visual State Groups hydrated from XAML".Log();
+                "Visual State Groups hydrated from XAML".LogFormsInfo();
                 UpdateStateManager(bindable, (VisualStateGroups)newvalue);
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.LogFormsException();
             }
         }
 
@@ -234,7 +233,7 @@ namespace BuildIt.Forms
         {
             if (groups == null || view == null || groups?.Count == 0)
             {
-                "Missing parameter to build groups in state manager".Log();
+                "Missing parameter to build groups in state manager".LogFormsInfo();
                 return;
             }
 
@@ -250,7 +249,7 @@ namespace BuildIt.Forms
             try
             {
                 StateGroup sg;
-                "Creating new StateGroup".Log();
+                "Creating new StateGroup".LogFormsInfo();
                 var key = vsgroup.DefinitionCacheKey;
                 var isExisting = false;
                 if (!string.IsNullOrWhiteSpace(key))
@@ -274,18 +273,18 @@ namespace BuildIt.Forms
 
                 var elementIds = new Dictionary<Element, string>();
 
-                $"Defining states for group {vsgroup.Name}".Log();
+                $"Defining states for group {vsgroup.Name}".LogFormsInfo();
                 foreach (var vstate in vsgroup)
                 {
-                    $"Creating new state {vstate.Name}".Log();
+                    $"Creating new state {vstate.Name}".LogFormsInfo();
                     var stateDef = sg.TypedGroupDefinition.DefineStateFromName(vstate.Name);
                     var values = stateDef.Values;
                     vstate.StateGroup = sg;
 
-                    "Building state setters".Log();
+                    "Building state setters".LogFormsInfo();
                     BuildStateSetters(vsgroup, vstate, view as Element, values, elementIds);
 
-                    "Building arriving animations".Log();
+                    "Building arriving animations".LogFormsInfo();
                     var arriving = vstate.ArrivingAnimations;
                     if (arriving != null)
                     {
@@ -296,7 +295,7 @@ namespace BuildIt.Forms
                         stateDef.ChangedTo = panimationFunction;
                     }
 
-                    "Building leaving animations".Log();
+                    "Building leaving animations".LogFormsInfo();
                     var leaving = vstate.LeavingAnimations;
                     if (leaving != null)
                     {
@@ -310,7 +309,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.LogFormsException();
             }
         }
 
@@ -337,7 +336,7 @@ namespace BuildIt.Forms
             foreach (var setter in state.Setters)
             {
                 setterIndex++;
-                $"Setter: {setter.Property}".Log();
+                $"Setter: {setter.Property}".LogFormsInfo();
                 var target = element.FindByTarget(setter);
                 if (target == null)
                 {
@@ -401,18 +400,13 @@ namespace BuildIt.Forms
             {
                 get
                 {
-                    var sv = new StateValue<TElement, TPropertyValue>();
-                    sv.Element = Element;
-                    sv.TargetId = TargetId;
-                    if (Element != null)
+                    var sv = new StateValue<TElement, TPropertyValue>
                     {
-                        sv.Key = new Tuple<object, string>(Element, Property.Name);
-                    }
-                    else
-                    {
-                        sv.Key = new Tuple<object, string>(TargetId, Property.Name);
-                    }
+                        Element = Element,
+                        TargetId = TargetId
+                    };
 
+                    sv.Key = new Tuple<object, string>(Element != null ? Element : (object)TargetId, Property.Name);
                     sv.Getter = (element) =>
                     {
                         var val = Property.GetValue(element);

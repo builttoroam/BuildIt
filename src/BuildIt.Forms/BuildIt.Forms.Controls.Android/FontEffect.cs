@@ -54,7 +54,7 @@ namespace BuildIt.Forms.Controls.Droid
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -103,11 +103,11 @@ namespace BuildIt.Forms.Controls.Droid
                 var assembly = ParentAssembly;
                 var file = File.CreateTempFile("__fonteffect", ".ttf");
                 var resourceName = assembly.FullName.Split(',').FirstOrDefault() + "." + fileName;
-                $"Attempting to open resource {resourceName}".Log();
+                $"Attempting to open resource {resourceName}".LogFormsInfo();
                 var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream == null)
                 {
-                    "Resource doesn't exist".Log();
+                    "Resource doesn't exist".LogFormsInfo();
                     return null;
                 }
 
@@ -117,13 +117,13 @@ namespace BuildIt.Forms.Controls.Droid
                     fs.Flush(true);
                 }
 
-                "Font successfully extracted".Log();
+                "Font successfully extracted".LogFormsInfo();
                 return file;
             }
             catch (Exception ex)
             {
-                $"Unable to extract font file '{fileName}'".Log();
-                ex.LogException();
+                $"Unable to extract font file '{fileName}'".LogFormsInfo();
+                ex.LogFormsException();
                 return null;
             }
         }

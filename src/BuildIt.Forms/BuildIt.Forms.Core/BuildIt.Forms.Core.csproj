@@ -4,6 +4,10 @@
     <TargetFramework>netstandard1.4</TargetFramework>
     <PackageTargetFallback>$(PackageTargetFallback);portable-monoandroid10+net45+win+win81+wp8+wpa81+xamarinios10+xamarinmac20</PackageTargetFallback>
     <RootNamespace>BuildIt.Forms</RootNamespace>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   
   <Import Project="..\..\BuildIt.Shared\SharedAssemblyInfo.targets" />
@@ -41,7 +45,7 @@
   
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="2.4.0.275-pre3" />
   </ItemGroup>

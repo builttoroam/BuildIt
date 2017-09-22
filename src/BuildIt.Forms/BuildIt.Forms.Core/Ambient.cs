@@ -156,7 +156,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -185,16 +185,16 @@ namespace BuildIt.Forms
         {
             try
             {
-                $"size changed {newValue}".Log();
+                $"size changed {newValue}".LogFormsInfo();
 #pragma warning disable SA1119 // Statement must not use unnecessary parenthesis - doesn't work for casting
                 if (!(newValue is double value) || value == 0.0)
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
                 {
-                    "size not a double".Log();
+                    "size not a double".LogFormsInfo();
                     return;
                 }
 
-                $"size is a double {value}".Log();
+                $"size is a double {value}".LogFormsInfo();
 
                 var view = bindable as Element;
 
@@ -202,7 +202,7 @@ namespace BuildIt.Forms
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 
@@ -211,30 +211,30 @@ namespace BuildIt.Forms
         {
             if (view == null)
             {
-                "null".Log();
+                "null".LogFormsInfo();
                 return;
             }
 
-            $"attempting to match {view.GetType().Name}".Log();
+            $"attempting to match {view.GetType().Name}".LogFormsInfo();
             if (!root)
             {
                 var val = view.GetValue(property);
                 var hasValue =  val!= property.DefaultValue;
                 if (hasValue)
                 {
-                    $"has a value assigned {val}".Log();
+                    $"has a value assigned {val}".LogFormsInfo();
                     return;
                 }
             }
 
             if (view is TElement element)
             {
-                "matching view found".Log();
+                "matching view found".LogFormsInfo();
                 action(element);
             }
             else if (view is Layout layout)
             {
-                $"matching view not found - searching children of {view.GetType().Name}".Log();
+                $"matching view not found - searching children of {view.GetType().Name}".LogFormsInfo();
                 foreach (var subelement in layout.Children)
                 {
                     ApplyToNested(subelement, property, action,false);
@@ -242,13 +242,13 @@ namespace BuildIt.Forms
 
                 layout.ChildAdded += (s, e) =>
                 {
-                    "child added".Log();
+                    "child added".LogFormsInfo();
                     ApplyToNested(e.Element, property,action, false);
                 };
             }
             else
             {
-                $"matching view not found for {view.GetType().Name}".Log();
+                $"matching view not found for {view.GetType().Name}".LogFormsInfo();
             }
         }
     }

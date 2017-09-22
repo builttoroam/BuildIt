@@ -29,12 +29,12 @@ namespace BuildIt.Forms.Sample
             this.AddDesignAction("Test", async () =>
             {
                 HelloWorldText.Text = "Hi Everyone!";
-                "Hi changed".Log();
+                "Hi changed".LogMessage();
                 await VisualStateManager.GoToState(this, "RotateRight");
-                "Hi changed back".Log();
+                "Hi changed back".LogMessage();
                 HelloWorldText.Text = "Well, maybe not everyone";
                 await VisualStateManager.GoToState(this, "RotateLeft");
-                "Ending".Log();
+                "Ending".LogMessage();
             });
         }
 
@@ -85,7 +85,7 @@ namespace BuildIt.Forms.Sample
 
         protected async void OnTouchEffectAction(object sender, object args)
         {
-            "Touched - mainpage".Log();
+            "Touched - mainpage".LogMessage();
         }
     }
 }

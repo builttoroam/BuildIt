@@ -76,7 +76,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
 
@@ -94,7 +94,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
 
@@ -106,7 +106,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
 
@@ -118,7 +118,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
 
@@ -130,7 +130,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
 
@@ -142,7 +142,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
 
@@ -157,7 +157,7 @@ namespace BuildIt.Forms.Controls.UWP
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
     }
