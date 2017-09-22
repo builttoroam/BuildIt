@@ -166,7 +166,7 @@
       <Name>BuildIt.AR.FormsSamples.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuildIt.AR.FormsSamples.UI\BuildIt.AR.FormsSamples.UI.csproj">
-      <Project>{1cd508af-365f-4571-9c8c-c27736e3f892}</Project>
+      <Project>{f50b99d3-7cb7-49fd-aca1-f2176ee0de7d}</Project>
       <Name>BuildIt.AR.FormsSamples.UI</Name>
     </ProjectReference>
   </ItemGroup>
