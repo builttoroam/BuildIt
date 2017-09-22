@@ -12,6 +12,8 @@ namespace BuildIt.Forms
     /// </summary>
     public static class ElementHelper
     {
+        private static Assembly FormsAssemblyForLogging { get; } = typeof(ElementHelper).GetTypeInfo().Assembly;
+
         /// <summary>
         /// Retrieves the target element and property info for a state action
         /// </summary>
@@ -48,8 +50,7 @@ namespace BuildIt.Forms
 
                 if (setterTarget == null)
                 {
-                    var cv = element as ContentView;
-                    if (cv != null)
+                    if (element is ContentView cv)
                     {
                         foreach (var child in cv.Children)
                         {
@@ -82,12 +83,31 @@ namespace BuildIt.Forms
             var dtc = (element?.Content as Grid)?.Children?.OfType<DesignTimeControl>().FirstOrDefault();
             if (dtc == null)
             {
-                "Unable to register design action. Only applicable to Content Page".Log();
+                "Unable to register design action. Only applicable to Content Page".LogFormsInfo();
                 return;
             }
 
             var di = dtc.BindingContext as DesignInfo;
             di?.AddDesignAction(actionTitle, action);
+        }
+
+        /// <summary>
+        /// Quick log for states messages
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        internal static void LogFormsInfo(this string message)
+        {
+            message.LogMessage(assembly: FormsAssemblyForLogging);
+        }
+
+        /// <summary>
+        /// Quick log for states messages
+        /// </summary>
+        /// <param name="exception">The exception to log</param>
+        /// <param name="message">The message to log</param>
+        internal static void LogFormsException(this Exception exception, string message = null)
+        {
+            exception.LogError(assembly: FormsAssemblyForLogging, message: message);
         }
     }
 }

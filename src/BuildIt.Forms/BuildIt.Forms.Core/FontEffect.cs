@@ -25,6 +25,11 @@ namespace BuildIt.Forms
         /// </summary>
         public bool IsEmbedded { get; set; }
 
+        /// <summary>
+        /// Gets or sets holds a reference to the XAML control or page that is using this effect,
+        /// so that the assembly it is defined on can be accessed to load the 
+        /// embedded font
+        /// </summary>
         public object Parent { get; set; }
     }
 }

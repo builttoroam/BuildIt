@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.FontEffect), "FontEffect")]
@@ -17,6 +18,7 @@ namespace BuildIt.Forms.Controls.UWP
     /// <summary>
     /// Effect for specifying font on Label elements
     /// </summary>
+    [Preserve]
     public class FontEffect : PlatformEffect
     {
         private static IDictionary<string, FontFamily> Fonts { get; } = new Dictionary<string, FontFamily>();
@@ -85,11 +87,11 @@ namespace BuildIt.Forms.Controls.UWP
                 var assembly = ParentAssembly;
                 var file = await ApplicationData.Current.LocalFolder.CreateFileAsync("__fonteffect" + fileName, CreationCollisionOption.ReplaceExisting);
                 var resourceName = assembly.FullName.Split(',').FirstOrDefault() + "." + fileName;
-                $"Attempting to open resource {resourceName}".Log();
+                $"Attempting to open resource {resourceName}".LogMessage();
                 var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream == null)
                 {
-                    "Resource doesn't exist".Log();
+                    "Resource doesn't exist".LogMessage();
                     return null;
                 }
 
@@ -99,13 +101,13 @@ namespace BuildIt.Forms.Controls.UWP
                     await fs.FlushAsync();
                 }
 
-                "Font successfully extracted".Log();
+                "Font successfully extracted".LogMessage();
                 return file;
             }
             catch (Exception ex)
             {
-                $"Unable to extract font file '{fileName}'".Log();
-                ex.LogException();
+                $"Unable to extract font file '{fileName}'".LogMessage();
+                ex.LogError();
                 return null;
             }
         }

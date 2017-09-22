@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ResolutionGroupName("BuildIt")]
@@ -13,6 +14,7 @@ namespace BuildIt.Forms.Controls.Droid
     /// <summary>
     /// Touch effect implementation for Android
     /// </summary>
+    [Preserve]
     public class TouchEffect : PlatformEffect
     {
         private static Dictionary<Android.Views.View, TouchEffect> viewDictionary =
@@ -37,7 +39,7 @@ namespace BuildIt.Forms.Controls.Droid
             view = Control ?? Container;
 
             //var type = view.GetType().Name;
-            //type.Log();
+            //type.LogFormsInfo();
 
             // Get access to the TouchEffect class in the PCL
             Forms.TouchEffect touchEffect =
@@ -193,7 +195,7 @@ namespace BuildIt.Forms.Controls.Droid
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
             }
         }
 

@@ -24,14 +24,6 @@
   </PropertyGroup>
 
 
- <ItemGroup>
-   <EmbeddedResource Include="ContentButton.xaml">
-     <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-   </EmbeddedResource>
-   <EmbeddedResource Include="IconButton.xaml">
-     <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-   </EmbeddedResource>
- </ItemGroup>
 
  
   <ItemGroup>
@@ -52,10 +44,10 @@
   </ItemGroup>-->
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.75" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.75" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.269-pre2" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.275-pre3" />
   </ItemGroup>
 
   <ItemGroup>

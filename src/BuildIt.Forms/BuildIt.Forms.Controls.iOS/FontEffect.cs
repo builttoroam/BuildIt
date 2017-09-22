@@ -15,6 +15,7 @@ namespace BuildIt.Forms.Controls.iOS
     /// <summary>
     /// Effect for specifying font
     /// </summary>
+    [Preserve]
     public class FontEffect : PlatformEffect
     {
         private bool IsEmbedded { get; set; }
@@ -77,11 +78,11 @@ namespace BuildIt.Forms.Controls.iOS
             {
                 var assembly = ParentAssembly;
                 var resourceName = assembly.FullName.Split(',').FirstOrDefault() + "." + fileName;
-                $"Attempting to open resource {resourceName}".Log();
+                $"Attempting to open resource {resourceName}".LogFormsInfo();
                 var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream == null)
                 {
-                    "Resource doesn't exist".Log();
+                    "Resource doesn't exist".LogFormsInfo();
                 }
 
                 var data = new byte[stream.Length];
@@ -102,7 +103,7 @@ namespace BuildIt.Forms.Controls.iOS
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogFormsException();
                 return false;
             }
         }

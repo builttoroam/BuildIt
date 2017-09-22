@@ -162,7 +162,8 @@
 
             <StackLayout vsm:Ambient.ForeColor="Blue"
                          Margin="20">
-                <controls:IconButton Icon="&#xF04B;"></controls:IconButton>
+                <controls:IconButton Icon="&#xF04B;"
+                                     vsm:Ambient.FontSize="40"></controls:IconButton>
 
                 <Grid HeightRequest="200"
                       BackgroundColor="Pink">
@@ -173,7 +174,7 @@
                     <Label FontSize="30"
                            x:Name="HelloLabel"
                            Text="Hello World - Blue! &#xF04B;"
-                           vsm:Fonts.FontFamily="fontawesome-head.ttf#FontAwesome">
+                           vsm:Ambient.FontFamily="fontawesome-head.ttf#FontAwesome">
 
                     </Label>
                 </Grid>
@@ -239,13 +240,15 @@
                         HorizontalOptions="Center" />
                 <controls:ContentButton VerticalOptions="Center"
                                         x:Name="DisabledButton"
+                                        vsm:Ambient.FontSize="20"
                                         Pressed="ToggleButtonPressed"
                                         HorizontalOptions="Center">
 
                     <StackLayout>
                         <Label Text="Hello!" />
                         <Label Text="Hello!" />
-                        <Label Text="Hello!" />
+                        <Label Text="Hello!"
+                               vsm:Ambient.FontSize="30" />
                         <Label Text="Hello!" />
                         <Label Text="Hello!" />
                         <Label Text="Hello!" />
@@ -260,7 +263,8 @@
                         <Label Text="Hello!" />
                         <Label Text="Hello!" />
                         <Label Text="Hello!" />
-                        <Label Text="Hello!" />
+                        <Label Text="Hello!"
+                               vsm:Ambient.FontSize="30" />
                         <Label Text="Hello!" />
                         <Label Text="Hello!" />
                     </StackLayout>

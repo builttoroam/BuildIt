@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Autofac;
@@ -14,6 +15,8 @@ namespace BuildIt.Forms.Sample
     {
         public App()
         {
+            LogHelper.LogOutput = entry => Debug.Write(entry);
+
             InitializeComponent();
 
             var build = new ContainerBuilder();
@@ -21,10 +24,6 @@ namespace BuildIt.Forms.Sample
 
             var csl = new AutofacServiceLocator(container);
             var dcontainer = new AutofacDependencyContainer(container);
-            using (dcontainer.StartUpdate())
-            {
-                dcontainer.Register<CustomBasicDebugLogger, ILogService>();
-            }
             ServiceLocator.SetLocatorProvider(() => csl);
 
             MainPage = new BuildIt.Forms.Sample.MainPage();
@@ -45,19 +44,5 @@ namespace BuildIt.Forms.Sample
             // Handle when your app resumes
         }
 
-        private class CustomBasicDebugLogger : BasicDebugLogger
-        {
-            public override void Debug(string message)
-            {
-                base.Debug(message);
-                System.Diagnostics.Debug.WriteLine(message);
-            }
-
-            public override void Exception(string message, Exception ex)
-            {
-                base.Exception(message, ex);
-                System.Diagnostics.Debug.WriteLine(message + " " + ex.StackTrace);
-            }
-        }
     }
 }

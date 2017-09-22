@@ -13,9 +13,9 @@
     <copyright>Copyright © 2017</copyright>
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
     <dependencies>
-      <dependency id="BuildIt.General" version="1.1.0.75" />
-      <dependency id="BuildIt.States" version="1.1.0.75" />
-      <dependency id="Xamarin.Forms" version="2.4.0.269-pre2" />
+      <dependency id="BuildIt.General" version="1.1.0.92" />
+      <dependency id="BuildIt.States" version="1.1.0.97" />
+      <dependency id="Xamarin.Forms" version="2.4.0.275-pre3" />
     </dependencies>
   </metadata>
   <files>

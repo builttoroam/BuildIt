@@ -1,6 +1,7 @@
 using System.Linq;
 using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ResolutionGroupName("BuildIt")]
@@ -12,6 +13,7 @@ namespace BuildIt.Forms.Controls.iOS
     /// <summary>
     /// Effect to detect touch input on any control
     /// </summary>
+    [Preserve]
     public class TouchEffect : PlatformEffect
     {
         private UIView view;
