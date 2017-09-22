@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -12,7 +11,6 @@ using Android.Hardware.Camera2.Params;
 using Android.Media;
 using Android.OS;
 using Android.Support.V4.App;
-using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
 using BuildIt.AR.FormsSamples.Android;
@@ -25,11 +23,8 @@ using Xamarin.Forms.Platform.Android;
 using BuildIt.AR.FormsSamples.Android.Listeners;
 using Boolean = System.Boolean;
 using Exception = System.Exception;
-using Fragment = Android.App.Fragment;
 using Orientation = Android.Content.Res.Orientation;
 using Point = Android.Graphics.Point;
-using Android.Runtime;
-using Android.Util;
 using Size = Android.Util.Size;
 using View = Android.Views.View;
 //using FragmentManager = Android.Support.V4.App.FragmentManager;
@@ -98,6 +93,7 @@ namespace BuildIt.AR.FormsSamples.Android
                 //SetupEventHandlers();
                 AddView(view);
             }
+
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(@"			ERROR: ", ex.Message);
@@ -272,6 +268,7 @@ namespace BuildIt.AR.FormsSamples.Android
                 }
                 manager.OpenCamera(mCameraId, mStateCallback, mBackgroundHandler);
             }
+
             catch (Exception ex)
             {
                 ex.LogException();
@@ -440,6 +437,7 @@ namespace BuildIt.AR.FormsSamples.Android
                 intent.SetData(uri);
                 Forms.Context.SendBroadcast(intent);
             }
+
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(@"				", ex.Message);

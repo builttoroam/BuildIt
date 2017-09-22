@@ -1,18 +1,18 @@
-﻿using CustomRenderer;
-using CustomRenderer.UWP;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Sensors;
+using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Media;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
+using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
@@ -21,39 +21,38 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Xamarin.Forms.Platform.UWP;
-using Windows.Foundation;
-using Windows.Phone.UI.Input;
 using BuildIt.AR.FormsSamples.UI.Views;
+using BuildIt.AR.FormsSamples.UWP;
+using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
-namespace CustomRenderer.UWP
+namespace BuildIt.AR.FormsSamples.UWP
 {
     public class CameraPageRenderer : PageRenderer
     {
-        readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
-        readonly SimpleOrientationSensor orientationSensor = SimpleOrientationSensor.GetDefault();
-        readonly DisplayRequest displayRequest = new DisplayRequest();
-        SimpleOrientation deviceOrientation = SimpleOrientation.NotRotated;
-        DisplayOrientations displayOrientation = DisplayOrientations.Portrait;
+        private readonly DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
+        private readonly SimpleOrientationSensor orientationSensor = SimpleOrientationSensor.GetDefault();
+        private readonly DisplayRequest displayRequest = new DisplayRequest();
+        private SimpleOrientation deviceOrientation = SimpleOrientation.NotRotated;
+        private DisplayOrientations displayOrientation = DisplayOrientations.Portrait;
 
         // Rotation metadata to apply to preview stream (https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh868174.aspx)
         static readonly Guid RotationKey = new Guid("C380465D-2271-428C-9B83-ECEA3B4A85C1"); // (MF_MT_VIDEO_ROTATION)
 
-        StorageFolder captureFolder = null;
+        private StorageFolder captureFolder = null;
 
         readonly SystemMediaTransportControls systemMediaControls = SystemMediaTransportControls.GetForCurrentView();
 
-        MediaCapture mediaCapture;
-        CaptureElement captureElement;
-        bool isInitialized;
-        bool isPreviewing;
-        bool externalCamera;
-        bool mirroringPreview;
-        
-        Page page; 
-        AppBarButton takePhotoButton;
-        Application app;
+        private MediaCapture mediaCapture;
+        private CaptureElement captureElement;
+        private bool isInitialized;
+        private bool isPreviewing;
+        private bool externalCamera;
+        private bool mirroringPreview;
+
+        private Page page;
+        private AppBarButton takePhotoButton;
+        private Application app;
         
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Page> e)
         {
@@ -87,7 +86,7 @@ namespace CustomRenderer.UWP
             return finalSize;
         }
 
-        void SetupUserInterface()
+        private void SetupUserInterface()
         {
             takePhotoButton = new AppBarButton
             {
@@ -99,19 +98,20 @@ namespace CustomRenderer.UWP
             var commandBar = new CommandBar();
             commandBar.PrimaryCommands.Add(takePhotoButton);
 
-            captureElement = new CaptureElement();
-            captureElement.Stretch = Stretch.UniformToFill;
+            captureElement = new CaptureElement {Stretch = Stretch.UniformToFill};
 
             var stackPanel = new StackPanel();
             stackPanel.Children.Add(captureElement);
 
-            page = new Page();
-            page.BottomAppBar = commandBar;
-            page.Content = stackPanel;
+            page = new Page
+            {
+                BottomAppBar = commandBar,
+                Content = stackPanel
+            };
             page.Unloaded += OnPageUnloaded;
         }
 
-        async void SetupCamera()
+        private async void SetupCamera()
         {
             await SetupUIAsync();
             await InitializeCameraAsync();
@@ -119,7 +119,7 @@ namespace CustomRenderer.UWP
 
         #region Event Handlers
 
-        async void OnSystemMediaControlsPropertyChanged(SystemMediaTransportControls sender, SystemMediaTransportControlsPropertyChangedEventArgs args)
+        private async void OnSystemMediaControlsPropertyChanged(SystemMediaTransportControls sender, SystemMediaTransportControlsPropertyChangedEventArgs args)
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
@@ -140,7 +140,7 @@ namespace CustomRenderer.UWP
             });
         }
 
-        void OnOrientationSensorOrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
+        private void OnOrientationSensorOrientationChanged(SimpleOrientationSensor sender, SimpleOrientationSensorOrientationChangedEventArgs args)
         {
             // Only update orientatino if the device is not parallel to the ground
             if (args.Orientation != SimpleOrientation.Faceup && args.Orientation != SimpleOrientation.Facedown)
@@ -149,7 +149,7 @@ namespace CustomRenderer.UWP
             }
         }
 
-        async void OnDisplayInformationOrientationChanged(DisplayInformation sender, object args)
+        private async void OnDisplayInformationOrientationChanged(DisplayInformation sender, object args)
         {
             displayOrientation = sender.CurrentOrientation;
 
@@ -159,12 +159,12 @@ namespace CustomRenderer.UWP
             }
         }
 
-        async void OnTakePhotoButtonClicked(object sender, RoutedEventArgs e)
+        private async void OnTakePhotoButtonClicked(object sender, RoutedEventArgs e)
         {
             await TakePhotoAsync();
         }
 
-        async void OnHardwareCameraButtonPressed(object sender, CameraEventArgs e)
+        private async void OnHardwareCameraButtonPressed(object sender, CameraEventArgs e)
         {
             await TakePhotoAsync();
         }
@@ -173,7 +173,7 @@ namespace CustomRenderer.UWP
 
         #region Media Capture
 
-        async Task InitializeCameraAsync()
+        private async Task InitializeCameraAsync()
         {
             if (mediaCapture == null)
             {
@@ -230,7 +230,7 @@ namespace CustomRenderer.UWP
             }
         }
 
-        async Task StartPreviewAsync()
+        private async Task StartPreviewAsync()
         {
             // Prevent the device from sleeping while the preview is running
             displayRequest.RequestActive();
@@ -249,7 +249,7 @@ namespace CustomRenderer.UWP
             }
         }
 
-        async Task StopPreviewAsync()
+        private async Task StopPreviewAsync()
         {
             isPreviewing = false;
             await mediaCapture.StopPreviewAsync();
@@ -265,7 +265,7 @@ namespace CustomRenderer.UWP
             });
         }
 
-        async Task SetPreviewRotationAsync()
+        private async Task SetPreviewRotationAsync()
         {
             // Only update the orientation if the camera is mounted on the device
             if (externalCamera)
@@ -288,7 +288,7 @@ namespace CustomRenderer.UWP
             await mediaCapture.SetEncodingPropertiesAsync(MediaStreamType.VideoPreview, props, null);
         }
 
-        async Task TakePhotoAsync()
+        private async Task TakePhotoAsync()
         {
             var stream = new InMemoryRandomAccessStream();
             await mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream);
@@ -304,8 +304,8 @@ namespace CustomRenderer.UWP
                 Debug.WriteLine("Exception when taking photo: " + ex.ToString());
             }
         }
-        
-        async Task CleanupCameraAsync()
+
+        private async Task CleanupCameraAsync()
         {
             if (isInitialized)
             {
@@ -326,7 +326,7 @@ namespace CustomRenderer.UWP
 
         #region Helpers
 
-        async Task SetupUIAsync()
+        private async Task SetupUIAsync()
         {
             // Lock page to landscape to prevent the capture element from rotating
             DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
@@ -350,7 +350,7 @@ namespace CustomRenderer.UWP
             captureFolder = picturesLibrary.SaveFolder ?? ApplicationData.Current.LocalFolder;
         }
 
-        async Task CleanupUIAsync()
+        private async Task CleanupUIAsync()
         {
             UnregisterEventHandlers();
 
@@ -363,7 +363,7 @@ namespace CustomRenderer.UWP
             DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
         }
 
-        void RegisterEventHandlers()
+        private void RegisterEventHandlers()
         {
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -379,8 +379,8 @@ namespace CustomRenderer.UWP
             systemMediaControls.PropertyChanged += OnSystemMediaControlsPropertyChanged;
             takePhotoButton.Click += OnTakePhotoButtonClicked;
         }
-        
-        void UnregisterEventHandlers()
+
+        private void UnregisterEventHandlers()
         {
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -397,7 +397,7 @@ namespace CustomRenderer.UWP
             takePhotoButton.Click -= OnTakePhotoButtonClicked;
         }
 
-        static async Task ReencodeAndSavePhotoAsync(IRandomAccessStream stream, StorageFile file, PhotoOrientation orientation)
+        private static async Task ReencodeAndSavePhotoAsync(IRandomAccessStream stream, StorageFile file, PhotoOrientation orientation)
         {
             using (var inputStream = stream)
             {
@@ -423,7 +423,7 @@ namespace CustomRenderer.UWP
 
         #region Rotation
 
-        SimpleOrientation GetCameraOrientation()
+        private SimpleOrientation GetCameraOrientation()
         {
             if (externalCamera)
             {
@@ -469,7 +469,7 @@ namespace CustomRenderer.UWP
             return result;
         }
 
-        static int ConvertDeviceOrientationToDegrees(SimpleOrientation orientation)
+        private static int ConvertDeviceOrientationToDegrees(SimpleOrientation orientation)
         {
             switch (orientation)
             {
@@ -485,7 +485,7 @@ namespace CustomRenderer.UWP
             }
         }
 
-        static int ConvertDisplayOrientationToDegrees(DisplayOrientations orientation)
+        private static int ConvertDisplayOrientationToDegrees(DisplayOrientations orientation)
         {
             switch (orientation)
             {
@@ -501,7 +501,7 @@ namespace CustomRenderer.UWP
             }
         }
 
-        static PhotoOrientation ConvertOrientationToPhotoOrientation(SimpleOrientation orientation)
+        private static PhotoOrientation ConvertOrientationToPhotoOrientation(SimpleOrientation orientation)
         {
             switch (orientation)
             {
@@ -516,12 +516,12 @@ namespace CustomRenderer.UWP
                     return PhotoOrientation.Normal;
             }
         }
-        
+
         #endregion
 
         #region Lifecycle
 
-        async void OnAppSuspending(object sender, SuspendingEventArgs e)
+        private async void OnAppSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             await CleanupCameraAsync();
@@ -529,7 +529,7 @@ namespace CustomRenderer.UWP
             deferral.Complete();
         }
 
-        async void OnAppResuming(object sender, object o)
+        private async void OnAppResuming(object sender, object o)
         {
             await SetupUIAsync();
             await InitializeCameraAsync();
