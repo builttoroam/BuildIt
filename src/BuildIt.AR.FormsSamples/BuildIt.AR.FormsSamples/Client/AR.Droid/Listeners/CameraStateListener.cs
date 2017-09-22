@@ -33,7 +33,6 @@ namespace BuildIt.AR.FormsSamples.Android.Listeners
             {
                 activity.Finish();
             }
-
         }
     }
 }
