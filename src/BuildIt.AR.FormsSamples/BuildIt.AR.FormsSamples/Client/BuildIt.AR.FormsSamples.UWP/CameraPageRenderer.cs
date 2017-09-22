@@ -201,7 +201,6 @@ namespace BuildIt.AR.FormsSamples.UWP
                     });
                     isInitialized = true;
                 }
-
                 catch (UnauthorizedAccessException)
                 {
                     Debug.WriteLine("Camera access denied");

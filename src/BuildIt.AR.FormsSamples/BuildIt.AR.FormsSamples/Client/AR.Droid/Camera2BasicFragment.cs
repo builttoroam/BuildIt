@@ -513,7 +513,6 @@ namespace BuildIt.AR.FormsSamples.Android
                 mCameraDevice.CreateCaptureSession(surfaces, new CameraCaptureSessionCallback(this), null);
 
             }
-
             catch (CameraAccessException e)
             {
                 e.PrintStackTrace();

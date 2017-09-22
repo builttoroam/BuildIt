@@ -93,7 +93,6 @@ namespace BuildIt.AR.FormsSamples.Android
                 //SetupEventHandlers();
                 AddView(view);
             }
-
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(@"			ERROR: ", ex.Message);
@@ -268,7 +267,6 @@ namespace BuildIt.AR.FormsSamples.Android
                 }
                 manager.OpenCamera(mCameraId, mStateCallback, mBackgroundHandler);
             }
-
             catch (Exception ex)
             {
                 ex.LogException();
@@ -437,7 +435,6 @@ namespace BuildIt.AR.FormsSamples.Android
                 intent.SetData(uri);
                 Forms.Context.SendBroadcast(intent);
             }
-
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(@"				", ex.Message);
