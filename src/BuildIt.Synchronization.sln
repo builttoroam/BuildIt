@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Synchronization", "BuildIt.Synchronization\BuildIt.Synchronization\BuildIt.Synchronization.csproj", "{CC098E36-DBA0-45A7-BF77-B8DD282937F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Synchronization", "BuildIt.Synchronization\BuildIt.Synchronization\BuildIt.Synchronization.csproj", "{CC098E36-DBA0-45A7-BF77-B8DD282937F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Synchronization.Tests", "BuildIt.Synchronization\BuildIt.Synchronization.Tests\BuildIt.Synchronization.Tests.csproj", "{911CB710-7F03-4774-8115-3747085F6DC2}"
 EndProject
@@ -182,6 +182,8 @@ Global
 		{F27A9FAF-183B-4587-9659-49212481D183}.AppStore|x86.Build.0 = Release|x86
 		{F27A9FAF-183B-4587-9659-49212481D183}.AppStore|x86.Deploy.0 = Release|x86
 		{F27A9FAF-183B-4587-9659-49212481D183}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F27A9FAF-183B-4587-9659-49212481D183}.Debug|Any CPU.Build.0 = Debug|x86
+		{F27A9FAF-183B-4587-9659-49212481D183}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{F27A9FAF-183B-4587-9659-49212481D183}.Debug|ARM.ActiveCfg = Debug|ARM
 		{F27A9FAF-183B-4587-9659-49212481D183}.Debug|ARM.Build.0 = Debug|ARM
 		{F27A9FAF-183B-4587-9659-49212481D183}.Debug|ARM.Deploy.0 = Debug|ARM
