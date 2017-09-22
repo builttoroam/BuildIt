@@ -456,4 +456,3 @@ namespace BuildIt.AR.FormsSamples.Android
         }
     }
 }
-

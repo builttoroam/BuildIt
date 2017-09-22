@@ -29,7 +29,6 @@ namespace BuildIt.AR.FormsSamples.Android.Listeners
                         {
                             Owner.CaptureStillPicture();
                         }
-
                         else if ((((int)ControlAFState.FocusedLocked) == afState.IntValue()) ||
                                    (((int)ControlAFState.NotFocusedLocked) == afState.IntValue()))
                         {

@@ -1,4 +1,3 @@
-
 using Android.Views;
 
 namespace BuildIt.AR.FormsSamples.Android.Listeners

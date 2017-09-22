@@ -229,4 +229,3 @@ namespace BuildIt.AR.FormsSamples.iOS
         }
     }
 }
-
