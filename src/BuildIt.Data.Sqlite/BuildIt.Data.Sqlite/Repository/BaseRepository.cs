@@ -39,13 +39,13 @@ namespace BuildIt.Data.Sqlite.Repository
             }
         }
 
-        public TEntity GetWithChildren(string id)
+        public TEntity GetWithChildren(string id, bool recursive = false)
         {
             try
             {
                 if (string.IsNullOrEmpty(id)) return null;
 
-                return db.GetWithChildren<TEntity>(id);
+                return db.GetWithChildren<TEntity>(id, recursive);
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace BuildIt.Data.Sqlite.Repository
             return false;
         }
 
-        public bool InsertOrUpdateWithChildren(TEntity entity, bool throwsOnError = false)
+        public bool InsertOrUpdateWithChildren(TEntity entity, bool throwsOnError = false, bool recursive = false)
         {
             if (entity == null) return false;
 
@@ -137,7 +137,7 @@ namespace BuildIt.Data.Sqlite.Repository
                 {
                     return Execute(() =>
                     {
-                        db.InsertOrReplaceWithChildren(entity);
+                        db.InsertOrReplaceWithChildren(entity, recursive);
                         return true;
                     }, throwsOnError);
                 }
