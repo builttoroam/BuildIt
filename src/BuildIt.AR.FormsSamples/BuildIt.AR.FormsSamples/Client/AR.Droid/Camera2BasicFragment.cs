@@ -511,7 +511,6 @@ namespace BuildIt.AR.FormsSamples.Android
                 surfaces.Add(surface);
                 surfaces.Add(mImageReader.Surface);
                 mCameraDevice.CreateCaptureSession(surfaces, new CameraCaptureSessionCallback(this), null);
-
             }
             catch (CameraAccessException e)
             {

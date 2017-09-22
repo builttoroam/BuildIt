@@ -29,7 +29,6 @@ namespace BuildIt.AR.FormsSamples.Android.Listeners
 
         public void OnSurfaceTextureUpdated(global::Android.Graphics.SurfaceTexture surface)
         {
-
         }
     }
 }

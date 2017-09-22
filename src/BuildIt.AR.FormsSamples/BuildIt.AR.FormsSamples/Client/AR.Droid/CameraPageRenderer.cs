@@ -134,7 +134,6 @@ namespace BuildIt.AR.FormsSamples.Android
 
         public void OnSurfaceTextureUpdated(SurfaceTexture surface)
         {
-
         }
 
         public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
