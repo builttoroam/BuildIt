@@ -8,7 +8,7 @@ namespace BuildIt.Data.Sqlite.Repository.Interfaces
     {
         TableQuery<TEntity> Table { get; }
         TEntity Get(string id);
-        TEntity GetWithChildren(string id);
+        TEntity GetWithChildren(string id, bool recursive = false);
         List<TEntity> GetWithChildren();
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace BuildIt.Data.Sqlite.Repository.Interfaces
         /// <returns>Returns true if entity inserterd or false if not</returns>
         bool InsertOrUpdate(TEntity entity, bool throwsOnError = false);
 
-        bool InsertOrUpdateWithChildren(TEntity entity, bool throwsOnError = false);
+        bool InsertOrUpdateWithChildren(TEntity entity, bool throwsOnError = false, bool recursive = false);
         bool UpdateWithChildren(TEntity entity, bool throwsOnError = false);
         bool Delete(string id, bool throwsOnError = false);
         Dictionary<string, bool> Delete(IEnumerable<string> ids, bool throwsOnError = false);
