@@ -10,6 +10,7 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.Droid.FontEffect), nameof(BuildIt.Forms.Controls.Droid.FontEffect))]
+
 // ReSharper disable once CheckNamespace - Needs to be platform specific
 namespace BuildIt.Forms.Controls.Droid
 {

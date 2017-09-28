@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BuildIt.States.Interfaces;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -140,6 +140,57 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
+        /// Exits the state picker
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="args">The event args</param>
+        protected async void ExitDesignTime(object sender, object args)
+        {
+            try
+            {
+                var touchArgs = args as TouchActionEventArgs;
+                if (touchArgs == null ||
+                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
+                {
+                    return;
+                }
+
+                StatesList.SelectedItem = null;
+
+                StateGroupList.SelectedItem = null;
+                await HideGroups();
+            }
+            catch (Exception ex)
+            {
+                ex.LogFormsException();
+            }
+        }
+
+        /// <summary>
+        /// Launches the Built to Roam website
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="args">The event args</param>
+        protected void LaunchBuiltToRoamWebsite(object sender, object args)
+        {
+            try
+            {
+                var touchArgs = args as TouchActionEventArgs;
+                if (touchArgs == null ||
+                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
+                {
+                    return;
+                }
+
+                Device.OpenUri(new Uri("https://www.builttoroam.com"));
+            }
+            catch (Exception ex)
+            {
+                ex.LogFormsException();
+            }
+        }
+
+        /// <summary>
         /// Launches the state picker
         /// </summary>
         /// <param name="sender">The sender</param>
@@ -176,57 +227,6 @@ namespace BuildIt.Forms
             this.HorizontalOptions = LayoutOptions.Fill;
             this.VerticalOptions = LayoutOptions.Fill;
             await VisualStateManager.GoToState(this, DesignStates.GroupsVisible.ToString());
-        }
-
-        /// <summary>
-        /// Launches the Built to Roam website
-        /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The event args</param>
-        protected void LaunchBuiltToRoamWebsite(object sender, object args)
-        {
-            try
-            {
-                var touchArgs = args as TouchActionEventArgs;
-                if (touchArgs == null ||
-                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
-                {
-                    return;
-                }
-
-                Device.OpenUri(new Uri("https://www.builttoroam.com"));
-            }
-            catch (Exception ex)
-            {
-                ex.LogFormsException();
-            }
-        }
-
-        /// <summary>
-        /// Exits the state picker
-        /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The event args</param>
-        protected async void ExitDesignTime(object sender, object args)
-        {
-            try
-            {
-                var touchArgs = args as TouchActionEventArgs;
-                if (touchArgs == null ||
-                    (touchArgs.Type != TouchActionType.Pressed && touchArgs.Type != TouchActionType.Released))
-                {
-                    return;
-                }
-
-                StatesList.SelectedItem = null;
-
-                StateGroupList.SelectedItem = null;
-                await HideGroups();
-            }
-            catch (Exception ex)
-            {
-                ex.LogFormsException();
-            }
         }
     }
 }

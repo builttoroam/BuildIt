@@ -1,40 +1,38 @@
-﻿<Application
-    x:Class="BuildIt.Forms.Sample.UWP.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BuildIt.Forms.Sample.UWP"
-    RequestedTheme="Light">
+﻿<Application x:Class="BuildIt.Forms.Sample.UWP.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:BuildIt.Forms.Sample.UWP"
+             RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
-        <ResourceDictionary.ThemeDictionaries>
-            <ResourceDictionary x:Key="Default">
-                <SolidColorBrush x:Key="MyAcrylicBrush"
-                                 Color="{ThemeResource SystemColorWindowColor}" />
-                <!-- Acrylic brushes only in Fall Creators Update -->
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="MyAcrylicBrush"
+                                     Color="{ThemeResource SystemColorWindowColor}" />
+                    <!-- Acrylic brushes only in Fall Creators Update -->
                     <!--<AcrylicBrush x:Key="MyAcrylicBrush"
                               BackgroundSource="HostBackdrop"
                               TintColor="#FFFF0000"
                               TintOpacity="0.2"
                               FallbackColor="#FF7F0000" />-->
-            </ResourceDictionary>
+                </ResourceDictionary>
 
-            <ResourceDictionary x:Key="HighContrast">
-                <SolidColorBrush x:Key="MyAcrylicBrush"
-                                 Color="{ThemeResource SystemColorWindowColor}" />
-            </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="MyAcrylicBrush"
+                                     Color="{ThemeResource SystemColorWindowColor}" />
+                </ResourceDictionary>
 
-            <ResourceDictionary x:Key="Light">
-                <SolidColorBrush x:Key="MyAcrylicBrush"
-                                 Color="{ThemeResource SystemColorWindowColor}" />
-                <!-- Acrylic brushes only in Fall Creators Update -->
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="MyAcrylicBrush"
+                                     Color="{ThemeResource SystemColorWindowColor}" />
+                    <!-- Acrylic brushes only in Fall Creators Update -->
                     <!--<AcrylicBrush x:Key="MyAcrylicBrush"
                               BackgroundSource="HostBackdrop"
                               TintColor="#FFFF0000"
                               TintOpacity="0.2"
                               FallbackColor="#FFFF7F7F" />-->
-            </ResourceDictionary>
-        </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </Application.Resources>
-
 </Application>

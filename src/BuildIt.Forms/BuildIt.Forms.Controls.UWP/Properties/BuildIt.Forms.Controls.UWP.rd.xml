@@ -28,6 +28,5 @@
   <Library Name="BuildIt.Forms.Controls.UWP">
 
   	<!-- add directives for your library here -->
-
   </Library>
 </Directives>

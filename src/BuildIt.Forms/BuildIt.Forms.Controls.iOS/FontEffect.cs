@@ -1,14 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using CoreGraphics;
+﻿using CoreGraphics;
 using CoreText;
 using Foundation;
+using System;
+using System.Linq;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.iOS.FontEffect), "FontEffect")]
 #pragma warning disable SA1300 // Element must begin with upper-case letter - iOS platform
+
 namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {
@@ -57,7 +58,6 @@ namespace BuildIt.Forms.Controls.iOS
                 }
 
                 label.FontFamily = pieces?.LastOrDefault();
-
             }
             catch (Exception ex)
             {

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using BuildIt.forms.Sample.Core.ViewModels;
+﻿using BuildIt.forms.Sample.Core.ViewModels;
 using BuildIt.Forms.Animations;
-using Xamarin.Forms;
-using BuildIt.Forms.Controls;
-using BuildIt.ServiceLocation;
-using BuildIt.States;
 using BuildIt.States.Interfaces;
+using System;
+using System.Threading;
+using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
 {
@@ -24,7 +17,7 @@ namespace BuildIt.Forms.Sample
 
             VisualStateManager.Bind(this, (BindingContext as IHasStates)?.StateManager);
 
-          //  DesignTimeInfo.BindingContext = new DesignInfo(this);
+            //  DesignTimeInfo.BindingContext = new DesignInfo(this);
 
             this.AddDesignAction("Test", async () =>
             {
@@ -57,7 +50,6 @@ namespace BuildIt.Forms.Sample
         {
             VisualStateManager.GoToState(this, "DoubleHeight");
         }
-
 
         public async void RotateLeftClicked(object sender, EventArgs e)
         {

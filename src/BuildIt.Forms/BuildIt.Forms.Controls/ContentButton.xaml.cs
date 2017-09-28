@@ -143,6 +143,7 @@ namespace BuildIt.Forms.Controls
                     EnterRequired = false;
                     IsEntered = true;
                     break;
+
                 case TouchActionType.Exited:
                     if (IsPressed)
                     {
@@ -151,9 +152,11 @@ namespace BuildIt.Forms.Controls
 
                     IsEntered = false;
                     break;
+
                 case TouchActionType.Pressed:
                     IsPressed = true;
                     break;
+
                 case TouchActionType.Released:
                     IsPressed = false;
                     if (IsEntered || !EnterRequired)

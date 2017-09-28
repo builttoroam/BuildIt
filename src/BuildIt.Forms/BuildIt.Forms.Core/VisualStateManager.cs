@@ -1,13 +1,13 @@
-﻿using System;
+﻿using BuildIt.Forms.Animations;
+using BuildIt.States;
+using BuildIt.States.Interfaces;
+using BuildIt.States.Typed.String;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.Forms.Animations;
-using BuildIt.States;
-using BuildIt.States.Interfaces;
-using BuildIt.States.Typed.String;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms
@@ -67,15 +67,6 @@ namespace BuildIt.Forms
                 return;
             }
 
-            //// TODO: This is a hack because there's an issue with the state manager
-            //// that cancels a current transition if we attempt to transition to the same
-            //// state again
-            //var current = manager.CurrentState(state.State.StateGroup.GroupName);
-            //if (current == state.State.Name)
-            //{
-            //    return;
-            //}
-
             await manager.GoToVisualState(state.State);
         }
 
@@ -106,7 +97,6 @@ namespace BuildIt.Forms
                             {
                                 HorizontalOptions = LayoutOptions.Start,
                                 VerticalOptions = LayoutOptions.End
-                                //Margin = new Thickness(12, 0, 0, 12)
                             };
 
                             if (content.ColumnDefinitions.Count > 0)

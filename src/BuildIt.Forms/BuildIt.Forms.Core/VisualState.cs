@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using BuildIt.Forms.Animations;
 using BuildIt.States.Interfaces;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms

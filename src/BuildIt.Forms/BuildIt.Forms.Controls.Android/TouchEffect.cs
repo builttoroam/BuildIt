@@ -8,6 +8,7 @@ using Xamarin.Forms.Platform.Android;
 
 [assembly: ResolutionGroupName("BuildIt")]
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.Droid.TouchEffect), "TouchEffect")]
+
 // ReSharper disable once CheckNamespace - keeping platform specific namespace
 namespace BuildIt.Forms.Controls.Droid
 {
@@ -38,9 +39,6 @@ namespace BuildIt.Forms.Controls.Droid
             // Get the Android View corresponding to the Element that the effect is attached to
             view = Control ?? Container;
 
-            //var type = view.GetType().Name;
-            //type.LogFormsInfo();
-
             // Get access to the TouchEffect class in the PCL
             Forms.TouchEffect touchEffect =
                 (Forms.TouchEffect)Element.Effects.
@@ -55,8 +53,7 @@ namespace BuildIt.Forms.Controls.Droid
 
             formsElement = Element;
 
-            var fview = formsElement as Xamarin.Forms.View;
-            if (fview != null)
+            if (formsElement is Xamarin.Forms.View fview)
             {
                 fview.InputTransparent = true;
             }
@@ -65,16 +62,6 @@ namespace BuildIt.Forms.Controls.Droid
 
             // Save fromPixels function
             fromPixels = view.Context.FromPixels;
-
-            //var renderer = view as IVisualElementRenderer;
-            //if (renderer != null)
-            //{
-            //    var ctrl = renderer.View;
-            //    if (ctrl != null)
-            //    {
-            //        ctrl.Touch += OnTouch;
-            //    }
-            //}
 
             // Set event handler on View
             view.Touch += OnTouch;
@@ -147,8 +134,7 @@ namespace BuildIt.Forms.Controls.Droid
 
                                 if (idToEffectDictionary[id] != null)
                                 {
-                                    FireEvent(idToEffectDictionary[id], id, TouchActionType.Moved, screenPointerCoords,
-                                        true);
+                                    FireEvent(idToEffectDictionary[id], id, TouchActionType.Moved, screenPointerCoords, true);
                                 }
                             }
                         }
@@ -167,8 +153,7 @@ namespace BuildIt.Forms.Controls.Droid
 
                             if (idToEffectDictionary[id] != null)
                             {
-                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Released, screenPointerCoords,
-                                    false);
+                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Released, screenPointerCoords, false);
                             }
                         }
 
@@ -184,8 +169,7 @@ namespace BuildIt.Forms.Controls.Droid
                         {
                             if (idToEffectDictionary[id] != null)
                             {
-                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Cancelled, screenPointerCoords,
-                                    false);
+                                FireEvent(idToEffectDictionary[id], id, TouchActionType.Cancelled, screenPointerCoords, false);
                             }
                         }
 

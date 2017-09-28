@@ -13,6 +13,7 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.FontEffect), "FontEffect")]
+
 namespace BuildIt.Forms.Controls.UWP
 {
     /// <summary>
@@ -21,10 +22,10 @@ namespace BuildIt.Forms.Controls.UWP
     [Preserve]
     public class FontEffect : PlatformEffect
     {
-        private static IDictionary<string, FontFamily> Fonts { get; } = new Dictionary<string, FontFamily>();
-
-        private FrameworkElement frameworkElement;
         private Forms.FontEffect effect;
+        private FrameworkElement frameworkElement;
+
+        private static IDictionary<string, FontFamily> Fonts { get; } = new Dictionary<string, FontFamily>();
 
         private bool IsEmbedded { get; set; }
 
@@ -52,7 +53,6 @@ namespace BuildIt.Forms.Controls.UWP
                     ParentAssembly = effect?.Parent.GetType().GetTypeInfo().Assembly;
                 }
 
-
                 if (effect != null && frameworkElement != null)
                 {
                     if (IsEmbedded)
@@ -62,14 +62,14 @@ namespace BuildIt.Forms.Controls.UWP
                         {
                             var file = await ExtractFont(fileName);
                             var uri = new Uri("ms-appdata:///local/" + file.Name);
-                            font = new FontFamily(uri.OriginalString +"#" + familyName);
+                            font = new FontFamily(uri.OriginalString + "#" + familyName);
                             Fonts[effect.FontName] = font;
                         }
+
                         (frameworkElement as TextBlock).FontFamily = font;
                     }
                     else
                     {
-
                         (this.Element as Label).FontFamily = "/Assets/Fonts/" + effect.FontName;
                     }
                 }
@@ -78,6 +78,13 @@ namespace BuildIt.Forms.Controls.UWP
             {
                 Console.WriteLine("Cannot set property on attached control. Error: ", ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
+        protected override void OnDetached()
+        {
         }
 
         private async Task<StorageFile> ExtractFont(string fileName)
@@ -110,13 +117,6 @@ namespace BuildIt.Forms.Controls.UWP
                 ex.LogError();
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Detach the effect
-        /// </summary>
-        protected override void OnDetached()
-        {
         }
     }
 }

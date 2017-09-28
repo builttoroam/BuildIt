@@ -7,6 +7,7 @@ using UIKit;
 using Xamarin.Forms;
 
 #pragma warning disable SA1300 // Element must begin with upper-case letter - iOS platform
+
 namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {

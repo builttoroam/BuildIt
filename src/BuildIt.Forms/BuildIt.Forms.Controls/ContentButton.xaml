@@ -11,8 +11,8 @@
                 <local:VisualStateManager.VisualStateGroups>
                     <local:VisualStateGroups>
                         <local:VisualStateGroup Name="CommonStates"
-                            DefinitionCacheKey="BuildIt_ContentButtonStates">
-                            <local:VisualState Name="Normal"/>
+                                                DefinitionCacheKey="BuildIt_ContentButtonStates">
+                            <local:VisualState Name="Normal" />
                             <local:VisualState Name="PointerOver">
                                 <local:VisualState.Setters>
                                     <local:Setter Value="#33000000"
@@ -46,6 +46,6 @@
     </ContentView.ControlTemplate>
     <ContentView.Effects>
         <local:TouchEffect Capture="True"
-                        TouchAction="OnTouchEffectAction" />
+                           TouchAction="OnTouchEffectAction" />
     </ContentView.Effects>
 </ContentView>

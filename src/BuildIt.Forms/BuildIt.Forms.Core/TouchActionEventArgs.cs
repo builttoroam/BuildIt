@@ -31,7 +31,7 @@ namespace BuildIt.Forms
         /// <summary>
         /// Gets the touch action type
         /// </summary>
-        public TouchActionType Type { get;  }
+        public TouchActionType Type { get; }
 
         /// <summary>
         /// Gets the location of the touch input

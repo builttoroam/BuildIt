@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BuildIt.States;
-using System.Windows.Input;
+﻿using BuildIt.States;
 using BuildIt.States.Interfaces;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BuildIt.forms.Sample.Core.ViewModels
 {
@@ -15,7 +13,6 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         Base,
         Show,
         Hide
-
     }
 
     public enum ItemStates
@@ -44,15 +41,12 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         {
             await StateManager.GoToState(EnabledVisibility ? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
         }
-
     }
-
-
 
     public class MainViewModel : NotifyBase, IHasStates
     {
         private ICommand pressedCommand;
-        public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates,()=>CommandIsEnabled));
+        public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
 
         public IStateManager StateManager { get; } = new StateManager();
 
@@ -67,6 +61,7 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         }
 
         private bool commandIsEnabled;
+
         public bool CommandIsEnabled
         {
             get => commandIsEnabled;
@@ -79,6 +74,7 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         }
 
         private bool visible = true;
+
         public void SwitchStates()
         {
             visible = !visible;
@@ -98,9 +94,6 @@ namespace BuildIt.forms.Sample.Core.ViewModels
             MoreItems.Fill(items);
         }
     }
-
-
-
 
     public class Command : ICommand
     {

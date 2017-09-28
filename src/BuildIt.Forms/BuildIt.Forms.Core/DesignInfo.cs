@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BuildIt.States.Interfaces;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BuildIt.States.Interfaces;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms

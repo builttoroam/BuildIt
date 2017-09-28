@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using BuildIt.Forms.Controls.iOS;
+﻿using BuildIt.Forms.Controls.iOS;
+using System.Linq;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportEffect(typeof(BackgroundEffect), nameof(BackgroundEffect))]
-
 #pragma warning disable SA1300 // Element must begin with upper-case letter - iOS platform
+
 namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {

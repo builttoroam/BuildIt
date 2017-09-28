@@ -3,9 +3,8 @@ using BuildIt.States.Interfaces;
 
 namespace BuildIt.forms.Sample.Core.ViewModels
 {
-    public class CustomViewModel:IHasStates
+    public class CustomViewModel : IHasStates
     {
-
         public IStateManager StateManager { get; } = new StateManager();
 
         public CustomViewModel()

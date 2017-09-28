@@ -6,6 +6,7 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.BackgroundEffect), "BackgroundEffect")]
+
 namespace BuildIt.Forms.Controls.UWP
 {
     /// <summary>
