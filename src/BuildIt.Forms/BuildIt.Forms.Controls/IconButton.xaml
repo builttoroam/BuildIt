@@ -13,7 +13,7 @@
             <Label.Effects>
                 <local:FontEffect FontName="fontawesome-webfont.ttf#FontAwesome"
                                   IsEmbedded="true"
-                                  Parent="{x:Reference Root}"/>
+                                  Parent="{x:Reference Root}" />
             </Label.Effects>
         </Label>
     </Grid>

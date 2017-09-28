@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Autofac;
-using Autofac.Core;
+﻿using Autofac;
 using BuildIt.Autofac;
 using BuildIt.ServiceLocation;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
@@ -43,6 +38,5 @@ namespace BuildIt.Forms.Sample
         {
             // Handle when your app resumes
         }
-
     }
 }

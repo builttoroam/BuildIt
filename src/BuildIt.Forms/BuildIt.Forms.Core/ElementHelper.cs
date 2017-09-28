@@ -15,6 +15,30 @@ namespace BuildIt.Forms
         private static Assembly FormsAssemblyForLogging { get; } = typeof(ElementHelper).GetTypeInfo().Assembly;
 
         /// <summary>
+        /// Adds an action that can be run from the design overlay
+        /// </summary>
+        /// <param name="element">The page or user control</param>
+        /// <param name="actionTitle">The text that will appear on screen</param>
+        /// <param name="action">The action to be performed</param>
+        public static void AddDesignAction(this ContentPage element, string actionTitle, Action action)
+        {
+            if (!Debugger.IsAttached)
+            {
+                return;
+            }
+
+            var dtc = (element?.Content as Grid)?.Children?.OfType<DesignTimeControl>().FirstOrDefault();
+            if (dtc == null)
+            {
+                "Unable to register design action. Only applicable to Content Page".LogFormsInfo();
+                return;
+            }
+
+            var di = dtc.BindingContext as DesignInfo;
+            di?.AddDesignAction(actionTitle, action);
+        }
+
+        /// <summary>
         /// Retrieves the target element and property info for a state action
         /// </summary>
         /// <param name="element">The root element (to begin search for target element)</param>
@@ -73,22 +97,14 @@ namespace BuildIt.Forms
             return new Tuple<Element, PropertyInfo>(setterTarget, targetProp);
         }
 
-        public static void AddDesignAction(this ContentPage element, string actionTitle, Action action)
+        /// <summary>
+        /// Quick log for states messages
+        /// </summary>
+        /// <param name="exception">The exception to log</param>
+        /// <param name="message">The message to log</param>
+        internal static void LogFormsException(this Exception exception, string message = null)
         {
-            if (!Debugger.IsAttached)
-            {
-                return;
-            }
-
-            var dtc = (element?.Content as Grid)?.Children?.OfType<DesignTimeControl>().FirstOrDefault();
-            if (dtc == null)
-            {
-                "Unable to register design action. Only applicable to Content Page".LogFormsInfo();
-                return;
-            }
-
-            var di = dtc.BindingContext as DesignInfo;
-            di?.AddDesignAction(actionTitle, action);
+            exception.LogError(assembly: FormsAssemblyForLogging, message: message);
         }
 
         /// <summary>
@@ -98,16 +114,6 @@ namespace BuildIt.Forms
         internal static void LogFormsInfo(this string message)
         {
             message.LogMessage(assembly: FormsAssemblyForLogging);
-        }
-
-        /// <summary>
-        /// Quick log for states messages
-        /// </summary>
-        /// <param name="exception">The exception to log</param>
-        /// <param name="message">The message to log</param>
-        internal static void LogFormsException(this Exception exception, string message = null)
-        {
-            exception.LogError(assembly: FormsAssemblyForLogging, message: message);
         }
     }
 }

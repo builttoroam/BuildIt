@@ -30,7 +30,7 @@ namespace BuildIt.Forms.Controls
         /// </summary>
         public string Icon
         {
-            get => (string) GetValue(IconProperty);
+            get => (string)GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
     }

@@ -157,8 +157,6 @@
                         </Grid>
                     </StackLayout>
 
-
-
                     <Grid Grid.Row="1"
                           HorizontalOptions="Start"
                           VerticalOptions="End"

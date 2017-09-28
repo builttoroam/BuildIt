@@ -22,22 +22,6 @@ namespace BuildIt.Forms
                 string.Empty,
                 propertyChanged: FontChanged);
 
-        private const string FontFamilyPropertyName = "FontFamily";
-
-        /// <summary>
-        /// Foreground color - used for nested Label elements
-        /// </summary>
-        public static readonly BindableProperty ForeColorProperty =
-            BindableProperty.CreateAttached(ForeColorPropertyName,
-                typeof(Color),
-                typeof(Ambient),
-                Color.Transparent,
-                BindingMode.OneWayToSource,
-                null,
-                ColorChanged);
-
-        private const string ForeColorPropertyName = "ForeColor";
-
         /// <summary>
         /// Font size attached property
         /// </summary>
@@ -49,9 +33,44 @@ namespace BuildIt.Forms
                 0.0,
                 propertyChanged: FontSizeChanged);
 
+        /// <summary>
+        /// Foreground color - used for nested Label elements
+        /// </summary>
+        public static readonly BindableProperty ForeColorProperty =
+            BindableProperty.CreateAttached(
+                ForeColorPropertyName,
+                typeof(Color),
+                typeof(Ambient),
+                Color.Transparent,
+                BindingMode.OneWayToSource,
+                null,
+                ColorChanged);
+
+        private const string FontFamilyPropertyName = "FontFamily";
         private const string FontSizePropertyName = "FontSize";
+        private const string ForeColorPropertyName = "ForeColor";
 
         private static IDictionary<Type, FieldInfo> ColorProperties { get; } = new Dictionary<Type, FieldInfo>();
+
+        /// <summary>
+        /// Gets the font family
+        /// </summary>
+        /// <param name="view">The element to retrieve the font family for</param>
+        /// <returns>The font family</returns>
+        public static string GetFontFamily(BindableObject view)
+        {
+            return (string)view.GetValue(FontFamilyProperty);
+        }
+
+        /// <summary>
+        /// Gets the font size
+        /// </summary>
+        /// <param name="view">The element to retrieve the font size for</param>
+        /// <returns>The font size</returns>
+        public static double GetFontSize(BindableObject view)
+        {
+            return (double)view.GetValue(FontSizeProperty);
+        }
 
         /// <summary>
         /// Gets the forecolor set on an element
@@ -64,6 +83,26 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
+        /// Sets the font family
+        /// </summary>
+        /// <param name="view">The element to set the font family on</param>
+        /// <param name="value">The font family value</param>
+        public static void SetFontFamily(BindableObject view, string value)
+        {
+            view.SetValue(FontFamilyProperty, value);
+        }
+
+        /// <summary>
+        /// Sets the font size
+        /// </summary>
+        /// <param name="view">The element to set the font size on</param>
+        /// <param name="value">The font size value</param>
+        public static void SetFontSize(BindableObject view, double value)
+        {
+            view.SetValue(FontSizeProperty, value);
+        }
+
+        /// <summary>
         /// Sets the forecolor property on a specific element
         /// </summary>
         /// <param name="view">The element</param>
@@ -71,12 +110,6 @@ namespace BuildIt.Forms
         public static void SetForeColor(BindableObject view, Color value)
         {
             view.SetValue(ForeColorProperty, value);
-        }
-
-        private static void ColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var clr = (Color)newValue;
-            ApplyForeColor(bindable, clr);
         }
 
         private static void ApplyForeColor(BindableObject bindable, Color foreColor)
@@ -94,8 +127,7 @@ namespace BuildIt.Forms
                 ColorProperties[objType] = colorProp;
             }
 
-            var prop = colorProp?.GetValue(bindable) as BindableProperty;
-            if (prop != null)
+            if (colorProp?.GetValue(bindable) is BindableProperty prop)
             {
                 var currentVal = bindable.GetValue(prop);
                 if (currentVal == null || (Color)currentVal == default(Color))
@@ -122,63 +154,70 @@ namespace BuildIt.Forms
             };
         }
 
-        /// <summary>
-        /// Gets the font family
-        /// </summary>
-        /// <param name="view">The element to retrieve the font family for</param>
-        /// <returns>The font family</returns>
-        public static string GetFontFamily(BindableObject view)
+        private static void ApplyToNested<TElement>(Element view, BindableProperty property, Action<TElement> action, bool root)
+            where TElement : View
         {
-            return (string)view.GetValue(FontFamilyProperty);
+            if (view == null)
+            {
+                "null".LogFormsInfo();
+                return;
+            }
+
+            $"attempting to match {view.GetType().Name}".LogFormsInfo();
+            if (!root)
+            {
+                var val = view.GetValue(property);
+                var hasValue = val != property.DefaultValue;
+                if (hasValue)
+                {
+                    $"has a value assigned {val}".LogFormsInfo();
+                    return;
+                }
+            }
+
+            if (view is TElement element)
+            {
+                "matching view found".LogFormsInfo();
+                action(element);
+            }
+            else if (view is Layout layout)
+            {
+                $"matching view not found - searching children of {view.GetType().Name}".LogFormsInfo();
+                foreach (var subelement in layout.Children)
+                {
+                    ApplyToNested(subelement, property, action, false);
+                }
+
+                layout.ChildAdded += (s, e) =>
+                {
+                    "child added".LogFormsInfo();
+                    ApplyToNested(e.Element, property, action, false);
+                };
+            }
+            else
+            {
+                $"matching view not found for {view.GetType().Name}".LogFormsInfo();
+            }
         }
 
-        /// <summary>
-        /// Sets the font family
-        /// </summary>
-        /// <param name="view">The element to set the font family on</param>
-        /// <param name="value">The font family value</param>
-        public static void SetFontFamily(BindableObject view, string value)
+        private static void ColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            view.SetValue(FontFamilyProperty, value);
+            var clr = (Color)newValue;
+            ApplyForeColor(bindable, clr);
         }
 
         private static void FontChanged(BindableObject bindable, object oldValue, object newValue)
         {
             try
             {
-                //var view = bindable as View;
-
-                //view?.Effects.Add(new FontEffect { FontName = newValue as string });
-
                 var view = bindable as Element;
 
-                ApplyToNested<Label>(view, FontFamilyProperty, label => label?.Effects.Add(new FontEffect { FontName = newValue as string }),true);
+                ApplyToNested<Label>(view, FontFamilyProperty, label => label?.Effects.Add(new FontEffect { FontName = newValue as string }), true);
             }
             catch (Exception ex)
             {
                 ex.LogFormsException();
             }
-        }
-
-
-        /// <summary>
-        /// Gets the font size
-        /// </summary>
-        /// <param name="view">The element to retrieve the font size for</param>
-        /// <returns>The font size</returns>
-        public static double GetFontSize(BindableObject view)
-        {
-            return (double)view.GetValue(FontSizeProperty);
-        }
-
-        /// <summary>
-        /// Sets the font size
-        /// </summary>
-        /// <param name="view">The element to set the font size on</param>
-        /// <param name="value">The font size value</param>
-        public static void SetFontSize(BindableObject view, double value)
-        {
-            view.SetValue(FontSizeProperty, value);
         }
 
         private static void FontSizeChanged(BindableObject bindable, object oldValue, object newValue)
@@ -198,57 +237,11 @@ namespace BuildIt.Forms
 
                 var view = bindable as Element;
 
-                ApplyToNested<Label>(view,FontSizeProperty,  label => label.FontSize = value,true);
+                ApplyToNested<Label>(view, FontSizeProperty, label => label.FontSize = value, true);
             }
             catch (Exception ex)
             {
                 ex.LogFormsException();
-            }
-        }
-
-        private static void ApplyToNested<TElement>(Element view, BindableProperty property, Action<TElement> action, bool root)
-            where TElement : View
-        {
-            if (view == null)
-            {
-                "null".LogFormsInfo();
-                return;
-            }
-
-            $"attempting to match {view.GetType().Name}".LogFormsInfo();
-            if (!root)
-            {
-                var val = view.GetValue(property);
-                var hasValue =  val!= property.DefaultValue;
-                if (hasValue)
-                {
-                    $"has a value assigned {val}".LogFormsInfo();
-                    return;
-                }
-            }
-
-            if (view is TElement element)
-            {
-                "matching view found".LogFormsInfo();
-                action(element);
-            }
-            else if (view is Layout layout)
-            {
-                $"matching view not found - searching children of {view.GetType().Name}".LogFormsInfo();
-                foreach (var subelement in layout.Children)
-                {
-                    ApplyToNested(subelement, property, action,false);
-                }
-
-                layout.ChildAdded += (s, e) =>
-                {
-                    "child added".LogFormsInfo();
-                    ApplyToNested(e.Element, property,action, false);
-                };
-            }
-            else
-            {
-                $"matching view not found for {view.GetType().Name}".LogFormsInfo();
             }
         }
     }

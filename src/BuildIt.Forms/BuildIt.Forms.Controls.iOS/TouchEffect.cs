@@ -7,6 +7,7 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ResolutionGroupName("BuildIt")]
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.iOS.TouchEffect), "TouchEffect")]
 #pragma warning disable SA1300 // Element must begin with upper-case letter - iOS platform
+
 namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {

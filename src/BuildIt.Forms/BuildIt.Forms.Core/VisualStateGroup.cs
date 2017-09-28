@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using BuildIt.States.Interfaces;
+using System.Collections.Generic;
 
 namespace BuildIt.Forms
 {

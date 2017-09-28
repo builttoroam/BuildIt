@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using BuildIt.States.Interfaces;
+﻿using BuildIt.States.Interfaces;
+using System.Threading.Tasks;
 
 namespace BuildIt.Forms
 {

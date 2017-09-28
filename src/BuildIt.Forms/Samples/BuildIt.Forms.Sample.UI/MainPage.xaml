@@ -107,7 +107,6 @@
                             </anim:AnimationGroup.PostAnimations>
                         </anim:AnimationGroup>
                     </vsm:VisualState.LeavingAnimations>
-
                 </vsm:VisualState>
                 <vsm:VisualState Name="DoubleHeight">
                     <vsm:VisualState.Setters>
@@ -143,7 +142,6 @@
                             </anim:AnimationGroup.PostAnimations>
                         </anim:AnimationGroup>
                     </vsm:VisualState.ArrivingAnimations>
-
                 </vsm:VisualState>
             </vsm:VisualStateGroup>
         </vsm:VisualStateGroups>
@@ -156,7 +154,7 @@
         </Grid.ColumnDefinitions>
         <!-- Acrylic brushes only in Fall Creators Update -->
         <!--<Grid.Effects>
-            <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush"/>
+            <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush" />
         </Grid.Effects>-->
         <ScrollView>
 
@@ -169,13 +167,12 @@
                       BackgroundColor="Pink">
                     <Grid.Effects>
                         <vsm:TouchEffect Capture="True"
-                                           TouchAction="OnTouchEffectAction" />
+                                         TouchAction="OnTouchEffectAction" />
                     </Grid.Effects>
                     <Label FontSize="30"
                            x:Name="HelloLabel"
                            Text="Hello World - Blue! &#xF04B;"
                            vsm:Ambient.FontFamily="fontawesome-head.ttf#FontAwesome">
-
                     </Label>
                 </Grid>
 
@@ -270,16 +267,13 @@
                     </StackLayout>
                 </controls:ContentButton>
 
-
                 <local:CustomControl x:Name="Custom">
                     <local:CustomControl.Effects>
                         <vsm:BackgroundEffect FallbackColor="Blue" />
                     </local:CustomControl.Effects>
                 </local:CustomControl>
             </StackLayout>
-
         </ScrollView>
-
 
         <Grid Grid.Column="1">
             <ListView ItemsSource="{Binding Items}">
@@ -291,7 +285,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
         </Grid>
 
         <Grid Grid.Column="2">
@@ -308,7 +301,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
         </Grid>
     </Grid>
 </ContentPage>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Xamarin.Forms;
@@ -7,6 +6,7 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.Droid.BackgroundEffect), "BackgroundEffect")]
+
 // ReSharper disable once CheckNamespace - keeping namespace different to make it easier to identify platform classes
 namespace BuildIt.Forms.Controls.Droid
 {
