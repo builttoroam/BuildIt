@@ -1,23 +1,26 @@
+using BuildIt.States.Interfaces;
 using System;
 using System.Threading.Tasks;
-using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle.Interfaces
 {
     /// <summary>
     /// Defines an application region
     /// </summary>
-    public interface IApplicationRegion: IRegisterDependencies, IRegisterForUIAccess
+    public interface IApplicationRegion : IRegisterDependencies, IRegisterForUIAccess
     {
         /// <summary>
         /// Event indicating that a region should be closed
         /// </summary>
         event EventHandler CloseRegion;
 
+        /// <summary>
+        /// Event indicating that the region is planning to close
+        /// </summary>
         event EventHandler<CancelEventArgs> ClosingRegion;
 
         /// <summary>
-        /// Unique identifier for the region
+        /// Gets a unique identifier for the region
         /// </summary>
         string RegionId { get; }
 

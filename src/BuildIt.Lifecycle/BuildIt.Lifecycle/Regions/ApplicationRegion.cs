@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using BuildIt.Lifecycle.Interfaces;
+﻿using BuildIt.Lifecycle.Interfaces;
 using BuildIt.ServiceLocation;
 using BuildIt.States.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace BuildIt.Lifecycle.Regions
 {
@@ -20,7 +20,6 @@ namespace BuildIt.Lifecycle.Regions
         /// Event indicating tha the region is about to close (cancellable)
         /// </summary>
         public event EventHandler<CancelEventArgs> ClosingRegion;
-
 
         /// <summary>
         /// Gets the id of the region
@@ -59,6 +58,7 @@ namespace BuildIt.Lifecycle.Regions
         /// <param name="manager">The manager to be associated with the region</param>
         /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Task to allow for async override
+
         public async Task Startup(IRegionManager manager)
 #pragma warning restore 1998
         {
@@ -115,6 +115,7 @@ namespace BuildIt.Lifecycle.Regions
         /// </summary>
         /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Task to allow for async override
+
         protected virtual async Task CompleteStartup()
 #pragma warning restore 1998
         {
@@ -136,8 +137,9 @@ namespace BuildIt.Lifecycle.Regions
         /// </summary>
         /// <returns>Task to await</returns>
 #pragma warning disable CS1998 // Task to allow for async override
+
         protected virtual async Task OnCloseRegion()
-#pragma warning restore CS1998 
+#pragma warning restore CS1998
         {
             CloseRegion.SafeRaise(this);
         }

@@ -1,7 +1,5 @@
 using Android.App;
 using Android.OS;
-using Autofac;
-using StateByState.Services;
 
 namespace StateByState.Android
 {
@@ -21,7 +19,6 @@ namespace StateByState.Android
             //{
             //    //builder.RegisterType<Special>().As<ISpecial>();
             //});
-
         }
     }
 }

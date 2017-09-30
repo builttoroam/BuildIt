@@ -1,6 +1,7 @@
-﻿using System;
-using BuildIt.States;
+﻿using BuildIt.States;
 using BuildIt.States.Interfaces;
+using System;
+using StateByState.Regions.Main;
 using Xamarin.Forms;
 
 namespace StateByState.XForms.Views
@@ -49,10 +50,7 @@ namespace StateByState.XForms.Views
                             .Change(x => x.FontSize, (x, c) => x.FontSize = c)
                             .ToValue(10);
 
-
-
-
-            //{
+            // {
             //    VisualStateGroups =
             //    {
             //        {
@@ -129,8 +127,8 @@ namespace StateByState.XForms.Views
             //                }
             //            }}
 
-            //    }
-            //};
+            // }
+            // };
         }
 
         private SecondViewModel CurrentViewModel => BindingContext as SecondViewModel;
@@ -175,5 +173,4 @@ namespace StateByState.XForms.Views
             CurrentViewModel.YtoX();
         }
     }
-
 }

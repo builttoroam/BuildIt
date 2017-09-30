@@ -1,14 +1,14 @@
 ﻿{
   "dependencies": {
     "Autofac": "4.6.1",
-    "BuildIt.General": "1.1.0.30",
+    "BuildIt.General": "1.1.0.92",
     "BuildIt.MvvmCross": "1.1.0.55-beta",
-    "BuildIt.States": "1.1.0.58-beta",
+    "BuildIt.States": "1.1.0.97",
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
-    "MvvmCross": "5.1.1",
+    "MvvmCross": "5.2.1",
     "Newtonsoft.Json": "10.0.3"
   },
   "frameworks": {

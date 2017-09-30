@@ -1,15 +1,11 @@
-﻿using System.Collections.Specialized;
-using System.Linq.Expressions;
-using System.Diagnostics;
-using Windows.UI.Xaml;
-using BuildIt.Lifecycle;
-using System;
-using System.Linq;
-using Windows.UI.Xaml.Controls;
-using BuildIt.General.UI;
+﻿using BuildIt.General.UI;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
-using BuildIt.States.Typed;
+using StateByState.Regions.Main;
+using System.Diagnostics;
+using System.Linq;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -18,7 +14,7 @@ namespace StateByState
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage: ICodeBehindViewModel<MainViewModel>
+    public sealed partial class MainPage : ICodeBehindViewModel<MainViewModel>
 
     {
         public enum TestStates
@@ -27,7 +23,7 @@ namespace StateByState
             Custom
         }
 
-        private StateManager sm=new StateManager();
+        private StateManager sm = new StateManager();
 
         public MainPage()
         {
@@ -36,7 +32,7 @@ namespace StateByState
 
             sm.Group<TestStates>()
                 .DefineState(TestStates.Custom)
-                .AddTrigger(new WindowSizeTrigger(this) {MinWidth = 700});
+                .AddTrigger(new WindowSizeTrigger(this) { MinWidth = 700 });
 
             var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
                        let tg = sg as INotifyTypedStateChange<TestStates>
@@ -57,7 +53,7 @@ namespace StateByState
 
         private void RegularCodebehindHandler(object sender, RoutedEventArgs e)
         {
-           // Debug.WriteLine(ViewModel != null);
+            // Debug.WriteLine(ViewModel != null);
         }
 
         private void Test(object sender, RoutedEventArgs e)
@@ -81,13 +77,10 @@ namespace StateByState
         }
     }
 
-
     public class WindowSizeTrigger : BuildIt.States.Interfaces.StateTriggerBase
     {
+        public int MinWidth { get; set; }
 
-        public int MinWidth { get; set; }   
-
-       
         public WindowSizeTrigger(Page page)
         {
             page.SizeChanged += Page_SizeChanged;
@@ -95,8 +88,7 @@ namespace StateByState
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateIsActive(e.NewSize.Width>=MinWidth);
+            UpdateIsActive(e.NewSize.Width >= MinWidth);
         }
     }
-
 }

@@ -1,6 +1,6 @@
+using BuildIt.States.Interfaces;
 using System;
 using System.Collections.Generic;
-using BuildIt.States.Interfaces;
 
 namespace BuildIt.Lifecycle.Interfaces
 {
@@ -24,21 +24,24 @@ namespace BuildIt.Lifecycle.Interfaces
         /// so that they can be registered with the DI framework
         /// </summary>
         /// <typeparam name="TRegion">The type of the region</typeparam>
-        void DefineRegion<TRegion>() where TRegion : IApplicationRegion;
+        void DefineRegion<TRegion>()
+            where TRegion : IApplicationRegion;
 
         /// <summary>
         /// Create a region of a particular type
         /// </summary>
         /// <typeparam name="TRegion">The type of region to create</typeparam>
         /// <returns>The newly created region</returns>
-        TRegion CreateRegion<TRegion>() where TRegion : IApplicationRegion;
+        TRegion CreateRegion<TRegion>()
+            where TRegion : IApplicationRegion;
 
         /// <summary>
-        /// Retrieve the active region(s) of a specific type 
+        /// Retrieve the active region(s) of a specific type
         /// </summary>
         /// <typeparam name="TRegion">The region type to retrieve</typeparam>
         /// <returns>The active regions</returns>
-        IEnumerable<TRegion> RegionByType<TRegion>() where TRegion : IApplicationRegion;
+        IEnumerable<TRegion> RegionByType<TRegion>()
+            where TRegion : IApplicationRegion;
 
         /// <summary>
         /// Retrieve an active region by its Id

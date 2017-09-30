@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>BuildIt.Lifecycle.XForms</AssemblyName>
     <PackageId>BuildIt.Lifecycle.XForms</PackageId>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
@@ -21,15 +21,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.3.5.256-pre6" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.282" />
   </ItemGroup>
 
   <ItemGroup>

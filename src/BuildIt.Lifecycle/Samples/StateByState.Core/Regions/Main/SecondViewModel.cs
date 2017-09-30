@@ -1,13 +1,12 @@
-﻿using BuildIt.Lifecycle.States.ViewModel;
-using BuildIt.States;
-using BuildIt.States.Completion;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using BuildIt.Lifecycle.States.ViewModel;
+using BuildIt.States;
+using BuildIt.States.Completion;
 using BuildIt.States.Interfaces.StateData;
-using CancelEventArgs = BuildIt.CancelEventArgs;
 
-namespace StateByState
+namespace StateByState.Regions.Main
 {
     public enum SecondStates
     {
@@ -17,7 +16,6 @@ namespace StateByState
         State3,
         State4
     }
-
 
     public enum SecondStates2
     {
@@ -38,8 +36,7 @@ namespace StateByState
     {
         private int extraData;
         private string name = "Bob";
-        //public event EventHandler SecondCompleted;
-
+        // public event EventHandler SecondCompleted;
 
         public string Name
         {
@@ -50,7 +47,6 @@ namespace StateByState
                 OnPropertyChanged();
             }
         }
-
 
         public int ExtraData
         {
@@ -67,16 +63,14 @@ namespace StateByState
             StateManager.Group<SecondStates>().DefineAllStates();
             StateManager.Group<SecondStates2>().DefineAllStates();
 
-            //StateManager = new BaseStateManager<SecondStates, SecondStateTransitions>();
-            //StateManager.DefineAllStates();
+            // StateManager = new BaseStateManager<SecondStates, SecondStateTransitions>();
+            // StateManager.DefineAllStates();
 
-            //var gm2 = StateManager.GroupWithTransition<SecondStates2, SecondStateTransitions>();
-            //gm2.Item2.DefineAllStates();
+            // var gm2 = StateManager.GroupWithTransition<SecondStates2, SecondStateTransitions>();
+            // gm2.Item2.DefineAllStates();
 
-
-            //StateManager2 = new BaseStateManager<SecondStates2, SecondStateTransitions>();
-            //StateManager2.DefineAllStates();
-
+            // StateManager2 = new BaseStateManager<SecondStates2, SecondStateTransitions>();
+            // StateManager2.DefineAllStates();
         }
 
         public async Task InitSecond()
@@ -97,6 +91,7 @@ namespace StateByState
                 await Task.Delay(1000);
             }
         }
+
         public void UpdateExtraData(int data)
         {
             ExtraData = data;
@@ -105,36 +100,39 @@ namespace StateByState
         public void GoBack()
         {
             OnComplete(DefaultCompletion.Complete);
-            //SecondCompleted?.Invoke(this, EventArgs.Empty);
+            // SecondCompleted?.Invoke(this, EventArgs.Empty);
         }
-
 
         public void ToFirst()
         {
             StateManager.GoToState(SecondStates.State1);
         }
+
         public void ToSecond()
         {
             StateManager.GoToState(SecondStates.State2);
         }
+
         public void ToThird()
         {
             StateManager.GoToState(SecondStates.State3);
         }
 
-
         public async void XtoZ()
         {
             await StateManager.GoToState(SecondStates2.StateZ);
         }
+
         public async void YtoZ()
         {
             await StateManager.GoToState(SecondStates2.StateZ);
         }
+
         public async void ZtoY()
         {
             await StateManager.GoToState(SecondStates2.StateY);
         }
+
         public async void YtoX()
         {
             await StateManager.GoToState(SecondStates2.StateX);
@@ -143,8 +141,7 @@ namespace StateByState
         public void Done()
         {
             OnComplete(DefaultCompletion.Complete);
-            //SecondCompleted?.Invoke(this, EventArgs.Empty);
-
+            // SecondCompleted?.Invoke(this, EventArgs.Empty);
         }
 
         public async Task ChangedTo(CancellationToken token)
@@ -154,17 +151,18 @@ namespace StateByState
         }
 
 #pragma warning disable 1998 // sample only
+
         public async Task AboutToChangeFrom(StateCancelEventArgs cancel)
 #pragma warning restore 1998
         {
-            //cancel.Cancel = true;
+            // cancel.Cancel = true;
         }
 
 #pragma warning disable 1998 // sample only
+
         public async Task ChangingFrom(CancellationToken token)
 #pragma warning restore 1998
         {
-
         }
     }
 }

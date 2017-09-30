@@ -77,7 +77,7 @@
                    Text="Test 1 2 3 4"
                    FontSize="30"
                    Foreground="Blue" />
-        <TextBlock 
+        <TextBlock
                    Text="{Binding ExtraData}"
                    FontSize="30"
                    Foreground="Blue" />
@@ -90,5 +90,4 @@
         <Button Click="ZtoY">Z To Y</Button>
         <Button Click="YtoX">Y To X</Button>
     </StackPanel>
-
 </Page>

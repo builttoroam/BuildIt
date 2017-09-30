@@ -1,5 +1,5 @@
-﻿
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
+using StateByState.Regions.Main;
 
 namespace StateByState
 {
@@ -13,7 +13,7 @@ namespace StateByState
             InitializeComponent();
         }
 
-        public SecondViewModel CurrentViewModel =>DataContext as SecondViewModel;
+        public SecondViewModel CurrentViewModel => DataContext as SecondViewModel;
 
         private void ToFirst(object sender, RoutedEventArgs e)
         {

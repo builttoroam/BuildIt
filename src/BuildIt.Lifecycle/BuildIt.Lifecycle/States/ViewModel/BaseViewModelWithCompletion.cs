@@ -1,5 +1,5 @@
-﻿using System;
-using BuildIt.States.Completion;
+﻿using BuildIt.States.Completion;
+using System;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
@@ -28,9 +28,9 @@ namespace BuildIt.Lifecycle.States.ViewModel
                 throw new ArgumentException("Can't complete using the default enum value", nameof(completion));
             }
 
-            OnComplete(new CompletionEventArgs<TCompletion> {Completion = completion});
+            OnComplete(new CompletionEventArgs<TCompletion> { Completion = completion });
         }
-        
+
         /// <summary>
         /// Raises the Complete event
         /// </summary>

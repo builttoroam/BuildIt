@@ -1,4 +1,3 @@
-using BuildIt.States;
 using BuildIt.States.Completion;
 
 namespace BuildIt.Lifecycle.States.ViewModel

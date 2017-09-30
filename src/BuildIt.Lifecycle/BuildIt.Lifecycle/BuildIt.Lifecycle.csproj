@@ -20,6 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NavigationStateRegistrationHelper.cs" />
     <Compile Remove="States\ViewModel\IAboutToLeaveViewModelState.cs" />
     <Compile Remove="States\ViewModel\IArrivingViewModelState.cs" />
     <Compile Remove="States\ViewModel\ICanRegisterDependencies.cs" />
@@ -31,6 +32,7 @@
     <Compile Remove="States\ViewModel\IViewModelTransitionDefinition.cs" />
     <Compile Remove="States\ViewModel\ViewModelStateDefinition.cs" />
     <Compile Remove="States\ViewModel\ViewModelStateGroup.cs" />
+    <Compile Remove="States\ViewModel\ViewModelStateHelpers.cs" />
     <Compile Remove="States\ViewModel\ViewModelTransitionDefinition.cs" />
   </ItemGroup>
 
@@ -39,8 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.30" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
+    <None Include="NavigationStateRegistrationHelper.cs" />
+    <None Include="States\ViewModel\ViewModelStateHelpers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>

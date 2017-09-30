@@ -72,7 +72,6 @@
             <local:CustomSplitView.Content>
                 <Frame x:Name="InnerFrame" />
             </local:CustomSplitView.Content>
-
         </local:CustomSplitView>
     </Grid>
 </Page>

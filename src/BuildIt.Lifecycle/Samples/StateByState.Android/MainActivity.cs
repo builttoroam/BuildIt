@@ -2,11 +2,10 @@
 using Android.OS;
 using Android.Widget;
 using BuildIt;
-using BuildIt.States;
-using System;
-using System.Collections.Generic;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Typed;
+using System;
+using System.Collections.Generic;
 
 namespace StateByState.Android
 {
@@ -18,9 +17,6 @@ namespace StateByState.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
-
-
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -39,7 +35,6 @@ namespace StateByState.Android
         }
     }
 
-
     public class VisualStateWrapper<TState>
         where TState : struct
     {
@@ -47,7 +42,6 @@ namespace StateByState.Android
         public IDictionary<TState, Action<bool>> States { get; } = new Dictionary<TState, Action<bool>>();
 
         public static string StateManagerName => nameof(StateManager);
-
 
         public IStateManager StateManager
         {
@@ -74,4 +68,3 @@ namespace StateByState.Android
         }
     }
 }
-

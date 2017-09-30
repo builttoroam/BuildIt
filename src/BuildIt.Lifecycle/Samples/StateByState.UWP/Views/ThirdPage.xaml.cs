@@ -1,23 +1,21 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using BuildIt.Lifecycle;
-using BuildIt.Lifecycle.States;
-using BuildIt.States;
+﻿using BuildIt.Lifecycle;
 using BuildIt.States.Interfaces;
 using System.Linq;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+using StateByState.Regions.Main;
 
 namespace StateByState
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ThirdPage 
+    public sealed partial class ThirdPage
     {
         public ThirdPage()
         {
             InitializeComponent();
-
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -28,15 +26,15 @@ namespace StateByState
 
             var sm = CurrentViewModel.StateManager;
             var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
-                let tg = sg.GroupDefinition as INotifyTypedStateChange<ThirdStates>
-                where tg != null
-                select tg).FirstOrDefault();
+                       let tg = sg.GroupDefinition as INotifyTypedStateChange<ThirdStates>
+                       where tg != null
+                       select tg).FirstOrDefault();
 
             var fn = new FrameNavigation<ThirdStates>(frame, grp);// CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
             await CurrentViewModel.Start();
         }
 
-        public ThirdViewModel CurrentViewModel=>DataContext as ThirdViewModel;
+        public ThirdViewModel CurrentViewModel => DataContext as ThirdViewModel;
 
         private void Button_OnClick(object sender, RoutedEventArgs e)
         {

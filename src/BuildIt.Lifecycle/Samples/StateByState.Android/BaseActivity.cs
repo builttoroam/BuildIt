@@ -1,11 +1,9 @@
-using System.Linq;
-using System.Reflection;
 using Android.App;
 using Android.OS;
 using BuildIt;
-using BuildIt.Lifecycle.States.ViewModel;
-using BuildIt.States;
 using BuildIt.States.Interfaces;
+using System.Linq;
+using System.Reflection;
 
 namespace StateByState.Android
 {
@@ -19,7 +17,7 @@ namespace StateByState.Android
         {
             base.OnCreate(savedInstanceState);
 
-            Tag=this.Intent.GetStringExtra("Tag");
+            Tag = this.Intent.GetStringExtra("Tag");
 
             if (string.IsNullOrWhiteSpace(Tag)) return;
 
@@ -30,14 +28,12 @@ namespace StateByState.Android
             var manager = props?.GetValue(mgr) as IStateGroup;
             var dc = manager?.CurrentStateData;
             DataContext = dc;
-            
-            var actpps = this.GetType().GetTypeInfo().DeclaredProperties;
 
+            var actpps = this.GetType().GetTypeInfo().DeclaredProperties;
 
             var pps = dc.GetType().GetTypeInfo().DeclaredProperties;
             foreach (var p in pps)
             {
-
                 var pt = p.PropertyType.GetTypeInfo();
                 var interfaces = pt.ImplementedInterfaces;
                 if (pt.IsInterface)
@@ -52,7 +48,7 @@ namespace StateByState.Android
                     {
                         var parm = inf.GenericTypeArguments;
 
-                        var vsct = typeof (VisualStateWrapper<>).MakeGenericType(parm);
+                        var vsct = typeof(VisualStateWrapper<>).MakeGenericType(parm);
                         foreach (var px in actpps)
                         {
                             if (px.PropertyType == vsct)

@@ -10,14 +10,14 @@ namespace BuildIt.Lifecycle.States.ViewModel
     public class BaseStateManagerViewModel : BaseViewModel, IHasStates
     {
         /// <summary>
-        /// Gets or sets the state manager for the view model
+        /// Gets gets or sets the state manager for the view model
         /// </summary>
         public IStateManager StateManager { get; } = new StateManager();
 
         /// <summary>
         /// Registers the view model and nested entities for UI access
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">The UI Context</param>
         public override void RegisterForUIAccess(IUIExecutionContext context)
         {
             base.RegisterForUIAccess(context);

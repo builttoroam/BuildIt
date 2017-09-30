@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>BuildIt.Lifecycle</id>
     <version>$version$</version>
@@ -14,18 +14,16 @@
     <tags>BuildIt, Lifecycle, State</tags>
     <dependencies>
       <group targetFramework="netstandard1.0">
-        <dependency id="BuildIt.General" version="1.1.0.15-beta" />
-        <dependency id="BuildIt.States" version="1.1.0.17-beta" />
-        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="BuildIt.General" version="1.1.0.92" />
+        <dependency id="BuildIt.States" version="1.1.0.97" />
         <dependency id="Newtonsoft.Json" version="10.0.3" />
       </group>
       <group targetFramework="uap">
-        <dependency id="BuildIt.General" version="1.1.0.15-beta" />
-        <dependency id="BuildIt.States" version="1.1.0.17-beta" />
-        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.3.3" />
+        <dependency id="BuildIt.General" version="1.1.0.92" />
+        <dependency id="BuildIt.States" version="1.1.0.97" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.4.0" />
         <dependency id="Newtonsoft.Json" version="10.0.3" />
       </group>
-     
     </dependencies>
   </metadata>
 
@@ -34,12 +32,14 @@
     <file src="BuildIt.Lifecycle\bin\Release\netstandard1.0\BuildIt.Lifecycle.pdb" target="lib\netstandard1.0" />
     <file src="BuildIt.Lifecycle\bin\Release\netstandard1.0\BuildIt.Lifecycle.xml" target="lib\netstandard1.0" />
 
-
     <file src="BuildIt.Lifecycle\bin\Release\netstandard1.0\BuildIt.Lifecycle.dll" target="lib\uap" />
     <file src="BuildIt.Lifecycle\bin\Release\netstandard1.0\BuildIt.Lifecycle.pdb" target="lib\uap" />
     <file src="BuildIt.Lifecycle\bin\Release\netstandard1.0\BuildIt.Lifecycle.xml" target="lib\uap" />
     <file src="BuildIt.Lifecycle.UWP\bin\Release\BuildIt.Lifecycle.UWP.dll" target="lib\uap" />
     <file src="BuildIt.Lifecycle.UWP\bin\Release\BuildIt.Lifecycle.UWP.pdb" target="lib\uap" />
     <file src="BuildIt.Lifecycle.UWP\bin\Release\BuildIt.Lifecycle.UWP.xml" target="lib\uap" />
+
+    <file src="BuildIt.Lifecycle\**\*.cs" target="src\BuildIt.Lifecycle\BuildIt.Lifecycle" exclude="BuildIt.Lifecycle\obj\**\*.cs" />
+    <file src="BuildIt.Lifecycle.UWP\**\*.cs" target="src\BuildIt.Lifecycle\BuildIt.Lifecycle.UWP" exclude="BuildIt.Lifecycle.UWP\obj\**\*.cs" />
   </files>
 </package>

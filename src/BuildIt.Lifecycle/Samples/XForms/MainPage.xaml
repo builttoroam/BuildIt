@@ -4,8 +4,7 @@
              xmlns:local="clr-namespace:StateByState.XForms"
              x:Class="StateByState.XForms.MainPage">
 
-	<Label Text="Welcome to Xamarin Forms!" 
-           VerticalOptions="Center" 
+    <Label Text="Welcome to Xamarin Forms!"
+           VerticalOptions="Center"
            HorizontalOptions="Center" />
-
 </ContentPage>

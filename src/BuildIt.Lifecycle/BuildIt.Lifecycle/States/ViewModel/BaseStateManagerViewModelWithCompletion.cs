@@ -1,5 +1,5 @@
-using System;
 using BuildIt.States.Completion;
+using System;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {
@@ -7,7 +7,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
     /// Base view model that has support for both state manager and completion events
     /// </summary>
     /// <typeparam name="TCompletion">The completion type (enum)</typeparam>
-    public class BaseStateManagerViewModelWithCompletion<TCompletion> : BaseStateManagerViewModel, 
+    public class BaseStateManagerViewModelWithCompletion<TCompletion> : BaseStateManagerViewModel,
         ICompletion<TCompletion>
         where TCompletion : struct
     {

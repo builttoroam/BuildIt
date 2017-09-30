@@ -8,7 +8,7 @@ namespace BuildIt.Lifecycle.States.ViewModel
     /// <summary>
     /// Base view model which implements interfaces for registering dependencies and UI access
     /// </summary>
-    public class BaseViewModel:NotifyBase, IRegisterDependencies, IRegisterForUIAccess, IIsAbleToBeBlocked
+    public class BaseViewModel : NotifyBase, IRegisterDependencies, IRegisterForUIAccess, IIsAbleToBeBlocked
     {
         private bool isBlocked;
 
@@ -18,18 +18,27 @@ namespace BuildIt.Lifecycle.States.ViewModel
         public event EventHandler IsBlockedChanged;
 
         /// <summary>
-        /// The UI Context
+        /// Gets or sets a value indicating whether gets or sets whether state transitions (back) should be blocked
         /// </summary>
-        public IUIExecutionContext UIContext { get; private set; }
+        public virtual bool IsBlocked
+        {
+            get => isBlocked;
+            set
+            {
+                if (value == isBlocked)
+                {
+                    return;
+                }
+
+                isBlocked = value;
+                OnIsBlockedChanged();
+            }
+        }
 
         /// <summary>
-        /// Registers the entity for UI access
+        /// Gets the UI Context
         /// </summary>
-        /// <param name="context">The UI Context to use for execution</param>
-        public virtual void RegisterForUIAccess(IUIExecutionContext context)
-        {
-            UIContext = context;
-        }
+        public IUIExecutionContext UIContext { get; private set; }
 
         /// <summary>
         /// Register dependencies for injection
@@ -40,17 +49,12 @@ namespace BuildIt.Lifecycle.States.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets whether state transitions (back) should be blocked
+        /// Registers the entity for UI access
         /// </summary>
-        public virtual bool IsBlocked
+        /// <param name="context">The UI Context to use for execution</param>
+        public virtual void RegisterForUIAccess(IUIExecutionContext context)
         {
-            get => isBlocked;
-            set
-            {
-                if (value == isBlocked) return;
-                isBlocked = value;
-                OnIsBlockedChanged();
-            }
+            UIContext = context;
         }
 
         /// <summary>

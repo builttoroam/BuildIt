@@ -1,5 +1,5 @@
-﻿using System;
-using BuildIt.States.Completion;
+﻿using BuildIt.States.Completion;
+using System;
 
 namespace BuildIt.Lifecycle.States.ViewModel
 {

@@ -1,11 +1,9 @@
-using System;
-using BuildIt;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
 using BuildIt.States.Completion;
 using StateByState.Services;
 
-namespace StateByState
+namespace StateByState.Regions.Secondary
 {
     public enum AdaptiveStates
     {
@@ -14,10 +12,10 @@ namespace StateByState
         Wide
     }
 
-    public class SecondardyMainViewModel:BaseStateManagerViewModelWithCompletion<DefaultCompletion>
+    public class SecondaryMainViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>
     {
         private string data;
-        //public event EventHandler Done;
+        // public event EventHandler Done;
 
         public string Data
         {
@@ -29,7 +27,7 @@ namespace StateByState
             }
         }
 
-        public SecondardyMainViewModel(ISpecial special)
+        public SecondaryMainViewModel(ISpecial special)
         {
             StateManager
                 .Group<AdaptiveStates>()
@@ -39,12 +37,8 @@ namespace StateByState
                         .ToValue("Normal")
                 .DefineState(AdaptiveStates.Wide)
                     .Target(this)
-                        .Change(x => x.Data, (x, c) => x.Data= c)
+                        .Change(x => x.Data, (x, c) => x.Data = c)
                         .ToValue("Wide");
-
-
-
-
 
             Data = "Is special - " + special.Data;
         }
@@ -52,10 +46,7 @@ namespace StateByState
         public void IsDone()
         {
             OnComplete(DefaultCompletion.Complete);
-            //Done.SafeRaise(this);
-
+            // Done.SafeRaise(this);
         }
-
-
     }
 }

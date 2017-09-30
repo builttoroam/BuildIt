@@ -1,8 +1,9 @@
 ﻿{
   "dependencies": {
     "Autofac": "4.6.1",
+    "BuildIt.General": "1.1.0.92",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
-    "Xamarin.Forms": "2.4.0.266-pre1"
+    "Xamarin.Forms": "2.4.0.282"
   },
   "frameworks": {
     "uap10.0.10586": {}

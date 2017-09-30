@@ -1,30 +1,27 @@
-using System;
-using System.Collections.Generic;
+using BuildIt.States.Interfaces;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using BuildIt.Lifecycle.States;
-using BuildIt.States;
-using BuildIt.States.Interfaces;
-using BuildIt.States.Typed;
-using BuildIt.States.Typed.Enum;
 
 namespace BuildIt.Lifecycle
 {
-    public class VisualStateChanger<TState> :IStateBinder
-        where TState : struct
+    /// <summary>
+    /// Handles changing the visual state on a page based on a change in state
+    /// </summary>
+    /// <typeparam name="TState">The type (enum) of states</typeparam>
+    public class VisualStateChanger<TState> : IStateBinder
+                where TState : struct
     {
-        public INotifyTypedStateChange<TState> ChangeNotifier { get; }
-
-        private Control VisualStateRoot { get; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisualStateChanger{TState}"/> class.
+        /// </summary>
+        /// <param name="visualStateRoot">The control that hosts the visual states</param>
+        /// <param name="changeNotifier">The state group</param>
         public VisualStateChanger(Control visualStateRoot, INotifyTypedStateChange<TState> changeNotifier)
         {
             VisualStateRoot = visualStateRoot;
             ChangeNotifier = changeNotifier;
-            
 
             var control = (VisualStateRoot as UserControl)?.Content as FrameworkElement;
             if (control == null)
@@ -32,19 +29,49 @@ namespace BuildIt.Lifecycle
                 return;
             }
 
-            var stateTypeName = typeof (TState).Name;
+            var stateTypeName = typeof(TState).Name;
             var visualStateGroup =
                 VisualStateManager.GetVisualStateGroups(control).FirstOrDefault(x => x.Name == stateTypeName);
 
-            if (visualStateGroup == null) return;
+            if (visualStateGroup == null)
+            {
+                return;
+            }
+
             visualStateGroup.CurrentStateChanged += VisualStateGroupOnCurrentStateChanged;
         }
 
-        private void VisualStateGroupOnCurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        /// <summary>
+        /// Gets the state group
+        /// </summary>
+        public INotifyTypedStateChange<TState> ChangeNotifier { get; }
+
+        private Control VisualStateRoot { get; }
+
+        /// <summary>
+        /// Binds the state group
+        /// </summary>
+        /// <returns>Task to await</returns>
+        public Task Bind()
         {
-            //var newState = e.NewState?.Name.EnumParse<TState>()??default(TState);
-            //if (newState.Equals(default(TState))) return;
-            (ChangeNotifier as IStateGroup)?.ChangeToStateByName(e.NewState?.Name, false);
+            ChangeNotifier.TypedStateChanged += StateManager_StateChanged;
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Disposes and unbinds
+        /// </summary>
+        public void Dispose()
+        {
+            Unbind();
+        }
+
+        /// <summary>
+        /// Unbinds the state group
+        /// </summary>
+        public void Unbind()
+        {
+            ChangeNotifier.TypedStateChanged -= StateManager_StateChanged;
         }
 
         private void StateManager_StateChanged(object sender, ITypedStateEventArgs<TState> e)
@@ -52,102 +79,11 @@ namespace BuildIt.Lifecycle
             VisualStateManager.GoToState(VisualStateRoot, e.TypedState.ToString(), e.UseTransitions);
         }
 
-        public async Task Bind()
+        private void VisualStateGroupOnCurrentStateChanged(object sender, VisualStateChangedEventArgs e)
         {
-            ChangeNotifier.TypedStateChanged += StateManager_StateChanged;
-        }
-
-        public void Unbind()
-        {
-            ChangeNotifier.TypedStateChanged -= StateManager_StateChanged;
-        }
-
-        public void Dispose()
-        {
-            Unbind();
+            // var newState = e.NewState?.Name.EnumParse<TState>()??default(TState);
+            // if (newState.Equals(default(TState))) return;
+            (ChangeNotifier as IStateGroup)?.ChangeToStateByName(e.NewState?.Name, false);
         }
     }
-
-    public static class LifecycleHelper
-    {
-
-        public static NavigationRegistrationHelper RegisterView<TView>() where TView:Page
-        {
-            return new NavigationRegistrationHelper {ViewType = typeof (TView)};
-        }
-
-        public static NavigationRegistrationHelper RegisterView<TView>(this Application app) where TView : Page
-        {
-            return new NavigationRegistrationHelper { ViewType = typeof(TView) };
-        }
-        
-    }
-
-    public static class UWPLifecycleHelpers
-    {
-       
-
-
-        public static IStateBinder Bind(this Page rootPage, IHasStates hasManager)
-        {
-            return new VisualStateManagerBinder(rootPage,hasManager.StateManager);
-        }
-        
-        private class VisualStateManagerBinder : IStateBinder
-        {
-            IStateManager StateManagerToBindTo { get; }
-
-            IList<IStateBinder> GroupBinders { get; } = new List<IStateBinder>();
-            public VisualStateManagerBinder(Page rootPage, IStateManager manager)
-            {
-                StateManagerToBindTo = manager;
-
-                var groups = VisualStateManager.GetVisualStateGroups(rootPage.Content as FrameworkElement);
-
-                var inotifier = typeof(EnumStateGroup<>);
-                var vsct = typeof(VisualStateChanger<>);
-
-                foreach (var kvp in manager.StateGroups)
-                {
-                    var sg = groups.FirstOrDefault(grp => grp.Name == kvp.Key);
-                    if (sg == null) continue;
-
-                    var typeArg = kvp.Value.GetType().GenericTypeArguments.FirstOrDefault();
-
-
-                    var groupNotifier = inotifier.MakeGenericType(typeArg);
-                    if (kvp.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
-                    {
-                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(typeArg), rootPage, kvp.Value) as IStateBinder;
-                        GroupBinders.Add(vsc);
-                    }
-                }
-            }
-
-            public async Task Bind()
-            {
-                foreach (var groupBinder in GroupBinders)
-                {
-                    await groupBinder.Bind();
-                }
-            }
-
-            public void Unbind()
-            {
-                foreach (var groupBinder in GroupBinders)
-                {
-                    groupBinder.Unbind();
-                }
-            }
-
-            public void Dispose()
-            {
-                Unbind();
-            }
-        }
-
-
-    }
-
-
 }

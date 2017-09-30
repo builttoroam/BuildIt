@@ -43,6 +43,9 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="AcitivityNavigation.cs" />
     <Compile Include="BaseActivity.cs" />
     <Compile Include="MainActivity.cs" />
@@ -75,10 +78,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj">
-      <Project>{d9058653-4416-4a9b-9fcd-1a2c805629ba}</Project>
-      <Name>BuildIt.Autofac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj">
       <Project>{88ae5f64-0f5e-4ad5-b673-1748f25c5458}</Project>
       <Name>BuildIt.Lifecycle.Autofac</Name>
@@ -96,11 +95,14 @@
     <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Autofac.4.6.1\lib\netstandard1.1\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.General, Version=1.1.0.30, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\BuildIt.General.1.1.0.30\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    <Reference Include="BuildIt.Autofac, Version=1.1.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\BuildIt.Autofac.1.1.0.32\lib\netstandard1.1\BuildIt.Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BuildIt.States, Version=1.1.0.58, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\BuildIt.States.1.1.0.58-beta\lib\monoandroid\BuildIt.States.dll</HintPath>
+    <Reference Include="BuildIt.General, Version=1.1.0.92, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\BuildIt.General.1.1.0.92\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+    </Reference>
+    <Reference Include="BuildIt.States, Version=1.1.0.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\BuildIt.States.1.1.0.97\lib\netstandard1.0\BuildIt.States.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>BuildIt.Lifecycle.XForms</id>
     <version>$version$</version>
@@ -13,19 +13,18 @@
     <copyright>Copyright © 2017</copyright>
     <tags>BuildIt, Xamarin Forms</tags>
     <dependencies>
-      <dependency id="BuildIt.General" version="1.1.0.15-beta" />
-      <dependency id="BuildIt.States" version="1.1.0.17-beta" />
-      <dependency id="NETStandard.Library" version="1.6.1" />
+      <dependency id="BuildIt.General" version="1.1.0.92" />
+      <dependency id="BuildIt.States" version="1.1.0.97" />
       <dependency id="Newtonsoft.Json" version="10.0.3" />
+      <dependency id="Xamarin.Forms" version="2.4.0.282" />
       <dependency id="BuildIt.Lifecycle" version="$version$" />
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.dll" target="lib\netstandard1.0" />
-    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.pdb" target="lib\netstandard1.0" />
-    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.xml" target="lib\netstandard1.0" />
-    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.dll" target="lib\portable-net45+win8+wpa81+wp8" />
-    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.pdb" target="lib\portable-net45+win8+wpa81+wp8" />
-    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.xml" target="lib\portable-net45+win8+wpa81+wp8" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.dll" target="lib\netstandard1.4" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.pdb" target="lib\netstandard1.4" />
+    <file src="BuildIt.Lifecycle.XForms\bin\Release\netstandard1.0\BuildIt.Lifecycle.XForms.xml" target="lib\netstandard1.4" />
+
+    <file src="BuildIt.Lifecycle.XForms\**\*.cs" target="src\BuildIt.Lifecycle\BuildIt.Lifecycle.XForms" exclude="BuildIt.Lifecycle.XForms\obj\**\*.cs" />
   </files>
 </package>

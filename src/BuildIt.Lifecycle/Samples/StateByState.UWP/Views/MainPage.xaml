@@ -15,6 +15,5 @@
         <Button Click="Fourth">Page Four</Button>
         <Button Click="Spawn">Another Window</Button>
         <Button Click="RegularCodebehindHandler">Test</Button>
-
     </StackPanel>
 </Page>

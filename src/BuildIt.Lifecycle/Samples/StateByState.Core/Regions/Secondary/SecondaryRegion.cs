@@ -1,32 +1,29 @@
-using BuildIt.Lifecycle;
+using BuildIt.Lifecycle.Regions;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
 using BuildIt.States.Completion;
 using System;
 using System.Threading.Tasks;
-using BuildIt.Lifecycle.Regions;
 
-namespace StateByState
+namespace StateByState.Regions.Secondary
 {
     public enum SecondaryRegionView
     {
         Base,
         Main
     }
-    public class SecondaryApplication : StateAwareApplicationRegion
-    {
-        public SecondaryApplication()
-        {
 
+    public class SecondaryRegion : StateAwareApplicationRegion
+    {
+        public SecondaryRegion()
+        {
             StateManager.Group<SecondaryRegionView>()
-                .DefineStateWithData<SecondaryRegionView, SecondardyMainViewModel>(SecondaryRegionView.Main)
+                .DefineStateWithData<SecondaryRegionView, SecondaryMainViewModel>(SecondaryRegionView.Main)
                 .OnComplete(DefaultCompletion.Complete)
                 .CloseRegion(this);
 
-
-
-            //.WhenChangedTo(vm =>
-            //{
+            // .WhenChangedTo(vm =>
+            // {
             //    vm.Done += State_Completed;
             //    Task.Run(async () =>
             //    {
@@ -35,22 +32,19 @@ namespace StateByState
             //        {
             //            Debug.WriteLine("test");
 
-            //        });
+            // });
             //    });
-            //})
-            //.WhenChangingFrom(vm =>
-            //{
+            // })
+            // .WhenChangingFrom(vm =>
+            // {
             //    vm.Done -= State_Completed;
-            //});
-
+            // });
         }
 
-
-        //public override  void RegisterDependencies(IContainer container)
-        //{
+        // public override  void RegisterDependencies(IContainer container)
+        // {
         //    (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
-        //}
-
+        // }
 
         private void State_Completed(object sender, EventArgs e)
         {
@@ -59,7 +53,7 @@ namespace StateByState
 
         protected override async Task CompleteStartup()
         {
-            //(StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
+            // (StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
 
             await base.CompleteStartup();
 

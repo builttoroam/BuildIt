@@ -14,7 +14,12 @@
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <RootNamespace>StateByState</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="App.config" />
@@ -22,7 +27,8 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.1" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
   </ItemGroup>
 
   <ItemGroup>

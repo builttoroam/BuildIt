@@ -1,6 +1,7 @@
 using Android.App;
 using Android.OS;
 using Android.Widget;
+using StateByState.Regions.Main;
 
 namespace StateByState.Android
 {
@@ -9,7 +10,7 @@ namespace StateByState.Android
     {
         public VisualStateWrapper<SecondStates> VisualStates { get; } = new VisualStateWrapper<SecondStates>();
 
-        public Button  MyButton1 { get; set; }
+        public Button MyButton1 { get; set; }
         public Button MyButton2 { get; set; }
         public Button MyButton3 { get; set; }
 
@@ -33,27 +34,19 @@ namespace StateByState.Android
             };
         }
 
-
-    protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             SetContentView(Resource.Layout.Second);
 
             MyButton1 = FindViewById<Button>(Resource.Id.MyButton1);
-        MyButton1.Click +=(s,e)=> CurrentViewModel.ToSecond();
+            MyButton1.Click += (s, e) => CurrentViewModel.ToSecond();
 
             MyButton2 = FindViewById<Button>(Resource.Id.MyButton2);
             MyButton2.Click += (s, e) => CurrentViewModel.ToThird();
             MyButton3 = FindViewById<Button>(Resource.Id.MyButton3);
             MyButton3.Click += (s, e) => CurrentViewModel.ToFirst();
-
-
-
         }
     }
-
-
-   
-
 }

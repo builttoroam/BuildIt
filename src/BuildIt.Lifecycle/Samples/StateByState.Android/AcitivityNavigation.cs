@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Android.App;
-using Android.Content;
-using BuildIt.States;
+﻿using Android.Content;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Typed;
+using System;
+using System.Collections.Generic;
 
 namespace StateByState.Android
 {
@@ -12,6 +10,7 @@ namespace StateByState.Android
     {
         public static IDictionary<string, object> Managers { get; } = new Dictionary<string, object>();
     }
+
     public class AcitivityNavigation<TState>
         where TState : struct
     {
@@ -58,6 +57,5 @@ namespace StateByState.Android
         {
             NavigationIndex[state] = typeof(TPage);
         }
-
     }
 }

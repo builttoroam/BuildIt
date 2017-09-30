@@ -44,6 +44,7 @@ namespace BuildIt.Lifecycle
         }
 
 #pragma warning disable 1998 // Async required for Windows UWP support for multiple views
+
         private async void RegionManager_RegionCreated(object sender, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
 #pragma warning restore 1998
         {

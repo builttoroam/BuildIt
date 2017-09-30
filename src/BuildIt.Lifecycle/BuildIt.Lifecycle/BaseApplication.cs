@@ -53,6 +53,7 @@ namespace BuildIt.Lifecycle
         /// </summary>
         /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Async so it can be overridden
+
         protected virtual async Task CommenceStartup()
 #pragma warning restore 1998
         {
@@ -63,6 +64,7 @@ namespace BuildIt.Lifecycle
         /// </summary>
         /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Async so it can be overridden
+
         protected virtual async Task CompleteStartup()
 #pragma warning restore 1998
         {
@@ -82,6 +84,7 @@ namespace BuildIt.Lifecycle
         /// <param name="container">The dependency container</param>
         /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Async so it can be overridden
+
         protected virtual async Task BuildCoreDependencies(IDependencyContainer container)
 #pragma warning restore 1998
         {

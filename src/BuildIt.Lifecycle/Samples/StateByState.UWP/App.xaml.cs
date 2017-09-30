@@ -1,14 +1,14 @@
-﻿using System;
+﻿using BuildIt.Lifecycle;
+using StateByState.Services;
+using StateByState.Shared;
+using StateByState.Shared.Views;
+using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Navigation;
-using Autofac;
-using BuildIt;
-using BuildIt.Lifecycle;
-using StateByState.Services;
-using StateByState.Shared;
-using StateByState.Shared.Views;
+using StateByState.Regions.Main;
+using StateByState.Regions.Secondary;
 
 namespace StateByState
 {
@@ -34,14 +34,12 @@ namespace StateByState
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 #if DEBUG
             if (Debugger.IsAttached)
             {
                 DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-
 
             // Associate main region states with corresponding native pages
             this.RegisterView<MainPage>().ForState(MainRegionView.Main);
@@ -62,19 +60,16 @@ namespace StateByState
             var wm = new WindowManager(core);
             await core.Startup(builder =>
             {
-                builder.Register<UWPSpecial,ISpecial>();
+                builder.Register<UWPSpecial, ISpecial>();
             });
-
         }
-
-
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
