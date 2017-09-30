@@ -18,31 +18,18 @@ namespace BuildIt.Synchronization
     {
         private const double OneHundred = 100;
 
+        private readonly object cancelLock = new object();
+
+        private readonly List<ISynchronizationStage<TSynchronizationStages>> synchronizationSteps = new List<ISynchronizationStage<TSynchronizationStages>>();
+
+        private readonly AutoResetEvent syncWaiter = new AutoResetEvent(true);
+
+        private CancellationTokenSource cancellationSource;
+
         /// <summary>
         /// Event stating that synchronization has changed
         /// </summary>
         public event EventHandler<SynchronizationEventArgs<TSynchronizationStages>> SynchronizationChanged;
-
-        /// <summary>
-        /// Triggers synchronization
-        /// </summary>
-        /// <param name="stagesToSynchronize">The states to sync</param>
-        /// <param name="cancelExistingSynchronization">Whether to cancel any existing syncs that are in progress</param>
-        /// <param name="waitForSynchronizationToComplete">Whether to wait for sync to complete</param>
-        /// <returns>Task to await</returns>
-        public async Task Synchronize(
-            TSynchronizationStages stagesToSynchronize,
-            bool cancelExistingSynchronization = false,
-            bool waitForSynchronizationToComplete = false)
-        {
-            var syncTask = InternalSync(
-                stagesToSynchronize,
-                cancelExistingSynchronization);
-            if (waitForSynchronizationToComplete)
-            {
-                await syncTask;
-            }
-        }
 
         public async Task Cancel(bool waitForSynchronizationToComplete = false)
         {
@@ -51,6 +38,17 @@ namespace BuildIt.Synchronization
             {
                 await syncTask;
             }
+        }
+
+        public void DefineSynchronizationStep(
+                    TSynchronizationStages synchronizationStage,
+                    Func<ISynchronizationStage<TSynchronizationStages>, Task<bool>> stepAction)
+        {
+            var wrapper = SyncStepWrapper<TSynchronizationStages>.Build(
+                synchronizationStage,
+                stepAction);
+
+            synchronizationSteps.Add(wrapper);
         }
 
         /// <summary>
@@ -85,35 +83,24 @@ namespace BuildIt.Synchronization
             SynchronizationChanged(this, args);
         }
 
-        private readonly AutoResetEvent syncWaiter = new AutoResetEvent(true);
-
-        private CancellationTokenSource cancellationSource;
-        private readonly object cancelLock = new object();
-
-        private async Task InternalSync(
+        /// <summary>
+        /// Triggers synchronization
+        /// </summary>
+        /// <param name="stagesToSynchronize">The states to sync</param>
+        /// <param name="cancelExistingSynchronization">Whether to cancel any existing syncs that are in progress</param>
+        /// <param name="waitForSynchronizationToComplete">Whether to wait for sync to complete</param>
+        /// <returns>Task to await</returns>
+        public async Task Synchronize(
             TSynchronizationStages stagesToSynchronize,
-            bool cancelExistingSynchronization)
+            bool cancelExistingSynchronization = false,
+            bool waitForSynchronizationToComplete = false)
         {
-            try
+            var syncTask = InternalSync(
+                stagesToSynchronize,
+                cancelExistingSynchronization);
+            if (waitForSynchronizationToComplete)
             {
-                lock (cancelLock)
-                {
-                    if (cancelExistingSynchronization)
-                    {
-                        var currentCancellation = cancellationSource;
-                        if (currentCancellation != null)
-                        {
-                            currentCancellation.Cancel();
-                        }
-                    }
-                }
-
-                // Force the actual sync to a background thread to avoid blocking any UI
-                await Task.Run(() => BackgroundThreadSync(stagesToSynchronize));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
+                await syncTask;
             }
         }
 
@@ -253,17 +240,31 @@ namespace BuildIt.Synchronization
             }
         }
 
-        private readonly List<ISynchronizationStage<TSynchronizationStages>> synchronizationSteps = new List<ISynchronizationStage<TSynchronizationStages>>();
-
-        public void DefineSynchronizationStep(
-            TSynchronizationStages synchronizationStage,
-            Func<ISynchronizationStage<TSynchronizationStages>, Task<bool>> stepAction)
+        private async Task InternalSync(
+                            TSynchronizationStages stagesToSynchronize,
+            bool cancelExistingSynchronization)
         {
-            var wrapper = SyncStepWrapper<TSynchronizationStages>.Build(
-                synchronizationStage,
-                stepAction);
+            try
+            {
+                lock (cancelLock)
+                {
+                    if (cancelExistingSynchronization)
+                    {
+                        var currentCancellation = cancellationSource;
+                        if (currentCancellation != null)
+                        {
+                            currentCancellation.Cancel();
+                        }
+                    }
+                }
 
-            synchronizationSteps.Add(wrapper);
+                // Force the actual sync to a background thread to avoid blocking any UI
+                await Task.Run(() => BackgroundThreadSync(stagesToSynchronize));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 }
