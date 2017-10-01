@@ -46,6 +46,17 @@ namespace BuildIt.Lifecycle
             return NavigationIndex.SafeValue(KeyFromState(state));
         }
 
+        /// <summary>
+        /// Retrieves the view type that's registered for a specific state
+        /// </summary>
+        /// <param name="groupName">The group</param>
+        /// <param name="stateName">The state</param>
+        /// <returns>The type of the registered view, or null if not found</returns>
+        public static Type TypeForName(string groupName, string stateName)
+        {
+            return NavigationIndex.SafeValue(groupName + stateName);
+        }
+
         private static string KeyFromState<TStateInfo>(TStateInfo state)
         {
             var type = state.GetType().Name;

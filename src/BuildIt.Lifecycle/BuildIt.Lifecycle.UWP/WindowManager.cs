@@ -1,7 +1,7 @@
 using BuildIt.Lifecycle.Interfaces;
+using BuildIt.Lifecycle.States;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -35,44 +35,54 @@ namespace BuildIt.Lifecycle
         /// </summary>
         private IDictionary<string, WindowRegionController> RegionWindows { get; } = new Dictionary<string, WindowRegionController>();
 
-        private void RegionManager_RegionIsClosed(object sender, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
-        {
-            var region = args.Parameter2;
-
-            var view = RegionWindows.SafeValue(region.RegionId);
-            view.Close();
-        }
-
-#pragma warning disable 1998 // Async required for Windows UWP support for multiple views
-
         private async void RegionManager_RegionCreated(object sender, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
-#pragma warning restore 1998
         {
             var regionManager = args.Parameter1;
             var region = args.Parameter2;
+            $"New region created, now creating new Window for region {region.GetType().Name}".LogLifecycleInfo();
 
+            // If this is the primary region, need to use the main view of the application
+            // otherwise create a new window
             var isPrimary = RegionManager.IsPrimaryRegion(region);
             var newView = isPrimary
                 ? CoreApplication.MainView
                 : CoreApplication.CreateNewView();
-            var newViewId = 0;
+            $"Is primary window {isPrimary}".LogLifecycleInfo();
+
+            // Make sure that the region is set to run UI tasks on the correct thread
+            // using a UIContext to host a reference to the view dispatcher
             var context = new UniversalUIContext(newView.Dispatcher);
             region.RegisterForUIAccess(context);
+            "Registered for UI access".LogLifecycleInfo();
 
+            var newViewId = 0;
             await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                // Create a new Window controller that will manage the window itselt
                 var controller = new WindowRegionController(Window.Current, regionManager, region, isPrimary);
                 newViewId = controller.Start();
                 RegionWindows[region.RegionId] = controller;
+                $"Window is wrapped in a window region controller - View Id {newViewId}".LogLifecycleInfo();
             });
 
+            // If this is the primary window, we don't need to do anything else
+            // otherwise, we need to attempt to show the window
             if (isPrimary)
             {
                 return;
             }
 
             var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-            Debug.WriteLine(viewShown);
+            $"View is shown - {viewShown}".LogLifecycleInfo();
+        }
+
+        private void RegionManager_RegionIsClosed(object sender, DualParameterEventArgs<IRegionManager, IApplicationRegion> args)
+        {
+            var region = args.Parameter2;
+            $"Region has closed {region.RegionId}".LogLifecycleInfo();
+
+            var view = RegionWindows.SafeValue(region.RegionId);
+            view?.Close();
         }
     }
 }

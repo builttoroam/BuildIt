@@ -34,7 +34,7 @@ namespace StateByState.Regions.Main
         Test2
     }
 
-    public class MainRegion : StateAwareApplicationRegion
+    public class MainRegion : SingleAreaApplicationRegion<MainRegionView>
     {
         public MainRegion()
         {
@@ -70,7 +70,7 @@ namespace StateByState.Regions.Main
                                 vm.Completed += State_Completed;
                                 // vm.UnableToComplete += State_UnableToCompleted;
                                 // vm.SpawnNewRegion += Vm_SpawnNewRegion;
-                                await vm.StartViewModel();
+                                await vm.StartViewModel(cancel);
                             })
 
                             .WhenAboutToChange((vm, cancel) => $"VM State: About to Change - {cancel.Cancel}".LogMessage())

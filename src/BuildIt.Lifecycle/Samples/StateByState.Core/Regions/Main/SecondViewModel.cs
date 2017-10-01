@@ -1,10 +1,10 @@
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using BuildIt.Lifecycle.States.ViewModel;
 using BuildIt.States;
 using BuildIt.States.Completion;
 using BuildIt.States.Interfaces.StateData;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StateByState.Regions.Main
 {

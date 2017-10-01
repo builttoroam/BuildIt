@@ -132,6 +132,7 @@
     <Compile Include="Views\ThrirdOnePage.xaml.cs">
       <DependentUpon>ThrirdOnePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WindowSizeTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

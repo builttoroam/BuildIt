@@ -1,10 +1,9 @@
-﻿using BuildIt.Lifecycle;
-using BuildIt.States.Interfaces;
+﻿using BuildIt.States.Interfaces;
+using StateByState.Regions.Main;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using StateByState.Regions.Main;
 
 namespace StateByState
 {
@@ -30,7 +29,7 @@ namespace StateByState
                        where tg != null
                        select tg).FirstOrDefault();
 
-            var fn = new FrameNavigation<ThirdStates>(frame, grp);// CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
+            // var fn = new FrameNavigation<ThirdStates>(frame, grp);// CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
             await CurrentViewModel.Start();
         }
 

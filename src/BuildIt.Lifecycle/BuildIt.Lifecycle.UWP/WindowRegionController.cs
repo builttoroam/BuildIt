@@ -1,9 +1,8 @@
 using BuildIt.Lifecycle.Interfaces;
+using BuildIt.Lifecycle.Regions;
 using BuildIt.States.Interfaces;
 using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Phone.UI.Input;
 using Windows.UI.Core;
@@ -59,36 +58,38 @@ namespace BuildIt.Lifecycle
         /// <returns>The window identifier</returns>
         public int Start()
         {
-            var frame = new Frame();
-
             var region = Region;
-
-            var hasStates = region as IHasStates;
-            var sm = (region as IHasStates)?.StateManager;
-            if (sm != null)
+            if (region is IHasRegionAreas regionAreas)
             {
-                var groups = sm.StateGroups;
-                var inotifier = typeof(INotifyTypedStateChange<>);
-                foreach (var stateGroup in groups)
+                if (regionAreas.AreaCount == 1
+                    && region is ISingleAreaApplicationRegion singleArea)
                 {
-                    var stateType =
-                        stateGroup.Value.GroupDefinition.GetType().GenericTypeArguments.FirstOrDefault();
-                    var groupNotifier = inotifier.MakeGenericType(stateType);
-                    if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
+                    var stateGroup = singleArea.AreaStateGroup;
+                    if (stateGroup != null)
                     {
-                        var fnt = typeof(FrameNavigation<>).MakeGenericType(stateType);
-                        var fn = Activator.CreateInstance(fnt, frame, stateGroup.Value);
+                        // This is a single area region, so just create a frame
+                        var frame = new Frame();
+                        var fnt = new FrameNavigation(frame, stateGroup);
+                        //var inotifier = typeof(INotifyTypedStateChange<>);
+                        //var stateType =
+                        //    stateGroup.GroupDefinition.GetType().GenericTypeArguments.FirstOrDefault();
+                        //var groupNotifier = inotifier.MakeGenericType(stateType);
+                        //if (stateGroup.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
+                        //{
+                        //    var fnt = typeof(FrameNavigation<>).MakeGenericType(stateType);
+                        //    var fn = Activator.CreateInstance(fnt, frame, stateGroup);
+                        //}
+
+                        frame.Navigated += Frame_Navigated;
+
+                        Window.Content = frame;
                     }
                 }
             }
 
-            frame.Navigated += Frame_Navigated;
-
-            Window.Content = frame;
-
             region.CloseRegion += Region_CloseRegion;
 
-            if (hasStates != null)
+            if (region is IHasStates hasStates)
             {
                 hasStates.StateManager.GoToPreviousStateIsBlockedChanged +=
                     StateManager_GoToPreviousStateIsBlockedChanged;

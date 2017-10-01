@@ -3,6 +3,7 @@ using BuildIt.States.Completion;
 using StateByState.Services;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace StateByState.Regions.Main
@@ -54,15 +55,15 @@ namespace StateByState.Regions.Main
             // SpawnNewRegion.SafeRaise(this);
         }
 
-        public async Task StartViewModel()
+        public async Task StartViewModel(CancellationToken cancel)
         {
-            await Task.Delay(20000);
+            await Task.Delay(20000, cancel);
         }
 
         public void Test()
         {
             OnComplete(MainCompletion.Page2);
-            Completed?.Invoke(this, EventArgs.Empty);
+            // Completed?.Invoke(this, EventArgs.Empty);
         }
 
         public void Three()

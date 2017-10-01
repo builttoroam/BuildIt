@@ -1,10 +1,7 @@
 using BuildIt.Lifecycle.States;
 using BuildIt.States.Interfaces;
-using BuildIt.States.Typed.Enum;
-using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,20 +10,16 @@ namespace BuildIt.Lifecycle
     /// <summary>
     /// Handles navigation within a frame
     /// </summary>
-    /// <typeparam name="TState">The type of states</typeparam>
-    public class FrameNavigation<TState>
-        where TState : struct
-        // where TStateDefinition : class, ITypedStateDefinition<TState>, new()
-        // where TStateGroupDefinition : class, ITypedStateGroupDefinition<TState, TStateDefinition>, new()
+    public class FrameNavigation
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrameNavigation{TState}"/> class.
+        /// Initializes a new instance of the <see cref="FrameNavigation"/> class.
         /// </summary>
         /// <param name="rootFrame">The frame where navigation should occur</param>
-        /// <param name="stateNotifier">The state group</param>
+        /// <param name="stateGroup">The state group</param>
         public FrameNavigation(
             Frame rootFrame,
-                INotifyTypedStateChange<TState> stateNotifier)
+                IStateGroup stateGroup)
         // ,string registerAs = null)
         {
             // var stateManager = hasStateManager.StateManager;
@@ -35,63 +28,115 @@ namespace BuildIt.Lifecycle
             //    registerAs = hasStateManager.GetType().Name;
             // }
             // Application.Current.Resources[registerAs] = this;
+
+            // Capture local references to arguments
             RootFrame = rootFrame;
+            StateGroup = stateGroup;
+
+            // Handle state change - this will trigger navigation
+            StateGroup.StateChanged += StateManager_StateChanged;
 
             RootFrame.Navigated += RootFrame_Navigated;
             RootFrame.Navigating += RootFrame_Navigating;
 
             // RootFrame.Tag = registerAs;
-            StateNotifier = stateNotifier;
-            StateNotifier.TypedStateChanged += StateManager_StateChanged;
         }
 
         /// <summary>
         /// Gets the current state data
         /// </summary>
-        public INotifyPropertyChanged CurrentStateData => (StateNotifier as IStateGroup)?.CurrentStateData;
+        private INotifyPropertyChanged CurrentStateData => StateGroup?.CurrentStateData;
 
         /// <summary>
         /// Gets the state group
         /// </summary>
-        public INotifyTypedStateChange<TState> StateNotifier { get; }
+        private IStateGroup StateGroup { get; }
 
         private Frame RootFrame { get; }
 
+        private void StateManager_StateChanged(object sender, IStateEventArgs e)
+        {
+            using (e.Defer())
+            {
+                // Retrieve the view that was registered for the new state
+                var tp = NavigationHelper.TypeForName(StateGroup.GroupName, e.StateName);
+                if (tp == null)
+                {
+                    $"Unable to find type of view to navigate to [{e.StateName}]".LogLifecycleInfo();
+                    return;
+                }
+
+                // Check if this is a forward navigation (ie new state)
+                if (e.IsNewState)
+                {
+                    // Navigate to the new type of view
+                    // Pass through the new state data
+                    RootFrame.Navigate(tp, CurrentStateData);
+                }
+                else
+                {
+                    // Remove items off the back stack until we find the view
+                    // we're after
+                    var previous = RootFrame.BackStack.FirstOrDefault();
+                    while (previous != null && previous.SourcePageType != tp)
+                    {
+                        RootFrame.BackStack.Remove(previous);
+                        previous = RootFrame.BackStack.FirstOrDefault();
+                    }
+
+                    if (previous != null)
+                    {
+                        RootFrame.GoBack();
+                    }
+                }
+            }
+        }
+
         private void RootFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
-            var dc = e.Parameter as INotifyPropertyChanged;
-            $"Found data context? '{dc != null}'".LogLifecycleInfo();
-            if (dc == null)
+            // Retrieve the navigation parameter, which is the view model that
+            // should be set as the data context
+            var viewModel = e.Parameter as INotifyPropertyChanged;
+            $"Found data context? '{viewModel != null}'".LogLifecycleInfo();
+            if (viewModel == null)
             {
                 return;
             }
 
+            // Retrieve the root content
             var pg = RootFrame.Content as FrameworkElement;
             if (pg == null)
             {
                 return;
             }
 
-            pg.DataContext = dc;
+            // Set the data context to be the view model
+            pg.DataContext = viewModel;
+
+            // ReSharper disable once SuspiciousTypeConversion.Global - this is possible if page or control implements IHasStates
+            if (pg is IHasStates viewHasStates && viewModel is IHasStates vmHasStates)
+            {
+                viewHasStates.StateManager.Bind(vmHasStates.StateManager);
+            }
 
             // var pgHasNotifier = pg as IHasStates;
             // if (pgHasNotifier == null) return;
-            var sm = (dc as IHasStates)?.StateManager;
-            if (sm != null)
-            {
-                var groups = sm.StateGroups;
-                var inotifier = typeof(EnumStateGroup<>);
-                var vsct = typeof(VisualStateChanger<>);
-                foreach (var stateGroup in groups)
-                {
-                    var typeArg = stateGroup.Value.GetType().GenericTypeArguments.FirstOrDefault();
-                    var groupNotifier = inotifier.MakeGenericType(typeArg);
-                    if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
-                    {
-                        var vsc = Activator.CreateInstance(vsct.MakeGenericType(typeArg), pg, stateGroup.Value);
-                    }
-                }
-            }
+            //var sm = (dc as IHasStates)?.StateManager;
+            //if (sm != null)
+            //{
+            //    var groups = sm.StateGroups;
+            //    var inotifier = typeof(EnumStateGroup<>);
+            //    var vsct = typeof(VisualStateChanger<>);
+            //    foreach (var stateGroup in groups)
+            //    {
+            //        var typeArg = stateGroup.Value.GetType().GenericTypeArguments.FirstOrDefault();
+            //        var groupNotifier = inotifier.MakeGenericType(typeArg);
+            //        if (stateGroup.Value.GetType().GetTypeInfo().ImplementedInterfaces.Contains(groupNotifier))
+            //        {
+            //            var vsc = Activator.CreateInstance(vsct.MakeGenericType(typeArg), pg, stateGroup.Value);
+            //        }
+            //    }
+            //}
 
             // var pps = dc.GetType().GetTypeInfo().DeclaredProperties;
             // "Iterating through declared properties".Log();
@@ -123,30 +168,6 @@ namespace BuildIt.Lifecycle
 
         private void RootFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
         {
-        }
-
-        private void StateManager_StateChanged(object sender, ITypedStateEventArgs<TState> e)
-        {
-            var tp = NavigationHelper.TypeForState(e.TypedState);
-
-            if (e.IsNewState)
-            {
-                RootFrame.Navigate(tp, CurrentStateData);
-            }
-            else
-            {
-                var previous = RootFrame.BackStack.FirstOrDefault();
-                while (previous != null && previous.SourcePageType != tp)
-                {
-                    RootFrame.BackStack.Remove(previous);
-                    previous = RootFrame.BackStack.FirstOrDefault();
-                }
-
-                if (previous != null)
-                {
-                    RootFrame.GoBack();
-                }
-            }
         }
     }
 }
