@@ -20,6 +20,11 @@ namespace BuildIt.Lifecycle.Interfaces
         event EventHandler<DualParameterEventArgs<IRegionManager, IApplicationRegion>> RegionIsClosed;
 
         /// <summary>
+        /// Gets the current regions
+        /// </summary>
+        IEnumerable<IApplicationRegion> CurrentRegions { get; }
+
+        /// <summary>
         /// Define a possible region - types need to be defined
         /// so that they can be registered with the DI framework
         /// </summary>
@@ -31,8 +36,9 @@ namespace BuildIt.Lifecycle.Interfaces
         /// Create a region of a particular type
         /// </summary>
         /// <typeparam name="TRegion">The type of region to create</typeparam>
+        /// <param name="newRegionId">The Id of the region to create (optional)</param>
         /// <returns>The newly created region</returns>
-        TRegion CreateRegion<TRegion>()
+        TRegion CreateRegion<TRegion>(string newRegionId = null)
             where TRegion : IApplicationRegion;
 
         /// <summary>

@@ -22,9 +22,9 @@ namespace BuildIt.Lifecycle.Regions
         public event EventHandler<CancelEventArgs> ClosingRegion;
 
         /// <summary>
-        /// Gets the id of the region
+        /// Gets or sets gets the id of the region
         /// </summary>
-        public string RegionId { get; } = Guid.NewGuid().ToString();
+        public string RegionId { get; set; } = Guid.NewGuid().ToString();
 
         /// <summary>
         /// Gets the region manager associated with the region

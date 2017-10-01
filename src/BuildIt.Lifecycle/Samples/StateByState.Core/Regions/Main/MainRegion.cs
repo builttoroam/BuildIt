@@ -10,30 +10,6 @@ using System.Threading.Tasks;
 
 namespace StateByState.Regions.Main
 {
-    public enum MainRegionView
-    {
-        Base,
-        Main,
-        Second,
-        Third,
-        Fourth
-    }
-
-    public enum MainRegionTransition
-    {
-        Base,
-        MainToSecond,
-        AnyToMain,
-        ThirdToMain
-    }
-
-    public enum SimpleTest
-    {
-        Base,
-        Test1,
-        Test2
-    }
-
     public class MainRegion : SingleAreaApplicationRegion<MainRegionView>
     {
         public MainRegion()

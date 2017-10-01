@@ -1,9 +1,14 @@
+using BuildIt.Lifecycle.Interfaces;
+using BuildIt.Lifecycle.Regions;
 using BuildIt.Lifecycle.States;
 using BuildIt.States.Interfaces;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace BuildIt.Lifecycle
 {
@@ -119,6 +124,18 @@ namespace BuildIt.Lifecycle
                 viewHasStates.StateManager.Bind(vmHasStates.StateManager);
             }
 
+            if (viewModel is IHasRegionManager regions)
+            {
+                foreach (var region in regions.RegionManager.CurrentRegions.OfType<ISingleAreaApplicationRegion>())
+                {
+                    var frame = pg.AdvancedFindControlByType<Frame>(region.RegionId);
+                    if (frame != null)
+                    {
+                        var nav = new FrameNavigation(frame, region.AreaStateGroup);
+                    }
+                }
+            }
+
             // var pgHasNotifier = pg as IHasStates;
             // if (pgHasNotifier == null) return;
             //var sm = (dc as IHasStates)?.StateManager;
@@ -168,6 +185,46 @@ namespace BuildIt.Lifecycle
 
         private void RootFrame_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
         {
+        }
+    }
+
+    public static class UIHelper
+    {
+        public static T AdvancedFindControlByType<T>(this DependencyObject container, string name = null)
+            where T : DependencyObject
+        {
+            if (container is T match &&
+                (container.GetValue(FrameworkElement.NameProperty)
+                     .Equals(name) || name == null))
+            {
+                return match;
+            }
+
+            T t = default(T);
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(container); i++)
+            {
+                var child = VisualTreeHelper.GetChild(container, i);
+                t = child.AdvancedFindControlByType<T>(name);
+                if (t != null)
+                {
+                    break;
+                }
+            }
+
+            if (t == null && container is FrameworkElement fe)
+            {
+                var cp = container.GetType().GetTypeInfo().CustomAttributes//.GetCustomAttribute<ContentPropertyAttribute>(true);
+                                   .FirstOrDefault(x => x.AttributeType == typeof(ContentPropertyAttribute));// GetCustomAttribute<ContentPropertyAttribute>();
+                if (cp != null)
+                {
+                    var content = container.GetType().GetProperty("Content").GetValue(fe) as DependencyObject;
+                    if (content != null)
+                    {
+                        t = content.AdvancedFindControlByType<T>(name);
+                    }
+                }
+            }
+            return t;
         }
     }
 }

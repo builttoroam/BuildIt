@@ -1,8 +1,5 @@
-﻿using BuildIt.States.Interfaces;
-using StateByState.Regions.Main;
-using System.Linq;
+﻿using StateByState.Regions.Main;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace StateByState
@@ -21,16 +18,16 @@ namespace StateByState
         {
             base.OnNavigatedTo(e);
 
-            var frame = Split.FindName("InnerFrame") as Frame;
+            //var frame = Split.FindName("InnerFrame") as Frame;
 
-            var sm = CurrentViewModel.StateManager;
-            var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
-                       let tg = sg.GroupDefinition as INotifyTypedStateChange<ThirdStates>
-                       where tg != null
-                       select tg).FirstOrDefault();
+            //var sm = CurrentViewModel.StateManager;
+            //var grp = (from sg in sm.StateGroups.Values.OfType<IStateGroup>()
+            //           let tg = sg.GroupDefinition as INotifyTypedStateChange<ThirdStates>
+            //           where tg != null
+            //           select tg).FirstOrDefault();
 
-            // var fn = new FrameNavigation<ThirdStates>(frame, grp);// CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
-            await CurrentViewModel.Start();
+            //// var fn = new FrameNavigation<ThirdStates>(frame, grp);// CurrentViewModel.StateManager.StateGroups[typeof(ThirdStates)] as INotifyStateChanged<ThirdStates>);
+            //await CurrentViewModel.Start();
         }
 
         public ThirdViewModel CurrentViewModel => DataContext as ThirdViewModel;

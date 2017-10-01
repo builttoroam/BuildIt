@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace StateByState.Regions.Secondary
 {
-    public enum SecondaryRegionView
-    {
-        Base,
-        Main
-    }
-
     public class SecondaryRegion : StateAwareApplicationRegion
     {
         public SecondaryRegion()

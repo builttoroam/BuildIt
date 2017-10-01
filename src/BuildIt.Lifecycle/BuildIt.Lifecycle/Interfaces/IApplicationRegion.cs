@@ -20,9 +20,9 @@ namespace BuildIt.Lifecycle.Interfaces
         event EventHandler<CancelEventArgs> ClosingRegion;
 
         /// <summary>
-        /// Gets a unique identifier for the region
+        /// Gets or sets a unique identifier for the region
         /// </summary>
-        string RegionId { get; }
+        string RegionId { get; set; }
 
         /// <summary>
         /// Gets the region manager associated with this region

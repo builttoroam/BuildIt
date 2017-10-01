@@ -5,13 +5,6 @@ using StateByState.Services;
 
 namespace StateByState.Regions.Secondary
 {
-    public enum AdaptiveStates
-    {
-        Base,
-        Normal,
-        Wide
-    }
-
     public class SecondaryMainViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>
     {
         private string data;

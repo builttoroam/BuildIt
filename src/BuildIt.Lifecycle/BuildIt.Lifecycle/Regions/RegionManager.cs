@@ -24,6 +24,11 @@ namespace BuildIt.Lifecycle.Regions
         public event EventHandler<DualParameterEventArgs<IRegionManager, IApplicationRegion>> RegionIsClosed;
 
         /// <summary>
+        /// Gets the currently regions
+        /// </summary>
+        public IEnumerable<IApplicationRegion> CurrentRegions => Regions.Values;
+
+        /// <summary>
         /// Gets the DI container
         /// </summary>
         protected IDependencyContainer DependencyContainer { get; private set; }
@@ -98,8 +103,9 @@ namespace BuildIt.Lifecycle.Regions
         /// Creates a region of a specific type
         /// </summary>
         /// <typeparam name="TRegion">The type of region to create</typeparam>
+        /// <param name="newRegionId">Optional Id for the new region</param>
         /// <returns>The newly created region, or null if not able to create the region</returns>
-        public TRegion CreateRegion<TRegion>()
+        public TRegion CreateRegion<TRegion>(string newRegionId = null)
             where TRegion : IApplicationRegion
         {
             try
@@ -114,6 +120,11 @@ namespace BuildIt.Lifecycle.Regions
                 // }
                 "Registering dependencies".LogLifecycleInfo();
                 (vm as IRegisterDependencies)?.RegisterDependencies(DependencyContainer);
+
+                if (!string.IsNullOrWhiteSpace(newRegionId))
+                {
+                    vm.RegionId = newRegionId;
+                }
 
                 // vm.RegionId = Guid.NewGuid().ToString();
                 Regions[vm.RegionId] = vm;

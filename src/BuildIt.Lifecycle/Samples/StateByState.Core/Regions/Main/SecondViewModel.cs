@@ -8,29 +8,6 @@ using System.Threading.Tasks;
 
 namespace StateByState.Regions.Main
 {
-    public enum SecondStates
-    {
-        Base,
-        State1,
-        State2,
-        State3,
-        State4
-    }
-
-    public enum SecondStates2
-    {
-        Base,
-        StateX,
-        StateY,
-        StateZ
-    }
-
-    public enum SecondCompletion
-    {
-        Base,
-        Complete
-    }
-
     public class SecondViewModel : BaseStateManagerViewModelWithCompletion<DefaultCompletion>,
         IChangedTo, IAboutToChangeFrom, IChangingFrom
     {
