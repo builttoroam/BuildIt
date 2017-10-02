@@ -2,6 +2,7 @@ using BuildIt.Lifecycle.Interfaces;
 using BuildIt.Lifecycle.Regions;
 using BuildIt.Lifecycle.States;
 using BuildIt.States.Interfaces;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -38,6 +39,11 @@ namespace BuildIt.Lifecycle
             RootFrame = rootFrame;
             StateGroup = stateGroup;
 
+            if (!string.IsNullOrWhiteSpace(StateGroup.CurrentStateName))
+            {
+                HandleState(StateGroup.GroupName, StateGroup.CurrentStateName, true);
+            }
+
             // Handle state change - this will trigger navigation
             StateGroup.StateChanged += StateManager_StateChanged;
 
@@ -59,41 +65,47 @@ namespace BuildIt.Lifecycle
 
         private Frame RootFrame { get; }
 
+        private void HandleState(string groupName, string stateName, bool isNewState)
+
+        {
+            // Retrieve the view that was registered for the new state
+            var tp = NavigationHelper.TypeForName(groupName, stateName);
+            if (tp == null)
+            {
+                $"Unable to find type of view to navigate to [{stateName}]".LogLifecycleInfo();
+                return;
+            }
+
+            // Check if this is a forward navigation (ie new state)
+            if (isNewState)
+            {
+                // Navigate to the new type of view
+                // Pass through the new state data
+                RootFrame.Navigate(tp, CurrentStateData);
+            }
+            else
+            {
+                // Remove items off the back stack until we find the view
+                // we're after
+                var previous = RootFrame.BackStack.FirstOrDefault();
+                while (previous != null && previous.SourcePageType != tp)
+                {
+                    RootFrame.BackStack.Remove(previous);
+                    previous = RootFrame.BackStack.FirstOrDefault();
+                }
+
+                if (previous != null)
+                {
+                    RootFrame.GoBack();
+                }
+            }
+        }
+
         private void StateManager_StateChanged(object sender, IStateEventArgs e)
         {
             using (e.Defer())
             {
-                // Retrieve the view that was registered for the new state
-                var tp = NavigationHelper.TypeForName(StateGroup.GroupName, e.StateName);
-                if (tp == null)
-                {
-                    $"Unable to find type of view to navigate to [{e.StateName}]".LogLifecycleInfo();
-                    return;
-                }
-
-                // Check if this is a forward navigation (ie new state)
-                if (e.IsNewState)
-                {
-                    // Navigate to the new type of view
-                    // Pass through the new state data
-                    RootFrame.Navigate(tp, CurrentStateData);
-                }
-                else
-                {
-                    // Remove items off the back stack until we find the view
-                    // we're after
-                    var previous = RootFrame.BackStack.FirstOrDefault();
-                    while (previous != null && previous.SourcePageType != tp)
-                    {
-                        RootFrame.BackStack.Remove(previous);
-                        previous = RootFrame.BackStack.FirstOrDefault();
-                    }
-
-                    if (previous != null)
-                    {
-                        RootFrame.GoBack();
-                    }
-                }
+                HandleState(StateGroup.GroupName, e.StateName, e.IsNewState);
             }
         }
 
@@ -128,10 +140,14 @@ namespace BuildIt.Lifecycle
             {
                 foreach (var region in regions.RegionManager.CurrentRegions.OfType<ISingleAreaApplicationRegion>())
                 {
-                    var frame = pg.AdvancedFindControlByType<Frame>(region.RegionId);
+                    var frame = VisualRegion.NamedRegions.SafeValue(region.RegionId) as Frame;
                     if (frame != null)
                     {
                         var nav = new FrameNavigation(frame, region.AreaStateGroup);
+                        if (pg is IHasStates pageState)
+                        {
+                            pageState.StateManager.Bind(region.StateManager);
+                        }
                     }
                 }
             }
@@ -225,6 +241,31 @@ namespace BuildIt.Lifecycle
                 }
             }
             return t;
+        }
+    }
+
+    public static class VisualRegion
+    {
+        public static string GetRegionName(DependencyObject entity)
+        {
+            return entity.GetValue(RegionNameProperty) as string;
+        }
+
+        public static void SetRegionName(DependencyObject entity, string value)
+        {
+            entity.SetValue(RegionNameProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RegionNameProperty =
+            DependencyProperty.Register("RegionName", typeof(string), typeof(VisualRegion), new PropertyMetadata(null, PropertyChangedCallback));
+
+        public static IDictionary<string, DependencyObject> NamedRegions { get; } = new Dictionary<string, DependencyObject>();
+
+        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var name = dependencyPropertyChangedEventArgs.NewValue as string;
+            NamedRegions[name] = dependencyObject;
         }
     }
 }

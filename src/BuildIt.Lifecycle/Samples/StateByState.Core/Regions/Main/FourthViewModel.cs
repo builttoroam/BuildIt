@@ -1,6 +1,6 @@
 ﻿using BuildIt.Lifecycle.States.ViewModel;
 
-namespace StateByState
+namespace StateByState.Regions.Main
 {
     public class FourthViewModel : BaseStateManagerViewModel
     {

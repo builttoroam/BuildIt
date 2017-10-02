@@ -1,23 +1,23 @@
-using System;
 using BuildIt;
 using StateByState.Services;
+using System;
 
-namespace StateByState.Regions.Main
+namespace StateByState.Regions.Main.Third
 {
     public class ThirdFourViewModel : NotifyBase
     {
-        public event EventHandler Done;
-
-        public string Title { get; set; }
-
         public ThirdFourViewModel(ISpecial special)
         {
             Title = special.Data;
         }
 
+        public event EventHandler Done;
+
+        public string Title { get; set; }
+
         public void SayImDone()
         {
-            Utilities.SafeRaise(Done, this);
+            Done.SafeRaise(this);
         }
     }
 }

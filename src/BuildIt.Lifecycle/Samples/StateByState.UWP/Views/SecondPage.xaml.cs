@@ -4,7 +4,7 @@ using BuildIt.States.UWP;
 using StateByState.Regions.Main;
 using Windows.UI.Xaml;
 
-namespace StateByState
+namespace StateByState.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

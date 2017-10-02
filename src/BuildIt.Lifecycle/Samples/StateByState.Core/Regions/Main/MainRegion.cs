@@ -3,6 +3,7 @@ using BuildIt.Lifecycle.Regions;
 using BuildIt.Lifecycle.States;
 using BuildIt.States;
 using BuildIt.States.Completion;
+using StateByState.Regions.Main.Third;
 using StateByState.Regions.Secondary;
 using System;
 using System.Diagnostics;
@@ -106,32 +107,6 @@ namespace StateByState.Regions.Main
                     });
         }
 
-        //private void Vm_SpawnNewRegion(object sender, EventArgs e)
-        //{
-        //    Manager.CreateRegion<SecondaryRegion>();
-        //}
-
-        // public override void RegisterDependencies(IContainer container)
-        // {
-        //    base.RegisterDependencies(container);
-
-        // foreach (var stateGroup in StateManager.StateGroups)
-        //    {
-        //        (stateGroup.Value as ICanRegisterDependencies)?.RegisterDependencies(container);
-        //    }
-
-        // //  (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
-
-        // //RegionManager?.RegisterDependencies(container);
-        // }
-
-        // public override void RegisterForUIAccess(IUIExecutionContext context)
-        // {
-        //    base.RegisterForUIAccess(context);
-
-        // (StateManager as IRegisterForUIAccess)?.RegisterForUIAccess(this);
-        // }
-
         protected override async Task CompleteStartup()
         {
             await base.CompleteStartup();
@@ -142,7 +117,6 @@ namespace StateByState.Regions.Main
         private async void State_Completed(object sender, EventArgs e)
         {
             await StateManager.GoToState(MainRegionView.Second);
-            // await StateManager.Transition(MainRegionTransition.MainToSecond);
         }
 
         // private async void State_UnableToCompleted(object sender, EventArgs e)
@@ -154,7 +128,6 @@ namespace StateByState.Regions.Main
         private async void ThirdCompleted(object sender, EventArgs e)
         {
             await StateManager.GoToState(MainRegionView.Main);
-            // await StateManager.Transition(MainRegionTransition.ThirdToMain);
         }
     }
 }

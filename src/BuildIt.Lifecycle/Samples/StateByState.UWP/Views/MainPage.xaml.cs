@@ -1,14 +1,14 @@
-﻿using BuildIt.General.UI;
+﻿using System.Diagnostics;
+using System.Linq;
+using Windows.UI.Xaml;
+using BuildIt.General.UI;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
 using StateByState.Regions.Main;
-using System.Diagnostics;
-using System.Linq;
-using Windows.UI.Xaml;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace StateByState
+namespace StateByState.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

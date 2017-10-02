@@ -1,14 +1,14 @@
 ﻿using BuildIt.Lifecycle;
 using StateByState.Services;
-using StateByState.Shared;
-using StateByState.Shared.Views;
 using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Navigation;
 using StateByState.Regions.Main;
+using StateByState.Regions.Main.Third;
 using StateByState.Regions.Secondary;
+using StateByState.Views;
 
 namespace StateByState
 {
@@ -42,16 +42,16 @@ namespace StateByState
 #endif
 
             // Associate main region states with corresponding native pages
-            this.RegisterView<MainPage>().ForState(MainRegionView.Main);
-            this.RegisterView<SecondPage>().ForState(MainRegionView.Second);
-            LifecycleHelper.RegisterView<ThirdPage>().ForState(MainRegionView.Third);
+            this.RegisterView<Views.MainPage>().ForState(MainRegionView.Main);
+            this.RegisterView<Views.SecondPage>().ForState(MainRegionView.Second);
+            LifecycleHelper.RegisterView<Views.Third.ThirdPage>().ForState(MainRegionView.Third);
             LifecycleHelper.RegisterView<FourthPage>().ForState(MainRegionView.Fourth);
 
             // Register the sub-pages of the third page
-            LifecycleHelper.RegisterView<ThrirdOnePage>().ForState(ThirdStates.One);
-            LifecycleHelper.RegisterView<ThirdTwoPage>().ForState(ThirdStates.Two);
-            LifecycleHelper.RegisterView<ThirdThreePage>().ForState(ThirdStates.Three);
-            LifecycleHelper.RegisterView<ThirdFourPage>().ForState(ThirdStates.Four);
+            LifecycleHelper.RegisterView<Views.Third.ThrirdOnePage>().ForState(ThirdStates.One);
+            LifecycleHelper.RegisterView<Views.Third.ThirdTwoPage>().ForState(ThirdStates.Two);
+            LifecycleHelper.RegisterView<Views.Third.ThirdThreePage>().ForState(ThirdStates.Three);
+            LifecycleHelper.RegisterView<Views.Third.ThirdFourPage>().ForState(ThirdStates.Four);
 
             // Register the page to be used in the additional window
             LifecycleHelper.RegisterView<SeparatePage>().ForState(SecondaryRegionView.Main);

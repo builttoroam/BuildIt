@@ -1,12 +1,11 @@
-﻿<Page
-    x:Class="StateByState.SecondPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:StateByState"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:lifecycle="using:BuildIt.Lifecycle"
-    mc:Ignorable="d">
+﻿<Page x:Class="StateByState.Views.SecondPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:StateByState"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:lifecycle="using:BuildIt.Lifecycle"
+      mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -77,8 +76,7 @@
                    Text="Test 1 2 3 4"
                    FontSize="30"
                    Foreground="Blue" />
-        <TextBlock
-                   Text="{Binding ExtraData}"
+        <TextBlock Text="{Binding ExtraData}"
                    FontSize="30"
                    Foreground="Blue" />
         <Button Click="ToFirst">To First</Button>

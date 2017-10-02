@@ -1,4 +1,4 @@
-namespace StateByState.Regions.Main
+namespace StateByState.Regions.Main.Third
 {
     public enum ThirdStates
     {

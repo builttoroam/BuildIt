@@ -1,4 +1,4 @@
-﻿<Page x:Class="StateByState.ThirdPage"
+﻿<Page x:Class="StateByState.Views.Third.ThirdPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:StateByState"
@@ -70,7 +70,8 @@
                 </StackPanel>
             </local:CustomSplitView.Pane>
             <local:CustomSplitView.Content>
-                <Frame x:Name="ThirdRegion" />
+                <Frame x:Name="ThirdRegion"
+                       lifecycle:VisualRegion.RegionName="ThirdRegion" />
             </local:CustomSplitView.Content>
         </local:CustomSplitView>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using StateByState.Regions.Main;
+using StateByState.Regions.Main.Third;
 
-namespace StateByState
+namespace StateByState.Views.Third
 {
     public sealed partial class ThirdFourPage
     {

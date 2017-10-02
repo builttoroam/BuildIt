@@ -1,6 +1,4 @@
-using StateByState.Services;
-
-namespace StateByState
+namespace StateByState.Services
 {
     public class UWPSpecial : ISpecial
     {
