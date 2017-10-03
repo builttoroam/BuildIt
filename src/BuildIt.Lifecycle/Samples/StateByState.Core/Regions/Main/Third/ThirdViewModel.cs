@@ -21,7 +21,7 @@ namespace StateByState.Regions.Main.Third
 
         public IRegionManager RegionManager { get; } = new RegionManager();
 
-        private IStateAwareApplicationRegion SubRegion { get; set; }
+        private ThirdRegion SubRegion { get; set; }
 
         public async void Four()
         {
@@ -32,6 +32,12 @@ namespace StateByState.Regions.Main.Third
         {
             SubRegion = RegionManager.CreateRegion<ThirdRegion>("ThirdRegion");
             await SubRegion.Startup(RegionManager);
+            SubRegion.ThirdCompleted += SubRegion_ThirdCompleted;
+        }
+
+        private void SubRegion_ThirdCompleted(object sender, EventArgs e)
+        {
+            ThirdCompleted.SafeRaise(this);
         }
 
         public async void One()
@@ -66,9 +72,9 @@ namespace StateByState.Regions.Main.Third
 
         // (StateManager as ICanRegisterDependencies)?.RegisterDependencies(container);
         // }
-        private void Vm_Done(object sender, EventArgs e)
-        {
-            ThirdCompleted.SafeRaise(this);
-        }
+        //private void Vm_Done(object sender, EventArgs e)
+        //{
+        //    ThirdCompleted.SafeRaise(this);
+        //}
     }
 }
