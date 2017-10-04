@@ -8,6 +8,10 @@
         <ControlTemplate>
             <Grid x:Name="RootGrid"
                   BackgroundColor="{TemplateBinding BackgroundColor}">
+                <!--<Grid.Effects>
+                    <local:TouchEffect Capture="True"
+                                       TouchAction="OnTouchEffectAction" />
+                </Grid.Effects>-->
                 <local:VisualStateManager.VisualStateGroups>
                     <local:VisualStateGroups>
                         <local:VisualStateGroup Name="CommonStates"

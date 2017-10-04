@@ -161,7 +161,8 @@
             <StackLayout vsm:Ambient.ForeColor="Blue"
                          Margin="20">
                 <controls:IconButton Icon="&#xF04B;"
-                                     vsm:Ambient.FontSize="40"></controls:IconButton>
+                                     vsm:Ambient.FontSize="40"
+                                     Pressed="ContentButton_OnPressed"></controls:IconButton>
 
                 <Grid HeightRequest="200"
                       BackgroundColor="Pink">
