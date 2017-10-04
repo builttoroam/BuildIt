@@ -15,6 +15,46 @@ namespace BuildIt.Forms
         private static Assembly FormsAssemblyForLogging { get; } = typeof(ElementHelper).GetTypeInfo().Assembly;
 
         /// <summary>
+        /// Applies an action to all nested children of an element
+        /// </summary>
+        /// <typeparam name="TElement">The minimum level base class that is necessary for the child for the action to be performed</typeparam>
+        /// <param name="view">The target element</param>
+        /// <param name="action">The action to perform</param>
+        /// <param name="applyToRoot">Apply this action to the target element</param>
+        public static void ApplyToAllNested<TElement>(Element view, Action<TElement> action, bool applyToRoot)
+            where TElement : View
+        {
+            if (view == null)
+            {
+                "null".LogFormsInfo();
+                return;
+            }
+
+            $"attempting to match {view.GetType().Name}".LogFormsInfo();
+
+            if (view is TElement element && applyToRoot)
+            {
+                "matching view found".LogFormsInfo();
+                action(element);
+            }
+
+            if (view is Layout layout)
+            {
+                $"searching children of {view.GetType().Name}".LogFormsInfo();
+                foreach (var subelement in layout.Children)
+                {
+                    ApplyToAllNested(subelement, action, true);
+                }
+
+                layout.ChildAdded += (s, e) =>
+                {
+                    "child added".LogFormsInfo();
+                    ApplyToAllNested(e.Element, action, true);
+                };
+            }
+        }
+
+        /// <summary>
         /// Adds an action that can be run from the design overlay
         /// </summary>
         /// <param name="element">The page or user control</param>

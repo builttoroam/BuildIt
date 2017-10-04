@@ -55,7 +55,7 @@ namespace BuildIt.Forms.Controls.Droid
 
             if (formsElement is Xamarin.Forms.View fview)
             {
-                fview.InputTransparent = true;
+                ElementHelper.ApplyToAllNested<Xamarin.Forms.View>(fview, e => e.InputTransparent = true, false);
             }
 
             pclTouchEffect = touchEffect;
@@ -113,6 +113,7 @@ namespace BuildIt.Forms.Controls.Droid
                         break;
 
                     case MotionEventActions.Move:
+
                         // Multiple Move events are bundled, so handle them in a loop
                         for (pointerIndex = 0; pointerIndex < motionEvent.PointerCount; pointerIndex++)
                         {

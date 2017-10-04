@@ -31,18 +31,10 @@ namespace BuildIt.Forms.Sample
             });
         }
 
-        protected async override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            await Custom.BindVisualStates();
-
-            await (BindingContext as MainViewModel).Init();
-        }
-
         public void ToggleButtonPressed(object sender, EventArgs e)
         {
             (BindingContext as MainViewModel).SwitchStates();
+
             // VisualStateManager.GoToState(this, visible ? "Show":"Hide");
         }
 
@@ -75,9 +67,23 @@ namespace BuildIt.Forms.Sample
             (BindingContext as MainViewModel).CommandIsEnabled = DisabledButton.IsEnabled;
         }
 
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await Custom.BindVisualStates();
+
+            await (BindingContext as MainViewModel).Init();
+        }
+
         protected async void OnTouchEffectAction(object sender, object args)
         {
             "Touched - mainpage".LogMessage();
+        }
+
+        private void ContentButton_OnPressed(object sender, EventArgs e)
+        {
+            "IconButton Pressed - MainPage".LogMessage();
         }
     }
 }

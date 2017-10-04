@@ -1,7 +1,10 @@
 ﻿using Autofac;
 using BuildIt.Autofac;
+using BuildIt.Logging;
+using BuildIt.Logging.Filters;
 using BuildIt.ServiceLocation;
 using System.Diagnostics;
+using System.Reflection;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
@@ -11,6 +14,19 @@ namespace BuildIt.Forms.Sample
         public App()
         {
             LogHelper.LogOutput = entry => Debug.Write(entry);
+            LogHelper.LogService = new BasicLoggerService
+            {
+                Filter = new OrLogFilter(
+                    new AssemblyNameLogFilter
+                    {
+                        AssemblyName = typeof(BuildIt.Forms.DesignTimeControl).GetTypeInfo().Assembly.GetName().Name
+                    },
+                    new AssemblyNameLogFilter
+                    {
+                        AssemblyName = typeof(App).GetTypeInfo().Assembly.GetName().Name
+                    }
+                )
+            };
 
             InitializeComponent();
 
