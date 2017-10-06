@@ -836,7 +836,75 @@ namespace BuildIt.States
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: AboutToChangeFrom".LogStateInfo();
-            stateDefinition.AboutToChangeFrom = action;
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.AboutToChangeFrom == null)
+            {
+                stateDefinition.AboutToChangeFrom = action;
+            }
+            else
+            {
+                stateDefinition.AboutToChangeFrom += action;
+            }
+
+            return smInfo;
+        }
+
+        /// <summary>
+        /// Defines an action to be called when AboutToChangeTo the state, passing in the current state data and new data
+        /// </summary>
+        /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
+        /// <param name="smInfo">The builder to update</param>
+        /// <param name="action">The action to be invoked when AboutToChangeTo</param>
+        /// <returns>The updated builder</returns>
+        public static
+            IStateDefinitionBuilder<TState> WhenAboutToChangeTo<TState>(
+                this IStateDefinitionBuilder<TState> smInfo,
+                Action<StateCancelEventArgs> action)
+            where TState : struct
+        {
+#pragma warning disable 1998  // Convert sync method into async call
+            return smInfo.WhenAboutToChangeTo(async cancel => action(cancel));
+#pragma warning restore 1998
+        }
+
+        /// <summary>
+        /// Defines an async action to be called when AboutToChange the state
+        /// </summary>
+        /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
+        /// <param name="smInfo">The builder to update</param>
+        /// <param name="action">The action to be invoked when AboutToChange</param>
+        /// <returns>The updated builder</returns>
+        public static IStateDefinitionBuilder<TState> WhenAboutToChangeTo<TState>(
+            this IStateDefinitionBuilder<TState> smInfo,
+            Func<StateCancelEventArgs, Task> action)
+            where TState : struct
+        {
+            if (smInfo?.State == null)
+            {
+                return null;
+            }
+
+            var stateDefinition = smInfo.State;
+
+            "Adding Behaviour: AboutToChangeTo".LogStateInfo();
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.AboutToChangeTo == null)
+            {
+                stateDefinition.AboutToChangeTo = action;
+            }
+            else
+            {
+                stateDefinition.AboutToChangeTo += action;
+            }
+
             return smInfo;
         }
 
@@ -877,7 +945,20 @@ namespace BuildIt.States
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: ChangingFrom".LogStateInfo();
-            stateDefinition.ChangingFrom = action;
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.ChangingFrom == null)
+            {
+                stateDefinition.ChangingFrom = action;
+            }
+            else
+            {
+                stateDefinition.ChangingFrom += action;
+            }
+
             return smInfo;
         }
 
@@ -918,7 +999,20 @@ namespace BuildIt.States
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: ChangedFrom".LogStateInfo();
-            stateDefinition.ChangedFrom = action;
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.ChangedFrom == null)
+            {
+                stateDefinition.ChangedFrom = action;
+            }
+            else
+            {
+                stateDefinition.ChangedFrom += action;
+            }
+
             return smInfo;
         }
 
@@ -959,7 +1053,21 @@ namespace BuildIt.States
             var stateDefinition = smInfo.State;
 
             "Adding Behaviour: ChangedTo".LogStateInfo();
-            stateDefinition.ChangedTo = action;
+
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.ChangedTo == null)
+            {
+                stateDefinition.ChangedTo = action;
+            }
+            else
+            {
+                stateDefinition.ChangedTo += action;
+            }
+
             return smInfo;
         }
 
@@ -1046,59 +1154,6 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Defines an action to be called when AboutToChange the state, passing in the current state data and new data
-        /// </summary>
-        /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
-        /// <typeparam name="TStateData">The type of state data that will be passed to the action</typeparam>
-        /// <param name="smInfo">The builder to update</param>
-        /// <param name="action">The action to be invoked when AboutToChange</param>
-        /// <returns>The updated builder</returns>
-        public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
-            this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Action<TStateData, StateCancelEventArgs> action)
-            where TState : struct
-            where TStateData : INotifyPropertyChanged
-        {
-#pragma warning disable 1998 // Convert sync method into async call
-            return smInfo.WhenAboutToChange(async (vm, cancel) => action(vm, cancel));
-#pragma warning restore 1998
-        }
-
-        /// <summary>
-        /// Defines an async action to be called when AboutToChange the state, passing in the current state data and new data
-        /// </summary>
-        /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
-        /// <typeparam name="TStateData">The type of state data that will be passed to the action</typeparam>
-        /// <param name="smInfo">The builder to update</param>
-        /// <param name="action">The action to be invoked when AboutToChange</param>
-        /// <returns>The updated builder</returns>
-        public static IStateDefinitionWithDataBuilder<TState, TStateData> WhenAboutToChange<TState, TStateData>(
-            this IStateDefinitionWithDataBuilder<TState, TStateData> smInfo,
-            Func<TStateData, StateCancelEventArgs, Task> action)
-            where TState : struct
-            where TStateData : INotifyPropertyChanged
-        {
-            if (smInfo?.StateDataWrapper == null)
-            {
-                return null;
-            }
-
-            var stateDefinition = smInfo.StateDataWrapper;
-
-            "Adding Behaviour: AboutToChangeFromViewModel".LogStateInfo();
-            if (stateDefinition.AboutToChangeFrom == null || action == null)
-            {
-                stateDefinition.AboutToChangeFrom = action;
-            }
-            else
-            {
-                stateDefinition.AboutToChangeFrom += action;
-            }
-
-            return smInfo;
-        }
-
-        /// <summary>
         /// Defines an action that to be called when ChangingFrom the state, passing in the current state data
         /// </summary>
         /// <typeparam name="TState">The typeo (enum) of the state group</typeparam>
@@ -1139,7 +1194,12 @@ namespace BuildIt.States
             var stateDefinition = smInfo.StateDataWrapper;
 
             "Adding Behaviour: ChangingFromViewModel".LogStateInfo();
-            if (stateDefinition.ChangingFrom == null || action == null)
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.ChangingFrom == null)
             {
                 stateDefinition.ChangingFrom = action;
             }
@@ -1232,7 +1292,12 @@ namespace BuildIt.States
 
             if (action == null)
             {
-                stateDefinition.ChangedToWithData = null;
+                return existingInfo;
+            }
+
+            if (stateDefinition.ChangedToWithData == null)
+            {
+                stateDefinition.ChangedToWithData = modAction;
             }
             else
             {
@@ -1284,7 +1349,12 @@ namespace BuildIt.States
 
             "Adding Behaviour: ChangedToViewModel".LogStateInfo();
 
-            if (stateDefinition.ChangedTo == null || action == null)
+            if (action == null)
+            {
+                return smInfo;
+            }
+
+            if (stateDefinition.ChangedTo == null)
             {
                 stateDefinition.ChangedTo = action;
             }
