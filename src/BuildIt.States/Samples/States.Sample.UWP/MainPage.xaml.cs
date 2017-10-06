@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
@@ -28,6 +29,9 @@ namespace States.Sample.UWP
 
                 .Group<LoadingStates>()
                 .DefineAllStates(this, LoadingUIStates)
+
+                .DefineState(LoadingStates.UILoading)
+                .WhenChangedTo(cancel => Debug.WriteLine("test"))
 
                 .Group<SizeStates>()
                 .DefineAllStates(this, LayoutStates);
