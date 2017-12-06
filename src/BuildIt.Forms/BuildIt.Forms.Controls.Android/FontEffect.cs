@@ -78,7 +78,7 @@ namespace BuildIt.Forms.Controls.Droid
             {
                 if (!IsEmbedded)
                 {
-                    font = Typeface.CreateFromAsset(Xamarin.Forms.Forms.Context.Assets, "Fonts/" + FileName);
+                    font = Typeface.CreateFromAsset(view.Context.Assets, "Fonts/" + FileName);
                 }
                 else
                 {

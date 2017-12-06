@@ -85,5 +85,18 @@ namespace BuildIt.Forms.Sample
         {
             "IconButton Pressed - MainPage".LogMessage();
         }
+
+        private async void ShowTab1Clicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "ShowTab1");
+        }
+        private async void ShowTab2Clicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "ShowTab2");
+        }
+        private async void ShowTab3Clicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "ShowTab3");
+        }
     }
 }

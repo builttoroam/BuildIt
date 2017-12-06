@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vsm="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
+             xmlns:ctrl="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Sample.ListViewItemControl">
     <ContentView.Content>
         <StackLayout>
@@ -25,6 +26,8 @@
             <Label Text="Hello Xamarin.Forms!" />
             <Label Text="Enabled!"
                    x:Name="EnabledLabel" />
+            <ctrl:IconButton Pressed="ToggleClicked"
+                             Icon="&#xF04B;" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>

@@ -57,18 +57,25 @@ namespace BuildIt.Forms.Controls.iOS
         /// <param name="evt">All touches of type UITouch</param>
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
-            base.TouchesBegan(touches, evt);
-
-            foreach (UITouch touch in touches.Cast<UITouch>())
+            try
             {
-                long id = touch.Handle.ToInt64();
-                FireEvent(this, id, TouchActionType.Pressed, touch, true);
+                base.TouchesBegan(touches, evt);
 
-                idToTouchDictionary.Add(id, this);
+                foreach (UITouch touch in touches.Cast<UITouch>())
+                {
+                    long id = touch.Handle.ToInt64();
+                    FireEvent(this, id, TouchActionType.Pressed, touch, true);
+
+                    idToTouchDictionary[id] = this;
+                }
+
+                // Save the setting of the Capture property
+                capture = touchEffect.Capture;
             }
-
-            // Save the setting of the Capture property
-            capture = touchEffect.Capture;
+            catch (Exception ex)
+            {
+                ex.LogError();
+            }
         }
 
         /// <summary>
@@ -78,25 +85,32 @@ namespace BuildIt.Forms.Controls.iOS
         /// <param name="evt">All the touches</param>
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
-            base.TouchesMoved(touches, evt);
-
-            foreach (UITouch touch in touches.Cast<UITouch>())
+            try
             {
-                long id = touch.Handle.ToInt64();
+                base.TouchesMoved(touches, evt);
 
-                if (capture)
+                foreach (UITouch touch in touches.Cast<UITouch>())
                 {
-                    FireEvent(this, id, TouchActionType.Moved, touch, true);
-                }
-                else
-                {
-                    CheckForBoundaryHop(touch);
+                    long id = touch.Handle.ToInt64();
 
-                    if (idToTouchDictionary[id] != null)
+                    if (capture)
                     {
-                        FireEvent(idToTouchDictionary[id], id, TouchActionType.Moved, touch, true);
+                        FireEvent(this, id, TouchActionType.Moved, touch, true);
+                    }
+                    else
+                    {
+                        CheckForBoundaryHop(touch);
+
+                        if (idToTouchDictionary[id] != null)
+                        {
+                            FireEvent(idToTouchDictionary[id], id, TouchActionType.Moved, touch, true);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
             }
         }
 
@@ -107,27 +121,34 @@ namespace BuildIt.Forms.Controls.iOS
         /// <param name="evt">The touch event</param>
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
-            base.TouchesEnded(touches, evt);
-
-            foreach (UITouch touch in touches.Cast<UITouch>())
+            try
             {
-                long id = touch.Handle.ToInt64();
+                base.TouchesEnded(touches, evt);
 
-                if (capture)
+                foreach (UITouch touch in touches.Cast<UITouch>())
                 {
-                    FireEvent(this, id, TouchActionType.Released, touch, false);
-                }
-                else
-                {
-                    CheckForBoundaryHop(touch);
+                    long id = touch.Handle.ToInt64();
 
-                    if (idToTouchDictionary[id] != null)
+                    if (capture)
                     {
-                        FireEvent(idToTouchDictionary[id], id, TouchActionType.Released, touch, false);
+                        FireEvent(this, id, TouchActionType.Released, touch, false);
                     }
-                }
+                    else
+                    {
+                        CheckForBoundaryHop(touch);
 
-                idToTouchDictionary.Remove(id);
+                        if (idToTouchDictionary.TryGetValue(id, out var idElement) && idElement != null)
+                        {
+                            FireEvent(idElement, id, TouchActionType.Released, touch, false);
+                        }
+                    }
+
+                    idToTouchDictionary.Remove(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
             }
         }
 
@@ -138,22 +159,29 @@ namespace BuildIt.Forms.Controls.iOS
         /// <param name="evt">All the touches</param>
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
-            base.TouchesCancelled(touches, evt);
-
-            foreach (UITouch touch in touches.Cast<UITouch>())
+            try
             {
-                long id = touch.Handle.ToInt64();
+                base.TouchesCancelled(touches, evt);
 
-                if (capture)
+                foreach (UITouch touch in touches.Cast<UITouch>())
                 {
-                    FireEvent(this, id, TouchActionType.Cancelled, touch, false);
-                }
-                else if (idToTouchDictionary[id] != null)
-                {
-                    FireEvent(idToTouchDictionary[id], id, TouchActionType.Cancelled, touch, false);
-                }
+                    long id = touch.Handle.ToInt64();
 
-                idToTouchDictionary.Remove(id);
+                    if (capture)
+                    {
+                        FireEvent(this, id, TouchActionType.Cancelled, touch, false);
+                    }
+                    else if (idToTouchDictionary[id] != null)
+                    {
+                        FireEvent(idToTouchDictionary[id], id, TouchActionType.Cancelled, touch, false);
+                    }
+
+                    idToTouchDictionary.Remove(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
             }
         }
 
@@ -192,17 +220,24 @@ namespace BuildIt.Forms.Controls.iOS
 
         private void FireEvent(TouchRecognizer recognizer, long id, TouchActionType actionType, UITouch touch, bool isInContact)
         {
-            // Convert touch location to Xamarin.Forms Point value
-            var touchPoint = touch.LocationInView(recognizer.View);
-            var formsPoint = new Point(touchPoint.X, touchPoint.Y);
+            try
+            {
+                // Convert touch location to Xamarin.Forms Point value
+                var touchPoint = touch.LocationInView(recognizer.View);
+                var formsPoint = new Point(touchPoint.X, touchPoint.Y);
 
-            // Get the method to call for firing events
-            Action<Element, TouchActionEventArgs> onTouchAction = recognizer.touchEffect.OnTouchAction;
+                // Get the method to call for firing events
+                Action<Element, TouchActionEventArgs> onTouchAction = recognizer.touchEffect.OnTouchAction;
 
-            // Call that method
-            onTouchAction(
-                recognizer.element,
-                new TouchActionEventArgs(id, actionType, formsPoint, isInContact));
+                // Call that method
+                onTouchAction(
+                    recognizer.element,
+                    new TouchActionEventArgs(id, actionType, formsPoint, isInContact));
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
+            }
         }
     }
 }

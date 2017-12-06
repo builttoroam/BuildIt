@@ -19,6 +19,26 @@
     </ContentPage.Resources>
     <vsm:VisualStateManager.VisualStateGroups>
         <vsm:VisualStateGroups>
+            <vsm:VisualStateGroup Name="TabStates">
+                <vsm:VisualState Name="ShowTab1">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab1.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="ShowTab2">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab2.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="ShowTab3">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab3.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
             <vsm:VisualStateGroup Name="SampleStates">
                 <vsm:VisualState Name="Show">
                     <vsm:VisualState.Setters>
@@ -152,156 +172,176 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <!-- Acrylic brushes only in Fall Creators Update -->
-        <!--<Grid.Effects>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Text="Tab1" Clicked="ShowTab1Clicked" Grid.Column="0" />
+        <Button Text="Tab2"
+                Clicked="ShowTab2Clicked"
+                Grid.Column="1" />
+        <Button Text="Tab3"
+                Clicked="ShowTab3Clicked"
+                Grid.Column="2" />
+
+        <Grid Margin="0,10,0,0" Grid.Row="1" Grid.ColumnSpan="3">
+            <!-- Acrylic brushes only in Fall Creators Update -->
+            <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush" />
         </Grid.Effects>-->
-        <ScrollView>
+            <ScrollView x:Name="Tab1"
+                        IsVisible="false">
 
-            <StackLayout vsm:Ambient.ForeColor="Blue"
-                         Margin="20">
-                <controls:IconButton Icon="&#xF04B;"
-                                     vsm:Ambient.FontSize="40"
-                                     Pressed="ContentButton_OnPressed"></controls:IconButton>
+                <StackLayout vsm:Ambient.ForeColor="Blue"
+                             Margin="20">
+                    <controls:IconButton Icon="&#xF04B;"
+                                         vsm:Ambient.FontSize="40"
+                                         Pressed="ContentButton_OnPressed"></controls:IconButton>
 
-                <Grid HeightRequest="200"
-                      BackgroundColor="Pink">
-                    <Grid.Effects>
-                        <vsm:TouchEffect Capture="True"
-                                         TouchAction="OnTouchEffectAction" />
-                    </Grid.Effects>
+                    <Grid HeightRequest="200"
+                          BackgroundColor="Pink">
+                        <Grid.Effects>
+                            <vsm:TouchEffect Capture="True"
+                                             TouchAction="OnTouchEffectAction" />
+                        </Grid.Effects>
+                        <Label FontSize="30"
+                               x:Name="HelloLabel"
+                               Text="Hello World - Blue! &#xF04B;"
+                               vsm:Ambient.FontFamily="fontawesome-head.ttf#FontAwesome">
+                        </Label>
+                    </Grid>
+
                     <Label FontSize="30"
-                           x:Name="HelloLabel"
-                           Text="Hello World - Blue! &#xF04B;"
-                           vsm:Ambient.FontFamily="fontawesome-head.ttf#FontAwesome">
-                    </Label>
-                </Grid>
-
-                <Label FontSize="30"
-                       x:Name="StatusLabel"
-                       TextColor="Red"
-                       Text="Hello World - Red!" />
-                <Grid HeightRequest="100"
-                      WidthRequest="100"
-                      x:Name="MultiStateAnimateGrid"
-                      HorizontalOptions="Start">
-                    <Grid.Effects>
-                        <vsm:BackgroundEffect FallbackColor="Blue" />
-                    </Grid.Effects>
-                </Grid>
-                <Grid HeightRequest="100"
-                      WidthRequest="100"
-                      x:Name="MultiStateManualAnimateGrid"
-                      HorizontalOptions="Start">
-                    <Grid.Effects>
-                        <vsm:BackgroundEffect FallbackColor="Red" />
-                    </Grid.Effects>
-                </Grid>
-                <StackLayout Orientation="Horizontal">
-                    <Button Text="Rotate Left"
-                            Clicked="RotateLeftClicked" />
-                    <Button Text="Rotate Right"
-                            Clicked="RotateRightClicked" />
-                    <Button Text="Rotate Left Special">
-                        <Button.Triggers>
-                            <EventTrigger Event="Clicked">
-                                <anim:StoryboardTriggerAction Storyboard="{StaticResource FadeToHalf}" />
-                            </EventTrigger>
-                        </Button.Triggers>
-                    </Button>
-                </StackLayout>
-                <Grid HeightRequest="100"
-                      WidthRequest="100"
-                      x:Name="AnimateGrid"
-                      HorizontalOptions="Start">
-                    <Grid.Effects>
-                        <vsm:BackgroundEffect FallbackColor="Green" />
-                    </Grid.Effects>
-                </Grid>
-                <StackLayout Orientation="Horizontal">
-                    <Button Text="Expand"
-                            Clicked="ExpandClicked" />
-                    <Button Text="Default"
-                            Clicked="DefaultClicked" />
-                </StackLayout>
-                <Grid Padding="80">
-                    <Grid.Effects>
-                        <vsm:BackgroundEffect FallbackColor="Red" />
-                    </Grid.Effects>
+                           x:Name="StatusLabel"
+                           TextColor="Red"
+                           Text="Hello World - Red!" />
+                    <Grid HeightRequest="100"
+                          WidthRequest="100"
+                          x:Name="MultiStateAnimateGrid"
+                          HorizontalOptions="Start">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Blue" />
+                        </Grid.Effects>
+                    </Grid>
+                    <Grid HeightRequest="100"
+                          WidthRequest="100"
+                          x:Name="MultiStateManualAnimateGrid"
+                          HorizontalOptions="Start">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Red" />
+                        </Grid.Effects>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Rotate Left"
+                                Clicked="RotateLeftClicked" />
+                        <Button Text="Rotate Right"
+                                Clicked="RotateRightClicked" />
+                        <Button Text="Rotate Left Special">
+                            <Button.Triggers>
+                                <EventTrigger Event="Clicked">
+                                    <anim:StoryboardTriggerAction Storyboard="{StaticResource FadeToHalf}" />
+                                </EventTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </StackLayout>
+                    <Grid HeightRequest="100"
+                          WidthRequest="100"
+                          x:Name="AnimateGrid"
+                          HorizontalOptions="Start">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Green" />
+                        </Grid.Effects>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Expand"
+                                Clicked="ExpandClicked" />
+                        <Button Text="Default"
+                                Clicked="DefaultClicked" />
+                    </StackLayout>
+                    <Grid Padding="80">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Red" />
+                        </Grid.Effects>
+                        <Button Text="Hello World!"
+                                Clicked="ButtonClicked"
+                                HorizontalOptions="Center" />
+                    </Grid>
                     <Button Text="Hello World!"
                             Clicked="ButtonClicked"
+                            x:Name="HelloWorldText"
                             HorizontalOptions="Center" />
-                </Grid>
-                <Button Text="Hello World!"
-                        Clicked="ButtonClicked"
-                        x:Name="HelloWorldText"
-                        HorizontalOptions="Center" />
-                <controls:ContentButton VerticalOptions="Center"
-                                        x:Name="DisabledButton"
-                                        vsm:Ambient.FontSize="20"
-                                        Pressed="ToggleButtonPressed"
-                                        HorizontalOptions="Center">
+                    <controls:ContentButton VerticalOptions="Center"
+                                            x:Name="DisabledButton"
+                                            vsm:Ambient.FontSize="20"
+                                            Pressed="ToggleButtonPressed"
+                                            HorizontalOptions="Center">
 
-                    <StackLayout>
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!"
-                               vsm:Ambient.FontSize="30" />
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!" />
-                    </StackLayout>
-                </controls:ContentButton>
-                <controls:ContentButton VerticalOptions="Center"
-                                        x:Name="DisabledCommandButton"
-                                        Command="{Binding PressedCommand}"
-                                        HorizontalOptions="Center">
+                        <StackLayout>
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!"
+                                   vsm:Ambient.FontSize="30" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                        </StackLayout>
+                    </controls:ContentButton>
+                    <controls:ContentButton VerticalOptions="Center"
+                                            x:Name="DisabledCommandButton"
+                                            Command="{Binding PressedCommand}"
+                                            HorizontalOptions="Center">
 
-                    <StackLayout>
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!"
-                               vsm:Ambient.FontSize="30" />
-                        <Label Text="Hello!" />
-                        <Label Text="Hello!" />
-                    </StackLayout>
-                </controls:ContentButton>
+                        <StackLayout>
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!"
+                                   vsm:Ambient.FontSize="30" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                        </StackLayout>
+                    </controls:ContentButton>
 
-                <local:CustomControl x:Name="Custom">
-                    <local:CustomControl.Effects>
-                        <vsm:BackgroundEffect FallbackColor="Blue" />
-                    </local:CustomControl.Effects>
-                </local:CustomControl>
-            </StackLayout>
-        </ScrollView>
+                    <local:CustomControl x:Name="Custom">
+                        <local:CustomControl.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Blue" />
+                        </local:CustomControl.Effects>
+                    </local:CustomControl>
+                </StackLayout>
+            </ScrollView>
 
-        <Grid Grid.Column="1">
-            <ListView ItemsSource="{Binding Items}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="50">
-                            <local:ListViewItemControl />
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+            <Grid x:Name="Tab2"
+                  IsVisible="false">
+                <ListView ItemsSource="{Binding Items}"
+                          RowHeight="150">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <local:ListViewItemControl />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-        <Grid Grid.Column="2">
-            <ListView ItemsSource="{Binding MoreItems}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="50">
-                            <StackLayout>
-                                <Label Text="Hello Xamarin.Forms!" />
-                                <Label Text="Enabled!"
-                                       IsVisible="{Binding EnabledVisibility}" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Grid x:Name="Tab3"
+                  IsVisible="False">
+                <ListView ItemsSource="{Binding MoreItems}"
+                          RowHeight="80"
+                          >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="Hello Xamarin.Forms!" />
+                                    <Label Text="Enabled!"
+                                           IsVisible="{Binding EnabledVisibility}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>

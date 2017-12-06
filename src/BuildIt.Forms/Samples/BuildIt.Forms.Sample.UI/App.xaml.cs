@@ -17,10 +17,10 @@ namespace BuildIt.Forms.Sample
             LogHelper.LogService = new BasicLoggerService
             {
                 Filter = new OrLogFilter(
-                    new AssemblyNameLogFilter
-                    {
-                        AssemblyName = typeof(BuildIt.Forms.DesignTimeControl).GetTypeInfo().Assembly.GetName().Name
-                    },
+                    //new AssemblyNameLogFilter
+                    //{
+                    //    AssemblyName = typeof(BuildIt.Forms.DesignTimeControl).GetTypeInfo().Assembly.GetName().Name
+                    //},
                     new AssemblyNameLogFilter
                     {
                         AssemblyName = typeof(App).GetTypeInfo().Assembly.GetName().Name
