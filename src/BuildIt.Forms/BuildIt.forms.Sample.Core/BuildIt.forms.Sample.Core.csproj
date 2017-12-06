@@ -12,11 +12,6 @@
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.282" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
-  </ItemGroup>
-
 </Project>
