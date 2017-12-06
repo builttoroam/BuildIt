@@ -15,13 +15,13 @@ namespace BuildIt.Forms.Controls
         /// The command to be invoked when button pressed
         /// </summary>
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create("Command", typeof(ICommand), typeof(ContentButton), null, BindingMode.OneWay, null, CommandChanged, null, null, null);
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ContentButton), null, BindingMode.OneWay, null, CommandChanged, null, null, null);
 
         /// <summary>
         /// The command parameters
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create("CommandParameter", typeof(object), typeof(Button), null, BindingMode.OneWay, null, CommandParameterChanged, null, null, null);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(Button), null, BindingMode.OneWay, null, CommandParameterChanged, null, null, null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentButton"/> class.
@@ -43,9 +43,9 @@ namespace BuildIt.Forms.Controls
         /// </summary>
         public ICommand Command
         {
-            get => (ICommand)GetValue(ContentButton.CommandProperty);
+            get => (ICommand)GetValue(CommandProperty);
 
-            set => SetValue(ContentButton.CommandProperty, value);
+            set => SetValue(CommandProperty, value);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace BuildIt.Forms.Controls
         /// </summary>
         public object CommandParameter
         {
-            get => GetValue(ContentButton.CommandParameterProperty);
+            get => GetValue(CommandParameterProperty);
 
-            set => SetValue(ContentButton.CommandParameterProperty, value);
+            set => SetValue(CommandParameterProperty, value);
         }
 
         private bool IsEnabledCore
@@ -83,8 +83,10 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Sends the pressed event
         /// </summary>
-        protected void SendPressed()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected async Task SendPressed()
         {
+            await Task.Yield();
             Command?.Execute(CommandParameter);
             Pressed.SafeRaise(this);
         }
@@ -96,12 +98,12 @@ namespace BuildIt.Forms.Controls
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            if (propertyName == ContentButton.CommandProperty.PropertyName)
+            if (propertyName == CommandProperty.PropertyName)
             {
-                ICommand cmd = this.Command;
+                ICommand cmd = Command;
                 if (cmd != null)
                 {
-                    cmd.CanExecuteChanged += new EventHandler(this.CommandCanExecuteChanged);
+                    cmd.CanExecuteChanged += new EventHandler(CommandCanExecuteChanged);
                 }
             }
         }
@@ -112,12 +114,12 @@ namespace BuildIt.Forms.Controls
         /// <param name="propertyName">The name of the property that's changing</param>
         protected override void OnPropertyChanging([CallerMemberName] string propertyName = null)
         {
-            if (propertyName == ContentButton.CommandProperty.PropertyName)
+            if (propertyName == CommandProperty.PropertyName)
             {
-                ICommand cmd = this.Command;
+                ICommand cmd = Command;
                 if (cmd != null)
                 {
-                    cmd.CanExecuteChanged -= new EventHandler(this.CommandCanExecuteChanged);
+                    cmd.CanExecuteChanged -= new EventHandler(CommandCanExecuteChanged);
                 }
             }
 
@@ -131,43 +133,57 @@ namespace BuildIt.Forms.Controls
         /// <param name="args">The touch event args</param>
         protected async void OnTouchEffectAction(object sender, object args)
         {
-            var touchArgs = args as TouchActionEventArgs;
-            if (touchArgs == null)
+            try
             {
-                return;
-            }
+                var touchArgs = args as TouchActionEventArgs;
+                if (touchArgs == null)
+                {
+                    return;
+                }
 
-            switch (touchArgs.Type)
+                bool sendPressed = false;
+                switch (touchArgs.Type)
+                {
+                    case TouchActionType.Entered:
+                        EnterRequired = false;
+                        IsEntered = true;
+                        break;
+
+                    case TouchActionType.Exited:
+                        if (IsPressed)
+                        {
+                            EnterRequired = true;
+                        }
+
+                        IsEntered = false;
+                        break;
+
+                    case TouchActionType.Pressed:
+                        IsPressed = true;
+                        break;
+
+                    case TouchActionType.Released:
+                        IsPressed = false;
+                        if (IsEntered || !EnterRequired)
+                        {
+                            sendPressed = true;
+                        }
+
+                        break;
+                }
+
+                await UpdateVisualState();
+
+                // Send the pressed event after we've finished updating the visual state of the button
+                if (sendPressed)
+                {
+                    await SendPressed();
+                }
+            }
+            catch (Exception ex)
             {
-                case TouchActionType.Entered:
-                    EnterRequired = false;
-                    IsEntered = true;
-                    break;
-
-                case TouchActionType.Exited:
-                    if (IsPressed)
-                    {
-                        EnterRequired = true;
-                    }
-
-                    IsEntered = false;
-                    break;
-
-                case TouchActionType.Pressed:
-                    IsPressed = true;
-                    break;
-
-                case TouchActionType.Released:
-                    IsPressed = false;
-                    if (IsEntered || !EnterRequired)
-                    {
-                        SendPressed();
-                    }
-
-                    break;
+                ex.LogError();
             }
-
-            await UpdateVisualState();
         }
 
         private static void CommandParameterChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -182,14 +198,14 @@ namespace BuildIt.Forms.Controls
 
         private void OnCommandChanged()
         {
-            if (this.Command != null)
+            if (Command != null)
             {
-                this.Command.CanExecuteChanged += new EventHandler(this.CommandCanExecuteChanged);
-                this.CommandCanExecuteChanged(this, EventArgs.Empty);
+                Command.CanExecuteChanged += new EventHandler(CommandCanExecuteChanged);
+                CommandCanExecuteChanged(this, EventArgs.Empty);
                 return;
             }
 
-            this.IsEnabledCore = true;
+            IsEnabledCore = true;
         }
 
         private async void ContentButton_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -225,10 +241,10 @@ namespace BuildIt.Forms.Controls
 
         private void CommandCanExecuteChanged(object sender, EventArgs eventArgs)
         {
-            ICommand cmd = this.Command;
+            ICommand cmd = Command;
             if (cmd != null)
             {
-                this.IsEnabledCore = cmd.CanExecute(this.CommandParameter);
+                IsEnabledCore = cmd.CanExecute(CommandParameter);
             }
         }
     }

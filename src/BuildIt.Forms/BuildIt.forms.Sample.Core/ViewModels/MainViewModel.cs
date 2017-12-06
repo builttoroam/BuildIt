@@ -24,11 +24,21 @@ namespace BuildIt.forms.Sample.Core.ViewModels
 
     public class ItemViewModel : NotifyBase, IHasStates
     {
+        private bool _enabledVisibility;
+
         public IStateManager StateManager { get; } = new StateManager();
 
         private static Random Random { get; } = new Random();
 
-        public bool EnabledVisibility { get; set; }
+        public bool EnabledVisibility
+        {
+            get => _enabledVisibility;
+            set
+            {
+                _enabledVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ItemViewModel()
         {
@@ -41,7 +51,20 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         {
             await StateManager.GoToState(EnabledVisibility ? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
         }
-    }
+
+        public async Task Toggle()
+        {
+            EnabledVisibility = !EnabledVisibility;
+
+            var j=1.0;
+            for (int i = 0; i < 10000; i++)
+            {
+                j *= (i/10000.00);
+            }
+
+            await StateManager.GoToState(EnabledVisibility? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
+        }
+}
 
     public class MainViewModel : NotifyBase, IHasStates
     {
@@ -84,7 +107,7 @@ namespace BuildIt.forms.Sample.Core.ViewModels
         public async Task Init()
         {
             var items = new List<ItemViewModel>();
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 2000; i++)
             {
                 var item = new ItemViewModel();
                 await item.Init();
