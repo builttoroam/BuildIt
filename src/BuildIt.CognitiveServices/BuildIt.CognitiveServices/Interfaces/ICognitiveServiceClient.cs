@@ -6,7 +6,7 @@ using BuildIt.CognitiveServices.Models.Feeds.Academic;
 using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
 using BuildIt.CognitiveServices.Models.Feeds.Language;
 using BuildIt.CognitiveServices.Models.Feeds.Search;
-using Microsoft.ProjectOxford.Emotion.Contract;
+using Microsoft.ProjectOxford.Common.Contract;
 using Microsoft.ProjectOxford.Vision.Contract;
 using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 

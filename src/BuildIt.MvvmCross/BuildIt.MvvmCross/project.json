@@ -2,11 +2,11 @@
   "supports": {},
   "dependencies": {
     "BuildIt.General": "1.1.0.30",
-    "MvvmCross": "5.1.1",
-    "MvvmCross.Binding": "5.1.1",
-    "MvvmCross.Core": "5.1.1",
-    "MvvmCross.Platform": "5.1.1",
-    "NETStandard.Library": "1.6.1",
+    "MvvmCross": "5.5.2",
+    "MvvmCross.Binding": "5.5.2",
+    "MvvmCross.Core": "5.5.2",
+    "MvvmCross.Platform": "5.5.2",
+    "NETStandard.Library": "2.0.1",
     "Newtonsoft.Json": "10.0.3"
   },
   "frameworks": {

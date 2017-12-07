@@ -6,7 +6,6 @@ using BuildIt.CognitiveServices.Models.Feeds.InputParameters;
 using BuildIt.CognitiveServices.Models.Feeds.Language;
 using BuildIt.CognitiveServices.Models.Feeds.Search;
 using Microsoft.ProjectOxford.Emotion;
-using Microsoft.ProjectOxford.Emotion.Contract;
 using Microsoft.ProjectOxford.Face;
 using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
@@ -19,6 +18,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.ProjectOxford.Common.Contract;
 using FaceRectangle = Microsoft.ProjectOxford.Face.Contract.FaceRectangle;
 
 namespace BuildIt.CognitiveServices

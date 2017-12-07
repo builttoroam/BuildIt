@@ -2,10 +2,10 @@
   "dependencies": {
     "BuildIt.Config.Core": "1.0.0.26",
     "BuildIt.General": "1.0.0.41",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.4"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.10586": {}
   },
   "runtimes": {
     "win10-arm": {},

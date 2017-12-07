@@ -13,7 +13,6 @@
     <DocumentationFile>bin\Release\netstandard2.0\BuildIt.Forms.Controls.xml</DocumentationFile>
   </PropertyGroup>
 
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\BuildIt.Forms.Controls.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -21,7 +20,6 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
- 
   <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
@@ -39,5 +37,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
   </ItemGroup>
 </Project>
