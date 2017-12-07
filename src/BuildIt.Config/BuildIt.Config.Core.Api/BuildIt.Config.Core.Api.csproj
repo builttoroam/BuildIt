@@ -19,7 +19,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\BuildIt.Config.Core.Api.xml</DocumentationFile>
-    <DefineConstants>RELEASE;NETSTANDARD1_1</DefineConstants>
+    <DefineConstants>RELEASE;NETSTANDARD2_0</DefineConstants>
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
