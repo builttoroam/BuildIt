@@ -1,8 +1,7 @@
 ﻿using BuildIt.Data.Sqlite.Common;
 using BuildIt.Data.Sqlite.Database.Interfaces;
 using BuildIt.Data.Sqlite.File;
-using SQLite.Net;
-using SQLite.Net.Interop;
+using SQLite;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -13,7 +12,6 @@ namespace BuildIt.Data.Sqlite.Database
 {
     public abstract class BasicDatabaseService : BaseDatabaseService, IBasicDatabaseService
     {
-        private readonly ISqlitePlatformProvider sqlitePlatformProvider;
         private readonly IDatabaseNameProvider databaseNameProvider;
         private readonly IFileService fileService;
 
@@ -21,9 +19,8 @@ namespace BuildIt.Data.Sqlite.Database
 
         public SQLiteConnection SqliteDbConnection { get; private set; }
 
-        protected BasicDatabaseService(ISqlitePlatformProvider sqlitePlatformProvider, IDatabaseNameProvider databaseNameProvider, IFileService fileService)
+        protected BasicDatabaseService(IDatabaseNameProvider databaseNameProvider, IFileService fileService)
         {
-            this.sqlitePlatformProvider = sqlitePlatformProvider;
             this.databaseNameProvider = databaseNameProvider;
             this.fileService = fileService;
         }
@@ -48,7 +45,7 @@ namespace BuildIt.Data.Sqlite.Database
 
         private async Task<SQLiteConnection> CreateSQLiteConnection(CreationCollisionOption creationCollisionOption)
         {
-            if (databaseNameProvider == null || fileService == null || sqlitePlatformProvider == null) return null;
+            if (databaseNameProvider == null || fileService == null ) return null;
 
             try
             {
@@ -63,7 +60,7 @@ namespace BuildIt.Data.Sqlite.Database
         }
         private SQLiteConnection CreateSQLiteConnection(string nativeDbPath, CreationCollisionOption creationCollisionOption)
         {
-            if (string.IsNullOrEmpty(nativeDbPath) || databaseNameProvider == null || fileService == null || sqlitePlatformProvider == null) return null;
+            if (string.IsNullOrEmpty(nativeDbPath) || databaseNameProvider == null || fileService == null ) return null;
 
             try
             {
@@ -74,7 +71,7 @@ namespace BuildIt.Data.Sqlite.Database
                     return SqliteDbConnection;
                 }
 
-                SqliteDbConnection = new SQLiteConnection(sqlitePlatformProvider.SqLitePlatform, nativeDbPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite);
+                SqliteDbConnection = new SQLiteConnection(nativeDbPath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite);
                 return SqliteDbConnection;
             }
             catch (Exception e)

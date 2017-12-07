@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SQLite.Net;
+using SQLite;
 
 namespace BuildIt.Data.Sqlite.Repository.Interfaces
 {

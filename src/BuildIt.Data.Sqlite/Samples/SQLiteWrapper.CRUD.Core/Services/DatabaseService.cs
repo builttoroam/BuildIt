@@ -1,6 +1,6 @@
 ﻿using BuildIt.Data.Sqlite.Database;
 using BuildIt.Data.Sqlite.Database.Interfaces;
-using SQLite.Net;
+using SQLite;
 using SQLiteWrapper.CRUD.Core.Models.Database;
 using SQLiteWrapper.CRUD.Core.Services.Interfaces;
 
@@ -8,8 +8,8 @@ namespace SQLiteWrapper.CRUD.Core.Services
 {
     public class DatabaseService : BasicDatabaseService, IDatabaseService
     {
-        public DatabaseService(ISqlitePlatformProvider sqlitePlatformProvider, IDatabaseNameProvider databaseNameProvider, ILocalFileService localFileService) :
-            base(sqlitePlatformProvider, databaseNameProvider, localFileService)
+        public DatabaseService(IDatabaseNameProvider databaseNameProvider, ILocalFileService localFileService) :
+            base(databaseNameProvider, localFileService)
         {
         }
 
