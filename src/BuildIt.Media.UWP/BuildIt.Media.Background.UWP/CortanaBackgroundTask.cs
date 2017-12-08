@@ -27,7 +27,7 @@ namespace BuildIt.Media.Background
             }
             catch (Exception ex)
             {
-                ex.LogException();
+                ex.LogError();
             }
         }
     }
