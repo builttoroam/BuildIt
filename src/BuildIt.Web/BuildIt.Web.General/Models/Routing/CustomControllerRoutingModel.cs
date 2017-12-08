@@ -32,7 +32,7 @@ namespace BuildIt.Web.Models.Routing
         public static CustomControllerRoutingModel<T> Default => new CustomControllerRoutingModel<T>()
         {
             Version = null,
-            Prefix = Constants.DefaultAppConfigurationControllerPrefix,
+            Prefix = BuildIt.Web.Utilities.Constants.DefaultAppConfigurationControllerPrefix,
             Controller = nameof(T).Replace("Controller", "")
         };
     }
