@@ -4,7 +4,6 @@
     <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>StateByState.Core</AssemblyName>
     <PackageId>StateByState.Core</PackageId>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -21,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.1" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.58-beta" />
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
   </ItemGroup>
 
 </Project>

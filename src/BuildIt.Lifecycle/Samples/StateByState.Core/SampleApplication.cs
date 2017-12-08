@@ -18,7 +18,7 @@ namespace StateByState
 
         protected override void RegisterDependencies(IDependencyContainer builder)
         {
-            builder.Register<BasicDebugLogger,ILogService>();
+           // builder.Register<BasicDebugLogger,ILogService>();
 
             base.RegisterDependencies(builder);
         }
