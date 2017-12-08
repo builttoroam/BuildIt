@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+VisualStudioVersion = 15.0.27128.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4DD5348-6D07-4E61-8974-61C57A54DEC5}"
 	ProjectSection(SolutionItems) = preProject
@@ -101,7 +101,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States.UWP", "Build
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Autofac", "BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj", "{D9058653-4416-4A9B-9FCD-1A2C805629BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Data.Sqlite", "BuildIt.Data.Sqlite\BuildIt.Data.Sqlite\BuildIt.Data.Sqlite.csproj", "{27622A0A-9C78-43ED-89A5-98215100E054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Data.Sqlite", "BuildIt.Data.Sqlite\BuildIt.Data.Sqlite\BuildIt.Data.Sqlite.csproj", "{27622A0A-9C78-43ED-89A5-98215100E054}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General", "BuildIt.General\BuildIt.General\BuildIt.General.csproj", "{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}"
 EndProject
@@ -112,8 +112,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle", "BuildIt.Lifecycle\BuildIt.Lifecycle\BuildIt.Lifecycle.csproj", "{FA40C3D1-C786-4A96-89D3-78D3AF17A437}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Lifecycle.Autofac", "BuildIt.Lifecycle\BuildIt.Lifecycle.Autofac\BuildIt.Lifecycle.Autofac.csproj", "{88AE5F64-0F5E-4AD5-B673-1748F25C5458}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Lifecycle.Shared", "BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.shproj", "{A0E34142-1554-469E-8F66-0CD7D656BEAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Lifecycle.Tests", "BuildIt.Lifecycle\BuildIt.Lifecycle.Tests\BuildIt.Lifecycle.Tests.csproj", "{1B35CBB6-69F6-49F4-AF75-5C66F202B88D}"
 EndProject
@@ -137,9 +135,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Synchronization.Tes
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.MvvmCross.UI.Shared", "BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.shproj", "{5D1D9D09-FE4B-4896-85B5-290A6AC9B677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core", "BuildIt.Config\BuildIt.Config.Core\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Config.Core", "BuildIt.Config\BuildIt.Config.Core\BuildIt.Config.Core.csproj", "{5D71E1B4-2FFD-4962-A5A7-11AE20D1652B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Common", "BuildIt.Config\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj", "{9F0FA446-E6E0-438E-9AA8-E2B7EC27071F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Config.Impl.Common", "BuildIt.Config\BuildIt.Config.Impl.Common\BuildIt.Config.Impl.Common.csproj", "{9F0FA446-E6E0-438E-9AA8-E2B7EC27071F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Impl.Droid", "BuildIt.Config\BuildIt.Config.Impl.Droid\BuildIt.Config.Impl.Droid.csproj", "{E0E6A925-BC0C-4163-906B-46CC92D30F74}"
 EndProject
@@ -151,7 +149,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Web", "BuildIt.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Web.General", "BuildIt.Web\BuildIt.Web.General\BuildIt.Web.General.csproj", "{12529926-84CD-49A5-82D6-CB59326DB174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Bot.Client", "BuildIt.Bot\BuildIt.Bot.Client\BuildIt.Bot.Client.csproj", "{296AB37C-EA12-4B82-8AD4-6084D21044BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Bot.Client", "BuildIt.Bot\BuildIt.Bot.Client\BuildIt.Bot.Client.csproj", "{296AB37C-EA12-4B82-8AD4-6084D21044BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.AR", "BuildIt.AR\BuildIt.AR\BuildIt.AR.csproj", "{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}"
 EndProject
@@ -175,11 +173,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.CognitiveServices.X
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.CognitiveServices", "BuildIt.CognitiveServices\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj", "{94BC79A7-6D56-4A50-A9E3-9B452EC3011C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Auth", "BuildIt.Auth\BuildIt.Auth\BuildIt.Auth.csproj", "{7094B192-EB80-43A0-B9D8-30E354AC229E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Auth", "BuildIt.Auth\BuildIt.Auth\BuildIt.Auth.csproj", "{7094B192-EB80-43A0-B9D8-30E354AC229E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Bot.Api", "BuildIt.Bot\BuildIt.Bot.Api\BuildIt.Bot.Api.csproj", "{6F7706BD-183E-431A-8DEF-6FAE99AF2BC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Config.Core.Api", "BuildIt.Config\BuildIt.Config.Core.Api\BuildIt.Config.Core.Api.csproj", "{14CFC26F-525E-4C98-9C03-9B00D2832A15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Config.Core.Api", "BuildIt.Config\BuildIt.Config.Core.Api\BuildIt.Config.Core.Api.csproj", "{14CFC26F-525E-4C98-9C03-9B00D2832A15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Backup.Azure", "BuildIt.Backup.Azure\BuildIt.Backup.Azure\BuildIt.Backup.Azure.csproj", "{A389E82D-D221-4280-8DF3-306923A07410}"
 EndProject
@@ -216,9 +214,10 @@ Global
 		BuildIt.Shared\BuildIt.Shared.projitems*{67f9d3a8-f71e-4428-913f-c37ae82cdb24}*SharedItemsImports = 4
 		BuildIt.MvvmCross\BuildIt.MvvmCross.UI.Shared\BuildIt.MvvmCross.UI.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{745261c8-2fb3-40be-997f-c24e29f09cb1}*SharedItemsImports = 4
+		BuildIt.Shared\BuildIt.Shared.projitems*{77561504-0981-43b2-8f21-b52e8c358bf5}*SharedItemsImports = 4
+		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{7cff52a4-ad28-48b6-a73f-233d9cc002f2}*SharedItemsImports = 4
 		BuildIt.UI.Shared\BuildIt.UI.Shared.projitems*{9c859f27-080a-4e23-8154-c736c5c09225}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{9f0fa446-e6e0-438e-9aa8-e2b7ec27071f}*SharedItemsImports = 4
-		BuildIt.Lifecycle\BuildIt.Lifecycle.Shared\BuildIt.Lifecycle.Shared.projitems*{a0e34142-1554-469e-8f66-0cd7d656beae}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{a389e82d-d221-4280-8df3-306923a07410}*SharedItemsImports = 4
 		BuildIt.Bot\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems*{c5f40178-c571-4212-9c23-b8fdc3784356}*SharedItemsImports = 13
 		BuildIt.Shared\BuildIt.Shared.projitems*{cc098e36-dba0-45a7-bf77-b8dd282937f6}*SharedItemsImports = 4
@@ -1362,7 +1361,6 @@ Global
 		{E511F510-CE4A-420C-9B4E-45001BE6B57F} = {CB63CFC0-3FC2-4075-B958-DFBFC77E099C}
 		{FA40C3D1-C786-4A96-89D3-78D3AF17A437} = {C6B58AAF-DF70-496A-9180-248F142600E6}
 		{88AE5F64-0F5E-4AD5-B673-1748F25C5458} = {C6B58AAF-DF70-496A-9180-248F142600E6}
-		{A0E34142-1554-469E-8F66-0CD7D656BEAE} = {C6B58AAF-DF70-496A-9180-248F142600E6}
 		{1B35CBB6-69F6-49F4-AF75-5C66F202B88D} = {C6B58AAF-DF70-496A-9180-248F142600E6}
 		{0959F4B6-D9E4-4947-8889-D913A26F4788} = {C6B58AAF-DF70-496A-9180-248F142600E6}
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {C6B58AAF-DF70-496A-9180-248F142600E6}
