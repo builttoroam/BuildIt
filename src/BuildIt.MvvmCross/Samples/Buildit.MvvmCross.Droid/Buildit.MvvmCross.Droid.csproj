@@ -46,35 +46,35 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BuildIt.General, Version=1.1.0.92, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BuildIt.General.1.1.0.92\lib\netstandard1.0\BuildIt.General.dll</HintPath>
+      <HintPath>..\..\..\packages\BuildIt.General.1.1.0.92\lib\netstandard1.0\BuildIt.General.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="MvvmCross.Binding, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Binding.5.6.3\lib\MonoAndroid\MvvmCross.Binding.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Binding.5.6.3\lib\MonoAndroid\MvvmCross.Binding.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Binding.Droid, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Binding.5.6.3\lib\MonoAndroid\MvvmCross.Binding.Droid.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Binding.5.6.3\lib\MonoAndroid\MvvmCross.Binding.Droid.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Core, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Core.5.6.3\lib\MonoAndroid\MvvmCross.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Core.5.6.3\lib\MonoAndroid\MvvmCross.Core.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Droid, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Core.5.6.3\lib\MonoAndroid\MvvmCross.Droid.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Core.5.6.3\lib\MonoAndroid\MvvmCross.Droid.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Localization, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Binding.5.6.3\lib\MonoAndroid\MvvmCross.Localization.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Binding.5.6.3\lib\MonoAndroid\MvvmCross.Localization.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Platform, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Platform.5.6.3\lib\MonoAndroid\MvvmCross.Platform.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Platform.5.6.3\lib\MonoAndroid\MvvmCross.Platform.dll</HintPath>
     </Reference>
     <Reference Include="MvvmCross.Platform.Droid, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Platform.5.6.3\lib\MonoAndroid\MvvmCross.Platform.Droid.dll</HintPath>
+      <HintPath>..\..\..\packages\MvvmCross.Platform.5.6.3\lib\MonoAndroid\MvvmCross.Platform.Droid.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -116,12 +116,12 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Import Project="..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
