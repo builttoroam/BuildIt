@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "BuildIt.General": "1.1.0.92",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.4",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.5",
     "Newtonsoft.Json": "10.0.3"
   },
   "frameworks": {
