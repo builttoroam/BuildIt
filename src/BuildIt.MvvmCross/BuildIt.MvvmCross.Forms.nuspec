@@ -34,12 +34,12 @@
 
     <file src="BuildIt.MvvmCross.Forms\bin\Release\netstandard1.0\BuildIt.MvvmCross.Forms.dll" target="lib\MonoAndroid10" />
     <file src="BuildIt.MvvmCross.Forms\bin\Release\netstandard1.0\BuildIt.MvvmCross.Forms.pdb" target="lib\MonoAndroid10" />
-    <file src="BuildIt.MvvmCross.Forms.Android\bin\Release\BuildIt.MvvmCross.Forms.Android.dll" target="lib\MonoAndroid10" />
-    <file src="BuildIt.MvvmCross.Forms.Android\bin\Release\BuildIt.MvvmCross.Forms.Android.pdb" target="lib\MonoAndroid10" />
+    <file src="BuildIt.MvvmCross.Forms.Droid\bin\Release\BuildIt.MvvmCross.Forms.Droid.dll" target="lib\MonoAndroid10" />
+    <file src="BuildIt.MvvmCross.Forms.Droid\bin\Release\BuildIt.MvvmCross.Forms.Droid.pdb" target="lib\MonoAndroid10" />
 
     <file src="BuildIt.MvvmCross.Forms\**\*.cs" target="src\BuildIt.MvvmCross\BuildIt.MvvmCross.Forms" exclude="BuildIt.MvvmCross.Forms\obj\**\*.cs" />
     <file src="BuildIt.MvvmCross.Forms.iOS\**\*.cs" target="src\BuildIt.MvvmCross\BuildIt.MvvmCross.Forms.iOS" exclude="BuildIt.MvvmCross.Forms.iOS\obj\**\*.cs" />
-    <file src="BuildIt.MvvmCross.Forms.Android\**\*.cs" target="src\BuildIt.MvvmCross\BuildIt.MvvmCross.Forms.Android" exclude="BuildIt.MvvmCross.Forms.Android\obj\**\*.cs" />
+    <file src="BuildIt.MvvmCross.Forms.Droid\**\*.cs" target="src\BuildIt.MvvmCross\BuildIt.MvvmCross.Forms.Droid" exclude="BuildIt.MvvmCross.Forms.Droid\obj\**\*.cs" />
     <file src="BuildIt.MvvmCross.Forms.UWP\**\*.cs" target="src\BuildIt.MvvmCross\BuildIt.MvvmCross.Forms.UWP" exclude="BuildIt.MvvmCross.Forms.UWP\obj\**\*.cs" />
   </files>
 </package>
