@@ -1,48 +1,19 @@
-﻿using System;
-using System.ComponentModel;
+﻿using BuildIt.MvvmCross.Interfaces;
+using BuildIt.MvvmCross.ViewModels;
+using MvvmCross.Uwp.Views;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Phone.UI.Input;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using BuildIt.MvvmCross.Interfaces;
-using BuildIt.MvvmCross.ViewModels;
-using BuildIt;
-#if WINDOWS_UWP
-using MvvmCross.Uwp.Views;
-
-#else
-using MvvmCross.WindowsCommon.Views;
-#endif
-#if NETFX_CORE
-#if !WIN8
-#else
-using Cirrious.MvvmCross.WindowsStore.Views;
-
-#endif
-#if WINDOWS_PHONE_APP || WINDOWS_UWP
-using Windows.Phone.UI.Input;
-#endif
-#else
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Animation;
-using System.Windows.Navigation;
-using Cirrious.MvvmCross.WindowsPhone.Views;
-#endif
 
 namespace BuildIt.MvvmCross.UI.Views
 {
-    public class BaseStateEnabledPage :
-#if NETFX_CORE && !WIN8
-        MvxWindowsPage
-#elif WINDOWS_PHONE
- MvxPhonePage
-#else
-        MvxStorePage
-#endif
+    public class BaseStateEnabledPage : MvxWindowsPage
     {
 
         protected IStateAndTransitions StatesAndTransitionsViewModel
@@ -58,7 +29,6 @@ namespace BuildIt.MvvmCross.UI.Views
             get { return DataContext as ICanGoBack; }
         }
 
-#if WINDOWS_UWP
         public static bool AutomaticallyShowAppViewBackButton { get; set; } = true;
 
         public static bool EnablePageCaching { get; set; } = false;
@@ -74,7 +44,6 @@ namespace BuildIt.MvvmCross.UI.Views
                 NavigationCacheMode = NavigationCacheMode.Required;
             }
         }
-#endif
 
 
         protected virtual void DumpExistingViewModel(NavigationEventArgs e)
@@ -96,10 +65,6 @@ namespace BuildIt.MvvmCross.UI.Views
 
                 base.OnNavigatedTo(e);
 
-#if WINDOWS_PHONE_APP
-                HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-
-#elif WINDOWS_UWP
                 if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
                 {
                     Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
@@ -123,7 +88,7 @@ namespace BuildIt.MvvmCross.UI.Views
                         }
                     }
                 }
-#endif
+
                 if (GoBackViewModel != null)
                 {
                     GoBackViewModel.ClearPreviousViews += ClearViews;
@@ -156,7 +121,6 @@ namespace BuildIt.MvvmCross.UI.Views
             }
         }
 
-#if WINDOWS_UWP
         public void SubscribeToBackRequestedEvent()
         {
             SystemNavigationManager.GetForCurrentView().BackRequested += BackRequested;
@@ -188,7 +152,6 @@ namespace BuildIt.MvvmCross.UI.Views
             }
         }
 
-#endif
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
         protected virtual async Task OnNavigatedToCompleted()
@@ -201,19 +164,10 @@ namespace BuildIt.MvvmCross.UI.Views
         {
             try
             {
-#if WINDOWS_PHONE_APP || NETFX_CORE
-#if !WIN8
                 if (Frame != null)
                 {
                     Frame.BackStack.Clear();
                 }
-#endif
-#else
-                while (NavigationService.BackStack.Any())
-                {
-                    NavigationService.RemoveBackEntry();
-                }
-#endif 
             }
             catch (Exception ex)
             {
@@ -221,7 +175,6 @@ namespace BuildIt.MvvmCross.UI.Views
             }
         }
 
-#if WINDOWS_PHONE_APP || WINDOWS_UWP
         async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
             var gb = GoBackViewModel;
@@ -246,8 +199,6 @@ namespace BuildIt.MvvmCross.UI.Views
             }
         }
 
-#endif
-
         private void ViewModelStateChanged(object sender, DualParameterEventArgs<string, bool> e)
         {
             try
@@ -269,7 +220,6 @@ namespace BuildIt.MvvmCross.UI.Views
 
         }
 
-
         private void RunStoryboard(object sender, DualParameterEventArgs<string, Action> e)
         {
             try
@@ -286,11 +236,7 @@ namespace BuildIt.MvvmCross.UI.Views
                         if (sb == null) return;
                         if (completedAction != null)
                         {
-#if !NETFX_CORE
-                            EventHandler eventHandler = null;
-#else
                             EventHandler<object> eventHandler = null;
-#endif
                             eventHandler = (s, es) =>
                             {
                                 completedAction();
@@ -355,10 +301,6 @@ namespace BuildIt.MvvmCross.UI.Views
         {
             try
             {
-#if WINDOWS_PHONE_APP
-                HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
-
-#elif WINDOWS_UWP
                 if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
                 {
                     Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
@@ -367,7 +309,6 @@ namespace BuildIt.MvvmCross.UI.Views
                 {
                     UnsubscribeFromBackRequestedEvent();
                 }
-#endif
                 if (GoBackViewModel != null)
                 {
                     GoBackViewModel.ClearPreviousViews -= ClearViews;
@@ -383,7 +324,6 @@ namespace BuildIt.MvvmCross.UI.Views
                 }
 
                 base.OnNavigatedFrom(e);
-#if WINDOWS_UWP
                 if (EnablePageCaching)
                 {
                     if (e.NavigationMode == NavigationMode.Back)
@@ -392,7 +332,6 @@ namespace BuildIt.MvvmCross.UI.Views
                     }
                 }
 
-#endif
             }
             catch (Exception exception)
             {
@@ -400,47 +339,5 @@ namespace BuildIt.MvvmCross.UI.Views
             }
 
         }
-
-#if !NETFX_CORE
-        protected override void SaveStateBundle(NavigationEventArgs navigationEventArgs, IMvxBundle bundle)
-        {
-            try
-            {
-                base.SaveStateBundle(navigationEventArgs, bundle);
-
-                foreach (var data in bundle.Data)
-                {
-                    State[data.Key] = data.Value;
-                }
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception.Message);
-            }
-
-        }
-
-        protected override IMvxBundle LoadStateBundle(NavigationEventArgs navigationEventArgs)
-        {
-            try
-            {
-                var bundle = base.LoadStateBundle(navigationEventArgs);
-                if (bundle == null)
-                {
-                    bundle = new MvxBundle();
-                }
-                foreach (var data in State)
-                {
-                    bundle.Data[data.Key] = data.Value.ToString();
-                }
-                return bundle;
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception.Message);
-                return null;
-            }
-        }
-#endif
     }
 }
