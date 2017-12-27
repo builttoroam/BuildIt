@@ -58,10 +58,10 @@ namespace BuildIt.MvvmCross.Forms.Droid
 
             base.OnCreate(bundle);
 
-            MvxLoadApplication();
+            MvxLoadApplication(bundle);
         }
 
-        protected virtual void MvxLoadApplication()
+        protected virtual void MvxLoadApplication(Bundle bundle)
         {
             var startup = Mvx.Resolve<IMvxAppStart>();
             startup.Start();
