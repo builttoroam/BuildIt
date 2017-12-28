@@ -15,6 +15,7 @@
     <dependencies>
       <dependency id="BuildIt.General" version="1.1.0.92" />
       <dependency id="MvvmCross" version="5.6.3" />
+      <dependency id="MvvmCross.Forms" version="5.6.3" />
       <dependency id="Xamarin.Forms" version="2.5.0.121934" />
     </dependencies>
   </metadata>
