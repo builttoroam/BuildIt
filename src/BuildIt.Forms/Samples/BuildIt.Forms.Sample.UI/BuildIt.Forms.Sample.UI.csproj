@@ -1,30 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>BuildIt.Forms.Sample</AssemblyName>
     <RootNamespace>BuildIt.Forms.Sample</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="CustomControl.xaml" />
-    <None Remove="ListViewItemControl.xaml" />
-    <None Remove="App.xaml" />
-    <None Remove="MainPage.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
-
- 
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,15 +24,4 @@
     <ProjectReference Include="..\..\BuildIt.forms.Sample.Core\BuildIt.forms.Sample.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="ListViewItemControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>

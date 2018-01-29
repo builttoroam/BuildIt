@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +15,13 @@ namespace BuildIt.Forms
         /// Gets or sets the path to the embedded image
         /// </summary>
         public string Source { get; set; }
+                    
+        /// <summary>
+        /// Gets or sets holds a reference to the XAML control or page that is using this effect,
+        /// so that the assembly it is defined on can be accessed to load the
+        /// embedded font
+        /// </summary>
+        public object Parent { get; set; }
 
         /// <summary>
         /// Provides the image source
@@ -27,10 +35,18 @@ namespace BuildIt.Forms
                 return null;
             }
 
-            // Do your translation lookup here, using whatever method you require
-            var imageSource = ImageSource.FromResource(Source);
+            try
+            {
+                // Do your translation lookup here, using whatever method you require
+                var imageSource = ImageSource.FromResource(Source,Parent.GetType());
 
-            return imageSource;
+                return imageSource;
+            }
+            catch(Exception ex)
+            {
+                ex.LogError();
+                return null;
+            }
         }
     }
 }
