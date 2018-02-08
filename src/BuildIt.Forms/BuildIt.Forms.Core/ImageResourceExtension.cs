@@ -15,7 +15,7 @@ namespace BuildIt.Forms
         /// Gets or sets the path to the embedded image
         /// </summary>
         public string Source { get; set; }
-                    
+
         /// <summary>
         /// Gets or sets holds a reference to the XAML control or page that is using this effect,
         /// so that the assembly it is defined on can be accessed to load the
@@ -38,11 +38,11 @@ namespace BuildIt.Forms
             try
             {
                 // Do your translation lookup here, using whatever method you require
-                var imageSource = ImageSource.FromResource(Source,Parent.GetType());
+                var imageSource = ImageSource.FromResource(Source, Parent.GetType());
 
                 return imageSource;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.LogError();
                 return null;
