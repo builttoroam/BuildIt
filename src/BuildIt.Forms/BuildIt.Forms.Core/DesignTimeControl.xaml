@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:tt="clr-namespace:BuildIt.Forms"
+             x:Name="RootControl"
              x:Class="BuildIt.Forms.DesignTimeControl">
     <ContentView.Content>
 
@@ -50,7 +51,7 @@
                     <Label Text="BuildIt Forms developed by" />
                     <Image HeightRequest="30"
                            Aspect="AspectFill"
-                           Source="{tt:ImageResource BuildIt.Forms.Assets.btrlogo.png}">
+                           Source="{tt:ImageResource BuildIt.Forms.Assets.btrlogo.png, Parent={x:Reference RootControl}}">
                         <Grid.Effects>
                             <tt:TouchEffect TouchAction="LaunchBuiltToRoamWebsite" />
                         </Grid.Effects>
@@ -169,7 +170,7 @@
                         </Grid.Effects>
 
                         <Image Aspect="AspectFill"
-                               Source="{tt:ImageResource BuildIt.Forms.Assets.designbuttonicon.png}">
+                               Source="{tt:ImageResource BuildIt.Forms.Assets.designbuttonicon.png, Parent={x:Reference RootControl}}">
                         </Image>
                     </Grid>
                 </Grid>

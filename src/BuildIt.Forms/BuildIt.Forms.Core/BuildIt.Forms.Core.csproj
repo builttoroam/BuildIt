@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-monoandroid10+net45+win+win81+wp8+wpa81+xamarinios10+xamarinmac20</PackageTargetFallback>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>BuildIt.Forms</RootNamespace>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
@@ -15,21 +14,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
-    <DefineConstants>RELEASE;NETSTANDARD1_4</DefineConstants>
-    <DocumentationFile>bin\Release\netstandard1.4\BuildIt.Forms.Core.xml</DocumentationFile>
+    <DefineConstants>RELEASE;NETSTANDARD2_0</DefineConstants>
+    <DocumentationFile>bin\Release\netstandard2.0\BuildIt.Forms.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\BuildIt.Forms.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\BuildIt.Forms.Core.xml</DocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Fonts.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Assets\btrlogo.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
@@ -38,21 +29,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\btrlogo.png" />
     <EmbeddedResource Include="Assets\designbuttonicon.png" />
-   
   </ItemGroup>
 
-  
-  
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="DesignTimeControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
   </ItemGroup>
 </Project>

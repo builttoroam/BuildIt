@@ -41,7 +41,8 @@ namespace BuildIt.Forms.Controls.UWP
                 }
             }
 
-            if (gd.Background == null && effect.FallbackColor != default(Color))
+            if ((gd.Background as SolidColorBrush) == null ||
+                (!(gd.Background as SolidColorBrush).Color.Equals(default(Color)) && effect.FallbackColor != default(Color)))
             {
                 gd.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(
                     Convert.ToByte(effect.FallbackColor.A * 255),

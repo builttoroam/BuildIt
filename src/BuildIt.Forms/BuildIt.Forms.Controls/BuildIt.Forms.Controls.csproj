@@ -1,29 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-monoandroid10+net45+win+win81+wp8+wpa81+xamarinios10+xamarinmac20</PackageTargetFallback>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <Import Project="..\..\BuildIt.Shared\SharedAssemblyInfo.targets" />
 
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
-    <DefineConstants>RELEASE;NETSTANDARD1_4</DefineConstants>
-    <DocumentationFile>bin\Release\netstandard1.4\BuildIt.Forms.Controls.xml</DocumentationFile>
+    <DefineConstants>RELEASE;NETSTANDARD2_0</DefineConstants>
+    <DocumentationFile>bin\Release\netstandard2.0\BuildIt.Forms.Controls.xml</DocumentationFile>
   </PropertyGroup>
 
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\BuildIt.Forms.Controls.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\BuildIt.Forms.Controls.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-
-
 
  
   <ItemGroup>
@@ -34,20 +30,11 @@
     <EmbeddedResource Include="fontawesome-webfont.ttf" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <EmbeddedResource Include="ContentButton.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IconButton.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>-->
-
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
   </ItemGroup>
 
   <ItemGroup>
