@@ -113,6 +113,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\BuildIt.Bot.Client.Impl.UWP.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuildIt.Bot.Client\BuildIt.Bot.Client.csproj">
+      <Project>{296ab37c-ea12-4b82-8ad4-6084d21044bc}</Project>
+      <Name>BuildIt.Bot.Client</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\BuildIt.Bot.Client.Impl.Common\BuildIt.Bot.Client.Impl.Common.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

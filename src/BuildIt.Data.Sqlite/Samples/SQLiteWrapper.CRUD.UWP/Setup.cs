@@ -3,10 +3,10 @@ using BuildIt.Data.Sqlite.Database.Interfaces;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
-using MvvmCross.WindowsUWP.Platform;
 using SQLiteWrapper.CRUD.Core.Services;
 using SQLiteWrapper.CRUD.Core.Services.Interfaces;
 using SQLiteWrapper.CRUD.UWP.Services;
+using MvvmCross.Uwp.Platform;
 
 namespace SQLiteWrapper.CRUD.UWP
 {
@@ -32,7 +32,7 @@ namespace SQLiteWrapper.CRUD.UWP
         {
             base.InitializeIoC();
 
-            Mvx.LazyConstructAndRegisterSingleton<ISqlitePlatformProvider, SqlitePlatformProvider>();
+//            Mvx.LazyConstructAndRegisterSingleton<ISqlitePlatformProvider, SqlitePlatformProvider>();
             Mvx.LazyConstructAndRegisterSingleton<ILocalFileService, LocalFileService>();
             Mvx.LazyConstructAndRegisterSingleton<IDatabaseNameProvider, DatabaseNameProvider>();
             

@@ -1,11 +1,11 @@
 ﻿{
   "dependencies": {
-    "BuildIt.Bot.Client": "0.1.6.59-beta",
-    "BuildIt.General": "1.0.0.41",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
+    "BuildIt.General": "1.1.0.92",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.4",
+    "Newtonsoft.Json": "10.0.3"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.10240": {}
   },
   "runtimes": {
     "win10-arm": {},

@@ -4,7 +4,6 @@
     <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>BuildIt.CognitiveServices.XForms</AssemblyName>
     <PackageId>BuildIt.CognitiveServices.XForms</PackageId>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wpa81</PackageTargetFallback>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
@@ -17,17 +16,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="UserControls\FacialRecognitionImage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.3.4.247" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.CognitiveServices\BuildIt.CognitiveServices.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
   </ItemGroup>
 
 </Project>

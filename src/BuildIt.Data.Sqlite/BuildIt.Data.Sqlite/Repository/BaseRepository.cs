@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using BuildIt.Data.Sqlite.Repository.Interfaces;
-using SQLite.Net;
+using SQLite;
 using SQLiteNetExtensions.Extensions;
 
 // ReSharper disable UnusedVariable
 
 namespace BuildIt.Data.Sqlite.Repository
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IBaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IBaseEntity, new()
     {
         private SQLiteConnection db;
         private bool isDisposed;
