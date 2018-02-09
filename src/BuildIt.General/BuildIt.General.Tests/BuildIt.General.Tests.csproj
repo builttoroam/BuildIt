@@ -232,7 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Fakes Include="Fakes\BuildIt.General.fakes" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
