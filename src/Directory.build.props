@@ -23,7 +23,7 @@
     <IsLibraryProject>$(MSBuildProjectName.Contains('BuildIt'))</IsLibraryProject>
 
 
-    <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsTestProject)' != 'true'">true</GeneratePackageOnBuild>
 
   </PropertyGroup>
