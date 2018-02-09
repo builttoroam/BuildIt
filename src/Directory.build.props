@@ -25,7 +25,7 @@
 
 
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsLibraryProject)' != 'true'">true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsLibraryProject)' == 'true'  and '$(IsTestProject)' != 'true' ">true</GeneratePackageOnBuild>
 
   </PropertyGroup>
   

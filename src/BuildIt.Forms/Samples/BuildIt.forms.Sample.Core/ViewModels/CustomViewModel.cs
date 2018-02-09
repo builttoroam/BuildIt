@@ -1,7 +1,7 @@
 ﻿using BuildIt.States;
 using BuildIt.States.Interfaces;
 
-namespace BuildIt.forms.Sample.Core.ViewModels
+namespace BuildIt.Forms.Sample.Core.ViewModels
 {
     public class CustomViewModel : IHasStates
     {

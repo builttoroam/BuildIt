@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace BuildIt.forms.Sample.Core.ViewModels
+namespace BuildIt.Forms.Sample.Core.ViewModels
 {
     public enum SampleStates
     {
