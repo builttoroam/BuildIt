@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General", "BuildIt.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.General.Tests", "BuildIt.General\BuildIt.General.Tests\BuildIt.General.Tests.csproj", "{18F7DCCA-467D-4B0E-B7B8-9FB19A023CF2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{52E6C410-E3B3-403D-A75C-E2D7445DA084}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.General\BuildIt.General.nuspec = BuildIt.General\BuildIt.General.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		BuildIt.Shared\BuildIt.Shared.projitems*{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}*SharedItemsImports = 4
