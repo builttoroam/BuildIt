@@ -21,6 +21,7 @@
     <IsTestProject>$(MSBuildProjectName.Contains('Tests'))</IsTestProject>
     <IsFakesProject>$(MSBuildProjectName.Contains('Fakes'))</IsFakesProject>
     <IsLibraryProject>$(MSBuildProjectName.Contains('BuildIt'))</IsLibraryProject>
+    <IsSampleProject>$(MSBuildProjectName.Contains('Sample'))</IsSampleProject>
 
 
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -15,7 +15,7 @@ namespace BuildIt.Forms
         /// Gets or sets the path to the embedded image
         /// </summary>
         public string Source { get; set; }
-                    
+
         /// <summary>
         /// Gets or sets holds a reference to the XAML control or page that is using this effect,
         /// so that the assembly it is defined on can be accessed to load the
