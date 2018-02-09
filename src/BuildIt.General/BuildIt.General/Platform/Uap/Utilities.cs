@@ -1,15 +1,7 @@
 ﻿using System.Collections.Generic;
-#if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
-#else
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using Microsoft.Phone.Controls;
-#endif
 
 namespace BuildIt.General.UI
 {
@@ -50,26 +42,7 @@ namespace BuildIt.General.UI
         {
             T selected = null;
             var list = sender as Selector;
-            if (list == null)
-            {
-#if !NETFX_CORE
-                var lls = sender as LongListSelector;
-                if (lls == null)
-                {
-                    var pvt = sender as Pivot;
-                    if (pvt == null) return default(T);
-                    selected = pvt.SelectedItem as T;
-                    resetSelectedIndex = false;
-                    
-                }
-                else
-                {
-                    selected = lls.SelectedItem as T;
-                }
-#endif
-
-            }
-            else
+            if (list != null)
             {
                 selected = list.SelectedItem as T;
             }
