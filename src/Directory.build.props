@@ -2,7 +2,7 @@
   <PropertyGroup>
      <Authors>Built to Roam</Authors>
       <Company>Built to Roam Pty Ltd</Company>
-      <Copyright>Copyright © 2017</Copyright>
+      <Copyright>Copyright © 2018</Copyright>
     <RepositoryType>git</RepositoryType>
       <RepositoryUrl>https://github.com/builttoroam/buildit</RepositoryUrl>
       <PackageTags>BuildIt</PackageTags>
@@ -30,6 +30,7 @@
   
   <ItemGroup Condition="'$(IsLibraryProject)' == 'true'">
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.1" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false' and '$(IsLibraryProject)' == 'true'">
