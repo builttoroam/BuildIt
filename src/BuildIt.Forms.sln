@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{D0C173D1
 		BuildIt.Forms\BuildIt.Forms.nuspec = BuildIt.Forms\BuildIt.Forms.nuspec
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.forms.Sample.Core", "BuildIt.Forms\Samples\BuildIt.forms.Sample.Core\BuildIt.forms.Sample.Core.csproj", "{6DA33F48-46C7-4AA1-9089-9553029FF535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Sample.Core", "BuildIt.Forms\Samples\BuildIt.forms.Sample.Core\BuildIt.Forms.Sample.Core.csproj", "{6DA33F48-46C7-4AA1-9089-9553029FF535}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
