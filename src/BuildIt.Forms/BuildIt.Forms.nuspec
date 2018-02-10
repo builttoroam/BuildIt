@@ -14,32 +14,27 @@
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
     <dependencies>
       <group targetFramework=".NETStandard1.0">
-        <dependency id="BuildIt.Forms" version="1.1.0" exclude="Build,Analyzers" />
         <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="1.1.0.128-beta" exclude="Build,Analyzers" />
         <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Forms" version="2.5.0.122203" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="MonoAndroid8.0">
-        <dependency id="BuildIt.Forms" version="1.1.0" exclude="Build,Analyzers" />
         <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="1.1.0.128-beta" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Forms" version="2.5.0.122203" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
-        <dependency id="BuildIt.Forms" version="1.1.0" exclude="Build,Analyzers" />
         <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="1.1.0.128-beta" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Forms" version="2.5.0.122203" exclude="Build,Analyzers" />
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="BuildIt.Forms" version="1.1.0" exclude="Build,Analyzers" />
         <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="1.1.0.128-beta" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Forms" version="2.5.0.122203" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="UAP10.0.16299">
-        <dependency id="BuildIt.Forms" version="1.1.0" exclude="Build,Analyzers" />
         <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="1.1.0.128-beta" exclude="Build,Analyzers" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.0.6" exclude="Build,Analyzers" />
