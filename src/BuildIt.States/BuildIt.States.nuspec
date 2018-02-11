@@ -14,14 +14,14 @@
     <tags>BuildIt, States</tags>
     <dependencies>
       <group targetFramework=".NETStandard1.0">
-        <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
+        <dependency id="BuildIt.General" version="1.1.0.134" exclude="Build,Analyzers" />
         <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
+        <dependency id="BuildIt.General" version="1.1.0.134" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="UAP10.0.16299">
-        <dependency id="BuildIt.General" version="1.1.0.125-beta" exclude="Build,Analyzers" />
+        <dependency id="BuildIt.General" version="1.1.0.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.0.6" exclude="Build,Analyzers" />
       </group>
     </dependencies>
