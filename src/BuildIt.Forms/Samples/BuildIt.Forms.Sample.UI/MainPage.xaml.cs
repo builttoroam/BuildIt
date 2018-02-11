@@ -1,4 +1,4 @@
-﻿using BuildIt.forms.Sample.Core.ViewModels;
+﻿using BuildIt.Forms.Sample.Core.ViewModels;
 using BuildIt.Forms.Animations;
 using BuildIt.States.Interfaces;
 using System;

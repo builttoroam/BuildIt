@@ -13,7 +13,7 @@ namespace BuildIt.Forms.Sample
     {
         public App()
         {
-            LogHelper.LogOutput = entry => Debug.Write(entry);
+            LogHelper.LogOutput = entry => Debug.WriteLine(entry);
             LogHelper.LogService = new BasicLoggerService
             {
                 Filter = new OrLogFilter(

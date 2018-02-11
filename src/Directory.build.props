@@ -1,0 +1,40 @@
+﻿<Project>
+  <PropertyGroup>
+     <Authors>Built to Roam</Authors>
+      <Company>Built to Roam Pty Ltd</Company>
+      <Copyright>Copyright © 2018</Copyright>
+    <RepositoryType>git</RepositoryType>
+      <RepositoryUrl>https://github.com/builttoroam/buildit</RepositoryUrl>
+      <PackageTags>BuildIt</PackageTags>
+      <NeutralLanguage>en</NeutralLanguage>
+      <PackageLicenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</PackageLicenseUrl>
+      <PackageProjectUrl>https://github.com/builttoroam/buildit</PackageProjectUrl>
+
+      <Version>1.1.0.0</Version>
+      <AssemblyVersion>1.1.0.0</AssemblyVersion>
+      <FileVersion>1.1.0.0</FileVersion>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+
+    <LangVersion>latest</LangVersion>
+    <NoWarn>$(NoWarn);1591;1701;1702;1705;VSX1000</NoWarn>
+
+    <IsTestProject>$(MSBuildProjectName.Contains('Tests'))</IsTestProject>
+    <IsFakesProject>$(MSBuildProjectName.Contains('Fakes'))</IsFakesProject>
+    <IsLibraryProject>$(MSBuildProjectName.Contains('BuildIt'))</IsLibraryProject>
+    <IsSampleProject>$(MSBuildProjectName.Contains('Sample'))</IsSampleProject>
+
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsLibraryProject)' == 'true'  and '$(IsTestProject)' != 'true' ">true</GeneratePackageOnBuild>
+
+  </PropertyGroup>
+  
+  <ItemGroup Condition="'$(IsLibraryProject)' == 'true'">
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.1" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false' and '$(IsLibraryProject)' == 'true'">
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.0" PrivateAssets="All" /> 
+  </ItemGroup>
+</Project>

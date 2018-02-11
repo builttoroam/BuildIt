@@ -94,26 +94,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.6</Version>
-    </PackageReference>
-    <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.92</Version>
-    </PackageReference>
-    <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.97</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms">
-      <Version>2.5.0.122203</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs">
-      <Link>GlobalSuppressions.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -176,10 +156,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildIt.Forms.Controls.UWP\BuildIt.Forms.Controls.UWP.csproj">
-      <Project>{323a1445-e918-44fc-9c1d-82c1b9de0ad6}</Project>
-      <Name>BuildIt.Forms.Controls.UWP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
       <Project>{5f435051-e7d5-47f7-9d2f-d41041977c0c}</Project>
       <Name>BuildIt.Forms.Controls</Name>
@@ -194,23 +170,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BuildIt.Autofac">
-      <Version>1.1.0.32</Version>
-    </PackageReference>
-    <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.75</Version>
-    </PackageReference>
-    <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.75</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="BuildIt.General">
+      <Version>1.1.0.125-beta</Version>
+    </PackageReference>
+    <PackageReference Include="BuildIt.States">
+      <Version>1.1.0.128-beta</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>2.5.0.122203</Version>
+    </PackageReference>
+    <PackageReference Include="BuildIt.Autofac">
+      <Version>1.1.0.32</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

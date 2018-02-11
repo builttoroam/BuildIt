@@ -11,9 +11,10 @@
     <AssemblyName>States.Sample.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>States.Sample.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
@@ -90,13 +91,6 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs">
-      <Link>GlobalSuppressions.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -131,13 +125,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="BuildIt.General">
+      <Version>1.1.0.125-beta</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.6" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\States.Sample.Core\States.Sample.Core.csproj">
       <Project>{9127482c-e5a0-47b5-af0c-6895e15e9c84}</Project>
       <Name>States.Sample.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BuildIt.States.UWP\BuildIt.States.UWP.csproj">
-      <Project>{0ca149fa-2055-4541-b45b-cdb6c09c51ea}</Project>
-      <Name>BuildIt.States.UWP</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.States\BuildIt.States.csproj">
       <Project>{b18d3d00-ad5f-41e5-8d44-1670f28946fb}</Project>

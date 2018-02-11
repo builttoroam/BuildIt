@@ -5,28 +5,22 @@ VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.States", "BuildIt.States\BuildIt.States\BuildIt.States.csproj", "{B18D3D00-AD5F-41E5-8D44-1670F28946FB}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States.UWP", "BuildIt.States\BuildIt.States.UWP\BuildIt.States.UWP.csproj", "{0CA149FA-2055-4541-B45B-CDB6C09C51EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.States.Tests", "BuildIt.States\BuildIt.States.Tests\BuildIt.States.Tests.csproj", "{6EB20973-5C6A-4B03-9636-B3B468C9B45D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{101B69D9-6F4E-4EE5-A583-F9E3FAB60152}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "States.Sample.Core", "BuildIt.States\Samples\States.Sample.Core\States.Sample.Core.csproj", "{9127482C-E5A0-47B5-AF0C-6895E15E9C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "States.Sample.UWP", "BuildIt.States\Samples\States.Sample.UWP\States.Sample.UWP.csproj", "{6886417B-DB5F-4C2E-AA75-4E4FF308D53D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{9DBA4789-DF6F-4FA4-AC79-9E152276B619}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.States\BuildIt.States.nuspec = BuildIt.States\BuildIt.States.nuspec
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "States.Sample.UWP", "BuildIt.States\Samples\States.Sample.UWP\States.Sample.UWP.csproj", "{6886417B-DB5F-4C2E-AA75-4E4FF308D53D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		BuildIt.Shared\BuildIt.Shared.projitems*{0ca149fa-2055-4541-b45b-cdb6c09c51ea}*SharedItemsImports = 4
 		BuildIt.Shared\BuildIt.Shared.projitems*{b18d3d00-ad5f-41e5-8d44-1670f28946fb}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,22 +49,6 @@ Global
 		{B18D3D00-AD5F-41E5-8D44-1670F28946FB}.Release|x64.Build.0 = Release|Any CPU
 		{B18D3D00-AD5F-41E5-8D44-1670F28946FB}.Release|x86.ActiveCfg = Release|Any CPU
 		{B18D3D00-AD5F-41E5-8D44-1670F28946FB}.Release|x86.Build.0 = Release|Any CPU
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|ARM.ActiveCfg = Debug|ARM
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|ARM.Build.0 = Debug|ARM
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|x64.ActiveCfg = Debug|x64
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|x64.Build.0 = Debug|x64
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|x86.ActiveCfg = Debug|x86
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Debug|x86.Build.0 = Debug|x86
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|ARM.ActiveCfg = Release|ARM
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|ARM.Build.0 = Release|ARM
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|x64.ActiveCfg = Release|x64
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|x64.Build.0 = Release|x64
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|x86.ActiveCfg = Release|x86
-		{0CA149FA-2055-4541-B45B-CDB6C09C51EA}.Release|x86.Build.0 = Release|x86
 		{6EB20973-5C6A-4B03-9636-B3B468C9B45D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6EB20973-5C6A-4B03-9636-B3B468C9B45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EB20973-5C6A-4B03-9636-B3B468C9B45D}.Debug|ARM.ActiveCfg = Debug|Any CPU

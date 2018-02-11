@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
-    <AssemblyName>BuildIt.Forms.Sample</AssemblyName>
-    <RootNamespace>BuildIt.Forms.Sample</RootNamespace>
+    <AssemblyName>BuildIt.Forms.Sample.Core</AssemblyName>
+    <RootNamespace>BuildIt.Forms.Sample.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +15,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>RELEASE</DefineConstants>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.125-beta" />
@@ -24,9 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj" />
     <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
-    <ProjectReference Include="..\BuildIt.forms.Sample.Core\BuildIt.Forms.Sample.Core.csproj" />
+    <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
