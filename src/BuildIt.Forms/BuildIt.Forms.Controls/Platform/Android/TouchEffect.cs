@@ -31,6 +31,7 @@ namespace BuildIt.Forms.Controls.Droid
         private Func<double, double> fromPixels;
         private int[] twoIntArray = new int[2];
 
+        /// <inheritdoc />
         /// <summary>
         /// Attach the effect
         /// </summary>
@@ -66,6 +67,15 @@ namespace BuildIt.Forms.Controls.Droid
             // Set event handler on View
             view.Touch += OnTouch;
             view.ViewDetachedFromWindow += ViewDetachedFromWindow;
+        }
+
+        /// <inheritdoc/>
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
+        protected override void OnDetached()
+        {
+            // Method must be overridden
         }
 
         private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
