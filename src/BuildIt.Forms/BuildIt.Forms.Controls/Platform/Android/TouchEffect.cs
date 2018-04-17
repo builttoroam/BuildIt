@@ -50,7 +50,14 @@ namespace BuildIt.Forms.Controls.Droid
                 return;
             }
 
-            viewDictionary[view] = this;
+            if (viewDictionary.ContainsKey(view))
+            {
+                // This effect may have been added twice due to being used in a ListView that has updated it's collection.
+                // cleanup the old effect handlers -RR
+                CleanupHandlers(view);
+            }
+
+            viewDictionary.Add(view, this);
 
             formsElement = Element;
 
@@ -78,23 +85,28 @@ namespace BuildIt.Forms.Controls.Droid
             // Method must be overridden
         }
 
-        private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
+        private void CleanupHandlers(Android.Views.View viewToCleanup)
         {
             try
             {
-                if (!viewDictionary.ContainsKey(e.DetachedView))
+                if (!viewDictionary.ContainsKey(viewToCleanup))
                 {
                     return;
                 }
 
-                viewDictionary.Remove(e.DetachedView);
-                e.DetachedView.Touch -= OnTouch;
-                e.DetachedView.ViewDetachedFromWindow -= ViewDetachedFromWindow;
+                viewDictionary.Remove(viewToCleanup);
+                viewToCleanup.Touch -= OnTouch;
+                viewToCleanup.ViewDetachedFromWindow -= ViewDetachedFromWindow;
             }
             catch (Exception ex)
             {
                 ex.LogError();
             }
+        }
+
+        private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
+        {
+            CleanupHandlers(e.DetachedView);
         }
 
         private void OnTouch(object sender, Android.Views.View.TouchEventArgs args)
