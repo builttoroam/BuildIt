@@ -50,7 +50,7 @@ namespace BuildIt.Forms.Controls.Droid
                 return;
             }
 
-            viewDictionary.Add(view, this);
+            viewDictionary[view] = this;
 
             formsElement = Element;
 
