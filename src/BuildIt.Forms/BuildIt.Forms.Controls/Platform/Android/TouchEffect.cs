@@ -65,20 +65,26 @@ namespace BuildIt.Forms.Controls.Droid
 
             // Set event handler on View
             view.Touch += OnTouch;
+            view.ViewDetachedFromWindow += ViewDetachedFromWindow;
         }
 
-        /// <summary>
-        /// Detach effect
-        /// </summary>
-        protected override void OnDetached()
+        private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
         {
-            if (!viewDictionary.ContainsKey(view))
+            try
             {
-                return;
-            }
+                if (!viewDictionary.ContainsKey(e.DetachedView))
+                {
+                    return;
+                }
 
-            viewDictionary.Remove(view);
-            view.Touch -= OnTouch;
+                viewDictionary.Remove(e.DetachedView);
+                e.DetachedView.Touch -= OnTouch;
+                e.DetachedView.ViewDetachedFromWindow -= ViewDetachedFromWindow;
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
+            }
         }
 
         private void OnTouch(object sender, Android.Views.View.TouchEventArgs args)
