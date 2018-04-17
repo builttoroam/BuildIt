@@ -43,7 +43,7 @@
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0.16299' and '$(IsLibraryProject)' == 'true' ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.6" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.8" />
   </ItemGroup>
 
     <ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' != 'true' ">

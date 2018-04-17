@@ -171,19 +171,19 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.6</Version>
+      <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.125-beta</Version>
+      <Version>1.1.0.134</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.128-beta</Version>
+      <Version>1.1.0.134</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>2.5.0.122203</Version>
+      <Version>2.5.1.444934</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.Autofac">
       <Version>1.1.0.32</Version>

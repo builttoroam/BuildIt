@@ -128,14 +128,14 @@
 
   <ItemGroup>
     <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.125-beta</Version>
+      <Version>1.1.0.134</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.128-beta</Version>
+      <Version>1.1.0.134</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
