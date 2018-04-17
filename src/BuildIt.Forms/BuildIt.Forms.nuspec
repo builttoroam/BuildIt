@@ -38,7 +38,7 @@
         <dependency id="BuildIt.General" version="1.1.0.134" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="1.1.0.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.0.8" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Forms" version="2.5.0.1.444934" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Forms" version="2.5.1.444934" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
