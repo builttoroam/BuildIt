@@ -18,9 +18,9 @@
   
   <ItemGroup>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
-    <PackageReference Include="BuildIt.General" Version="1.1.0.125-beta" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.128-beta" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="BuildIt.General" Version="1.1.0.134" />
+    <PackageReference Include="BuildIt.States" Version="1.1.0.134" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
   </ItemGroup>
 
   <ItemGroup>
