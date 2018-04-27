@@ -61,7 +61,7 @@ namespace BuildIt.Forms.Controls.Droid
             // Method must be overridden
             try
             {
-                view.ViewAttachedToWindow += ViewAttachedToWindow;
+                view.ViewAttachedToWindow -= ViewAttachedToWindow;
             }
             catch (Exception ex)
             {
