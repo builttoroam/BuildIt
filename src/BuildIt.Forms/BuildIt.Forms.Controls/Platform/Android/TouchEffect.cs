@@ -39,11 +39,52 @@ namespace BuildIt.Forms.Controls.Droid
         {
             // Get the Android View corresponding to the Element that the effect is attached to
             view = Control ?? Container;
+            if (view == null)
+            {
+                return;
+            }
 
+            view.ViewAttachedToWindow += ViewAttachedToWindow;
+
+            if (!viewDictionary.ContainsKey(view) && view.IsAttachedToWindow)
+            {
+                AttachHandlers();
+            }
+        }
+
+        /// <inheritdoc/>
+        /// <summary>
+        /// Detach the effect
+        /// </summary>
+        protected override void OnDetached()
+        {
+            // Method must be overridden
+            try
+            {
+                view.ViewAttachedToWindow += ViewAttachedToWindow;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void ViewAttachedToWindow(object sender, Android.Views.View.ViewAttachedToWindowEventArgs e)
+        {
+            AttachHandlers();
+        }
+
+        private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
+        {
+            CleanupHandlers(e.DetachedView);
+        }
+
+        private void AttachHandlers()
+        {
             // Get access to the TouchEffect class in the PCL
             Forms.TouchEffect touchEffect =
                 (Forms.TouchEffect)Element.Effects.
-                    FirstOrDefault(e => e is Forms.TouchEffect);
+                    FirstOrDefault(ef => ef is Forms.TouchEffect);
 
             if (touchEffect == null || view == null)
             {
@@ -63,7 +104,7 @@ namespace BuildIt.Forms.Controls.Droid
 
             if (formsElement is Xamarin.Forms.View fview)
             {
-                ElementHelper.ApplyToAllNested<Xamarin.Forms.View>(fview, e => e.InputTransparent = true, false);
+                ElementHelper.ApplyToAllNested<Xamarin.Forms.View>(fview, fv => fv.InputTransparent = true, false);
             }
 
             pclTouchEffect = touchEffect;
@@ -74,15 +115,6 @@ namespace BuildIt.Forms.Controls.Droid
             // Set event handler on View
             view.Touch += OnTouch;
             view.ViewDetachedFromWindow += ViewDetachedFromWindow;
-        }
-
-        /// <inheritdoc/>
-        /// <summary>
-        /// Detach the effect
-        /// </summary>
-        protected override void OnDetached()
-        {
-            // Method must be overridden
         }
 
         private void CleanupHandlers(Android.Views.View viewToCleanup)
@@ -102,11 +134,6 @@ namespace BuildIt.Forms.Controls.Droid
             {
                 ex.LogError();
             }
-        }
-
-        private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
-        {
-            CleanupHandlers(e.DetachedView);
         }
 
         private void OnTouch(object sender, Android.Views.View.TouchEventArgs args)
