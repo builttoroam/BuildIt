@@ -223,6 +223,13 @@ namespace BuildIt.Forms.Controls
                 if (IsPressed)
                 {
                     await VisualStateManager.GoToState(this, "Pressed");
+
+                    // Releasing the button after half a second. This should stop the button's visual state getting "stuck" in a ListView -RR
+                    await Task.Delay(500);
+                    if (VisualStateManager.GetVisualStateGroups(this)?.StateManager?.CurrentState("CommonStates") == "Pressed")
+                    {
+                        OnTouchEffectAction(this, new TouchActionEventArgs(0, TouchActionType.Released, Point.Zero, false));
+                    }
                 }
                 else if (IsEntered)
                 {
