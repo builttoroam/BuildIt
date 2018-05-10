@@ -1,6 +1,7 @@
 using Android.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -18,17 +19,27 @@ namespace BuildIt.Forms.Controls.Droid
     [Preserve]
     public class TouchEffect : PlatformEffect
     {
-        private static Dictionary<Android.Views.View, TouchEffect> viewDictionary =
-            new Dictionary<Android.Views.View, TouchEffect>();
+        private class TouchInfo
+        {
+            public Android.Views.View View { get; set; }
+            public bool EventsAttached { get; set; }
+            public Element Element { get; set; }
+            public Func<double,double> FromPixel { get; set; }
+            public Forms.TouchEffect Effect { get; set; }
+            public TouchEffect DroidEffect { get; set; }
+        }
+
+        private static IDictionary<Android.Views.View, TouchInfo> viewDictionary =
+            new Dictionary<Android.Views.View, TouchInfo>();
 
         private static Dictionary<int, TouchEffect> idToEffectDictionary =
             new Dictionary<int, TouchEffect>();
 
-        private Android.Views.View view;
-        private Element formsElement;
-        private Forms.TouchEffect pclTouchEffect;
+        private TouchInfo currentView;
+        // private Element formsElement;
+        // private Forms.TouchEffect pclTouchEffect;
         private bool capture;
-        private Func<double, double> fromPixels;
+        // private Func<double, double> fromPixels;
         private int[] twoIntArray = new int[2];
 
         /// <inheritdoc />
@@ -38,18 +49,10 @@ namespace BuildIt.Forms.Controls.Droid
         protected override void OnAttached()
         {
             // Get the Android View corresponding to the Element that the effect is attached to
-            view = Control ?? Container;
-            if (view == null)
-            {
-                return;
-            }
+            var newView = Control ?? Container;
 
-            view.ViewAttachedToWindow += ViewAttachedToWindow;
-
-            if (!viewDictionary.ContainsKey(view) && view.IsAttachedToWindow)
-            {
-                AttachHandlers();
-            }
+            // Attach the new view
+            AttachView(newView);
         }
 
         /// <inheritdoc/>
@@ -61,7 +64,7 @@ namespace BuildIt.Forms.Controls.Droid
             // Method must be overridden
             try
             {
-                view.ViewAttachedToWindow -= ViewAttachedToWindow;
+                DetachView(currentView?.View);
             }
             catch (Exception ex)
             {
@@ -71,64 +74,128 @@ namespace BuildIt.Forms.Controls.Droid
 
         private void ViewAttachedToWindow(object sender, Android.Views.View.ViewAttachedToWindowEventArgs e)
         {
-            AttachHandlers();
+            AttachHandlers(e.AttachedView);
         }
 
         private void ViewDetachedFromWindow(object sender, Android.Views.View.ViewDetachedFromWindowEventArgs e)
         {
-            CleanupHandlers(e.DetachedView);
+            DetachHandlers(e.DetachedView);
         }
 
-        private void AttachHandlers()
+        private void AttachView(Android.Views.View newView)
         {
+            if (newView == null)
+            {
+                return;
+            }
+
+            if (currentView != null && currentView.View != newView)
+            {
+                // Clean up the existing view (and any event handlers)
+                DetachView(currentView?.View);
+            }
+
+            var existing = viewDictionary.SafeValue(newView);
+
+            if (existing != null)
+            {
+                currentView = existing;
+                return;
+            }
+
+            var view = newView;
+
             // Get access to the TouchEffect class in the PCL
             Forms.TouchEffect touchEffect =
-                (Forms.TouchEffect)Element.Effects.
-                    FirstOrDefault(ef => ef is Forms.TouchEffect);
+                    (Forms.TouchEffect)Element.Effects.
+                        FirstOrDefault(ef => ef is Forms.TouchEffect);
 
             if (touchEffect == null || view == null)
             {
                 return;
             }
 
-            if (viewDictionary.ContainsKey(view))
-            {
-                // This effect may have been added twice due to being used in a ListView that has updated it's collection.
-                // cleanup the old effect handlers -RR
-                CleanupHandlers(view);
-            }
+            var touchInfo = new TouchInfo();
+            touchInfo.View = view;
+            touchInfo.DroidEffect = this;
+            touchInfo.Effect = touchEffect;
+            touchInfo.Element = Element;
+            touchInfo.FromPixel = view.Context.FromPixels;
+            viewDictionary.Add(view, touchInfo);
 
-            viewDictionary.Add(view, this);
-
-            formsElement = Element;
-
-            if (formsElement is Xamarin.Forms.View fview)
+            if (Element is Xamarin.Forms.View fview)
             {
                 ElementHelper.ApplyToAllNested<Xamarin.Forms.View>(fview, fv => fv.InputTransparent = true, false);
             }
 
-            pclTouchEffect = touchEffect;
+            currentView = touchInfo;
 
-            // Save fromPixels function
-            fromPixels = view.Context.FromPixels;
-
-            // Set event handler on View
-            view.Touch += OnTouch;
+            view.ViewAttachedToWindow += ViewAttachedToWindow;
             view.ViewDetachedFromWindow += ViewDetachedFromWindow;
+
+            if (view.IsAttachedToWindow)
+            {
+                AttachHandlers(view);
+            }
         }
 
-        private void CleanupHandlers(Android.Views.View viewToCleanup)
+        private void AttachHandlers(Android.Views.View newView)
+        {
+            if (currentView.View != newView)
+            {
+                AttachView(newView);
+                return;
+            }
+
+            var info = viewDictionary.SafeValue(newView);
+            if (info == null)
+            {
+                Debug.WriteLine("This shouldn't happen");
+            }
+
+            if (!info.EventsAttached)
+            {
+                newView.Touch += OnTouch;
+                info.EventsAttached = true;
+            }
+        }
+
+        private void DetachView(Android.Views.View viewToCleanup)
         {
             try
             {
-                if (!viewDictionary.ContainsKey(viewToCleanup))
+                if (viewToCleanup == null || !viewDictionary.ContainsKey(viewToCleanup))
                 {
                     return;
                 }
 
+                DetachHandlers(viewToCleanup);
+
                 viewDictionary.Remove(viewToCleanup);
-                viewToCleanup.Touch -= OnTouch;
+
+                viewToCleanup.ViewAttachedToWindow -= ViewAttachedToWindow;
                 viewToCleanup.ViewDetachedFromWindow -= ViewDetachedFromWindow;
+
+                currentView = null;
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
+            }
+        }
+
+        private void DetachHandlers(Android.Views.View viewToCleanup)
+        {
+            try
+            {
+                var info = viewDictionary.SafeValue(viewToCleanup);
+                if (info==null || !info.EventsAttached)
+                {
+                    return;
+                }
+
+                viewToCleanup.Touch -= OnTouch;
+                info.EventsAttached = false;
             }
             catch (Exception ex)
             {
@@ -143,6 +210,11 @@ namespace BuildIt.Forms.Controls.Droid
                 // Two object common to all the events
                 Android.Views.View senderView = sender as Android.Views.View;
                 MotionEvent motionEvent = args.Event;
+                var info = viewDictionary.SafeValue(senderView);
+                if (info == null)
+                {
+                    return;
+                }
 
                 // Get the pointer index
                 int pointerIndex = motionEvent.ActionIndex;
@@ -164,7 +236,12 @@ namespace BuildIt.Forms.Controls.Droid
 
                         idToEffectDictionary.Add(id, this);
 
-                        capture = pclTouchEffect.Capture;
+                        capture = info.Effect.Capture;
+                        if (capture)
+                        {
+                            info.View.RequestPointerCapture();
+                        }
+
                         break;
 
                     case MotionEventActions.Move:
@@ -201,6 +278,7 @@ namespace BuildIt.Forms.Controls.Droid
                     case MotionEventActions.Pointer1Up:
                         if (capture)
                         {
+                            info.View.ReleasePointerCapture();
                             FireEvent(this, id, TouchActionType.Released, screenPointerCoords, false);
                         }
                         else
@@ -219,6 +297,7 @@ namespace BuildIt.Forms.Controls.Droid
                     case MotionEventActions.Cancel:
                         if (capture)
                         {
+                            info.View.ReleasePointerCapture();
                             FireEvent(this, id, TouchActionType.Cancelled, screenPointerCoords, false);
                         }
                         else
@@ -260,7 +339,7 @@ namespace BuildIt.Forms.Controls.Droid
 
                 if (viewRect.Contains(pointerLocation))
                 {
-                    touchEffectHit = viewDictionary[view];
+                    touchEffectHit = viewDictionary.SafeValue(view)?.DroidEffect;
                 }
             }
 
@@ -282,18 +361,28 @@ namespace BuildIt.Forms.Controls.Droid
 
         private void FireEvent(TouchEffect touchEffect, int id, TouchActionType actionType, Point pointerLocation, bool isInContact)
         {
+            var current = touchEffect.currentView;
+            if (current == null)
+            {
+                return;
+            }
+
             // Get the method to call for firing events
-            Action<Element, TouchActionEventArgs> onTouchAction = touchEffect.pclTouchEffect.OnTouchAction;
+            Action<Element, TouchActionEventArgs> onTouchAction = current.Effect.OnTouchAction;
+            if (onTouchAction == null)
+            {
+                return;
+            }
 
             // Get the location of the pointer within the view
-            touchEffect.view.GetLocationOnScreen(twoIntArray);
+            current.View.GetLocationOnScreen(twoIntArray);
             double x = pointerLocation.X - twoIntArray[0];
             double y = pointerLocation.Y - twoIntArray[1];
-            Point point = new Point(fromPixels(x), fromPixels(y));
+            Point point = new Point(current.FromPixel(x), current.FromPixel(y));
 
             // Call the method
             onTouchAction(
-                touchEffect.formsElement,
+                current.Element,
                 new TouchActionEventArgs(id, actionType, point, isInContact));
         }
     }
