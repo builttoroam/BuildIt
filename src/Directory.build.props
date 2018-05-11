@@ -29,8 +29,9 @@
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsLibraryProject)' == 'true'  and '$(IsTestProject)' != 'true' ">true</GeneratePackageOnBuild>
 
   </PropertyGroup>
-  
+
   <ItemGroup Condition="'$(IsLibraryProject)' == 'true'">
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
   </ItemGroup>
 
