@@ -125,7 +125,6 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="BuildIt.General">
       <Version>1.1.0.134</Version>
@@ -134,8 +133,8 @@
       <Version>1.1.0.134</Version>
     </PackageReference>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.446417" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
