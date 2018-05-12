@@ -62,7 +62,7 @@
     </ProjectReference>
   </ItemGroup>
     <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.2"/>
+    <PackageReference Include="Autofac" Version="4.6.0"/>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32"/>
   </ItemGroup>
 

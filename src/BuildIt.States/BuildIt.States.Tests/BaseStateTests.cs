@@ -8,6 +8,7 @@ namespace BuildIt.States.Tests
         [TestInitialize]
         public void TestInit()
         {
+            var af = new Autofac.AutofacDependencyContainer(null);
             LogHelper.LogOutput = entry => Debug.Write(entry);
         }
     }
