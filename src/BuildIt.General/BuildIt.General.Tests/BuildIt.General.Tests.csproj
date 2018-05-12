@@ -40,10 +40,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BuildIt.General\BuildIt.General.csproj">
-      <Project>{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}</Project>
+      <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
       <Name>BuildIt.General</Name>
     </ProjectReference>
   </ItemGroup>
@@ -195,7 +193,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-      <Reference Include="Microsoft.ExtendedReflection, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.ExtendedReflection, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\Pex\Microsoft.ExtendedReflection.dll</HintPath>
     </Reference>
@@ -208,7 +206,7 @@
     <Reference Include="mscorlib.4.0.0.0.Fakes">
       <HintPath>FakesAssemblies\mscorlib.4.0.0.0.Fakes.dll</HintPath>
     </Reference>
-        <Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
