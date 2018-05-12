@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid80;</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81;</TargetFrameworks>
     <AssemblyName>BuildIt.Forms.Controls</AssemblyName>
     <PackageId>BuildIt.Forms.Controls</PackageId>
     <RootNamespace>BuildIt.Forms.Controls</RootNamespace>
@@ -50,7 +50,7 @@
     <Compile Include="Platform\Xamarin-common\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid81' ">
     <Compile Include="Platform\Android\**\*.cs" />
     <Compile Include="Platform\Xamarin-common\**\*.cs" />
     <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
@@ -76,5 +76,4 @@
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

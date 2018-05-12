@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;</TargetFrameworks>
     <AssemblyName>BuildIt.General</AssemblyName>
@@ -21,6 +21,7 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0.16299' ">
     <Compile Include="Platform\Uap\**\*.cs" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.4" />
   </ItemGroup>
 
 
@@ -48,7 +49,7 @@
     <Compile Include="Platform\Xamarin-common\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid81' ">
     <Compile Include="Platform\Android\**\*.cs" />
     <Compile Include="Platform\Xamarin-common\**\*.cs" />
     <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
@@ -60,9 +61,7 @@
     <PackageReference Include="Tizen.NET" Version="4.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  <ItemGroup> 
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
