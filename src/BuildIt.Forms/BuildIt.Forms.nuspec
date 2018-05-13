@@ -63,10 +63,10 @@
     <file src="BuildIt.Forms.Controls\bin\Release\Xamarin.iOS10\BuildIt.Forms.Controls.dll" target="lib\Xamarin.iOS10" />
     <file src="BuildIt.Forms.Controls\bin\Release\Xamarin.iOS10\BuildIt.Forms.Controls.pdb" target="lib\Xamarin.iOS10" />
 
-    <file src="BuildIt.Forms.Core\bin\Release\MonoAndroid80\BuildIt.Forms.Core.dll" target="lib\MonoAndroid8.0" />
-    <file src="BuildIt.Forms.Core\bin\Release\MonoAndroid80\BuildIt.Forms.Core.pdb" target="lib\MonoAndroid8.0" />
-    <file src="BuildIt.Forms.Controls\bin\Release\MonoAndroid80\BuildIt.Forms.Controls.dll" target="lib\MonoAndroid8.0" />
-    <file src="BuildIt.Forms.Controls\bin\Release\MonoAndroid80\BuildIt.Forms.Controls.pdb" target="lib\MonoAndroid8.0" />
+    <file src="BuildIt.Forms.Core\bin\Release\MonoAndroid81\BuildIt.Forms.Core.dll" target="lib\MonoAndroid8.0" />
+    <file src="BuildIt.Forms.Core\bin\Release\MonoAndroid81\BuildIt.Forms.Core.pdb" target="lib\MonoAndroid8.0" />
+    <file src="BuildIt.Forms.Controls\bin\Release\MonoAndroid81\BuildIt.Forms.Controls.dll" target="lib\MonoAndroid8.0" />
+    <file src="BuildIt.Forms.Controls\bin\Release\MonoAndroid81\BuildIt.Forms.Controls.pdb" target="lib\MonoAndroid8.0" />
 
     <file src="BuildIt.Forms.Core\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Core" exclude="BuildIt.Forms.Core\obj\**\*.cs" />
     <file src="BuildIt.Forms.Controls\**\*.cs" target="src\BuildIt.Forms\BuildIt.Forms.Controls" exclude="BuildIt.Forms.Controls\obj\**\*.cs" />
