@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="General.Samples.UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:General.Samples.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <local:StateConverter x:Key="StateConverter"/>
+    </Page.Resources>
+    <Grid DataContext="{Binding Converter={StaticResource StateConverter}}">
+        <Grid DataContext="{Binding Data}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="First Name"/>
+                <TextBlock Text="{Binding FirstName}"/>
+                <TextBlock Text="Last Name"/>
+                <TextBlock Text="{Binding LastName}"/>
+                <TextBlock Text="{Binding Child.FirstName}"/>
+                <Button Content="Bob" Click="BobClick"/>
+                <Button Content="Bob2" Click="Bob2Click"/>
+                <Button Content="Fred" Click="FredClick"/>
+                <Button Content="Mutate" Click="MutateClick"/>
+            </StackPanel>
+            <ListView Grid.Row="1" ItemsSource="{Binding People}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="AliceBlue" BorderThickness="0,0,0,2" Margin="0,8,0,0">
+                            <TextBlock Text="{Binding FirstName}"/>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>
