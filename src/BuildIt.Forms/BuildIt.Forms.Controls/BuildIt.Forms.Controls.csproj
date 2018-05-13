@@ -66,12 +66,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildIt.General" Version="1.1.0.134" />
-    <PackageReference Include="BuildIt.States" Version="1.1.0.134" />
     <PackageReference Include="Xamarin.Forms" Version="3.0.0.446417" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
+    <ProjectReference Include="..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj" />
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
