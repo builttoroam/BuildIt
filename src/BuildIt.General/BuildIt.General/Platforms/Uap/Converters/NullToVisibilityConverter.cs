@@ -5,28 +5,25 @@ using System.Windows;
 using System.Windows.Data;
 
 #else
-using Windows.UI.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuildIt.General.UI.Converters
+namespace BuildIt.UI.Converters
 {
     /// <summary>
-    /// Sample converter that exchanges whether an item has been read or not
-    /// to a font weight. Default is that if read, it will return bold.
-    /// If parameter is "invert" then if the item has not been read, it will
-    /// return bold
+    /// Converts object to visbility based on whether it's null
     /// </summary>
-    public class BoolBoldConverter : IValueConverter
+    public class NullToVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// Converts from bool to bold fontweight (if true)
+        /// Converts from entity to visibility
         /// </summary>
-        /// <param name="value">The value to convert</param>
-        /// <param name="targetType">The target type</param>
-        /// <param name="parameter">The conversion parameter</param>
-        /// <param name="language">The language to convert</param>
-        /// <returns>FontWeight</returns>
+        /// <param name="value">value to convert back</param>
+        /// <param name="targetType">the target type</param>
+        /// <param name="parameter">the conversion parameter</param>
+        /// <param name="language">the conversion language</param>
+        /// <returns>The converted value</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object Convert(object value, Type targetType, object parameter,
 #if !NETFX_CORE
@@ -36,17 +33,16 @@ namespace BuildIt.General.UI.Converters
 #endif
 #pragma warning restore SA1117 // Parameters must be on same line or separate lines
         {
-            if (value is bool boolValue)
-            {
-                // Invert if the parameter is "invert"
-                bool invert = parameter != null && parameter.ToString().ToLower() == "invert";
-                boolValue = invert ? !boolValue : boolValue;
+            var caseParameter = parameter as string;
 
-                // Determine whether to return bold or normal
-                return boolValue ? FontWeights.Bold : FontWeights.Normal;
+            bool valueExists = value != null;
+
+            if (caseParameter != null && caseParameter == "invert")
+            {
+                valueExists = !valueExists;
             }
 
-            return FontWeights.Normal;
+            return valueExists ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -64,9 +60,8 @@ namespace BuildIt.General.UI.Converters
 #else
             string language)
 #endif
-#pragma warning restore SA1117 // Parameters must be on same line or separate lines
         {
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

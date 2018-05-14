@@ -51,28 +51,4 @@ namespace General.Samples.UWP
         }
     }
 
-    public class StateConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            var type = value.GetType();
-            var gtype = type.GetInterfaces().FirstOrDefault(x => x.IsConstructedGenericType && x.GetGenericTypeDefinition() == typeof(IViewModelWithState<>));
-            if (gtype != null)
-            {
-                var appStateType = typeof(AppStateWrapper<>).MakeGenericType(gtype.GetGenericArguments());
-                return Activator.CreateInstance(appStateType, value);
-            }
-
-            return value;
-            //var appState = value as IViewModelWithState<string>;
-            //return new AppStateWrapper<string>(appState);
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            return value;
-        }
-    }
-
 }
