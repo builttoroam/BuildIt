@@ -8,12 +8,18 @@ namespace BuildIt
     /// <summary>
     /// Base implementation of INotifyPropertyChanged
     /// </summary>
-    public class NotifyBase : INotifyPropertyChanged
+    public class NotifyBase : IRaisePropertyChanged
     {
         /// <summary>
         /// Property changed event
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <inheritdoc />
+        public void RaisePropertyChanged(string propertyName)
+        {
+            OnPropertyChanged(propertyName);
+        }
 
         /// <summary>
         /// Method for invoking property changed

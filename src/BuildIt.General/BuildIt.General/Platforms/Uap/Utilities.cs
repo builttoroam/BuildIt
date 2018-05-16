@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
-namespace BuildIt.General.UI
+namespace BuildIt.UI
 {
     /// <summary>
     /// General helper class

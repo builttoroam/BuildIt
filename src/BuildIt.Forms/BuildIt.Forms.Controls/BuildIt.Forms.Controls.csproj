@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81;</TargetFrameworks>
@@ -75,5 +75,4 @@
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

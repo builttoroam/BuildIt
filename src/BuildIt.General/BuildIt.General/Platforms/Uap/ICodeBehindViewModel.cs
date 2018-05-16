@@ -1,4 +1,4 @@
-namespace BuildIt.General.UI
+namespace BuildIt.UI
 {
     /// <summary>
     /// Indicates whether the element has a view model accessed from the code behind

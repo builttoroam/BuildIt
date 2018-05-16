@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 #if !NETFX_CORE
 using System.Windows.Data;
 
 #else
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuildIt.General.UI.Converters
+namespace BuildIt.UI.Converters
 {
     /// <summary>
-    /// Converts between a bool and opacity. If true, returns 1
-    /// If false, returns 0, or the value specified as a parameter
+    /// Converts between bool to visibility
     /// </summary>
-    public class BoolOpacityConverter : IValueConverter
+    public class BoolVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// Converts from bool to opacity
+        /// Converts bool to visibility
         /// </summary>
-        /// <param name="value">The bool value</param>
-        /// <param name="targetType">The destination type</param>
-        /// <param name="parameter">The low opacity value</param>
+        /// <param name="value">Incoming bool value</param>
+        /// <param name="targetType">N/A - type ignored</param>
+        /// <param name="parameter">N/A - parameter ignored</param>
         /// <param name="language">The language to use for conversion.</param>
-        /// <returns>Opacity value (low opacity value (default = 0) or 1.0</returns>
+        /// <returns>Output visibility value</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object Convert(object value, Type targetType, object parameter,
 #if !NETFX_CORE
@@ -32,36 +33,27 @@ namespace BuildIt.General.UI.Converters
 #endif
 #pragma warning restore SA1117 // Parameters must be on same line or separate lines
         {
-            var lowopacity = 0.0;
-
-            // Convert the parameter to the low opacity value
-            if (parameter is double)
-            {
-                lowopacity = (double)parameter;
-            }
-
-            if (parameter is string)
-            {
-                double.TryParse((string)parameter, out lowopacity);
-            }
-
-            // Use the bool value to determine what the opacity value should be
             if (value is bool)
             {
-                return ((bool)value) ? 1.0 : lowopacity;
+                if (parameter + string.Empty == "invert")
+                {
+                    value = !(bool)value;
+                }
+
+                return ((bool)value) ? Visibility.Visible : Visibility.Collapsed;
             }
 
-            return 0.0;
+            return Visibility.Collapsed;
         }
 
         /// <summary>
-        /// Converts from opacity to bool
+        /// Converts visibility to bool
         /// </summary>
-        /// <param name="value">The opacity value (double)</param>
+        /// <param name="value">Incoming Visibility value</param>
         /// <param name="targetType">N/A - type ignored</param>
         /// <param name="parameter">N/A - parameter ignored</param>
         /// <param name="language">The language to use for conversion.</param>
-        /// <returns>Bool value</returns>
+        /// <returns>Output bool value</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object ConvertBack(object value, Type targetType, object parameter,
 #if !NETFX_CORE
@@ -70,9 +62,9 @@ namespace BuildIt.General.UI.Converters
             string language)
 #endif
         {
-            if (value is double)
+            if (value is Visibility)
             {
-                return ((double)value) == 1.0 ? true : false;
+                return ((Visibility)value) == Visibility.Visible ? true : false;
             }
 
             return false;

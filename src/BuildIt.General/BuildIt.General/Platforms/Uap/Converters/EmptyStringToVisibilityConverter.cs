@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 #if !NETFX_CORE
 using System.Windows.Data;
 
 #else
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuildIt.General.UI.Converters
+namespace BuildIt.UI.Converters
 {
     /// <summary>
-    /// Converts object to visbility based on whether it's null
+    /// Converter to convert string to visibility (collapsed if string is empty or null)
     /// </summary>
-    public class NullToVisibilityConverter : IValueConverter
+    public class EmptyStringToVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// Converts from entity to visibility
+        /// Returns visibile if value is not null and not empty
         /// </summary>
         /// <param name="value">value to convert back</param>
         /// <param name="targetType">the target type</param>
@@ -35,14 +33,16 @@ namespace BuildIt.General.UI.Converters
         {
             var caseParameter = parameter as string;
 
-            bool valueExists = value != null;
+            bool valueExists = string.IsNullOrWhiteSpace(value as string);
 
             if (caseParameter != null && caseParameter == "invert")
             {
                 valueExists = !valueExists;
             }
 
-            return valueExists ? Visibility.Visible : Visibility.Collapsed;
+            // Note: We take the reverse here because in most cases you want to display
+            // the item if the value exists, rather than when it doesn't
+            return (!valueExists).ToVisibility();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace BuildIt.General.UI.Converters
             string language)
 #endif
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
     }
 }
