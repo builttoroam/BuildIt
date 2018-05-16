@@ -7,7 +7,7 @@ using System.Windows.Data;
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuildIt.General.UI.Converters
+namespace BuildIt.UI.Converters
 {
     /// <summary>
     /// Converts a value to a string using a format string.

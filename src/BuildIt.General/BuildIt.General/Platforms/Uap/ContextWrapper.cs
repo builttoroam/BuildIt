@@ -1,7 +1,7 @@
 using System;
 using Windows.UI.Xaml;
 
-namespace BuildIt.General.UI
+namespace BuildIt.UI
 {
     /// <summary>
     /// Wraps data context for an element so that change events can be propagated when it changes

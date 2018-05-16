@@ -2,20 +2,19 @@
 using System.Globalization;
 #if !NETFX_CORE
 using System.Windows.Data;
-
 #else
 using Windows.UI.Xaml.Data;
 #endif
 
-namespace BuildIt.General.UI.Converters
+namespace BuildIt.UI.Converters
 {
     /// <summary>
-    /// Converter to convert string to visibility (collapsed if string is empty or null)
+    /// Converts to lower or upper case characters
     /// </summary>
-    public class EmptyStringToVisibilityConverter : IValueConverter
+    public class CaseConverter : IValueConverter
     {
         /// <summary>
-        /// Returns visibile if value is not null and not empty
+        /// Converts to upper or to lower case based on the parameter value ("upper" or "lower" or null if no conversion)
         /// </summary>
         /// <param name="value">value to convert back</param>
         /// <param name="targetType">the target type</param>
@@ -32,17 +31,20 @@ namespace BuildIt.General.UI.Converters
 #pragma warning restore SA1117 // Parameters must be on same line or separate lines
         {
             var caseParameter = parameter as string;
-
-            bool valueExists = string.IsNullOrWhiteSpace(value as string);
-
-            if (caseParameter != null && caseParameter == "invert")
+            if (caseParameter == null || value == null)
             {
-                valueExists = !valueExists;
+                return value;
             }
 
-            // Note: We take the reverse here because in most cases you want to display
-            // the item if the value exists, rather than when it doesn't
-            return (!valueExists).ToVisibility();
+            switch (caseParameter.ToLower())
+            {
+                case "upper":
+                    return value.ToString().ToUpper();
+                case "lower":
+                    return value.ToString().ToLower();
+            }
+
+            return value.ToString();
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace BuildIt.General.UI.Converters
             string language)
 #endif
         {
-            return string.Empty;
+            throw new NotImplementedException();
         }
     }
 }
