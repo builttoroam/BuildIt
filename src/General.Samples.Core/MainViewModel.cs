@@ -28,12 +28,15 @@ namespace General.Samples.Core
 
         public async void Mutate()
         {
-            while (true)
+            await Task.Run(async () =>
             {
-                await Task.Delay(100);
+                while (true)
+                {
+                    await Task.Delay(100);
 
-                Data = BuildPersonWithPeople(Data);
-            }
+                    Data = BuildPersonWithPeople(Data);
+                }
+            });
         }
 
         private Person BuildPersonWithPeople(Person state)
