@@ -62,19 +62,6 @@
       <DependentUpon>EnumExtensionsTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Factories\DictionaryFactory.cs" />
-    <Compile Include="FluentHelpersTest.AddItem.g.cs">
-      <DependentUpon>FluentHelpersTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FluentHelpersTest.cs" />
-    <Compile Include="FluentHelpersTest.Insert.g.cs">
-      <DependentUpon>FluentHelpersTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FluentHelpersTest.RemoveItem.g.cs">
-      <DependentUpon>FluentHelpersTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FluentHelpersTest.RemoveItemAt.g.cs">
-      <DependentUpon>FluentHelpersTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="LogHelperTest.cs" />
     <Compile Include="LogHelperTest.LogException.g.cs">
       <DependentUpon>LogHelperTest.cs</DependentUpon>
@@ -105,7 +92,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="ReduxHelpersTest.cs" />
+    <Compile Include="ReduxHelpersTest.DeepAdd.g.cs">
+      <DependentUpon>ReduxHelpersTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReduxHelpersTest.DeepCloneTest.g.cs">
+      <DependentUpon>ReduxHelpersTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReduxHelpersTest.DeepEntityClone.g.cs">
+      <DependentUpon>ReduxHelpersTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReduxHelpersTest.DeepInsert.g.cs">
+      <DependentUpon>ReduxHelpersTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReduxHelpersTest.DeepRemove.g.cs">
+      <DependentUpon>ReduxHelpersTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReduxHelpersTest.DeepRemoveAt.g.cs">
       <DependentUpon>ReduxHelpersTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ServiceLocation\Mocks\MockServiceLocator.cs" />
