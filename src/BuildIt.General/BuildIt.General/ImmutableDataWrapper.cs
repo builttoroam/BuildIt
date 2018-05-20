@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,8 +24,10 @@ namespace BuildIt
         /// Constru
         /// </summary>
         /// <param name="entityWithData">The entity that has a Data property to wrap</param>
-        public ImmutableDataWrapper(IHasImmutableData<TData> entityWithData)
+        /// <param name="uiContext">The UI context</param>
+        public ImmutableDataWrapper(IHasImmutableData<TData> entityWithData, IUIExecutionContext uiContext)
         {
+            ExecutionContext = uiContext;
             ChangeData(entityWithData.Data);
             entityWithData.PropertyChanged += DataPropertyChanged;
         }
@@ -44,17 +47,25 @@ namespace BuildIt
         /// </summary>
         private TData NextData { get; set; }
 
+        private IUIExecutionContext ExecutionContext { get; }
+
         /// <summary>
         /// Handles when the data property on the entity changes
         /// </summary>
         /// <param name="sender">The entity</param>
         /// <param name="e">The property that has changed</param>
-        private void DataPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void DataPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Data))
             {
-                var data = (sender as IHasImmutableData<TData>)?.Data;
-                ChangeData(data);
+                // This does check to make sure on UI thread and runs on ui thread if required
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+                await ExecutionContext.RunAsync(async () =>
+                {
+                    var data = (sender as IHasImmutableData<TData>)?.Data;
+                    ChangeData(data);
+                });
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             }
         }
 
