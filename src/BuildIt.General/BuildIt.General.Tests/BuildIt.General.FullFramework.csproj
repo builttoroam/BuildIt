@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25C1EC8C-D170-4160-A934-DC67A0093E9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BuildIt.General</RootNamespace>
+    <AssemblyName>BuildIt.General</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\BuildIt.General\BaseConfiguration.cs">
+      <Link>BaseConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\CancelEventArgs.cs">
+      <Link>CancelEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ConfigurationManager.cs">
+      <Link>ConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Constants.cs">
+      <Link>Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\DisplayNameAttribute.cs">
+      <Link>DisplayNameAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\DualParameterEventArgs.cs">
+      <Link>DualParameterEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\EnumExtensions.cs">
+      <Link>EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\FluentHelpers.cs">
+      <Link>FluentHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\HashHelper.cs">
+      <Link>HashHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\IConfigurationManager.cs">
+      <Link>IConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\IHasImmutableData.cs">
+      <Link>IHasImmutableData.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ImmutableDataWrapper.cs">
+      <Link>ImmutableDataWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\IRaisePropertyChanged.cs">
+      <Link>IRaisePropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\IRegisterForUIAccess.cs">
+      <Link>IRegisterForUIAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\IRequiresUIAccess.cs">
+      <Link>IRequiresUIAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\IUIExecutionContext.cs">
+      <Link>IUIExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\BasicLoggerService.cs">
+      <Link>Logging\BasicLoggerService.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\AndLogFilter.cs">
+      <Link>Logging\Filters\AndLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\AssemblyNameLogFilter.cs">
+      <Link>Logging\Filters\AssemblyNameLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\BaseLogFilter.cs">
+      <Link>Logging\Filters\BaseLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\EntityTypeLogFilter.cs">
+      <Link>Logging\Filters\EntityTypeLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\MessageContainsLogFilter.cs">
+      <Link>Logging\Filters\MessageContainsLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\MinimumLogLevelLogFilter.cs">
+      <Link>Logging\Filters\MinimumLogLevelLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\MultiLogFilter.cs">
+      <Link>Logging\Filters\MultiLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\NotLogFilter.cs">
+      <Link>Logging\Filters\NotLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\OrLogFilter.cs">
+      <Link>Logging\Filters\OrLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\RequiredCategoriesLogFilter.cs">
+      <Link>Logging\Filters\RequiredCategoriesLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\Filters\RequiredMetadataLogFilter.cs">
+      <Link>Logging\Filters\RequiredMetadataLogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\ILogEntry.cs">
+      <Link>Logging\ILogEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\ILogFilter.cs">
+      <Link>Logging\ILogFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\ILoggerService.cs">
+      <Link>Logging\ILoggerService.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\ITypedLogEntry.cs">
+      <Link>Logging\ITypedLogEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\LogEntry.cs">
+      <Link>Logging\LogEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\LogLevel.cs">
+      <Link>Logging\LogLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Logging\TypedLogEntry.cs">
+      <Link>Logging\TypedLogEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\LogHelper.cs">
+      <Link>LogHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\NotifyBase.cs">
+      <Link>NotifyBase.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ParameterEventArgs.cs">
+      <Link>ParameterEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ReduxHelpers.cs">
+      <Link>ReduxHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ServiceLocation\ActivationException.cs">
+      <Link>ServiceLocation\ActivationException.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ServiceLocation\IDependencyContainer.cs">
+      <Link>ServiceLocation\IDependencyContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ServiceLocation\IServiceLocator.cs">
+      <Link>ServiceLocation\IServiceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ServiceLocation\ServiceLocator.cs">
+      <Link>ServiceLocation\ServiceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ServiceLocation\ServiceLocatorImplBase.cs">
+      <Link>ServiceLocation\ServiceLocatorImplBase.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\ServiceLocation\ServiceLocatorProvider.cs">
+      <Link>ServiceLocation\ServiceLocatorProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\TripleParameterEventArgs.cs">
+      <Link>TripleParameterEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\TupleHelpers.cs">
+      <Link>TupleHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\TypeHelper.cs">
+      <Link>TypeHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\TypeRef.cs">
+      <Link>TypeRef.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\UIHelper.cs">
+      <Link>UIHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

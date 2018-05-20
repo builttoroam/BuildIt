@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Data;
 
 // ReSharper disable once CheckNamespace - Issue with Multi-targetting
@@ -26,7 +27,7 @@ namespace BuildIt.UI.Converters
             if (gtype != null)
             {
                 var appStateType = typeof(ImmutableDataWrapper<>).MakeGenericType(gtype.GetGenericArguments());
-                return Activator.CreateInstance(appStateType, value);
+                return Activator.CreateInstance(appStateType, value, new UniversalUIContext());
             }
 
             return value;
