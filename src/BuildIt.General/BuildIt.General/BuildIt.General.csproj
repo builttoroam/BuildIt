@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81;net461</TargetFrameworks>
     <AssemblyName>BuildIt.General</AssemblyName>
     <PackageId>BuildIt.General</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -13,6 +13,7 @@
   <ItemGroup>
     <Compile Remove="Platforms\**\*.cs" />
     <None Include="Platforms\**\*.cs" />
+    <Compile Remove="Resources\**\*.cs" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -42,30 +43,35 @@
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Ios\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Mac\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Tvos\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.WatchOS')) ">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Watchos\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
     <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
+    <Compile Remove="Utilities.XElement.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('tizen')) ">

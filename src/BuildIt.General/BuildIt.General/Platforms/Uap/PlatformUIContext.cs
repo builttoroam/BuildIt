@@ -9,13 +9,13 @@ namespace BuildIt.UI
     /// <summary>
     /// Implements UI abstraction
     /// </summary>
-    public class UniversalUIContext : IUIExecutionContext
+    public class PlatformUIContext : IUIExecutionContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UniversalUIContext"/> class.
+        /// Initializes a new instance of the <see cref="PlatformUIContext"/> class.
         /// </summary>
         /// <param name="dispatcher">The core dispatcher for UI actions</param>
-        public UniversalUIContext(CoreDispatcher dispatcher = null)
+        public PlatformUIContext(CoreDispatcher dispatcher = null)
         {
             Dispatcher = dispatcher ??
                 ((Window.Current == null) ? CoreApplication.MainView.CoreWindow.Dispatcher : CoreApplication.GetCurrentView().CoreWindow.Dispatcher);
