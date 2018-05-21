@@ -46,7 +46,7 @@
 
     <file src="BuildIt.General\bin\Release\monoandroid81\BuildIt.General.dll" target="lib\monoandroid81" />
     <file src="BuildIt.General\bin\Release\monoandroid81\BuildIt.General.pdb" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid810\BuildIt.General.xml" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\BuildIt.General.xml" target="lib\monoandroid81" />
 
     <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.dll" target="lib\xamarinios10" />
     <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.pdb" target="lib\xamarinios10" />
