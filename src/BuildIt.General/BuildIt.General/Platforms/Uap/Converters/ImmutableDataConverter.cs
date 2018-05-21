@@ -27,7 +27,7 @@ namespace BuildIt.UI.Converters
             if (gtype != null)
             {
                 var appStateType = typeof(ImmutableDataWrapper<>).MakeGenericType(gtype.GetGenericArguments());
-                return Activator.CreateInstance(appStateType, value, new UniversalUIContext());
+                return Activator.CreateInstance(appStateType, value, new PlatformUIContext());
             }
 
             return value;
