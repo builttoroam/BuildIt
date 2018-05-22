@@ -63,6 +63,8 @@ namespace BuildIt
 
         private static Queue<ILogEntry> LogQueue { get; } = new Queue<ILogEntry>();
 
+        private static object LogQueueLock { get; } = new object();
+
         private static AutoResetEvent LogWaiter { get; } = new AutoResetEvent(false);
 
         /// <summary>
@@ -186,7 +188,10 @@ namespace BuildIt
                     return;
                 }
 
-                LogQueue.Enqueue(log);
+                lock (LogQueueLock)
+                {
+                    LogQueue.Enqueue(log);
+                }
                 if (Interlocked.CompareExchange(ref wakeUpLock, 1, 0) == 0)
                 {
                     Task.Run(() => WakeUp());
@@ -208,7 +213,12 @@ namespace BuildIt
             {
                 while (LogQueue.Count > 0)
                 {
-                    var entry = LogQueue.Dequeue();
+
+                    ILogEntry entry;
+                    lock (LogQueueLock)
+                    {
+                        entry = LogQueue.Dequeue();
+                    }
                     if (entry == null)
                     {
                         return;
