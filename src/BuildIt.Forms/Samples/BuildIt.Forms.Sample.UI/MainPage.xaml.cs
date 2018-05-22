@@ -98,5 +98,30 @@ namespace BuildIt.Forms.Sample
         {
             VisualStateManager.GoToState(this, "ShowTab3");
         }
+        private async void ShowTab4Clicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "ShowTab4");
+        }
+
+        private void BobClick(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).LoadBob();
+        }
+        private void FredClick(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).LoadFred();
+
+        }
+
+        private void Bob2Click(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).LoadBob2();
+        }
+
+        private void MutateClick(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).Mutate();
+
+        }
     }
 }

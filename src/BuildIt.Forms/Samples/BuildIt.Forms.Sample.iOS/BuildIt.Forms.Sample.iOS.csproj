@@ -126,17 +126,19 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.134</Version>
-    </PackageReference>
-    <PackageReference Include="BuildIt.States">
-      <Version>1.1.0.134</Version>
-    </PackageReference>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.446417" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{916b2f7a-cca2-4e77-b5ad-076ecd28b657}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj">
+      <Project>{d0e72094-0768-45cb-919a-7dc41149ea9d}</Project>
+      <Name>BuildIt.States</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
       <Project>{B88241FC-7403-4AD2-989E-47D7BB5CDD76}</Project>
       <Name>BuildIt.Forms.Controls</Name>
@@ -144,6 +146,10 @@
     <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj">
       <Project>{EF038A32-FB22-46AD-8258-4A254F046C14}</Project>
       <Name>BuildIt.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuildIt.forms.Sample.Core\BuildIt.Forms.Sample.Core.csproj">
+      <Project>{6da33f48-46c7-4aa1-9089-9553029ff535}</Project>
+      <Name>BuildIt.Forms.Sample.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj">
       <Project>{3083890B-12C7-4FBE-85BC-0CCF9CB1D556}</Project>
