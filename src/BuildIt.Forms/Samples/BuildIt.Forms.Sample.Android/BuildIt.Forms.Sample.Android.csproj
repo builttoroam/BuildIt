@@ -58,7 +58,7 @@
   <ItemGroup>
     <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.446417" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2" />
@@ -91,6 +91,14 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{916b2f7a-cca2-4e77-b5ad-076ecd28b657}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj">
+      <Project>{d0e72094-0768-45cb-919a-7dc41149ea9d}</Project>
+      <Name>BuildIt.States</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
       <Project>{5f435051-e7d5-47f7-9d2f-d41041977c0c}</Project>
       <Name>BuildIt.Forms.Controls</Name>
@@ -98,6 +106,10 @@
     <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj">
       <Project>{4180a997-f8e2-427a-b0f1-e504afdefdde}</Project>
       <Name>BuildIt.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuildIt.forms.Sample.Core\BuildIt.Forms.Sample.Core.csproj">
+      <Project>{6da33f48-46c7-4aa1-9089-9553029ff535}</Project>
+      <Name>BuildIt.Forms.Sample.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuildIt.Forms.Sample.UI\BuildIt.Forms.Sample.UI.csproj">
       <Project>{f4d30225-84fc-41d4-85ac-97a6d03d2cac}</Project>

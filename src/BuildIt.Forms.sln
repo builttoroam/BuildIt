@@ -298,6 +298,7 @@ Global
 		{317705FC-D2E8-4ADB-A605-39301849F247}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{317705FC-D2E8-4ADB-A605-39301849F247}.Debug|x64.ActiveCfg = Debug|iPhone
 		{317705FC-D2E8-4ADB-A605-39301849F247}.Debug|x86.ActiveCfg = Debug|iPhone
+		{317705FC-D2E8-4ADB-A605-39301849F247}.Debug|x86.Build.0 = Debug|iPhone
 		{317705FC-D2E8-4ADB-A605-39301849F247}.Release|Any CPU.ActiveCfg = Release|iPhone
 		{317705FC-D2E8-4ADB-A605-39301849F247}.Release|ARM.ActiveCfg = Release|iPhone
 		{317705FC-D2E8-4ADB-A605-39301849F247}.Release|iPhone.ActiveCfg = Release|iPhone
