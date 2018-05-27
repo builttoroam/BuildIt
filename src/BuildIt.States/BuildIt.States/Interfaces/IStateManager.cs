@@ -17,6 +17,11 @@ namespace BuildIt.States.Interfaces
         event EventHandler GoToPreviousStateIsBlockedChanged;
 
         /// <summary>
+        /// State changed event handler across all state groups
+        /// </summary>
+        event EventHandler<DualParameterEventArgs<string, bool>> StateChanged;
+
+        /// <summary>
         /// Gets the available state groups
         /// </summary>
         IReadOnlyDictionary<string, IStateGroup> StateGroups { get; }
@@ -217,5 +222,11 @@ namespace BuildIt.States.Interfaces
         /// <param name="bothDirections">Whether updates to states should go both ways</param>
         /// <returns>Binder that can be used to disconnect the state managers</returns>
         Task<IStateBinder> Bind(IStateManager managerToBindTo, bool bothDirections = true);
+
+        /// <summary>
+        /// Forces state changed event to be triggered for all existing states
+        /// </summary>
+        /// <param name="animate">Whether to indicate if animations should be run or not</param>
+        void RefreshStates(bool animate = false);
     }
 }

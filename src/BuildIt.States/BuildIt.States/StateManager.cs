@@ -22,6 +22,11 @@ namespace BuildIt.States
         public event EventHandler GoToPreviousStateIsBlockedChanged;
 
         /// <summary>
+        /// State changed event handler across all state groups
+        /// </summary>
+        public event EventHandler<DualParameterEventArgs<string, bool>> StateChanged;
+
+        /// <summary>
         /// Gets the currently defined state groups
         /// </summary>
         public IReadOnlyDictionary<string, IStateGroup> StateGroups => stateGroups;
@@ -72,6 +77,7 @@ namespace BuildIt.States
         {
             stateGroups[group.GroupName] = group;
             group.GoToPreviousStateIsBlockedChanged += Group_IsBlockedChanged;
+            group.StateChanged += Group_StateChanged;
         }
 
         /// <summary>
@@ -345,9 +351,35 @@ namespace BuildIt.States
             return binder;
         }
 
+        /// <summary>
+        /// Forces state changed event to be triggered for all existing states
+        /// </summary>
+        /// <param name="animate">Whether to indicate if animations should be run or not</param>
+        public void RefreshStates(bool animate = false)
+        {
+            foreach (var group in StateGroups)
+            {
+                var current = group.Value?.CurrentStateName;
+                if (!string.IsNullOrWhiteSpace(current))
+                {
+                    StateChanged.SafeRaise(this, current, animate);
+                }
+            }
+        }
+
         private void Group_IsBlockedChanged(object sender, EventArgs e)
         {
             GoToPreviousStateIsBlockedChanged.SafeRaise(this);
+        }
+
+        private void Group_StateChanged(object sender, IStateEventArgs e)
+        {
+            var group = (sender as IStateGroup);
+            var current = group.CurrentStateName;
+            if (!string.IsNullOrWhiteSpace(current))
+            {
+                StateChanged.SafeRaise(this, current, true);
+            }
         }
     }
 }
