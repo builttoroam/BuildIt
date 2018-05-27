@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;uap10.0.16299</TargetFrameworks>
     <AssemblyName>BuildIt.MvvmCross</AssemblyName>
     <PackageId>BuildIt.MvvmCross</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
