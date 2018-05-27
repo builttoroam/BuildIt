@@ -1,5 +1,5 @@
-using MvvmCross.Platform.Platform;
-using MvvmCross.Plugins.File;
+using MvvmCross.Base;
+using MvvmCross.Plugin.File;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

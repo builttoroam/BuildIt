@@ -1,4 +1,4 @@
-﻿using MvvmCross.Plugins.Network.Rest;
+﻿using MvvmCross.Plugin.Network.Rest;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
