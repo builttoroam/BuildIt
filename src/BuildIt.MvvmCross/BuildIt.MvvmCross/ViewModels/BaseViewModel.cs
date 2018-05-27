@@ -4,13 +4,15 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.MvvmCross.Interfaces;
-using MvvmCross.Core.ViewModels;
+using BuildIt.States;
+using BuildIt.States.Interfaces;
+using MvvmCross.ViewModels;
 
 namespace BuildIt.MvvmCross.ViewModels
 {
-    public class BaseViewModel : MvxViewModel, IStateAndTransitions, ICanGoBack
+    public class BaseViewModel : MvxViewModel, IStateAndStoryboards, ICanGoBack
     {
-         /// <summary>
+        /// <summary>
         /// Event triggering a storyboard to run
         /// </summary>
         public event EventHandler<DualParameterEventArgs<string, Action>> RunStoryboard;
@@ -20,48 +22,26 @@ namespace BuildIt.MvvmCross.ViewModels
         /// </summary>
         public event EventHandler<ParameterEventArgs<string>> StopStoryboard;
 
-        /// <summary>
-        /// Event indicating that a control should change state
-        /// </summary>
-        public event EventHandler<DualParameterEventArgs<string, bool>> StateChanged;
+        /// <inheritdoc/>
+        public IStateManager StateManager { get; } = new StateManager();
 
-        private readonly Dictionary<string, string> currentStates = new Dictionary<string, string>();
-        public T CurrentState<T>() where T : struct
+        /// <inheritdoc/>
+        public T CurrentState<T>()
+            where T : struct
         {
-            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
-            var tvalue = current.EnumParse<T>();
-            return tvalue;
+            return StateManager.CurrentState<T>();
         }
 
-        public void ChangePageState<T>(T stateName, bool useTransitions = true) where T : struct
+        /// <inheritdoc/>
+        public void ChangePageState<T>(T stateName, bool useTransitions = true)
+            where T : struct
         {
-            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
-
-            var attrib =((Enum)(object)stateName).GetAttribute<VisualStateAttribute>();
-            string newState;
-            
-            if (attrib != null)
-            {
-                newState = attrib.VisualStateName;
-            }
-            else
-            {
-                newState = stateName.ToString();
-            }
-
-            if (string.IsNullOrWhiteSpace(current) || current != newState)
-            {
-                currentStates[typeof(T).FullName] = newState;
-                StateChanged.SafeRaise(this, newState, useTransitions);
-            }
+            StateManager.GoToState(stateName, useTransitions);
         }
 
         public void RefreshStates(bool useTransitions = false)
         {
-            foreach (var currentState in currentStates)
-            {
-                StateChanged.SafeRaise(this, currentState.Value, useTransitions);
-            }
+            StateManager.RefreshStates(useTransitions);
         }
 
 
@@ -85,7 +65,7 @@ namespace BuildIt.MvvmCross.ViewModels
         public event EventHandler ClearPreviousViews;
 
 #pragma warning disable 1998 // Async to allow for implementation
-        public async  virtual Task GoingBack(CancelEventArgs e)
+        public async virtual Task GoingBack(CancelEventArgs e)
 #pragma warning restore 1998
         {
             // Do nothing - method is here so it can be inherit
@@ -96,7 +76,7 @@ namespace BuildIt.MvvmCross.ViewModels
             ClearPreviousViews.SafeRaise(this);
         }
 
-        private ManualResetEvent waiter= new ManualResetEvent(false);
+        private ManualResetEvent waiter = new ManualResetEvent(false);
 
         public async override void Start()
         {
@@ -114,7 +94,7 @@ namespace BuildIt.MvvmCross.ViewModels
             }
 
 
-    }
+        }
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
         public virtual async Task StartAsync()
