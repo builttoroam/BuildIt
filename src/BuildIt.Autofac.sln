@@ -4,17 +4,16 @@ VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Autofac", "BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj", "{CED5AB57-F9BC-4F27-8276-D77FB854F7A0}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{F5146351-EE36-4BEC-8109-F8280C460DD2}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.Autofac\BuildIt.Autofac.nuspec = BuildIt.Autofac\BuildIt.Autofac.nuspec
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{92D97B4B-6565-4834-93AF-126327A27DBC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General", "BuildIt.General\BuildIt.General\BuildIt.General.csproj", "{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -36,9 +35,24 @@ Global
 		{CED5AB57-F9BC-4F27-8276-D77FB854F7A0}.Release|x64.Build.0 = Release|Any CPU
 		{CED5AB57-F9BC-4F27-8276-D77FB854F7A0}.Release|x86.ActiveCfg = Release|Any CPU
 		{CED5AB57-F9BC-4F27-8276-D77FB854F7A0}.Release|x86.Build.0 = Release|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Debug|x64.Build.0 = Debug|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Debug|x86.Build.0 = Debug|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Release|x64.ActiveCfg = Release|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Release|x64.Build.0 = Release|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Release|x86.ActiveCfg = Release|Any CPU
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4780F67-0587-4F0D-9BE2-9C5FCAFE203E} = {92D97B4B-6565-4834-93AF-126327A27DBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FDCA405-5E8D-4A8B-9D1B-F35DA55E8152}
