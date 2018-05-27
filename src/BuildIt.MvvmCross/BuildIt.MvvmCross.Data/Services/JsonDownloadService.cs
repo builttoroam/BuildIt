@@ -1,4 +1,4 @@
-using MvvmCross.Plugins.Network.Rest;
+using MvvmCross.Plugin.Network.Rest;
 using System.Threading.Tasks;
 
 namespace BuildIt.MvvmCross.Data.Services

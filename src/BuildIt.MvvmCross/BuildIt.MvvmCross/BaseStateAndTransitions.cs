@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using BuildIt.MvvmCross.Interfaces;
-using MvvmCross.Core.ViewModels;
+using BuildIt.States;
+using BuildIt.States.Interfaces;
+using MvvmCross.ViewModels;
 
 namespace BuildIt.MvvmCross
 {
-    public class BaseStateAndTransitions : MvxNotifyPropertyChanged,IStateAndTransitions
+    public class BaseStateAndTransitions : MvxNotifyPropertyChanged, IStateAndStoryboards
     {
         /// <summary>
         /// Event triggering a storyboard to run
@@ -17,50 +19,22 @@ namespace BuildIt.MvvmCross
         /// </summary>
         public event EventHandler<ParameterEventArgs<string>> StopStoryboard;
 
-        /// <summary>
-        /// Event indicating that a control should change state
-        /// </summary>
-        public event EventHandler<DualParameterEventArgs<string, bool>> StateChanged;
+        /// <inheritdoc/>
+        public IStateManager StateManager { get; } = new StateManager();
 
-        private readonly Dictionary<string, string> currentStates = new Dictionary<string, string>();
-        public T CurrentState<T>() where T : struct
+        /// <inheritdoc/>
+        public T CurrentState<T>()
+            where T : struct
         {
-            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
-            var tvalue = current.EnumParse<T>();
-            return tvalue;
+            return StateManager.CurrentState<T>();
         }
 
-        public void ChangePageState<T>(T stateName, bool useTransitions = true) where T : struct
+        /// <inheritdoc/>
+        public void ChangePageState<T>(T stateName, bool useTransitions = true)
+            where T : struct
         {
-            var current = currentStates.SafeValue<string, string, string>(typeof(T).FullName);
-
-            var attrib = ((Enum)(object)stateName).GetAttribute<VisualStateAttribute>();
-            string newState;
-
-            if (attrib != null)
-            {
-                newState = attrib.VisualStateName;
-            }
-            else
-            {
-                newState = stateName.ToString();
-            }
-
-            if (string.IsNullOrWhiteSpace(current) || current != newState)
-            {
-                currentStates[typeof(T).FullName] = newState;
-                StateChanged.SafeRaise(this, newState, useTransitions);
-            }
+            StateManager.GoToState(stateName, useTransitions);
         }
-
-        public void RefreshStates(bool useTransitions = false)
-        {
-            foreach (var currentState in currentStates)
-            {
-                StateChanged.SafeRaise(this, currentState.Value, useTransitions);
-            }
-        }
-
 
         /// <summary>
         /// Begins a storyboard
