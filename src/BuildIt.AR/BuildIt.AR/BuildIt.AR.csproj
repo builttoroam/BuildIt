@@ -1,36 +1,91 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81</TargetFrameworks>
     <AssemblyName>BuildIt.AR</AssemblyName>
     <PackageId>BuildIt.AR</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-  </PropertyGroup>
-
-  <Import Project="..\..\BuildIt.Shared\SharedAssemblyInfo.targets" />
-
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\BuildIt.AR.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.4\BuildIt.ARc.xml</DocumentationFile>
-    <DefineConstants>RELEASE;NETSTANDARD1_4</DefineConstants>
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
+    <RootNamespace>BuildIt.AR</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+    <Compile Remove="Platforms\**\*.cs" />
+    <None Include="Platforms\**\*.cs" />
+    <Compile Remove="Resources\**\*.cs" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <Compile Include="Platforms\Netstandard\**\*.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
+    <Compile Include="Platforms\Net\**\*.cs" />
+    <Compile Include="Platforms\Console\**\*.cs" />
+    <PackageReference Include="System.Console" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0'">
+    <Compile Include="Platforms\Shared\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
+    <Compile Include="Platforms\Windows-common\**\*.cs" />
+    <Compile Include="Platforms\Uap\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Ios\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Mac\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Tvos\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.WatchOS')) ">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Watchos\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <Compile Remove="Utilities.XElement.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <Compile Include="Platforms\Android\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
+    <Compile Remove="Utilities.XElement.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('tizen')) ">
+    <Compile Include="Platforms\Tizen\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <PackageReference Include="Tizen.NET" Version="4.0.0">
+      <ExcludeAssets>Runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NETStandard.Library" Version="2.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="*" />
   </ItemGroup>
 </Project>
 
