@@ -12,6 +12,10 @@
     <description>Helper libraries to build applications with augmented reality functionality</description>
     <copyright>Copyright © 2016</copyright>
     <tags>BuildIt</tags>
+
+    <group targetFramework="UAP10.0.16299">
+      <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.5" exclude="Build,Analyzers" />
+    </group>
   </metadata>
   <files>
     <file src="BuildIt.AR\bin\Release\netstandard1.0\BuildIt.AR.dll" target="lib\netstandard1.0"  />
