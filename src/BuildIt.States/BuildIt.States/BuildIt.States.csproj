@@ -56,7 +56,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'tizen40' ">
     <Compile Include="Platform\Tizen\**\*.cs" />
     <Compile Include="Platform\Xamarin-common\**\*.cs" />
-    <PackageReference Include="Tizen.NET" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
