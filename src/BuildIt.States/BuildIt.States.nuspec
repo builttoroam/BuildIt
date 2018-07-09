@@ -22,7 +22,7 @@
       </group>
       <group targetFramework="UAP10.0.16299">
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.0.8" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.4" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
