@@ -24,7 +24,7 @@
         <dependency id="BuildIt.States" version="BuildIt0.0.0.0" />
         <dependency id="MvvmCross" version="6.1.2" />
         <dependency id="Newtonsoft.Json" version="11.0.2" />
-        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.4" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.5" />
       </group>
     </dependencies>
   </metadata>
