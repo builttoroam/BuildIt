@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildItArSample.UWP", "Buil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.AR", "BuildIt.AR\BuildIt.AR\BuildIt.AR.csproj", "{5EEBFF53-3F5C-468F-B369-2E6C9CFB352C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspec", "Nuspec", "{F5DAC108-5A40-4617-A16D-E59A57322B9B}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.AR\BuildIt.AR.nuspec = BuildIt.AR\BuildIt.AR.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
