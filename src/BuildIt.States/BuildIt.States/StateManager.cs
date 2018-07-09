@@ -374,8 +374,8 @@ namespace BuildIt.States
 
         private void Group_StateChanged(object sender, IStateEventArgs e)
         {
-            var group = (sender as IStateGroup);
-            var current = group.CurrentStateName;
+            var group = sender as IStateGroup;
+            var current = group?.CurrentStateName;
             if (!string.IsNullOrWhiteSpace(current))
             {
                 StateChanged.SafeRaise(this, current, true);
