@@ -41,11 +41,7 @@
     <DefineConstants>$(DefineConstants);TIZEN</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0.16299' and '$(IsLibraryProject)' == 'true' ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.4" />
-  </ItemGroup>
-
-    <ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' != 'true' ">
+  <ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' != 'true' ">
     <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
     <ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' == 'true' ">
