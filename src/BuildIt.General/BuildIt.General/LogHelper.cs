@@ -192,6 +192,7 @@ namespace BuildIt
                 {
                     LogQueue.Enqueue(log);
                 }
+
                 if (Interlocked.CompareExchange(ref wakeUpLock, 1, 0) == 0)
                 {
                     Task.Run(() => WakeUp());
@@ -213,12 +214,12 @@ namespace BuildIt
             {
                 while (LogQueue.Count > 0)
                 {
-
                     ILogEntry entry;
                     lock (LogQueueLock)
                     {
                         entry = LogQueue.Dequeue();
                     }
+
                     if (entry == null)
                     {
                         return;
