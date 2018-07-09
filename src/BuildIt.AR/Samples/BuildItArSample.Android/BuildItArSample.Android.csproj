@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -79,10 +79,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildIt.AR.Android\BuildIt.AR.Android.csproj">
-      <Project>{2684ca7a-0bca-444c-a40f-78116a05c3e0}</Project>
-      <Name>BuildIt.AR.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.AR\BuildIt.AR.csproj">
       <Project>{5eebff53-3f5c-468f-b369-2e6c9cfb352c}</Project>
       <Name>BuildIt.AR</Name>
