@@ -14,7 +14,11 @@
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework="netstandard1.1">
-        <dependency id="Newtonsoft.Json" version="11.0.2" />
+        <dependency id="Newtonsoft.Json" version="11.0.2" exclude="Build,Analyzers" />
+      </group>
+
+      <group targetFramework="netstandard2.0">
+        <dependency id="Newtonsoft.Json" version="11.0.2" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
@@ -22,6 +26,10 @@
     <file src="BuildIt.Auth\bin\Release\netstandard1.1\BuildIt.Auth.dll" target="lib\netstandard1.1" />
     <file src="BuildIt.Auth\bin\Release\netstandard1.1\BuildIt.Auth.pdb" target="lib\netstandard1.1" />
     <file src="BuildIt.Auth\bin\Release\netstandard1.1\BuildIt.Auth.xml" target="lib\netstandard1.1" />
+
+    <file src="BuildIt.Auth\bin\Release\netstandard2.0\BuildIt.Auth.dll" target="lib\netstandard2.0" />
+    <file src="BuildIt.Auth\bin\Release\netstandard2.0\BuildIt.Auth.pdb" target="lib\netstandard2.0" />
+    <file src="BuildIt.Auth\bin\Release\netstandard2.0\BuildIt.Auth.xml" target="lib\netstandard2.0" />
 
     <file src="BuildIt.Auth\**\*.cs" target="src\BuildIt.Auth\BuildIt.Auth" exclude="BuildIt.Auth\obj\**\*.cs" />
   </files>
