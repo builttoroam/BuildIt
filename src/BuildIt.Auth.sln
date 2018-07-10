@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.UWP", "Build
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "BuildIt.Auth\Samples\Authentication\Authentication.csproj", "{7AA2FC31-7303-417C-82E8-D89D67A8B857}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspec", "Nuspec", "{DCC19ED7-BB62-48ED-9D4E-709D822C2E6B}"
+	ProjectSection(SolutionItems) = preProject
+		BuildIt.Auth\BuildIt.Auth.nuspec = BuildIt.Auth\BuildIt.Auth.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
