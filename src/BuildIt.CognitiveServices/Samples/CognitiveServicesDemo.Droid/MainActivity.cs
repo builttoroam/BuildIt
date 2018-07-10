@@ -6,11 +6,11 @@ using Android.OS;
 using CognitiveServicesDemo.Service.Interfaces;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Core.Views;
-using MvvmCross.Forms.Presenter.Core;
-using MvvmCross.Forms.Presenter.Droid;
 using MvvmCross.Platform;
 using Xamarin.Forms;
 using System.Linq;
+using MvvmCross.Forms.Core;
+using MvvmCross.Forms.Droid.Presenters;
 
 namespace CognitiveServicesDemo.Droid
 {
@@ -33,7 +33,7 @@ namespace CognitiveServicesDemo.Droid
             base.OnCreate(bundle);
 
             Forms.Init(this, bundle);
-            var mvxFormsApp = new MvxFormsApp();
+            var mvxFormsApp = new MvxFormsApplication();
             LoadApplication(mvxFormsApp);
 
             var presenter = Mvx.Resolve<IMvxViewPresenter>() as MvxFormsDroidPagePresenter;

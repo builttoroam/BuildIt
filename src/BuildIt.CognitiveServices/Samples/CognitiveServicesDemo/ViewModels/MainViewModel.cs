@@ -15,7 +15,6 @@ namespace CognitiveServicesDemo.ViewModels
         public IMvxCommand ShowBingSpeechCommand { get; }
         public IMvxCommand ShowBingImageSearchCommand { get; }
         public IMvxCommand ShowAcademicCommand { get; }
-        public IMvxCommand ShowVideoCommand { get; }
 
         public MainViewModel()
         {
@@ -30,7 +29,6 @@ namespace CognitiveServicesDemo.ViewModels
             ShowBingSpeechCommand = new MvxCommand(ShowBingSpeech);
             ShowBingImageSearchCommand = new MvxCommand(ShowBingImageSearch);
             ShowAcademicCommand = new MvxCommand(ShowAcademic);
-            ShowVideoCommand = new MvxCommand(ShowVideo);
         }
 
         private void ShowEmotion()
@@ -86,11 +84,6 @@ namespace CognitiveServicesDemo.ViewModels
         private void ShowAcademic()
         {
             ShowViewModel<AcademicViewModel>();
-        }
-
-        private void ShowVideo()
-        {
-            ShowViewModel<VisionVideoFacialRecognitionViewModel>();
         }
     }
 }

@@ -2,10 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wpa81</PackageTargetFallback>
     <AssemblyName>CognitiveServicesDemo</AssemblyName>
     <PackageId>CognitiveServicesDemo</PackageId>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wpa81</PackageTargetFallback>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -18,86 +17,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="CustomResultLayout.xaml" />
-    <None Remove="Views\AcademicPage.xaml" />
-    <None Remove="Views\BingImageSearchPage.xaml" />
-    <None Remove="Views\BingSpeechPage.xaml" />
-    <None Remove="Views\BingWebSearchPage.xaml" />
-    <None Remove="Views\EntityLinkingPage.xaml" />
-    <None Remove="Views\LanguageBingSpellCheckPage.xaml" />
-    <None Remove="Views\LanguageTextAnalyticsPage.xaml" />
-    <None Remove="Views\LanguageWebLanguageModelPage.xaml" />
-    <None Remove="Views\MainPage.xaml" />
-    <None Remove="Views\SearchBingAutosuggestPage.xaml" />
-    <None Remove="Views\VisionEmotionPage.xaml" />
-    <None Remove="Views\VisionFacePage.xaml" />
-    <None Remove="Views\VisionVideoFacialRecognitionPage.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="CustomResultLayout.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\AcademicPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BingImageSearchPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BingSpeechPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BingWebSearchPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\EntityLinkingPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\LanguageBingSpellCheckPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\LanguageTextAnalyticsPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\LanguageWebLanguageModelPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SearchBingAutosuggestPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\VisionEmotionPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\VisionFacePage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\VisionVideoFacialRecognitionPage.xaml">
-      <CustomToolNamespace>MSBuild:UpdateDesignTimeXaml</CustomToolNamespace>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ExifLib.PCL" Version="1.0.1" />
-    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
-    <PackageReference Include="Microsoft.ProjectOxford.Common" Version="1.0.324" />
+    <PackageReference Include="Microsoft.ProjectOxford.Common" Version="2.1.1" />
+    <PackageReference Include="Microsoft.ProjectOxford.Emotion" Version="2.0.40" />
     <PackageReference Include="Microsoft.ProjectOxford.Face.DotNetStandard" Version="1.0.0" />
-    <PackageReference Include="Microsoft.ProjectOxford.Video" Version="1.2.0" />
     <PackageReference Include="Microsoft.ProjectOxford.Vision" Version="1.0.393" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
     <PackageReference Include="MvvmCross" Version="5.0.5" />
     <PackageReference Include="MvvmCross.Core" Version="5.0.5" />
     <PackageReference Include="MvvmCross.Platform" Version="5.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Octane.Xam.VideoPlayer" Version="1.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Octane.Xam.VideoPlayer" Version="2.2.0" />
     <PackageReference Include="PCLStorage" Version="1.0.2" />
-    <PackageReference Include="Xam.Plugin.Media" Version="2.6.2.16-beta" />
-    <PackageReference Include="Xamarin.Forms" Version="2.3.4.247" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.1" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.583944" />
   </ItemGroup>
 
   <ItemGroup>

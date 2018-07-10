@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A363
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.CognitiveServices.XForms", "BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms\BuildIt.CognitiveServices.XForms.csproj", "{8B988DEF-DBE9-4C4E-9FD6-8DC9A022D722}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitiveServicesDemo", "BuildIt.CognitiveServices\Samples\CognitiveServicesDemo\CognitiveServicesDemo.csproj", "{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveServicesDemo", "BuildIt.CognitiveServices\Samples\CognitiveServicesDemo\CognitiveServicesDemo.csproj", "{72ADAAA9-F6E1-4A42-B322-4665C46E7D34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitiveServicesDemo.Droid", "BuildIt.CognitiveServices\Samples\CognitiveServicesDemo.Droid\CognitiveServicesDemo.Droid.csproj", "{A44AFD97-BEFD-4A70-B7CF-CA56CCB28824}"
 EndProject
@@ -23,12 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{9D91A171
 		BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms.nuspec = BuildIt.CognitiveServices\BuildIt.CognitiveServices.XForms.nuspec
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BuildIt.Shared", "BuildIt.Shared\BuildIt.Shared.shproj", "{CC9E2FC1-2EB0-4352-8EF1-805709B77466}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		BuildIt.Shared\BuildIt.Shared.projitems*{94bc79a7-6d56-4a50-a9e3-9b452ec3011c}*SharedItemsImports = 4
-		BuildIt.Shared\BuildIt.Shared.projitems*{cc9e2fc1-2eb0-4352-8ef1-805709b77466}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

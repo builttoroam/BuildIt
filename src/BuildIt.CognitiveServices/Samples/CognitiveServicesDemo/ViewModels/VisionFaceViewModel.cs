@@ -234,18 +234,18 @@ namespace CognitiveServicesDemo.ViewModels
                     Title = $"Adult content: {analysis.Adult.IsAdultContent}, Image infor: {analysis.Metadata.Format} + Height: {analysis.Metadata.Height} + Width: {analysis.Metadata.Width}";
                 }
 
-                using (var streamPic = file.GetStream())
-                {
-                    var picInfo = ExifReader.ReadJpeg(streamPic);
-                    var orientation = picInfo.Orientation;
-                    if ((orientation == ExifOrientation.BottomLeft || orientation == ExifOrientation.TopRight)
-                        && imageHeight < imageWidth) // Orientation is wrong?
-                    {
-                        var temp = imageHeight;
-                        imageHeight = imageWidth;
-                        imageWidth = temp;
-                    }
-                }
+                //using (var streamPic = file.GetStream())
+                //{
+                //    var picInfo = ExifReader.ReadJpeg(streamPic);
+                //    var orientation = picInfo.Orientation;
+                //    if ((orientation == ExifOrientation.BottomLeft || orientation == ExifOrientation.TopRight)
+                //        && imageHeight < imageWidth) // Orientation is wrong?
+                //    {
+                //        var temp = imageHeight;
+                //        imageHeight = imageWidth;
+                //        imageWidth = temp;
+                //    }
+                //}
 
                 ImageSource = file.Path;
                 NaturalImageWidth = imageWidth;

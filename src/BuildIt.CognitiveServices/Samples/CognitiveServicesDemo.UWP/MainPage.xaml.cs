@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Core.Views;
-using MvvmCross.Forms.Presenter.WindowsUWP;
+using MvvmCross.Forms.Uwp.Presenters;
 using MvvmCross.Platform;
 
 namespace CognitiveServicesDemo.UWP
@@ -31,7 +31,7 @@ namespace CognitiveServicesDemo.UWP
             //Start MvvmCross
             var start = Mvx.Resolve<IMvxAppStart>();
             start.Start();
-            var presenter = Mvx.Resolve<IMvxViewPresenter>() as MvxFormsWindowsUWPPagePresenter;
+            var presenter = Mvx.Resolve<IMvxViewPresenter>() as MvxFormsUwpPagePresenter;
             if (presenter != null)
             {
                 LoadApplication(presenter.MvxFormsApp);

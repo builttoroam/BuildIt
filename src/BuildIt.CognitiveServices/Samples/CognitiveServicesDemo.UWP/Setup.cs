@@ -1,11 +1,11 @@
-﻿using Windows.ApplicationModel.Activation;
-using MvvmCross.Core.ViewModels;
+﻿using MvvmCross.Core.ViewModels;
 using MvvmCross.Core.Views;
-using MvvmCross.Forms.Presenter.Core;
-using MvvmCross.Forms.Presenter.WindowsUWP;
+using MvvmCross.Forms.Core;
+using MvvmCross.Forms.Uwp.Presenters;
 using MvvmCross.Platform;
-using MvvmCross.WindowsUWP.Platform;
-using MvvmCross.WindowsUWP.Views;
+using MvvmCross.Uwp.Platform;
+using MvvmCross.Uwp.Views;
+using Windows.ApplicationModel.Activation;
 using Xamarin.Forms;
 using XamlControls = Windows.UI.Xaml.Controls;
 
@@ -27,13 +27,12 @@ namespace CognitiveServicesDemo.UWP
             return app;
         }
 
-
         protected override IMvxWindowsViewPresenter CreateViewPresenter(IMvxWindowsFrame rootFrame)
         {
             Forms.Init(launchActivatedEventArgs);
-            var app = new MvxFormsApp();
+            var app = new MvxFormsApplication();
 
-            var presenter = new MvxFormsWindowsUWPPagePresenter(rootFrame, app);
+            var presenter = new MvxFormsUwpPagePresenter(rootFrame, app);
             Mvx.RegisterSingleton<IMvxViewPresenter>(presenter);
 
             return presenter;

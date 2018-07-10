@@ -14,7 +14,6 @@
           <Label HorizontalOptions="Center" Text="Cognitive Service - Vision" />
           <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Image" Command="{Binding ShowFaceCommand}" />
-            <Button BackgroundColor="Silver" HorizontalOptions="Center" Text="Video" Command="{Binding ShowVideoCommand}" />
           </StackLayout>
         </StackLayout>
         <StackLayout>
