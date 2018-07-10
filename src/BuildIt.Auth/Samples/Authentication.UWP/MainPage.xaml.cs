@@ -17,13 +17,11 @@ namespace Authentication.UWP
 {
     public sealed partial class MainPage
     {
-        public Authentication.App FormsApp { get; }
         public MainPage()
         {
             this.InitializeComponent();
-            FormsApp = new Authentication.App();
-            LoadApplication(FormsApp);
-            
+
+            LoadApplication(new Authentication.App());
         }
     }
 }

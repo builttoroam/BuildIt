@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace Authentication
 {
@@ -29,11 +24,6 @@ namespace Authentication
         protected override void OnResume()
         {
             // Handle when your app resumes
-        }
-
-        protected override void OnAppLinkRequestReceived(Uri uri)
-        {
-            base.OnAppLinkRequestReceived(uri);
         }
     }
 }
