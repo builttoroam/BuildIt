@@ -25,6 +25,9 @@
                     <vsm:VisualState.Setters>
                         <vsm:Setter Value="true"
                                     Target="Tab1.IsVisible" />
+                        <vsm:Setter Value="true"
+                                    Element="{x:Reference CameraPreviewControl}"
+                                    Property="IsVisible" />
                     </vsm:VisualState.Setters>
                 </vsm:VisualState>
                 <vsm:VisualState Name="ShowTab2">
@@ -205,6 +208,8 @@
 
                 <StackLayout vsm:Ambient.ForeColor="Blue"
                              Margin="20">
+                    <controls:CameraPreviewControl x:Name="CameraPreviewControl"
+                                                   IsVisible="False" />
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
                                          Pressed="ContentButton_OnPressed"></controls:IconButton>
