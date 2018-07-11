@@ -10,7 +10,6 @@ using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
 using Windows.System.Display;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Xamarin.Forms;
@@ -19,7 +18,6 @@ using Application = Windows.UI.Xaml.Application;
 using FlowDirection = Windows.UI.Xaml.FlowDirection;
 using Frame = Xamarin.Forms.Frame;
 using Grid = Windows.UI.Xaml.Controls.Grid;
-using Page = Windows.UI.Xaml.Controls.Page;
 using Panel = Windows.Devices.Enumeration.Panel;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
@@ -40,7 +38,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private CaptureElement captureElement;
 
         private CameraRotationHelper rotationHelper;
-        private Page page;
         private Application app;
 
         private bool isSuspending;
@@ -109,7 +106,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 await setupTask;
             }
 
-            var wantUiActive = isActivePage && Window.Current.Visible && Element.IsVisible && !isSuspending;
+            var wantUiActive = isActivePage && Element.IsVisible && !isSuspending;
             if (isUiActive != wantUiActive)
             {
                 isUiActive = wantUiActive;
@@ -118,14 +115,11 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 {
                     if (wantUiActive)
                     {
-                        // Todo - await SetupUiAsync();
                         await InitializeCameraAsync();
                     }
                     else
                     {
                         await CleanupCameraAsync();
-
-                        // Todo - CleanupUiAsync();
                     }
                 }
 
@@ -297,14 +291,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 await SetupBasedOnStateAsync();
                 deferral.Complete();
             });
-        }
-
-        private async void OnPageUnloaded(object sender, RoutedEventArgs e)
-        {
-            app.Suspending -= OnAppSuspending;
-            app.Resuming -= OnAppResuming;
-            isActivePage = false;
-            await SetupBasedOnStateAsync();
         }
     }
 }

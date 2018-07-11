@@ -16,10 +16,5 @@ namespace BuildIt.Forms.Controls
         {
             InitializeComponent();
         }
-
-        ///// <summary>
-        ///// Gets the <see cref="Image"/> used for rendering the camera preview
-        ///// </summary>
-        //internal Image PreviewImage => CameraPreviewImage;
     }
 }
