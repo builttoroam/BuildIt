@@ -226,3 +226,4 @@ FakesAssemblies/
 /src/BuildIt.Config/Samples/BuildIt.Config.Web.Core.Sample/Properties/PublishProfiles
 /src/BuildIt.AR/Samples/BuildItArSample.Android/Resources/Resource.Designer.cs
 /src/BuildIt.Auth/Samples/Authentication.Android/Resources/Resource.designer.cs
+/src/BuildIt.Forms/Samples/BuildIt.Forms.Sample.Android/Resources/Resource.Designer.cs
