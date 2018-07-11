@@ -74,4 +74,10 @@
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="CameraPreviewControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
