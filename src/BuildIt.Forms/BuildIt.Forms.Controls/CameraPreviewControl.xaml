@@ -7,7 +7,4 @@
        BackgroundColor="Black"
        HasShadow="False"
        CornerRadius="0">
-    <!--<Image x:Name="CameraPreviewImage"
-           HorizontalOptions="Fill"
-           VerticalOptions="Fill" />-->
 </Frame>
