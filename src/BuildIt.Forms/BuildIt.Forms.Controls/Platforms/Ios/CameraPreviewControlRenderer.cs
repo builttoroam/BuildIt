@@ -4,7 +4,9 @@ using BuildIt.Forms.Controls.Platforms.Ios;
 using Foundation;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -60,7 +62,14 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 return;
             }
 
+            if (cameraPreviewControl != null)
+            {
+                cameraPreviewControl.CaptureNativeFrameToFileDelegate = null;
+            }
+
             cameraPreviewControl = cpc;
+            cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+
             SetupUserInterface();
             SetupEventHandlers();
 
@@ -120,6 +129,23 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         {
             StopCameraFeed();
             base.Dispose(disposing);
+        }
+
+        private async Task<string> CapturePhotoToFile()
+        {
+            var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
+            var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
+            var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer);
+
+            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", $"image{DateTime.Now:O}");
+            if (File.Exists(fileName))
+            {
+                // Do something else
+            }
+
+            NSError error = null;
+            jpegImage.Save(fileName, false, out error);
+            return fileName;
         }
 
         private void SetPreferredCamera()
