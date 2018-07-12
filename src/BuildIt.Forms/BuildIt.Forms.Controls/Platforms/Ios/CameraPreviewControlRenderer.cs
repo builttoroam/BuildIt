@@ -1,7 +1,6 @@
 ﻿using AVFoundation;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Ios;
-using CoreGraphics;
 using Foundation;
 using System;
 using System.ComponentModel;
@@ -27,14 +26,24 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         {
             base.LayoutSubviews();
 
-            if (liveCameraStream == null ||
-                (liveCameraStream.Frame.Width == Bounds.Width &&
-                 liveCameraStream.Frame.Height == Bounds.Height))
+            // If our bounds have changed, make sure we update all of our subviews as well
+            // (ie. when the screen rotates, or if the size of the control has changed) -RR
+            if (liveCameraStream == null)
             {
                 return;
             }
 
-            liveCameraStream.Frame = new CGRect(0f, 0f, Bounds.Width, Bounds.Height);
+            liveCameraStream.Frame = Bounds;
+
+            if (liveCameraStream.Layer?.Sublayers == null)
+            {
+                return;
+            }
+
+            foreach (var layerSublayer in liveCameraStream.Layer.Sublayers)
+            {
+                layerSublayer.Frame = liveCameraStream.Bounds;
+            }
         }
 
         /// <inheritdoc />
@@ -129,11 +138,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
         private void SetupUserInterface()
         {
-            liveCameraStream = new UIView
-            {
-                Frame = new CGRect(0f, 0f, Bounds.Width, Bounds.Height)
-            };
-
+            liveCameraStream = new UIView { Frame = Frame };
             Add(liveCameraStream);
         }
 
