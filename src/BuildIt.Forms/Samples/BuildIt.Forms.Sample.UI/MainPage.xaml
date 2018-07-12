@@ -210,6 +210,8 @@
                              Margin="20">
                     <controls:CameraPreviewControl x:Name="CameraPreviewControl"
                                                    IsVisible="False" />
+                    <Button Text="Flip Camera"
+                            Clicked="FlipCameraButton_OnClicked" />
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
                                          Pressed="ContentButton_OnPressed"></controls:IconButton>
