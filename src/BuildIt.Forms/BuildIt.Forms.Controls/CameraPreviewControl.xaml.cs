@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Threading.Tasks;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace BuildIt.Forms.Controls
@@ -24,6 +25,12 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
+        /// A delegate type used by the native renderer implementation to capture a frame of video to a file
+        /// </summary>
+        /// <returns>The path to the saved photo file</returns>
+        internal delegate Task<string> CaptureNativeFrameToFile();
+
+        /// <summary>
         /// Enumeration specifying which camera should be used
         /// </summary>
         public enum CameraPreference
@@ -46,6 +53,20 @@ namespace BuildIt.Forms.Controls
         {
             get => (CameraPreference)GetValue(PreferredCameraProperty);
             set => SetValue(PreferredCameraProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the native implementation of the frame capture method
+        /// </summary>
+        internal CaptureNativeFrameToFile CaptureNativeFrameToFileDelegate { get; set; }
+
+        /// <summary>
+        /// Captures the most current video frame to a photo and saves it to local storage
+        /// </summary>
+        /// <returns>The path to the captured photo file</returns>
+        public string CaptureFrameToFile()
+        {
+            return CaptureNativeFrameToFileDelegate?.Invoke();
         }
     }
 }

@@ -7,6 +7,7 @@ using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Android;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Context = Android.Content.Context;
@@ -79,7 +80,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 return;
             }
 
+            if (cameraPreviewControl != null)
+            {
+                cameraPreviewControl.CaptureNativeFrameToFileDelegate = null;
+            }
+
             cameraPreviewControl = cpc;
+            cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
 
             try
             {
@@ -91,6 +98,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 ex.LogError();
             }
+        }
+
+        private Task<string> CapturePhotoToFile()
+        {
+            return Task.FromResult(string.Empty);
         }
 
         /// <inheritdoc />
