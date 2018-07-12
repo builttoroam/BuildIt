@@ -23,6 +23,21 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private bool isInitialized;
 
         /// <inheritdoc />
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
+
+            if (liveCameraStream == null ||
+                (liveCameraStream.Frame.Width == Bounds.Width &&
+                 liveCameraStream.Frame.Height == Bounds.Height))
+            {
+                return;
+            }
+
+            liveCameraStream.Frame = new CGRect(0f, 0f, Bounds.Width, Bounds.Height);
+        }
+
+        /// <inheritdoc />
         protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
             base.OnElementChanged(e);
@@ -32,6 +47,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 return;
             }
 
+            SetupUserInterface();
+            SetupEventHandlers();
+
             if (!Element.IsVisible)
             {
                 return;
@@ -39,8 +57,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             try
             {
-                SetupUserInterface();
-                SetupEventHandlers();
                 SetupLiveCameraStream();
                 AuthorizeCameraUse();
                 isInitialized = true;
@@ -56,17 +72,21 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName &&
-                !isInitialized &&
-                Element.IsVisible)
+            if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
             {
                 try
                 {
-                    SetupUserInterface();
-                    SetupEventHandlers();
-                    SetupLiveCameraStream();
-                    AuthorizeCameraUse();
-                    isInitialized = true;
+                    if (!isInitialized &&
+                        Element.IsVisible)
+                    {
+                        SetupLiveCameraStream();
+                        AuthorizeCameraUse();
+                        isInitialized = true;
+                    }
+                    else if (isInitialized && !Element.IsVisible)
+                    {
+                        StopCameraFeed();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -77,6 +97,12 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
+        {
+            StopCameraFeed();
+            base.Dispose(disposing);
+        }
+
+        private void StopCameraFeed()
         {
             if (captureDeviceInput != null)
             {
@@ -98,17 +124,17 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 stillImageOutput = null;
             }
 
-            base.Dispose(disposing);
+            isInitialized = false;
         }
 
         private void SetupUserInterface()
         {
             liveCameraStream = new UIView
             {
-                Frame = new CGRect(0f, 0f, NativeView.Bounds.Width, NativeView.Bounds.Height)
+                Frame = new CGRect(0f, 0f, Bounds.Width, Bounds.Height)
             };
 
-            NativeView.Add(liveCameraStream);
+            Add(liveCameraStream);
         }
 
         private void SetupEventHandlers()
@@ -130,14 +156,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             ConfigureCameraForDevice(captureDevice);
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
-            var dictionary = new NSMutableDictionary
-            {
-                [AVVideo.CodecKey] = new NSNumber((int)AVVideoCodec.JPEG)
-            };
-
             stillImageOutput = new AVCaptureStillImageOutput
             {
-                OutputSettings = dictionary
+                OutputSettings = new NSDictionary(AVVideo.CodecKey, AVVideo.CodecJPEG)
             };
 
             captureSession.AddOutput(stillImageOutput);
