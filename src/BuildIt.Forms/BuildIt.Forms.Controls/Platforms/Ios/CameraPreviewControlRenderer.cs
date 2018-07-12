@@ -4,6 +4,7 @@ using BuildIt.Forms.Controls.Platforms.Ios;
 using Foundation;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -20,6 +21,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private UIView liveCameraStream;
 
         private bool isInitialized;
+
+        private CameraPreviewControl cameraPreviewControl;
 
         /// <inheritdoc />
         public override void LayoutSubviews()
@@ -51,11 +54,13 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         {
             base.OnElementChanged(e);
 
-            if (Element == null)
+            var cpc = Element as CameraPreviewControl;
+            if (cpc == null)
             {
                 return;
             }
 
+            cameraPreviewControl = cpc;
             SetupUserInterface();
             SetupEventHandlers();
 
@@ -102,6 +107,12 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                     ex.LogError();
                 }
             }
+
+            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName &&
+                isInitialized)
+            {
+                SetPreferredCamera();
+            }
         }
 
         /// <inheritdoc />
@@ -109,6 +120,18 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         {
             StopCameraFeed();
             base.Dispose(disposing);
+        }
+
+        private void SetPreferredCamera()
+        {
+            var device = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
+            ConfigureCameraForDevice(device);
+
+            captureSession.BeginConfiguration();
+            captureSession.RemoveInput(captureDeviceInput);
+            captureDeviceInput = AVCaptureDeviceInput.FromDevice(device);
+            captureSession.AddInput(captureDeviceInput);
+            captureSession.CommitConfiguration();
         }
 
         private void StopCameraFeed()
@@ -157,7 +180,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
 
-            var captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaType.Video);
+            var captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
             ConfigureCameraForDevice(captureDevice);
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
@@ -169,6 +192,16 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             captureSession.AddOutput(stillImageOutput);
             captureSession.AddInput(captureDeviceInput);
             captureSession.StartRunning();
+        }
+
+        private AVCaptureDevice GetCameraForPreference(CameraPreviewControl.CameraPreference cameraPreference)
+        {
+            var orientation = cameraPreference == CameraPreviewControl.CameraPreference.Back
+                ? AVCaptureDevicePosition.Back
+                : AVCaptureDevicePosition.Front;
+
+            var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaType.Video);
+            return devices.FirstOrDefault(d => d.Position == orientation) ?? devices.FirstOrDefault(d => d.Position == AVCaptureDevicePosition.Unspecified);
         }
 
         private void ConfigureCameraForDevice(AVCaptureDevice device)

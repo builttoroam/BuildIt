@@ -6,6 +6,7 @@ using Android.Widget;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Android;
 using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Context = Android.Content.Context;
@@ -26,7 +27,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private TextureView textureView;
         private SurfaceTexture surfaceTexture;
 
-        private bool flashOn;
+        private CameraPreviewControl cameraPreviewControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
@@ -72,10 +73,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             base.OnElementChanged(e);
 
-            if (Element == null)
+            var cpc = Element as CameraPreviewControl;
+            if (cpc == null)
             {
                 return;
             }
+
+            cameraPreviewControl = cpc;
 
             try
             {
@@ -86,6 +90,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             catch (Exception ex)
             {
                 ex.LogError();
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName)
+            {
+                SwitchCameraIfNecessary();
             }
         }
 
@@ -101,6 +116,30 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             view.Layout(0, 0, r - l, b - t);
         }
 
+        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraPreference cameraPreference)
+        {
+            return cameraPreference == CameraPreviewControl.CameraPreference.Back
+                ? CameraFacing.Back
+                : CameraFacing.Front;
+        }
+
+        private void SwitchCameraIfNecessary()
+        {
+            var newCameraType = ToCameraFacing(cameraPreviewControl.PreferredCamera);
+            if (newCameraType == cameraType)
+            {
+                return;
+            }
+
+            cameraType = newCameraType;
+
+            camera.StopPreview();
+            camera.Release();
+            camera = global::Android.Hardware.Camera.Open((int)cameraType);
+            camera.SetPreviewTexture(surfaceTexture);
+            PrepareAndStartCamera();
+        }
+
         private void SetupUserInterface()
         {
             activity = Context as Activity;
@@ -110,7 +149,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             view = activity.LayoutInflater.Inflate(Resource.Layout.CameraLayout, this, false);
-            cameraType = CameraFacing.Back;
+            cameraType = ToCameraFacing(cameraPreviewControl.PreferredCamera);
 
             textureView = view.FindViewById<TextureView>(Resource.Id.textureView);
             textureView.SurfaceTextureListener = this;

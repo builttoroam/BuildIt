@@ -3,6 +3,7 @@ using BuildIt.Forms.Animations;
 using BuildIt.States.Interfaces;
 using System;
 using System.Threading;
+using BuildIt.Forms.Controls;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
@@ -122,6 +123,14 @@ namespace BuildIt.Forms.Sample
         {
             (BindingContext as MainViewModel).Mutate();
 
+        }
+
+        private void FlipCameraButton_OnClicked(object sender, EventArgs e)
+        {
+            CameraPreviewControl.PreferredCamera =
+                CameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraPreference.Back
+                    ? CameraPreviewControl.CameraPreference.Front
+                    : CameraPreviewControl.CameraPreference.Back;
         }
     }
 }

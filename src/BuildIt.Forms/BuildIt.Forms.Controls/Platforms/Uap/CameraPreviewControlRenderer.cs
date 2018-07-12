@@ -49,17 +49,20 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private bool externalCamera;
         private Task setupTask = Task.CompletedTask;
 
+        private CameraPreviewControl cameraPreviewControl;
+
         /// <inheritdoc />
         protected override async void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
             base.OnElementChanged(e);
 
-            var cameraPreviewControl = Element as CameraPreviewControl;
-            if (cameraPreviewControl == null)
+            var cpc = Element as CameraPreviewControl;
+            if (cpc == null)
             {
                 return;
             }
 
+            cameraPreviewControl = cpc;
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -89,6 +92,14 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
             {
                 await SetupBasedOnStateAsync();
+            }
+
+            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName &&
+                isUiActive)
+            {
+                // restart the previewer so that it can pick up the correct camera preference
+                await CleanupCameraAsync();
+                await InitializeCameraAsync();
             }
         }
 
@@ -146,8 +157,12 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             if (mediaCapture == null)
             {
+                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraPreference.Back
+                    ? Panel.Back
+                    : Panel.Front;
+
                 // Attempt to get the back camera if one is available, but use any camera device if not
-                var cameraDevice = await FindCameraDeviceByPanelAsync(Panel.Back);
+                var cameraDevice = await FindCameraDeviceByPanelAsync(desiredPanel);
 
                 if (cameraDevice == null)
                 {
