@@ -131,21 +131,28 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             base.Dispose(disposing);
         }
 
-        private async Task<string> CapturePhotoToFile()
+        /// <summary>
+        /// Captures the current video frame to a photo file
+        /// </summary>
+        /// <returns>Path to the captured storage file</returns>
+        protected virtual async Task<string> CapturePhotoToFile()
         {
             var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
             var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
             var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer);
 
-            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", $"image{DateTime.Now:O}");
-            if (File.Exists(fileName))
+            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
+            if (!Directory.Exists(folder))
             {
-                // Do something else
+                Directory.CreateDirectory(folder);
             }
 
-            NSError error = null;
-            jpegImage.Save(fileName, false, out error);
-            return fileName;
+            var fileCount = Directory.GetFiles(folder).Length;
+            var fileName = Path.Combine(folder, $"{fileCount}.jpg");
+            File.Create(fileName).Dispose();
+
+            jpegImage.Save(fileName, false, out var error);
+            return error == null ? fileName : error.ToString();
         }
 
         private void SetPreferredCamera()
