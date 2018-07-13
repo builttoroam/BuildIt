@@ -28,7 +28,7 @@ namespace BuildIt.Forms.Controls
         /// A delegate type used by the native renderer implementation to capture a frame of video to a file
         /// </summary>
         /// <returns>The path to the saved photo file</returns>
-        internal delegate Task<string> CaptureNativeFrameToFile();
+        internal delegate Task<string> CaptureNativeFrameToFile(bool saveToPhotosLibrary);
 
         /// <summary>
         /// Enumeration specifying which camera should be used
@@ -66,7 +66,7 @@ namespace BuildIt.Forms.Controls
         /// <returns>The path to the captured photo file</returns>
         public Task<string> CaptureFrameToFile()
         {
-            return CaptureNativeFrameToFileDelegate?.Invoke();
+            return CaptureNativeFrameToFileDelegate?.Invoke(true);
         }
     }
 }
