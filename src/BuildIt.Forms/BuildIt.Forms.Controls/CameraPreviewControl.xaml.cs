@@ -64,7 +64,7 @@ namespace BuildIt.Forms.Controls
         /// Captures the most current video frame to a photo and saves it to local storage
         /// </summary>
         /// <returns>The path to the captured photo file</returns>
-        public string CaptureFrameToFile()
+        public Task<string> CaptureFrameToFile()
         {
             return CaptureNativeFrameToFileDelegate?.Invoke();
         }

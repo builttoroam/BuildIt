@@ -132,5 +132,15 @@ namespace BuildIt.Forms.Sample
                     ? CameraPreviewControl.CameraPreference.Front
                     : CameraPreviewControl.CameraPreference.Back;
         }
+
+        private async void PhotoButton_OnClicked(object sender, EventArgs e)
+        {
+            var path = await CameraPreviewControl.CaptureFrameToFile();
+            var result = await DisplayAlert("Photo Captured", path, "View Photo", "Cancel");
+            if (result)
+            {
+                await Navigation.PushModalAsync(new SavedPhotoPage(path), true);
+            }
+        }
     }
 }
