@@ -108,7 +108,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         public async Task Init()
         {
             var items = new List<ItemViewModel>();
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 2000; i++)
             {
                 var item = new ItemViewModel();
                 await item.Init();
@@ -165,7 +165,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         private ObservableCollection<Person> MutateList(ObservableCollection<Person> people)
         {
             var newPeople = people.ToList();
-            var numChanges = rnd.Next(0, 1) % 10;
+            var numChanges = rnd.Next(0, 1000) % 10;
             for (int i = 0; i < numChanges; i++)
             {
                 if (newPeople.Count == 0)
