@@ -132,10 +132,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         }
 
         /// <summary>
-        /// Captures the current video frame to a photo file
+        /// Captures the most current video frame to a photo and saves it to local storage
         /// </summary>
-        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
-        /// <returns>Path to the captured storage file</returns>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
+        /// **If Saving to Photos Library** Requires `NSPhotoLibraryUsageDescription' in info.plist</param>
+        /// <returns>The path to the saved photo file</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
