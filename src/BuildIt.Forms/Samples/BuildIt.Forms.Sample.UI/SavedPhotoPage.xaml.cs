@@ -9,6 +9,8 @@ namespace BuildIt.Forms.Sample
         public SavedPhotoPage(string photoFilePath)
         {
             InitializeComponent();
+
+            // NB: In UWP this willy only work if the image source is in the app's local storage directory. Pictures Library sources do not work :( -RR
             Image.Source = photoFilePath;
         }
 

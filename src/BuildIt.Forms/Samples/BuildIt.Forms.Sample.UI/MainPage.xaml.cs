@@ -135,7 +135,7 @@ namespace BuildIt.Forms.Sample
 
         private async void PhotoButton_OnClicked(object sender, EventArgs e)
         {
-            var path = await CameraPreviewControl.CaptureFrameToFile();
+            var path = await CameraPreviewControl.CaptureFrameToFile(true);
             var result = await DisplayAlert("Photo Captured", path, "View Photo", "Cancel");
             if (result)
             {
