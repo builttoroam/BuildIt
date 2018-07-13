@@ -212,6 +212,8 @@
                                                    IsVisible="False" />
                     <Button Text="Flip Camera"
                             Clicked="FlipCameraButton_OnClicked" />
+                    <Button Text="Take Photo"
+                            Clicked="PhotoButton_OnClicked"></Button>
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
                                          Pressed="ContentButton_OnPressed"></controls:IconButton>
