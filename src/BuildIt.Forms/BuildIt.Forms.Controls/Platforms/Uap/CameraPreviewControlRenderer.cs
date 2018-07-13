@@ -4,10 +4,17 @@ using BuildIt.Forms.Controls.Platforms.Uap.Helpers;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
+using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.Media.Capture;
+using Windows.Media.MediaProperties;
+using Windows.Storage;
+using Windows.Storage.FileProperties;
+using Windows.Storage.Streams;
 using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -63,6 +70,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             }
 
             cameraPreviewControl = cpc;
+            cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -84,6 +92,41 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             }
         }
 
+        /// <summary>
+        /// Captures the current video frame to a photo file
+        /// </summary>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
+        /// <returns>Path to the captured storage file</returns>
+        protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
+        {
+            try
+            {
+                var stream = new InMemoryRandomAccessStream();
+                await mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream);
+
+                StorageFolder captureRoot = null;
+                if (saveToPhotosLibrary)
+                {
+                    var picturesLibrary = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
+                    captureRoot = picturesLibrary.SaveFolder;
+                }
+
+                captureRoot = captureRoot ?? ApplicationData.Current.LocalFolder;
+                var captureFolder = await captureRoot.CreateFolderAsync(Path.Combine("VideoCapture", DateTime.Now.ToString("yyyy-MM-dd")), CreationCollisionOption.OpenIfExists);
+                var fileCount = (await captureFolder.GetFilesAsync()).Count;
+                var file = await captureFolder.CreateFileAsync($"{fileCount}.jpg", CreationCollisionOption.GenerateUniqueName);
+                var orientation = CameraRotationHelper.ConvertSimpleOrientationToPhotoOrientation(rotationHelper.GetCameraCaptureOrientation());
+                await ReencodeAndSavePhotoAsync(stream, file, orientation);
+
+                return file.Path;
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
+                return ex.ToString();
+            }
+        }
+
         /// <inheritdoc />
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -100,6 +143,21 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 // restart the previewer so that it can pick up the correct camera preference
                 await CleanupCameraAsync();
                 await InitializeCameraAsync();
+            }
+        }
+
+        private static async Task ReencodeAndSavePhotoAsync(IRandomAccessStream stream, StorageFile file, PhotoOrientation orientation)
+        {
+            using (var inputStream = stream)
+            {
+                var decoder = await BitmapDecoder.CreateAsync(inputStream);
+                using (var outputStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    var encoder = await BitmapEncoder.CreateForTranscodingAsync(outputStream, decoder);
+                    var properties = new BitmapPropertySet { { "System.Photo.Orientation", new BitmapTypedValue(orientation, PropertyType.UInt16) } };
+                    await encoder.BitmapProperties.SetPropertiesAsync(properties);
+                    await encoder.FlushAsync();
+                }
             }
         }
 
