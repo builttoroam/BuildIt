@@ -152,6 +152,18 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             File.Create(fileName).Dispose();
 
             jpegImage.Save(fileName, false, out var error);
+
+            if (error != null)
+            {
+                return error.ToString();
+            }
+
+            var photo = new UIImage(jpegImage);
+            photo.SaveToPhotosAlbum((img, err) =>
+            {
+                error = err;
+            });
+
             return error == null ? fileName : error.ToString();
         }
 
