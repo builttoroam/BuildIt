@@ -105,8 +105,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         /// <summary>
         /// Captures the current video frame to a photo file
         /// </summary>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
         /// <returns>Path to the captured storage file</returns>
-        protected virtual async Task<string> CapturePhotoToFile()
+        protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             camera.StopPreview();
             var image = textureView.Bitmap;
@@ -132,13 +133,16 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 fileStream.Close();
                 image.Recycle();
 
-                // Broadcasting the the file's Uri in the following intent will allow any Photo Gallery apps to incorporate
-                // the photo file into their collection -RR
-                var intent = new Intent(Intent.ActionMediaScannerScanFile);
-                var file = new Java.IO.File(filePath);
-                var uri = global::Android.Net.Uri.FromFile(file);
-                intent.SetData(uri);
-                activity.SendBroadcast(intent);
+                if (saveToPhotosLibrary)
+                {
+                    // Broadcasting the the file's Uri in the following intent will allow any Photo Gallery apps to incorporate
+                    // the photo file into their collection -RR
+                    var intent = new Intent(Intent.ActionMediaScannerScanFile);
+                    var file = new Java.IO.File(filePath);
+                    var uri = global::Android.Net.Uri.FromFile(file);
+                    intent.SetData(uri);
+                    activity.SendBroadcast(intent);
+                }
 
                 return filePath;
             }

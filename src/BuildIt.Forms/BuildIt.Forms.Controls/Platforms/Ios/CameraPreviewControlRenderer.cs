@@ -134,8 +134,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         /// <summary>
         /// Captures the current video frame to a photo file
         /// </summary>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
         /// <returns>Path to the captured storage file</returns>
-        protected virtual async Task<string> CapturePhotoToFile()
+        protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
             var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
@@ -158,11 +159,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 return error.ToString();
             }
 
-            var photo = new UIImage(jpegImage);
-            photo.SaveToPhotosAlbum((img, err) =>
+            if (saveToPhotosLibrary)
             {
-                error = err;
-            });
+                var photo = new UIImage(jpegImage);
+                photo.SaveToPhotosAlbum((img, err) => error = err);
+            }
 
             return error == null ? fileName : error.ToString();
         }
