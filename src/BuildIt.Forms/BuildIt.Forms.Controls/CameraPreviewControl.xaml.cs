@@ -6,6 +6,7 @@ namespace BuildIt.Forms.Controls
 {
     /// <summary>
     /// A simple controled inheritng from <see cref="Frame"/> which shows a live preview of the camera. Defaults to rear/first-available camera
+    /// iOS: Requires 'NSCameraUsageDescription' in your info.plist. Android: Requires 'android.permission.CAMERA' in the app manifest. UWP: Requires 'Webcam' and 'Microphone' capabilities
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CameraPreviewControl
@@ -25,9 +26,10 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// A delegate type used by the native renderer implementation to capture a frame of video to a file
+        /// A delegate type used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
-        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
+        /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
         /// <returns>The path to the saved photo file</returns>
         internal delegate Task<string> CaptureNativeFrameToFile(bool saveToPhotosLibrary);
 
@@ -62,10 +64,11 @@ namespace BuildIt.Forms.Controls
         internal CaptureNativeFrameToFile CaptureNativeFrameToFileDelegate { get; set; }
 
         /// <summary>
-        /// Captures the most current video frame to a photo and saves it to local storage
+        /// Captures the most current video frame to a photo and saves it to local storage. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
-        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
-        /// <returns>The path to the captured photo file</returns>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
+        /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
+        /// <returns>The path to the saved photo file</returns>
         public Task<string> CaptureFrameToFile(bool saveToPhotosLibrary)
         {
             return CaptureNativeFrameToFileDelegate?.Invoke(saveToPhotosLibrary);

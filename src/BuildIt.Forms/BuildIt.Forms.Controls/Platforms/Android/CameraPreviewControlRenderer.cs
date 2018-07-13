@@ -103,10 +103,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
         /// <summary>
-        /// Captures the current video frame to a photo file
+        /// Captures the most current video frame to a photo and saves it to local storage. Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
         /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
-        /// <returns>Path to the captured storage file</returns>
+        /// <returns>The path to the saved photo file</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             camera.StopPreview();
