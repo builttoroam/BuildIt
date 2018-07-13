@@ -7,7 +7,9 @@ using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Android;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
+using Android.Content;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Context = Android.Content.Context;
@@ -100,9 +102,55 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private Task<string> CapturePhotoToFile()
+        /// <summary>
+        /// Captures the current video frame to a photo file
+        /// </summary>
+        /// <returns>Path to the captured storage file</returns>
+        protected virtual async Task<string> CapturePhotoToFile()
         {
-            return Task.FromResult(string.Empty);
+            camera.StopPreview();
+            var image = textureView.Bitmap;
+
+            try
+            {
+                var absolutePath = global::Android.OS.Environment.GetExternalStoragePublicDirectory(global::Android.OS.Environment.DirectoryDcim).AbsolutePath;
+                var folderPath = System.IO.Path.Combine(absolutePath, "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
+                var fileCount = 0;
+                if (Directory.Exists(folderPath))
+                {
+                    fileCount = Directory.GetFiles(folderPath).Length;
+                }
+                else
+                {
+                    var directory = new Java.IO.File(folderPath);
+                    directory.Mkdirs();
+                }
+
+                var filePath = System.IO.Path.Combine(folderPath, $"{fileCount}.jpg");
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await image.CompressAsync(Bitmap.CompressFormat.Jpeg, 50, fileStream);
+                fileStream.Close();
+                image.Recycle();
+
+                // Broadcasting the the file's Uri in the following intent will allow any Photo Gallery apps to incorporate
+                // the photo file into their collection -RR
+                var intent = new Intent(Intent.ActionMediaScannerScanFile);
+                var file = new Java.IO.File(filePath);
+                var uri = global::Android.Net.Uri.FromFile(file);
+                intent.SetData(uri);
+                activity.SendBroadcast(intent);
+
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                ex.LogError();
+                return ex.ToString();
+            }
+            finally
+            {
+                camera.StartPreview();
+            }
         }
 
         /// <inheritdoc />
