@@ -1,5 +1,7 @@
 ﻿using BuildIt.States;
 using BuildIt.States.Interfaces;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,15 +59,15 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         {
             EnabledVisibility = !EnabledVisibility;
 
-            var j=1.0;
+            var j = 1.0;
             for (int i = 0; i < 10000; i++)
             {
-                j *= (i/10000.00);
+                j *= (i / 10000.00);
             }
 
-            await StateManager.GoToState(EnabledVisibility? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
+            await StateManager.GoToState(EnabledVisibility ? ItemStates.ItemEnabled : ItemStates.ItemDisabled, true);
         }
-}
+    }
 
     public class MainViewModel : NotifyBase, IHasStates, IHasImmutableData<Person>
     {
@@ -114,10 +116,20 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                 await item.Init();
                 items.Add(item);
             }
+
             Items.Fill(items);
             MoreItems.Fill(items);
+            // need to request runtime permissions for using the camera
+            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+            if (results.ContainsKey(Permission.Camera))
+            {
+                var status = results[Permission.Camera];
+                if(status == PermissionStatus.Granted)
+                {
+                    // permissions were granted
+                }
+            }
         }
-
 
         private Person _data;
 
