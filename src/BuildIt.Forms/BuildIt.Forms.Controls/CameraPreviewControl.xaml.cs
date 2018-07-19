@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,6 +25,8 @@ namespace BuildIt.Forms.Controls
         {
             InitializeComponent();
         }
+
+        internal Func<bool, Task> EnableAutoContinuousAutoFocus { get; set; }
 
         /// <summary>
         /// A delegate type used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
@@ -73,5 +76,7 @@ namespace BuildIt.Forms.Controls
         {
             return CaptureNativeFrameToFileDelegate?.Invoke(saveToPhotosLibrary);
         }
+
+
     }
 }
