@@ -31,6 +31,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private SurfaceTexture surfaceTexture;
 
         private CameraPreviewControl cameraPreviewControl;
+        private String defaultFocusMode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
@@ -89,6 +90,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.EnableAutoContinuousAutoFocus = EnableContinuousAutofocusAsync;
 
             try
             {
@@ -238,7 +240,32 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 camera.SetDisplayOrientation(180);
             }
 
+            var cameraParameters = camera.GetParameters();
+            defaultFocusMode = cameraParameters.FocusMode;
             camera.StartPreview();
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task<bool> EnableContinuousAutofocusAsync(bool enable)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var cameraParameters = camera.GetParameters();
+            if (enable)
+            {
+                if (cameraParameters.SupportedFocusModes != null && cameraParameters.SupportedFocusModes.Contains(global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture))
+                {
+                    cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
+                    camera.SetParameters(cameraParameters);
+                    return true;
+                }
+            }
+            else
+            {
+                cameraParameters.FocusMode = defaultFocusMode;
+                camera.SetParameters(cameraParameters);
+            }
+
+            return false;
         }
     }
 }
