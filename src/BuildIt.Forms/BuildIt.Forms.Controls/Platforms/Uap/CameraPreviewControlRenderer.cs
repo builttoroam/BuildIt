@@ -11,6 +11,7 @@ using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Media.Capture;
+using Windows.Media.Devices;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
@@ -71,6 +72,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.EnableAutoContinuousAutoFocus = EnableContinuousAutofocusAsync;
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -365,6 +367,15 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 await SetupBasedOnStateAsync();
                 deferral.Complete();
             });
+        }
+
+        private async Task EnableContinuousAutofocusAsync(bool enable)
+        {
+            var focusControl = mediaCapture.VideoDeviceController.FocusControl;
+            await focusControl.UnlockAsync();
+            var settings = new FocusSettings { Mode = enable ? FocusMode.Continuous : FocusMode.Auto, AutoFocusRange = AutoFocusRange.FullRange };
+            focusControl.Configure(settings);
+            await focusControl.FocusAsync();
         }
     }
 }
