@@ -90,7 +90,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
-            cameraPreviewControl.EnableAutoContinuousAutoFocus = EnableContinuousAutofocusAsync;
 
             try
             {
@@ -160,13 +159,18 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
         /// <inheritdoc />
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+
 
             if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName)
             {
                 SwitchCameraIfNecessary();
+            }
+            else if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
+            {
+                await EnableContinuousAutoFocusAsync(cameraPreviewControl.EnableContinuousAutoFocus);
             }
         }
 
@@ -246,7 +250,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task<bool> EnableContinuousAutofocusAsync(bool enable)
+        private async Task EnableContinuousAutoFocusAsync(bool enable)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var cameraParameters = camera.GetParameters();
@@ -256,7 +260,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 {
                     cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
                     camera.SetParameters(cameraParameters);
-                    return true;
                 }
             }
             else
@@ -264,8 +267,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameraParameters.FocusMode = defaultFocusMode;
                 camera.SetParameters(cameraParameters);
             }
-
-            return false;
         }
     }
 }

@@ -212,8 +212,10 @@
                                                    IsVisible="False" />
                     <Button Text="Flip Camera"
                             Clicked="FlipCameraButton_OnClicked" />
+                    <Button Text="Toggle continuous autofocus"
+                            Clicked="ToggleContinuousAutofocusCameraButton_Clicked" />
                     <Button Text="Take Photo"
-                            Clicked="PhotoButton_OnClicked"></Button>
+                            Clicked="PhotoButton_OnClicked" />
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
                                          Pressed="ContentButton_OnPressed"></controls:IconButton>

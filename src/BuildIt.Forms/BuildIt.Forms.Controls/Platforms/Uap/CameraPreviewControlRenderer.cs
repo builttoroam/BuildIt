@@ -72,7 +72,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
-            cameraPreviewControl.EnableAutoContinuousAutoFocus = EnableContinuousAutofocusAsync;
+
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -134,7 +134,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
             if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
             {
                 await SetupBasedOnStateAsync();
@@ -146,6 +145,11 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 // restart the previewer so that it can pick up the correct camera preference
                 await CleanupCameraAsync();
                 await InitializeCameraAsync();
+            }
+
+            if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
+            {
+                await EnableContinuousAutoFocusAsync(cameraPreviewControl.EnableContinuousAutoFocus);
             }
         }
 
@@ -369,13 +373,16 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             });
         }
 
-        private async Task EnableContinuousAutofocusAsync(bool enable)
+        private async Task EnableContinuousAutoFocusAsync(bool enable)
         {
             var focusControl = mediaCapture.VideoDeviceController.FocusControl;
-            await focusControl.UnlockAsync();
-            var settings = new FocusSettings { Mode = enable ? FocusMode.Continuous : FocusMode.Auto, AutoFocusRange = AutoFocusRange.FullRange };
-            focusControl.Configure(settings);
-            await focusControl.FocusAsync();
+            if (focusControl.SupportedFocusModes.Contains(FocusMode.Continuous))
+            {
+                await focusControl.UnlockAsync();
+                var settings = new FocusSettings { Mode = enable ? FocusMode.Continuous : FocusMode.Auto, AutoFocusRange = AutoFocusRange.FullRange };
+                focusControl.Configure(settings);
+                await focusControl.FocusAsync();
+            }
         }
     }
 }
