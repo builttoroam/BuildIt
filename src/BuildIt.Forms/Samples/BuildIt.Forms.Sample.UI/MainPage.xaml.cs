@@ -142,5 +142,10 @@ namespace BuildIt.Forms.Sample
                 await Navigation.PushModalAsync(new SavedPhotoPage(path), true);
             }
         }
+
+        private void ToggleContinuousAutofocusCameraButton_Clicked(object sender, EventArgs e)
+        {
+            CameraPreviewControl.EnableContinuousAutoFocus = !CameraPreviewControl.EnableContinuousAutoFocus;
+        }
     }
 }

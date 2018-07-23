@@ -26,6 +26,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private bool isInitialized;
 
         private CameraPreviewControl cameraPreviewControl;
+        private AVCaptureFocusMode defaultFocusMode;
 
         /// <inheritdoc />
         public override void LayoutSubviews()
@@ -70,7 +71,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
-            cameraPreviewControl.EnableAutoContinuousAutoFocus = EnableContinuousAutofocusAsync;
 
             SetupUserInterface();
             SetupEventHandlers();
@@ -123,6 +123,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 isInitialized)
             {
                 SetPreferredCamera();
+            }
+
+            if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
+            {
+                EnableContinuousAutofocus(cameraPreviewControl.EnableContinuousAutoFocus);
             }
         }
 
@@ -231,7 +236,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
 
             captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
-            System.Diagnostics.Debug.WriteLine($"focus mode {captureDevice.FocusMode}");
+            
             ConfigureCameraForDevice();
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
@@ -287,11 +292,14 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-        private async Task EnableContinuousAutofocusAsync(bool enable)
+        private void EnableContinuousAutofocus(bool enable)
         {
-            captureDevice.LockForConfiguration(out NSError error);
-            captureDevice.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
-            captureDevice.UnlockForConfiguration();
+            if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
+            {
+                captureDevice.LockForConfiguration(out NSError error);
+                captureDevice.FocusMode = enable ? AVCaptureFocusMode.ContinuousAutoFocus : AVCaptureFocusMode.AutoFocus;
+                captureDevice.UnlockForConfiguration();
+            }
         }
     }
 }

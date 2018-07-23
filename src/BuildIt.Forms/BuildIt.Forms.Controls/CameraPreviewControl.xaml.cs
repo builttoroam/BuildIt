@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +17,9 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty PreferredCameraProperty =
             BindableProperty.Create(nameof(PreferredCamera), typeof(CameraPreference), typeof(CameraPreviewControl), CameraPreference.Back);
 
+        public static readonly BindableProperty EnableContinuousAutoFocusProperty =
+            BindableProperty.Create(nameof(EnableContinuousAutoFocus), typeof(bool), typeof(CameraPreviewControl), false);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControl"/> class.
         /// </summary>
@@ -25,8 +27,6 @@ namespace BuildIt.Forms.Controls
         {
             InitializeComponent();
         }
-
-        internal Func<bool, Task> EnableAutoContinuousAutoFocus { get; set; }
 
         /// <summary>
         /// A delegate type used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
@@ -59,6 +59,12 @@ namespace BuildIt.Forms.Controls
         {
             get => (CameraPreference)GetValue(PreferredCameraProperty);
             set => SetValue(PreferredCameraProperty, value);
+        }
+
+        public bool EnableContinuousAutoFocus
+        {
+            get => (bool)GetValue(EnableContinuousAutoFocusProperty);
+            set => SetValue(EnableContinuousAutoFocusProperty, value);
         }
 
         /// <summary>
