@@ -124,7 +124,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             if (results.ContainsKey(Permission.Camera))
             {
                 var status = results[Permission.Camera];
-                if(status == PermissionStatus.Granted)
+                if (status == PermissionStatus.Granted)
                 {
                     // permissions were granted
                 }
