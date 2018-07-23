@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -35,6 +37,8 @@ namespace BuildIt.Forms.Controls
         /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
         /// <returns>The path to the saved photo file</returns>
         internal delegate Task<string> CaptureNativeFrameToFile(bool saveToPhotosLibrary);
+
+        internal Func<IList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
         /// Enumeration specifying which camera should be used
@@ -81,6 +85,11 @@ namespace BuildIt.Forms.Controls
         public Task<string> CaptureFrameToFile(bool saveToPhotosLibrary)
         {
             return CaptureNativeFrameToFileDelegate?.Invoke(saveToPhotosLibrary);
+        }
+
+        public IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        {
+            return RetrieveSupportedFocusModesFunc();
         }
     }
 }

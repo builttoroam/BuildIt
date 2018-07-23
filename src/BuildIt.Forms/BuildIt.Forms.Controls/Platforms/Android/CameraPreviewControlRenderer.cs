@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.Hardware;
 using Android.Views;
@@ -6,10 +7,10 @@ using Android.Widget;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Android;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
-using Android.Content;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Context = Android.Content.Context;
@@ -31,7 +32,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private SurfaceTexture surfaceTexture;
 
         private CameraPreviewControl cameraPreviewControl;
-        private String defaultFocusMode;
+        private string defaultFocusMode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
@@ -90,6 +91,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
 
             try
             {
@@ -159,10 +161,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
         /// <inheritdoc />
-        protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
 
             if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName)
             {
@@ -170,7 +171,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             else if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
             {
-                await EnableContinuousAutoFocusAsync(cameraPreviewControl.EnableContinuousAutoFocus);
+                EnableContinuousAutoFocus(cameraPreviewControl.EnableContinuousAutoFocus);
             }
         }
 
@@ -249,9 +250,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             camera.StartPreview();
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task EnableContinuousAutoFocusAsync(bool enable)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        private void EnableContinuousAutoFocus(bool enable)
         {
             var cameraParameters = camera.GetParameters();
             if (enable)
@@ -267,6 +266,33 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameraParameters.FocusMode = defaultFocusMode;
                 camera.SetParameters(cameraParameters);
             }
+        }
+
+        private IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        {
+            var supportedFocusModes = new List<CameraFocusMode>();
+            var cameraParameters = camera.GetParameters();
+            if (cameraParameters != null)
+            {
+                foreach (var supportedFocusMode in cameraParameters.SupportedFocusModes)
+                {
+                    switch (supportedFocusMode)
+                    {
+                        case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
+                            supportedFocusModes.Add(CameraFocusMode.Auto);
+                            break;
+
+                        case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
+                            supportedFocusModes.Add(CameraFocusMode.Continuous);
+                            break;
+                    }
+                }
+            }
+
+            // manual focus isn't a mode exposed by Android with the old Camera API but achieved through
+            // various method calls so should work
+            supportedFocusModes.Add(CameraFocusMode.Manual);
+            return supportedFocusModes;
         }
     }
 }

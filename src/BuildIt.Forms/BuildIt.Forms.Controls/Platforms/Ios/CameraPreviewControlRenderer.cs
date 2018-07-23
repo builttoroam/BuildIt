@@ -3,6 +3,7 @@ using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Ios;
 using Foundation;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -22,11 +23,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private AVCaptureDevice captureDevice;
         private AVCaptureStillImageOutput stillImageOutput;
         private UIView liveCameraStream;
-
         private bool isInitialized;
-
         private CameraPreviewControl cameraPreviewControl;
-        private AVCaptureFocusMode defaultFocusMode;
 
         /// <inheritdoc />
         public override void LayoutSubviews()
@@ -71,6 +69,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
 
             SetupUserInterface();
             SetupEventHandlers();
@@ -236,7 +235,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
 
             captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
-            
+
             ConfigureCameraForDevice();
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
@@ -300,6 +299,27 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 captureDevice.FocusMode = enable ? AVCaptureFocusMode.ContinuousAutoFocus : AVCaptureFocusMode.AutoFocus;
                 captureDevice.UnlockForConfiguration();
             }
+        }
+
+        private IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        {
+            var supportedFocusModes = new List<CameraFocusMode>();
+            if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.AutoFocus))
+            {
+                supportedFocusModes.Add(CameraFocusMode.Auto);
+            }
+
+            if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
+            {
+                supportedFocusModes.Add(CameraFocusMode.Continuous);
+            }
+
+            if (captureDevice.FocusPointOfInterestSupported)
+            {
+                supportedFocusModes.Add(CameraFocusMode.Manual);
+            }
+
+            return supportedFocusModes;
         }
     }
 }
