@@ -76,7 +76,5 @@ namespace BuildIt.Forms.Controls
         {
             return CaptureNativeFrameToFileDelegate?.Invoke(saveToPhotosLibrary);
         }
-
-
     }
 }

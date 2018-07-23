@@ -19,6 +19,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
     {
         private AVCaptureSession captureSession;
         private AVCaptureDeviceInput captureDeviceInput;
+        private AVCaptureDevice captureDevice;
         private AVCaptureStillImageOutput stillImageOutput;
         private UIView liveCameraStream;
 
@@ -69,6 +70,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.EnableAutoContinuousAutoFocus = EnableContinuousAutofocusAsync;
 
             SetupUserInterface();
             SetupEventHandlers();
@@ -171,12 +173,13 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
         private void SetPreferredCamera()
         {
-            var device = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
-            ConfigureCameraForDevice(device);
+            captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
+            System.Diagnostics.Debug.WriteLine($"focus mode {captureDevice.FocusMode}");
+            ConfigureCameraForDevice();
 
             captureSession.BeginConfiguration();
             captureSession.RemoveInput(captureDeviceInput);
-            captureDeviceInput = AVCaptureDeviceInput.FromDevice(device);
+            captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
             captureSession.AddInput(captureDeviceInput);
             captureSession.CommitConfiguration();
         }
@@ -227,8 +230,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
 
-            var captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
-            ConfigureCameraForDevice(captureDevice);
+            captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
+            System.Diagnostics.Debug.WriteLine($"focus mode {captureDevice.FocusMode}");
+            ConfigureCameraForDevice();
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
             stillImageOutput = new AVCaptureStillImageOutput
@@ -251,26 +255,26 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             return devices.FirstOrDefault(d => d.Position == orientation) ?? devices.FirstOrDefault(d => d.Position == AVCaptureDevicePosition.Unspecified);
         }
 
-        private void ConfigureCameraForDevice(AVCaptureDevice device)
+        private void ConfigureCameraForDevice()
         {
             var error = new NSError();
-            if (device.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
+            if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
             {
-                device.LockForConfiguration(out error);
-                device.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
-                device.UnlockForConfiguration();
+                captureDevice.LockForConfiguration(out error);
+                captureDevice.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
+                captureDevice.UnlockForConfiguration();
             }
-            else if (device.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
+            else if (captureDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
             {
-                device.LockForConfiguration(out error);
-                device.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
-                device.UnlockForConfiguration();
+                captureDevice.LockForConfiguration(out error);
+                captureDevice.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
+                captureDevice.UnlockForConfiguration();
             }
-            else if (device.IsWhiteBalanceModeSupported(AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance))
+            else if (captureDevice.IsWhiteBalanceModeSupported(AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance))
             {
-                device.LockForConfiguration(out error);
-                device.WhiteBalanceMode = AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance;
-                device.UnlockForConfiguration();
+                captureDevice.LockForConfiguration(out error);
+                captureDevice.WhiteBalanceMode = AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance;
+                captureDevice.UnlockForConfiguration();
             }
         }
 
@@ -281,6 +285,13 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             {
                 await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVMediaType.Video);
             }
+        }
+
+        private async Task EnableContinuousAutofocusAsync(bool enable)
+        {
+            captureDevice.LockForConfiguration(out NSError error);
+            captureDevice.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
+            captureDevice.UnlockForConfiguration();
         }
     }
 }
