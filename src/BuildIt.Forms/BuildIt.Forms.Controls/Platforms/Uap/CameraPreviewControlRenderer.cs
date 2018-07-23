@@ -2,6 +2,7 @@
 using BuildIt.Forms.Controls.Platforms.Uap;
 using BuildIt.Forms.Controls.Platforms.Uap.Helpers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -72,7 +73,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
-
+            cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -383,6 +384,31 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 focusControl.Configure(settings);
                 await focusControl.FocusAsync();
             }
+        }
+
+        private IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        {
+            var supportedFocusModes = new List<CameraFocusMode>();
+            foreach (var supportedFocusMode in mediaCapture.VideoDeviceController.FocusControl.SupportedFocusModes)
+            {
+                switch (supportedFocusMode)
+                {
+                    case FocusMode.Auto:
+                        supportedFocusModes.Add(CameraFocusMode.Auto);
+                        break;
+                    case FocusMode.Single:
+                        // Not supported in other platforms so leave it out
+                        break;
+                    case FocusMode.Continuous:
+                        supportedFocusModes.Add(CameraFocusMode.Continuous);
+                        break;
+                    case FocusMode.Manual:
+                        supportedFocusModes.Add(CameraFocusMode.Manual);
+                        break;
+                }
+            }
+
+            return supportedFocusModes;
         }
     }
 }
