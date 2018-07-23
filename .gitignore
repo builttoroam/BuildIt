@@ -204,6 +204,9 @@ FakesAssemblies/
 /src/Samples/StateByState/StateByState.XForms/Droid/StateByState.XForms.Droid.csproj.bak
 /src/**/lib
 
+# Coderush
+.cr/
+
 # Visual Studio project file backups
 *.csproj.bak
 *.nuget.props
