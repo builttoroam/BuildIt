@@ -21,7 +21,6 @@ namespace BuildIt.Forms.Sample.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
             base.OnCreate(bundle);
-
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
