@@ -147,5 +147,11 @@ namespace BuildIt.Forms.Sample
         {
             CameraPreviewControl.EnableContinuousAutoFocus = !CameraPreviewControl.EnableContinuousAutoFocus;
         }
+
+        private void GetSupportedFocusModesButton_Clicked(object sender, EventArgs e)
+        {
+            var supportedFocusModes = CameraPreviewControl.RetrieveSupportedFocusModes();
+            SupportedFocusModesLabel.Text = string.Join(", ", supportedFocusModes);
+        }
     }
 }
