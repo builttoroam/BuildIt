@@ -189,6 +189,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 : CameraFacing.Front;
         }
 
+        private static CameraPreviewControl.CameraPreference ToCameraPreference(CameraFacing cameraFacing)
+        {
+            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraPreference.Back : CameraPreviewControl.CameraPreference.Front;
+        }
+
         private void SwitchCameraIfNecessary()
         {
             var newCameraType = ToCameraFacing(cameraPreviewControl.PreferredCamera);
@@ -288,6 +293,25 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             // various method calls so should work
             supportedFocusModes.Add(CameraFocusMode.Manual);
             return supportedFocusModes;
+        }
+
+        private IReadOnlyList<CameraPreviewControl.CameraPreference> RetrieveSupportedCameraFacings()
+        {
+            var supportedCameraFacings = new List<CameraPreviewControl.CameraPreference>();
+            for (var i = 0; i < global::Android.Hardware.Camera.NumberOfCameras; i++)
+            {
+                var cameraInfo = new global::Android.Hardware.Camera.CameraInfo();
+                global::Android.Hardware.Camera.GetCameraInfo(i, cameraInfo);
+                var cameraPreference = ToCameraPreference(cameraInfo.Facing);
+                if (supportedCameraFacings.Contains(cameraPreference))
+                {
+                    continue;
+                }
+
+                supportedCameraFacings.Add(cameraPreference);
+            }
+
+            return supportedCameraFacings;
         }
     }
 }
