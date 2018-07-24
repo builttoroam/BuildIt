@@ -176,6 +176,21 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
         }
 
+        private static CameraPreviewControl.CameraFacing ToCameraPreference(Panel panel)
+        {
+            switch (panel)
+            {
+                case Panel.Front:
+                    return CameraPreviewControl.CameraFacing.Front;
+
+                case Panel.Back:
+                    return CameraPreviewControl.CameraFacing.Back;
+
+                default:
+                    return CameraPreviewControl.CameraFacing.Unspecified;
+            }
+        }
+
         private async Task SetupBasedOnStateAsync()
         {
             while (!setupTask.IsCompleted)
@@ -223,7 +238,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             if (mediaCapture == null)
             {
-                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraPreference.Back
+                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraFacing.Back
                     ? Panel.Back
                     : Panel.Front;
 
@@ -396,12 +411,16 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     case FocusMode.Auto:
                         supportedFocusModes.Add(CameraFocusMode.Auto);
                         break;
+
                     case FocusMode.Single:
+
                         // Not supported in other platforms so leave it out
                         break;
+
                     case FocusMode.Continuous:
                         supportedFocusModes.Add(CameraFocusMode.Continuous);
                         break;
+
                     case FocusMode.Manual:
                         supportedFocusModes.Add(CameraFocusMode.Manual);
                         break;
@@ -409,6 +428,24 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             }
 
             return supportedFocusModes;
+        }
+
+        private async Task<IReadOnlyList<CameraPreviewControl.CameraFacing>> RetrieveSupportedCameraFacingsAsync()
+        {
+            var supportedCameraFacings = new List<CameraPreviewControl.CameraFacing>();
+            var videoDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
+            foreach (var videoDevice in videoDevices)
+            {
+                var cameraFacing = ToCameraPreference(videoDevice.EnclosureLocation.Panel);
+                if (supportedCameraFacings.Contains(cameraFacing))
+                {
+                    continue;
+                }
+
+                supportedCameraFacings.Add(cameraFacing);
+            }
+
+            return supportedCameraFacings;
         }
     }
 }

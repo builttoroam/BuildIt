@@ -182,16 +182,16 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             view.Layout(0, 0, r - l, b - t);
         }
 
-        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraPreference cameraPreference)
+        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraFacing cameraPreference)
         {
-            return cameraPreference == CameraPreviewControl.CameraPreference.Back
+            return cameraPreference == CameraPreviewControl.CameraFacing.Back
                 ? CameraFacing.Back
                 : CameraFacing.Front;
         }
 
-        private static CameraPreviewControl.CameraPreference ToCameraPreference(CameraFacing cameraFacing)
+        private static CameraPreviewControl.CameraFacing ToCameraPreference(CameraFacing cameraFacing)
         {
-            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraPreference.Back : CameraPreviewControl.CameraPreference.Front;
+            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
         }
 
         private void SwitchCameraIfNecessary()
@@ -295,9 +295,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             return supportedFocusModes;
         }
 
-        private IReadOnlyList<CameraPreviewControl.CameraPreference> RetrieveSupportedCameraFacings()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task<IReadOnlyList<CameraPreviewControl.CameraFacing>> RetrieveSupportedCameraFacingsAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            var supportedCameraFacings = new List<CameraPreviewControl.CameraPreference>();
+            var supportedCameraFacings = new List<CameraPreviewControl.CameraFacing>();
             for (var i = 0; i < global::Android.Hardware.Camera.NumberOfCameras; i++)
             {
                 var cameraInfo = new global::Android.Hardware.Camera.CameraInfo();

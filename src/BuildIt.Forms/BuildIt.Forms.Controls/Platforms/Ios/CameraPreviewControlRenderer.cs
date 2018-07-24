@@ -26,6 +26,21 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private bool isInitialized;
         private CameraPreviewControl cameraPreviewControl;
 
+        private static CameraPreviewControl.CameraFacing ToCameraPreference(AVCaptureDevicePosition position)
+        {
+            switch (position)
+            {
+                case AVCaptureDevicePosition.Back:
+                    return CameraPreviewControl.CameraFacing.Back;
+
+                case AVCaptureDevicePosition.Front:
+                    return CameraPreviewControl.CameraFacing.Front;
+
+                default:
+                    return CameraPreviewControl.CameraFacing.Unspecified;
+            }
+        }
+
         /// <inheritdoc />
         public override void LayoutSubviews()
         {
@@ -243,9 +258,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             captureSession.StartRunning();
         }
 
-        private AVCaptureDevice GetCameraForPreference(CameraPreviewControl.CameraPreference cameraPreference)
+        private AVCaptureDevice GetCameraForPreference(CameraPreviewControl.CameraFacing cameraPreference)
         {
-            var orientation = cameraPreference == CameraPreviewControl.CameraPreference.Back
+            var orientation = cameraPreference == CameraPreviewControl.CameraFacing.Back
                 ? AVCaptureDevicePosition.Back
                 : AVCaptureDevicePosition.Front;
 
@@ -316,17 +331,26 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             return supportedFocusModes;
         }
 
-        private IReadOnlyList<CameraPreviewControl.CameraPreference> RetrieveSupportedCameraFacings()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task<IReadOnlyList<CameraPreviewControl.CameraFacing>> RetrieveSupportedCameraFacingsAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            var supportedCameraFacings = new List<CameraPreviewControl.CameraPreference>();
+            var supportedCameraFacings = new List<CameraPreviewControl.CameraFacing>();
             var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaType.Video);
             if (devices != null)
             {
-                foreach(var device in devices)
+                foreach (var device in devices)
                 {
-                    
+                    var cameraFacing = ToCameraPreference(device.Position);
+                    if (supportedCameraFacings.Contains(cameraFacing))
+                    {
+                        continue;
+                    }
+
+                    supportedCameraFacings.Add(cameraFacing);
                 }
             }
+
             return supportedCameraFacings;
         }
     }
