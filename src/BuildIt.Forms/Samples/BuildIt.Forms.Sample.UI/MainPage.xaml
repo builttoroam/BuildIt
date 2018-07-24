@@ -217,7 +217,7 @@
                     <Button Text="Take Photo"
                             Clicked="PhotoButton_OnClicked" />
                     <Button Text="Get supported focus modes"
-                            Clicked="GetSupportedFocusModesButton_Clicked" />
+                            Clicked="RetrieveSupportedFocusModesButton_Clicked" />
                     <Label x:Name="SupportedFocusModesLabel" />
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
