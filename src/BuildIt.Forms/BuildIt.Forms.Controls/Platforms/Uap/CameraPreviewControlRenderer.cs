@@ -450,5 +450,17 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
             return cameras;
         }
+
+        private async Task FocusAsync()
+        {
+            var focusControl = mediaCapture.VideoDeviceController.FocusControl;
+            // lock in case continuous auto-focus was switched on before
+            await focusControl.LockAsync();
+            var focusRange = focusControl.SupportedFocusRanges.Contains(AutoFocusRange.FullRange) ? AutoFocusRange.FullRange : focusControl.SupportedFocusRanges.FirstOrDefault();
+            var focusMode = focusControl.SupportedFocusModes.Contains(FocusMode.Single) ? FocusMode.Single : focusControl.SupportedFocusModes.FirstOrDefault();
+            var settings = new FocusSettings { Mode = focusMode, AutoFocusRange = focusRange };
+            focusControl.Configure(settings);
+            await focusControl.FocusAsync();
+        }
     }
 }

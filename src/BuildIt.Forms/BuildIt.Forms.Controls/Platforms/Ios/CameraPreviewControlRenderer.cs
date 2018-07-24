@@ -352,5 +352,14 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             return cameras;
         }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task FocusAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            captureDevice.LockForConfiguration(out NSError error);
+            captureDevice.FocusMode = AVCaptureFocusMode.AutoFocus;
+            captureDevice.UnlockForConfiguration();
+        }
     }
 }

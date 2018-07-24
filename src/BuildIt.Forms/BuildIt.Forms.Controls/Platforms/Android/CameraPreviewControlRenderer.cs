@@ -21,7 +21,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     /// <summary>
     /// Custom Renderer for <see cref="CameraPreviewControl"/>
     /// </summary>
-    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener
+    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, global::Android.Hardware.Camera.IAutoFocusCallback
     {
         private global::Android.Hardware.Camera camera;
         private global::Android.Views.View view;
@@ -309,6 +309,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             return cameras;
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task FocusAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            camera.AutoFocus(this);
+        }
+
+        /// <summary>
+        /// Autofocus callback
+        /// </summary>
+        /// <param name="success"></param>
+        /// <param name="camera"></param>
+        public void OnAutoFocus(bool success, global::Android.Hardware.Camera camera)
+        {
         }
     }
 }
