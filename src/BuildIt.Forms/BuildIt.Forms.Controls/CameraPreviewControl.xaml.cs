@@ -17,7 +17,7 @@ namespace BuildIt.Forms.Controls
         /// Informs the previewer as to which camera on the device should be used (if available)
         /// </summary>
         public static readonly BindableProperty PreferredCameraProperty =
-            BindableProperty.Create(nameof(PreferredCamera), typeof(CameraPreference), typeof(CameraPreviewControl), CameraPreference.Back);
+            BindableProperty.Create(nameof(PreferredCamera), typeof(CameraFacing), typeof(CameraPreviewControl), CameraFacing.Back);
 
         /// <summary>
         /// Toggles enabling continuous autofocus
@@ -34,17 +34,22 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Enumeration specifying which camera should be used
+        /// Enumeration the available camera facings/positions
         /// </summary>
-        public enum CameraPreference
+        public enum CameraFacing
         {
             /// <summary>
-            /// Prefer the camera located on the back of the device enclosure
+            /// An unspecified camera facing
+            /// </summary>
+            Unspecified,
+
+            /// <summary>
+            /// The camera located on the back of the device enclosure
             /// </summary>
             Back,
 
             /// <summary>
-            /// Prefer the front-facing camera
+            /// The front-facing camera
             /// </summary>
             Front
         }
@@ -52,9 +57,9 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Gets or sets the preferred camera to be used for the preview
         /// </summary>
-        public CameraPreference PreferredCamera
+        public CameraFacing PreferredCamera
         {
-            get => (CameraPreference)GetValue(PreferredCameraProperty);
+            get => (CameraFacing)GetValue(PreferredCameraProperty);
             set => SetValue(PreferredCameraProperty, value);
         }
 
