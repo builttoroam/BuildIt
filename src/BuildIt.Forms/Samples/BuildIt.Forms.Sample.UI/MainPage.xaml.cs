@@ -128,9 +128,9 @@ namespace BuildIt.Forms.Sample
         private void FlipCameraButton_OnClicked(object sender, EventArgs e)
         {
             CameraPreviewControl.PreferredCamera =
-                CameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraPreference.Back
-                    ? CameraPreviewControl.CameraPreference.Front
-                    : CameraPreviewControl.CameraPreference.Back;
+                CameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraFacing.Back
+                    ? CameraPreviewControl.CameraFacing.Front
+                    : CameraPreviewControl.CameraFacing.Back;
         }
 
         private async void PhotoButton_OnClicked(object sender, EventArgs e)
