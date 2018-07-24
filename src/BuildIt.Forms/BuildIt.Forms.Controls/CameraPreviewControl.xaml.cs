@@ -19,6 +19,9 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty PreferredCameraProperty =
             BindableProperty.Create(nameof(PreferredCamera), typeof(CameraPreference), typeof(CameraPreviewControl), CameraPreference.Back);
 
+        /// <summary>
+        /// Toggles enabling continuous autofocus
+        /// </summary>
         public static readonly BindableProperty EnableContinuousAutoFocusProperty =
             BindableProperty.Create(nameof(EnableContinuousAutoFocus), typeof(bool), typeof(CameraPreviewControl), false);
 
@@ -29,16 +32,6 @@ namespace BuildIt.Forms.Controls
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// A delegate type used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
-        /// </summary>
-        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
-        /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
-        /// <returns>The path to the saved photo file</returns>
-        internal delegate Task<string> CaptureNativeFrameToFile(bool saveToPhotosLibrary);
-
-        internal Func<IList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
         /// Enumeration specifying which camera should be used
@@ -72,9 +65,14 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Gets or sets the native implementation of the frame capture method
+        /// A delegate type used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
-        internal CaptureNativeFrameToFile CaptureNativeFrameToFileDelegate { get; set; }
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
+        /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
+        /// <returns>The path to the saved photo file</returns>
+        internal Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
+
+        internal Func<IReadOnlyList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
         /// Captures the most current video frame to a photo and saves it to local storage. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
@@ -84,10 +82,10 @@ namespace BuildIt.Forms.Controls
         /// <returns>The path to the saved photo file</returns>
         public Task<string> CaptureFrameToFile(bool saveToPhotosLibrary)
         {
-            return CaptureNativeFrameToFileDelegate?.Invoke(saveToPhotosLibrary);
+            return CaptureNativeFrameToFileFunc(saveToPhotosLibrary);
         }
 
-        public IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        public IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
         {
             return RetrieveSupportedFocusModesFunc();
         }

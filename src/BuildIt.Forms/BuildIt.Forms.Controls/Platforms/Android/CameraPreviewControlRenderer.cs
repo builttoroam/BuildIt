@@ -84,13 +84,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 return;
             }
 
-            if (cameraPreviewControl != null)
-            {
-                cameraPreviewControl.CaptureNativeFrameToFileDelegate = null;
-            }
-
             cameraPreviewControl = cpc;
-            cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
 
             try
@@ -268,7 +263,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        private IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
         {
             var supportedFocusModes = new List<CameraFocusMode>();
             var cameraParameters = camera.GetParameters();
