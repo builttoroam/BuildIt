@@ -5,16 +5,24 @@
     /// </summary>
     public enum CameraFocusMode
     {
-        // An unspecified focus mode
+        /// <summary>
+        /// An unspecified focus mode
+        /// </summary>
         Unspecified,
 
-        // The camera will automatically focus once
+        /// <summary>
+        /// The camera will automatically focus once
+        /// </summary>
         Auto,
 
-        // The camera will continuously try to focus
+        /// <summary>
+        /// The camera will continuously try to focus
+        /// </summary>
         Continuous,
 
-        // The camera will manually focus on a point/region
+        /// <summary>
+        /// The camera will manually focus on a point/region
+        /// </summary>
         Manual
     }
 }

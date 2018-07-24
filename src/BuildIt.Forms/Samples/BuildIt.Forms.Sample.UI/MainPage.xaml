@@ -219,6 +219,10 @@
                     <Button Text="Get supported focus modes"
                             Clicked="RetrieveSupportedFocusModesButton_Clicked" />
                     <Label x:Name="SupportedFocusModesLabel" />
+                    <Button Text="Get available cameras"
+                            Clicked="RetrieveAvailableCameras_Clicked"/>
+                    <Label x:Name="AvailableCamerasLabel" />
+
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
                                          Pressed="ContentButton_OnPressed" />
