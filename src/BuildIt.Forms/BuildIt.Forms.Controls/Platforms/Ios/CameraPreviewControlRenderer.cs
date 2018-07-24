@@ -173,7 +173,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private void SetPreferredCamera()
         {
             captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
-            System.Diagnostics.Debug.WriteLine($"focus mode {captureDevice.FocusMode}");
             ConfigureCameraForDevice();
 
             captureSession.BeginConfiguration();
@@ -315,6 +314,20 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
 
             return supportedFocusModes;
+        }
+
+        private IReadOnlyList<CameraPreviewControl.CameraPreference> RetrieveSupportedCameraFacings()
+        {
+            var supportedCameraFacings = new List<CameraPreviewControl.CameraPreference>();
+            var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaType.Video);
+            if (devices != null)
+            {
+                foreach(var device in devices)
+                {
+                    
+                }
+            }
+            return supportedCameraFacings;
         }
     }
 }
