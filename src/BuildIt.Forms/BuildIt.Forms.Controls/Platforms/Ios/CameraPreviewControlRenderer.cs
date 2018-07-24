@@ -26,21 +26,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private bool isInitialized;
         private CameraPreviewControl cameraPreviewControl;
 
-        private static CameraPreviewControl.CameraFacing ToCameraPreference(AVCaptureDevicePosition position)
-        {
-            switch (position)
-            {
-                case AVCaptureDevicePosition.Back:
-                    return CameraPreviewControl.CameraFacing.Back;
-
-                case AVCaptureDevicePosition.Front:
-                    return CameraPreviewControl.CameraFacing.Front;
-
-                default:
-                    return CameraPreviewControl.CameraFacing.Unspecified;
-            }
-        }
-
         /// <inheritdoc />
         public override void LayoutSubviews()
         {
@@ -80,7 +65,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
-
+            cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
             SetupEventHandlers();
 
@@ -183,6 +168,21 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
 
             return error == null ? fileName : error.ToString();
+        }
+
+        private static CameraPreviewControl.CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
+        {
+            switch (position)
+            {
+                case AVCaptureDevicePosition.Back:
+                    return CameraPreviewControl.CameraFacing.Back;
+
+                case AVCaptureDevicePosition.Front:
+                    return CameraPreviewControl.CameraFacing.Front;
+
+                default:
+                    return CameraPreviewControl.CameraFacing.Unspecified;
+            }
         }
 
         private void SetPreferredCamera()
@@ -332,26 +332,25 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task<IReadOnlyList<CameraPreviewControl.CameraFacing>> RetrieveSupportedCameraFacingsAsync()
+        private async Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            var supportedCameraFacings = new List<CameraPreviewControl.CameraFacing>();
+            var cameras = new List<ICamera>();
             var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaType.Video);
             if (devices != null)
             {
                 foreach (var device in devices)
                 {
-                    var cameraFacing = ToCameraPreference(device.Position);
-                    if (supportedCameraFacings.Contains(cameraFacing))
+                    var camera = new Camera()
                     {
-                        continue;
-                    }
-
-                    supportedCameraFacings.Add(cameraFacing);
+                        Id = device.UniqueID,
+                        CameraFacing = ToCameraFacing(device.Position)
+                    };
+                    cameras.Add(camera);
                 }
             }
 
-            return supportedCameraFacings;
+            return cameras;
         }
     }
 }

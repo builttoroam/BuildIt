@@ -86,6 +86,11 @@ namespace BuildIt.Forms.Controls
         internal Func<IReadOnlyList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
+        /// A delegate used by the native renderers to return the available cameras
+        /// </summary>
+        internal Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
+
+        /// <summary>
         /// Captures the most current video frame to a photo and saves it to local storage. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
         /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
@@ -103,6 +108,15 @@ namespace BuildIt.Forms.Controls
         public IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
         {
             return RetrieveSupportedFocusModesFunc?.Invoke();
+        }
+
+        /// <summary>
+        /// Retrieves the available camera facings
+        /// </summary>
+        /// <returns>The available camera facings</returns>
+        public Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
+        {
+            return RetrieveCamerasFunc?.Invoke();
         }
     }
 }

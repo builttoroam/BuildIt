@@ -74,6 +74,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
+            cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -176,7 +177,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraPreference(Panel panel)
+        private static CameraPreviewControl.CameraFacing ToCameraFacing(Panel panel)
         {
             switch (panel)
             {
@@ -430,22 +431,24 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             return supportedFocusModes;
         }
 
-        private async Task<IReadOnlyList<CameraPreviewControl.CameraFacing>> RetrieveSupportedCameraFacingsAsync()
+        private async Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
         {
-            var supportedCameraFacings = new List<CameraPreviewControl.CameraFacing>();
+            var cameras = new List<Camera>();
             var videoDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
-            foreach (var videoDevice in videoDevices)
+            if (videoDevices != null)
             {
-                var cameraFacing = ToCameraPreference(videoDevice.EnclosureLocation.Panel);
-                if (supportedCameraFacings.Contains(cameraFacing))
+                foreach (var videoDevice in videoDevices)
                 {
-                    continue;
+                    var camera = new Camera()
+                    {
+                        Id = videoDevice.Id,
+                        CameraFacing = ToCameraFacing(videoDevice.EnclosureLocation?.Panel ?? Panel.Unknown)
+                    };
+                    cameras.Add(camera);
                 }
-
-                supportedCameraFacings.Add(cameraFacing);
             }
 
-            return supportedCameraFacings;
+            return cameras;
         }
     }
 }

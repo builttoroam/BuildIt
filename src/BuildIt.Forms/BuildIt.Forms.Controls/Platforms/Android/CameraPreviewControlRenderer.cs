@@ -87,11 +87,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraPreviewControl = cpc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
+            cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
 
             try
             {
                 SetupUserInterface();
-                SetupEventHandlers();
                 AddView(view);
             }
             catch (Exception ex)
@@ -189,7 +189,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 : CameraFacing.Front;
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraPreference(CameraFacing cameraFacing)
+        private static CameraPreviewControl.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
         {
             return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
         }
@@ -224,10 +224,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             textureView = view.FindViewById<TextureView>(Resource.Id.textureView);
             textureView.SurfaceTextureListener = this;
-        }
-
-        private void SetupEventHandlers()
-        {
         }
 
         private void PrepareAndStartCamera()
@@ -296,24 +292,23 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task<IReadOnlyList<CameraPreviewControl.CameraFacing>> RetrieveSupportedCameraFacingsAsync()
+        private async Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            var supportedCameraFacings = new List<CameraPreviewControl.CameraFacing>();
+            var cameras = new List<ICamera>();
             for (var i = 0; i < global::Android.Hardware.Camera.NumberOfCameras; i++)
             {
                 var cameraInfo = new global::Android.Hardware.Camera.CameraInfo();
                 global::Android.Hardware.Camera.GetCameraInfo(i, cameraInfo);
-                var cameraPreference = ToCameraPreference(cameraInfo.Facing);
-                if (supportedCameraFacings.Contains(cameraPreference))
+                var camera = new Camera()
                 {
-                    continue;
-                }
-
-                supportedCameraFacings.Add(cameraPreference);
+                    Id = i.ToString(),
+                    CameraFacing = ToCameraFacing(cameraInfo.Facing)
+                };
+                cameras.Add(camera);
             }
 
-            return supportedCameraFacings;
+            return cameras;
         }
     }
 }
