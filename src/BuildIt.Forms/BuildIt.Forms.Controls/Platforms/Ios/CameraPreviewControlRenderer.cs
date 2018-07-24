@@ -62,13 +62,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 return;
             }
 
-            if (cameraPreviewControl != null)
-            {
-                cameraPreviewControl.CaptureNativeFrameToFileDelegate = null;
-            }
-
             cameraPreviewControl = cpc;
-            cameraPreviewControl.CaptureNativeFrameToFileDelegate = CapturePhotoToFile;
+            cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
 
             SetupUserInterface();
@@ -301,7 +296,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-        private IList<CameraFocusMode> RetrieveSupportedFocusModes()
+        private IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
         {
             var supportedFocusModes = new List<CameraFocusMode>();
             if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.AutoFocus))
