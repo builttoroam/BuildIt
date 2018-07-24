@@ -58,6 +58,9 @@ namespace BuildIt.Forms.Controls
             set => SetValue(PreferredCameraProperty, value);
         }
 
+        /// <summary>
+        /// Toggles continuous auto-focus for selected camera device
+        /// </summary>
         public bool EnableContinuousAutoFocus
         {
             get => (bool)GetValue(EnableContinuousAutoFocusProperty);
@@ -65,13 +68,16 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// A delegate type used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
+        /// A delegate used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
         /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
         /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
         /// <returns>The path to the saved photo file</returns>
         internal Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
 
+        /// <summary>
+        /// A delegate used by the native renderers to return the supported focus modes
+        /// </summary>
         internal Func<IReadOnlyList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
@@ -82,12 +88,16 @@ namespace BuildIt.Forms.Controls
         /// <returns>The path to the saved photo file</returns>
         public Task<string> CaptureFrameToFile(bool saveToPhotosLibrary)
         {
-            return CaptureNativeFrameToFileFunc(saveToPhotosLibrary);
+            return CaptureNativeFrameToFileFunc?.Invoke(saveToPhotosLibrary);
         }
 
+        /// <summary>
+        /// Retrieves the focus modes supported by the currently selected camera
+        /// </summary>
+        /// <returns>The supported focus modes</returns>
         public IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
         {
-            return RetrieveSupportedFocusModesFunc();
+            return RetrieveSupportedFocusModesFunc?.Invoke();
         }
     }
 }

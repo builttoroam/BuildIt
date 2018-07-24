@@ -5,16 +5,16 @@
     /// </summary>
     public enum CameraFocusMode
     {
-        // Default value
-        None,
+        // An unspecified focus mode
+        Unspecified,
 
-        // Auto-focus
+        // The camera will automatically focus once
         Auto,
 
-        // Continuous auto-focus
+        // The camera will continuously try to focus
         Continuous,
 
-        // Manual focus
+        // The camera will manually focus on a point/region
         Manual
     }
 }
