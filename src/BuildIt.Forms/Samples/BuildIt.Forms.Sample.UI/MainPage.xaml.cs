@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using BuildIt.Forms.Controls;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace BuildIt.Forms.Sample
 {
@@ -152,6 +153,12 @@ namespace BuildIt.Forms.Sample
         {
             var supportedFocusModes = CameraPreviewControl.RetrieveSupportedFocusModes();
             SupportedFocusModesLabel.Text = string.Join(", ", supportedFocusModes);
+        }
+
+        private async void RetrieveAvailableCameras_Clicked(object sender, EventArgs e)
+        {
+            var cameras = await CameraPreviewControl.RetrieveCamerasAsync();
+            AvailableCamerasLabel.Text = string.Join(Environment.NewLine, cameras.Select(c => $"Camera id: {c.Id}, facing: {c.CameraFacing}"));
         }
     }
 }
