@@ -96,9 +96,14 @@ namespace BuildIt.Forms.Controls
         /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
         /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
         /// <returns>The path to the saved photo file</returns>
-        public Task<string> CaptureFrameToFile(bool saveToPhotosLibrary)
+        public async Task<string> CaptureFrameToFile(bool saveToPhotosLibrary)
         {
-            return CaptureNativeFrameToFileFunc?.Invoke(saveToPhotosLibrary);
+            if (CaptureNativeFrameToFileFunc == null)
+            {
+                return null;
+            }
+
+            return await CaptureNativeFrameToFileFunc(saveToPhotosLibrary);
         }
 
         /// <summary>
@@ -107,16 +112,26 @@ namespace BuildIt.Forms.Controls
         /// <returns>The supported focus modes</returns>
         public IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
         {
-            return RetrieveSupportedFocusModesFunc?.Invoke();
+            if (RetrieveSupportedFocusModesFunc == null)
+            {
+                return new List<CameraFocusMode>();
+            }
+
+            return RetrieveSupportedFocusModesFunc();
         }
 
         /// <summary>
         /// Retrieves the available camera facings
         /// </summary>
         /// <returns>The available camera facings</returns>
-        public Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
+        public async Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
         {
-            return RetrieveCamerasFunc?.Invoke();
+            if (RetrieveCamerasFunc == null)
+            {
+                return new List<ICamera>();
+            }
+
+            return await RetrieveCamerasFunc();
         }
     }
 }
