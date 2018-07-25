@@ -182,9 +182,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             view.Layout(0, 0, r - l, b - t);
         }
 
-        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraFacing cameraPreference)
+        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraFacing cameraFacing)
         {
-            return cameraPreference == CameraPreviewControl.CameraFacing.Back
+            return cameraFacing == CameraPreviewControl.CameraFacing.Back
                 ? CameraFacing.Back
                 : CameraFacing.Front;
         }
