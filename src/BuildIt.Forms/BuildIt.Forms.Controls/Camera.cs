@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using static BuildIt.Forms.Controls.CameraPreviewControl;
 
 namespace BuildIt.Forms.Controls
 {
@@ -17,6 +15,6 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Gets the direction the camera is facing
         /// </summary>
-        public CameraPreviewControl.CameraFacing CameraFacing { get; set; }
+        public CameraFacing CameraFacing { get; set; }
     }
 }
