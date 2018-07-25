@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.Hardware;
 using Android.Views;
 using Android.Widget;
 using BuildIt.Forms.Controls;
@@ -27,7 +26,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private global::Android.Views.View view;
 
         private Activity activity;
-        private CameraFacing cameraType;
+        private global::Android.Hardware.CameraFacing cameraType;
         private TextureView textureView;
         private SurfaceTexture surfaceTexture;
 
@@ -88,6 +87,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
+            cameraPreviewControl.FocusFunc = FocusAsync;
 
             try
             {
@@ -182,16 +182,16 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             view.Layout(0, 0, r - l, b - t);
         }
 
-        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraFacing cameraFacing)
+        private static global::Android.Hardware.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
         {
-            return cameraFacing == CameraPreviewControl.CameraFacing.Back
-                ? CameraFacing.Back
-                : CameraFacing.Front;
+            return cameraFacing == CameraFacing.Back
+                ? global::Android.Hardware.CameraFacing.Back
+                : global::Android.Hardware.CameraFacing.Front;
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
+        private static CameraFacing ToCameraFacing(global::Android.Hardware.CameraFacing cameraFacing)
         {
-            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
+            return cameraFacing == global::Android.Hardware.CameraFacing.Back ? CameraFacing.Back : CameraFacing.Front;
         }
 
         private void SwitchCameraIfNecessary()

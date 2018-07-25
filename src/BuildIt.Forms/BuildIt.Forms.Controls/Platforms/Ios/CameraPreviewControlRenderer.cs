@@ -66,6 +66,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
+            cameraPreviewControl.FocusFunc = FocusAsync;
+            
             SetupUserInterface();
             SetupEventHandlers();
 
@@ -170,18 +172,18 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             return error == null ? fileName : error.ToString();
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
+        private static CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
         {
             switch (position)
             {
                 case AVCaptureDevicePosition.Back:
-                    return CameraPreviewControl.CameraFacing.Back;
+                    return CameraFacing.Back;
 
                 case AVCaptureDevicePosition.Front:
-                    return CameraPreviewControl.CameraFacing.Front;
+                    return CameraFacing.Front;
 
                 default:
-                    return CameraPreviewControl.CameraFacing.Unspecified;
+                    return CameraFacing.Unspecified;
             }
         }
 
@@ -258,9 +260,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             captureSession.StartRunning();
         }
 
-        private AVCaptureDevice GetCameraForPreference(CameraPreviewControl.CameraFacing cameraPreference)
+        private AVCaptureDevice GetCameraForPreference(CameraFacing cameraPreference)
         {
-            var orientation = cameraPreference == CameraPreviewControl.CameraFacing.Back
+            var orientation = cameraPreference == CameraFacing.Back
                 ? AVCaptureDevicePosition.Back
                 : AVCaptureDevicePosition.Front;
 

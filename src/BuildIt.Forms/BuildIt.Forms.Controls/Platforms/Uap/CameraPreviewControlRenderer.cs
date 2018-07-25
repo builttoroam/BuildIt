@@ -75,6 +75,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
+            cameraPreviewControl.FocusFunc = FocusAsync;
             SetupUserInterface();
             await SetupBasedOnStateAsync();
 
@@ -177,18 +178,18 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(Panel panel)
+        private static CameraFacing ToCameraFacing(Panel panel)
         {
             switch (panel)
             {
                 case Panel.Front:
-                    return CameraPreviewControl.CameraFacing.Front;
+                    return CameraFacing.Front;
 
                 case Panel.Back:
-                    return CameraPreviewControl.CameraFacing.Back;
+                    return CameraFacing.Back;
 
                 default:
-                    return CameraPreviewControl.CameraFacing.Unspecified;
+                    return CameraFacing.Unspecified;
             }
         }
 
@@ -239,7 +240,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             if (mediaCapture == null)
             {
-                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraFacing.Back
+                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraFacing.Back
                     ? Panel.Back
                     : Panel.Front;
 

@@ -34,27 +34,6 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Enumeration the available camera facings/positions
-        /// </summary>
-        public enum CameraFacing
-        {
-            /// <summary>
-            /// An unspecified camera facing
-            /// </summary>
-            Unspecified,
-
-            /// <summary>
-            /// The camera located on the back of the device enclosure
-            /// </summary>
-            Back,
-
-            /// <summary>
-            /// The front-facing camera
-            /// </summary>
-            Front
-        }
-
-        /// <summary>
         /// Gets or sets the preferred camera to be used for the preview
         /// </summary>
         public CameraFacing PreferredCamera
@@ -89,6 +68,8 @@ namespace BuildIt.Forms.Controls
         /// A delegate used by the native renderers to return the available cameras
         /// </summary>
         internal Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
+
+        internal Func<Task> FocusFunc { get; set; }
 
         /// <summary>
         /// Captures the most current video frame to a photo and saves it to local storage. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
@@ -132,6 +113,16 @@ namespace BuildIt.Forms.Controls
             }
 
             return await RetrieveCamerasFunc();
+        }
+
+        public async Task FocusAsync()
+        {
+            if (FocusFunc == null)
+            {
+                return;
+            }
+
+            await FocusFunc();
         }
     }
 }

@@ -25,4 +25,25 @@
         /// </summary>
         Manual
     }
+
+    /// <summary>
+    /// Enumeration the available camera facings/positions
+    /// </summary>
+    public enum CameraFacing
+    {
+        /// <summary>
+        /// An unspecified camera facing
+        /// </summary>
+        Unspecified,
+
+        /// <summary>
+        /// The camera located on the back of the device enclosure
+        /// </summary>
+        Back,
+
+        /// <summary>
+        /// The front-facing camera
+        /// </summary>
+        Front
+    }
 }

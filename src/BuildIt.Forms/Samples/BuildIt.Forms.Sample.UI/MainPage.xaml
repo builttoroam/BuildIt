@@ -223,6 +223,8 @@
                             Clicked="RetrieveAvailableCameras_Clicked"/>
                     <Label x:Name="AvailableCamerasLabel" />
 
+                    <Button Text="Focus"
+                            Clicked="FocusButton_Clicked" />
                     <controls:IconButton Icon="&#xF04B;"
                                          vsm:Ambient.FontSize="40"
                                          Pressed="ContentButton_OnPressed" />

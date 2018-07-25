@@ -129,9 +129,9 @@ namespace BuildIt.Forms.Sample
         private void FlipCameraButton_OnClicked(object sender, EventArgs e)
         {
             CameraPreviewControl.PreferredCamera =
-                CameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraFacing.Back
-                    ? CameraPreviewControl.CameraFacing.Front
-                    : CameraPreviewControl.CameraFacing.Back;
+                CameraPreviewControl.PreferredCamera == CameraFacing.Back
+                    ? CameraFacing.Front
+                    : CameraFacing.Back;
         }
 
         private async void PhotoButton_OnClicked(object sender, EventArgs e)
@@ -159,6 +159,11 @@ namespace BuildIt.Forms.Sample
         {
             var cameras = await CameraPreviewControl.RetrieveCamerasAsync();
             AvailableCamerasLabel.Text = string.Join(Environment.NewLine, cameras.Select(c => $"Camera id: {c.Id}, facing: {c.CameraFacing}"));
+        }
+
+        private async void FocusButton_Clicked(object sender, EventArgs e)
+        {
+            await CameraPreviewControl.FocusAsync();
         }
     }
 }
