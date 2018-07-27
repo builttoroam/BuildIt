@@ -1,0 +1,54 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid81;uap10.0.16299;</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Platforms\**\*.cs" />
+    <None Include="Platforms\**\*.cs" />
+    <Compile Remove="Resources\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('uap'))">
+    <Compile Include="Platforms\Uap\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Ios\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac'))">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Mac\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.TVOS'))">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Tvos\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.WatchOS'))">
+    <Compile Include="Platforms\Apple-common\**\*.cs" />
+    <Compile Include="Platforms\Watchos\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
+    <PackageReference Include="Xam.Android.Tensorflow">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <Compile Include="Platforms\Android\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+    <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('tizen'))">
+    <Compile Include="Platforms\Tizen\**\*.cs" />
+    <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+  </ItemGroup>
+
+</Project>
