@@ -1,6 +1,7 @@
 ﻿using CoreML;
 using Foundation;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BuildIt.ML.Platforms.Ios
@@ -11,18 +12,18 @@ namespace BuildIt.ML.Platforms.Ios
         private MLModel model;
         IEnumerable<Feature> outputFeatures;
 
-        public async Task InitAsync(string modelName, IEnumerable<Feature> outputFeatures)
+        public Task InitAsync(string modelName, IEnumerable<Feature> outputFeatures)
         {
             this.outputFeatures = outputFeatures;
             var assetPath = NSBundle.MainBundle.GetUrlForResource(modelName, CoreMLModelExtension);
-            model = MLModel.Create(assetPath, out NSError error);
-
             // TODO: handle when there's an error
+            model = MLModel.Create(assetPath, out NSError error);
+            return Task.CompletedTask;
         }
 
         public async Task<IMLFeatureProvider> ClassifyAsync(IEnumerable<Feature> inputFeatures)
         {
-            var inputs = new NSDictionary<NSString, NSObject>();
+            var inputs = new Dictionary<string, NSObject>();
             foreach (var inputFeature in inputFeatures)
             {
                 switch (inputFeature.Type)
@@ -79,7 +80,7 @@ namespace BuildIt.ML.Platforms.Ios
                 }
             }
 
-            var inputFeatureProvider = new MLDictionaryFeatureProvider(inputs, out NSError error);
+            var inputFeatureProvider = new MLDictionaryFeatureProvider(NSDictionary<NSString, NSObject>.FromObjectsAndKeys(inputs.Values.ToArray(), inputs.Keys.ToArray()), out NSError error);
 
             // TODO: handle errors
             var outputFeatures = model.GetPrediction(inputFeatureProvider, out error);

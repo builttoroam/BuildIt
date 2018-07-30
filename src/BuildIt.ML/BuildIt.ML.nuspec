@@ -16,9 +16,9 @@
   <files>
     <file src="BuildIt.ML\bin\Release\netstandard1.0\BuildIt.ML.dll" target="lib\netstandard1.0" />
     <file src="BuildIt.ML\bin\Release\netstandard2.0\BuildIt.ML.dll" target="lib\netstandard2.0" />
-    <file src="BuildIt.ML\bin\Release\uap10.0.17134\BuildIt.ML.dll" target="lib\uap10.0.16299" />
+    <file src="BuildIt.ML\bin\Release\uap10.0.16299\BuildIt.ML.dll" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.ML\bin\Release\Xamarin.iOS10\BuildIt.ML.dll" target="lib\Xamarin.iOS10" />
+    <file src="BuildIt.ML\bin\Release\Xamarin.iOS11\BuildIt.ML.dll" target="lib\Xamarin.iOS11" />
     <file src="BuildIt.ML\bin\Release\MonoAndroid81\BuildIt.ML.dll" target="lib\MonoAndroid8.1" />
   </files>
 </package>
