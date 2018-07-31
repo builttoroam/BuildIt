@@ -18,7 +18,7 @@ namespace MarsHabitatPricerPredictor
             base.ViewDidLoad();
 
             // Perform any additional setup after loading the view, typically from a nib.
-            var classifier = new Classifier();
+            var classifier = new CustomVisionClassifier();
             var outputFeatures = new List<Feature>();
             await classifier.InitAsync("MarsHabitatPricer", outputFeatures);
             var inputFeatures = new List<Feature>
