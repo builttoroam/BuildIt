@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildIt.ML.Sample.UI\BuildIt.ML.Sample.UI.csproj">
