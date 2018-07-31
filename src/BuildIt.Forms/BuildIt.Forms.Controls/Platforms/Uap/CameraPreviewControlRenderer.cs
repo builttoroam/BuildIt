@@ -428,7 +428,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 }
             }
 
-            return supportedFocusModes;
+            return supportedFocusModes.AsReadOnly();
         }
 
         private async Task<IReadOnlyList<ICamera>> RetrieveCamerasAsync()
@@ -448,7 +448,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 }
             }
 
-            return cameras;
+            return cameras.AsReadOnly();
         }
     }
 }
