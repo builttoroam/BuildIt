@@ -328,7 +328,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 supportedFocusModes.Add(CameraFocusMode.Manual);
             }
 
-            return supportedFocusModes;
+            return supportedFocusModes.AsReadOnly();
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

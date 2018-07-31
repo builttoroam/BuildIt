@@ -308,7 +308,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameras.Add(camera);
             }
 
-            return cameras;
+            return cameras.AsReadOnly();
         }
     }
 }
