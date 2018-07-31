@@ -16,6 +16,7 @@ namespace BuildIt.ML.Platforms.Ios
         {
             this.outputFeatures = outputFeatures;
             var assetPath = NSBundle.MainBundle.GetUrlForResource(modelName, CoreMLModelExtension);
+
             // TODO: handle when there's an error
             model = MLModel.Create(assetPath, out NSError error);
             return Task.CompletedTask;
@@ -84,6 +85,7 @@ namespace BuildIt.ML.Platforms.Ios
 
             // TODO: handle errors
             var outputFeatures = model.GetPrediction(inputFeatureProvider, out error);
+
             // TODO: handle errors
 
             // TODO: handle parsing the output
