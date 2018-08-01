@@ -7,6 +7,10 @@
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding Classifications, StringFormat='Classifications: {0}'}" />
+            <Button x:Name="ClassifyButton"
+                    Text="Classify"
+                    Clicked="ClassifyButton_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

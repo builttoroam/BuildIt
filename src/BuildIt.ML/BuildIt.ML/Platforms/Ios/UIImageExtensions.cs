@@ -2,7 +2,7 @@
 using CoreVideo;
 using UIKit;
 
-namespace BuildIt.ML.Platforms.Ios
+namespace BuildIt.ML
 {
     public static class UIImageExtensions
     {

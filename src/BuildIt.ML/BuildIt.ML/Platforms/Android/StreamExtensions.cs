@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BuildIt.ML.Platforms.Android
+namespace BuildIt.ML
 {
     public static class StreamExtensions
     {

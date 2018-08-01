@@ -13,6 +13,10 @@
     <Compile Include="Platforms\Uap\**\*.cs" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
+    <Compile Include="Platforms\NetStandard\**\*.cs" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Ios\**\*.cs" />
@@ -49,6 +53,10 @@
   <ItemGroup Condition="$(TargetFramework.StartsWith('tizen'))">
     <Compile Include="Platforms\Tizen\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Platforms\NetStandard\CrossCustomVisionClassifier.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace BuildIt.ML.Models
+﻿namespace BuildIt.ML
 {
     public class ImageClassification
     {

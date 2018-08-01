@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using UIKit;
 
-namespace BuildIt.ML.Platforms.Ios
+namespace BuildIt.ML
 {
     public static class StreamExtensions
     {
