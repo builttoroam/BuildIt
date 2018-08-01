@@ -1,4 +1,5 @@
-﻿using BuildIt.ML.Models;
+﻿using BuildIt.ML.Interfaces;
+using BuildIt.ML.Models;
 using CoreGraphics;
 using CoreML;
 using Foundation;
@@ -10,7 +11,7 @@ using Vision;
 
 namespace BuildIt.ML.Platforms.Ios
 {
-    public class CustomVisionClassifier
+    public class CustomVisionClassifier : ICustomVisionClassifier
     {
         private const string CoreMLModelExtension = "mlmodelc";
         private VNCoreMLModel model;
@@ -39,7 +40,7 @@ namespace BuildIt.ML.Platforms.Ios
                 else
                 {
                     var classifications = r.GetResults<VNClassificationObservation>();
-                    tcs.SetResult(classifications.Select(c => new ImageClassification(c.Identifier,  c.Confidence)));
+                    tcs.SetResult(classifications.Select(c => new ImageClassification(c.Identifier, c.Confidence)));
                 }
             });
             using (var image = await imageStream.ToUIImageAsync())
@@ -56,7 +57,6 @@ namespace BuildIt.ML.Platforms.Ios
                 return imageClassifications.ToList().AsReadOnly();
             }
         }
-
 
         private NSUrl CompileModel(string modelName)
         {

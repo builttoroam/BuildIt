@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <None Include="Interfaces\ICustomVisionClassifier.cs" />
   </ItemGroup>
 
 </Project>

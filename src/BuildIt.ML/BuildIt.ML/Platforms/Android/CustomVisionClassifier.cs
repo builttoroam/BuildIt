@@ -1,4 +1,5 @@
 ﻿using Android.Graphics;
+using BuildIt.ML.Interfaces;
 using BuildIt.ML.Models;
 using Org.Tensorflow.Contrib.Android;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BuildIt.ML.Platforms.Android
 {
-    public class CustomVisionClassifier
+    public class CustomVisionClassifier : ICustomVisionClassifier
     {
         private const string OutputName = "loss";
         private const string InputName = "Placeholder";
