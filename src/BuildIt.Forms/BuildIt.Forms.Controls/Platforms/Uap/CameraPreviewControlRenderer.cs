@@ -12,6 +12,7 @@ using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Media.Capture;
+using Windows.Media.Capture.Frames;
 using Windows.Media.Devices;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
@@ -59,6 +60,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private Task setupTask = Task.CompletedTask;
 
         private CameraPreviewControl cameraPreviewControl;
+        private MediaFrameReader mediaFrameReader;
 
         /// <inheritdoc />
         protected override async void OnElementChanged(ElementChangedEventArgs<Frame> e)
@@ -257,6 +259,8 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 try
                 {
                     await mediaCapture.InitializeAsync(settings);
+                    mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(null, null);
+                    mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
                     isInitialized = true;
                 }
                 catch (UnauthorizedAccessException)
@@ -298,6 +302,11 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     await StopPreviewAsync();
                 }
 
+                if (mediaFrameReader != null)
+                {
+                    mediaFrameReader.FrameArrived -= MediaFrameReader_FrameArrived;
+                }
+
                 isInitialized = false;
             }
 
@@ -311,6 +320,17 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             {
                 rotationHelper.OrientationChanged -= OnOrientationChanged;
                 rotationHelper = null;
+            }
+        }
+
+        private void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
+        {
+            using (var mediaFrameReference = sender.TryAcquireLatestFrame())
+            {
+                if (mediaFrameReference?.VideoMediaFrame != null)
+                {
+                    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(mediaFrameReference.VideoMediaFrame));
+                }
             }
         }
 
