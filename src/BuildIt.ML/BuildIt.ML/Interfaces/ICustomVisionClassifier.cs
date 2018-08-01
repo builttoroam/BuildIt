@@ -1,9 +1,8 @@
-﻿using BuildIt.ML.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BuildIt.ML.Interfaces
+namespace BuildIt.ML
 {
     public interface ICustomVisionClassifier
     {

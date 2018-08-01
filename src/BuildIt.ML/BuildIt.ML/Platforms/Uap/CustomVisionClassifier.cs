@@ -1,6 +1,3 @@
-using BuildIt.ML.Interfaces;
-using BuildIt.ML.Models;
-using BuildIt.ML.Platforms.Uap;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +9,7 @@ using Windows.Graphics.Imaging;
 using Windows.Media;
 using Windows.Storage;
 
-namespace BuildIt.ML.Platforms.Android
+namespace BuildIt.ML
 {
     public class CustomVisionClassifier : ICustomVisionClassifier
     {

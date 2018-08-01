@@ -1,6 +1,6 @@
 ﻿using CoreML;
 
-namespace BuildIt.ML.Platforms.Ios
+namespace BuildIt.ML
 {
     public class LongFeatureValue : FeatureValue<long>
     {

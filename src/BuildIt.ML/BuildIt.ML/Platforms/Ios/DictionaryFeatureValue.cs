@@ -1,7 +1,7 @@
 ﻿using CoreML;
 using Foundation;
 
-namespace BuildIt.ML.Platforms.Ios
+namespace BuildIt.ML
 {
     public class DictionaryFeatureValue : FeatureValue<NSDictionary<NSObject, NSNumber>>
     {

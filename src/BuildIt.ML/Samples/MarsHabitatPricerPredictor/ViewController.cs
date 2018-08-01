@@ -1,4 +1,4 @@
-﻿using BuildIt.ML.Platforms.Ios;
+﻿using BuildIt.ML;
 using CoreML;
 using Foundation;
 using System;
@@ -18,7 +18,7 @@ namespace MarsHabitatPricerPredictor
             base.ViewDidLoad();
 
             // Perform any additional setup after loading the view, typically from a nib.
-            var classifier = new CustomVisionClassifier();
+            var classifier = new Classifier();
             var outputFeatures = new List<Feature>();
             await classifier.InitAsync("MarsHabitatPricer", outputFeatures);
             var inputFeatures = new List<Feature>

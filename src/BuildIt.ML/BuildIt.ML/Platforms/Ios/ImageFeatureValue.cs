@@ -1,7 +1,7 @@
 ﻿using CoreML;
 using CoreVideo;
 
-namespace BuildIt.ML.Platforms.Ios
+namespace BuildIt.ML
 {
     public class ImageFeatureValue : FeatureValue<CVPixelBuffer>
     {

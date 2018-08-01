@@ -1,0 +1,42 @@
+﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+
+namespace BuildIt.ML.Sample.Core
+{
+    public class MainViewModel : INotifyPropertyChanged
+    {
+        private string classifications;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Classifications
+        {
+            get => classifications;
+            set
+            {
+                if (value != classifications)
+                {
+                    classifications = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public async Task ClassifyAsync()
+        {
+            await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+            var imageClassifications = await CrossCustomVisionClassifier.Instance.ClassifyAsync(file.GetStream());
+            Classifications = string.Join(",", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

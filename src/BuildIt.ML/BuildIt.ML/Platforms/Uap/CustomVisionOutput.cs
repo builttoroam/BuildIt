@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BuildIt.ML.Platforms.Uap
+namespace BuildIt.ML
 {
     internal class CustomVisionOutput
     {
