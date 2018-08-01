@@ -1,7 +1,5 @@
-﻿using BuildIt.ML.Platforms.Ios;
-using BuildIt.ML.Sample.UI;
+﻿using BuildIt.ML.Sample.UI;
 using Foundation;
-using System.Collections.Generic;
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
 

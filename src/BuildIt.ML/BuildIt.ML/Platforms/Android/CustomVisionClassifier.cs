@@ -1,13 +1,11 @@
 ﻿using Android.Graphics;
-using BuildIt.ML.Interfaces;
-using BuildIt.ML.Models;
 using Org.Tensorflow.Contrib.Android;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BuildIt.ML.Platforms.Android
+namespace BuildIt.ML
 {
     public class CustomVisionClassifier : ICustomVisionClassifier
     {
@@ -21,7 +19,7 @@ namespace BuildIt.ML.Platforms.Android
             this.labels = labels;
             var assets = global::Android.App.Application.Context.Assets;
 
-            inferenceInterface = new TensorFlowInferenceInterface(assets, modelName);
+            inferenceInterface = new TensorFlowInferenceInterface(assets, modelName + ".pb");
         }
 
         public async Task<IReadOnlyList<ImageClassification>> ClassifyAsync(Stream imageStream)

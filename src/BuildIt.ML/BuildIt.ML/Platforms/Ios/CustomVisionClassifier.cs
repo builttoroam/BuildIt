@@ -1,6 +1,4 @@
-﻿using BuildIt.ML.Interfaces;
-using BuildIt.ML.Models;
-using CoreGraphics;
+﻿using CoreGraphics;
 using CoreML;
 using Foundation;
 using System.Collections.Generic;
@@ -9,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vision;
 
-namespace BuildIt.ML.Platforms.Ios
+namespace BuildIt.ML
 {
     public class CustomVisionClassifier : ICustomVisionClassifier
     {
