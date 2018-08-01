@@ -54,13 +54,4 @@
     <Compile Include="Platforms\Tizen\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Platforms\NetStandard\CrossCustomVisionClassifier.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Interfaces\ICustomVisionClassifier.cs" />
-  </ItemGroup>
-
 </Project>
