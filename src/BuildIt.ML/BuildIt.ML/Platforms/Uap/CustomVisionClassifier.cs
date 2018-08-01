@@ -1,3 +1,4 @@
+using BuildIt.ML.Interfaces;
 using BuildIt.ML.Models;
 using BuildIt.ML.Platforms.Uap;
 using System;
@@ -13,9 +14,12 @@ using Windows.Storage;
 
 namespace BuildIt.ML.Platforms.Android
 {
-    public class CustomVisionClassifier
+    public class CustomVisionClassifier : ICustomVisionClassifier
     {
         private const string WindowsMLContract = "Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract";
+        private const string Data = "data";
+        private const string ClassLabel = "classLabel";
+        private const string Loss = "loss";
         private string[] labels;
         private LearningModelPreview learningModel;
 
@@ -40,11 +44,11 @@ namespace BuildIt.ML.Platforms.Android
                 {
                     var customVisionOutput = new CustomVisionOutput(labels);
                     var binding = new LearningModelBindingPreview(learningModel);
-                    binding.Bind("data", videoFrame);
-                    binding.Bind("classLabel", customVisionOutput.ClassLabel);
-                    binding.Bind("loss", customVisionOutput.Loss);
+                    binding.Bind(Data, videoFrame);
+                    binding.Bind(ClassLabel, customVisionOutput.ClassLabel);
+                    binding.Bind(Loss, customVisionOutput.Loss);
                     var result = await learningModel.EvaluateAsync(binding, string.Empty);
-                    return customVisionOutput.Loss.Select(l => new ImageClassification(l.Key,  l.Value)).ToList().AsReadOnly();
+                    return customVisionOutput.Loss.Select(l => new ImageClassification(l.Key, l.Value)).ToList().AsReadOnly();
                 }
             }
         }
