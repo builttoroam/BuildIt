@@ -13,6 +13,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using static Android.Hardware.Camera;
 using Context = Android.Content.Context;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
@@ -21,7 +22,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     /// <summary>
     /// Custom Renderer for <see cref="CameraPreviewControl"/>
     /// </summary>
-    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener
+    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, IPreviewCallback
     {
         private global::Android.Hardware.Camera camera;
         private global::Android.Views.View view;
@@ -243,6 +244,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             var cameraParameters = camera.GetParameters();
             defaultFocusMode = cameraParameters.FocusMode;
+            camera.SetPreviewCallback(this);
             camera.StartPreview();
         }
 
@@ -309,6 +311,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             return cameras.AsReadOnly();
+        }
+
+        public void OnPreviewFrame(byte[] data, global::Android.Hardware.Camera camera)
+        {
+            throw new NotImplementedException();
         }
     }
 }
