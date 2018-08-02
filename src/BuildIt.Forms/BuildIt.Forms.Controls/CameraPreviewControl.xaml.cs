@@ -150,7 +150,7 @@ namespace BuildIt.Forms.Controls
 
         internal void OnMediaFrameArrived(MediaFrame mediaFrame)
         {
-            MediaFrameArrived(this, new MediaFrameEventArgs(mediaFrame));
+            MediaFrameArrived?.Invoke(this, new MediaFrameEventArgs(mediaFrame));
         }
     }
 }
