@@ -1,5 +1,6 @@
 ﻿using CoreGraphics;
 using CoreML;
+using CoreVideo;
 using Foundation;
 using System.Collections.Generic;
 using System.IO;
@@ -65,6 +66,33 @@ namespace BuildIt.ML
                 throw new NSErrorException(err);
 
             return modelPath;
+        }
+
+        public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
+        {
+            var tcs = new TaskCompletionSource<IEnumerable<ImageClassification>>();
+            var request = new VNCoreMLRequest(model, (r, e) =>
+            {
+                if (e != null)
+                {
+                    // TODO: handle errors
+                }
+                else
+                {
+                    var classifications = r.GetResults<VNClassificationObservation>();
+                    tcs.SetResult(classifications.Select(c => new ImageClassification(c.Identifier, c.Confidence)));
+                }
+            });
+
+            var requestHandler = new VNImageRequestHandler(obj as CVPixelBuffer, new NSDictionary());
+            requestHandler.Perform(new[] { request }, out NSError error);
+            if (error != null)
+            {
+                // TODO: handle error
+            }
+
+            var imageClassifications = await tcs.Task;
+            return imageClassifications.ToList().AsReadOnly();
         }
     }
 }

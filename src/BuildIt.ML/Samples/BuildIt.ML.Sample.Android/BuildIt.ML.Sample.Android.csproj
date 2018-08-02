@@ -95,6 +95,22 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildIt.Forms\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj">
+      <Project>{79bfcfe4-0e39-488f-a909-f72a999fa046}</Project>
+      <Name>BuildIt.Forms.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.Forms\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj">
+      <Project>{33ace3b8-1e2f-49de-8292-65e7ab49b5a5}</Project>
+      <Name>BuildIt.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{d0e892dc-9872-4549-8780-dacd78e54522}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj">
+      <Project>{1d30dc76-3cde-47b8-860d-5aea8e620b92}</Project>
+      <Name>BuildIt.States</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.ML\BuildIt.ML.csproj">
       <Project>{1ba489bf-56a8-44c7-b901-64a0f6cb05b4}</Project>
       <Name>BuildIt.ML</Name>

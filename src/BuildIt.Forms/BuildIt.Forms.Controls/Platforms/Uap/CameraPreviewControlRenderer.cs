@@ -253,6 +253,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     Debug.WriteLine("No camera device found.");
                     return;
                 }
+
                 var frameSourceGroups = await MediaFrameSourceGroup.FindAllAsync();
                 var selectedGroupObjects = frameSourceGroups.Select(group =>
                    new
@@ -260,7 +261,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                        sourceGroup = group,
                        colorSourceInfo = group.SourceInfos.FirstOrDefault((sourceInfo) =>
                        {
-                           // On XBox/Kinect, omit the MediaStreamType and EnclosureLocation tests
                            return sourceInfo.SourceKind == MediaFrameSourceKind.Color;
                        })
                    }).Where(t => t.colorSourceInfo != null)
@@ -274,6 +274,12 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 {
                     await mediaCapture.InitializeAsync(settings);
                     var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
+                    var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
+                    if (preferredFormat != null)
+                    {
+                        await colorFrameSource.SetFormatAsync(preferredFormat);
+                    }
+
                     mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
                     mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
                     await mediaFrameReader.StartAsync();
@@ -342,12 +348,12 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
         private void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
-            Debug.WriteLine("frame arrived");
             using (var mediaFrameReference = sender.TryAcquireLatestFrame())
             {
                 if (mediaFrameReference?.VideoMediaFrame != null)
                 {
-                    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(mediaFrameReference.VideoMediaFrame));
+                    var videoFrame = mediaFrameReference.VideoMediaFrame.GetVideoFrame();
+                    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(videoFrame));
                 }
             }
         }
