@@ -19,7 +19,7 @@ using Xamarin.Forms.Platform.iOS;
 namespace BuildIt.Forms.Controls.Platforms.Ios
 {
     /// <inheritdoc />
-    public class CameraPreviewControlRenderer : FrameRenderer/*, IAVCaptureVideoDataOutputSampleBufferDelegate*/
+    public class CameraPreviewControlRenderer : FrameRenderer
     {
         private AVCaptureSession captureSession;
         private AVCaptureDeviceInput captureDeviceInput;

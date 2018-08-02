@@ -315,7 +315,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OnPreviewFrame(byte[] data, global::Android.Hardware.Camera camera)
         {
-            throw new NotImplementedException();
+            cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(ConvertYuvToJpeg(data, camera)));
+        }
+
+        private byte[] ConvertYuvToJpeg(byte[] yuvData, global::Android.Hardware.Camera camera)
+        {
+            // conversion code may be needed to work with the ML library
+            var cameraParameters = camera.GetParameters();
+            var width = cameraParameters.PreviewSize.Width;
+            var height = cameraParameters.PreviewSize.Height;
+            var yuv = new YuvImage(yuvData, cameraParameters.PreviewFormat, width, height, null);
+            var ms = new MemoryStream();
+            var quality = 100;   // adjust this as needed
+            yuv.CompressToJpeg(new Rect(0, 0, width, height), quality, ms);
+            var jpegData = ms.ToArray();
+
+            return jpegData;
         }
     }
 }
