@@ -209,7 +209,8 @@
                 <StackLayout vsm:Ambient.ForeColor="Blue"
                              Margin="20">
                     <controls:CameraPreviewControl x:Name="CameraPreviewControl"
-                                                   IsVisible="False" />
+                                                   IsVisible="False"
+                                                   MediaFrameArrived="CameraPreviewControl_MediaFrameArrived"/>
                     <Button Text="Flip Camera"
                             Clicked="FlipCameraButton_OnClicked" />
                     <Button Text="Toggle continuous autofocus"

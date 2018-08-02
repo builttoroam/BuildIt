@@ -160,5 +160,10 @@ namespace BuildIt.Forms.Sample
             var cameras = await CameraPreviewControl.RetrieveCamerasAsync();
             AvailableCamerasLabel.Text = string.Join(Environment.NewLine, cameras.Select(c => $"Camera id: {c.Id}, facing: {c.CameraFacing}"));
         }
+
+        private void CameraPreviewControl_MediaFrameArrived(object sender, MediaFrameEventArgs eventArgs)
+        {
+
+        }
     }
 }
