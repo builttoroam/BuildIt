@@ -1,6 +1,9 @@
 ﻿using AVFoundation;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Ios;
+using CoreFoundation;
+using CoreMedia;
+using CoreVideo;
 using Foundation;
 using System;
 using System.Collections.Generic;
@@ -16,7 +19,7 @@ using Xamarin.Forms.Platform.iOS;
 namespace BuildIt.Forms.Controls.Platforms.Ios
 {
     /// <inheritdoc />
-    public class CameraPreviewControlRenderer : FrameRenderer
+    public class CameraPreviewControlRenderer : FrameRenderer/*, IAVCaptureVideoDataOutputSampleBufferDelegate*/
     {
         private AVCaptureSession captureSession;
         private AVCaptureDeviceInput captureDeviceInput;
@@ -25,7 +28,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private UIView liveCameraStream;
         private bool isInitialized;
         private CameraPreviewControl cameraPreviewControl;
-
+        AVCaptureVideoDataOutput videoOutput;
+        FrameExtractor frameExtractor;
         /// <inheritdoc />
         public override void LayoutSubviews()
         {
@@ -199,26 +203,19 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
         private void StopCameraFeed()
         {
-            if (captureDeviceInput != null)
-            {
-                captureSession?.RemoveInput(captureDeviceInput);
-                captureDeviceInput.Dispose();
-                captureDeviceInput = null;
-            }
+            captureSession?.RemoveInput(captureDeviceInput);
+            captureDeviceInput?.Dispose();
+            captureDeviceInput = null;
 
-            if (captureSession != null)
-            {
-                captureSession.StopRunning();
-                captureSession.Dispose();
-                captureSession = null;
-            }
+            captureSession?.StopRunning();
+            captureSession?.Dispose();
+            captureSession = null;
 
-            if (stillImageOutput != null)
-            {
-                stillImageOutput.Dispose();
-                stillImageOutput = null;
-            }
+            stillImageOutput?.Dispose();
+            stillImageOutput = null;
 
+            videoOutput?.Dispose();
+            videoOutput = null;
             isInitialized = false;
         }
 
@@ -252,6 +249,16 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             {
                 OutputSettings = new NSDictionary(AVVideo.CodecKey, AVVideo.CodecJPEG)
             };
+            videoOutput = new AVCaptureVideoDataOutput()
+            {
+                AlwaysDiscardsLateVideoFrames = true
+            };
+            var videoCaptureQueue = new DispatchQueue("Video Capture Queue");
+            videoOutput.SetSampleBufferDelegateQueue(new FrameExtractor(cameraPreviewControl.OnMediaFrameArrived), videoCaptureQueue);
+            if (captureSession.CanAddOutput(videoOutput))
+            {
+                captureSession.AddOutput(videoOutput);
+            }
 
             captureSession.AddOutput(stillImageOutput);
             captureSession.AddInput(captureDeviceInput);
@@ -351,6 +358,36 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
 
             return cameras;
+        }
+
+        //[Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
+        //private void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("output sample buffer");
+        //    var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
+        //    if (pixelBuffer != null)
+        //    {
+        //        cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(pixelBuffer));
+        //    }
+        //}
+    }
+
+    internal class FrameExtractor : AVCaptureVideoDataOutputSampleBufferDelegate
+    {
+        private readonly Action<MediaFrame> frameArrivedAction;
+
+        public FrameExtractor(Action<MediaFrame> frameArrivedAction)
+        {
+            this.frameArrivedAction = frameArrivedAction;
+        }
+
+        public override void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
+        {
+            var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
+            if (pixelBuffer != null)
+            {
+                frameArrivedAction(new MediaFrame(pixelBuffer));
+            }
         }
     }
 }
