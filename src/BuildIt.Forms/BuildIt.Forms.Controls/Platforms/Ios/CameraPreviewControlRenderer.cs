@@ -28,8 +28,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private UIView liveCameraStream;
         private bool isInitialized;
         private CameraPreviewControl cameraPreviewControl;
-        AVCaptureVideoDataOutput videoOutput;
-        FrameExtractor frameExtractor;
+        private AVCaptureVideoDataOutput videoOutput;
+        private FrameExtractor frameExtractor;
+
         /// <inheritdoc />
         public override void LayoutSubviews()
         {
@@ -254,11 +255,12 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 AlwaysDiscardsLateVideoFrames = true
             };
             var videoCaptureQueue = new DispatchQueue("Video Capture Queue");
-            videoOutput.SetSampleBufferDelegateQueue(new FrameExtractor(cameraPreviewControl.OnMediaFrameArrived), videoCaptureQueue);
-            if (captureSession.CanAddOutput(videoOutput))
-            {
-                captureSession.AddOutput(videoOutput);
-            }
+            //frameExtractor = new FrameExtractor(cameraPreviewControl.OnMediaFrameArrived);
+            //videoOutput.SetSampleBufferDelegateQueue(frameExtractor, videoCaptureQueue);
+            //if (captureSession.CanAddOutput(videoOutput))
+            //{
+            //    captureSession.AddOutput(videoOutput);
+            //}
 
             captureSession.AddOutput(stillImageOutput);
             captureSession.AddInput(captureDeviceInput);

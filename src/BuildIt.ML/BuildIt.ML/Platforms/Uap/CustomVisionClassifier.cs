@@ -19,6 +19,7 @@ namespace BuildIt.ML
         private const string Loss = "loss";
         private string[] labels;
         private LearningModelPreview learningModel;
+        CustomVisionOutput customVisionOutput;
 
         public async Task InitAsync(string modelName, string[] labels)
         {
@@ -27,6 +28,7 @@ namespace BuildIt.ML
                 this.labels = labels;
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/{modelName}.onnx"));
                 learningModel = await LearningModelPreview.LoadModelFromStorageFileAsync(file);
+                customVisionOutput = new CustomVisionOutput(labels);
             }
 
             // TODO: return an error
@@ -53,6 +55,22 @@ namespace BuildIt.ML
         private bool IsWindowsMLSupported()
         {
             return ApiInformation.IsApiContractPresent(WindowsMLContract, 1, 0);
+        }
+
+        public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
+        {
+            var videoFrame = obj as VideoFrame;
+            if (videoFrame?.Direct3DSurface == null)
+            {
+                return new List<ImageClassification>();
+            }
+
+            var binding = new LearningModelBindingPreview(learningModel);
+            binding.Bind(Data, videoFrame);
+            binding.Bind(ClassLabel, customVisionOutput.ClassLabel);
+            binding.Bind(Loss, customVisionOutput.Loss);
+            var result = await learningModel.EvaluateAsync(binding, string.Empty);
+            return customVisionOutput.Loss.Select(l => new ImageClassification(l.Key, l.Value)).ToList().AsReadOnly();
         }
     }
 }

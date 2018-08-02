@@ -26,6 +26,2101 @@ namespace BuildIt.ML.Sample.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_fade_in = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_fade_in;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_fade_out = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_fade_out;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_grow_fade_in_from_bottom = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_popup_enter = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_popup_enter;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_popup_exit = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_popup_exit;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_shrink_fade_out_from_bottom = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_shrink_fade_out_from_bottom;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_slide_in_bottom = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_slide_in_bottom;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_slide_in_top = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_slide_in_top;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_slide_out_bottom = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_slide_out_bottom;
+			global::BuildIt.Forms.Controls.Resource.Animation.abc_slide_out_top = global::BuildIt.ML.Sample.Droid.Resource.Animation.abc_slide_out_top;
+			global::BuildIt.Forms.Controls.Resource.Animation.design_bottom_sheet_slide_in = global::BuildIt.ML.Sample.Droid.Resource.Animation.design_bottom_sheet_slide_in;
+			global::BuildIt.Forms.Controls.Resource.Animation.design_bottom_sheet_slide_out = global::BuildIt.ML.Sample.Droid.Resource.Animation.design_bottom_sheet_slide_out;
+			global::BuildIt.Forms.Controls.Resource.Animation.design_snackbar_in = global::BuildIt.ML.Sample.Droid.Resource.Animation.design_snackbar_in;
+			global::BuildIt.Forms.Controls.Resource.Animation.design_snackbar_out = global::BuildIt.ML.Sample.Droid.Resource.Animation.design_snackbar_out;
+			global::BuildIt.Forms.Controls.Resource.Animator.design_appbar_state_list_animator = global::BuildIt.ML.Sample.Droid.Resource.Animator.design_appbar_state_list_animator;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarDivider = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarDivider;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarItemBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarItemBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarPopupTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarPopupTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarSize = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarSize;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarSplitStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarSplitStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarTabBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarTabBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarTabStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarTabStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarTabTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarTabTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionBarWidgetTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarWidgetTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionDropDownStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionDropDownStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionMenuTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionMenuTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionMenuTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionMenuTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeCloseButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeCloseButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeCloseDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeCloseDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeCopyDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeCopyDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeCutDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeCutDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeFindDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeFindDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModePasteDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModePasteDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModePopupWindowStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModePopupWindowStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeSelectAllDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeSelectAllDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeShareDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeShareDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeSplitBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeSplitBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionModeWebSearchDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionModeWebSearchDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionOverflowButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionOverflowButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionOverflowMenuStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionOverflowMenuStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionProviderClass = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionProviderClass;
+			global::BuildIt.Forms.Controls.Resource.Attribute.actionViewClass = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionViewClass;
+			global::BuildIt.Forms.Controls.Resource.Attribute.activityChooserViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.activityChooserViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.alertDialogButtonGroupStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.alertDialogButtonGroupStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.alertDialogCenterButtons = global::BuildIt.ML.Sample.Droid.Resource.Attribute.alertDialogCenterButtons;
+			global::BuildIt.Forms.Controls.Resource.Attribute.alertDialogStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.alertDialogStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.alertDialogTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.alertDialogTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.allowStacking = global::BuildIt.ML.Sample.Droid.Resource.Attribute.allowStacking;
+			global::BuildIt.Forms.Controls.Resource.Attribute.alpha = global::BuildIt.ML.Sample.Droid.Resource.Attribute.alpha;
+			global::BuildIt.Forms.Controls.Resource.Attribute.arrowHeadLength = global::BuildIt.ML.Sample.Droid.Resource.Attribute.arrowHeadLength;
+			global::BuildIt.Forms.Controls.Resource.Attribute.arrowShaftLength = global::BuildIt.ML.Sample.Droid.Resource.Attribute.arrowShaftLength;
+			global::BuildIt.Forms.Controls.Resource.Attribute.autoCompleteTextViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.autoCompleteTextViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.background = global::BuildIt.ML.Sample.Droid.Resource.Attribute.background;
+			global::BuildIt.Forms.Controls.Resource.Attribute.backgroundSplit = global::BuildIt.ML.Sample.Droid.Resource.Attribute.backgroundSplit;
+			global::BuildIt.Forms.Controls.Resource.Attribute.backgroundStacked = global::BuildIt.ML.Sample.Droid.Resource.Attribute.backgroundStacked;
+			global::BuildIt.Forms.Controls.Resource.Attribute.backgroundTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.backgroundTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.backgroundTintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.backgroundTintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.barLength = global::BuildIt.ML.Sample.Droid.Resource.Attribute.barLength;
+			global::BuildIt.Forms.Controls.Resource.Attribute.behavior_autoHide = global::BuildIt.ML.Sample.Droid.Resource.Attribute.behavior_autoHide;
+			global::BuildIt.Forms.Controls.Resource.Attribute.behavior_hideable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.behavior_hideable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.behavior_overlapTop = global::BuildIt.ML.Sample.Droid.Resource.Attribute.behavior_overlapTop;
+			global::BuildIt.Forms.Controls.Resource.Attribute.behavior_peekHeight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.behavior_peekHeight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.behavior_skipCollapsed = global::BuildIt.ML.Sample.Droid.Resource.Attribute.behavior_skipCollapsed;
+			global::BuildIt.Forms.Controls.Resource.Attribute.borderWidth = global::BuildIt.ML.Sample.Droid.Resource.Attribute.borderWidth;
+			global::BuildIt.Forms.Controls.Resource.Attribute.borderlessButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.borderlessButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.bottomSheetDialogTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.bottomSheetDialogTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.bottomSheetStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.bottomSheetStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonBarButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonBarButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonBarNegativeButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonBarNegativeButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonBarNeutralButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonBarNeutralButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonBarPositiveButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonBarPositiveButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonGravity = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonGravity;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonPanelSideLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonPanelSideLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonStyleSmall = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonStyleSmall;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.buttonTintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.buttonTintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.cardBackgroundColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.cardBackgroundColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.cardCornerRadius = global::BuildIt.ML.Sample.Droid.Resource.Attribute.cardCornerRadius;
+			global::BuildIt.Forms.Controls.Resource.Attribute.cardElevation = global::BuildIt.ML.Sample.Droid.Resource.Attribute.cardElevation;
+			global::BuildIt.Forms.Controls.Resource.Attribute.cardMaxElevation = global::BuildIt.ML.Sample.Droid.Resource.Attribute.cardMaxElevation;
+			global::BuildIt.Forms.Controls.Resource.Attribute.cardPreventCornerOverlap = global::BuildIt.ML.Sample.Droid.Resource.Attribute.cardPreventCornerOverlap;
+			global::BuildIt.Forms.Controls.Resource.Attribute.cardUseCompatPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.cardUseCompatPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.checkboxStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.checkboxStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.checkedTextViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.checkedTextViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.closeIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.closeIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.closeItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.closeItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.collapseContentDescription = global::BuildIt.ML.Sample.Droid.Resource.Attribute.collapseContentDescription;
+			global::BuildIt.Forms.Controls.Resource.Attribute.collapseIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.collapseIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.collapsedTitleGravity = global::BuildIt.ML.Sample.Droid.Resource.Attribute.collapsedTitleGravity;
+			global::BuildIt.Forms.Controls.Resource.Attribute.collapsedTitleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.collapsedTitleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.color = global::BuildIt.ML.Sample.Droid.Resource.Attribute.color;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorAccent = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorAccent;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorBackgroundFloating = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorBackgroundFloating;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorButtonNormal = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorButtonNormal;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorControlActivated = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorControlActivated;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorControlHighlight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorControlHighlight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorControlNormal = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorControlNormal;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorPrimary = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorPrimary;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorPrimaryDark = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorPrimaryDark;
+			global::BuildIt.Forms.Controls.Resource.Attribute.colorSwitchThumbNormal = global::BuildIt.ML.Sample.Droid.Resource.Attribute.colorSwitchThumbNormal;
+			global::BuildIt.Forms.Controls.Resource.Attribute.commitIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.commitIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentInsetEnd = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentInsetEnd;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentInsetEndWithActions = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentInsetEndWithActions;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentInsetLeft = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentInsetLeft;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentInsetRight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentInsetRight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentInsetStart = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentInsetStart;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentInsetStartWithNavigation = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentInsetStartWithNavigation;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentPaddingBottom = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentPaddingBottom;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentPaddingLeft = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentPaddingLeft;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentPaddingRight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentPaddingRight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentPaddingTop = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentPaddingTop;
+			global::BuildIt.Forms.Controls.Resource.Attribute.contentScrim = global::BuildIt.ML.Sample.Droid.Resource.Attribute.contentScrim;
+			global::BuildIt.Forms.Controls.Resource.Attribute.controlBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.controlBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.counterEnabled = global::BuildIt.ML.Sample.Droid.Resource.Attribute.counterEnabled;
+			global::BuildIt.Forms.Controls.Resource.Attribute.counterMaxLength = global::BuildIt.ML.Sample.Droid.Resource.Attribute.counterMaxLength;
+			global::BuildIt.Forms.Controls.Resource.Attribute.counterOverflowTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.counterOverflowTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.counterTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.counterTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.customNavigationLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.customNavigationLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.defaultQueryHint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.defaultQueryHint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dialogPreferredPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dialogPreferredPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dialogTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dialogTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.displayOptions = global::BuildIt.ML.Sample.Droid.Resource.Attribute.displayOptions;
+			global::BuildIt.Forms.Controls.Resource.Attribute.divider = global::BuildIt.ML.Sample.Droid.Resource.Attribute.divider;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dividerHorizontal = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dividerHorizontal;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dividerPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dividerPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dividerVertical = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dividerVertical;
+			global::BuildIt.Forms.Controls.Resource.Attribute.drawableSize = global::BuildIt.ML.Sample.Droid.Resource.Attribute.drawableSize;
+			global::BuildIt.Forms.Controls.Resource.Attribute.drawerArrowStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.drawerArrowStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dropDownListViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dropDownListViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.dropdownListPreferredItemHeight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.dropdownListPreferredItemHeight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.editTextBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.editTextBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.editTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.editTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.editTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.editTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.elevation = global::BuildIt.ML.Sample.Droid.Resource.Attribute.elevation;
+			global::BuildIt.Forms.Controls.Resource.Attribute.errorEnabled = global::BuildIt.ML.Sample.Droid.Resource.Attribute.errorEnabled;
+			global::BuildIt.Forms.Controls.Resource.Attribute.errorTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.errorTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandActivityOverflowButtonDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandActivityOverflowButtonDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expanded = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expanded;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleGravity = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleGravity;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleMargin = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleMargin;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleMarginBottom = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleMarginBottom;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleMarginEnd = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleMarginEnd;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleMarginStart = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleMarginStart;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleMarginTop = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleMarginTop;
+			global::BuildIt.Forms.Controls.Resource.Attribute.expandedTitleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.expandedTitleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.externalRouteEnabledDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.externalRouteEnabledDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.fabSize = global::BuildIt.ML.Sample.Droid.Resource.Attribute.fabSize;
+			global::BuildIt.Forms.Controls.Resource.Attribute.foregroundInsidePadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.foregroundInsidePadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.gapBetweenBars = global::BuildIt.ML.Sample.Droid.Resource.Attribute.gapBetweenBars;
+			global::BuildIt.Forms.Controls.Resource.Attribute.goIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.goIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.headerLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.headerLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.height = global::BuildIt.ML.Sample.Droid.Resource.Attribute.height;
+			global::BuildIt.Forms.Controls.Resource.Attribute.hideOnContentScroll = global::BuildIt.ML.Sample.Droid.Resource.Attribute.hideOnContentScroll;
+			global::BuildIt.Forms.Controls.Resource.Attribute.hintAnimationEnabled = global::BuildIt.ML.Sample.Droid.Resource.Attribute.hintAnimationEnabled;
+			global::BuildIt.Forms.Controls.Resource.Attribute.hintEnabled = global::BuildIt.ML.Sample.Droid.Resource.Attribute.hintEnabled;
+			global::BuildIt.Forms.Controls.Resource.Attribute.hintTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.hintTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.homeAsUpIndicator = global::BuildIt.ML.Sample.Droid.Resource.Attribute.homeAsUpIndicator;
+			global::BuildIt.Forms.Controls.Resource.Attribute.homeLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.homeLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.icon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.icon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.iconifiedByDefault = global::BuildIt.ML.Sample.Droid.Resource.Attribute.iconifiedByDefault;
+			global::BuildIt.Forms.Controls.Resource.Attribute.imageButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.imageButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.indeterminateProgressStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.indeterminateProgressStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.initialActivityCount = global::BuildIt.ML.Sample.Droid.Resource.Attribute.initialActivityCount;
+			global::BuildIt.Forms.Controls.Resource.Attribute.insetForeground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.insetForeground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.isLightTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.isLightTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.itemBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.itemBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.itemIconTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.itemIconTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.itemPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.itemPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.itemTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.itemTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.itemTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.itemTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.keylines = global::BuildIt.ML.Sample.Droid.Resource.Attribute.keylines;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layoutManager = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layoutManager;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_anchor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_anchor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_anchorGravity = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_anchorGravity;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_behavior = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_behavior;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_collapseMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_collapseMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_collapseParallaxMultiplier = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_collapseParallaxMultiplier;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_dodgeInsetEdges = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_dodgeInsetEdges;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_insetEdge = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_insetEdge;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_keyline = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_keyline;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_scrollFlags = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_scrollFlags;
+			global::BuildIt.Forms.Controls.Resource.Attribute.layout_scrollInterpolator = global::BuildIt.ML.Sample.Droid.Resource.Attribute.layout_scrollInterpolator;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listChoiceBackgroundIndicator = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listDividerAlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listDividerAlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listMenuViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listMenuViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listPopupWindowStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listPopupWindowStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listPreferredItemHeight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listPreferredItemHeight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listPreferredItemHeightLarge = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listPreferredItemHeightLarge;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listPreferredItemHeightSmall = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listPreferredItemHeightSmall;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listPreferredItemPaddingLeft = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listPreferredItemPaddingLeft;
+			global::BuildIt.Forms.Controls.Resource.Attribute.listPreferredItemPaddingRight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.listPreferredItemPaddingRight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.logo = global::BuildIt.ML.Sample.Droid.Resource.Attribute.logo;
+			global::BuildIt.Forms.Controls.Resource.Attribute.logoDescription = global::BuildIt.ML.Sample.Droid.Resource.Attribute.logoDescription;
+			global::BuildIt.Forms.Controls.Resource.Attribute.maxActionInlineWidth = global::BuildIt.ML.Sample.Droid.Resource.Attribute.maxActionInlineWidth;
+			global::BuildIt.Forms.Controls.Resource.Attribute.maxButtonHeight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.maxButtonHeight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.measureWithLargestChild = global::BuildIt.ML.Sample.Droid.Resource.Attribute.measureWithLargestChild;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteAudioTrackDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteAudioTrackDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteCloseDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteCloseDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteControlPanelThemeOverlay = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteControlPanelThemeOverlay;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteDefaultIconDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteDefaultIconDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRoutePauseDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRoutePauseDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRoutePlayDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRoutePlayDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteSpeakerGroupIconDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteSpeakerGroupIconDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteSpeakerIconDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteSpeakerIconDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteStopDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteStopDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.mediaRouteTvIconDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.mediaRouteTvIconDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.menu = global::BuildIt.ML.Sample.Droid.Resource.Attribute.menu;
+			global::BuildIt.Forms.Controls.Resource.Attribute.multiChoiceItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.multiChoiceItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.navigationContentDescription = global::BuildIt.ML.Sample.Droid.Resource.Attribute.navigationContentDescription;
+			global::BuildIt.Forms.Controls.Resource.Attribute.navigationIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.navigationIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.navigationMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.navigationMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.overlapAnchor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.overlapAnchor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.paddingBottomNoButtons = global::BuildIt.ML.Sample.Droid.Resource.Attribute.paddingBottomNoButtons;
+			global::BuildIt.Forms.Controls.Resource.Attribute.paddingEnd = global::BuildIt.ML.Sample.Droid.Resource.Attribute.paddingEnd;
+			global::BuildIt.Forms.Controls.Resource.Attribute.paddingStart = global::BuildIt.ML.Sample.Droid.Resource.Attribute.paddingStart;
+			global::BuildIt.Forms.Controls.Resource.Attribute.paddingTopNoTitle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.paddingTopNoTitle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.panelBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.panelBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.panelMenuListTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.panelMenuListTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.panelMenuListWidth = global::BuildIt.ML.Sample.Droid.Resource.Attribute.panelMenuListWidth;
+			global::BuildIt.Forms.Controls.Resource.Attribute.passwordToggleContentDescription = global::BuildIt.ML.Sample.Droid.Resource.Attribute.passwordToggleContentDescription;
+			global::BuildIt.Forms.Controls.Resource.Attribute.passwordToggleDrawable = global::BuildIt.ML.Sample.Droid.Resource.Attribute.passwordToggleDrawable;
+			global::BuildIt.Forms.Controls.Resource.Attribute.passwordToggleEnabled = global::BuildIt.ML.Sample.Droid.Resource.Attribute.passwordToggleEnabled;
+			global::BuildIt.Forms.Controls.Resource.Attribute.passwordToggleTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.passwordToggleTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.passwordToggleTintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.passwordToggleTintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.popupMenuStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.popupMenuStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.popupTheme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.popupTheme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.popupWindowStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.popupWindowStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.preserveIconSpacing = global::BuildIt.ML.Sample.Droid.Resource.Attribute.preserveIconSpacing;
+			global::BuildIt.Forms.Controls.Resource.Attribute.pressedTranslationZ = global::BuildIt.ML.Sample.Droid.Resource.Attribute.pressedTranslationZ;
+			global::BuildIt.Forms.Controls.Resource.Attribute.progressBarPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.progressBarPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.progressBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.progressBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.queryBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.queryBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.queryHint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.queryHint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.radioButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.radioButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.ratingBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.ratingBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.ratingBarStyleIndicator = global::BuildIt.ML.Sample.Droid.Resource.Attribute.ratingBarStyleIndicator;
+			global::BuildIt.Forms.Controls.Resource.Attribute.ratingBarStyleSmall = global::BuildIt.ML.Sample.Droid.Resource.Attribute.ratingBarStyleSmall;
+			global::BuildIt.Forms.Controls.Resource.Attribute.reverseLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.reverseLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.rippleColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.rippleColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.scrimAnimationDuration = global::BuildIt.ML.Sample.Droid.Resource.Attribute.scrimAnimationDuration;
+			global::BuildIt.Forms.Controls.Resource.Attribute.scrimVisibleHeightTrigger = global::BuildIt.ML.Sample.Droid.Resource.Attribute.scrimVisibleHeightTrigger;
+			global::BuildIt.Forms.Controls.Resource.Attribute.searchHintIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.searchHintIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.searchIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.searchIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.searchViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.searchViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.seekBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.seekBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.selectableItemBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.selectableItemBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.selectableItemBackgroundBorderless = global::BuildIt.ML.Sample.Droid.Resource.Attribute.selectableItemBackgroundBorderless;
+			global::BuildIt.Forms.Controls.Resource.Attribute.showAsAction = global::BuildIt.ML.Sample.Droid.Resource.Attribute.showAsAction;
+			global::BuildIt.Forms.Controls.Resource.Attribute.showDividers = global::BuildIt.ML.Sample.Droid.Resource.Attribute.showDividers;
+			global::BuildIt.Forms.Controls.Resource.Attribute.showText = global::BuildIt.ML.Sample.Droid.Resource.Attribute.showText;
+			global::BuildIt.Forms.Controls.Resource.Attribute.showTitle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.showTitle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.singleChoiceItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.singleChoiceItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.spanCount = global::BuildIt.ML.Sample.Droid.Resource.Attribute.spanCount;
+			global::BuildIt.Forms.Controls.Resource.Attribute.spinBars = global::BuildIt.ML.Sample.Droid.Resource.Attribute.spinBars;
+			global::BuildIt.Forms.Controls.Resource.Attribute.spinnerDropDownItemStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.spinnerDropDownItemStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.spinnerStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.spinnerStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.splitTrack = global::BuildIt.ML.Sample.Droid.Resource.Attribute.splitTrack;
+			global::BuildIt.Forms.Controls.Resource.Attribute.srcCompat = global::BuildIt.ML.Sample.Droid.Resource.Attribute.srcCompat;
+			global::BuildIt.Forms.Controls.Resource.Attribute.stackFromEnd = global::BuildIt.ML.Sample.Droid.Resource.Attribute.stackFromEnd;
+			global::BuildIt.Forms.Controls.Resource.Attribute.state_above_anchor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.state_above_anchor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.state_collapsed = global::BuildIt.ML.Sample.Droid.Resource.Attribute.state_collapsed;
+			global::BuildIt.Forms.Controls.Resource.Attribute.state_collapsible = global::BuildIt.ML.Sample.Droid.Resource.Attribute.state_collapsible;
+			global::BuildIt.Forms.Controls.Resource.Attribute.statusBarBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.statusBarBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.statusBarScrim = global::BuildIt.ML.Sample.Droid.Resource.Attribute.statusBarScrim;
+			global::BuildIt.Forms.Controls.Resource.Attribute.subMenuArrow = global::BuildIt.ML.Sample.Droid.Resource.Attribute.subMenuArrow;
+			global::BuildIt.Forms.Controls.Resource.Attribute.submitBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.submitBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.subtitle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.subtitle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.subtitleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.subtitleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.subtitleTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.subtitleTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.subtitleTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.subtitleTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.suggestionRowLayout = global::BuildIt.ML.Sample.Droid.Resource.Attribute.suggestionRowLayout;
+			global::BuildIt.Forms.Controls.Resource.Attribute.switchMinWidth = global::BuildIt.ML.Sample.Droid.Resource.Attribute.switchMinWidth;
+			global::BuildIt.Forms.Controls.Resource.Attribute.switchPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.switchPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.switchStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.switchStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.switchTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.switchTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabBackground = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabBackground;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabContentStart = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabContentStart;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabGravity = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabGravity;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabIndicatorColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabIndicatorColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabIndicatorHeight = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabIndicatorHeight;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabMaxWidth = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabMaxWidth;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabMinWidth = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabMinWidth;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabPaddingBottom = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabPaddingBottom;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabPaddingEnd = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabPaddingEnd;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabPaddingStart = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabPaddingStart;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabPaddingTop = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabPaddingTop;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabSelectedTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabSelectedTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tabTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tabTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAllCaps = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAllCaps;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceLargePopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceLargePopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceListItem = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceListItem;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceListItemSecondary = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceListItemSecondary;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceListItemSmall = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceListItemSmall;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearancePopupMenuHeader = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearancePopupMenuHeader;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceSearchResultSubtitle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceSearchResultSubtitle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceSearchResultTitle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceSearchResultTitle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textAppearanceSmallPopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textAppearanceSmallPopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textColorAlertDialogListItem = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textColorAlertDialogListItem;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textColorError = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textColorError;
+			global::BuildIt.Forms.Controls.Resource.Attribute.textColorSearchUrl = global::BuildIt.ML.Sample.Droid.Resource.Attribute.textColorSearchUrl;
+			global::BuildIt.Forms.Controls.Resource.Attribute.theme = global::BuildIt.ML.Sample.Droid.Resource.Attribute.theme;
+			global::BuildIt.Forms.Controls.Resource.Attribute.thickness = global::BuildIt.ML.Sample.Droid.Resource.Attribute.thickness;
+			global::BuildIt.Forms.Controls.Resource.Attribute.thumbTextPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.thumbTextPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.thumbTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.thumbTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.thumbTintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.thumbTintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tickMark = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tickMark;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tickMarkTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tickMarkTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tickMarkTintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tickMarkTintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.tintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.tintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.title = global::BuildIt.ML.Sample.Droid.Resource.Attribute.title;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleEnabled = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleEnabled;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleMargin = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleMargin;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleMarginBottom = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleMarginBottom;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleMarginEnd = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleMarginEnd;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleMarginStart = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleMarginStart;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleMarginTop = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleMarginTop;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleMargins = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleMargins;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleTextColor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleTextColor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.titleTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.titleTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.toolbarId = global::BuildIt.ML.Sample.Droid.Resource.Attribute.toolbarId;
+			global::BuildIt.Forms.Controls.Resource.Attribute.toolbarNavigationButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.toolbarNavigationButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.toolbarStyle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.toolbarStyle;
+			global::BuildIt.Forms.Controls.Resource.Attribute.track = global::BuildIt.ML.Sample.Droid.Resource.Attribute.track;
+			global::BuildIt.Forms.Controls.Resource.Attribute.trackTint = global::BuildIt.ML.Sample.Droid.Resource.Attribute.trackTint;
+			global::BuildIt.Forms.Controls.Resource.Attribute.trackTintMode = global::BuildIt.ML.Sample.Droid.Resource.Attribute.trackTintMode;
+			global::BuildIt.Forms.Controls.Resource.Attribute.useCompatPadding = global::BuildIt.ML.Sample.Droid.Resource.Attribute.useCompatPadding;
+			global::BuildIt.Forms.Controls.Resource.Attribute.voiceIcon = global::BuildIt.ML.Sample.Droid.Resource.Attribute.voiceIcon;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowActionBar = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowActionBar;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowActionBarOverlay = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowActionBarOverlay;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowActionModeOverlay = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowActionModeOverlay;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowFixedHeightMajor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowFixedHeightMajor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowFixedHeightMinor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowFixedHeightMinor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowFixedWidthMajor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowFixedWidthMajor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowFixedWidthMinor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowFixedWidthMinor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowMinWidthMajor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowMinWidthMajor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowMinWidthMinor = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowMinWidthMinor;
+			global::BuildIt.Forms.Controls.Resource.Attribute.windowNoTitle = global::BuildIt.ML.Sample.Droid.Resource.Attribute.windowNoTitle;
+			global::BuildIt.Forms.Controls.Resource.Boolean.abc_action_bar_embed_tabs = global::BuildIt.ML.Sample.Droid.Resource.Boolean.abc_action_bar_embed_tabs;
+			global::BuildIt.Forms.Controls.Resource.Boolean.abc_allow_stacked_button_bar = global::BuildIt.ML.Sample.Droid.Resource.Boolean.abc_allow_stacked_button_bar;
+			global::BuildIt.Forms.Controls.Resource.Boolean.abc_config_actionMenuItemAllCaps = global::BuildIt.ML.Sample.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps;
+			global::BuildIt.Forms.Controls.Resource.Boolean.abc_config_closeDialogWhenTouchOutside = global::BuildIt.ML.Sample.Droid.Resource.Boolean.abc_config_closeDialogWhenTouchOutside;
+			global::BuildIt.Forms.Controls.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent = global::BuildIt.ML.Sample.Droid.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_background_cache_hint_selector_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_background_cache_hint_selector_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_background_cache_hint_selector_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_btn_colored_borderless_text_material = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_btn_colored_borderless_text_material;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_btn_colored_text_material = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_btn_colored_text_material;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_color_highlight_material = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_color_highlight_material;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_hint_foreground_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_hint_foreground_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_hint_foreground_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_hint_foreground_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_input_method_navigation_guard = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_input_method_navigation_guard;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_primary_text_disable_only_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_primary_text_disable_only_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_primary_text_disable_only_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_primary_text_disable_only_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_primary_text_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_primary_text_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_primary_text_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_primary_text_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_search_url_text = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_search_url_text;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_search_url_text_normal = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_search_url_text_normal;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_search_url_text_pressed = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_search_url_text_pressed;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_search_url_text_selected = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_search_url_text_selected;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_secondary_text_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_secondary_text_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_secondary_text_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_secondary_text_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_tint_btn_checkable = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_tint_btn_checkable;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_tint_default = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_tint_default;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_tint_edittext = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_tint_edittext;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_tint_seek_thumb = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_tint_seek_thumb;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_tint_spinner = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_tint_spinner;
+			global::BuildIt.Forms.Controls.Resource.Color.abc_tint_switch_track = global::BuildIt.ML.Sample.Droid.Resource.Color.abc_tint_switch_track;
+			global::BuildIt.Forms.Controls.Resource.Color.accent_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.accent_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.accent_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.accent_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.background_floating_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.background_floating_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.background_floating_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.background_floating_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.background_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.background_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.background_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.background_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.bright_foreground_disabled_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.bright_foreground_disabled_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.bright_foreground_disabled_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.bright_foreground_disabled_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.bright_foreground_inverse_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.bright_foreground_inverse_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.bright_foreground_inverse_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.bright_foreground_inverse_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.bright_foreground_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.bright_foreground_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.bright_foreground_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.bright_foreground_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.button_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.button_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.button_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.button_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.cardview_dark_background = global::BuildIt.ML.Sample.Droid.Resource.Color.cardview_dark_background;
+			global::BuildIt.Forms.Controls.Resource.Color.cardview_light_background = global::BuildIt.ML.Sample.Droid.Resource.Color.cardview_light_background;
+			global::BuildIt.Forms.Controls.Resource.Color.cardview_shadow_end_color = global::BuildIt.ML.Sample.Droid.Resource.Color.cardview_shadow_end_color;
+			global::BuildIt.Forms.Controls.Resource.Color.cardview_shadow_start_color = global::BuildIt.ML.Sample.Droid.Resource.Color.cardview_shadow_start_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_bottom_navigation_shadow_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_bottom_navigation_shadow_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_error = global::BuildIt.ML.Sample.Droid.Resource.Color.design_error;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_shadow_end_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_shadow_end_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_shadow_mid_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_shadow_mid_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_shadow_start_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_shadow_start_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_stroke_end_inner_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_stroke_end_inner_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_stroke_end_outer_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_stroke_end_outer_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_stroke_top_inner_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_stroke_top_inner_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_fab_stroke_top_outer_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_fab_stroke_top_outer_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_snackbar_background_color = global::BuildIt.ML.Sample.Droid.Resource.Color.design_snackbar_background_color;
+			global::BuildIt.Forms.Controls.Resource.Color.design_tint_password_toggle = global::BuildIt.ML.Sample.Droid.Resource.Color.design_tint_password_toggle;
+			global::BuildIt.Forms.Controls.Resource.Color.dim_foreground_disabled_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.dim_foreground_disabled_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.dim_foreground_disabled_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.dim_foreground_disabled_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.dim_foreground_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.dim_foreground_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.dim_foreground_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.dim_foreground_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.foreground_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.foreground_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.foreground_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.foreground_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.highlighted_text_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.highlighted_text_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.highlighted_text_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.highlighted_text_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.material_blue_grey_800 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_blue_grey_800;
+			global::BuildIt.Forms.Controls.Resource.Color.material_blue_grey_900 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_blue_grey_900;
+			global::BuildIt.Forms.Controls.Resource.Color.material_blue_grey_950 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_blue_grey_950;
+			global::BuildIt.Forms.Controls.Resource.Color.material_deep_teal_200 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_deep_teal_200;
+			global::BuildIt.Forms.Controls.Resource.Color.material_deep_teal_500 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_deep_teal_500;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_100 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_100;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_300 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_300;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_50 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_50;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_600 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_600;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_800 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_800;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_850 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_850;
+			global::BuildIt.Forms.Controls.Resource.Color.material_grey_900 = global::BuildIt.ML.Sample.Droid.Resource.Color.material_grey_900;
+			global::BuildIt.Forms.Controls.Resource.Color.notification_action_color_filter = global::BuildIt.ML.Sample.Droid.Resource.Color.notification_action_color_filter;
+			global::BuildIt.Forms.Controls.Resource.Color.notification_icon_bg_color = global::BuildIt.ML.Sample.Droid.Resource.Color.notification_icon_bg_color;
+			global::BuildIt.Forms.Controls.Resource.Color.notification_material_background_media_default_color = global::BuildIt.ML.Sample.Droid.Resource.Color.notification_material_background_media_default_color;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_dark_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_dark_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_dark_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_dark_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_text_default_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_text_default_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_text_default_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_text_default_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_text_disabled_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_text_disabled_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.primary_text_disabled_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.primary_text_disabled_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.ripple_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.ripple_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.ripple_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.ripple_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.secondary_text_default_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.secondary_text_default_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.secondary_text_default_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.secondary_text_default_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.secondary_text_disabled_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.secondary_text_disabled_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.secondary_text_disabled_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.secondary_text_disabled_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.switch_thumb_disabled_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.switch_thumb_disabled_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.switch_thumb_disabled_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.switch_thumb_disabled_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.switch_thumb_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.switch_thumb_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.switch_thumb_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.switch_thumb_material_light;
+			global::BuildIt.Forms.Controls.Resource.Color.switch_thumb_normal_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Color.switch_thumb_normal_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Color.switch_thumb_normal_material_light = global::BuildIt.ML.Sample.Droid.Resource.Color.switch_thumb_normal_material_light;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_content_inset_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_content_inset_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_content_inset_with_nav = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_content_inset_with_nav;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_default_height_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_default_height_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_default_padding_end_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_default_padding_end_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_default_padding_start_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_default_padding_start_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_elevation_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_elevation_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_icon_vertical_padding_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_overflow_padding_end_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_overflow_padding_start_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_progress_bar_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_progress_bar_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_stacked_max_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_stacked_max_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_stacked_tab_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_bar_subtitle_top_margin_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_bar_subtitle_top_margin_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_button_min_height_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_button_min_height_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_button_min_width_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_button_min_width_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_action_button_min_width_overflow_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_action_button_min_width_overflow_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_alert_dialog_button_bar_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_alert_dialog_button_bar_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_button_inset_horizontal_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_button_inset_horizontal_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_button_inset_vertical_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_button_inset_vertical_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_button_padding_horizontal_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_button_padding_horizontal_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_button_padding_vertical_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_button_padding_vertical_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_cascading_menus_min_smallest_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_cascading_menus_min_smallest_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_config_prefDialogWidth = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_config_prefDialogWidth;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_control_corner_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_control_corner_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_control_inset_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_control_inset_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_control_padding_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_control_padding_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_fixed_height_major = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_fixed_height_major;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_fixed_height_minor = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_fixed_height_minor;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_fixed_width_major = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_fixed_width_major;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_fixed_width_minor = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_fixed_width_minor;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_list_padding_bottom_no_buttons = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_list_padding_bottom_no_buttons;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_list_padding_top_no_title = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_list_padding_top_no_title;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_min_width_major = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_min_width_major;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_min_width_minor = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_min_width_minor;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_padding_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_padding_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_padding_top_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_padding_top_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dialog_title_divider_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dialog_title_divider_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_disabled_alpha_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_disabled_alpha_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_disabled_alpha_material_light = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_disabled_alpha_material_light;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dropdownitem_icon_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dropdownitem_icon_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dropdownitem_text_padding_left = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dropdownitem_text_padding_left;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_dropdownitem_text_padding_right = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_dropdownitem_text_padding_right;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_edit_text_inset_bottom_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_edit_text_inset_bottom_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_edit_text_inset_horizontal_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_edit_text_inset_top_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_edit_text_inset_top_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_floating_window_z = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_floating_window_z;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_list_item_padding_horizontal_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_panel_menu_list_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_panel_menu_list_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_progress_bar_height_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_progress_bar_height_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_search_view_preferred_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_search_view_preferred_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_search_view_preferred_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_search_view_preferred_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_seekbar_track_background_height_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_seekbar_track_background_height_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_seekbar_track_progress_height_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_seekbar_track_progress_height_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_select_dialog_padding_start_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_select_dialog_padding_start_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_switch_padding = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_switch_padding;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_body_1_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_body_1_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_body_2_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_body_2_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_button_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_button_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_caption_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_caption_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_display_1_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_display_1_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_display_2_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_display_2_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_display_3_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_display_3_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_display_4_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_display_4_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_headline_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_headline_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_large_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_large_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_medium_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_medium_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_menu_header_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_menu_header_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_menu_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_menu_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_small_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_small_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_subhead_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_subhead_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_subtitle_material_toolbar = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_subtitle_material_toolbar;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_title_material = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_title_material;
+			global::BuildIt.Forms.Controls.Resource.Dimension.abc_text_size_title_material_toolbar = global::BuildIt.ML.Sample.Droid.Resource.Dimension.abc_text_size_title_material_toolbar;
+			global::BuildIt.Forms.Controls.Resource.Dimension.cardview_compat_inset_shadow = global::BuildIt.ML.Sample.Droid.Resource.Dimension.cardview_compat_inset_shadow;
+			global::BuildIt.Forms.Controls.Resource.Dimension.cardview_default_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.cardview_default_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.cardview_default_radius = global::BuildIt.ML.Sample.Droid.Resource.Dimension.cardview_default_radius;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_appbar_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_appbar_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_active_item_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_active_item_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_active_text_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_active_text_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_item_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_item_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_item_min_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_item_min_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_margin = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_margin;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_shadow_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_shadow_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_navigation_text_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_navigation_text_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_sheet_modal_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_sheet_modal_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_bottom_sheet_peek_height_min = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_bottom_sheet_peek_height_min;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_fab_border_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_fab_border_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_fab_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_fab_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_fab_image_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_fab_image_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_fab_size_mini = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_fab_size_mini;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_fab_size_normal = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_fab_size_normal;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_fab_translation_z_pressed = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_fab_translation_z_pressed;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_navigation_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_navigation_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_navigation_icon_padding = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_navigation_icon_padding;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_navigation_icon_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_navigation_icon_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_navigation_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_navigation_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_navigation_padding_bottom = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_navigation_padding_bottom;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_navigation_separator_vertical_padding = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_navigation_separator_vertical_padding;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_action_inline_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_action_inline_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_background_corner_radius = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_background_corner_radius;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_elevation = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_elevation;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_extra_spacing_horizontal = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_extra_spacing_horizontal;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_min_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_min_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_padding_horizontal = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_padding_horizontal;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_padding_vertical = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_padding_vertical;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_padding_vertical_2lines = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_padding_vertical_2lines;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_snackbar_text_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_snackbar_text_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_tab_max_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_tab_max_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_tab_scrollable_min_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_tab_scrollable_min_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_tab_text_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_tab_text_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.design_tab_text_size_2line = global::BuildIt.ML.Sample.Droid.Resource.Dimension.design_tab_text_size_2line;
+			global::BuildIt.Forms.Controls.Resource.Dimension.disabled_alpha_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Dimension.disabled_alpha_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Dimension.disabled_alpha_material_light = global::BuildIt.ML.Sample.Droid.Resource.Dimension.disabled_alpha_material_light;
+			global::BuildIt.Forms.Controls.Resource.Dimension.highlight_alpha_material_colored = global::BuildIt.ML.Sample.Droid.Resource.Dimension.highlight_alpha_material_colored;
+			global::BuildIt.Forms.Controls.Resource.Dimension.highlight_alpha_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Dimension.highlight_alpha_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Dimension.highlight_alpha_material_light = global::BuildIt.ML.Sample.Droid.Resource.Dimension.highlight_alpha_material_light;
+			global::BuildIt.Forms.Controls.Resource.Dimension.hint_alpha_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Dimension.hint_alpha_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Dimension.hint_alpha_material_light = global::BuildIt.ML.Sample.Droid.Resource.Dimension.hint_alpha_material_light;
+			global::BuildIt.Forms.Controls.Resource.Dimension.hint_pressed_alpha_material_dark = global::BuildIt.ML.Sample.Droid.Resource.Dimension.hint_pressed_alpha_material_dark;
+			global::BuildIt.Forms.Controls.Resource.Dimension.hint_pressed_alpha_material_light = global::BuildIt.ML.Sample.Droid.Resource.Dimension.hint_pressed_alpha_material_light;
+			global::BuildIt.Forms.Controls.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::BuildIt.ML.Sample.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::BuildIt.Forms.Controls.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity = global::BuildIt.ML.Sample.Droid.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity;
+			global::BuildIt.Forms.Controls.Resource.Dimension.item_touch_helper_swipe_escape_velocity = global::BuildIt.ML.Sample.Droid.Resource.Dimension.item_touch_helper_swipe_escape_velocity;
+			global::BuildIt.Forms.Controls.Resource.Dimension.mr_controller_volume_group_list_item_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.mr_controller_volume_group_list_item_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.mr_controller_volume_group_list_item_icon_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.mr_controller_volume_group_list_item_icon_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.mr_controller_volume_group_list_max_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.mr_controller_volume_group_list_max_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.mr_controller_volume_group_list_padding_top = global::BuildIt.ML.Sample.Droid.Resource.Dimension.mr_controller_volume_group_list_padding_top;
+			global::BuildIt.Forms.Controls.Resource.Dimension.mr_dialog_fixed_width_major = global::BuildIt.ML.Sample.Droid.Resource.Dimension.mr_dialog_fixed_width_major;
+			global::BuildIt.Forms.Controls.Resource.Dimension.mr_dialog_fixed_width_minor = global::BuildIt.ML.Sample.Droid.Resource.Dimension.mr_dialog_fixed_width_minor;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_action_icon_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_action_icon_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_action_text_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_action_text_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_big_circle_margin = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_big_circle_margin;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_content_margin_start = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_content_margin_start;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_large_icon_height = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_large_icon_height;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_large_icon_width = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_large_icon_width;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_main_column_padding_top = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_main_column_padding_top;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_media_narrow_margin = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_media_narrow_margin;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_right_icon_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_right_icon_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_right_side_padding_top = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_right_side_padding_top;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_small_icon_background_padding = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_small_icon_background_padding;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_small_icon_size_as_large = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_small_icon_size_as_large;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_subtext_size = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_subtext_size;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_top_pad = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_top_pad;
+			global::BuildIt.Forms.Controls.Resource.Dimension.notification_top_pad_large_text = global::BuildIt.ML.Sample.Droid.Resource.Dimension.notification_top_pad_large_text;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ab_share_pack_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ab_share_pack_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_action_bar_item_background_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_action_bar_item_background_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_borderless_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_borderless_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_check_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_check_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_check_to_on_mtrl_000 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_check_to_on_mtrl_015 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_colored_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_colored_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_default_mtrl_shape = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_default_mtrl_shape;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_radio_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_radio_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_radio_to_on_mtrl_000 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_radio_to_on_mtrl_015 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_cab_background_internal_bg = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_cab_background_internal_bg;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_cab_background_top_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_cab_background_top_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_cab_background_top_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_cab_background_top_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_control_background_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_control_background_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_dialog_material_background = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_dialog_material_background;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_edit_text_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_edit_text_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_ab_back_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_ab_back_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_arrow_drop_right_black_24dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_arrow_drop_right_black_24dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_clear_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_clear_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_go_search_api_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_go_search_api_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_menu_overflow_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_menu_overflow_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_menu_share_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_menu_share_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_search_api_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_search_api_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_star_black_16dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_star_black_16dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_star_black_36dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_star_black_36dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_star_black_48dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_star_black_48dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_star_half_black_16dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_star_half_black_16dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_star_half_black_36dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_star_half_black_36dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_star_half_black_48dp = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_star_half_black_48dp;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ic_voice_search_api_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ic_voice_search_api_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_item_background_holo_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_item_background_holo_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_item_background_holo_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_item_background_holo_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_divider_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_divider_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_focused_holo = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_focused_holo;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_longpressed_holo = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_longpressed_holo;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_pressed_holo_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_pressed_holo_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_pressed_holo_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_pressed_holo_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_selector_background_transition_holo_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_selector_background_transition_holo_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_selector_disabled_holo_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_selector_disabled_holo_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_selector_disabled_holo_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_selector_disabled_holo_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_selector_holo_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_selector_holo_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_list_selector_holo_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_list_selector_holo_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_popup_background_mtrl_mult = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_popup_background_mtrl_mult;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ratingbar_indicator_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ratingbar_indicator_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ratingbar_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ratingbar_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_ratingbar_small_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_ratingbar_small_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_scrubber_primary_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_scrubber_primary_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_scrubber_track_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_scrubber_track_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_seekbar_thumb_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_seekbar_thumb_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_seekbar_tick_mark_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_seekbar_tick_mark_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_seekbar_track_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_seekbar_track_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_spinner_mtrl_am_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_spinner_mtrl_am_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_spinner_textfield_background_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_spinner_textfield_background_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_switch_thumb_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_switch_thumb_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_switch_track_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_switch_track_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_tab_indicator_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_tab_indicator_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_tab_indicator_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_tab_indicator_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_cursor_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_cursor_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_select_handle_left_mtrl_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_select_handle_left_mtrl_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_select_handle_left_mtrl_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_select_handle_left_mtrl_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_select_handle_middle_mtrl_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_select_handle_middle_mtrl_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_select_handle_middle_mtrl_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_select_handle_middle_mtrl_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_select_handle_right_mtrl_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_select_handle_right_mtrl_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_text_select_handle_right_mtrl_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_text_select_handle_right_mtrl_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_textfield_activated_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_textfield_activated_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_textfield_default_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_textfield_default_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_textfield_search_default_mtrl_alpha = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_textfield_search_default_mtrl_alpha;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_textfield_search_material = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_textfield_search_material;
+			global::BuildIt.Forms.Controls.Resource.Drawable.abc_vector_test = global::BuildIt.ML.Sample.Droid.Resource.Drawable.abc_vector_test;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_hide_password;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password_1 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_hide_password_1;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password_2 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_hide_password_2;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_hide_password_3 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_hide_password_3;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_show_password;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password_1 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_show_password_1;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password_2 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_show_password_2;
+			global::BuildIt.Forms.Controls.Resource.Drawable.avd_show_password_3 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.avd_show_password_3;
+			global::BuildIt.Forms.Controls.Resource.Drawable.design_bottom_navigation_item_background = global::BuildIt.ML.Sample.Droid.Resource.Drawable.design_bottom_navigation_item_background;
+			global::BuildIt.Forms.Controls.Resource.Drawable.design_fab_background = global::BuildIt.ML.Sample.Droid.Resource.Drawable.design_fab_background;
+			global::BuildIt.Forms.Controls.Resource.Drawable.design_ic_visibility = global::BuildIt.ML.Sample.Droid.Resource.Drawable.design_ic_visibility;
+			global::BuildIt.Forms.Controls.Resource.Drawable.design_ic_visibility_off = global::BuildIt.ML.Sample.Droid.Resource.Drawable.design_ic_visibility_off;
+			global::BuildIt.Forms.Controls.Resource.Drawable.design_password_eye = global::BuildIt.ML.Sample.Droid.Resource.Drawable.design_password_eye;
+			global::BuildIt.Forms.Controls.Resource.Drawable.design_snackbar_background = global::BuildIt.ML.Sample.Droid.Resource.Drawable.design_snackbar_background;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_audiotrack_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_audiotrack_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_audiotrack_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_audiotrack_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_dialog_close_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_dialog_close_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_dialog_close_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_dialog_close_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_00 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_00;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_01 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_01;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_02 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_02;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_03 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_03;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_04 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_04;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_05 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_05;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_06 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_06;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_07 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_07;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_08 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_08;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_09 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_09;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_10 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_10;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_11 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_11;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_12 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_12;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_13 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_13;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_14 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_14;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_collapse_15 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_collapse_15;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_00 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_00;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_01 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_01;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_02 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_02;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_03 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_03;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_04 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_04;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_05 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_05;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_06 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_06;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_07 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_07;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_08 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_08;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_09 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_09;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_10 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_10;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_11 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_11;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_12 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_12;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_13 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_13;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_14 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_14;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_group_expand_15 = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_group_expand_15;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_media_pause_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_media_pause_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_media_pause_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_media_pause_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_media_play_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_media_play_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_media_play_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_media_play_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_media_stop_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_media_stop_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_media_stop_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_media_stop_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_00_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_00_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_00_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_00_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_01_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_01_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_01_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_01_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_02_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_02_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_02_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_02_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_03_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_03_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_03_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_03_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_04_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_04_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_04_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_04_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_05_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_05_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_05_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_05_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_06_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_06_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_06_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_06_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_07_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_07_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_07_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_07_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_08_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_08_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_08_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_08_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_09_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_09_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_09_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_09_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_10_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_10_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_10_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_10_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_11_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_11_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_11_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_11_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_12_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_12_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_12_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_12_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_13_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_13_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_13_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_13_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_14_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_14_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_14_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_14_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_15_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_15_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_15_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_15_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_16_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_16_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_16_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_16_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_17_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_17_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_17_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_17_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_18_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_18_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_18_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_18_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_19_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_19_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_19_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_19_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_20_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_20_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_20_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_20_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_21_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_21_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_21_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_21_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_22_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_22_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connected_22_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connected_22_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_00_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_00_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_00_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_00_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_01_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_01_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_01_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_01_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_02_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_02_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_02_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_02_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_03_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_03_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_03_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_03_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_04_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_04_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_04_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_04_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_05_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_05_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_05_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_05_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_06_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_06_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_06_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_06_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_07_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_07_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_07_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_07_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_08_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_08_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_08_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_08_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_09_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_09_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_09_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_09_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_10_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_10_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_10_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_10_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_11_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_11_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_11_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_11_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_12_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_12_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_12_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_12_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_13_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_13_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_13_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_13_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_14_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_14_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_14_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_14_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_15_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_15_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_15_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_15_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_16_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_16_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_16_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_16_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_17_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_17_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_17_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_17_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_18_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_18_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_18_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_18_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_19_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_19_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_19_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_19_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_20_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_20_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_20_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_20_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_21_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_21_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_21_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_21_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_22_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_22_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_connecting_22_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_connecting_22_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_disabled_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_disabled_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_disabled_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_disabled_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_disconnected_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_disconnected_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_disconnected_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_disconnected_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_mr_button_grey = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_mr_button_grey;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_vol_type_speaker_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_vol_type_speaker_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_vol_type_speaker_group_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_vol_type_speaker_group_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_vol_type_speaker_group_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_vol_type_speaker_group_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_vol_type_speaker_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_vol_type_speaker_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_vol_type_tv_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_vol_type_tv_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.ic_vol_type_tv_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.ic_vol_type_tv_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_button_connected_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_button_connected_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_button_connected_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_button_connected_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_button_connecting_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_button_connecting_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_button_connecting_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_button_connecting_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_button_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_button_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_button_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_button_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_dialog_close_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_dialog_close_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_dialog_close_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_dialog_close_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_dialog_material_background_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_dialog_material_background_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_dialog_material_background_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_dialog_material_background_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_group_collapse = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_group_collapse;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_group_expand = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_group_expand;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_media_pause_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_media_pause_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_media_pause_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_media_pause_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_media_play_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_media_play_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_media_play_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_media_play_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_media_stop_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_media_stop_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_media_stop_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_media_stop_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_vol_type_audiotrack_dark = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_vol_type_audiotrack_dark;
+			global::BuildIt.Forms.Controls.Resource.Drawable.mr_vol_type_audiotrack_light = global::BuildIt.ML.Sample.Droid.Resource.Drawable.mr_vol_type_audiotrack_light;
+			global::BuildIt.Forms.Controls.Resource.Drawable.navigation_empty_icon = global::BuildIt.ML.Sample.Droid.Resource.Drawable.navigation_empty_icon;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_action_background = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_action_background;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_bg = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_bg;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_bg_low = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_bg_low;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_bg_low_normal = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_bg_low_normal;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_bg_low_pressed = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_bg_low_pressed;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_bg_normal = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_bg_normal;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_bg_normal_pressed = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_bg_normal_pressed;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_icon_background = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_icon_background;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_template_icon_bg = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_template_icon_bg;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_template_icon_low_bg = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_template_icon_low_bg;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notification_tile_bg = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notification_tile_bg;
+			global::BuildIt.Forms.Controls.Resource.Drawable.notify_panel_notification_icon_bg = global::BuildIt.ML.Sample.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::BuildIt.Forms.Controls.Resource.Id.action0 = global::BuildIt.ML.Sample.Droid.Resource.Id.action0;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar_activity_content = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar_activity_content;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar_container = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar_container;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar_root = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar_root;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar_spinner = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar_spinner;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar_subtitle = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar_subtitle;
+			global::BuildIt.Forms.Controls.Resource.Id.action_bar_title = global::BuildIt.ML.Sample.Droid.Resource.Id.action_bar_title;
+			global::BuildIt.Forms.Controls.Resource.Id.action_container = global::BuildIt.ML.Sample.Droid.Resource.Id.action_container;
+			global::BuildIt.Forms.Controls.Resource.Id.action_context_bar = global::BuildIt.ML.Sample.Droid.Resource.Id.action_context_bar;
+			global::BuildIt.Forms.Controls.Resource.Id.action_divider = global::BuildIt.ML.Sample.Droid.Resource.Id.action_divider;
+			global::BuildIt.Forms.Controls.Resource.Id.action_image = global::BuildIt.ML.Sample.Droid.Resource.Id.action_image;
+			global::BuildIt.Forms.Controls.Resource.Id.action_menu_divider = global::BuildIt.ML.Sample.Droid.Resource.Id.action_menu_divider;
+			global::BuildIt.Forms.Controls.Resource.Id.action_menu_presenter = global::BuildIt.ML.Sample.Droid.Resource.Id.action_menu_presenter;
+			global::BuildIt.Forms.Controls.Resource.Id.action_mode_bar = global::BuildIt.ML.Sample.Droid.Resource.Id.action_mode_bar;
+			global::BuildIt.Forms.Controls.Resource.Id.action_mode_bar_stub = global::BuildIt.ML.Sample.Droid.Resource.Id.action_mode_bar_stub;
+			global::BuildIt.Forms.Controls.Resource.Id.action_mode_close_button = global::BuildIt.ML.Sample.Droid.Resource.Id.action_mode_close_button;
+			global::BuildIt.Forms.Controls.Resource.Id.action_text = global::BuildIt.ML.Sample.Droid.Resource.Id.action_text;
+			global::BuildIt.Forms.Controls.Resource.Id.actions = global::BuildIt.ML.Sample.Droid.Resource.Id.actions;
+			global::BuildIt.Forms.Controls.Resource.Id.activity_chooser_view_content = global::BuildIt.ML.Sample.Droid.Resource.Id.activity_chooser_view_content;
+			global::BuildIt.Forms.Controls.Resource.Id.add = global::BuildIt.ML.Sample.Droid.Resource.Id.add;
+			global::BuildIt.Forms.Controls.Resource.Id.alertTitle = global::BuildIt.ML.Sample.Droid.Resource.Id.alertTitle;
+			global::BuildIt.Forms.Controls.Resource.Id.all = global::BuildIt.ML.Sample.Droid.Resource.Id.all;
+			global::BuildIt.Forms.Controls.Resource.Id.always = global::BuildIt.ML.Sample.Droid.Resource.Id.always;
+			global::BuildIt.Forms.Controls.Resource.Id.auto = global::BuildIt.ML.Sample.Droid.Resource.Id.auto;
+			global::BuildIt.Forms.Controls.Resource.Id.beginning = global::BuildIt.ML.Sample.Droid.Resource.Id.beginning;
+			global::BuildIt.Forms.Controls.Resource.Id.bottom = global::BuildIt.ML.Sample.Droid.Resource.Id.bottom;
+			global::BuildIt.Forms.Controls.Resource.Id.buttonPanel = global::BuildIt.ML.Sample.Droid.Resource.Id.buttonPanel;
+			global::BuildIt.Forms.Controls.Resource.Id.cancel_action = global::BuildIt.ML.Sample.Droid.Resource.Id.cancel_action;
+			global::BuildIt.Forms.Controls.Resource.Id.center = global::BuildIt.ML.Sample.Droid.Resource.Id.center;
+			global::BuildIt.Forms.Controls.Resource.Id.center_horizontal = global::BuildIt.ML.Sample.Droid.Resource.Id.center_horizontal;
+			global::BuildIt.Forms.Controls.Resource.Id.center_vertical = global::BuildIt.ML.Sample.Droid.Resource.Id.center_vertical;
+			global::BuildIt.Forms.Controls.Resource.Id.checkbox = global::BuildIt.ML.Sample.Droid.Resource.Id.checkbox;
+			global::BuildIt.Forms.Controls.Resource.Id.chronometer = global::BuildIt.ML.Sample.Droid.Resource.Id.chronometer;
+			global::BuildIt.Forms.Controls.Resource.Id.clip_horizontal = global::BuildIt.ML.Sample.Droid.Resource.Id.clip_horizontal;
+			global::BuildIt.Forms.Controls.Resource.Id.clip_vertical = global::BuildIt.ML.Sample.Droid.Resource.Id.clip_vertical;
+			global::BuildIt.Forms.Controls.Resource.Id.collapseActionView = global::BuildIt.ML.Sample.Droid.Resource.Id.collapseActionView;
+			global::BuildIt.Forms.Controls.Resource.Id.container = global::BuildIt.ML.Sample.Droid.Resource.Id.container;
+			global::BuildIt.Forms.Controls.Resource.Id.contentPanel = global::BuildIt.ML.Sample.Droid.Resource.Id.contentPanel;
+			global::BuildIt.Forms.Controls.Resource.Id.coordinator = global::BuildIt.ML.Sample.Droid.Resource.Id.coordinator;
+			global::BuildIt.Forms.Controls.Resource.Id.custom = global::BuildIt.ML.Sample.Droid.Resource.Id.custom;
+			global::BuildIt.Forms.Controls.Resource.Id.customPanel = global::BuildIt.ML.Sample.Droid.Resource.Id.customPanel;
+			global::BuildIt.Forms.Controls.Resource.Id.decor_content_parent = global::BuildIt.ML.Sample.Droid.Resource.Id.decor_content_parent;
+			global::BuildIt.Forms.Controls.Resource.Id.default_activity_button = global::BuildIt.ML.Sample.Droid.Resource.Id.default_activity_button;
+			global::BuildIt.Forms.Controls.Resource.Id.design_bottom_sheet = global::BuildIt.ML.Sample.Droid.Resource.Id.design_bottom_sheet;
+			global::BuildIt.Forms.Controls.Resource.Id.design_menu_item_action_area = global::BuildIt.ML.Sample.Droid.Resource.Id.design_menu_item_action_area;
+			global::BuildIt.Forms.Controls.Resource.Id.design_menu_item_action_area_stub = global::BuildIt.ML.Sample.Droid.Resource.Id.design_menu_item_action_area_stub;
+			global::BuildIt.Forms.Controls.Resource.Id.design_menu_item_text = global::BuildIt.ML.Sample.Droid.Resource.Id.design_menu_item_text;
+			global::BuildIt.Forms.Controls.Resource.Id.design_navigation_view = global::BuildIt.ML.Sample.Droid.Resource.Id.design_navigation_view;
+			global::BuildIt.Forms.Controls.Resource.Id.disableHome = global::BuildIt.ML.Sample.Droid.Resource.Id.disableHome;
+			global::BuildIt.Forms.Controls.Resource.Id.edit_query = global::BuildIt.ML.Sample.Droid.Resource.Id.edit_query;
+			global::BuildIt.Forms.Controls.Resource.Id.end = global::BuildIt.ML.Sample.Droid.Resource.Id.end;
+			global::BuildIt.Forms.Controls.Resource.Id.end_padder = global::BuildIt.ML.Sample.Droid.Resource.Id.end_padder;
+			global::BuildIt.Forms.Controls.Resource.Id.enterAlways = global::BuildIt.ML.Sample.Droid.Resource.Id.enterAlways;
+			global::BuildIt.Forms.Controls.Resource.Id.enterAlwaysCollapsed = global::BuildIt.ML.Sample.Droid.Resource.Id.enterAlwaysCollapsed;
+			global::BuildIt.Forms.Controls.Resource.Id.exitUntilCollapsed = global::BuildIt.ML.Sample.Droid.Resource.Id.exitUntilCollapsed;
+			global::BuildIt.Forms.Controls.Resource.Id.expand_activities_button = global::BuildIt.ML.Sample.Droid.Resource.Id.expand_activities_button;
+			global::BuildIt.Forms.Controls.Resource.Id.expanded_menu = global::BuildIt.ML.Sample.Droid.Resource.Id.expanded_menu;
+			global::BuildIt.Forms.Controls.Resource.Id.fill = global::BuildIt.ML.Sample.Droid.Resource.Id.fill;
+			global::BuildIt.Forms.Controls.Resource.Id.fill_horizontal = global::BuildIt.ML.Sample.Droid.Resource.Id.fill_horizontal;
+			global::BuildIt.Forms.Controls.Resource.Id.fill_vertical = global::BuildIt.ML.Sample.Droid.Resource.Id.fill_vertical;
+			global::BuildIt.Forms.Controls.Resource.Id.@fixed = global::BuildIt.ML.Sample.Droid.Resource.Id.@fixed;
+			global::BuildIt.Forms.Controls.Resource.Id.home = global::BuildIt.ML.Sample.Droid.Resource.Id.home;
+			global::BuildIt.Forms.Controls.Resource.Id.homeAsUp = global::BuildIt.ML.Sample.Droid.Resource.Id.homeAsUp;
+			global::BuildIt.Forms.Controls.Resource.Id.icon = global::BuildIt.ML.Sample.Droid.Resource.Id.icon;
+			global::BuildIt.Forms.Controls.Resource.Id.icon_group = global::BuildIt.ML.Sample.Droid.Resource.Id.icon_group;
+			global::BuildIt.Forms.Controls.Resource.Id.ifRoom = global::BuildIt.ML.Sample.Droid.Resource.Id.ifRoom;
+			global::BuildIt.Forms.Controls.Resource.Id.image = global::BuildIt.ML.Sample.Droid.Resource.Id.image;
+			global::BuildIt.Forms.Controls.Resource.Id.info = global::BuildIt.ML.Sample.Droid.Resource.Id.info;
+			global::BuildIt.Forms.Controls.Resource.Id.item_touch_helper_previous_elevation = global::BuildIt.ML.Sample.Droid.Resource.Id.item_touch_helper_previous_elevation;
+			global::BuildIt.Forms.Controls.Resource.Id.largeLabel = global::BuildIt.ML.Sample.Droid.Resource.Id.largeLabel;
+			global::BuildIt.Forms.Controls.Resource.Id.left = global::BuildIt.ML.Sample.Droid.Resource.Id.left;
+			global::BuildIt.Forms.Controls.Resource.Id.line1 = global::BuildIt.ML.Sample.Droid.Resource.Id.line1;
+			global::BuildIt.Forms.Controls.Resource.Id.line3 = global::BuildIt.ML.Sample.Droid.Resource.Id.line3;
+			global::BuildIt.Forms.Controls.Resource.Id.listMode = global::BuildIt.ML.Sample.Droid.Resource.Id.listMode;
+			global::BuildIt.Forms.Controls.Resource.Id.list_item = global::BuildIt.ML.Sample.Droid.Resource.Id.list_item;
+			global::BuildIt.Forms.Controls.Resource.Id.masked = global::BuildIt.ML.Sample.Droid.Resource.Id.masked;
+			global::BuildIt.Forms.Controls.Resource.Id.media_actions = global::BuildIt.ML.Sample.Droid.Resource.Id.media_actions;
+			global::BuildIt.Forms.Controls.Resource.Id.middle = global::BuildIt.ML.Sample.Droid.Resource.Id.middle;
+			global::BuildIt.Forms.Controls.Resource.Id.mini = global::BuildIt.ML.Sample.Droid.Resource.Id.mini;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_art = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_art;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_chooser_list = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_chooser_list;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_chooser_route_desc = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_chooser_route_desc;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_chooser_route_icon = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_chooser_route_icon;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_chooser_route_name = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_chooser_route_name;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_chooser_title = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_chooser_title;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_close = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_close;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_control_divider = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_control_divider;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_control_playback_ctrl = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_control_playback_ctrl;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_control_subtitle = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_control_subtitle;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_control_title = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_control_title;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_control_title_container = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_control_title_container;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_custom_control = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_custom_control;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_default_control = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_default_control;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_dialog_area = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_dialog_area;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_expandable_area = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_expandable_area;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_group_expand_collapse = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_group_expand_collapse;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_media_main_control = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_media_main_control;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_name = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_name;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_playback_control = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_playback_control;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_title_bar = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_title_bar;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_volume_control = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_volume_control;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_volume_group_list = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_volume_group_list;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_volume_item_icon = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_volume_item_icon;
+			global::BuildIt.Forms.Controls.Resource.Id.mr_volume_slider = global::BuildIt.ML.Sample.Droid.Resource.Id.mr_volume_slider;
+			global::BuildIt.Forms.Controls.Resource.Id.multiply = global::BuildIt.ML.Sample.Droid.Resource.Id.multiply;
+			global::BuildIt.Forms.Controls.Resource.Id.navigation_header_container = global::BuildIt.ML.Sample.Droid.Resource.Id.navigation_header_container;
+			global::BuildIt.Forms.Controls.Resource.Id.never = global::BuildIt.ML.Sample.Droid.Resource.Id.never;
+			global::BuildIt.Forms.Controls.Resource.Id.none = global::BuildIt.ML.Sample.Droid.Resource.Id.none;
+			global::BuildIt.Forms.Controls.Resource.Id.normal = global::BuildIt.ML.Sample.Droid.Resource.Id.normal;
+			global::BuildIt.Forms.Controls.Resource.Id.notification_background = global::BuildIt.ML.Sample.Droid.Resource.Id.notification_background;
+			global::BuildIt.Forms.Controls.Resource.Id.notification_main_column = global::BuildIt.ML.Sample.Droid.Resource.Id.notification_main_column;
+			global::BuildIt.Forms.Controls.Resource.Id.notification_main_column_container = global::BuildIt.ML.Sample.Droid.Resource.Id.notification_main_column_container;
+			global::BuildIt.Forms.Controls.Resource.Id.parallax = global::BuildIt.ML.Sample.Droid.Resource.Id.parallax;
+			global::BuildIt.Forms.Controls.Resource.Id.parentPanel = global::BuildIt.ML.Sample.Droid.Resource.Id.parentPanel;
+			global::BuildIt.Forms.Controls.Resource.Id.pin = global::BuildIt.ML.Sample.Droid.Resource.Id.pin;
+			global::BuildIt.Forms.Controls.Resource.Id.progress_circular = global::BuildIt.ML.Sample.Droid.Resource.Id.progress_circular;
+			global::BuildIt.Forms.Controls.Resource.Id.progress_horizontal = global::BuildIt.ML.Sample.Droid.Resource.Id.progress_horizontal;
+			global::BuildIt.Forms.Controls.Resource.Id.radio = global::BuildIt.ML.Sample.Droid.Resource.Id.radio;
+			global::BuildIt.Forms.Controls.Resource.Id.right = global::BuildIt.ML.Sample.Droid.Resource.Id.right;
+			global::BuildIt.Forms.Controls.Resource.Id.right_icon = global::BuildIt.ML.Sample.Droid.Resource.Id.right_icon;
+			global::BuildIt.Forms.Controls.Resource.Id.right_side = global::BuildIt.ML.Sample.Droid.Resource.Id.right_side;
+			global::BuildIt.Forms.Controls.Resource.Id.screen = global::BuildIt.ML.Sample.Droid.Resource.Id.screen;
+			global::BuildIt.Forms.Controls.Resource.Id.scroll = global::BuildIt.ML.Sample.Droid.Resource.Id.scroll;
+			global::BuildIt.Forms.Controls.Resource.Id.scrollIndicatorDown = global::BuildIt.ML.Sample.Droid.Resource.Id.scrollIndicatorDown;
+			global::BuildIt.Forms.Controls.Resource.Id.scrollIndicatorUp = global::BuildIt.ML.Sample.Droid.Resource.Id.scrollIndicatorUp;
+			global::BuildIt.Forms.Controls.Resource.Id.scrollView = global::BuildIt.ML.Sample.Droid.Resource.Id.scrollView;
+			global::BuildIt.Forms.Controls.Resource.Id.scrollable = global::BuildIt.ML.Sample.Droid.Resource.Id.scrollable;
+			global::BuildIt.Forms.Controls.Resource.Id.search_badge = global::BuildIt.ML.Sample.Droid.Resource.Id.search_badge;
+			global::BuildIt.Forms.Controls.Resource.Id.search_bar = global::BuildIt.ML.Sample.Droid.Resource.Id.search_bar;
+			global::BuildIt.Forms.Controls.Resource.Id.search_button = global::BuildIt.ML.Sample.Droid.Resource.Id.search_button;
+			global::BuildIt.Forms.Controls.Resource.Id.search_close_btn = global::BuildIt.ML.Sample.Droid.Resource.Id.search_close_btn;
+			global::BuildIt.Forms.Controls.Resource.Id.search_edit_frame = global::BuildIt.ML.Sample.Droid.Resource.Id.search_edit_frame;
+			global::BuildIt.Forms.Controls.Resource.Id.search_go_btn = global::BuildIt.ML.Sample.Droid.Resource.Id.search_go_btn;
+			global::BuildIt.Forms.Controls.Resource.Id.search_mag_icon = global::BuildIt.ML.Sample.Droid.Resource.Id.search_mag_icon;
+			global::BuildIt.Forms.Controls.Resource.Id.search_plate = global::BuildIt.ML.Sample.Droid.Resource.Id.search_plate;
+			global::BuildIt.Forms.Controls.Resource.Id.search_src_text = global::BuildIt.ML.Sample.Droid.Resource.Id.search_src_text;
+			global::BuildIt.Forms.Controls.Resource.Id.search_voice_btn = global::BuildIt.ML.Sample.Droid.Resource.Id.search_voice_btn;
+			global::BuildIt.Forms.Controls.Resource.Id.select_dialog_listview = global::BuildIt.ML.Sample.Droid.Resource.Id.select_dialog_listview;
+			global::BuildIt.Forms.Controls.Resource.Id.shortcut = global::BuildIt.ML.Sample.Droid.Resource.Id.shortcut;
+			global::BuildIt.Forms.Controls.Resource.Id.showCustom = global::BuildIt.ML.Sample.Droid.Resource.Id.showCustom;
+			global::BuildIt.Forms.Controls.Resource.Id.showHome = global::BuildIt.ML.Sample.Droid.Resource.Id.showHome;
+			global::BuildIt.Forms.Controls.Resource.Id.showTitle = global::BuildIt.ML.Sample.Droid.Resource.Id.showTitle;
+			global::BuildIt.Forms.Controls.Resource.Id.smallLabel = global::BuildIt.ML.Sample.Droid.Resource.Id.smallLabel;
+			global::BuildIt.Forms.Controls.Resource.Id.snackbar_action = global::BuildIt.ML.Sample.Droid.Resource.Id.snackbar_action;
+			global::BuildIt.Forms.Controls.Resource.Id.snackbar_text = global::BuildIt.ML.Sample.Droid.Resource.Id.snackbar_text;
+			global::BuildIt.Forms.Controls.Resource.Id.snap = global::BuildIt.ML.Sample.Droid.Resource.Id.snap;
+			global::BuildIt.Forms.Controls.Resource.Id.spacer = global::BuildIt.ML.Sample.Droid.Resource.Id.spacer;
+			global::BuildIt.Forms.Controls.Resource.Id.split_action_bar = global::BuildIt.ML.Sample.Droid.Resource.Id.split_action_bar;
+			global::BuildIt.Forms.Controls.Resource.Id.src_atop = global::BuildIt.ML.Sample.Droid.Resource.Id.src_atop;
+			global::BuildIt.Forms.Controls.Resource.Id.src_in = global::BuildIt.ML.Sample.Droid.Resource.Id.src_in;
+			global::BuildIt.Forms.Controls.Resource.Id.src_over = global::BuildIt.ML.Sample.Droid.Resource.Id.src_over;
+			global::BuildIt.Forms.Controls.Resource.Id.start = global::BuildIt.ML.Sample.Droid.Resource.Id.start;
+			global::BuildIt.Forms.Controls.Resource.Id.status_bar_latest_event_content = global::BuildIt.ML.Sample.Droid.Resource.Id.status_bar_latest_event_content;
+			global::BuildIt.Forms.Controls.Resource.Id.submenuarrow = global::BuildIt.ML.Sample.Droid.Resource.Id.submenuarrow;
+			global::BuildIt.Forms.Controls.Resource.Id.submit_area = global::BuildIt.ML.Sample.Droid.Resource.Id.submit_area;
+			global::BuildIt.Forms.Controls.Resource.Id.tabMode = global::BuildIt.ML.Sample.Droid.Resource.Id.tabMode;
+			global::BuildIt.Forms.Controls.Resource.Id.text = global::BuildIt.ML.Sample.Droid.Resource.Id.text;
+			global::BuildIt.Forms.Controls.Resource.Id.text2 = global::BuildIt.ML.Sample.Droid.Resource.Id.text2;
+			global::BuildIt.Forms.Controls.Resource.Id.textSpacerNoButtons = global::BuildIt.ML.Sample.Droid.Resource.Id.textSpacerNoButtons;
+			global::BuildIt.Forms.Controls.Resource.Id.textSpacerNoTitle = global::BuildIt.ML.Sample.Droid.Resource.Id.textSpacerNoTitle;
+			global::BuildIt.Forms.Controls.Resource.Id.text_input_password_toggle = global::BuildIt.ML.Sample.Droid.Resource.Id.text_input_password_toggle;
+			global::BuildIt.Forms.Controls.Resource.Id.textinput_counter = global::BuildIt.ML.Sample.Droid.Resource.Id.textinput_counter;
+			global::BuildIt.Forms.Controls.Resource.Id.textinput_error = global::BuildIt.ML.Sample.Droid.Resource.Id.textinput_error;
+			global::BuildIt.Forms.Controls.Resource.Id.textureView = global::BuildIt.ML.Sample.Droid.Resource.Id.textureView;
+			global::BuildIt.Forms.Controls.Resource.Id.time = global::BuildIt.ML.Sample.Droid.Resource.Id.time;
+			global::BuildIt.Forms.Controls.Resource.Id.title = global::BuildIt.ML.Sample.Droid.Resource.Id.title;
+			global::BuildIt.Forms.Controls.Resource.Id.titleDividerNoCustom = global::BuildIt.ML.Sample.Droid.Resource.Id.titleDividerNoCustom;
+			global::BuildIt.Forms.Controls.Resource.Id.title_template = global::BuildIt.ML.Sample.Droid.Resource.Id.title_template;
+			global::BuildIt.Forms.Controls.Resource.Id.top = global::BuildIt.ML.Sample.Droid.Resource.Id.top;
+			global::BuildIt.Forms.Controls.Resource.Id.topPanel = global::BuildIt.ML.Sample.Droid.Resource.Id.topPanel;
+			global::BuildIt.Forms.Controls.Resource.Id.touch_outside = global::BuildIt.ML.Sample.Droid.Resource.Id.touch_outside;
+			global::BuildIt.Forms.Controls.Resource.Id.transition_current_scene = global::BuildIt.ML.Sample.Droid.Resource.Id.transition_current_scene;
+			global::BuildIt.Forms.Controls.Resource.Id.transition_scene_layoutid_cache = global::BuildIt.ML.Sample.Droid.Resource.Id.transition_scene_layoutid_cache;
+			global::BuildIt.Forms.Controls.Resource.Id.up = global::BuildIt.ML.Sample.Droid.Resource.Id.up;
+			global::BuildIt.Forms.Controls.Resource.Id.useLogo = global::BuildIt.ML.Sample.Droid.Resource.Id.useLogo;
+			global::BuildIt.Forms.Controls.Resource.Id.view_offset_helper = global::BuildIt.ML.Sample.Droid.Resource.Id.view_offset_helper;
+			global::BuildIt.Forms.Controls.Resource.Id.visible = global::BuildIt.ML.Sample.Droid.Resource.Id.visible;
+			global::BuildIt.Forms.Controls.Resource.Id.volume_item_container = global::BuildIt.ML.Sample.Droid.Resource.Id.volume_item_container;
+			global::BuildIt.Forms.Controls.Resource.Id.withText = global::BuildIt.ML.Sample.Droid.Resource.Id.withText;
+			global::BuildIt.Forms.Controls.Resource.Id.wrap_content = global::BuildIt.ML.Sample.Droid.Resource.Id.wrap_content;
+			global::BuildIt.Forms.Controls.Resource.Integer.abc_config_activityDefaultDur = global::BuildIt.ML.Sample.Droid.Resource.Integer.abc_config_activityDefaultDur;
+			global::BuildIt.Forms.Controls.Resource.Integer.abc_config_activityShortDur = global::BuildIt.ML.Sample.Droid.Resource.Integer.abc_config_activityShortDur;
+			global::BuildIt.Forms.Controls.Resource.Integer.app_bar_elevation_anim_duration = global::BuildIt.ML.Sample.Droid.Resource.Integer.app_bar_elevation_anim_duration;
+			global::BuildIt.Forms.Controls.Resource.Integer.bottom_sheet_slide_duration = global::BuildIt.ML.Sample.Droid.Resource.Integer.bottom_sheet_slide_duration;
+			global::BuildIt.Forms.Controls.Resource.Integer.cancel_button_image_alpha = global::BuildIt.ML.Sample.Droid.Resource.Integer.cancel_button_image_alpha;
+			global::BuildIt.Forms.Controls.Resource.Integer.design_snackbar_text_max_lines = global::BuildIt.ML.Sample.Droid.Resource.Integer.design_snackbar_text_max_lines;
+			global::BuildIt.Forms.Controls.Resource.Integer.hide_password_duration = global::BuildIt.ML.Sample.Droid.Resource.Integer.hide_password_duration;
+			global::BuildIt.Forms.Controls.Resource.Integer.mr_controller_volume_group_list_animation_duration_ms = global::BuildIt.ML.Sample.Droid.Resource.Integer.mr_controller_volume_group_list_animation_duration_ms;
+			global::BuildIt.Forms.Controls.Resource.Integer.mr_controller_volume_group_list_fade_in_duration_ms = global::BuildIt.ML.Sample.Droid.Resource.Integer.mr_controller_volume_group_list_fade_in_duration_ms;
+			global::BuildIt.Forms.Controls.Resource.Integer.mr_controller_volume_group_list_fade_out_duration_ms = global::BuildIt.ML.Sample.Droid.Resource.Integer.mr_controller_volume_group_list_fade_out_duration_ms;
+			global::BuildIt.Forms.Controls.Resource.Integer.show_password_duration = global::BuildIt.ML.Sample.Droid.Resource.Integer.show_password_duration;
+			global::BuildIt.Forms.Controls.Resource.Integer.status_bar_notification_info_maxnum = global::BuildIt.ML.Sample.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::BuildIt.Forms.Controls.Resource.Interpolator.mr_fast_out_slow_in = global::BuildIt.ML.Sample.Droid.Resource.Interpolator.mr_fast_out_slow_in;
+			global::BuildIt.Forms.Controls.Resource.Interpolator.mr_linear_out_slow_in = global::BuildIt.ML.Sample.Droid.Resource.Interpolator.mr_linear_out_slow_in;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_action_bar_title_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_action_bar_title_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_action_bar_up_container = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_action_bar_up_container;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_action_menu_item_layout = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_action_menu_item_layout;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_action_menu_layout = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_action_menu_layout;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_action_mode_bar = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_action_mode_bar;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_action_mode_close_item_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_action_mode_close_item_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_activity_chooser_view = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_activity_chooser_view;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_activity_chooser_view_list_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_activity_chooser_view_list_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_alert_dialog_button_bar_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_alert_dialog_button_bar_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_alert_dialog_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_alert_dialog_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_alert_dialog_title_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_alert_dialog_title_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_dialog_title_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_dialog_title_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_expanded_menu_layout = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_expanded_menu_layout;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_list_menu_item_checkbox = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_list_menu_item_checkbox;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_list_menu_item_icon = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_list_menu_item_icon;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_list_menu_item_layout = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_list_menu_item_layout;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_list_menu_item_radio = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_list_menu_item_radio;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_popup_menu_header_item_layout = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_popup_menu_header_item_layout;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_popup_menu_item_layout = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_popup_menu_item_layout;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_screen_content_include = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_screen_content_include;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_screen_simple = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_screen_simple;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_screen_simple_overlay_action_mode = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_screen_simple_overlay_action_mode;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_screen_toolbar = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_screen_toolbar;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_search_dropdown_item_icons_2line = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_search_dropdown_item_icons_2line;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_search_view = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_search_view;
+			global::BuildIt.Forms.Controls.Resource.Layout.abc_select_dialog_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.abc_select_dialog_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.CameraLayout = global::BuildIt.ML.Sample.Droid.Resource.Layout.CameraLayout;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_bottom_navigation_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_bottom_navigation_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_bottom_sheet_dialog = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_bottom_sheet_dialog;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_layout_snackbar = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_layout_snackbar;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_layout_snackbar_include = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_layout_snackbar_include;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_layout_tab_icon = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_layout_tab_icon;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_layout_tab_text = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_layout_tab_text;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_menu_item_action_area = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_menu_item_action_area;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_navigation_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_navigation_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_navigation_item_header = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_navigation_item_header;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_navigation_item_separator = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_navigation_item_separator;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_navigation_item_subheader = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_navigation_item_subheader;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_navigation_menu = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_navigation_menu;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_navigation_menu_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_navigation_menu_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.design_text_input_password_icon = global::BuildIt.ML.Sample.Droid.Resource.Layout.design_text_input_password_icon;
+			global::BuildIt.Forms.Controls.Resource.Layout.mr_chooser_dialog = global::BuildIt.ML.Sample.Droid.Resource.Layout.mr_chooser_dialog;
+			global::BuildIt.Forms.Controls.Resource.Layout.mr_chooser_list_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.mr_chooser_list_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.mr_controller_material_dialog_b = global::BuildIt.ML.Sample.Droid.Resource.Layout.mr_controller_material_dialog_b;
+			global::BuildIt.Forms.Controls.Resource.Layout.mr_controller_volume_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.mr_controller_volume_item;
+			global::BuildIt.Forms.Controls.Resource.Layout.mr_playback_control = global::BuildIt.ML.Sample.Droid.Resource.Layout.mr_playback_control;
+			global::BuildIt.Forms.Controls.Resource.Layout.mr_volume_control = global::BuildIt.ML.Sample.Droid.Resource.Layout.mr_volume_control;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_action = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_action;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_action_tombstone = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_action_tombstone;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_media_action = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_media_action;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_media_cancel_action = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_media_cancel_action;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_big_media = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_big_media;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_big_media_custom = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_big_media_custom;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_big_media_narrow = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_big_media_narrow;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_big_media_narrow_custom = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_big_media_narrow_custom;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_custom_big = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_custom_big;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_icon_group = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_icon_group;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_lines_media = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_lines_media;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_media = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_media;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_media_custom = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_media_custom;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_part_chronometer = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_part_chronometer;
+			global::BuildIt.Forms.Controls.Resource.Layout.notification_template_part_time = global::BuildIt.ML.Sample.Droid.Resource.Layout.notification_template_part_time;
+			global::BuildIt.Forms.Controls.Resource.Layout.select_dialog_item_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.select_dialog_item_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.select_dialog_multichoice_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.select_dialog_multichoice_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.select_dialog_singlechoice_material = global::BuildIt.ML.Sample.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::BuildIt.Forms.Controls.Resource.Layout.support_simple_spinner_dropdown_item = global::BuildIt.ML.Sample.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::BuildIt.Forms.Controls.Resource.String.abc_action_bar_home_description = global::BuildIt.ML.Sample.Droid.Resource.String.abc_action_bar_home_description;
+			global::BuildIt.Forms.Controls.Resource.String.abc_action_bar_up_description = global::BuildIt.ML.Sample.Droid.Resource.String.abc_action_bar_up_description;
+			global::BuildIt.Forms.Controls.Resource.String.abc_action_menu_overflow_description = global::BuildIt.ML.Sample.Droid.Resource.String.abc_action_menu_overflow_description;
+			global::BuildIt.Forms.Controls.Resource.String.abc_action_mode_done = global::BuildIt.ML.Sample.Droid.Resource.String.abc_action_mode_done;
+			global::BuildIt.Forms.Controls.Resource.String.abc_activity_chooser_view_see_all = global::BuildIt.ML.Sample.Droid.Resource.String.abc_activity_chooser_view_see_all;
+			global::BuildIt.Forms.Controls.Resource.String.abc_activitychooserview_choose_application = global::BuildIt.ML.Sample.Droid.Resource.String.abc_activitychooserview_choose_application;
+			global::BuildIt.Forms.Controls.Resource.String.abc_capital_off = global::BuildIt.ML.Sample.Droid.Resource.String.abc_capital_off;
+			global::BuildIt.Forms.Controls.Resource.String.abc_capital_on = global::BuildIt.ML.Sample.Droid.Resource.String.abc_capital_on;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_body_1_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_body_1_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_body_2_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_body_2_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_button_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_button_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_caption_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_caption_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_display_1_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_display_1_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_display_2_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_display_2_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_display_3_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_display_3_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_display_4_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_display_4_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_headline_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_headline_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_menu_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_menu_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_subhead_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_subhead_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_font_family_title_material = global::BuildIt.ML.Sample.Droid.Resource.String.abc_font_family_title_material;
+			global::BuildIt.Forms.Controls.Resource.String.abc_search_hint = global::BuildIt.ML.Sample.Droid.Resource.String.abc_search_hint;
+			global::BuildIt.Forms.Controls.Resource.String.abc_searchview_description_clear = global::BuildIt.ML.Sample.Droid.Resource.String.abc_searchview_description_clear;
+			global::BuildIt.Forms.Controls.Resource.String.abc_searchview_description_query = global::BuildIt.ML.Sample.Droid.Resource.String.abc_searchview_description_query;
+			global::BuildIt.Forms.Controls.Resource.String.abc_searchview_description_search = global::BuildIt.ML.Sample.Droid.Resource.String.abc_searchview_description_search;
+			global::BuildIt.Forms.Controls.Resource.String.abc_searchview_description_submit = global::BuildIt.ML.Sample.Droid.Resource.String.abc_searchview_description_submit;
+			global::BuildIt.Forms.Controls.Resource.String.abc_searchview_description_voice = global::BuildIt.ML.Sample.Droid.Resource.String.abc_searchview_description_voice;
+			global::BuildIt.Forms.Controls.Resource.String.abc_shareactionprovider_share_with = global::BuildIt.ML.Sample.Droid.Resource.String.abc_shareactionprovider_share_with;
+			global::BuildIt.Forms.Controls.Resource.String.abc_shareactionprovider_share_with_application = global::BuildIt.ML.Sample.Droid.Resource.String.abc_shareactionprovider_share_with_application;
+			global::BuildIt.Forms.Controls.Resource.String.abc_toolbar_collapse_description = global::BuildIt.ML.Sample.Droid.Resource.String.abc_toolbar_collapse_description;
+			global::BuildIt.Forms.Controls.Resource.String.appbar_scrolling_view_behavior = global::BuildIt.ML.Sample.Droid.Resource.String.appbar_scrolling_view_behavior;
+			global::BuildIt.Forms.Controls.Resource.String.bottom_sheet_behavior = global::BuildIt.ML.Sample.Droid.Resource.String.bottom_sheet_behavior;
+			global::BuildIt.Forms.Controls.Resource.String.character_counter_pattern = global::BuildIt.ML.Sample.Droid.Resource.String.character_counter_pattern;
+			global::BuildIt.Forms.Controls.Resource.String.mr_button_content_description = global::BuildIt.ML.Sample.Droid.Resource.String.mr_button_content_description;
+			global::BuildIt.Forms.Controls.Resource.String.mr_cast_button_connected = global::BuildIt.ML.Sample.Droid.Resource.String.mr_cast_button_connected;
+			global::BuildIt.Forms.Controls.Resource.String.mr_cast_button_connecting = global::BuildIt.ML.Sample.Droid.Resource.String.mr_cast_button_connecting;
+			global::BuildIt.Forms.Controls.Resource.String.mr_cast_button_disconnected = global::BuildIt.ML.Sample.Droid.Resource.String.mr_cast_button_disconnected;
+			global::BuildIt.Forms.Controls.Resource.String.mr_chooser_searching = global::BuildIt.ML.Sample.Droid.Resource.String.mr_chooser_searching;
+			global::BuildIt.Forms.Controls.Resource.String.mr_chooser_title = global::BuildIt.ML.Sample.Droid.Resource.String.mr_chooser_title;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_album_art = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_album_art;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_casting_screen = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_casting_screen;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_close_description = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_close_description;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_collapse_group = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_collapse_group;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_disconnect = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_disconnect;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_expand_group = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_expand_group;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_no_info_available = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_no_info_available;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_no_media_selected = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_no_media_selected;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_pause = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_pause;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_play = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_play;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_stop = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_stop;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_stop_casting = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_stop_casting;
+			global::BuildIt.Forms.Controls.Resource.String.mr_controller_volume_slider = global::BuildIt.ML.Sample.Droid.Resource.String.mr_controller_volume_slider;
+			global::BuildIt.Forms.Controls.Resource.String.mr_system_route_name = global::BuildIt.ML.Sample.Droid.Resource.String.mr_system_route_name;
+			global::BuildIt.Forms.Controls.Resource.String.mr_user_route_category_name = global::BuildIt.ML.Sample.Droid.Resource.String.mr_user_route_category_name;
+			global::BuildIt.Forms.Controls.Resource.String.password_toggle_content_description = global::BuildIt.ML.Sample.Droid.Resource.String.password_toggle_content_description;
+			global::BuildIt.Forms.Controls.Resource.String.path_password_eye = global::BuildIt.ML.Sample.Droid.Resource.String.path_password_eye;
+			global::BuildIt.Forms.Controls.Resource.String.path_password_eye_mask_strike_through = global::BuildIt.ML.Sample.Droid.Resource.String.path_password_eye_mask_strike_through;
+			global::BuildIt.Forms.Controls.Resource.String.path_password_eye_mask_visible = global::BuildIt.ML.Sample.Droid.Resource.String.path_password_eye_mask_visible;
+			global::BuildIt.Forms.Controls.Resource.String.path_password_strike_through = global::BuildIt.ML.Sample.Droid.Resource.String.path_password_strike_through;
+			global::BuildIt.Forms.Controls.Resource.String.search_menu_title = global::BuildIt.ML.Sample.Droid.Resource.String.search_menu_title;
+			global::BuildIt.Forms.Controls.Resource.String.status_bar_notification_info_overflow = global::BuildIt.ML.Sample.Droid.Resource.String.status_bar_notification_info_overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.AlertDialog_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.AlertDialog_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.AlertDialog_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.AlertDialog_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Animation_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Animation_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Animation_AppCompat_DropDownUp = global::BuildIt.ML.Sample.Droid.Resource.Style.Animation_AppCompat_DropDownUp;
+			global::BuildIt.Forms.Controls.Resource.Style.Animation_Design_BottomSheetDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Animation_Design_BottomSheetDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_AlertDialog_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_AlertDialog_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_AlertDialog_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Animation_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Animation_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Animation_AppCompat_DropDownUp = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Animation_AppCompat_DropDownUp;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_CardView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_CardView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_DialogWindowTitle_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_DialogWindowTitle_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_DialogWindowTitleBackground_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_DialogWindowTitleBackground_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Body1 = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body1;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Body2 = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body2;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Button = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Button;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Caption = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Caption;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Display1 = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display1;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Display2 = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display2;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Display3 = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display3;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Display4 = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display4;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Headline = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Headline;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Large = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Medium = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Menu = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Menu;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_SearchResult = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Subhead = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Borderless_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Borderless_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Header = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Header;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_CompactMenu = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_CompactMenu;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat_Dark = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_ThemeOverlay_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V11_Theme_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V11_Theme_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V11_ThemeOverlay_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V11_ThemeOverlay_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V12_Widget_AppCompat_EditText = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V12_Widget_AppCompat_EditText;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V21_Theme_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V21_Theme_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V21_Theme_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V21_Theme_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V21_ThemeOverlay_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V21_ThemeOverlay_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V22_Theme_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V22_Theme_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V22_Theme_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V22_Theme_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V23_Theme_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V23_Theme_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V23_Theme_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V23_Theme_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_Theme_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_Theme_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_Theme_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_Theme_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_Theme_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_ThemeOverlay_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_ThemeOverlay_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_V7_Widget_AppCompat_EditText = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_V7_Widget_AppCompat_EditText;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActionMode = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActionMode;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ActivityChooserView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ActivityChooserView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Button = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Button;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Button_Borderless = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Button_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Button_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Button_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Button_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ButtonBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_EditText = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_EditText;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ImageButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ImageButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ListMenuView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ListMenuView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ListPopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ListPopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ListView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ListView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ListView_DropDown = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ListView_DropDown;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ListView_Menu = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ListView_Menu;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_PopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_PopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_PopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ProgressBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_RatingBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_RatingBar_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_SearchView = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_SearchView;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_SeekBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar_Discrete;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Spinner = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Spinner;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Toolbar = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_Design_AppBarLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_Design_AppBarLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.Base_Widget_Design_TabLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Base_Widget_Design_TabLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.CardView = global::BuildIt.ML.Sample.Droid.Resource.Style.CardView;
+			global::BuildIt.Forms.Controls.Resource.Style.CardView_Dark = global::BuildIt.ML.Sample.Droid.Resource.Style.CardView_Dark;
+			global::BuildIt.Forms.Controls.Resource.Style.CardView_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.CardView_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_ThemeOverlay_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_ThemeOverlay_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V11_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V11_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V11_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V11_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V14_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V14_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V14_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V14_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V21_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V21_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V21_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V21_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V25_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V25_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_V25_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_V25_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Platform_Widget_AppCompat_Spinner = global::BuildIt.ML.Sample.Droid.Resource.Style.Platform_Widget_AppCompat_Spinner;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1 = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2 = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton;
+			global::BuildIt.Forms.Controls.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Body1 = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Body1;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Body2 = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Body2;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Button = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Button;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Caption = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Caption;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Display1 = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Display1;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Display2 = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Display2;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Display3 = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Display3;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Display4 = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Display4;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Headline = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Headline;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Large = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Large;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Large_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Large_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Medium = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Medium;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Medium_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Menu = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Menu;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_SearchResult_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Small_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Small_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Subhead = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Subhead;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Title_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Title_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_Button = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_Button_Borderless_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Borderless_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_Button_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Header = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Header;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_Switch = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Switch;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_Counter = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_Counter;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_Counter_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_Counter_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_Error = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_Error;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_Hint = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_Hint;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_Snackbar_Message = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_Snackbar_Message;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Design_Tab = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Design_Tab;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_MediaRouter_PrimaryText = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_MediaRouter_PrimaryText;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_MediaRouter_SecondaryText = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_MediaRouter_SecondaryText;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_MediaRouter_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_MediaRouter_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::BuildIt.Forms.Controls.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title = global::BuildIt.ML.Sample.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_CompactMenu = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_CompactMenu;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DayNight_NoActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DayNight_NoActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Dialog_MinWidth = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Dialog_MinWidth;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_DialogWhenLarge = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_DialogWhenLarge;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light_DarkActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light_DarkActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_Light_NoActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_Light_NoActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_AppCompat_NoActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_AppCompat_NoActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_Design = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_Design;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_Design_BottomSheetDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_Design_BottomSheetDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_Design_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_Design_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_Design_Light_BottomSheetDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_Design_Light_BottomSheetDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_Design_Light_NoActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_Design_Light_NoActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_Design_NoActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_Design_NoActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_MediaRouter = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_MediaRouter;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_MediaRouter_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_MediaRouter_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_MediaRouter_Light_DarkControlPanel = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_MediaRouter_Light_DarkControlPanel;
+			global::BuildIt.Forms.Controls.Resource.Style.Theme_MediaRouter_LightControlPanel = global::BuildIt.ML.Sample.Droid.Resource.Style.Theme_MediaRouter_LightControlPanel;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat_Dark = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat_Dialog = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat_Dialog_Alert;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_AppCompat_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_AppCompat_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_MediaRouter_Dark = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_MediaRouter_Dark;
+			global::BuildIt.Forms.Controls.Resource.Style.ThemeOverlay_MediaRouter_Light = global::BuildIt.ML.Sample.Droid.Resource.Style.ThemeOverlay_MediaRouter_Light;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionBar_Solid = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionBar_Solid;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionBar_TabBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionBar_TabText = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabText;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionBar_TabView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionButton_CloseMode = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionButton_CloseMode;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionButton_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionButton_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActionMode = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActionMode;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ActivityChooserView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ActivityChooserView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_AutoCompleteTextView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_AutoCompleteTextView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Button = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Button;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Button_Borderless = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Button_Borderless;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Button_Borderless_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Button_Borderless_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Button_Colored = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Button_Colored;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Button_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Button_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ButtonBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ButtonBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_CompoundButton_Switch = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_CompoundButton_Switch;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_DrawerArrowToggle = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_DrawerArrowToggle;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_DropDownItem_Spinner = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_DropDownItem_Spinner;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_EditText = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_EditText;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ImageButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ImageButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ActivityChooserView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ActivityChooserView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ListPopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ListPopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_ListView_DropDown = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_ListView_DropDown;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_PopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_SearchView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_SearchView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ListMenuView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ListMenuView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ListPopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ListPopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ListView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ListView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ListView_DropDown = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ListView_DropDown;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ListView_Menu = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ListView_Menu;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_PopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_PopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_PopupMenu_Overflow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_PopupMenu_Overflow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_PopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_PopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ProgressBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ProgressBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_RatingBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_RatingBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_RatingBar_Indicator = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_RatingBar_Indicator;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_RatingBar_Small = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_RatingBar_Small;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_SearchView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_SearchView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_SearchView_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_SearchView_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_SeekBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_SeekBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_SeekBar_Discrete = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_SeekBar_Discrete;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Spinner = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Spinner;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Spinner_DropDown = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Spinner_Underlined = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_TextView_SpinnerItem = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Toolbar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Toolbar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_AppBarLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_AppBarLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_BottomNavigationView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_BottomNavigationView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_BottomSheet_Modal = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_BottomSheet_Modal;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_CollapsingToolbar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_CollapsingToolbar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_CoordinatorLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_CoordinatorLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_FloatingActionButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_FloatingActionButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_NavigationView = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_NavigationView;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_ScrimInsetsFrameLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_ScrimInsetsFrameLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_Snackbar = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_Snackbar;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_TabLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_TabLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_Design_TextInputLayout = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_Design_TextInputLayout;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_MediaRouter_Light_MediaRouteButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_MediaRouter_Light_MediaRouteButton;
+			global::BuildIt.Forms.Controls.Resource.Style.Widget_MediaRouter_MediaRouteButton = global::BuildIt.ML.Sample.Droid.Resource.Style.Widget_MediaRouter_MediaRouteButton;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_background = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_background;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_backgroundSplit = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_backgroundSplit;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_backgroundStacked = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_backgroundStacked;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_contentInsetEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_contentInsetEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_contentInsetEndWithActions = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_contentInsetEndWithActions;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_contentInsetLeft = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_contentInsetLeft;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_contentInsetRight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_contentInsetRight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_contentInsetStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_contentInsetStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_contentInsetStartWithNavigation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_contentInsetStartWithNavigation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_customNavigationLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_customNavigationLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_displayOptions = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_displayOptions;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_divider = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_divider;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_elevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_elevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_height = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_height;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_hideOnContentScroll = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_hideOnContentScroll;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_homeAsUpIndicator = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_homeAsUpIndicator;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_homeLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_homeLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_icon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_icon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_indeterminateProgressStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_indeterminateProgressStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_itemPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_itemPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_logo = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_logo;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_navigationMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_navigationMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_popupTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_popupTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_progressBarPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_progressBarPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_progressBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_progressBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_subtitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_subtitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_subtitleTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_subtitleTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_title = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_title;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBar_titleTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBar_titleTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBarLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBarLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionBarLayout_android_layout_gravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionBarLayout_android_layout_gravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMenuItemView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMenuItemView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMenuItemView_android_minWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMenuItemView_android_minWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMenuView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMenuView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode_background = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode_background;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode_backgroundSplit = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode_backgroundSplit;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode_closeItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode_closeItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode_height = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode_height;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode_subtitleTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode_subtitleTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActionMode_titleTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActionMode_titleTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActivityChooserView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActivityChooserView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ActivityChooserView_initialActivityCount = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ActivityChooserView_initialActivityCount;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_android_layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_android_layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_buttonPanelSideLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_buttonPanelSideLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_listItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_listItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_listLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_listLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_multiChoiceItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_multiChoiceItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_showTitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_showTitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AlertDialog_singleChoiceItemLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AlertDialog_singleChoiceItemLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout_android_background = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout_android_background;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout_elevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout_elevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout_expanded = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout_expanded;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayoutStates = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayoutStates;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayoutStates_state_collapsed = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayoutStates_state_collapsed;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayoutStates_state_collapsible = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayoutStates_state_collapsible;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout_Layout_layout_scrollFlags = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout_Layout_layout_scrollFlags;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppBarLayout_Layout_layout_scrollInterpolator = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppBarLayout_Layout_layout_scrollInterpolator;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatImageView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatImageView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatImageView_android_src = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatImageView_android_src;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatImageView_srcCompat = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatImageView_srcCompat;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatImageView_tint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatImageView_tint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatImageView_tintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatImageView_tintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatSeekBar = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatSeekBar;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatSeekBar_android_thumb = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatSeekBar_android_thumb;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatSeekBar_tickMark = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatSeekBar_tickMark;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatSeekBar_tickMarkTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatSeekBar_tickMarkTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatSeekBar_tickMarkTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatSeekBar_tickMarkTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_drawableBottom = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableBottom;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_drawableEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_drawableLeft = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableLeft;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_drawableRight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableRight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_drawableStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_drawableTop = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_drawableTop;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextHelper_android_textAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextHelper_android_textAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextView_android_textAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextView_android_textAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTextView_textAllCaps = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTextView_textAllCaps;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarDivider = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarItemBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarPopupTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarPopupTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarSize = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarSize;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarSplitStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarSplitStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarTabStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarTabStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionDropDownStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionDropDownStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionMenuTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeCutDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeCutDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeFindDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeFindDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModePasteDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModePasteDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeShareDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeShareDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeSplitBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeSplitBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_activityChooserViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_activityChooserViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_alertDialogStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_alertDialogStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_alertDialogTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_alertDialogTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_android_windowIsFloating = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_android_windowIsFloating;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_borderlessButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_borderlessButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_buttonStyleSmall = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_buttonStyleSmall;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_checkboxStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_checkboxStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_checkedTextViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_checkedTextViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorAccent = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorAccent;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorBackgroundFloating = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorBackgroundFloating;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorButtonNormal = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorButtonNormal;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorControlActivated = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorControlActivated;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorControlHighlight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorControlHighlight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorControlNormal = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorControlNormal;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorPrimary = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorPrimary;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorPrimaryDark = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorPrimaryDark;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_controlBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_controlBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_dialogPreferredPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_dialogPreferredPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_dialogTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_dialogTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_dividerHorizontal = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_dividerHorizontal;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_dividerVertical = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_dividerVertical;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_dropDownListViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_dropDownListViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_editTextBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_editTextBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_editTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_editTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_editTextStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_editTextStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_homeAsUpIndicator = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_imageButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listDividerAlertDialog = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listMenuViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listMenuViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listPopupWindowStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listPreferredItemHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_panelBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_panelBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_panelMenuListTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_panelMenuListWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_popupMenuStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_popupMenuStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_popupWindowStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_popupWindowStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_radioButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_radioButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_ratingBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_searchViewStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_searchViewStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_seekBarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_seekBarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_selectableItemBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_spinnerStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_spinnerStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_switchStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_switchStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceListItem = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItem;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceListItemSecondary = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSecondary;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearancePopupMenuHeader = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearancePopupMenuHeader;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_textColorSearchUrl = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_textColorSearchUrl;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_toolbarStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_toolbarStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowActionBar = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowActionBar;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowActionBarOverlay = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowActionBarOverlay;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowActionModeOverlay = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowActionModeOverlay;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowMinWidthMajor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMajor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowMinWidthMinor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMinor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.AppCompatTheme_windowNoTitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.AppCompatTheme_windowNoTitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomNavigationView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomNavigationView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomNavigationView_elevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomNavigationView_elevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomNavigationView_itemBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomNavigationView_itemBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomNavigationView_itemIconTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomNavigationView_itemIconTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomNavigationView_itemTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomNavigationView_itemTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomNavigationView_menu = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomNavigationView_menu;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomSheetBehavior_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomSheetBehavior_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomSheetBehavior_Layout_behavior_hideable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_hideable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomSheetBehavior_Layout_behavior_peekHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_peekHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.BottomSheetBehavior_Layout_behavior_skipCollapsed = global::BuildIt.ML.Sample.Droid.Resource.Styleable.BottomSheetBehavior_Layout_behavior_skipCollapsed;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ButtonBarLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ButtonBarLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ButtonBarLayout_allowStacking = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ButtonBarLayout_allowStacking;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_android_minHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_android_minHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_android_minWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_android_minWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_cardBackgroundColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_cardBackgroundColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_cardCornerRadius = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_cardCornerRadius;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_cardElevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_cardElevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_cardMaxElevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_cardMaxElevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_cardPreventCornerOverlap = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_cardPreventCornerOverlap;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_cardUseCompatPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_cardUseCompatPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_contentPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_contentPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_contentPaddingBottom = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_contentPaddingBottom;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_contentPaddingLeft = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_contentPaddingLeft;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_contentPaddingRight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_contentPaddingRight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CardView_contentPaddingTop = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CardView_contentPaddingTop;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_contentScrim = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_contentScrim;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_scrimAnimationDuration = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_scrimAnimationDuration;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_scrimVisibleHeightTrigger = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_scrimVisibleHeightTrigger;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_title = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_title;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_titleEnabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_titleEnabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_toolbarId = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_toolbarId;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseParallaxMultiplier = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CollapsingToolbarLayout_Layout_layout_collapseParallaxMultiplier;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ColorStateListItem = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ColorStateListItem;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ColorStateListItem_alpha = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ColorStateListItem_alpha;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ColorStateListItem_android_alpha = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ColorStateListItem_android_alpha;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ColorStateListItem_android_color = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ColorStateListItem_android_color;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CompoundButton = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CompoundButton;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CompoundButton_android_button = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CompoundButton_android_button;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CompoundButton_buttonTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CompoundButton_buttonTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CompoundButton_buttonTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_keylines = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_keylines;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge;
+			global::BuildIt.Forms.Controls.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline = global::BuildIt.ML.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DesignTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DesignTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DesignTheme_bottomSheetDialogTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DesignTheme_bottomSheetDialogTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DesignTheme_bottomSheetStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DesignTheme_bottomSheetStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DesignTheme_textColorError = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DesignTheme_textColorError;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_arrowHeadLength = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_arrowShaftLength = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_barLength = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_barLength;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_color = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_color;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_drawableSize = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_drawableSize;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_gapBetweenBars = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_gapBetweenBars;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_spinBars = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_spinBars;
+			global::BuildIt.Forms.Controls.Resource.Styleable.DrawerArrowToggle_thickness = global::BuildIt.ML.Sample.Droid.Resource.Styleable.DrawerArrowToggle_thickness;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_backgroundTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_backgroundTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_backgroundTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_backgroundTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_borderWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_borderWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_elevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_elevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_fabSize = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_fabSize;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_pressedTranslationZ = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_pressedTranslationZ;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_rippleColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_rippleColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_useCompatPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_useCompatPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_Behavior_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_Behavior_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide = global::BuildIt.ML.Sample.Droid.Resource.Styleable.FloatingActionButton_Behavior_Layout_behavior_autoHide;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ForegroundLinearLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ForegroundLinearLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ForegroundLinearLayout_android_foreground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ForegroundLinearLayout_android_foreground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_android_baselineAligned = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAligned;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_android_gravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_android_gravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_android_orientation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_android_orientation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_android_weightSum = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_android_weightSum;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_divider = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_divider;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_dividerPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_dividerPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_showDividers = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_showDividers;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width = global::BuildIt.ML.Sample.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ListPopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ListPopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MediaRouteButton = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MediaRouteButton;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MediaRouteButton_android_minHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MediaRouteButton_android_minHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MediaRouteButton_android_minWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MediaRouteButton_android_minWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MediaRouteButton_externalRouteEnabledDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MediaRouteButton_externalRouteEnabledDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup_android_checkableBehavior = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup_android_checkableBehavior;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup_android_enabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup_android_enabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup_android_id = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup_android_id;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup_android_menuCategory = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup_android_menuCategory;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup_android_orderInCategory = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup_android_orderInCategory;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuGroup_android_visible = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuGroup_android_visible;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_actionLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_actionLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_actionProviderClass = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_actionProviderClass;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_actionViewClass = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_actionViewClass;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_alphabeticShortcut = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_alphabeticShortcut;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_checkable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_checkable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_checked = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_checked;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_enabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_enabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_icon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_icon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_id = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_id;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_menuCategory = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_menuCategory;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_numericShortcut = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_numericShortcut;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_onClick = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_onClick;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_orderInCategory = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_orderInCategory;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_title = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_title;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_titleCondensed = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_titleCondensed;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_android_visible = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_android_visible;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuItem_showAsAction = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuItem_showAsAction;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_headerBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_headerBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_horizontalDivider = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_horizontalDivider;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_itemBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_itemBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_itemIconDisabledAlpha = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_itemIconDisabledAlpha;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_itemTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_itemTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_verticalDivider = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_verticalDivider;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_android_windowAnimationStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_android_windowAnimationStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_preserveIconSpacing = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_preserveIconSpacing;
+			global::BuildIt.Forms.Controls.Resource.Styleable.MenuView_subMenuArrow = global::BuildIt.ML.Sample.Droid.Resource.Styleable.MenuView_subMenuArrow;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_android_background = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_android_background;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_android_fitsSystemWindows = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_android_fitsSystemWindows;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_android_maxWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_android_maxWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_elevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_elevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_headerLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_headerLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_itemBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_itemBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_itemIconTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_itemIconTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_itemTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_itemTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_itemTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_itemTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.NavigationView_menu = global::BuildIt.ML.Sample.Droid.Resource.Styleable.NavigationView_menu;
+			global::BuildIt.Forms.Controls.Resource.Styleable.PopupWindow = global::BuildIt.ML.Sample.Droid.Resource.Styleable.PopupWindow;
+			global::BuildIt.Forms.Controls.Resource.Styleable.PopupWindow_android_popupAnimationStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.PopupWindow_android_popupAnimationStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.PopupWindow_android_popupBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.PopupWindow_android_popupBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.PopupWindow_overlapAnchor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.PopupWindow_overlapAnchor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.PopupWindowBackgroundState = global::BuildIt.ML.Sample.Droid.Resource.Styleable.PopupWindowBackgroundState;
+			global::BuildIt.Forms.Controls.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecycleListView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecycleListView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecycleListView_paddingBottomNoButtons = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecycleListView_paddingBottomNoButtons;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecycleListView_paddingTopNoTitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecycleListView_paddingTopNoTitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView_android_descendantFocusability = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView_android_descendantFocusability;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView_android_orientation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView_android_orientation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView_layoutManager = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView_layoutManager;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView_reverseLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView_reverseLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView_spanCount = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView_spanCount;
+			global::BuildIt.Forms.Controls.Resource.Styleable.RecyclerView_stackFromEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.RecyclerView_stackFromEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ScrimInsetsFrameLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ScrimInsetsFrameLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ScrollingViewBehavior_Layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ScrollingViewBehavior_Layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ScrollingViewBehavior_Layout_behavior_overlapTop = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ScrollingViewBehavior_Layout_behavior_overlapTop;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_android_focusable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_android_focusable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_android_imeOptions = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_android_imeOptions;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_android_inputType = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_android_inputType;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_android_maxWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_android_maxWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_closeIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_closeIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_commitIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_commitIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_defaultQueryHint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_defaultQueryHint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_goIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_goIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_iconifiedByDefault = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_iconifiedByDefault;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_queryBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_queryBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_queryHint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_queryHint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_searchHintIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_searchHintIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_searchIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_searchIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_submitBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_submitBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_suggestionRowLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_suggestionRowLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SearchView_voiceIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SearchView_voiceIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SnackbarLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SnackbarLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SnackbarLayout_android_maxWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SnackbarLayout_android_maxWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SnackbarLayout_elevation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SnackbarLayout_elevation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SnackbarLayout_maxActionInlineWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SnackbarLayout_maxActionInlineWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Spinner = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Spinner;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Spinner_android_dropDownWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Spinner_android_dropDownWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Spinner_android_entries = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Spinner_android_entries;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Spinner_android_popupBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Spinner_android_popupBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Spinner_android_prompt = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Spinner_android_prompt;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Spinner_popupTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Spinner_popupTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_android_textOff = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_android_textOff;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_android_textOn = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_android_textOn;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_android_thumb = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_android_thumb;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_showText = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_showText;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_splitTrack = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_splitTrack;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_switchMinWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_switchMinWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_switchPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_switchPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_switchTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_switchTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_thumbTextPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_thumbTextPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_thumbTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_thumbTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_thumbTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_thumbTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_track = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_track;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_trackTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_trackTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.SwitchCompat_trackTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.SwitchCompat_trackTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabItem = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabItem;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabItem_android_icon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabItem_android_icon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabItem_android_layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabItem_android_layout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabItem_android_text = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabItem_android_text;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabBackground = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabBackground;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabContentStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabContentStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabGravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabGravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabIndicatorColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabIndicatorColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabIndicatorHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabIndicatorHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabMaxWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabMaxWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabMinWidth = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabMinWidth;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabPadding = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabPadding;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabPaddingBottom = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabPaddingBottom;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabPaddingEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabPaddingEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabPaddingStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabPaddingStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabPaddingTop = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabPaddingTop;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabSelectedTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabSelectedTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TabLayout_tabTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TabLayout_tabTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_shadowColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_shadowColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_shadowDx = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_shadowDx;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_shadowDy = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_shadowDy;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_shadowRadius = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_shadowRadius;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_textColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_textColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_textColorHint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_textColorHint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_textSize = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_textSize;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_textStyle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_textStyle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_android_typeface = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_android_typeface;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextAppearance_textAllCaps = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextAppearance_textAllCaps;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_android_hint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_android_hint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_android_textColorHint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_android_textColorHint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_counterEnabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_counterEnabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_counterMaxLength = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_counterMaxLength;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_counterTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_counterTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_errorEnabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_errorEnabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_errorTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_errorTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_hintAnimationEnabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_hintAnimationEnabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_hintEnabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_hintEnabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_hintTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_hintTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_passwordToggleContentDescription = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_passwordToggleContentDescription;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_passwordToggleDrawable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_passwordToggleDrawable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_passwordToggleEnabled = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_passwordToggleEnabled;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_passwordToggleTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_passwordToggleTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.TextInputLayout_passwordToggleTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.TextInputLayout_passwordToggleTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_android_gravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_android_gravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_android_minHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_android_minHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_buttonGravity = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_buttonGravity;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_collapseContentDescription = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_collapseContentDescription;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_collapseIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_collapseIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_contentInsetEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_contentInsetEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_contentInsetEndWithActions = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_contentInsetEndWithActions;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_contentInsetLeft = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_contentInsetLeft;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_contentInsetRight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_contentInsetRight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_contentInsetStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_contentInsetStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_contentInsetStartWithNavigation = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_contentInsetStartWithNavigation;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_logo = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_logo;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_logoDescription = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_logoDescription;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_maxButtonHeight = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_maxButtonHeight;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_navigationContentDescription = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_navigationContentDescription;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_navigationIcon = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_navigationIcon;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_popupTheme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_popupTheme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_subtitle = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_subtitle;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_subtitleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_subtitleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_subtitleTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_subtitleTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_title = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_title;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleMargin = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleMargin;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleMarginBottom = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleMarginBottom;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleMarginEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleMarginEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleMarginStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleMarginStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleMarginTop = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleMarginTop;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleMargins = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleMargins;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleTextAppearance = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleTextAppearance;
+			global::BuildIt.Forms.Controls.Resource.Styleable.Toolbar_titleTextColor = global::BuildIt.ML.Sample.Droid.Resource.Styleable.Toolbar_titleTextColor;
+			global::BuildIt.Forms.Controls.Resource.Styleable.View = global::BuildIt.ML.Sample.Droid.Resource.Styleable.View;
+			global::BuildIt.Forms.Controls.Resource.Styleable.View_android_focusable = global::BuildIt.ML.Sample.Droid.Resource.Styleable.View_android_focusable;
+			global::BuildIt.Forms.Controls.Resource.Styleable.View_android_theme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.View_android_theme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.View_paddingEnd = global::BuildIt.ML.Sample.Droid.Resource.Styleable.View_paddingEnd;
+			global::BuildIt.Forms.Controls.Resource.Styleable.View_paddingStart = global::BuildIt.ML.Sample.Droid.Resource.Styleable.View_paddingStart;
+			global::BuildIt.Forms.Controls.Resource.Styleable.View_theme = global::BuildIt.ML.Sample.Droid.Resource.Styleable.View_theme;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewBackgroundHelper = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewBackgroundHelper;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewBackgroundHelper_android_background = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewBackgroundHelper_android_background;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewBackgroundHelper_backgroundTint = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTint;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewStubCompat = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewStubCompat;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewStubCompat_android_id = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewStubCompat_android_id;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewStubCompat_android_inflatedId = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
+			global::BuildIt.Forms.Controls.Resource.Styleable.ViewStubCompat_android_layout = global::BuildIt.ML.Sample.Droid.Resource.Styleable.ViewStubCompat_android_layout;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::BuildIt.ML.Sample.Droid.Resource.Attribute.actionBarSize;
 		}
 		
@@ -3048,8 +5143,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0037
 			public const int SYM = 2131361847;
 			
-			// aapt resource value: 0x7f0a00b6
-			public const int action0 = 2131361974;
+			// aapt resource value: 0x7f0a00b7
+			public const int action0 = 2131361975;
 			
 			// aapt resource value: 0x7f0a007c
 			public const int action_bar = 2131361916;
@@ -3072,17 +5167,17 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a005a
 			public const int action_bar_title = 2131361882;
 			
-			// aapt resource value: 0x7f0a00b3
-			public const int action_container = 2131361971;
+			// aapt resource value: 0x7f0a00b4
+			public const int action_container = 2131361972;
 			
 			// aapt resource value: 0x7f0a007d
 			public const int action_context_bar = 2131361917;
 			
-			// aapt resource value: 0x7f0a00ba
-			public const int action_divider = 2131361978;
+			// aapt resource value: 0x7f0a00bb
+			public const int action_divider = 2131361979;
 			
-			// aapt resource value: 0x7f0a00b4
-			public const int action_image = 2131361972;
+			// aapt resource value: 0x7f0a00b5
+			public const int action_image = 2131361973;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int action_menu_divider = 2131361795;
@@ -3099,11 +5194,11 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a005c
 			public const int action_mode_close_button = 2131361884;
 			
-			// aapt resource value: 0x7f0a00b5
-			public const int action_text = 2131361973;
+			// aapt resource value: 0x7f0a00b6
+			public const int action_text = 2131361974;
 			
-			// aapt resource value: 0x7f0a00c3
-			public const int actions = 2131361987;
+			// aapt resource value: 0x7f0a00c4
+			public const int actions = 2131361988;
 			
 			// aapt resource value: 0x7f0a005d
 			public const int activity_chooser_view_content = 2131361885;
@@ -3138,8 +5233,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0063
 			public const int buttonPanel = 2131361891;
 			
-			// aapt resource value: 0x7f0a00b7
-			public const int cancel_action = 2131361975;
+			// aapt resource value: 0x7f0a00b8
+			public const int cancel_action = 2131361976;
 			
 			// aapt resource value: 0x7f0a0045
 			public const int center = 2131361861;
@@ -3153,8 +5248,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0073
 			public const int checkbox = 2131361907;
 			
-			// aapt resource value: 0x7f0a00bf
-			public const int chronometer = 2131361983;
+			// aapt resource value: 0x7f0a00c0
+			public const int chronometer = 2131361984;
 			
 			// aapt resource value: 0x7f0a004e
 			public const int clip_horizontal = 2131361870;
@@ -3165,14 +5260,14 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0039
 			public const int collapseActionView = 2131361849;
 			
-			// aapt resource value: 0x7f0a008d
-			public const int container = 2131361933;
+			// aapt resource value: 0x7f0a008e
+			public const int container = 2131361934;
 			
 			// aapt resource value: 0x7f0a0066
 			public const int contentPanel = 2131361894;
 			
-			// aapt resource value: 0x7f0a008e
-			public const int coordinator = 2131361934;
+			// aapt resource value: 0x7f0a008f
+			public const int coordinator = 2131361935;
 			
 			// aapt resource value: 0x7f0a006d
 			public const int custom = 2131361901;
@@ -3186,20 +5281,20 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0060
 			public const int default_activity_button = 2131361888;
 			
-			// aapt resource value: 0x7f0a0090
-			public const int design_bottom_sheet = 2131361936;
+			// aapt resource value: 0x7f0a0091
+			public const int design_bottom_sheet = 2131361937;
+			
+			// aapt resource value: 0x7f0a0098
+			public const int design_menu_item_action_area = 2131361944;
 			
 			// aapt resource value: 0x7f0a0097
-			public const int design_menu_item_action_area = 2131361943;
+			public const int design_menu_item_action_area_stub = 2131361943;
 			
 			// aapt resource value: 0x7f0a0096
-			public const int design_menu_item_action_area_stub = 2131361942;
+			public const int design_menu_item_text = 2131361942;
 			
 			// aapt resource value: 0x7f0a0095
-			public const int design_menu_item_text = 2131361941;
-			
-			// aapt resource value: 0x7f0a0094
-			public const int design_navigation_view = 2131361940;
+			public const int design_navigation_view = 2131361941;
 			
 			// aapt resource value: 0x7f0a0020
 			public const int disableHome = 2131361824;
@@ -3210,8 +5305,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0030
 			public const int end = 2131361840;
 			
-			// aapt resource value: 0x7f0a00c5
-			public const int end_padder = 2131361989;
+			// aapt resource value: 0x7f0a00c6
+			public const int end_padder = 2131361990;
 			
 			// aapt resource value: 0x7f0a003f
 			public const int enterAlways = 2131361855;
@@ -3255,8 +5350,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0062
 			public const int icon = 2131361890;
 			
-			// aapt resource value: 0x7f0a00c4
-			public const int icon_group = 2131361988;
+			// aapt resource value: 0x7f0a00c5
+			public const int icon_group = 2131361989;
 			
 			// aapt resource value: 0x7f0a003a
 			public const int ifRoom = 2131361850;
@@ -3264,8 +5359,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a005f
 			public const int image = 2131361887;
 			
-			// aapt resource value: 0x7f0a00c0
-			public const int info = 2131361984;
+			// aapt resource value: 0x7f0a00c1
+			public const int info = 2131361985;
 			
 			// aapt resource value: 0x7f0a0059
 			public const int italic = 2131361881;
@@ -3273,8 +5368,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0000
 			public const int item_touch_helper_previous_elevation = 2131361792;
 			
-			// aapt resource value: 0x7f0a008c
-			public const int largeLabel = 2131361932;
+			// aapt resource value: 0x7f0a008d
+			public const int largeLabel = 2131361933;
 			
 			// aapt resource value: 0x7f0a0049
 			public const int left = 2131361865;
@@ -3291,14 +5386,14 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0061
 			public const int list_item = 2131361889;
 			
-			// aapt resource value: 0x7f0a00ca
-			public const int masked = 2131361994;
+			// aapt resource value: 0x7f0a00cb
+			public const int masked = 2131361995;
 			
-			// aapt resource value: 0x7f0a00b9
-			public const int media_actions = 2131361977;
+			// aapt resource value: 0x7f0a00ba
+			public const int media_actions = 2131361978;
 			
-			// aapt resource value: 0x7f0a00c8
-			public const int message = 2131361992;
+			// aapt resource value: 0x7f0a00c9
+			public const int message = 2131361993;
 			
 			// aapt resource value: 0x7f0a0031
 			public const int middle = 2131361841;
@@ -3306,86 +5401,86 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0053
 			public const int mini = 2131361875;
 			
-			// aapt resource value: 0x7f0a00a5
-			public const int mr_art = 2131361957;
-			
-			// aapt resource value: 0x7f0a009a
-			public const int mr_chooser_list = 2131361946;
-			
-			// aapt resource value: 0x7f0a009d
-			public const int mr_chooser_route_desc = 2131361949;
+			// aapt resource value: 0x7f0a00a6
+			public const int mr_art = 2131361958;
 			
 			// aapt resource value: 0x7f0a009b
-			public const int mr_chooser_route_icon = 2131361947;
-			
-			// aapt resource value: 0x7f0a009c
-			public const int mr_chooser_route_name = 2131361948;
-			
-			// aapt resource value: 0x7f0a0099
-			public const int mr_chooser_title = 2131361945;
-			
-			// aapt resource value: 0x7f0a00a2
-			public const int mr_close = 2131361954;
-			
-			// aapt resource value: 0x7f0a00a8
-			public const int mr_control_divider = 2131361960;
-			
-			// aapt resource value: 0x7f0a00ae
-			public const int mr_control_playback_ctrl = 2131361966;
-			
-			// aapt resource value: 0x7f0a00b1
-			public const int mr_control_subtitle = 2131361969;
-			
-			// aapt resource value: 0x7f0a00b0
-			public const int mr_control_title = 2131361968;
-			
-			// aapt resource value: 0x7f0a00af
-			public const int mr_control_title_container = 2131361967;
-			
-			// aapt resource value: 0x7f0a00a3
-			public const int mr_custom_control = 2131361955;
-			
-			// aapt resource value: 0x7f0a00a4
-			public const int mr_default_control = 2131361956;
-			
-			// aapt resource value: 0x7f0a009f
-			public const int mr_dialog_area = 2131361951;
+			public const int mr_chooser_list = 2131361947;
 			
 			// aapt resource value: 0x7f0a009e
-			public const int mr_expandable_area = 2131361950;
+			public const int mr_chooser_route_desc = 2131361950;
 			
-			// aapt resource value: 0x7f0a00b2
-			public const int mr_group_expand_collapse = 2131361970;
+			// aapt resource value: 0x7f0a009c
+			public const int mr_chooser_route_icon = 2131361948;
 			
-			// aapt resource value: 0x7f0a00a6
-			public const int mr_media_main_control = 2131361958;
+			// aapt resource value: 0x7f0a009d
+			public const int mr_chooser_route_name = 2131361949;
 			
-			// aapt resource value: 0x7f0a00a1
-			public const int mr_name = 2131361953;
+			// aapt resource value: 0x7f0a009a
+			public const int mr_chooser_title = 2131361946;
 			
-			// aapt resource value: 0x7f0a00a7
-			public const int mr_playback_control = 2131361959;
-			
-			// aapt resource value: 0x7f0a00a0
-			public const int mr_title_bar = 2131361952;
+			// aapt resource value: 0x7f0a00a3
+			public const int mr_close = 2131361955;
 			
 			// aapt resource value: 0x7f0a00a9
-			public const int mr_volume_control = 2131361961;
+			public const int mr_control_divider = 2131361961;
+			
+			// aapt resource value: 0x7f0a00af
+			public const int mr_control_playback_ctrl = 2131361967;
+			
+			// aapt resource value: 0x7f0a00b2
+			public const int mr_control_subtitle = 2131361970;
+			
+			// aapt resource value: 0x7f0a00b1
+			public const int mr_control_title = 2131361969;
+			
+			// aapt resource value: 0x7f0a00b0
+			public const int mr_control_title_container = 2131361968;
+			
+			// aapt resource value: 0x7f0a00a4
+			public const int mr_custom_control = 2131361956;
+			
+			// aapt resource value: 0x7f0a00a5
+			public const int mr_default_control = 2131361957;
+			
+			// aapt resource value: 0x7f0a00a0
+			public const int mr_dialog_area = 2131361952;
+			
+			// aapt resource value: 0x7f0a009f
+			public const int mr_expandable_area = 2131361951;
+			
+			// aapt resource value: 0x7f0a00b3
+			public const int mr_group_expand_collapse = 2131361971;
+			
+			// aapt resource value: 0x7f0a00a7
+			public const int mr_media_main_control = 2131361959;
+			
+			// aapt resource value: 0x7f0a00a2
+			public const int mr_name = 2131361954;
+			
+			// aapt resource value: 0x7f0a00a8
+			public const int mr_playback_control = 2131361960;
+			
+			// aapt resource value: 0x7f0a00a1
+			public const int mr_title_bar = 2131361953;
 			
 			// aapt resource value: 0x7f0a00aa
-			public const int mr_volume_group_list = 2131361962;
+			public const int mr_volume_control = 2131361962;
 			
-			// aapt resource value: 0x7f0a00ac
-			public const int mr_volume_item_icon = 2131361964;
+			// aapt resource value: 0x7f0a00ab
+			public const int mr_volume_group_list = 2131361963;
 			
 			// aapt resource value: 0x7f0a00ad
-			public const int mr_volume_slider = 2131361965;
+			public const int mr_volume_item_icon = 2131361965;
+			
+			// aapt resource value: 0x7f0a00ae
+			public const int mr_volume_slider = 2131361966;
 			
 			// aapt resource value: 0x7f0a0028
 			public const int multiply = 2131361832;
 			
-			// aapt resource value: 0x7f0a0093
-			public const int navigation_header_container = 2131361939;
+			// aapt resource value: 0x7f0a0094
+			public const int navigation_header_container = 2131361940;
 			
 			// aapt resource value: 0x7f0a003b
 			public const int never = 2131361851;
@@ -3396,14 +5491,14 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a001e
 			public const int normal = 2131361822;
 			
-			// aapt resource value: 0x7f0a00c2
-			public const int notification_background = 2131361986;
+			// aapt resource value: 0x7f0a00c3
+			public const int notification_background = 2131361987;
+			
+			// aapt resource value: 0x7f0a00bd
+			public const int notification_main_column = 2131361981;
 			
 			// aapt resource value: 0x7f0a00bc
-			public const int notification_main_column = 2131361980;
-			
-			// aapt resource value: 0x7f0a00bb
-			public const int notification_main_column_container = 2131361979;
+			public const int notification_main_column_container = 2131361980;
 			
 			// aapt resource value: 0x7f0a004c
 			public const int parallax = 2131361868;
@@ -3429,11 +5524,11 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a004a
 			public const int right = 2131361866;
 			
-			// aapt resource value: 0x7f0a00c1
-			public const int right_icon = 2131361985;
+			// aapt resource value: 0x7f0a00c2
+			public const int right_icon = 2131361986;
 			
-			// aapt resource value: 0x7f0a00bd
-			public const int right_side = 2131361981;
+			// aapt resource value: 0x7f0a00be
+			public const int right_side = 2131361982;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int save_image_matrix = 2131361804;
@@ -3507,17 +5602,17 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0025
 			public const int showTitle = 2131361829;
 			
-			// aapt resource value: 0x7f0a00c6
-			public const int sliding_tabs = 2131361990;
+			// aapt resource value: 0x7f0a00c7
+			public const int sliding_tabs = 2131361991;
 			
-			// aapt resource value: 0x7f0a008b
-			public const int smallLabel = 2131361931;
+			// aapt resource value: 0x7f0a008c
+			public const int smallLabel = 2131361932;
+			
+			// aapt resource value: 0x7f0a0093
+			public const int snackbar_action = 2131361939;
 			
 			// aapt resource value: 0x7f0a0092
-			public const int snackbar_action = 2131361938;
-			
-			// aapt resource value: 0x7f0a0091
-			public const int snackbar_text = 2131361937;
+			public const int snackbar_text = 2131361938;
 			
 			// aapt resource value: 0x7f0a0043
 			public const int snap = 2131361859;
@@ -3540,8 +5635,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a004b
 			public const int start = 2131361867;
 			
-			// aapt resource value: 0x7f0a00b8
-			public const int status_bar_latest_event_content = 2131361976;
+			// aapt resource value: 0x7f0a00b9
+			public const int status_bar_latest_event_content = 2131361977;
 			
 			// aapt resource value: 0x7f0a0076
 			public const int submenuarrow = 2131361910;
@@ -3567,8 +5662,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0069
 			public const int textSpacerNoTitle = 2131361897;
 			
-			// aapt resource value: 0x7f0a0098
-			public const int text_input_password_toggle = 2131361944;
+			// aapt resource value: 0x7f0a0099
+			public const int text_input_password_toggle = 2131361945;
 			
 			// aapt resource value: 0x7f0a0014
 			public const int textinput_counter = 2131361812;
@@ -3576,8 +5671,11 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0015
 			public const int textinput_error = 2131361813;
 			
-			// aapt resource value: 0x7f0a00be
-			public const int time = 2131361982;
+			// aapt resource value: 0x7f0a008b
+			public const int textureView = 2131361931;
+			
+			// aapt resource value: 0x7f0a00bf
+			public const int time = 2131361983;
 			
 			// aapt resource value: 0x7f0a001c
 			public const int title = 2131361820;
@@ -3588,8 +5686,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a006f
 			public const int title_template = 2131361903;
 			
-			// aapt resource value: 0x7f0a00c7
-			public const int toolbar = 2131361991;
+			// aapt resource value: 0x7f0a00c8
+			public const int toolbar = 2131361992;
 			
 			// aapt resource value: 0x7f0a003e
 			public const int top = 2131361854;
@@ -3597,8 +5695,8 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a006e
 			public const int topPanel = 2131361902;
 			
-			// aapt resource value: 0x7f0a008f
-			public const int touch_outside = 2131361935;
+			// aapt resource value: 0x7f0a0090
+			public const int touch_outside = 2131361936;
 			
 			// aapt resource value: 0x7f0a000f
 			public const int transition_current_scene = 2131361807;
@@ -3627,11 +5725,11 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0016
 			public const int view_offset_helper = 2131361814;
 			
-			// aapt resource value: 0x7f0a00c9
-			public const int visible = 2131361993;
+			// aapt resource value: 0x7f0a00ca
+			public const int visible = 2131361994;
 			
-			// aapt resource value: 0x7f0a00ab
-			public const int volume_item_container = 2131361963;
+			// aapt resource value: 0x7f0a00ac
+			public const int volume_item_container = 2131361964;
 			
 			// aapt resource value: 0x7f0a003c
 			public const int withText = 2131361852;
@@ -3802,130 +5900,133 @@ namespace BuildIt.ML.Sample.Droid
 			public const int abc_select_dialog_material = 2130968601;
 			
 			// aapt resource value: 0x7f04001a
-			public const int design_bottom_navigation_item = 2130968602;
+			public const int CameraLayout = 2130968602;
 			
 			// aapt resource value: 0x7f04001b
-			public const int design_bottom_sheet_dialog = 2130968603;
+			public const int design_bottom_navigation_item = 2130968603;
 			
 			// aapt resource value: 0x7f04001c
-			public const int design_layout_snackbar = 2130968604;
+			public const int design_bottom_sheet_dialog = 2130968604;
 			
 			// aapt resource value: 0x7f04001d
-			public const int design_layout_snackbar_include = 2130968605;
+			public const int design_layout_snackbar = 2130968605;
 			
 			// aapt resource value: 0x7f04001e
-			public const int design_layout_tab_icon = 2130968606;
+			public const int design_layout_snackbar_include = 2130968606;
 			
 			// aapt resource value: 0x7f04001f
-			public const int design_layout_tab_text = 2130968607;
+			public const int design_layout_tab_icon = 2130968607;
 			
 			// aapt resource value: 0x7f040020
-			public const int design_menu_item_action_area = 2130968608;
+			public const int design_layout_tab_text = 2130968608;
 			
 			// aapt resource value: 0x7f040021
-			public const int design_navigation_item = 2130968609;
+			public const int design_menu_item_action_area = 2130968609;
 			
 			// aapt resource value: 0x7f040022
-			public const int design_navigation_item_header = 2130968610;
+			public const int design_navigation_item = 2130968610;
 			
 			// aapt resource value: 0x7f040023
-			public const int design_navigation_item_separator = 2130968611;
+			public const int design_navigation_item_header = 2130968611;
 			
 			// aapt resource value: 0x7f040024
-			public const int design_navigation_item_subheader = 2130968612;
+			public const int design_navigation_item_separator = 2130968612;
 			
 			// aapt resource value: 0x7f040025
-			public const int design_navigation_menu = 2130968613;
+			public const int design_navigation_item_subheader = 2130968613;
 			
 			// aapt resource value: 0x7f040026
-			public const int design_navigation_menu_item = 2130968614;
+			public const int design_navigation_menu = 2130968614;
 			
 			// aapt resource value: 0x7f040027
-			public const int design_text_input_password_icon = 2130968615;
+			public const int design_navigation_menu_item = 2130968615;
 			
 			// aapt resource value: 0x7f040028
-			public const int mr_chooser_dialog = 2130968616;
+			public const int design_text_input_password_icon = 2130968616;
 			
 			// aapt resource value: 0x7f040029
-			public const int mr_chooser_list_item = 2130968617;
+			public const int mr_chooser_dialog = 2130968617;
 			
 			// aapt resource value: 0x7f04002a
-			public const int mr_controller_material_dialog_b = 2130968618;
+			public const int mr_chooser_list_item = 2130968618;
 			
 			// aapt resource value: 0x7f04002b
-			public const int mr_controller_volume_item = 2130968619;
+			public const int mr_controller_material_dialog_b = 2130968619;
 			
 			// aapt resource value: 0x7f04002c
-			public const int mr_playback_control = 2130968620;
+			public const int mr_controller_volume_item = 2130968620;
 			
 			// aapt resource value: 0x7f04002d
-			public const int mr_volume_control = 2130968621;
+			public const int mr_playback_control = 2130968621;
 			
 			// aapt resource value: 0x7f04002e
-			public const int notification_action = 2130968622;
+			public const int mr_volume_control = 2130968622;
 			
 			// aapt resource value: 0x7f04002f
-			public const int notification_action_tombstone = 2130968623;
+			public const int notification_action = 2130968623;
 			
 			// aapt resource value: 0x7f040030
-			public const int notification_media_action = 2130968624;
+			public const int notification_action_tombstone = 2130968624;
 			
 			// aapt resource value: 0x7f040031
-			public const int notification_media_cancel_action = 2130968625;
+			public const int notification_media_action = 2130968625;
 			
 			// aapt resource value: 0x7f040032
-			public const int notification_template_big_media = 2130968626;
+			public const int notification_media_cancel_action = 2130968626;
 			
 			// aapt resource value: 0x7f040033
-			public const int notification_template_big_media_custom = 2130968627;
+			public const int notification_template_big_media = 2130968627;
 			
 			// aapt resource value: 0x7f040034
-			public const int notification_template_big_media_narrow = 2130968628;
+			public const int notification_template_big_media_custom = 2130968628;
 			
 			// aapt resource value: 0x7f040035
-			public const int notification_template_big_media_narrow_custom = 2130968629;
+			public const int notification_template_big_media_narrow = 2130968629;
 			
 			// aapt resource value: 0x7f040036
-			public const int notification_template_custom_big = 2130968630;
+			public const int notification_template_big_media_narrow_custom = 2130968630;
 			
 			// aapt resource value: 0x7f040037
-			public const int notification_template_icon_group = 2130968631;
+			public const int notification_template_custom_big = 2130968631;
 			
 			// aapt resource value: 0x7f040038
-			public const int notification_template_lines_media = 2130968632;
+			public const int notification_template_icon_group = 2130968632;
 			
 			// aapt resource value: 0x7f040039
-			public const int notification_template_media = 2130968633;
+			public const int notification_template_lines_media = 2130968633;
 			
 			// aapt resource value: 0x7f04003a
-			public const int notification_template_media_custom = 2130968634;
+			public const int notification_template_media = 2130968634;
 			
 			// aapt resource value: 0x7f04003b
-			public const int notification_template_part_chronometer = 2130968635;
+			public const int notification_template_media_custom = 2130968635;
 			
 			// aapt resource value: 0x7f04003c
-			public const int notification_template_part_time = 2130968636;
+			public const int notification_template_part_chronometer = 2130968636;
 			
 			// aapt resource value: 0x7f04003d
-			public const int select_dialog_item_material = 2130968637;
+			public const int notification_template_part_time = 2130968637;
 			
 			// aapt resource value: 0x7f04003e
-			public const int select_dialog_multichoice_material = 2130968638;
+			public const int select_dialog_item_material = 2130968638;
 			
 			// aapt resource value: 0x7f04003f
-			public const int select_dialog_singlechoice_material = 2130968639;
+			public const int select_dialog_multichoice_material = 2130968639;
 			
 			// aapt resource value: 0x7f040040
-			public const int support_simple_spinner_dropdown_item = 2130968640;
+			public const int select_dialog_singlechoice_material = 2130968640;
 			
 			// aapt resource value: 0x7f040041
-			public const int Tabbar = 2130968641;
+			public const int support_simple_spinner_dropdown_item = 2130968641;
 			
 			// aapt resource value: 0x7f040042
-			public const int Toolbar = 2130968642;
+			public const int Tabbar = 2130968642;
 			
 			// aapt resource value: 0x7f040043
-			public const int tooltip = 2130968643;
+			public const int Toolbar = 2130968643;
+			
+			// aapt resource value: 0x7f040044
+			public const int tooltip = 2130968644;
 			
 			static Layout()
 			{
