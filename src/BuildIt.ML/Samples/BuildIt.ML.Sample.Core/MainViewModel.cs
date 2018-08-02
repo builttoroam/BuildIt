@@ -1,5 +1,7 @@
 ﻿using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -26,11 +28,23 @@ namespace BuildIt.ML.Sample.Core
             }
         }
 
+        public async Task InitAsync()
+        {
+            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+        }
+
         public async Task ClassifyAsync()
         {
             await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
             var imageClassifications = await CrossCustomVisionClassifier.Instance.ClassifyAsync(file.GetStream());
+            Classifications = string.Join(",", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
+        }
+
+        public async Task ClassifyAsync(object frame)
+        {
+            await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
+            var imageClassifications = await CrossCustomVisionClassifier.Instance.ClassifyNativeFrameAsync(frame);
             Classifications = string.Join(",", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
         }
 

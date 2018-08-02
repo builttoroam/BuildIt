@@ -312,7 +312,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             return cameras.AsReadOnly();
         }
-
         public void OnPreviewFrame(byte[] data, global::Android.Hardware.Camera camera)
         {
             cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(ConvertYuvToJpeg(data, camera)));

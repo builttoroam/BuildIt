@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildIt.Forms\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj" />
+    <ProjectReference Include="..\..\..\BuildIt.Forms\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
+    <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj" />
     <ProjectReference Include="..\BuildIt.ML.Sample.Core\BuildIt.ML.Sample.Core.csproj" />
   </ItemGroup>
 </Project>
