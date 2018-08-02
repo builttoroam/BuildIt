@@ -253,14 +253,30 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     Debug.WriteLine("No camera device found.");
                     return;
                 }
+                var frameSourceGroups = await MediaFrameSourceGroup.FindAllAsync();
+                var selectedGroupObjects = frameSourceGroups.Select(group =>
+                   new
+                   {
+                       sourceGroup = group,
+                       colorSourceInfo = group.SourceInfos.FirstOrDefault((sourceInfo) =>
+                       {
+                           // On XBox/Kinect, omit the MediaStreamType and EnclosureLocation tests
+                           return sourceInfo.SourceKind == MediaFrameSourceKind.Color;
+                       })
+                   }).Where(t => t.colorSourceInfo != null)
+                   .FirstOrDefault();
 
+                MediaFrameSourceGroup selectedGroup = selectedGroupObjects?.sourceGroup;
+                MediaFrameSourceInfo colorSourceInfo = selectedGroupObjects?.colorSourceInfo;
                 mediaCapture = new MediaCapture();
-                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id };
+                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id, SourceGroup = selectedGroup, StreamingCaptureMode = StreamingCaptureMode.Video };
                 try
                 {
                     await mediaCapture.InitializeAsync(settings);
-                    mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(null, null);
+                    var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
+                    mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
                     mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
+                    await mediaFrameReader.StartAsync();
                     isInitialized = true;
                 }
                 catch (UnauthorizedAccessException)
@@ -305,6 +321,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 if (mediaFrameReader != null)
                 {
                     mediaFrameReader.FrameArrived -= MediaFrameReader_FrameArrived;
+                    await mediaFrameReader.StopAsync();
                 }
 
                 isInitialized = false;
@@ -325,6 +342,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
         private void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
+            Debug.WriteLine("frame arrived");
             using (var mediaFrameReference = sender.TryAcquireLatestFrame())
             {
                 if (mediaFrameReference?.VideoMediaFrame != null)
