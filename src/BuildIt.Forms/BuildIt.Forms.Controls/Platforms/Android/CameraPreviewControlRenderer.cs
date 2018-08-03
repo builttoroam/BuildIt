@@ -4,12 +4,14 @@ using Android.Graphics;
 using Android.Hardware;
 using Android.Views;
 using Android.Widget;
+using ApxLabs.FastAndroidCamera;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Android;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -22,7 +24,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     /// <summary>
     /// Custom Renderer for <see cref="CameraPreviewControl"/>
     /// </summary>
-    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, IPreviewCallback
+    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback
     {
         private global::Android.Hardware.Camera camera;
         private global::Android.Views.View view;
@@ -243,9 +245,18 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             var cameraParameters = camera.GetParameters();
+            int numBytes = (cameraParameters.PreviewSize.Width * cameraParameters.PreviewSize.Height * ImageFormat.GetBitsPerPixel(cameraParameters.PreviewFormat)) / 8;
+
+            using (FastJavaByteArray buffer = new FastJavaByteArray(numBytes))
+            {
+                // allocate new Java byte arrays for Android to use for preview frames
+                camera.AddCallbackBuffer(new FastJavaByteArray(numBytes));
+            }
+
             defaultFocusMode = cameraParameters.FocusMode;
-            camera.SetPreviewCallback(this);
+            camera.SetNonMarshalingPreviewCallback(this);
             camera.StartPreview();
+            // non-marshaling version of the preview callback
         }
 
         private void EnableContinuousAutoFocus(bool enable)
@@ -312,24 +323,38 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             return cameras.AsReadOnly();
         }
-        public void OnPreviewFrame(byte[] data, global::Android.Hardware.Camera camera)
+
+        /*public void OnPreviewFrame(byte[] data, global::Android.Hardware.Camera camera)
         {
             cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(ConvertYuvToJpeg(data, camera)));
-        }
+        }*/
 
-        private byte[] ConvertYuvToJpeg(byte[] yuvData, global::Android.Hardware.Camera camera)
+        private byte[] ConvertYuvToJpeg(IList<byte> yuvData, global::Android.Hardware.Camera camera)
         {
             // conversion code may be needed to work with the ML library
             var cameraParameters = camera.GetParameters();
             var width = cameraParameters.PreviewSize.Width;
             var height = cameraParameters.PreviewSize.Height;
-            var yuv = new YuvImage(yuvData, cameraParameters.PreviewFormat, width, height, null);
-            var ms = new MemoryStream();
-            var quality = 100;   // adjust this as needed
-            yuv.CompressToJpeg(new Rect(0, 0, width, height), quality, ms);
-            var jpegData = ms.ToArray();
+            using (var yuv = new YuvImage(yuvData.ToArray(), cameraParameters.PreviewFormat, width, height, null))
+            {
+                var ms = new MemoryStream();
+                var quality = 100;   // adjust this as needed
+                yuv.CompressToJpeg(new Rect(0, 0, width, height), quality, ms);
+                var jpegData = ms.ToArray();
+                return jpegData;
+            }
+        }
 
-            return jpegData;
+        public void OnPreviewFrame(IntPtr data, global::Android.Hardware.Camera camera)
+        {
+            using (var buffer = new FastJavaByteArray(data))
+            {
+                // TODO: see if this can be optimised
+                var jpeg = ConvertYuvToJpeg(buffer, camera);
+                cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpeg));
+                // finished with this frame, process the next one
+                camera.AddCallbackBuffer(buffer);
+            }
         }
     }
 }
