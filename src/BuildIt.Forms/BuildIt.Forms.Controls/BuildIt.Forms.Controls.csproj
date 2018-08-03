@@ -76,4 +76,10 @@
     <ProjectReference Include="..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj" />
     <ProjectReference Include="..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid81'">
+    <PackageReference Include="FastAndroidCamera">
+      <Version>2.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
 </Project>
