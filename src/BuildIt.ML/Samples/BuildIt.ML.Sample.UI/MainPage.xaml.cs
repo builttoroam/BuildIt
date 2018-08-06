@@ -26,7 +26,6 @@ namespace BuildIt.ML.Sample.UI
         private async void ClassifyButton_Clicked(object sender, EventArgs e)
         {
             CameraPreviewControl.IsVisible = true;
-            //await ViewModel?.ClassifyAsync();
         }
 
         private async void CameraPreviewControl_MediaFrameArrived(object sender, Forms.Controls.MediaFrameEventArgs eventArgs)

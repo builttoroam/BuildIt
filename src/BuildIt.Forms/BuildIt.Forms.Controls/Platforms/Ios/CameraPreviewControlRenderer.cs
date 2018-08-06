@@ -19,7 +19,7 @@ using Xamarin.Forms.Platform.iOS;
 namespace BuildIt.Forms.Controls.Platforms.Ios
 {
     /// <inheritdoc />
-    public class CameraPreviewControlRenderer : FrameRenderer
+    public class CameraPreviewControlRenderer : FrameRenderer, IAVCaptureVideoDataOutputSampleBufferDelegate
     {
         private AVCaptureSession captureSession;
         private AVCaptureDeviceInput captureDeviceInput;
@@ -30,6 +30,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private CameraPreviewControl cameraPreviewControl;
         private AVCaptureVideoDataOutput videoOutput;
         private FrameExtractor frameExtractor;
+        DispatchQueue videoCaptureQueue;
 
         /// <inheritdoc />
         public override void LayoutSubviews()
@@ -217,6 +218,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             videoOutput?.Dispose();
             videoOutput = null;
+
+            videoCaptureQueue?.Dispose();
+            videoCaptureQueue = null;
             isInitialized = false;
         }
 
@@ -254,16 +258,17 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             {
                 AlwaysDiscardsLateVideoFrames = true
             };
-            var videoCaptureQueue = new DispatchQueue("Video Capture Queue");
-            //frameExtractor = new FrameExtractor(cameraPreviewControl.OnMediaFrameArrived);
-            //videoOutput.SetSampleBufferDelegateQueue(frameExtractor, videoCaptureQueue);
-            //if (captureSession.CanAddOutput(videoOutput))
-            //{
-            //    captureSession.AddOutput(videoOutput);
-            //}
+            videoCaptureQueue = new DispatchQueue("Video Capture Queue");
+            frameExtractor = new FrameExtractor(cameraPreviewControl.OnMediaFrameArrived);
+            videoOutput.SetSampleBufferDelegateQueue(frameExtractor, videoCaptureQueue);
+            captureSession.AddInput(captureDeviceInput);
+
+            if (captureSession.CanAddOutput(videoOutput))
+            {
+                captureSession.AddOutput(videoOutput);
+            }
 
             captureSession.AddOutput(stillImageOutput);
-            captureSession.AddInput(captureDeviceInput);
             captureSession.StartRunning();
         }
 
@@ -362,16 +367,16 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             return cameras;
         }
 
-        //[Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
-        //private void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("output sample buffer");
-        //    var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
-        //    if (pixelBuffer != null)
-        //    {
-        //        cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(pixelBuffer));
-        //    }
-        //}
+        [Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
+        private void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
+        {
+            //System.Diagnostics.Debug.WriteLine("output sample buffer");
+            //var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
+            //if (pixelBuffer != null)
+            //{
+            //    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(pixelBuffer));
+            //}
+        }
     }
 
     internal class FrameExtractor : AVCaptureVideoDataOutputSampleBufferDelegate
@@ -385,10 +390,12 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
         public override void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
         {
-            var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
-            if (pixelBuffer != null)
+            using (sampleBuffer)
             {
-                frameArrivedAction(new MediaFrame(pixelBuffer));
+                using (var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer)
+                {
+                    frameArrivedAction(new MediaFrame(pixelBuffer));
+                }
             }
         }
     }
