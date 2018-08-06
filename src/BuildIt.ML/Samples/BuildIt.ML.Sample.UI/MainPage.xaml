@@ -8,7 +8,7 @@
             <controls:CameraPreviewControl x:Name="CameraPreviewControl"
                                            IsVisible="False"
                                            PreferredCamera="Back"
-                                           MediaFrameArrived="CameraPreviewControl_MediaFrameArrived" />
+                                            />
             <Label Text="{Binding Classifications, StringFormat='Classifications: {0}'}" />
             <Button x:Name="ClassifyButton"
                     Text="Classify"

@@ -367,34 +367,34 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             return cameras;
         }
 
-        [Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
-        private void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
-        {
-            //System.Diagnostics.Debug.WriteLine("output sample buffer");
-            //var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
-            //if (pixelBuffer != null)
-            //{
-            //    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(pixelBuffer));
-            //}
-        }
+        //[Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
+        //private void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
+        //{
+        //    //System.Diagnostics.Debug.WriteLine("output sample buffer");
+        //    //var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
+        //    //if (pixelBuffer != null)
+        //    //{
+        //    //    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(pixelBuffer));
+        //    //}
+        //}
     }
 
     internal class FrameExtractor : AVCaptureVideoDataOutputSampleBufferDelegate
     {
-        private readonly Action<MediaFrame> frameArrivedAction;
+        private readonly Func<MediaFrame, Task> frameArrivedAction;
 
-        public FrameExtractor(Action<MediaFrame> frameArrivedAction)
+        public FrameExtractor(Func<MediaFrame, Task> frameArrivedAction)
         {
             this.frameArrivedAction = frameArrivedAction;
         }
 
-        public override void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
+        public override async void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
         {
             using (sampleBuffer)
             {
                 using (var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer)
                 {
-                    frameArrivedAction(new MediaFrame(pixelBuffer));
+                    await frameArrivedAction(new MediaFrame(pixelBuffer));
                 }
             }
         }
