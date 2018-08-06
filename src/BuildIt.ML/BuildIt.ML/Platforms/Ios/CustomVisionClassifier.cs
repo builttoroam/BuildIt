@@ -71,28 +71,36 @@ namespace BuildIt.ML
         public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
         {
             var tcs = new TaskCompletionSource<IEnumerable<ImageClassification>>();
-            var request = new VNCoreMLRequest(model, (r, e) =>
+            using (var request = new VNCoreMLRequest(model, (r, e) =>
+             {
+                 if (e != null)
+                 {
+                     // TODO: handle errors
+                 }
+                 else
+                 {
+                     var classifications = r.GetResults<VNClassificationObservation>();
+                     tcs.SetResult(classifications.Select(c => new ImageClassification(c.Identifier, c.Confidence)));
+                 }
+             }))
             {
-                if (e != null)
+                var cvPixelBuffer = obj as CVPixelBuffer;
+                //using (var cvPixelBuffer = obj as CVPixelBuffer)
+                //{
+                using (var requestHandler = new VNImageRequestHandler(cvPixelBuffer, new NSDictionary()))
                 {
-                    // TODO: handle errors
-                }
-                else
-                {
-                    var classifications = r.GetResults<VNClassificationObservation>();
-                    tcs.SetResult(classifications.Select(c => new ImageClassification(c.Identifier, c.Confidence)));
-                }
-            });
+                    requestHandler.Perform(new[] { request }, out NSError error);
+                    if (error != null)
+                    {
+                        // TODO: handle error
+                    }
 
-            var requestHandler = new VNImageRequestHandler(obj as CVPixelBuffer, new NSDictionary());
-            requestHandler.Perform(new[] { request }, out NSError error);
-            if (error != null)
-            {
-                // TODO: handle error
+                    var imageClassifications = await tcs.Task;
+                    return imageClassifications.ToList().AsReadOnly();
+                }
+                //}
+                //return new List<ImageClassification>();
             }
-
-            var imageClassifications = await tcs.Task;
-            return imageClassifications.ToList().AsReadOnly();
         }
     }
 }
