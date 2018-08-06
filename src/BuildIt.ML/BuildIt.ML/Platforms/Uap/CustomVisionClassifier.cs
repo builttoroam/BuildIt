@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.AI.MachineLearning.Preview;
-using Windows.Foundation.Metadata;
+using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Imaging;
 using Windows.Media;
 using Windows.Storage;
@@ -13,25 +14,19 @@ namespace BuildIt.ML
 {
     public class CustomVisionClassifier : ICustomVisionClassifier
     {
-        private const string WindowsMLContract = "Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract";
         private const string Data = "data";
         private const string ClassLabel = "classLabel";
         private const string Loss = "loss";
         private string[] labels;
         private LearningModelPreview learningModel;
-        CustomVisionOutput customVisionOutput;
+        private CustomVisionOutput customVisionOutput;
 
         public async Task InitAsync(string modelName, string[] labels)
         {
-            if (IsWindowsMLSupported())
-            {
-                this.labels = labels;
-                var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/{modelName}.onnx"));
-                learningModel = await LearningModelPreview.LoadModelFromStorageFileAsync(file);
-                customVisionOutput = new CustomVisionOutput(labels);
-            }
-
-            // TODO: return an error
+            this.labels = labels;
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/{modelName}.onnx"));
+            learningModel = await LearningModelPreview.LoadModelFromStorageFileAsync(file);
+            customVisionOutput = new CustomVisionOutput(labels);
         }
 
         public async Task<IReadOnlyList<ImageClassification>> ClassifyAsync(Stream imageStream)
@@ -52,25 +47,32 @@ namespace BuildIt.ML
             }
         }
 
-        private bool IsWindowsMLSupported()
-        {
-            return ApiInformation.IsApiContractPresent(WindowsMLContract, 1, 0);
-        }
-
         public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
         {
-            var videoFrame = obj as VideoFrame;
-            if (videoFrame?.Direct3DSurface == null)
+            try
             {
-                return new List<ImageClassification>();
+                using (var surface = obj as IDirect3DSurface)
+                {
+                    if (surface != null)
+                    {
+                        using (var videoFrame = VideoFrame.CreateWithDirect3D11Surface(surface))
+                        {
+                            var binding = new LearningModelBindingPreview(learningModel);
+                            binding.Bind(Data, videoFrame);
+                            binding.Bind(ClassLabel, customVisionOutput.ClassLabel);
+                            binding.Bind(Loss, customVisionOutput.Loss);
+                            var result = await learningModel.EvaluateAsync(binding, string.Empty);
+                            return customVisionOutput.Loss.Select(l => new ImageClassification(l.Key, l.Value)).ToList().AsReadOnly();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
 
-            var binding = new LearningModelBindingPreview(learningModel);
-            binding.Bind(Data, videoFrame);
-            binding.Bind(ClassLabel, customVisionOutput.ClassLabel);
-            binding.Bind(Loss, customVisionOutput.Loss);
-            var result = await learningModel.EvaluateAsync(binding, string.Empty);
-            return customVisionOutput.Loss.Select(l => new ImageClassification(l.Key, l.Value)).ToList().AsReadOnly();
+            return new List<ImageClassification>().AsReadOnly();
         }
     }
 }

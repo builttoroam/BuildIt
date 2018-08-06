@@ -61,6 +61,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
         private CameraPreviewControl cameraPreviewControl;
         private MediaFrameReader mediaFrameReader;
+        private bool processing;
 
         /// <inheritdoc />
         protected override async void OnElementChanged(ElementChangedEventArgs<Frame> e)
@@ -346,14 +347,26 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             }
         }
 
-        private void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
+        private async void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
+            if (processing)
+            {
+                return;
+            }
+
             using (var mediaFrameReference = sender.TryAcquireLatestFrame())
             {
                 if (mediaFrameReference?.VideoMediaFrame != null)
                 {
-                    var videoFrame = mediaFrameReference.VideoMediaFrame.GetVideoFrame();
-                    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(videoFrame));
+                    using (var videoFrame = mediaFrameReference.VideoMediaFrame.GetVideoFrame())
+                    {
+                        if (videoFrame.Direct3DSurface != null)
+                        {
+                            processing = true;
+                            await cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(videoFrame.Direct3DSurface));
+                            processing = false;
+                        }
+                    }
                 }
             }
         }
