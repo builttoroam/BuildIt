@@ -45,7 +45,9 @@ namespace BuildIt.Forms.Controls
 
         public delegate void MediaFrameArrivedHandler(object sender, MediaFrameEventArgs eventArgs);
 
-        public event MediaFrameArrivedHandler MediaFrameArrived;
+        //public event MediaFrameArrivedHandler MediaFrameArrived;
+
+            public Func<MediaFrame, Task> MediaFrameArrived { get; set; }
 
         /// <summary>
         /// Enumeration the available camera facings/positions
@@ -148,9 +150,15 @@ namespace BuildIt.Forms.Controls
             return await RetrieveCamerasFunc();
         }
 
-        internal void OnMediaFrameArrived(MediaFrame mediaFrame)
+        internal async Task OnMediaFrameArrived(MediaFrame mediaFrame)
         {
-            MediaFrameArrived?.Invoke(this, new MediaFrameEventArgs(mediaFrame));
+            if (MediaFrameArrived == null)
+            {
+                return;
+            }
+
+            await MediaFrameArrived(mediaFrame);
+            //MediaFrameArrived?.Invoke(this, new MediaFrameEventArgs(mediaFrame));
         }
     }
 }

@@ -345,13 +345,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        public void OnPreviewFrame(IntPtr data, global::Android.Hardware.Camera camera)
+        public async void OnPreviewFrame(IntPtr data, global::Android.Hardware.Camera camera)
         {
             using (var buffer = new FastJavaByteArray(data))
             {
                 // TODO: see if this can be optimised
                 var jpeg = ConvertYuvToJpeg(buffer, camera);
-                cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpeg));
+                await cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpeg));
                 // finished with this frame, process the next one
                 camera.AddCallbackBuffer(buffer);
             }

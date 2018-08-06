@@ -1,6 +1,7 @@
-﻿using BuildIt.ML.Sample.Core;
+﻿using BuildIt.Forms.Controls;
+using BuildIt.ML.Sample.Core;
 using System;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,6 +22,12 @@ namespace BuildIt.ML.Sample.UI
         {
             base.OnAppearing();
             await ViewModel?.InitAsync();
+            CameraPreviewControl.MediaFrameArrived = ClassifyImage;
+        }
+
+        private async Task ClassifyImage(MediaFrame mediaFrame)
+        {
+            await ViewModel?.ClassifyAsync(mediaFrame.NativeFrame);
         }
 
         private async void ClassifyButton_Clicked(object sender, EventArgs e)
