@@ -94,12 +94,16 @@
     <Compile Include="Resources\Currency.cs">
       <DependentUpon>Currency.mlmodel</DependentUpon>
     </Compile>
+    <Compile Include="Resources\fruits.cs">
+      <DependentUpon>fruits.mlmodel</DependentUpon>
+    </Compile>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <CoreMLModel Include="Resources\Currency.mlmodel" />
+    <CoreMLModel Include="Resources\fruits.mlmodel" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
