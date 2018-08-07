@@ -1,11 +1,11 @@
-﻿using BuildIt.Forms.Sample.Core.ViewModels;
-using BuildIt.Forms.Animations;
+﻿using BuildIt.Forms.Animations;
+using BuildIt.Forms.Controls;
+using BuildIt.Forms.Sample.Core.ViewModels;
 using BuildIt.States.Interfaces;
 using System;
-using System.Threading;
-using BuildIt.Forms.Controls;
-using Xamarin.Forms;
 using System.Linq;
+using System.Threading;
+using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
 {
@@ -92,14 +92,17 @@ namespace BuildIt.Forms.Sample
         {
             VisualStateManager.GoToState(this, "ShowTab1");
         }
+
         private async void ShowTab2Clicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "ShowTab2");
         }
+
         private async void ShowTab3Clicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "ShowTab3");
         }
+
         private async void ShowTab4Clicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "ShowTab4");
@@ -109,10 +112,10 @@ namespace BuildIt.Forms.Sample
         {
             (BindingContext as MainViewModel).LoadBob();
         }
+
         private void FredClick(object sender, EventArgs e)
         {
             (BindingContext as MainViewModel).LoadFred();
-
         }
 
         private void Bob2Click(object sender, EventArgs e)
@@ -123,7 +126,6 @@ namespace BuildIt.Forms.Sample
         private void MutateClick(object sender, EventArgs e)
         {
             (BindingContext as MainViewModel).Mutate();
-
         }
 
         private void FlipCameraButton_OnClicked(object sender, EventArgs e)
@@ -159,11 +161,6 @@ namespace BuildIt.Forms.Sample
         {
             var cameras = await CameraPreviewControl.RetrieveCamerasAsync();
             AvailableCamerasLabel.Text = string.Join(Environment.NewLine, cameras.Select(c => $"Camera id: {c.Id}, facing: {c.CameraFacing}"));
-        }
-
-        private void CameraPreviewControl_MediaFrameArrived(object sender, MediaFrameEventArgs eventArgs)
-        {
-
         }
     }
 }
