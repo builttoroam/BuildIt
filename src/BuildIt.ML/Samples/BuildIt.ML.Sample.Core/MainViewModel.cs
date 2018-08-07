@@ -43,9 +43,10 @@ namespace BuildIt.ML.Sample.Core
 
         public async Task ClassifyAsync(object frame)
         {
-            await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
+            await CrossCustomVisionClassifier.Instance.InitAsync("fruits", new[] { "apple", "banana", "pineapple" });
+            //await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
             var imageClassifications = await CrossCustomVisionClassifier.Instance.ClassifyNativeFrameAsync(frame);
-            Classifications = string.Join(",", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
+            Classifications = string.Join("\n", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
         }
 
         private void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
