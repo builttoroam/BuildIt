@@ -30,7 +30,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private CameraPreviewControl cameraPreviewControl;
         private AVCaptureVideoDataOutput videoOutput;
         private FrameExtractor frameExtractor;
-        DispatchQueue videoCaptureQueue;
+        private DispatchQueue videoCaptureQueue;
 
         /// <inheritdoc />
         public override void LayoutSubviews()
@@ -146,34 +146,41 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         /// <returns>The path to the saved photo file</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
-            var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
-            var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
-            var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer);
-
-            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
-            if (!Directory.Exists(folder))
+            using (var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video))
             {
-                Directory.CreateDirectory(folder);
+                using (var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection))
+                {
+                    using (var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer))
+                    {
+
+                        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
+                        if (!Directory.Exists(folder))
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
+
+                        //var fileCount = Directory.GetFiles(folder).Length;
+                        //var fileName = Path.Combine(folder, $"{fileCount}.jpg");
+                        //File.Create(fileName).Dispose();
+
+                        //jpegImage.Save(fileName, false, out var error);
+
+                        //if (error != null)
+                        //{
+                        //    return error.ToString();
+                        //}
+
+                        //if (saveToPhotosLibrary)
+                        //{
+                        //    var photo = new UIImage(jpegImage);
+                        //    photo.SaveToPhotosAlbum((img, err) => error = err);
+                        //}
+
+                        //return error == null ? fileName : error.ToString();
+                        return string.Empty;
+                    }
+                }
             }
-
-            var fileCount = Directory.GetFiles(folder).Length;
-            var fileName = Path.Combine(folder, $"{fileCount}.jpg");
-            File.Create(fileName).Dispose();
-
-            jpegImage.Save(fileName, false, out var error);
-
-            if (error != null)
-            {
-                return error.ToString();
-            }
-
-            if (saveToPhotosLibrary)
-            {
-                var photo = new UIImage(jpegImage);
-                photo.SaveToPhotosAlbum((img, err) => error = err);
-            }
-
-            return error == null ? fileName : error.ToString();
         }
 
         private static CameraPreviewControl.CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
