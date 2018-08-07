@@ -2,8 +2,6 @@
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Platforms.Ios;
 using CoreFoundation;
-using CoreMedia;
-using CoreVideo;
 using Foundation;
 using System;
 using System.Collections.Generic;
@@ -146,40 +144,49 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         /// <returns>The path to the saved photo file</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
-            using (var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video))
+            NSError error = null;
+            try
             {
-                using (var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection))
+                using (var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video))
                 {
-                    using (var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer))
+                    using (var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection))
                     {
-
-                        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
-                        if (!Directory.Exists(folder))
+                        using (var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer))
                         {
-                            Directory.CreateDirectory(folder);
+                            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
+                            if (!Directory.Exists(folder))
+                            {
+                                Directory.CreateDirectory(folder);
+                            }
+
+                            var fileCount = Directory.GetFiles(folder).Length;
+                            var fileName = Path.Combine(folder, $"{fileCount}.jpg");
+                            using (File.Create(fileName))
+                            {
+                                jpegImage.Save(fileName, false, out error);
+
+                                if (error != null)
+                                {
+                                    return error.ToString();
+                                }
+
+                                if (saveToPhotosLibrary)
+                                {
+                                    using (var photo = new UIImage(jpegImage))
+                                    {
+                                        photo.SaveToPhotosAlbum((img, err) => error = err);
+                                    }
+                                }
+
+                                return error == null ? fileName : error.ToString();
+                            }
                         }
-
-                        //var fileCount = Directory.GetFiles(folder).Length;
-                        //var fileName = Path.Combine(folder, $"{fileCount}.jpg");
-                        //File.Create(fileName).Dispose();
-
-                        //jpegImage.Save(fileName, false, out var error);
-
-                        //if (error != null)
-                        //{
-                        //    return error.ToString();
-                        //}
-
-                        //if (saveToPhotosLibrary)
-                        //{
-                        //    var photo = new UIImage(jpegImage);
-                        //    photo.SaveToPhotosAlbum((img, err) => error = err);
-                        //}
-
-                        //return error == null ? fileName : error.ToString();
-                        return string.Empty;
                     }
                 }
+            }
+            finally
+            {
+                error?.Dispose();
             }
         }
 
