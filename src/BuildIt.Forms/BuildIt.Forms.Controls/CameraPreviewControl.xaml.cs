@@ -6,16 +6,6 @@ using Xamarin.Forms.Xaml;
 
 namespace BuildIt.Forms.Controls
 {
-    public class MediaFrameEventArgs : EventArgs
-    {
-        public MediaFrameEventArgs(MediaFrame mediaFrame)
-        {
-            MediaFrame = mediaFrame;
-        }
-
-        public MediaFrame MediaFrame { get; }
-    }
-
     /// <summary>
     /// A simple controled inheritng from <see cref="Frame"/> which shows a live preview of the camera. Defaults to rear/first-available camera
     /// iOS: Requires 'NSCameraUsageDescription' in your info.plist. Android: Requires 'android.permission.CAMERA' in the app manifest. UWP: Requires 'Webcam' and 'Microphone' capabilities
@@ -43,12 +33,6 @@ namespace BuildIt.Forms.Controls
             InitializeComponent();
         }
 
-        public delegate void MediaFrameArrivedHandler(object sender, MediaFrameEventArgs eventArgs);
-
-        //public event MediaFrameArrivedHandler MediaFrameArrived;
-
-            public Func<MediaFrame, Task> MediaFrameArrived { get; set; }
-
         /// <summary>
         /// Enumeration the available camera facings/positions
         /// </summary>
@@ -69,6 +53,11 @@ namespace BuildIt.Forms.Controls
             /// </summary>
             Front
         }
+
+        /// <summary>
+        /// A callback for when a camera receives a frame
+        /// </summary>
+        public Func<MediaFrame, Task> MediaFrameArrived { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred camera to be used for the preview
@@ -158,7 +147,6 @@ namespace BuildIt.Forms.Controls
             }
 
             await MediaFrameArrived(mediaFrame);
-            //MediaFrameArrived?.Invoke(this, new MediaFrameEventArgs(mediaFrame));
         }
     }
 }
