@@ -366,17 +366,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             return cameras;
         }
-
-        //[Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
-        //private void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
-        //{
-        //    //System.Diagnostics.Debug.WriteLine("output sample buffer");
-        //    //var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
-        //    //if (pixelBuffer != null)
-        //    //{
-        //    //    cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(pixelBuffer));
-        //    //}
-        //}
     }
 
     internal class FrameExtractor : AVCaptureVideoDataOutputSampleBufferDelegate
