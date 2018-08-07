@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Currency.pb" />
+    <AndroidAsset Include="Assets\fruits.pb" />
     <None Include="Resources\AboutResources.txt" />
     <AndroidAsset Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

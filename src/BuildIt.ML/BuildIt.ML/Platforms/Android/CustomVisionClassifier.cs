@@ -1,4 +1,5 @@
 ﻿using Android.Graphics;
+using Org.Tensorflow;
 using Org.Tensorflow.Contrib.Android;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,8 @@ namespace BuildIt.ML
         private const string InputName = "Placeholder";
         private TensorFlowInferenceInterface inferenceInterface;
         private string[] labels;
+        private string DataNormLayerPrefix = "data_bn";
+        private bool hasNormalizationLayer;
 
         public async Task InitAsync(string modelName, string[] labels)
         {
@@ -20,6 +23,17 @@ namespace BuildIt.ML
             var assets = global::Android.App.Application.Context.Assets;
 
             inferenceInterface = new TensorFlowInferenceInterface(assets, modelName + ".pb");
+
+            var iter = inferenceInterface.Graph().Operations();
+            while (iter.HasNext && !hasNormalizationLayer)
+            {
+                var op = iter.Next() as Operation;
+                if (op.Name().Contains(DataNormLayerPrefix))
+                {
+                    hasNormalizationLayer = true;
+                }
+            }
+            System.Diagnostics.Debug.WriteLine("initialized");
         }
 
         public async Task<IReadOnlyList<ImageClassification>> ClassifyAsync(Stream imageStream)
@@ -27,26 +41,7 @@ namespace BuildIt.ML
             using (var bitmap = await BitmapFactory.DecodeStreamAsync(imageStream))
             {
                 var outputs = new float[labels.Length];
-                var floatValues = new float[227 * 227 * 3];
-                using (var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 227, 227, false))
-                {
-                    using (var resizedBitmap = scaledBitmap.Copy(Bitmap.Config.Argb8888, false))
-                    {
-                        var intValues = new int[227 * 227];
-                        resizedBitmap.GetPixels(intValues, 0, 227, 0, 0, 227, 227);
-                        for (int i = 0; i < intValues.Length; ++i)
-                        {
-                            var val = intValues[i];
-                            floatValues[i * 3 + 0] = ((val & 0xFF) - 104);
-                            floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - 117);
-                            floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - 123);
-                        }
-
-                        resizedBitmap.Recycle();
-                    }
-
-                    scaledBitmap.Recycle();
-                }
+                var floatValues = GetBitmapPixels(bitmap, 227, 227, hasNormalizationLayer);
 
                 bitmap.Recycle();
                 inferenceInterface.Feed(InputName, floatValues.ToArray(), 1, 227, 227, 3);
@@ -64,48 +59,16 @@ namespace BuildIt.ML
 
         public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
         {
+            System.Diagnostics.Debug.WriteLine("cast bytes");
             var bytes = obj as byte[];
+            System.Diagnostics.Debug.WriteLine($"decode {bytes.Length}");
 
-            //using (var bitmap = await BitmapFactory.DecodeByteArrayAsync(bytes, 0, bytes.Length))
-            //{
-            //    var outputs = new float[labels.Length];
-            //    var floatValues = new float[227 * 227 * 3];
-            //    using (var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 227, 227, false))
-            //    {
-            //        using (var resizedBitmap = scaledBitmap.Copy(Bitmap.Config.Argb8888, false))
-            //        {
-            //            var intValues = new int[227 * 227];
-            //            resizedBitmap.GetPixels(intValues, 0, 227, 0, 0, 227, 227);
-            //            for (int i = 0; i < intValues.Length; ++i)
-            //            {
-            //                var val = intValues[i];
-            //                floatValues[i * 3 + 0] = ((val & 0xFF) - 104);
-            //                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - 117);
-            //                floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - 123);
-            //            }
-
-            //            resizedBitmap.Recycle();
-            //        }
-
-            //        scaledBitmap.Recycle();
-            //    }
             using (var bitmap = await BitmapFactory.DecodeByteArrayAsync(bytes, 0, bytes.Length))
             {
                 var outputs = new float[labels.Length];
-                var floatValues = new float[227 * 227 * 3];
-
-                var intValues = new int[227 * 227];
-                bitmap.GetPixels(intValues, 0, 227, 0, 0, 227, 227);
-                for (int i = 0; i < intValues.Length; ++i)
-                {
-                    var val = intValues[i];
-                    floatValues[i * 3 + 0] = ((val & 0xFF) - 104);
-                    floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - 117);
-                    floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - 123);
-                }
-
-                bitmap.Recycle();
-
+                System.Diagnostics.Debug.WriteLine("get pixels");
+                var floatValues = GetBitmapPixels(bitmap, 227, 227, hasNormalizationLayer);
+                System.Diagnostics.Debug.WriteLine("train");
                 inferenceInterface.Feed(InputName, floatValues.ToArray(), 1, 227, 227, 3);
                 inferenceInterface.Run(new string[] { OutputName });
                 inferenceInterface.Fetch(OutputName, outputs);
@@ -117,6 +80,90 @@ namespace BuildIt.ML
 
                 return imageClassifications.AsReadOnly();
             }
+        }
+
+        //private float[] GetBitmapPixels(Bitmap bitmap, int width, int height)
+        //{
+        //    var floatValues = new float[width * height * 3];
+        //    var imageMeanB = hasNormalizationLayer ? 0f : 124f;
+        //    var imageMeanG = hasNormalizationLayer ? 0f : 117f;
+        //    var imageMeanR = hasNormalizationLayer ? 0f : 105f;
+        //    System.Diagnostics.Debug.WriteLine($"has normalization layer {hasNormalizationLayer}");
+        //    using (var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, width, height, false))
+        //    {
+        //        using (var resizedBitmap = scaledBitmap.Copy(Bitmap.Config.Argb8888, false))
+        //        {
+        //            var intValues = new int[width * height];
+        //            resizedBitmap.GetPixels(intValues, 0, resizedBitmap.Width, 0, 0, resizedBitmap.Width, resizedBitmap.Height);
+
+        //            for (int i = 0; i < intValues.Length; ++i)
+        //            {
+        //                var val = intValues[i];
+
+        //                floatValues[i * 3 + 0] = ((val & 0xFF) - imageMeanB);
+        //                floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - imageMeanG);
+        //                floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - imageMeanR);
+        //            }
+
+        //            resizedBitmap.Recycle();
+        //        }
+
+        //        scaledBitmap.Recycle();
+        //    }
+
+        //    return floatValues;
+        //}
+
+        private static float ImageMeanR()
+        {
+  
+                    return 123.0f;
+        }
+
+        private static float ImageMeanG()
+        {
+
+                    return 117.0f;
+ 
+        }
+
+        private static float ImageMeanB()
+        {
+
+                    return 104.0f;
+
+        }
+
+        public static float[] GetBitmapPixels(Bitmap bitmap, int width, int height, bool hasNormalizationLayer)
+        {
+            var floatValues = new float[width * height * 3];
+            var imageMeanB = hasNormalizationLayer ? 0f : ImageMeanB();
+            var imageMeanG = hasNormalizationLayer ? 0f : ImageMeanG();
+            var imageMeanR = hasNormalizationLayer ? 0f : ImageMeanR();
+
+            using (var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, width, height, false))
+            {
+                using (var resizedBitmap = scaledBitmap.Copy(Bitmap.Config.Argb8888, false))
+                {
+                    var intValues = new int[width * height];
+                    resizedBitmap.GetPixels(intValues, 0, resizedBitmap.Width, 0, 0, resizedBitmap.Width, resizedBitmap.Height);
+
+                    for (int i = 0; i < intValues.Length; ++i)
+                    {
+                        var val = intValues[i];
+
+                        floatValues[i * 3 + 0] = ((val & 0xFF) - imageMeanB) / 1f;
+                        floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - imageMeanG) / 1f;
+                        floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - imageMeanR) / 1f;
+                    }
+
+                    resizedBitmap.Recycle();
+                }
+
+                scaledBitmap.Recycle();
+            }
+
+            return floatValues;
         }
     }
 }

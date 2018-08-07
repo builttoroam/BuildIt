@@ -15,7 +15,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using static Android.Hardware.Camera;
 using Context = Android.Content.Context;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
@@ -256,6 +255,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             defaultFocusMode = cameraParameters.FocusMode;
             camera.SetNonMarshalingPreviewCallback(this);
             camera.StartPreview();
+
             // non-marshaling version of the preview callback
         }
 
@@ -324,11 +324,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             return cameras.AsReadOnly();
         }
 
-        /*public void OnPreviewFrame(byte[] data, global::Android.Hardware.Camera camera)
-        {
-            cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(ConvertYuvToJpeg(data, camera)));
-        }*/
-
         private byte[] ConvertYuvToJpeg(IList<byte> yuvData, global::Android.Hardware.Camera camera)
         {
             // conversion code may be needed to work with the ML library
@@ -352,6 +347,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 // TODO: see if this can be optimised
                 var jpeg = ConvertYuvToJpeg(buffer, camera);
                 await cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpeg));
+
                 // finished with this frame, process the next one
                 camera.AddCallbackBuffer(buffer);
             }
