@@ -2773,8 +2773,8 @@ namespace BuildIt.Forms.Controls
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f08009f
-			public static int action0 = 2131230879;
+			// aapt resource value: 0x7f0800a0
+			public static int action0 = 2131230880;
 			
 			// aapt resource value: 0x7f080064
 			public static int action_bar = 2131230820;
@@ -2797,17 +2797,17 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080041
 			public static int action_bar_title = 2131230785;
 			
-			// aapt resource value: 0x7f08009c
-			public static int action_container = 2131230876;
+			// aapt resource value: 0x7f08009d
+			public static int action_container = 2131230877;
 			
 			// aapt resource value: 0x7f080065
 			public static int action_context_bar = 2131230821;
 			
-			// aapt resource value: 0x7f0800a3
-			public static int action_divider = 2131230883;
+			// aapt resource value: 0x7f0800a4
+			public static int action_divider = 2131230884;
 			
-			// aapt resource value: 0x7f08009d
-			public static int action_image = 2131230877;
+			// aapt resource value: 0x7f08009e
+			public static int action_image = 2131230878;
 			
 			// aapt resource value: 0x7f080003
 			public static int action_menu_divider = 2131230723;
@@ -2824,11 +2824,11 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080043
 			public static int action_mode_close_button = 2131230787;
 			
-			// aapt resource value: 0x7f08009e
-			public static int action_text = 2131230878;
+			// aapt resource value: 0x7f08009f
+			public static int action_text = 2131230879;
 			
-			// aapt resource value: 0x7f0800ac
-			public static int actions = 2131230892;
+			// aapt resource value: 0x7f0800ad
+			public static int actions = 2131230893;
 			
 			// aapt resource value: 0x7f080044
 			public static int activity_chooser_view_content = 2131230788;
@@ -2848,6 +2848,9 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f08002f
 			public static int auto = 2131230767;
 			
+			// aapt resource value: 0x7f080073
+			public static int autoFitTextureView = 2131230835;
+			
 			// aapt resource value: 0x7f080020
 			public static int beginning = 2131230752;
 			
@@ -2857,8 +2860,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f08004b
 			public static int buttonPanel = 2131230795;
 			
-			// aapt resource value: 0x7f0800a0
-			public static int cancel_action = 2131230880;
+			// aapt resource value: 0x7f0800a1
+			public static int cancel_action = 2131230881;
 			
 			// aapt resource value: 0x7f080030
 			public static int center = 2131230768;
@@ -2872,8 +2875,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f08005b
 			public static int checkbox = 2131230811;
 			
-			// aapt resource value: 0x7f0800a8
-			public static int chronometer = 2131230888;
+			// aapt resource value: 0x7f0800a9
+			public static int chronometer = 2131230889;
 			
 			// aapt resource value: 0x7f080039
 			public static int clip_horizontal = 2131230777;
@@ -2884,14 +2887,14 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080024
 			public static int collapseActionView = 2131230756;
 			
-			// aapt resource value: 0x7f080076
-			public static int container = 2131230838;
+			// aapt resource value: 0x7f080077
+			public static int container = 2131230839;
 			
 			// aapt resource value: 0x7f08004e
 			public static int contentPanel = 2131230798;
 			
-			// aapt resource value: 0x7f080077
-			public static int coordinator = 2131230839;
+			// aapt resource value: 0x7f080078
+			public static int coordinator = 2131230840;
 			
 			// aapt resource value: 0x7f080055
 			public static int custom = 2131230805;
@@ -2905,20 +2908,20 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080047
 			public static int default_activity_button = 2131230791;
 			
-			// aapt resource value: 0x7f080079
-			public static int design_bottom_sheet = 2131230841;
+			// aapt resource value: 0x7f08007a
+			public static int design_bottom_sheet = 2131230842;
+			
+			// aapt resource value: 0x7f080081
+			public static int design_menu_item_action_area = 2131230849;
 			
 			// aapt resource value: 0x7f080080
-			public static int design_menu_item_action_area = 2131230848;
+			public static int design_menu_item_action_area_stub = 2131230848;
 			
 			// aapt resource value: 0x7f08007f
-			public static int design_menu_item_action_area_stub = 2131230847;
+			public static int design_menu_item_text = 2131230847;
 			
 			// aapt resource value: 0x7f08007e
-			public static int design_menu_item_text = 2131230846;
-			
-			// aapt resource value: 0x7f08007d
-			public static int design_navigation_view = 2131230845;
+			public static int design_navigation_view = 2131230846;
 			
 			// aapt resource value: 0x7f080012
 			public static int disableHome = 2131230738;
@@ -2929,8 +2932,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080021
 			public static int end = 2131230753;
 			
-			// aapt resource value: 0x7f0800b2
-			public static int end_padder = 2131230898;
+			// aapt resource value: 0x7f0800b3
+			public static int end_padder = 2131230899;
 			
 			// aapt resource value: 0x7f08002a
 			public static int enterAlways = 2131230762;
@@ -2968,8 +2971,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080049
 			public static int icon = 2131230793;
 			
-			// aapt resource value: 0x7f0800ad
-			public static int icon_group = 2131230893;
+			// aapt resource value: 0x7f0800ae
+			public static int icon_group = 2131230894;
 			
 			// aapt resource value: 0x7f080025
 			public static int ifRoom = 2131230757;
@@ -2977,23 +2980,23 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080046
 			public static int image = 2131230790;
 			
-			// aapt resource value: 0x7f0800a9
-			public static int info = 2131230889;
+			// aapt resource value: 0x7f0800aa
+			public static int info = 2131230890;
 			
 			// aapt resource value: 0x7f080000
 			public static int item_touch_helper_previous_elevation = 2131230720;
 			
-			// aapt resource value: 0x7f080075
-			public static int largeLabel = 2131230837;
+			// aapt resource value: 0x7f080076
+			public static int largeLabel = 2131230838;
 			
 			// aapt resource value: 0x7f080034
 			public static int left = 2131230772;
 			
-			// aapt resource value: 0x7f0800ae
-			public static int line1 = 2131230894;
+			// aapt resource value: 0x7f0800af
+			public static int line1 = 2131230895;
 			
-			// aapt resource value: 0x7f0800b0
-			public static int line3 = 2131230896;
+			// aapt resource value: 0x7f0800b1
+			public static int line3 = 2131230897;
 			
 			// aapt resource value: 0x7f08000f
 			public static int listMode = 2131230735;
@@ -3001,11 +3004,11 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080048
 			public static int list_item = 2131230792;
 			
-			// aapt resource value: 0x7f0800b4
-			public static int masked = 2131230900;
+			// aapt resource value: 0x7f0800b5
+			public static int masked = 2131230901;
 			
-			// aapt resource value: 0x7f0800a2
-			public static int media_actions = 2131230882;
+			// aapt resource value: 0x7f0800a3
+			public static int media_actions = 2131230883;
 			
 			// aapt resource value: 0x7f080022
 			public static int middle = 2131230754;
@@ -3013,86 +3016,86 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f08003e
 			public static int mini = 2131230782;
 			
-			// aapt resource value: 0x7f08008e
-			public static int mr_art = 2131230862;
-			
-			// aapt resource value: 0x7f080083
-			public static int mr_chooser_list = 2131230851;
-			
-			// aapt resource value: 0x7f080086
-			public static int mr_chooser_route_desc = 2131230854;
+			// aapt resource value: 0x7f08008f
+			public static int mr_art = 2131230863;
 			
 			// aapt resource value: 0x7f080084
-			public static int mr_chooser_route_icon = 2131230852;
-			
-			// aapt resource value: 0x7f080085
-			public static int mr_chooser_route_name = 2131230853;
-			
-			// aapt resource value: 0x7f080082
-			public static int mr_chooser_title = 2131230850;
-			
-			// aapt resource value: 0x7f08008b
-			public static int mr_close = 2131230859;
-			
-			// aapt resource value: 0x7f080091
-			public static int mr_control_divider = 2131230865;
-			
-			// aapt resource value: 0x7f080097
-			public static int mr_control_playback_ctrl = 2131230871;
-			
-			// aapt resource value: 0x7f08009a
-			public static int mr_control_subtitle = 2131230874;
-			
-			// aapt resource value: 0x7f080099
-			public static int mr_control_title = 2131230873;
-			
-			// aapt resource value: 0x7f080098
-			public static int mr_control_title_container = 2131230872;
-			
-			// aapt resource value: 0x7f08008c
-			public static int mr_custom_control = 2131230860;
-			
-			// aapt resource value: 0x7f08008d
-			public static int mr_default_control = 2131230861;
-			
-			// aapt resource value: 0x7f080088
-			public static int mr_dialog_area = 2131230856;
+			public static int mr_chooser_list = 2131230852;
 			
 			// aapt resource value: 0x7f080087
-			public static int mr_expandable_area = 2131230855;
+			public static int mr_chooser_route_desc = 2131230855;
 			
-			// aapt resource value: 0x7f08009b
-			public static int mr_group_expand_collapse = 2131230875;
+			// aapt resource value: 0x7f080085
+			public static int mr_chooser_route_icon = 2131230853;
 			
-			// aapt resource value: 0x7f08008f
-			public static int mr_media_main_control = 2131230863;
+			// aapt resource value: 0x7f080086
+			public static int mr_chooser_route_name = 2131230854;
 			
-			// aapt resource value: 0x7f08008a
-			public static int mr_name = 2131230858;
+			// aapt resource value: 0x7f080083
+			public static int mr_chooser_title = 2131230851;
 			
-			// aapt resource value: 0x7f080090
-			public static int mr_playback_control = 2131230864;
-			
-			// aapt resource value: 0x7f080089
-			public static int mr_title_bar = 2131230857;
+			// aapt resource value: 0x7f08008c
+			public static int mr_close = 2131230860;
 			
 			// aapt resource value: 0x7f080092
-			public static int mr_volume_control = 2131230866;
+			public static int mr_control_divider = 2131230866;
+			
+			// aapt resource value: 0x7f080098
+			public static int mr_control_playback_ctrl = 2131230872;
+			
+			// aapt resource value: 0x7f08009b
+			public static int mr_control_subtitle = 2131230875;
+			
+			// aapt resource value: 0x7f08009a
+			public static int mr_control_title = 2131230874;
+			
+			// aapt resource value: 0x7f080099
+			public static int mr_control_title_container = 2131230873;
+			
+			// aapt resource value: 0x7f08008d
+			public static int mr_custom_control = 2131230861;
+			
+			// aapt resource value: 0x7f08008e
+			public static int mr_default_control = 2131230862;
+			
+			// aapt resource value: 0x7f080089
+			public static int mr_dialog_area = 2131230857;
+			
+			// aapt resource value: 0x7f080088
+			public static int mr_expandable_area = 2131230856;
+			
+			// aapt resource value: 0x7f08009c
+			public static int mr_group_expand_collapse = 2131230876;
+			
+			// aapt resource value: 0x7f080090
+			public static int mr_media_main_control = 2131230864;
+			
+			// aapt resource value: 0x7f08008b
+			public static int mr_name = 2131230859;
+			
+			// aapt resource value: 0x7f080091
+			public static int mr_playback_control = 2131230865;
+			
+			// aapt resource value: 0x7f08008a
+			public static int mr_title_bar = 2131230858;
 			
 			// aapt resource value: 0x7f080093
-			public static int mr_volume_group_list = 2131230867;
+			public static int mr_volume_control = 2131230867;
 			
-			// aapt resource value: 0x7f080095
-			public static int mr_volume_item_icon = 2131230869;
+			// aapt resource value: 0x7f080094
+			public static int mr_volume_group_list = 2131230868;
 			
 			// aapt resource value: 0x7f080096
-			public static int mr_volume_slider = 2131230870;
+			public static int mr_volume_item_icon = 2131230870;
+			
+			// aapt resource value: 0x7f080097
+			public static int mr_volume_slider = 2131230871;
 			
 			// aapt resource value: 0x7f080019
 			public static int multiply = 2131230745;
 			
-			// aapt resource value: 0x7f08007c
-			public static int navigation_header_container = 2131230844;
+			// aapt resource value: 0x7f08007d
+			public static int navigation_header_container = 2131230845;
 			
 			// aapt resource value: 0x7f080026
 			public static int never = 2131230758;
@@ -3103,14 +3106,14 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080010
 			public static int normal = 2131230736;
 			
-			// aapt resource value: 0x7f0800ab
-			public static int notification_background = 2131230891;
+			// aapt resource value: 0x7f0800ac
+			public static int notification_background = 2131230892;
+			
+			// aapt resource value: 0x7f0800a6
+			public static int notification_main_column = 2131230886;
 			
 			// aapt resource value: 0x7f0800a5
-			public static int notification_main_column = 2131230885;
-			
-			// aapt resource value: 0x7f0800a4
-			public static int notification_main_column_container = 2131230884;
+			public static int notification_main_column_container = 2131230885;
 			
 			// aapt resource value: 0x7f080037
 			public static int parallax = 2131230775;
@@ -3133,11 +3136,11 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080035
 			public static int right = 2131230773;
 			
-			// aapt resource value: 0x7f0800aa
-			public static int right_icon = 2131230890;
+			// aapt resource value: 0x7f0800ab
+			public static int right_icon = 2131230891;
 			
-			// aapt resource value: 0x7f0800a6
-			public static int right_side = 2131230886;
+			// aapt resource value: 0x7f0800a7
+			public static int right_side = 2131230887;
 			
 			// aapt resource value: 0x7f08001a
 			public static int screen = 2131230746;
@@ -3202,14 +3205,14 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080017
 			public static int showTitle = 2131230743;
 			
-			// aapt resource value: 0x7f080074
-			public static int smallLabel = 2131230836;
+			// aapt resource value: 0x7f080075
+			public static int smallLabel = 2131230837;
+			
+			// aapt resource value: 0x7f08007c
+			public static int snackbar_action = 2131230844;
 			
 			// aapt resource value: 0x7f08007b
-			public static int snackbar_action = 2131230843;
-			
-			// aapt resource value: 0x7f08007a
-			public static int snackbar_text = 2131230842;
+			public static int snackbar_text = 2131230843;
 			
 			// aapt resource value: 0x7f08002e
 			public static int snap = 2131230766;
@@ -3232,8 +3235,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080036
 			public static int start = 2131230774;
 			
-			// aapt resource value: 0x7f0800a1
-			public static int status_bar_latest_event_content = 2131230881;
+			// aapt resource value: 0x7f0800a2
+			public static int status_bar_latest_event_content = 2131230882;
 			
 			// aapt resource value: 0x7f08005e
 			public static int submenuarrow = 2131230814;
@@ -3244,11 +3247,11 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080011
 			public static int tabMode = 2131230737;
 			
-			// aapt resource value: 0x7f0800b1
-			public static int text = 2131230897;
+			// aapt resource value: 0x7f0800b2
+			public static int text = 2131230898;
 			
-			// aapt resource value: 0x7f0800af
-			public static int text2 = 2131230895;
+			// aapt resource value: 0x7f0800b0
+			public static int text2 = 2131230896;
 			
 			// aapt resource value: 0x7f080052
 			public static int textSpacerNoButtons = 2131230802;
@@ -3256,8 +3259,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080051
 			public static int textSpacerNoTitle = 2131230801;
 			
-			// aapt resource value: 0x7f080081
-			public static int text_input_password_toggle = 2131230849;
+			// aapt resource value: 0x7f080082
+			public static int text_input_password_toggle = 2131230850;
 			
 			// aapt resource value: 0x7f08000c
 			public static int textinput_counter = 2131230732;
@@ -3265,11 +3268,11 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f08000d
 			public static int textinput_error = 2131230733;
 			
-			// aapt resource value: 0x7f080073
-			public static int textureView = 2131230835;
+			// aapt resource value: 0x7f080074
+			public static int textureView = 2131230836;
 			
-			// aapt resource value: 0x7f0800a7
-			public static int time = 2131230887;
+			// aapt resource value: 0x7f0800a8
+			public static int time = 2131230888;
 			
 			// aapt resource value: 0x7f08004a
 			public static int title = 2131230794;
@@ -3286,8 +3289,8 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f080056
 			public static int topPanel = 2131230806;
 			
-			// aapt resource value: 0x7f080078
-			public static int touch_outside = 2131230840;
+			// aapt resource value: 0x7f080079
+			public static int touch_outside = 2131230841;
 			
 			// aapt resource value: 0x7f08000a
 			public static int transition_current_scene = 2131230730;
@@ -3304,11 +3307,11 @@ namespace BuildIt.Forms.Controls
 			// aapt resource value: 0x7f08000e
 			public static int view_offset_helper = 2131230734;
 			
-			// aapt resource value: 0x7f0800b3
-			public static int visible = 2131230899;
+			// aapt resource value: 0x7f0800b4
+			public static int visible = 2131230900;
 			
-			// aapt resource value: 0x7f080094
-			public static int volume_item_container = 2131230868;
+			// aapt resource value: 0x7f080095
+			public static int volume_item_container = 2131230869;
 			
 			// aapt resource value: 0x7f080027
 			public static int withText = 2131230759;
@@ -3479,124 +3482,127 @@ namespace BuildIt.Forms.Controls
 			public static int abc_select_dialog_material = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public static int CameraLayout = 2130903067;
+			public static int Camera2Layout = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public static int design_bottom_navigation_item = 2130903068;
+			public static int CameraLayout = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public static int design_bottom_sheet_dialog = 2130903069;
+			public static int design_bottom_navigation_item = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public static int design_layout_snackbar = 2130903070;
+			public static int design_bottom_sheet_dialog = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public static int design_layout_snackbar_include = 2130903071;
+			public static int design_layout_snackbar = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public static int design_layout_tab_icon = 2130903072;
+			public static int design_layout_snackbar_include = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public static int design_layout_tab_text = 2130903073;
+			public static int design_layout_tab_icon = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public static int design_menu_item_action_area = 2130903074;
+			public static int design_layout_tab_text = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public static int design_navigation_item = 2130903075;
+			public static int design_menu_item_action_area = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public static int design_navigation_item_header = 2130903076;
+			public static int design_navigation_item = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public static int design_navigation_item_separator = 2130903077;
+			public static int design_navigation_item_header = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public static int design_navigation_item_subheader = 2130903078;
+			public static int design_navigation_item_separator = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public static int design_navigation_menu = 2130903079;
+			public static int design_navigation_item_subheader = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public static int design_navigation_menu_item = 2130903080;
+			public static int design_navigation_menu = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public static int design_text_input_password_icon = 2130903081;
+			public static int design_navigation_menu_item = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public static int mr_chooser_dialog = 2130903082;
+			public static int design_text_input_password_icon = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public static int mr_chooser_list_item = 2130903083;
+			public static int mr_chooser_dialog = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public static int mr_controller_material_dialog_b = 2130903084;
+			public static int mr_chooser_list_item = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public static int mr_controller_volume_item = 2130903085;
+			public static int mr_controller_material_dialog_b = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public static int mr_playback_control = 2130903086;
+			public static int mr_controller_volume_item = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public static int mr_volume_control = 2130903087;
+			public static int mr_playback_control = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public static int notification_action = 2130903088;
+			public static int mr_volume_control = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public static int notification_action_tombstone = 2130903089;
+			public static int notification_action = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public static int notification_media_action = 2130903090;
+			public static int notification_action_tombstone = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public static int notification_media_cancel_action = 2130903091;
+			public static int notification_media_action = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public static int notification_template_big_media = 2130903092;
+			public static int notification_media_cancel_action = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public static int notification_template_big_media_custom = 2130903093;
+			public static int notification_template_big_media = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public static int notification_template_big_media_narrow = 2130903094;
+			public static int notification_template_big_media_custom = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public static int notification_template_big_media_narrow_custom = 2130903095;
+			public static int notification_template_big_media_narrow = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public static int notification_template_custom_big = 2130903096;
+			public static int notification_template_big_media_narrow_custom = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public static int notification_template_icon_group = 2130903097;
+			public static int notification_template_custom_big = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public static int notification_template_lines_media = 2130903098;
+			public static int notification_template_icon_group = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public static int notification_template_media = 2130903099;
+			public static int notification_template_lines_media = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public static int notification_template_media_custom = 2130903100;
+			public static int notification_template_media = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public static int notification_template_part_chronometer = 2130903101;
+			public static int notification_template_media_custom = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public static int notification_template_part_time = 2130903102;
+			public static int notification_template_part_chronometer = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public static int select_dialog_item_material = 2130903103;
+			public static int notification_template_part_time = 2130903103;
 			
 			// aapt resource value: 0x7f030040
-			public static int select_dialog_multichoice_material = 2130903104;
+			public static int select_dialog_item_material = 2130903104;
 			
 			// aapt resource value: 0x7f030041
-			public static int select_dialog_singlechoice_material = 2130903105;
+			public static int select_dialog_multichoice_material = 2130903105;
 			
 			// aapt resource value: 0x7f030042
-			public static int support_simple_spinner_dropdown_item = 2130903106;
+			public static int select_dialog_singlechoice_material = 2130903106;
+			
+			// aapt resource value: 0x7f030043
+			public static int support_simple_spinner_dropdown_item = 2130903107;
 			
 			static Layout()
 			{
