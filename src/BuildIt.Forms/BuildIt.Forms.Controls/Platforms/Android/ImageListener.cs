@@ -7,18 +7,15 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 {
     public class ImageAvailableListener : Java.Lang.Object, ImageReader.IOnImageAvailableListener
     {
-        public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer, File file)
+        public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer)
         {
             if (cameraControlRenderer == null)
-                throw new System.ArgumentNullException("fragment");
-            if (file == null)
-                throw new System.ArgumentNullException("file");
+                throw new System.ArgumentNullException("cameraControlRenderer");
 
             owner = cameraControlRenderer;
-            this.file = file;
         }
 
-        private readonly File file;
+        //private readonly File file;
         private readonly CameraPreviewControlRenderer owner;
 
         //public File File { get; private set; }
@@ -26,7 +23,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OnImageAvailable(ImageReader reader)
         {
-            owner.mBackgroundHandler.Post(new ImageSaver(reader.AcquireNextImage(), file));
+            System.Diagnostics.Debug.WriteLine("bui: image available");
+            //owner.mBackgroundHandler.Post(new ImageSaver(reader.AcquireNextImage(), file));
         }
 
         // Saves a JPEG {@link Image} into the specified {@link File}.
