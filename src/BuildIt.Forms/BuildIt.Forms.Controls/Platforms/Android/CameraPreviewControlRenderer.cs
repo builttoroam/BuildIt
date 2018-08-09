@@ -275,6 +275,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             if (useCamera2Api)
             {
                 lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
+                OpenCamera(mTextureView.Width, mTextureView.Height);
                 return;
             }
 
@@ -470,6 +471,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OpenCamera(int width, int height)
         {
+            mCameraDevice?.Close();
+            mCameraDevice = null;
             System.Diagnostics.Debug.WriteLine("bui: open camera");
             SetUpCameraOutputs(width, height);
             ConfigureTransform(width, height);
@@ -480,7 +483,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 {
                     throw new RuntimeException("Time out waiting to lock camera opening.");
                 }
-
                 manager.OpenCamera(mCameraId, mStateCallback, mBackgroundHandler);
             }
             catch (CameraAccessException e)
@@ -533,9 +535,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
             try
             {
-                for (var i = 0; i < manager.GetCameraIdList().Length; i++)
+                var cameraIdList = manager.GetCameraIdList();
+                for (var i = 0; i < cameraIdList.Length; i++)
                 {
-                    var cameraId = manager.GetCameraIdList()[i];
+                    var cameraId = cameraIdList[i];
                     CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraId);
 
                     // We don't use a front facing camera in this sample.
@@ -580,6 +583,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                             {
                                 swappedDimensions = true;
                             }
+
                             break;
 
                         default:
