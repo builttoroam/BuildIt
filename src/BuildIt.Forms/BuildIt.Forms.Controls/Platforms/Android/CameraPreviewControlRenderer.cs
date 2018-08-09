@@ -23,6 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using static Android.App.Application;
 using Context = Android.Content.Context;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
@@ -31,7 +32,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     /// <summary>
     /// Custom Renderer for <see cref="CameraPreviewControl"/>
     /// </summary>
-    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback
+    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback, IActivityLifecycleCallbacks
     {
         private global::Android.Hardware.Camera camera;
         private global::Android.Views.View view;
@@ -40,6 +41,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public CameraCaptureListener mCaptureCallback;
         private bool mFlashSupported;
         public int mState = STATE_PREVIEW;
+        private bool useCamera2Api;
 
         // Camera state: Showing camera preview.
         public const int STATE_PREVIEW = 0;
@@ -57,6 +59,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public const int STATE_PICTURE_TAKEN = 4;
         public Activity Activity => Context as Activity;
         private CameraFacing cameraType;
+        private LensFacing lensFacing;
         private TextureView textureView;
         private SurfaceTexture surfaceTexture;
         private int mSensorOrientation;
@@ -65,7 +68,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private CameraPreviewControl cameraPreviewControl;
         private string defaultFocusMode;
         private ImageReader mImageReader;
-
 
         private Camera2BasicSurfaceTextureListener mSurfaceTextureListener;
 
@@ -81,6 +83,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         /// <inheritdoc />
         public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
+            if (useCamera2Api)
+            {
+                //mOnImageAvailableListener = new ImageAvailableListener(this);
+                OpenCamera(width, height);
+                return;
+            }
+
             camera = global::Android.Hardware.Camera.Open((int)cameraType);
             textureView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
             surfaceTexture = surface;
@@ -100,15 +109,21 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         /// <inheritdoc />
         public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)
         {
-            camera.StopPreview();
-            camera.Release();
+            if (!useCamera2Api)
+            {
+                camera.StopPreview();
+                camera.Release();
+            }
             return true;
         }
 
         /// <inheritdoc />
         public void OnSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height)
         {
-            PrepareAndStartCamera();
+            if (!useCamera2Api)
+            {
+                PrepareAndStartCamera();
+            }
         }
 
         /// <inheritdoc />
@@ -131,14 +146,19 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
-            mStateCallback = new CameraStateListener(this);
-            mSurfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
+            useCamera2Api = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
+            if (useCamera2Api)
+            {
+                mStateCallback = new CameraStateListener(this);
+                mSurfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
 
-            // fill ORIENTATIONS list
-            ORIENTATIONS.Append((int)SurfaceOrientation.Rotation0, 90);
-            ORIENTATIONS.Append((int)SurfaceOrientation.Rotation90, 0);
-            ORIENTATIONS.Append((int)SurfaceOrientation.Rotation180, 270);
-            ORIENTATIONS.Append((int)SurfaceOrientation.Rotation270, 180);
+                // fill ORIENTATIONS list
+                ORIENTATIONS.Append((int)SurfaceOrientation.Rotation0, 90);
+                ORIENTATIONS.Append((int)SurfaceOrientation.Rotation90, 0);
+                ORIENTATIONS.Append((int)SurfaceOrientation.Rotation180, 270);
+                ORIENTATIONS.Append((int)SurfaceOrientation.Rotation270, 180);
+            }
+
             try
             {
                 SetupUserInterface();
@@ -239,6 +259,12 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 : CameraFacing.Front;
         }
 
+        private static LensFacing ToLensFacing(CameraPreviewControl.CameraFacing cameraFacing)
+        {
+            return cameraFacing == CameraPreviewControl.CameraFacing.Back ? LensFacing.Back :
+                LensFacing.Front;
+        }
+
         private static CameraPreviewControl.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
         {
             return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
@@ -246,6 +272,12 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void SwitchCameraIfNecessary()
         {
+            if (useCamera2Api)
+            {
+                lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
+                return;
+            }
+
             var newCameraType = ToCameraFacing(cameraPreviewControl.PreferredCamera);
             if (newCameraType == cameraType)
             {
@@ -263,19 +295,15 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void SetupUserInterface()
         {
-            //activity = Context as Activity;
-            //if (activity == null)
-            //{
-            //    return;
-            //}
-
-            if (global::Android.OS.Build.VERSION.SdkInt >= global::Android.OS.BuildVersionCodes.Lollipop)
+            if (useCamera2Api)
             {
-                view = Activity.LayoutInflater.Inflate(Resource.Layout.Camera2Layout, this, false);
-                cameraType = ToCameraFacing(cameraPreviewControl.PreferredCamera);
+                Activity.Application.RegisterActivityLifecycleCallbacks(this);
 
-                textureView = view.FindViewById<TextureView>(Resource.Id.autoFitTextureView);
-                textureView.SurfaceTextureListener = this;
+                view = Activity.LayoutInflater.Inflate(Resource.Layout.Camera2Layout, this, false);
+                lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
+
+                mTextureView = view.FindViewById<AutoFitTextureView>(Resource.Id.autoFitTextureView);
+                mTextureView.SurfaceTextureListener = this;
             }
             else
             {
@@ -442,6 +470,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OpenCamera(int width, int height)
         {
+            System.Diagnostics.Debug.WriteLine("bui: open camera");
             SetUpCameraOutputs(width, height);
             ConfigureTransform(width, height);
             var manager = (CameraManager)Context.GetSystemService(Context.CameraService);
@@ -470,6 +499,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 return;
             }
+
             var rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
             Matrix matrix = new Matrix();
             RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
@@ -499,6 +529,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void SetUpCameraOutputs(int width, int height)
         {
+            System.Diagnostics.Debug.WriteLine("Bui: setup camera outputs");
             var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
             try
             {
@@ -509,7 +540,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                     // We don't use a front facing camera in this sample.
                     var facing = (Integer)characteristics.Get(CameraCharacteristics.LensFacing);
-                    if (facing != null && facing == (Integer.ValueOf((int)LensFacing.Front)))
+                    if (facing == null || facing != Integer.ValueOf((int)lensFacing))
                     {
                         continue;
                     }
@@ -630,6 +661,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private static global::Android.Util.Size ChooseOptimalSize(global::Android.Util.Size[] choices, int textureViewWidth,
             int textureViewHeight, int maxWidth, int maxHeight, global::Android.Util.Size aspectRatio)
         {
+            System.Diagnostics.Debug.WriteLine("Bui: choose optimal size");
+
             // Collect the supported resolutions that are at least as big as the preview Surface
             var bigEnough = new List<global::Android.Util.Size>();
 
@@ -674,13 +707,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private CaptureRequest.Builder stillCaptureBuilder;
 
-
         public Semaphore mCameraOpenCloseLock = new Semaphore(1);
 
         private void CloseCamera()
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Bui: close camera");
+
                 mCameraOpenCloseLock.Acquire();
                 if (null != mCaptureSession)
                 {
@@ -712,6 +746,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Bui: create camera preview session");
+
                 SurfaceTexture texture = mTextureView.SurfaceTexture;
                 if (texture == null)
                 {
@@ -744,10 +780,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Bui: capture still pic");
+
                 if (Activity == null || null == mCameraDevice)
                 {
                     return;
                 }
+
                 // This is the CaptureRequest.Builder that we use to take a picture.
                 if (stillCaptureBuilder == null)
                     stillCaptureBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.StillCapture);
@@ -773,7 +812,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private static readonly SparseIntArray ORIENTATIONS = new SparseIntArray();
 
-
         private int GetOrientation(int rotation)
         {
             // Sensor orientation is 90 for most devices, or 270 for some devices (eg. Nexus 5X)
@@ -789,8 +827,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Bui: run precapture");
+
                 // This is how to tell the camera to trigger.
                 mPreviewRequestBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Start);
+
                 // Tell #mCaptureCallback to wait for the precapture sequence to be set.
                 mState = STATE_WAITING_PRECAPTURE;
                 mCaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback, mBackgroundHandler);
@@ -809,5 +850,68 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             mBackgroundHandler = new Handler(mBackgroundThread.Looper);
         }
 
+        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
+        {
+        }
+
+        public void OnActivityDestroyed(Activity activity)
+        {
+        }
+
+        public void OnActivityPaused(Activity activity)
+        {
+            CloseCamera();
+            StopBackgroundThread();
+        }
+
+        public void OnActivityResumed(Activity activity)
+        {
+            StartBackgroundThread();
+            if (mTextureView == null)
+            {
+                return;
+            }
+
+            // When the screen is turned off and turned back on, the SurfaceTexture is already
+            // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
+            // a camera and start preview from here (otherwise, we wait until the surface is ready in
+            // the SurfaceTextureListener).
+            if (mTextureView.IsAvailable)
+            {
+                OpenCamera(mTextureView.Width, mTextureView.Height);
+            }
+            else
+            {
+                mTextureView.SurfaceTextureListener = mSurfaceTextureListener;
+            }
+        }
+
+        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
+        {
+        }
+
+        public void OnActivityStarted(Activity activity)
+        {
+        }
+
+        public void OnActivityStopped(Activity activity)
+        {
+        }
+
+        // Stops the background thread and its {@link Handler}.
+        private void StopBackgroundThread()
+        {
+            mBackgroundThread.QuitSafely();
+            try
+            {
+                mBackgroundThread.Join();
+                mBackgroundThread = null;
+                mBackgroundHandler = null;
+            }
+            catch (InterruptedException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
     }
 }
