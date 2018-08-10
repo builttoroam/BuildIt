@@ -1,5 +1,4 @@
 ﻿using Android.Hardware.Camera2;
-using Java.IO;
 using Java.Lang;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
@@ -36,7 +35,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         {
                             owner.CaptureStillPicture();
                         }
-
                         else if ((((int)ControlAFState.FocusedLocked) == afState.IntValue()) ||
                                    (((int)ControlAFState.NotFocusedLocked) == afState.IntValue()))
                         {

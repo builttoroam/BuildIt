@@ -23,7 +23,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OnImageAvailable(ImageReader reader)
         {
-            System.Diagnostics.Debug.WriteLine("bui: image available");
             //owner.mBackgroundHandler.Post(new ImageSaver(reader.AcquireNextImage(), file));
         }
 
