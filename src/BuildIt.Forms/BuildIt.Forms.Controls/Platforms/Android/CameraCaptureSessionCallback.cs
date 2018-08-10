@@ -31,15 +31,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             owner.captureSession = session;
             try
             {
-                // Auto focus should be continuous for camera preview.
-                owner.previewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+                // default to auto
+                owner.previewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
                 // Flash is automatically enabled when necessary.
                 owner.SetAutoFlash(owner.previewRequestBuilder);
 
                 // Finally, we start displaying the camera preview.
-                owner.mPreviewRequest = owner.previewRequestBuilder.Build();
-                owner.captureSession.SetRepeatingRequest(owner.mPreviewRequest,
-                        owner.mCaptureCallback, owner.backgroundHandler);
+                owner.previewRequest = owner.previewRequestBuilder.Build();
+                owner.captureSession.SetRepeatingRequest(owner.previewRequest, owner.captureCallback, owner.backgroundHandler);
             }
             catch (CameraAccessException e)
             {
