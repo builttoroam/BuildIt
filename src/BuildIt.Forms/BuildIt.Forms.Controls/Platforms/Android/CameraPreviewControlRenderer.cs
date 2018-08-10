@@ -36,8 +36,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     {
         public int state = STATE_PREVIEW;
         public CaptureRequest.Builder previewRequestBuilder;
-        public CaptureRequest mPreviewRequest;
-        public CameraCaptureListener mCaptureCallback;
+        public CaptureRequest previewRequest;
+        public CameraCaptureListener captureCallback;
 
         private static readonly SparseIntArray ORIENTATIONS = new SparseIntArray();
 
@@ -76,7 +76,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private ImageAvailableListener onImageAvailableListener;
 
         private CameraPreviewControl cameraPreviewControl;
-        private string defaultFocusMode;
+        private CameraFocusMode defaultFocusMode;
         private ImageReader imageReader;
 
         private Camera2BasicSurfaceTextureListener surfaceTextureListener;
@@ -477,13 +477,32 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 camera.AddCallbackBuffer(new FastJavaByteArray(numBytes));
             }
 
-            defaultFocusMode = cameraParameters.FocusMode;
+            switch (cameraParameters.FocusMode)
+            {
+                case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
+                    defaultFocusMode = CameraFocusMode.Continuous;
+                    break;
+                case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
+                    defaultFocusMode = CameraFocusMode.Auto;
+                    break;
+            }
+
             camera.SetNonMarshalingPreviewCallback(this);
             camera.StartPreview();
         }
 
         private void EnableContinuousAutoFocus(bool enable)
         {
+            if (useCamera2Api)
+            {
+                captureSession.StopRepeating();
+                var current = (int)previewRequest.Get(CaptureRequest.ControlAfMode);
+
+                previewRequestBuilder.Set(CaptureRequest.ControlAfMode, enable ? (int)ControlAFMode.ContinuousPicture : (int)ToControlAFMode(defaultFocusMode));
+                captureSession.SetRepeatingRequest(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+                return;
+            }
+
             var cameraParameters = camera.GetParameters();
             if (enable)
             {
@@ -495,7 +514,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             else
             {
-                cameraParameters.FocusMode = defaultFocusMode;
+                switch (defaultFocusMode)
+                {
+                    case CameraFocusMode.Continuous:
+                        cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
+                        break;
+                    default:
+                        // fallback to autofocus
+                        cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeAuto;
+                        break;
+                }
+
                 camera.SetParameters(cameraParameters);
             }
         }
@@ -627,6 +656,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                             {
                                 swappedDimensions = true;
                             }
+
                             break;
 
                         case SurfaceOrientation.Rotation90:
@@ -714,8 +744,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private static global::Android.Util.Size ChooseOptimalSize(global::Android.Util.Size[] choices, int textureViewWidth, int textureViewHeight, int maxWidth, int maxHeight, global::Android.Util.Size aspectRatio)
         {
-            System.Diagnostics.Debug.WriteLine("Bui: choose optimal size");
-
             // Collect the supported resolutions that are at least as big as the preview Surface
             var bigEnough = new List<global::Android.Util.Size>();
 
@@ -762,20 +790,20 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Bui: close camera");
-
                 CameraOpenCloseLock.Acquire();
-                if (null != captureSession)
+                if (captureSession != null)
                 {
                     captureSession.Close();
                     captureSession = null;
                 }
-                if (null != cameraDevice)
+
+                if (cameraDevice != null)
                 {
                     cameraDevice.Close();
                     cameraDevice = null;
                 }
-                if (null != imageReader)
+
+                if (imageReader != null)
                 {
                     imageReader.Close();
                     imageReader = null;
@@ -795,8 +823,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Bui: create camera preview session");
-
                 SurfaceTexture texture = textureView.SurfaceTexture;
                 if (texture == null)
                 {
@@ -814,7 +840,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 previewRequestBuilder.AddTarget(surface);
 
                 // Here, we create a CameraCaptureSession for camera preview.
-                List<Surface> surfaces = new List<Surface>();
+                var surfaces = new List<Surface>();
                 surfaces.Add(surface);
                 surfaces.Add(imageReader.Surface);
                 cameraDevice.CreateCaptureSession(surfaces, new CameraCaptureSessionCallback(this), null);
@@ -879,7 +905,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                 // Tell #mCaptureCallback to wait for the precapture sequence to be set.
                 state = STATE_WAITING_PRECAPTURE;
-                captureSession.Capture(previewRequestBuilder.Build(), mCaptureCallback, backgroundHandler);
+                captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
             }
             catch (CameraAccessException e)
             {
@@ -918,5 +944,37 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 e.PrintStackTrace();
             }
         }
+
+        private static ControlAFMode ToControlAFMode(CameraFocusMode cameraFocusMode)
+        {
+            switch (cameraFocusMode)
+            {
+                case CameraFocusMode.Auto:
+                    return ControlAFMode.Auto;
+                case CameraFocusMode.Continuous:
+                    return ControlAFMode.ContinuousPicture;
+                default:
+                    return ControlAFMode.Off;
+            }
+        }
+
+        public void UnlockFocus()
+        {
+            try
+            {
+                // Reset the auto-focus trigger
+                previewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
+                SetAutoFlash(previewRequestBuilder);
+                captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+                // After this, the camera will go back to the normal state of preview.
+                state = STATE_PREVIEW;
+                captureSession.SetRepeatingRequest(previewRequest, captureCallback, backgroundHandler);
+            }
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
+
     }
 }

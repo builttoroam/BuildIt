@@ -22,7 +22,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             //// registered, this code will toast a success message regardless...)
             //owner.ShowToast("Saved: " + owner.mFile);
             //Log.Debug(TAG, owner.mFile.ToString());
-            //owner.UnlockFocus();
+            owner.UnlockFocus();
         }
     }
 }
