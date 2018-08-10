@@ -27,7 +27,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void Process(CaptureResult result)
         {
-            switch (owner.mState)
+            switch (owner.state)
             {
                 case CameraPreviewControlRenderer.STATE_WAITING_LOCK:
                     {
@@ -45,7 +45,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                             if (aeState == null ||
                                     aeState.IntValue() == ((int)ControlAEState.Converged))
                             {
-                                owner.mState = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
+                                owner.state = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
                                 owner.CaptureStillPicture();
                             }
                             else
@@ -63,7 +63,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                                 aeState.IntValue() == ((int)ControlAEState.Precapture) ||
                                 aeState.IntValue() == ((int)ControlAEState.FlashRequired))
                         {
-                            owner.mState = CameraPreviewControlRenderer.STATE_WAITING_NON_PRECAPTURE;
+                            owner.state = CameraPreviewControlRenderer.STATE_WAITING_NON_PRECAPTURE;
                         }
                         break;
                     }
@@ -73,7 +73,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         Integer aeState = (Integer)result.Get(CaptureResult.ControlAeState);
                         if (aeState == null || aeState.IntValue() != ((int)ControlAEState.Precapture))
                         {
-                            owner.mState = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
+                            owner.state = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
                             owner.CaptureStillPicture();
                         }
                         break;
