@@ -1,5 +1,4 @@
-﻿using Android.Content;
-using Android.Media;
+﻿using Android.Media;
 using Java.IO;
 using Java.Lang;
 using System.Threading.Tasks;
@@ -82,11 +81,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         finally
                         {
                             image.Close();
-                            //if (saveToPhotosLibrary)
-                            //{
-                            //    owner.SaveToPhotosLibrary(file);
-                            //}
-
                             savePhotoTaskCompletionSource.SetResult(filePath);
                         }
                     }
