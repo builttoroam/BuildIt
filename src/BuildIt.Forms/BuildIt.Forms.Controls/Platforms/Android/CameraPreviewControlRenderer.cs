@@ -45,7 +45,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private global::Android.Views.View view;
         private bool flashSupported;
         private bool useCamera2Api;
-        private TaskCompletionSource<string> savePhotoTaskCompletionSource = new TaskCompletionSource<string>();
 
         // Camera state: Showing camera preview.
         internal const int STATE_PREVIEW = 0;
@@ -297,7 +296,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
                 stateCallback = new CameraStateListener(this);
                 captureCallback = new CameraCaptureListener(this);
-                imageAvailableListener = new ImageAvailableListener(this, savePhotoTaskCompletionSource);
+                imageAvailableListener = new ImageAvailableListener(this);
 
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
                 StartBackgroundThread();
@@ -399,8 +398,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 imageAvailableListener.FilePath = BuildFilePath();
                 imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
+                imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
                 LockFocus();
-                var finalFilePath = await savePhotoTaskCompletionSource.Task;
+                var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
                 if (saveToPhotosLibrary)
                 {
                     using (var file = new Java.IO.File(finalFilePath))

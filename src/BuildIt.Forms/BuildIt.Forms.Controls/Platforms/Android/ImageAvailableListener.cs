@@ -8,16 +8,16 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     public class ImageAvailableListener : Java.Lang.Object, ImageReader.IOnImageAvailableListener
     {
         private readonly CameraPreviewControlRenderer owner;
-        private readonly TaskCompletionSource<string> savePhotoTaskCompletionSource;
+        public TaskCompletionSource<string> SavePhotoTaskCompletionSource { get; set; }
 
         // Specified if a photo needs to be taken
         public string FilePath { get; set; }
 
         public bool SaveToPhotosLibrary { get; set; }
 
-        public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer, TaskCompletionSource<string> savePhotoTaskCompletionSource)
+        public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer)
         {
-            this.savePhotoTaskCompletionSource = savePhotoTaskCompletionSource;
+            this.SavePhotoTaskCompletionSource = SavePhotoTaskCompletionSource;
             if (cameraControlRenderer == null)
             {
                 throw new System.ArgumentNullException("cameraControlRenderer");
@@ -34,7 +34,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             var image = reader.AcquireNextImage();
-            owner.backgroundHandler.Post(new ImageSaver(image, FilePath, SaveToPhotosLibrary, owner, savePhotoTaskCompletionSource));
+            owner.backgroundHandler.Post(new ImageSaver(image, FilePath, SaveToPhotosLibrary, owner, SavePhotoTaskCompletionSource));
         }
 
         // Saves a JPEG {@link Image} into the specified {@link File}.
