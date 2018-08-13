@@ -79,6 +79,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
+            isActivePage = true;
             await SetupBasedOnStateAsync();
 
             if (e.OldElement != null)
@@ -91,7 +92,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 app = Application.Current;
                 app.Suspending += OnAppSuspending;
                 app.Resuming += OnAppResuming;
-                isActivePage = true;
             }
             catch (Exception ex)
             {
