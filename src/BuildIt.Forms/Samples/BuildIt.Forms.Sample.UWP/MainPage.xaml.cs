@@ -6,7 +6,7 @@
         {
             this.InitializeComponent();
 
-            LoadApplication(new BuildIt.Forms.Sample.App());
+            LoadApplication(new Sample.App());
         }
     }
 }

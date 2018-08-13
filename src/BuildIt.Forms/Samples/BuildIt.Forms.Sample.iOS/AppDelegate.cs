@@ -1,8 +1,6 @@
 ﻿using Foundation;
 using UIKit;
 
-//using BuildIt.Forms.Controls.iOS;
-
 namespace BuildIt.Forms.Sample.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the
@@ -20,7 +18,9 @@ namespace BuildIt.Forms.Sample.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            var y = new BuildIt.Forms.Controls.iOS.TouchEffect();
+            var y = new Controls.iOS.TouchEffect();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
