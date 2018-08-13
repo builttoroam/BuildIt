@@ -45,6 +45,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private global::Android.Views.View view;
         private bool flashSupported;
         private bool useCamera2Api;
+        private TaskCompletionSource<string> savePhotoTaskCompletionSource = new TaskCompletionSource<string>();
 
         // Camera state: Showing camera preview.
         internal const int STATE_PREVIEW = 0;
@@ -73,7 +74,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private AutoFitTextureView textureView;
         private SurfaceTexture surfaceTexture;
         private int sensorOrientation;
-        private ImageAvailableListener onImageAvailableListener;
+        private ImageAvailableListener imageAvailableListener;
 
         private CameraPreviewControl cameraPreviewControl;
         private CameraFocusMode defaultFocusMode;
@@ -287,16 +288,19 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             cameraPreviewControl = cpc;
-            cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
 
             useCamera2Api = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
             if (useCamera2Api)
             {
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
-
+                cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
                 stateCallback = new CameraStateListener(this);
+                captureCallback = new CameraCaptureListener(this);
+                imageAvailableListener = new ImageAvailableListener(this, savePhotoTaskCompletionSource);
+
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
+                StartBackgroundThread();
 
                 // fill ORIENTATIONS list
                 ORIENTATIONS.Append((int)SurfaceOrientation.Rotation0, 90);
@@ -306,6 +310,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             else
             {
+                cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             }
 
@@ -332,20 +337,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             try
             {
-                var absolutePath = global::Android.OS.Environment.GetExternalStoragePublicDirectory(global::Android.OS.Environment.DirectoryDcim).AbsolutePath;
-                var folderPath = System.IO.Path.Combine(absolutePath, "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
-                var fileCount = 0;
-                if (Directory.Exists(folderPath))
-                {
-                    fileCount = Directory.GetFiles(folderPath).Length;
-                }
-                else
-                {
-                    var directory = new Java.IO.File(folderPath);
-                    directory.Mkdirs();
-                }
-
-                var filePath = System.IO.Path.Combine(folderPath, $"{fileCount}.jpg");
+                string filePath = BuildFilePath();
                 var fileStream = new FileStream(filePath, FileMode.Create);
                 await image.CompressAsync(Bitmap.CompressFormat.Jpeg, 50, fileStream);
                 fileStream.Close();
@@ -355,11 +347,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 {
                     // Broadcasting the the file's Uri in the following intent will allow any Photo Gallery apps to incorporate
                     // the photo file into their collection -RR
-                    var intent = new Intent(Intent.ActionMediaScannerScanFile);
-                    var file = new Java.IO.File(filePath);
-                    var uri = global::Android.Net.Uri.FromFile(file);
-                    intent.SetData(uri);
-                    Activity.SendBroadcast(intent);
+                    using (var file = new Java.IO.File(filePath))
+                    {
+                        SaveToPhotosLibrary(file);
+                    }
                 }
 
                 return filePath;
@@ -372,6 +363,57 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             finally
             {
                 camera.StartPreview();
+            }
+        }
+
+        internal void SaveToPhotosLibrary(Java.IO.File file)
+        {
+            var intent = new Intent(Intent.ActionMediaScannerScanFile);
+            var uri = global::Android.Net.Uri.FromFile(file);
+            intent.SetData(uri);
+            Activity.SendBroadcast(intent);
+        }
+
+        private static string BuildFilePath()
+        {
+            var absolutePath = global::Android.OS.Environment.GetExternalStoragePublicDirectory(global::Android.OS.Environment.DirectoryDcim).AbsolutePath;
+            var folderPath = System.IO.Path.Combine(absolutePath, "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
+            var fileCount = 0;
+            if (Directory.Exists(folderPath))
+            {
+                fileCount = Directory.GetFiles(folderPath).Length;
+            }
+            else
+            {
+                var directory = new Java.IO.File(folderPath);
+                directory.Mkdirs();
+            }
+
+            var filePath = System.IO.Path.Combine(folderPath, $"{fileCount}.jpg");
+            return filePath;
+        }
+
+        protected async Task<string> CaptureCamera2PhotoToFile(bool saveToPhotosLibrary)
+        {
+            try
+            {
+                imageAvailableListener.FilePath = BuildFilePath();
+                imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
+                LockFocus();
+                var finalFilePath = await savePhotoTaskCompletionSource.Task;
+                if (saveToPhotosLibrary)
+                {
+                    using (var file = new Java.IO.File(finalFilePath))
+                    {
+                        SaveToPhotosLibrary(file);
+                    }
+                }
+
+                return imageAvailableListener.FilePath;
+            }
+            finally
+            {
+                imageAvailableListener.FilePath = null;
             }
         }
 
@@ -482,6 +524,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
                     defaultFocusMode = CameraFocusMode.Continuous;
                     break;
+
                 case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
                     defaultFocusMode = CameraFocusMode.Auto;
                     break;
@@ -519,7 +562,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     case CameraFocusMode.Continuous:
                         cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
                         break;
+
                     default:
+
                         // fallback to autofocus
                         cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeAuto;
                         break;
@@ -639,7 +684,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     global::Android.Util.Size largest = (global::Android.Util.Size)Collections.Max(Arrays.AsList(map.GetOutputSizes((int)ImageFormatType.Jpeg)),
                         new CompareSizesByArea());
                     imageReader = ImageReader.NewInstance(largest.Width, largest.Height, ImageFormatType.Jpeg, /*maxImages*/2);
-                    imageReader.SetOnImageAvailableListener(onImageAvailableListener, backgroundHandler);
+                    imageReader.SetOnImageAvailableListener(imageAvailableListener, backgroundHandler);
 
                     // Find out if we need to swap dimension to get the preview size relative to sensor
                     // coordinate.
@@ -951,8 +996,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 case CameraFocusMode.Auto:
                     return ControlAFMode.Auto;
+
                 case CameraFocusMode.Continuous:
                     return ControlAFMode.ContinuousPicture;
+
                 default:
                     return ControlAFMode.Off;
             }
@@ -966,6 +1013,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 previewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
                 SetAutoFlash(previewRequestBuilder);
                 captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+
                 // After this, the camera will go back to the normal state of preview.
                 state = STATE_PREVIEW;
                 captureSession.SetRepeatingRequest(previewRequest, captureCallback, backgroundHandler);
@@ -976,5 +1024,21 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
+        private void LockFocus()
+        {
+            try
+            {
+                // This is how to tell the camera to lock focus.
+                previewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+
+                // Tell #captureCallback to wait for the lock.
+                state = STATE_WAITING_LOCK;
+                captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+            }
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
     }
 }

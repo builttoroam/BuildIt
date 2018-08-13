@@ -1,6 +1,5 @@
 ﻿using Android.Hardware.Camera2;
 
-
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
     public class CameraCaptureSessionCallback : CameraCaptureSession.StateCallback
@@ -10,7 +9,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public CameraCaptureSessionCallback(CameraPreviewControlRenderer owner)
         {
             if (owner == null)
+            {
                 throw new System.ArgumentNullException("owner");
+            }
+
             this.owner = owner;
         }
 
@@ -22,7 +24,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public override void OnConfigured(CameraCaptureSession session)
         {
             // The camera is already closed
-            if (null == owner.cameraDevice)
+            if (owner.cameraDevice == null)
             {
                 return;
             }
@@ -33,6 +35,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 // default to auto
                 owner.previewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
+
                 // Flash is automatically enabled when necessary.
                 owner.SetAutoFlash(owner.previewRequestBuilder);
 

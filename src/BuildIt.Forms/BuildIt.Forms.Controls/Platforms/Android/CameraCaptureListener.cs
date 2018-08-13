@@ -10,7 +10,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public CameraCaptureListener(CameraPreviewControlRenderer owner)
         {
             if (owner == null)
+            {
                 throw new System.ArgumentNullException("owner");
+            }
+
             this.owner = owner;
         }
 
@@ -35,8 +38,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         {
                             owner.CaptureStillPicture();
                         }
-                        else if ((((int)ControlAFState.FocusedLocked) == afState.IntValue()) ||
-                                   (((int)ControlAFState.NotFocusedLocked) == afState.IntValue()))
+                        else if ((afState.IntValue() == ((int)ControlAFState.FocusedLocked)) ||
+                                   (afState.IntValue() == ((int)ControlAFState.NotFocusedLocked)))
                         {
                             // ControlAeState can be null on some devices
                             Integer aeState = (Integer)result.Get(CaptureResult.ControlAeState);
@@ -51,8 +54,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                                 owner.RunPrecaptureSequence();
                             }
                         }
+
                         break;
                     }
+
                 case CameraPreviewControlRenderer.STATE_WAITING_PRECAPTURE:
                     {
                         // ControlAeState can be null on some devices
@@ -63,8 +68,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         {
                             owner.state = CameraPreviewControlRenderer.STATE_WAITING_NON_PRECAPTURE;
                         }
+
                         break;
                     }
+
                 case CameraPreviewControlRenderer.STATE_WAITING_NON_PRECAPTURE:
                     {
                         // ControlAeState can be null on some devices
@@ -74,6 +81,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                             owner.state = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
                             owner.CaptureStillPicture();
                         }
+
                         break;
                     }
             }

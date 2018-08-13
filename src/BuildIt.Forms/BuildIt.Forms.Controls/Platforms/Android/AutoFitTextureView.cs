@@ -7,8 +7,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 {
     public class AutoFitTextureView : TextureView
     {
-        private int mRatioWidth = 0;
-        private int mRatioHeight = 0;
+        private int ratioWidth = 0;
+        private int ratioHeight = 0;
 
         public AutoFitTextureView(Context context)
             : this(context, null)
@@ -19,6 +19,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             : this(context, attrs, 0)
         {
         }
+
         public AutoFitTextureView(Context context, IAttributeSet attrs, int defStyle)
             : base(context, attrs, defStyle)
         {
@@ -27,9 +28,12 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public void SetAspectRatio(int width, int height)
         {
             if (width == 0 || height == 0)
+            {
                 throw new ArgumentException("Size cannot be negative.");
-            mRatioWidth = width;
-            mRatioHeight = height;
+            }
+
+            ratioWidth = width;
+            ratioHeight = height;
             RequestLayout();
         }
 
@@ -38,19 +42,19 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
             int width = MeasureSpec.GetSize(widthMeasureSpec);
             int height = MeasureSpec.GetSize(heightMeasureSpec);
-            if (0 == mRatioWidth || 0 == mRatioHeight)
+            if (ratioWidth == 0 || ratioHeight == 0)
             {
                 SetMeasuredDimension(width, height);
             }
             else
             {
-                if (width < (float)height * mRatioWidth / (float)mRatioHeight)
+                if (width < (float)height * ratioWidth / (float)ratioHeight)
                 {
-                    SetMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
+                    SetMeasuredDimension(width, width * ratioHeight / ratioWidth);
                 }
                 else
                 {
-                    SetMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
+                    SetMeasuredDimension(height * ratioWidth / ratioHeight, height);
                 }
             }
         }

@@ -12,7 +12,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public CameraCaptureStillPictureSessionCallback(CameraPreviewControlRenderer owner)
         {
             if (owner == null)
+            {
                 throw new System.ArgumentNullException("owner");
+            }
+
             this.owner = owner;
         }
 
