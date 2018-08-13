@@ -20,6 +20,8 @@ namespace BuildIt.Forms.Sample.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+
             base.OnCreate(bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
