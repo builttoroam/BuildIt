@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FFImageLoading.Forms;
+using FFImageLoading.Forms.Platform;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Windows.ApplicationModel;
@@ -53,9 +55,12 @@ namespace BuildIt.Forms.Sample.UWP
 
                 var assembliesToInclude = new List<Assembly>()
                 {
-                    typeof(BuildIt.Forms.Controls.UWP.TouchEffect).GetTypeInfo().Assembly
+                    typeof(Controls.UWP.TouchEffect).GetTypeInfo().Assembly,
+                    typeof(CachedImage).GetTypeInfo().Assembly,
+                    typeof(CachedImageRenderer).GetTypeInfo().Assembly
                 };
 
+                CachedImageRenderer.Init();
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

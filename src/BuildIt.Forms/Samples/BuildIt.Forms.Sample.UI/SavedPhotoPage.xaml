@@ -1,14 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="BuildIt.Forms.Sample.SavedPhotoPage">
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Button Text="Close Page"
                     Clicked="CloseButton_OnClicked" />
-            <Image x:Name="Image"
+
+            <forms:CachedImage x:Name="Image"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="FillAndExpand" />
+            <!--<Image x:Name="Image"
                    HorizontalOptions="Fill"
-                   VerticalOptions="FillAndExpand" />
+                   VerticalOptions="FillAndExpand" />-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
