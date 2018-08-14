@@ -34,17 +34,33 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     /// </summary>
     public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback, IActivityLifecycleCallbacks
     {
-        public int state = STATE_PREVIEW;
-        public CaptureRequest.Builder previewRequestBuilder;
-        public CaptureRequest previewRequest;
-        public CameraCaptureListener captureCallback;
-
         private static readonly SparseIntArray ORIENTATIONS = new SparseIntArray();
-
         private global::Android.Hardware.Camera camera;
         private global::Android.Views.View view;
         private bool flashSupported;
         private bool useCamera2Api;
+        private CaptureRequest.Builder stillCaptureBuilder;
+        private CameraFacing cameraType;
+        private LensFacing lensFacing;
+        private AutoFitTextureView textureView;
+        private SurfaceTexture surfaceTexture;
+        private int sensorOrientation;
+        private ImageAvailableListener imageAvailableListener;
+        private CameraPreviewControl cameraPreviewControl;
+        private CameraFocusMode defaultFocusMode;
+        private ImageReader imageReader;
+        private Camera2BasicSurfaceTextureListener surfaceTextureListener;
+
+        // The size of the camera preview
+        private global::Android.Util.Size previewSize;
+
+        // CameraDevice.StateListener is called when a CameraDevice changes its state
+        private CameraStateListener stateCallback;
+
+        // An additional thread for running tasks that shouldn't block the UI.
+        private HandlerThread backgroundThread;
+
+        internal Activity Activity => Context as Activity;
 
         // Camera state: Showing camera preview.
         internal const int STATE_PREVIEW = 0;
@@ -67,20 +83,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         // Max preview height that is guaranteed by Camera2 API
         private static readonly int MAX_PREVIEW_HEIGHT = 1080;
 
-        private CaptureRequest.Builder stillCaptureBuilder;
-        private CameraFacing cameraType;
-        private LensFacing lensFacing;
-        private AutoFitTextureView textureView;
-        private SurfaceTexture surfaceTexture;
-        private int sensorOrientation;
-        private ImageAvailableListener imageAvailableListener;
-
-        private CameraPreviewControl cameraPreviewControl;
-        private CameraFocusMode defaultFocusMode;
-        private ImageReader imageReader;
-
-        private Camera2BasicSurfaceTextureListener surfaceTextureListener;
-
         // ID of the current {@link CameraDevice}.
         private string cameraId;
 
@@ -90,19 +92,16 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         // A reference to the opened CameraDevice
         public CameraDevice cameraDevice;
 
-        // The size of the camera preview
-        private global::Android.Util.Size previewSize;
-
-        // CameraDevice.StateListener is called when a CameraDevice changes its state
-        private CameraStateListener stateCallback;
-
-        // An additional thread for running tasks that shouldn't block the UI.
-        private HandlerThread backgroundThread;
-
         // A {@link Handler} for running tasks in the background.
         public Handler backgroundHandler;
 
-        internal Activity Activity => Context as Activity;
+        public int State { get; set; } = STATE_PREVIEW;
+
+        public CaptureRequest.Builder PreviewRequestBuilder { get; private set; }
+
+        public CaptureRequest PreviewRequest { get; internal set; }
+
+        public CameraCaptureListener CaptureCallback { get; private set; }
 
         public Semaphore CameraOpenCloseLock { get; } = new Semaphore(1);
 
@@ -113,61 +112,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public CameraPreviewControlRenderer(Context context)
             : base(context)
         {
-        }
-
-        internal void OpenCamera(int width, int height)
-        {
-            cameraDevice?.Close();
-            cameraDevice = null;
-            SetUpCameraOutputs(width, height);
-            ConfigureTransform(width, height);
-            var manager = (CameraManager)Context.GetSystemService(Context.CameraService);
-            try
-            {
-                if (!CameraOpenCloseLock.TryAcquire(2500, TimeUnit.Milliseconds))
-                {
-                    throw new RuntimeException("Time out waiting to lock camera opening.");
-                }
-
-                manager.OpenCamera(cameraId, stateCallback, backgroundHandler);
-            }
-            catch (CameraAccessException e)
-            {
-                e.PrintStackTrace();
-            }
-            catch (InterruptedException e)
-            {
-                throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
-            }
-        }
-
-        internal void ConfigureTransform(int viewWidth, int viewHeight)
-        {
-            if (textureView == null || previewSize == null || Activity == null)
-            {
-                return;
-            }
-
-            var rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
-            Matrix matrix = new Matrix();
-            RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
-            RectF bufferRect = new RectF(0, 0, previewSize.Height, previewSize.Width);
-            float centerX = viewRect.CenterX();
-            float centerY = viewRect.CenterY();
-            if (rotation == (int)SurfaceOrientation.Rotation90 || rotation == (int)SurfaceOrientation.Rotation270)
-            {
-                bufferRect.Offset(centerX - bufferRect.CenterX(), centerY - bufferRect.CenterY());
-                matrix.SetRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.Fill);
-                float scale = System.Math.Max((float)viewHeight / previewSize.Height, (float)viewWidth / previewSize.Width);
-                matrix.PostScale(scale, scale, centerX, centerY);
-                matrix.PostRotate(90 * (rotation - 2), centerX, centerY);
-            }
-            else if (rotation == (int)SurfaceOrientation.Rotation180)
-            {
-                matrix.PostRotate(180, centerX, centerY);
-            }
-
-            textureView.SetTransform(matrix);
         }
 
         public async void OnPreviewFrame(IntPtr data, global::Android.Hardware.Camera camera)
@@ -279,6 +223,61 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
         }
 
+        internal void OpenCamera(int width, int height)
+        {
+            cameraDevice?.Close();
+            cameraDevice = null;
+            SetUpCameraOutputs(width, height);
+            ConfigureTransform(width, height);
+            var manager = (CameraManager)Context.GetSystemService(Context.CameraService);
+            try
+            {
+                if (!CameraOpenCloseLock.TryAcquire(2500, TimeUnit.Milliseconds))
+                {
+                    throw new RuntimeException("Time out waiting to lock camera opening.");
+                }
+
+                manager.OpenCamera(cameraId, stateCallback, backgroundHandler);
+            }
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+            catch (InterruptedException e)
+            {
+                throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
+            }
+        }
+
+        internal void ConfigureTransform(int viewWidth, int viewHeight)
+        {
+            if (textureView == null || previewSize == null || Activity == null)
+            {
+                return;
+            }
+
+            var rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
+            Matrix matrix = new Matrix();
+            RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
+            RectF bufferRect = new RectF(0, 0, previewSize.Height, previewSize.Width);
+            float centerX = viewRect.CenterX();
+            float centerY = viewRect.CenterY();
+            if (rotation == (int)SurfaceOrientation.Rotation90 || rotation == (int)SurfaceOrientation.Rotation270)
+            {
+                bufferRect.Offset(centerX - bufferRect.CenterX(), centerY - bufferRect.CenterY());
+                matrix.SetRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.Fill);
+                float scale = System.Math.Max((float)viewHeight / previewSize.Height, (float)viewWidth / previewSize.Width);
+                matrix.PostScale(scale, scale, centerX, centerY);
+                matrix.PostRotate(90 * (rotation - 2), centerX, centerY);
+            }
+            else if (rotation == (int)SurfaceOrientation.Rotation180)
+            {
+                matrix.PostRotate(180, centerX, centerY);
+            }
+
+            textureView.SetTransform(matrix);
+        }
+
         /// <inheritdoc />
         protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
@@ -291,15 +290,15 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             cameraPreviewControl = cpc;
-            cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
 
             useCamera2Api = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
             if (useCamera2Api)
             {
+                cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras2Async;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
                 stateCallback = new CameraStateListener(this);
-                captureCallback = new CameraCaptureListener(this);
+                CaptureCallback = new CameraCaptureListener(this);
                 imageAvailableListener = new ImageAvailableListener(this);
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
                 StartBackgroundThread();
@@ -312,6 +311,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             else
             {
+                cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             }
@@ -454,15 +454,28 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 : CameraFacing.Front;
         }
 
+        private static CameraPreviewControl.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
+        {
+            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
+        }
+
+        private static CameraPreviewControl.CameraFacing ToCameraFacing(LensFacing lensFacing)
+        {
+            switch (lensFacing)
+            {
+                case LensFacing.Back:
+                    return CameraPreviewControl.CameraFacing.Back;
+                case LensFacing.Front:
+                    return CameraPreviewControl.CameraFacing.Front;
+                default:
+                    return CameraPreviewControl.CameraFacing.Unspecified;
+            }
+        }
+
         private static LensFacing ToLensFacing(CameraPreviewControl.CameraFacing cameraFacing)
         {
             return cameraFacing == CameraPreviewControl.CameraFacing.Back ? LensFacing.Back :
                 LensFacing.Front;
-        }
-
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
-        {
-            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
         }
 
         private void SwitchCameraIfNecessary()
@@ -542,10 +555,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             if (useCamera2Api)
             {
                 captureSession.StopRepeating();
-                var current = (int)previewRequest.Get(CaptureRequest.ControlAfMode);
+                var current = (int)PreviewRequest.Get(CaptureRequest.ControlAfMode);
 
-                previewRequestBuilder.Set(CaptureRequest.ControlAfMode, enable ? (int)ControlAFMode.ContinuousPicture : (int)ToControlAFMode(defaultFocusMode));
-                captureSession.SetRepeatingRequest(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, enable ? (int)ControlAFMode.ContinuousPicture : (int)ToControlAFMode(defaultFocusMode));
+                captureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, backgroundHandler);
                 return;
             }
 
@@ -623,6 +636,28 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             // various method calls so should work
             supportedFocusModes.Add(CameraFocusMode.Manual);
             return supportedFocusModes;
+        }
+
+        private async Task<IReadOnlyList<ICamera>> RetrieveCameras2Async()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var cameras = new List<ICamera>();
+            var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
+            var cameraIdList = manager.GetCameraIdList();
+            for (var i = 0; i < cameraIdList.Length; i++)
+            {
+                var cameraId = cameraIdList[i];
+                CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraId);
+                var facing = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
+                var camera = new Camera()
+                {
+                    Id = cameraId,
+                    CameraFacing = ToCameraFacing(facing)
+                };
+                cameras.Add(camera);
+            }
+
+            return cameras.AsReadOnly();
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -883,9 +918,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 Surface surface = new Surface(texture);
 
                 // We set up a CaptureRequest.Builder with the output Surface.
-                previewRequestBuilder = cameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
-                previewRequestBuilder.AddTarget(surface);
-                previewRequestBuilder.AddTarget(imageReader.Surface);
+                PreviewRequestBuilder = cameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+                PreviewRequestBuilder.AddTarget(surface);
+                PreviewRequestBuilder.AddTarget(imageReader.Surface);
 
                 // Here, we create a CameraCaptureSession for camera preview.
                 var surfaces = new List<Surface>();
@@ -949,11 +984,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             try
             {
                 // This is how to tell the camera to trigger.
-                previewRequestBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Start);
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Start);
 
                 // Tell #mCaptureCallback to wait for the precapture sequence to be set.
-                state = STATE_WAITING_PRECAPTURE;
-                captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+                State = STATE_WAITING_PRECAPTURE;
+                captureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, backgroundHandler);
             }
             catch (CameraAccessException e)
             {
@@ -1013,13 +1048,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             try
             {
                 // Reset the auto-focus trigger
-                previewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
-                SetAutoFlash(previewRequestBuilder);
-                captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
+                SetAutoFlash(PreviewRequestBuilder);
+                captureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, backgroundHandler);
 
                 // After this, the camera will go back to the normal state of preview.
-                state = STATE_PREVIEW;
-                captureSession.SetRepeatingRequest(previewRequest, captureCallback, backgroundHandler);
+                State = STATE_PREVIEW;
+                captureSession.SetRepeatingRequest(PreviewRequest, CaptureCallback, backgroundHandler);
             }
             catch (CameraAccessException e)
             {
@@ -1032,11 +1067,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             try
             {
                 // This is how to tell the camera to lock focus.
-                previewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
 
                 // Tell #captureCallback to wait for the lock.
-                state = STATE_WAITING_LOCK;
-                captureSession.Capture(previewRequestBuilder.Build(), captureCallback, backgroundHandler);
+                State = STATE_WAITING_LOCK;
+                captureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, backgroundHandler);
             }
             catch (CameraAccessException e)
             {
