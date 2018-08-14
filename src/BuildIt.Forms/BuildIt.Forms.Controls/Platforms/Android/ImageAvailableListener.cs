@@ -1,13 +1,17 @@
 ﻿using Android.Media;
 using Java.IO;
 using Java.Lang;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
-    public class ImageAvailableListener : Java.Lang.Object, ImageReader.IOnImageAvailableListener
+    public class ImageAvailableListener : Object, ImageReader.IOnImageAvailableListener
     {
         private readonly CameraPreviewControlRenderer owner;
+
+        private SemaphoreSlim frameProcessingSemaphore = new SemaphoreSlim(1);
+
         public TaskCompletionSource<string> SavePhotoTaskCompletionSource { get; set; }
 
         // Specified if a photo needs to be taken
@@ -26,28 +30,43 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             owner = cameraControlRenderer;
         }
 
-        public void OnImageAvailable(ImageReader reader)
+        public async void OnImageAvailable(ImageReader reader)
         {
-            if (string.IsNullOrWhiteSpace(FilePath))
+            try
             {
-                return;
-            }
+                await frameProcessingSemaphore.WaitAsync();
+                using (var image = reader.AcquireNextImage())
+                {
+                    var buffer = image.GetPlanes()[0].Buffer;
+                    var bytes = new byte[buffer.Remaining()];
+                    buffer.Get(bytes);
+                    await owner.OnMediaFrameArrived(bytes);
+                    image.Close();
+                    if (string.IsNullOrWhiteSpace(FilePath))
+                    {
+                        return;
+                    }
 
-            var image = reader.AcquireNextImage();
-            owner.backgroundHandler.Post(new ImageSaver(image, FilePath, SaveToPhotosLibrary, owner, SavePhotoTaskCompletionSource));
+                    owner.backgroundHandler.Post(new ImageSaver(bytes, FilePath, SaveToPhotosLibrary, owner, SavePhotoTaskCompletionSource));
+                }
+            }
+            finally
+            {
+                frameProcessingSemaphore.Release();
+            }
         }
 
         // Saves a JPEG {@link Image} into the specified {@link File}.
         private class ImageSaver : Object, IRunnable
         {
             // The JPEG image
-            private readonly Image image;
+            private readonly byte[] image;
             private readonly string filePath;
             private readonly bool saveToPhotosLibrary;
             private readonly TaskCompletionSource<string> savePhotoTaskCompletionSource;
             private readonly CameraPreviewControlRenderer owner;
 
-            public ImageSaver(Image image, string filePath, bool saveToPhotosLibrary, CameraPreviewControlRenderer owner, TaskCompletionSource<string> savePhotoTaskCompletionSource)
+            public ImageSaver(byte[] image, string filePath, bool saveToPhotosLibrary, CameraPreviewControlRenderer owner, TaskCompletionSource<string> savePhotoTaskCompletionSource)
             {
                 this.savePhotoTaskCompletionSource = savePhotoTaskCompletionSource;
                 this.filePath = filePath;
@@ -65,14 +84,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 using (var file = new File(filePath))
                 {
-                    var buffer = image.GetPlanes()[0].Buffer;
-                    var bytes = new byte[buffer.Remaining()];
-                    buffer.Get(bytes);
                     using (var output = new FileOutputStream(file))
                     {
                         try
                         {
-                            output.Write(bytes);
+                            output.Write(image);
                         }
                         catch (IOException e)
                         {
@@ -80,7 +96,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         }
                         finally
                         {
-                            image.Close();
                             savePhotoTaskCompletionSource.SetResult(filePath);
                         }
                     }

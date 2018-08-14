@@ -175,12 +175,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             using (var buffer = new FastJavaByteArray(data))
             {
                 // TODO: see if this can be optimised
-                var jpeg = ConvertYuvToJpeg(buffer, camera);
-                await cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpeg));
+                var jpegBytes = ConvertYuvToJpeg(buffer, camera);
+                await cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpegBytes));
 
                 // finished with this frame, process the next one
                 camera.AddCallbackBuffer(buffer);
             }
+        }
+
+        internal async Task OnMediaFrameArrived(byte[] jpegBytes)
+        {
+            await cameraPreviewControl.OnMediaFrameArrived(new MediaFrame(jpegBytes));
         }
 
         /// <inheritdoc />
@@ -188,7 +193,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             if (useCamera2Api)
             {
-                //mOnImageAvailableListener = new ImageAvailableListener(this);
                 OpenCamera(width, height);
                 return;
             }
@@ -297,7 +301,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 stateCallback = new CameraStateListener(this);
                 captureCallback = new CameraCaptureListener(this);
                 imageAvailableListener = new ImageAvailableListener(this);
-
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
                 StartBackgroundThread();
 
@@ -681,9 +684,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     }
 
                     // For still image captures, we use the largest available size.
-                    global::Android.Util.Size largest = (global::Android.Util.Size)Collections.Max(Arrays.AsList(map.GetOutputSizes((int)ImageFormatType.Jpeg)),
+                    global::Android.Util.Size largest = (global::Android.Util.Size)Collections.Max(
+                        Arrays.AsList(map.GetOutputSizes((int)ImageFormatType.Jpeg)),
                         new CompareSizesByArea());
-                    imageReader = ImageReader.NewInstance(largest.Width, largest.Height, ImageFormatType.Jpeg, /*maxImages*/2);
+                    imageReader = ImageReader.NewInstance(largest.Width, largest.Height, ImageFormatType.Jpeg, 2);
                     imageReader.SetOnImageAvailableListener(imageAvailableListener, backgroundHandler);
 
                     // Find out if we need to swap dimension to get the preview size relative to sensor
@@ -714,8 +718,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                             break;
 
                         default:
-
-                            //Log.Error(TAG, "Display rotation is invalid: " + displayRotation);
                             break;
                     }
 
@@ -883,6 +885,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 // We set up a CaptureRequest.Builder with the output Surface.
                 previewRequestBuilder = cameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
                 previewRequestBuilder.AddTarget(surface);
+                previewRequestBuilder.AddTarget(imageReader.Surface);
 
                 // Here, we create a CameraCaptureSession for camera preview.
                 var surfaces = new List<Surface>();
