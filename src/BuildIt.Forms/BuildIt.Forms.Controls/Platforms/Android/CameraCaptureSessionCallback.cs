@@ -8,17 +8,12 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public CameraCaptureSessionCallback(CameraPreviewControlRenderer owner)
         {
-            if (owner == null)
-            {
-                throw new System.ArgumentNullException("owner");
-            }
-
             this.owner = owner;
         }
 
         public override void OnConfigureFailed(CameraCaptureSession session)
         {
-            //owner.ShowToast("Failed");
+            // TODO: callback when camera couldn't be configured
         }
 
         public override void OnConfigured(CameraCaptureSession session)
