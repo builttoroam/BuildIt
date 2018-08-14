@@ -22,11 +22,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer)
         {
             this.SavePhotoTaskCompletionSource = SavePhotoTaskCompletionSource;
-            if (cameraControlRenderer == null)
-            {
-                throw new System.ArgumentNullException("cameraControlRenderer");
-            }
-
             owner = cameraControlRenderer;
         }
 
@@ -70,11 +65,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 this.savePhotoTaskCompletionSource = savePhotoTaskCompletionSource;
                 this.filePath = filePath;
-                if (image == null)
-                {
-                    throw new System.ArgumentNullException("image");
-                }
-
                 this.image = image;
                 this.saveToPhotosLibrary = saveToPhotosLibrary;
                 this.owner = owner;

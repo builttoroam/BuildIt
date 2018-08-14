@@ -8,11 +8,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public Camera2BasicSurfaceTextureListener(CameraPreviewControlRenderer owner)
         {
-            if (owner == null)
-            {
-                throw new System.ArgumentNullException("owner");
-            }
-
             this.owner = owner;
         }
 

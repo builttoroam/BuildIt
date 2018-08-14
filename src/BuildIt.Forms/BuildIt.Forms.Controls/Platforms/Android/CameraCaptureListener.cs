@@ -9,11 +9,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public CameraCaptureListener(CameraPreviewControlRenderer owner)
         {
-            if (owner == null)
-            {
-                throw new System.ArgumentNullException("owner");
-            }
-
             this.owner = owner;
         }
 
@@ -37,9 +32,12 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         if (afState == null)
                         {
                             owner.CaptureStillPicture();
+                            return;
                         }
-                        else if ((afState.IntValue() == ((int)ControlAFState.FocusedLocked)) ||
-                                   (afState.IntValue() == ((int)ControlAFState.NotFocusedLocked)))
+
+                        var controlAFState = (ControlAFState)afState.IntValue();
+                        if ((controlAFState == ControlAFState.FocusedLocked) ||
+                                   (controlAFState == ControlAFState.NotFocusedLocked))
                         {
                             // ControlAeState can be null on some devices
                             Integer aeState = (Integer)result.Get(CaptureResult.ControlAeState);
