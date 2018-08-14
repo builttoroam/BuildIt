@@ -4,7 +4,7 @@ using Java.Util;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
-    public class CompareSizesByArea : Java.Lang.Object, IComparator
+    public class CompareSizesByArea : Object, IComparator
     {
         public int Compare(Object lhs, Object rhs)
         {
