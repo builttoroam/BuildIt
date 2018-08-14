@@ -34,14 +34,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             try
             {
                 // default to auto
-                owner.previewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
+                owner.PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
 
                 // Flash is automatically enabled when necessary.
-                owner.SetAutoFlash(owner.previewRequestBuilder);
+                owner.SetAutoFlash(owner.PreviewRequestBuilder);
 
                 // Finally, we start displaying the camera preview.
-                owner.previewRequest = owner.previewRequestBuilder.Build();
-                owner.captureSession.SetRepeatingRequest(owner.previewRequest, owner.captureCallback, owner.backgroundHandler);
+                owner.PreviewRequest = owner.PreviewRequestBuilder.Build();
+                owner.captureSession.SetRepeatingRequest(owner.PreviewRequest, owner.CaptureCallback, owner.backgroundHandler);
             }
             catch (CameraAccessException e)
             {
