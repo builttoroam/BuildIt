@@ -938,6 +938,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 PreviewRequestBuilder.AddTarget(surface);
                 PreviewRequestBuilder.AddTarget(imageReader.Surface);
 
+                // Need this here as add the image reader surface would affect the orientation of jpeg capture
+                // TODO: handle orientation changes
+                int rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
+                PreviewRequestBuilder.Set(CaptureRequest.JpegOrientation, GetOrientation(rotation));
+
                 // Here, we create a CameraCaptureSession for camera preview.
                 var surfaces = new List<Surface>();
                 surfaces.Add(surface);
