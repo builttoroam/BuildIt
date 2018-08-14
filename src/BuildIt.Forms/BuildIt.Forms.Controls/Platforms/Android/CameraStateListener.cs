@@ -9,11 +9,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public CameraStateListener(CameraPreviewControlRenderer owner)
         {
-            if (owner == null)
-            {
-                throw new System.ArgumentNullException("owner");
-            }
-
             this.owner = owner;
         }
 
