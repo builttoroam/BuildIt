@@ -31,11 +31,11 @@ namespace BuildIt.ML.Sample.Core
         public async Task InitAsync()
         {
             var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+            await CrossCustomVisionClassifier.Instance.InitAsync("fruits", new[] { "apple", "banana", "pineapple" });
         }
 
         public async Task ClassifyAsync()
         {
-            await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
             var imageClassifications = await CrossCustomVisionClassifier.Instance.ClassifyAsync(file.GetStream());
             Classifications = string.Join(",", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
@@ -43,7 +43,6 @@ namespace BuildIt.ML.Sample.Core
 
         public async Task ClassifyAsync(object frame)
         {
-            await CrossCustomVisionClassifier.Instance.InitAsync("fruits", new[] { "apple", "banana", "pineapple" });
             //await CrossCustomVisionClassifier.Instance.InitAsync("Currency", new[] { "FivePounds", "TenPounds" });
             var imageClassifications = await CrossCustomVisionClassifier.Instance.ClassifyNativeFrameAsync(frame);
             Classifications = string.Join("\n", imageClassifications.Select(c => $"{c.Label} {c.Confidence}"));
