@@ -427,10 +427,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName)
             {
+                if (useCamera2Api)
+                {
+                    SwitchCamera2IfNecessary();
+                    return;
+                }
+
                 SwitchCameraIfNecessary();
             }
             else if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
             {
+                if (useCamera2Api)
+                {
+                    EnableContinuousAutoFocusCamera2(cameraPreviewControl.EnableContinuousAutoFocus);
+                    return;
+                }
+
                 EnableContinuousAutoFocus(cameraPreviewControl.EnableContinuousAutoFocus);
             }
         }
@@ -478,15 +490,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 LensFacing.Front;
         }
 
+        private void SwitchCamera2IfNecessary()
+        {
+            lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
+            OpenCamera(textureView.Width, textureView.Height);
+        }
+
         private void SwitchCameraIfNecessary()
         {
-            if (useCamera2Api)
-            {
-                lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
-                OpenCamera(textureView.Width, textureView.Height);
-                return;
-            }
-
             var newCameraType = ToCameraFacing(cameraPreviewControl.PreferredCamera);
             if (newCameraType == cameraType)
             {
@@ -552,16 +563,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void EnableContinuousAutoFocus(bool enable)
         {
-            if (useCamera2Api)
-            {
-                captureSession.StopRepeating();
-                var current = (int)PreviewRequest.Get(CaptureRequest.ControlAfMode);
-
-                PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, enable ? (int)ControlAFMode.ContinuousPicture : (int)ToControlAFMode(defaultFocusMode));
-                captureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, backgroundHandler);
-                return;
-            }
-
             var cameraParameters = camera.GetParameters();
             if (enable)
             {
@@ -588,6 +589,15 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                 camera.SetParameters(cameraParameters);
             }
+        }
+
+        private void EnableContinuousAutoFocusCamera2(bool enable)
+        {
+            captureSession.StopRepeating();
+            var current = (int)PreviewRequest.Get(CaptureRequest.ControlAfMode);
+
+            PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, enable ? (int)ControlAFMode.ContinuousPicture : (int)ToControlAFMode(defaultFocusMode));
+            captureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, backgroundHandler);
         }
 
         private IReadOnlyList<CameraFocusMode> RetrieveCamera2SupportedFocusModes()
