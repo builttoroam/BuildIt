@@ -931,6 +931,7 @@ namespace BuildIt.ML.Sample.Droid
 			global::BuildIt.Forms.Controls.Resource.Id.all = global::BuildIt.ML.Sample.Droid.Resource.Id.all;
 			global::BuildIt.Forms.Controls.Resource.Id.always = global::BuildIt.ML.Sample.Droid.Resource.Id.always;
 			global::BuildIt.Forms.Controls.Resource.Id.auto = global::BuildIt.ML.Sample.Droid.Resource.Id.auto;
+			global::BuildIt.Forms.Controls.Resource.Id.autoFitTextureView = global::BuildIt.ML.Sample.Droid.Resource.Id.autoFitTextureView;
 			global::BuildIt.Forms.Controls.Resource.Id.beginning = global::BuildIt.ML.Sample.Droid.Resource.Id.beginning;
 			global::BuildIt.Forms.Controls.Resource.Id.bottom = global::BuildIt.ML.Sample.Droid.Resource.Id.bottom;
 			global::BuildIt.Forms.Controls.Resource.Id.buttonPanel = global::BuildIt.ML.Sample.Droid.Resource.Id.buttonPanel;
@@ -1070,7 +1071,6 @@ namespace BuildIt.ML.Sample.Droid
 			global::BuildIt.Forms.Controls.Resource.Id.text_input_password_toggle = global::BuildIt.ML.Sample.Droid.Resource.Id.text_input_password_toggle;
 			global::BuildIt.Forms.Controls.Resource.Id.textinput_counter = global::BuildIt.ML.Sample.Droid.Resource.Id.textinput_counter;
 			global::BuildIt.Forms.Controls.Resource.Id.textinput_error = global::BuildIt.ML.Sample.Droid.Resource.Id.textinput_error;
-			global::BuildIt.Forms.Controls.Resource.Id.textureView = global::BuildIt.ML.Sample.Droid.Resource.Id.textureView;
 			global::BuildIt.Forms.Controls.Resource.Id.time = global::BuildIt.ML.Sample.Droid.Resource.Id.time;
 			global::BuildIt.Forms.Controls.Resource.Id.title = global::BuildIt.ML.Sample.Droid.Resource.Id.title;
 			global::BuildIt.Forms.Controls.Resource.Id.titleDividerNoCustom = global::BuildIt.ML.Sample.Droid.Resource.Id.titleDividerNoCustom;
@@ -5221,6 +5221,9 @@ namespace BuildIt.ML.Sample.Droid
 			// aapt resource value: 0x7f0a0044
 			public const int auto = 2131361860;
 			
+			// aapt resource value: 0x7f0a008b
+			public const int autoFitTextureView = 2131361931;
+			
 			// aapt resource value: 0x7f0a002f
 			public const int beginning = 2131361839;
 			
@@ -5670,9 +5673,6 @@ namespace BuildIt.ML.Sample.Droid
 			
 			// aapt resource value: 0x7f0a0015
 			public const int textinput_error = 2131361813;
-			
-			// aapt resource value: 0x7f0a008b
-			public const int textureView = 2131361931;
 			
 			// aapt resource value: 0x7f0a00bf
 			public const int time = 2131361983;
