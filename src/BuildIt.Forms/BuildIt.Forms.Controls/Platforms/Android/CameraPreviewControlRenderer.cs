@@ -619,7 +619,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             var capabilities = cameraCharacteristics.Get(CameraCharacteristics.RequestAvailableCapabilities).ToArray<int>();
-            if (capabilities.Any(c => c == (int) RequestAvailableCapabilities.ManualSensor))
+            if (capabilities.Any(c => c == (int)RequestAvailableCapabilities.ManualSensor))
             {
                 supportedFocusModes.Add(CameraFocusMode.Manual);
             }
