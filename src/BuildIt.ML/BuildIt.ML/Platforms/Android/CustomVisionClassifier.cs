@@ -15,19 +15,19 @@ namespace BuildIt.ML
         private const string InputName = "Placeholder";
         private const string DataNormLayerPrefix = "data_bn";
         private const string ModelFileExtension = ".pb";
+        private const int ImageWidthHeight = 227;
         private TensorFlowInferenceInterface inferenceInterface;
         private string[] labels;
         private bool hasNormalizationLayer;
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        /// <inheritdoc />
         public async Task InitAsync(string modelName, string[] labels)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             this.labels = labels;
             var assets = Android.App.Application.Context.Assets;
-
             inferenceInterface = new TensorFlowInferenceInterface(assets, string.Format("{0}{1}", modelName, ModelFileExtension));
-
             var iter = inferenceInterface.Graph().Operations();
             while (iter.HasNext && !hasNormalizationLayer)
             {
@@ -39,15 +39,16 @@ namespace BuildIt.ML
             }
         }
 
+        /// <inheritdoc />
         public async Task<IReadOnlyList<ImageClassification>> ClassifyAsync(Stream imageStream)
         {
             using (var bitmap = await BitmapFactory.DecodeStreamAsync(imageStream))
             {
                 var outputs = new float[labels.Length];
-                var floatValues = GetBitmapPixels(bitmap, 227, 227, hasNormalizationLayer);
+                var floatValues = GetBitmapPixels(bitmap, ImageWidthHeight, ImageWidthHeight, hasNormalizationLayer);
 
                 bitmap.Recycle();
-                inferenceInterface.Feed(InputName, floatValues.ToArray(), 1, 227, 227, 3);
+                inferenceInterface.Feed(InputName, floatValues.ToArray(), 1, ImageWidthHeight, ImageWidthHeight, 3);
                 inferenceInterface.Run(new string[] { OutputName });
                 inferenceInterface.Fetch(OutputName, outputs);
                 var imageClassifications = new List<ImageClassification>();
@@ -60,14 +61,15 @@ namespace BuildIt.ML
             }
         }
 
+        /// <inheritdoc />
         public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
         {
             var bytes = obj as byte[];
             using (var bitmap = await BitmapFactory.DecodeByteArrayAsync(bytes, 0, bytes.Length))
             {
                 var outputs = new float[labels.Length];
-                var floatValues = GetBitmapPixels(bitmap, 227, 227, hasNormalizationLayer);
-                inferenceInterface.Feed(InputName, floatValues.ToArray(), 1, 227, 227, 3);
+                var floatValues = GetBitmapPixels(bitmap, ImageWidthHeight, ImageWidthHeight, hasNormalizationLayer);
+                inferenceInterface.Feed(InputName, floatValues.ToArray(), 1, ImageWidthHeight, ImageWidthHeight, 3);
                 inferenceInterface.Run(new string[] { OutputName });
                 inferenceInterface.Fetch(OutputName, outputs);
                 var imageClassifications = new List<ImageClassification>();
