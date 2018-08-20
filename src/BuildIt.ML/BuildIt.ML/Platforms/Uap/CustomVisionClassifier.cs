@@ -20,16 +20,18 @@ namespace BuildIt.ML
         private const string Loss = "loss";
         private string[] labels;
         private LearningModelPreview learningModel;
-        private CustomVisionOutput customVisionOutput;
+        private EvaluationOutput evaluationOutput;
 
+        /// <inheritdoc />
         public async Task InitAsync(string modelName, string[] labels)
         {
             this.labels = labels;
             var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/{modelName}.onnx"));
             learningModel = await LearningModelPreview.LoadModelFromStorageFileAsync(file);
-            customVisionOutput = new CustomVisionOutput(labels);
+            evaluationOutput = new EvaluationOutput(labels);
         }
 
+        /// <inheritdoc />
         public async Task<IReadOnlyList<ImageClassification>> ClassifyAsync(Stream imageStream)
         {
             var decoder = await BitmapDecoder.CreateAsync(imageStream.AsRandomAccessStream());
@@ -37,7 +39,7 @@ namespace BuildIt.ML
             {
                 using (var videoFrame = VideoFrame.CreateWithSoftwareBitmap(softwareBitmap))
                 {
-                    var customVisionOutput = new CustomVisionOutput(labels);
+                    var customVisionOutput = new EvaluationOutput(labels);
                     var binding = new LearningModelBindingPreview(learningModel);
                     binding.Bind(Data, videoFrame);
                     binding.Bind(ClassLabel, customVisionOutput.ClassLabel);
@@ -48,6 +50,7 @@ namespace BuildIt.ML
             }
         }
 
+        /// <inheritdoc />
         public async Task<IReadOnlyList<ImageClassification>> ClassifyNativeFrameAsync(object obj)
         {
             try
@@ -60,10 +63,10 @@ namespace BuildIt.ML
                         {
                             var binding = new LearningModelBindingPreview(learningModel);
                             binding.Bind(Data, videoFrame);
-                            binding.Bind(ClassLabel, customVisionOutput.ClassLabel);
-                            binding.Bind(Loss, customVisionOutput.Loss);
+                            binding.Bind(ClassLabel, evaluationOutput.ClassLabel);
+                            binding.Bind(Loss, evaluationOutput.Loss);
                             var result = await learningModel.EvaluateAsync(binding, string.Empty);
-                            return customVisionOutput.Loss.Select(l => new ImageClassification(l.Key, l.Value)).ToList().AsReadOnly();
+                            return evaluationOutput.Loss.Select(l => new ImageClassification(l.Key, l.Value)).ToList().AsReadOnly();
                         }
                     }
                 }
