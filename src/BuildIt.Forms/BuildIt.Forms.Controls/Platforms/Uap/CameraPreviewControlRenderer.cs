@@ -158,6 +158,28 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             {
                 await EnableContinuousAutoFocusAsync(cameraPreviewControl.EnableContinuousAutoFocus);
             }
+
+            if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
+            {
+                System.Diagnostics.Debug.WriteLine("bui: change aspect");
+                ConfigureCaptureElementStretch();
+            }
+        }
+
+        private void ConfigureCaptureElementStretch()
+        {
+            switch (cameraPreviewControl.Aspect)
+            {
+                case Aspect.AspectFit:
+                    captureElement.Stretch = Stretch.Uniform;
+                    break;
+                case Aspect.AspectFill:
+                    captureElement.Stretch = Stretch.UniformToFill;
+                    break;
+                case Aspect.Fill:
+                    captureElement.Stretch = Stretch.Fill;
+                    break;
+            }
         }
 
         private static async Task ReencodeAndSavePhotoAsync(IRandomAccessStream stream, StorageFile file, PhotoOrientation orientation)
@@ -229,11 +251,8 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
         private void SetupUserInterface()
         {
-            captureElement = new CaptureElement
-            {
-                Stretch = Stretch.UniformToFill
-            };
-
+            captureElement = new CaptureElement();
+            ConfigureCaptureElementStretch();
             var grid = new Grid();
             grid.Children.Add(captureElement);
 
