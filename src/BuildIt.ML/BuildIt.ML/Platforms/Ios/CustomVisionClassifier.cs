@@ -10,6 +10,7 @@ using Vision;
 
 namespace BuildIt.ML
 {
+    /// <inheritdoc />
     public class CustomVisionClassifier : ICustomVisionClassifier
     {
         private const string CoreMLModelExtension = "mlmodelc";
@@ -21,9 +22,7 @@ namespace BuildIt.ML
 
             // TODO: handle when there's an error
             var mlModel = MLModel.Create(assetPath, out NSError error);
-
             model = VNCoreMLModel.FromMLModel(mlModel, out error);
-
             return Task.CompletedTask;
         }
 
@@ -61,9 +60,10 @@ namespace BuildIt.ML
         {
             var uncompiled = NSBundle.MainBundle.GetUrlForResource(modelName, "mlmodel");
             var modelPath = MLModel.CompileModel(uncompiled, out NSError err);
-
             if (err != null)
+            {
                 throw new NSErrorException(err);
+            }
 
             return modelPath;
         }
@@ -85,8 +85,6 @@ namespace BuildIt.ML
              }))
             {
                 var cvPixelBuffer = obj as CVPixelBuffer;
-                //using (var cvPixelBuffer = obj as CVPixelBuffer)
-                //{
                 using (var requestHandler = new VNImageRequestHandler(cvPixelBuffer, new NSDictionary()))
                 {
                     requestHandler.Perform(new[] { request }, out NSError error);
@@ -98,8 +96,6 @@ namespace BuildIt.ML
                     var imageClassifications = await tcs.Task;
                     return imageClassifications.ToList().AsReadOnly();
                 }
-                //}
-                //return new List<ImageClassification>();
             }
         }
     }

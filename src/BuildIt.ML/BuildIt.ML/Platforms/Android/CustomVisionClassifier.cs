@@ -8,21 +8,25 @@ using System.Threading.Tasks;
 
 namespace BuildIt.ML
 {
+    /// <inheritdoc />
     public class CustomVisionClassifier : ICustomVisionClassifier
     {
         private const string OutputName = "loss";
         private const string InputName = "Placeholder";
         private const string DataNormLayerPrefix = "data_bn";
+        private const string ModelFileExtension = ".pb";
         private TensorFlowInferenceInterface inferenceInterface;
         private string[] labels;
         private bool hasNormalizationLayer;
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task InitAsync(string modelName, string[] labels)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             this.labels = labels;
             var assets = Android.App.Application.Context.Assets;
 
-            inferenceInterface = new TensorFlowInferenceInterface(assets, modelName + ".pb");
+            inferenceInterface = new TensorFlowInferenceInterface(assets, string.Format("{0}{1}", modelName, ModelFileExtension));
 
             var iter = inferenceInterface.Graph().Operations();
             while (iter.HasNext && !hasNormalizationLayer)
