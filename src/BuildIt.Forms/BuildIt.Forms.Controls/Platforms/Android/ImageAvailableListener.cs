@@ -12,18 +12,18 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private SemaphoreSlim frameProcessingSemaphore = new SemaphoreSlim(1);
 
+        public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer)
+        {
+            this.SavePhotoTaskCompletionSource = SavePhotoTaskCompletionSource;
+            owner = cameraControlRenderer;
+        }
+
         public TaskCompletionSource<string> SavePhotoTaskCompletionSource { get; set; }
 
         // Specified if a photo needs to be taken
         public string FilePath { get; set; }
 
         public bool SaveToPhotosLibrary { get; set; }
-
-        public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer)
-        {
-            this.SavePhotoTaskCompletionSource = SavePhotoTaskCompletionSource;
-            owner = cameraControlRenderer;
-        }
 
         public async void OnImageAvailable(ImageReader reader)
         {
@@ -42,7 +42,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         return;
                     }
 
-                    owner.backgroundHandler.Post(new ImageSaver(bytes, FilePath, SaveToPhotosLibrary, owner, SavePhotoTaskCompletionSource));
+                    owner.BackgroundHandler.Post(new ImageSaver(bytes, FilePath, SaveToPhotosLibrary, owner, SavePhotoTaskCompletionSource));
                 }
             }
             finally

@@ -22,10 +22,15 @@ namespace BuildIt.Forms.Controls.Droid
         private class TouchInfo
         {
             public Android.Views.View View { get; set; }
+
             public bool EventsAttached { get; set; }
+
             public Element Element { get; set; }
-            public Func<double,double> FromPixel { get; set; }
+
+            public Func<double, double> FromPixel { get; set; }
+
             public Forms.TouchEffect Effect { get; set; }
+
             public TouchEffect DroidEffect { get; set; }
         }
 
@@ -36,9 +41,11 @@ namespace BuildIt.Forms.Controls.Droid
             new Dictionary<int, TouchEffect>();
 
         private TouchInfo currentView;
+
         // private Element formsElement;
         // private Forms.TouchEffect pclTouchEffect;
         private bool capture;
+
         // private Func<double, double> fromPixels;
         private int[] twoIntArray = new int[2];
 
@@ -189,7 +196,7 @@ namespace BuildIt.Forms.Controls.Droid
             try
             {
                 var info = viewDictionary.SafeValue(viewToCleanup);
-                if (info==null || !info.EventsAttached)
+                if (info == null || !info.EventsAttached)
                 {
                     return;
                 }

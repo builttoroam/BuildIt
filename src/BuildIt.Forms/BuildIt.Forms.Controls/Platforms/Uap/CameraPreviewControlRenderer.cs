@@ -38,6 +38,8 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
     /// </summary>
     public class CameraPreviewControlRenderer : FrameRenderer
     {
+        private const string ImageCapture = "ImageCapture";
+
         // Rotation metadata to apply to preview stream (https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh868174.aspx)
         private static readonly Guid RotationKey = new Guid("C380465D-2271-428C-9B83-ECEA3B4A85C1"); // (MF_MT_VIDEO_ROTATION)
 
@@ -120,7 +122,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 }
 
                 captureRoot = captureRoot ?? ApplicationData.Current.LocalFolder;
-                var captureFolder = await captureRoot.CreateFolderAsync(Path.Combine("VideoCapture", DateTime.Now.ToString("yyyy-MM-dd")), CreationCollisionOption.OpenIfExists);
+                var captureFolder = await captureRoot.CreateFolderAsync(Path.Combine(ImageCapture, DateTime.Now.ToString("yyyy-MM-dd")), CreationCollisionOption.OpenIfExists);
                 var fileCount = (await captureFolder.GetFilesAsync()).Count;
                 var file = await captureFolder.CreateFileAsync($"{fileCount}.jpg", CreationCollisionOption.GenerateUniqueName);
                 var orientation = CameraRotationHelper.ConvertSimpleOrientationToPhotoOrientation(rotationHelper.GetCameraCaptureOrientation());
@@ -423,8 +425,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             {
                 await SetPreviewRotationAsync();
             }
-
-            // await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => UpdateButtonOrientation());
         }
 
         private async void OnAppResuming(object sender, object e)
