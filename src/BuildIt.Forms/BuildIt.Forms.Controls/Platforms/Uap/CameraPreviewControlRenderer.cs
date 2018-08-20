@@ -161,7 +161,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
             if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
             {
-                System.Diagnostics.Debug.WriteLine("bui: change aspect");
                 ConfigureCaptureElementStretch();
             }
         }
