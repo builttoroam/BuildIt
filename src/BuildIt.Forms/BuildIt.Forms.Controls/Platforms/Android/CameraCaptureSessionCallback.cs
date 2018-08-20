@@ -19,13 +19,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public override void OnConfigured(CameraCaptureSession session)
         {
             // The camera is already closed
-            if (owner.cameraDevice == null)
+            if (owner.CameraDevice == null)
             {
                 return;
             }
 
             // When the session is ready, we start displaying the preview.
-            owner.captureSession = session;
+            owner.CaptureSession = session;
             try
             {
                 // default to auto
@@ -36,7 +36,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                 // Finally, we start displaying the camera preview.
                 owner.PreviewRequest = owner.PreviewRequestBuilder.Build();
-                owner.captureSession.SetRepeatingRequest(owner.PreviewRequest, owner.CaptureCallback, owner.backgroundHandler);
+                owner.CaptureSession.SetRepeatingRequest(owner.PreviewRequest, owner.CaptureCallback, owner.BackgroundHandler);
             }
             catch (CameraAccessException e)
             {

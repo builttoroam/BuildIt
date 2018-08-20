@@ -78,11 +78,8 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// A delegate used by the native renderer implementation to capture a frame of video to a file. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
+        /// A delegate used by the native renderer implementation to capture a frame of video to a file
         /// </summary>
-        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
-        /// **If Saving to Photos Library** iOS: Requires `NSPhotoLibraryUsageDescription' in info.plist. UWP: Requires 'Pictures Library' capability</param>
-        /// <returns>The path to the saved photo file</returns>
         internal Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
 
         /// <summary>

@@ -19,6 +19,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
     /// <inheritdoc />
     public class CameraPreviewControlRenderer : FrameRenderer, IAVCaptureVideoDataOutputSampleBufferDelegate
     {
+        private const string ImageCapture = "ImageCapture";
         private AVCaptureSession captureSession;
         private AVCaptureDeviceInput captureDeviceInput;
         private AVCaptureDevice captureDevice;
@@ -153,7 +154,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                     {
                         using (var jpegImage = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer))
                         {
-                            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "VideoCapture", DateTime.Now.ToString("yyyy-MM-dd"));
+                            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ImageCapture, DateTime.Now.ToString("yyyy-MM-dd"));
                             if (!Directory.Exists(folder))
                             {
                                 Directory.CreateDirectory(folder);
