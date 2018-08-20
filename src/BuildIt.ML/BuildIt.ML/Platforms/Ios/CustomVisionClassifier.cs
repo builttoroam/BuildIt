@@ -16,6 +16,7 @@ namespace BuildIt.ML
         private const string CoreMLModelExtension = "mlmodelc";
         private VNCoreMLModel model;
 
+        /// <inheritdoc />
         public Task InitAsync(string modelName, string[] labels)
         {
             var assetPath = NSBundle.MainBundle.GetUrlForResource(modelName, CoreMLModelExtension) ?? CompileModel(modelName);
@@ -26,6 +27,7 @@ namespace BuildIt.ML
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc />
         public async Task<IReadOnlyList<ImageClassification>> ClassifyAsync(Stream imageStream)
         {
             var tcs = new TaskCompletionSource<IEnumerable<ImageClassification>>();
