@@ -26,7 +26,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             switch (owner.State)
             {
-                case CameraPreviewControlRenderer.STATE_WAITING_LOCK:
+                case CameraPreviewControlRenderer.StateWaitingLock:
                     {
                         Integer afState = (Integer)result.Get(CaptureResult.ControlAfState);
                         if (afState == null)
@@ -44,7 +44,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                             if (aeState == null ||
                                     aeState.IntValue() == ((int)ControlAEState.Converged))
                             {
-                                owner.State = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
+                                owner.State = CameraPreviewControlRenderer.StatePictureTaken;
                                 owner.CaptureStillPicture();
                             }
                             else
@@ -56,7 +56,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         break;
                     }
 
-                case CameraPreviewControlRenderer.STATE_WAITING_PRECAPTURE:
+                case CameraPreviewControlRenderer.StateWaitingPrecapture:
                     {
                         // ControlAeState can be null on some devices
                         Integer aeState = (Integer)result.Get(CaptureResult.ControlAeState);
@@ -64,19 +64,19 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                                 aeState.IntValue() == ((int)ControlAEState.Precapture) ||
                                 aeState.IntValue() == ((int)ControlAEState.FlashRequired))
                         {
-                            owner.State = CameraPreviewControlRenderer.STATE_WAITING_NON_PRECAPTURE;
+                            owner.State = CameraPreviewControlRenderer.StateWaitingNonPrecapture;
                         }
 
                         break;
                     }
 
-                case CameraPreviewControlRenderer.STATE_WAITING_NON_PRECAPTURE:
+                case CameraPreviewControlRenderer.StateWaitingNonPrecapture:
                     {
                         // ControlAeState can be null on some devices
                         Integer aeState = (Integer)result.Get(CaptureResult.ControlAeState);
                         if (aeState == null || aeState.IntValue() != ((int)ControlAEState.Precapture))
                         {
-                            owner.State = CameraPreviewControlRenderer.STATE_PICTURE_TAKEN;
+                            owner.State = CameraPreviewControlRenderer.StatePictureTaken;
                             owner.CaptureStillPicture();
                         }
 
