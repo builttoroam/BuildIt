@@ -12,6 +12,7 @@ using Windows.Storage;
 
 namespace BuildIt.ML
 {
+    /// <inheritdoc />
     public class CustomVisionClassifier : ICustomVisionClassifier
     {
         private const string Data = "data";
