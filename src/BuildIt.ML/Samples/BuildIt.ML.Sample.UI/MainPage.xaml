@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <controls:CameraPreviewControl x:Name="CameraPreviewControl"
-                                           IsVisible="False"
+                                           Aspect="Fill"
                                            PreferredCamera="Back"
                                             />
             <Label Text="{Binding Classifications, StringFormat='Classifications: {0}'}" />
