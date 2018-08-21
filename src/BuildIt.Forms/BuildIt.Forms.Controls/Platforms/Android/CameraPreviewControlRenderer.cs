@@ -199,12 +199,20 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OnActivityPaused(Activity activity)
         {
-            CloseCamera();
-            StopBackgroundThread();
+            if (useCamera2Api)
+            {
+                CloseCamera();
+                StopBackgroundThread();
+            }
         }
 
         public void OnActivityResumed(Activity activity)
         {
+            if (!useCamera2Api)
+            {
+                return;
+            }
+
             StartBackgroundThread();
             if (textureView == null)
             {
@@ -983,17 +991,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                     // garbage capture data.
                     previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))), rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth, maxPreviewHeight, largest);
-
-                    // We fit the aspect ratio of TextureView to the size of preview we picked.
-                    var orientation = Resources.Configuration.Orientation;
-                    if (orientation == global::Android.Content.Res.Orientation.Landscape)
-                    {
-                        textureView.SetAspectRatio(previewSize.Width, previewSize.Height);
-                    }
-                    else
-                    {
-                        textureView.SetAspectRatio(previewSize.Height, previewSize.Width);
-                    }
+                    SetTextureAspectRatio();
 
                     // Check if the flash is supported.
                     var available = (Java.Lang.Boolean)characteristics.Get(CameraCharacteristics.FlashInfoAvailable);
@@ -1017,6 +1015,20 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             catch (NullPointerException e)
             {
                 e.PrintStackTrace();
+            }
+        }
+
+        private void SetTextureAspectRatio()
+        {
+            // We fit the aspect ratio of TextureView to the size of preview we picked.
+            var orientation = Resources.Configuration.Orientation;
+            if (orientation == global::Android.Content.Res.Orientation.Landscape)
+            {
+                textureView.SetAspectRatio(cameraPreviewControl.Aspect, previewSize.Width, previewSize.Height);
+            }
+            else
+            {
+                textureView.SetAspectRatio(cameraPreviewControl.Aspect, previewSize.Height, previewSize.Width);
             }
         }
 

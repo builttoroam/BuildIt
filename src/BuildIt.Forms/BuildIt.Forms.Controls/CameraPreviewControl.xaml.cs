@@ -26,7 +26,7 @@ namespace BuildIt.Forms.Controls
             BindableProperty.Create(nameof(EnableContinuousAutoFocus), typeof(bool), typeof(CameraPreviewControl), false);
 
         public static readonly BindableProperty AspectProperty =
-            BindableProperty.Create(nameof(Aspect), typeof(Aspect), typeof(CameraPreviewControl), default(Aspect));
+            BindableProperty.Create(nameof(Aspect), typeof(CameraPreviewAspect), typeof(CameraPreviewControl), default(CameraPreviewAspect));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControl"/> class.
@@ -80,9 +80,9 @@ namespace BuildIt.Forms.Controls
             set => SetValue(EnableContinuousAutoFocusProperty, value);
         }
 
-        public Aspect Aspect
+        public CameraPreviewAspect Aspect
         {
-            get => (Aspect)GetValue(AspectProperty);
+            get => (CameraPreviewAspect)GetValue(AspectProperty);
             set => SetValue(AspectProperty, value);
         }
 
