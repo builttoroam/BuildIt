@@ -9,6 +9,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     {
         private int ratioWidth = 0;
         private int ratioHeight = 0;
+        private CameraPreviewAspect aspect;
 
         public AutoFitTextureView(Context context)
             : this(context, null)
@@ -25,13 +26,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
         }
 
-        public void SetAspectRatio(int width, int height)
+        public void SetAspectRatio(CameraPreviewAspect aspect, int width, int height)
         {
             if (width == 0 || height == 0)
             {
                 throw new ArgumentException("Size cannot be negative.");
             }
 
+            this.aspect = aspect;
             ratioWidth = width;
             ratioHeight = height;
             RequestLayout();
@@ -45,17 +47,27 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             if (ratioWidth == 0 || ratioHeight == 0)
             {
                 SetMeasuredDimension(width, height);
+                return;
             }
-            else
+
+            switch (aspect)
             {
-                if (width < (float)height * ratioWidth / (float)ratioHeight)
-                {
-                    SetMeasuredDimension(width, width * ratioHeight / ratioWidth);
-                }
-                else
-                {
-                    SetMeasuredDimension(height * ratioWidth / ratioHeight, height);
-                }
+                case CameraPreviewAspect.AspectFit:
+                    if (width < (float)height * ratioWidth / (float)ratioHeight)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"bui:2 {width}, {width * ratioHeight / ratioWidth}");
+                        SetMeasuredDimension(width, width * ratioHeight / ratioWidth);
+                    }
+                    else
+                    {
+                        SetMeasuredDimension(height * ratioWidth / ratioHeight, height);
+                    }
+
+                    break;
+
+                case CameraPreviewAspect.Fill:
+                    SetMeasuredDimension(width, height);
+                    break;
             }
         }
     }
