@@ -21,6 +21,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
     {
         private const string ImageCapture = "ImageCapture";
         private AVCaptureSession captureSession;
+        private AVCaptureVideoPreviewLayer videoPreviewLayer;
         private AVCaptureDeviceInput captureDeviceInput;
         private AVCaptureDevice captureDevice;
         private AVCaptureStillImageOutput stillImageOutput;
@@ -72,7 +73,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
-            SetupEventHandlers();
 
             if (!Element.IsVisible)
             {
@@ -127,6 +127,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
             {
                 EnableContinuousAutofocus(cameraPreviewControl.EnableContinuousAutoFocus);
+            }
+
+            if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
+            {
+                ApplyAspect();
             }
         }
 
@@ -245,19 +250,15 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             Add(liveCameraStream);
         }
 
-        private void SetupEventHandlers()
-        {
-        }
-
         private void SetupLiveCameraStream()
         {
             captureSession = new AVCaptureSession();
 
-            var videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
+            videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
             {
-                Frame = liveCameraStream.Bounds
+                Frame = liveCameraStream.Bounds,
             };
-
+            ApplyAspect();
             liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
 
             captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
@@ -285,6 +286,29 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             captureSession.AddOutput(stillImageOutput);
             captureSession.StartRunning();
+        }
+
+        private void ApplyAspect()
+        {
+            if (cameraPreviewControl == null)
+            {
+                return;
+            }
+
+            switch (cameraPreviewControl.Aspect)
+            {
+                case Aspect.AspectFit:
+                    videoPreviewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspect;
+                    break;
+
+                case Aspect.AspectFill:
+                    videoPreviewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
+                    break;
+
+                case Aspect.Fill:
+                    videoPreviewLayer.VideoGravity = AVLayerVideoGravity.Resize;
+                    break;
+            }
         }
 
         private AVCaptureDevice GetCameraForPreference(CameraPreviewControl.CameraFacing cameraPreference)
