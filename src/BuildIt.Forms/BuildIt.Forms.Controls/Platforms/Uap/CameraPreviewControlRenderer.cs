@@ -169,13 +169,10 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             switch (cameraPreviewControl.Aspect)
             {
-                case Aspect.AspectFit:
+                case CameraPreviewAspect.AspectFit:
                     captureElement.Stretch = Stretch.Uniform;
                     break;
-                case Aspect.AspectFill:
-                    captureElement.Stretch = Stretch.UniformToFill;
-                    break;
-                case Aspect.Fill:
+                case CameraPreviewAspect.Fill:
                     captureElement.Stretch = Stretch.Fill;
                     break;
             }
