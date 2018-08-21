@@ -22,6 +22,8 @@
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Forms" version="3.1.0.583944" exclude="Build,Analyzers" />
+		<dependency id="FastAndroidCamera" version="2.0.0" exclude="Build,Analyzers" />
+
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
