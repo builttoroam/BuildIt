@@ -297,11 +297,13 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             switch (cameraPreviewControl.Aspect)
             {
-                case CameraPreviewAspect.AspectFit:
+                case Aspect.AspectFill:
+                    videoPreviewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
+                    break;
+                case Aspect.AspectFit:
                     videoPreviewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspect;
                     break;
-
-                case CameraPreviewAspect.Fill:
+                case Aspect.Fill:
                     videoPreviewLayer.VideoGravity = AVLayerVideoGravity.Resize;
                     break;
             }

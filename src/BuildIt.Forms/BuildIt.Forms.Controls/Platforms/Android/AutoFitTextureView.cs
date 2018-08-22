@@ -2,6 +2,7 @@
 using Android.Util;
 using Android.Views;
 using System;
+using Xamarin.Forms;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
@@ -9,7 +10,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     {
         private int ratioWidth = 0;
         private int ratioHeight = 0;
-        private CameraPreviewAspect aspect;
+        private Aspect aspect;
 
         public AutoFitTextureView(Context context)
             : this(context, null)
@@ -26,7 +27,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
         }
 
-        public void SetAspectRatio(CameraPreviewAspect aspect, int width, int height)
+        public void SetAspectRatio(Aspect aspect, int width, int height)
         {
             if (width == 0 || height == 0)
             {
@@ -52,10 +53,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             switch (aspect)
             {
-                case CameraPreviewAspect.AspectFit:
+                case Aspect.AspectFit:
                     if (width < (float)height * ratioWidth / (float)ratioHeight)
                     {
-                        System.Diagnostics.Debug.WriteLine($"bui:2 {width}, {width * ratioHeight / ratioWidth}");
                         SetMeasuredDimension(width, width * ratioHeight / ratioWidth);
                     }
                     else
@@ -65,7 +65,39 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                     break;
 
-                case CameraPreviewAspect.Fill:
+                case Aspect.AspectFill:
+                    /*if (width > height)
+                    {
+                        SetMeasuredDimension((int)(width * (height / (float)ratioHeight)), height);
+                    }
+                    else if (height > width)
+                    {
+                        SetMeasuredDimension(width, (int)(height * (width / (float)ratioWidth)));
+                    }
+                    else
+                    {
+                        SetMeasuredDimension(width, height);
+                    }*/
+
+                    var previewAspectRatio = (double)ratioWidth / ratioHeight;
+                    if (previewAspectRatio > 1)
+                    {
+                        // width > height, so keep the height but scale the width to meet aspect ratio
+                        SetMeasuredDimension((int)(width * previewAspectRatio), height);
+                    }
+                    else if (previewAspectRatio < 1 && previewAspectRatio != 0)
+                    {
+                        // width < height
+                        SetMeasuredDimension(width, (int)(height / previewAspectRatio));
+                    }
+                    else
+                    { 
+                        SetMeasuredDimension(width, height);
+                    }
+
+                    break;
+
+                case Aspect.Fill:
                     SetMeasuredDimension(width, height);
                     break;
             }
