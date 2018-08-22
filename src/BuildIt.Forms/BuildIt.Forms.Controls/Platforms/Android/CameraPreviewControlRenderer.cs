@@ -462,7 +462,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             catch (CameraAccessException e)
             {
-                // currently we do not raise an error here as the user would be prompted to enable permissions at this point
+                errorOccurred = true;
                 e.PrintStackTrace();
             }
             catch (InterruptedException e)
@@ -472,6 +472,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             catch (Java.Lang.Exception)
             {
+                // note: this may be raised on the first run even when the permissions prompt is being displayed
                 errorOccurred = true;
             }
 
