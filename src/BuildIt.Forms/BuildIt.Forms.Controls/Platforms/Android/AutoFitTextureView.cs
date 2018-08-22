@@ -78,7 +78,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                         SetMeasuredDimension(width, (int)(height / previewAspectRatio));
                     }
                     else
-                    { 
+                    {
                         SetMeasuredDimension(width, height);
                     }
 
