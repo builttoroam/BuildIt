@@ -27,7 +27,6 @@ using static Android.App.Application;
 using Context = Android.Content.Context;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
-
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
     /// <summary>
@@ -86,6 +85,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private AutoFitTextureView textureView;
         private bool useCamera2Api;
         private global::Android.Views.View view;
+        int textureWidth;
+        int textureHeight;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
@@ -261,6 +262,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         /// <inheritdoc />
         public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
+            textureWidth = width;
+            textureHeight = height;
             if (useCamera2Api)
             {
                 OpenCamera(width, height);
@@ -268,11 +271,69 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             camera = global::Android.Hardware.Camera.Open((int)cameraType);
-            textureView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
+            ApplyAspect();
+
             surfaceTexture = surface;
 
             camera.SetPreviewTexture(surface);
             PrepareAndStartCamera();
+        }
+
+        private void ApplyAspect()
+        {
+            var cameraParameters = camera.GetParameters();
+            var previewWidth = 0;
+            var previewHeight = 0;
+            var orientation = Resources.Configuration.Orientation;
+            if (orientation == global::Android.Content.Res.Orientation.Landscape)
+            {
+                previewWidth = cameraParameters.PreviewSize.Width;
+                previewHeight = cameraParameters.PreviewSize.Height;
+            }
+            else
+            {
+                previewWidth = cameraParameters.PreviewSize.Height;
+                previewHeight = cameraParameters.PreviewSize.Width;
+            }
+
+            switch (cameraPreviewControl.Aspect)
+            {
+                case Aspect.AspectFit:
+                    if (textureWidth < (float)textureHeight * previewWidth / (float)previewHeight)
+                    {
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureWidth * previewHeight / previewWidth);
+                    }
+                    else
+                    {
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureHeight * previewWidth / previewHeight, textureHeight);
+                    }
+
+                    break;
+
+                case Aspect.AspectFill:
+                    var previewAspectRatio = (double)previewWidth / previewHeight;
+                    if (previewAspectRatio > 1)
+                    {
+                        // width > height, so keep the height but scale the width to meet aspect ratio
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams((int)(textureWidth * previewAspectRatio), textureHeight);
+                    }
+                    else if (previewAspectRatio < 1 && previewAspectRatio != 0)
+                    {
+                        // width < height
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, (int)(textureHeight / previewAspectRatio));
+                    }
+                    else
+                    {
+                        // width == height
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
+                    }
+
+                    break;
+
+                case Aspect.Fill:
+                    textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
+                    break;
+            }
         }
 
         /// <inheritdoc />
@@ -554,6 +615,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 }
 
                 EnableContinuousAutoFocus(cameraPreviewControl.EnableContinuousAutoFocus);
+            }
+            else if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
+            {
+                if (useCamera2Api)
+                {
+                    ApplyAspect2();
+                }
+                else
+                {
+                    ApplyAspect();
+                }
             }
         }
 
@@ -991,7 +1063,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                     // garbage capture data.
                     previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))), rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth, maxPreviewHeight, largest);
-                    SetTextureAspectRatio();
+                    ApplyAspect2();
 
                     // Check if the flash is supported.
                     var available = (Java.Lang.Boolean)characteristics.Get(CameraCharacteristics.FlashInfoAvailable);
@@ -1018,7 +1090,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private void SetTextureAspectRatio()
+        private void ApplyAspect2()
         {
             // We fit the aspect ratio of TextureView to the size of preview we picked.
             var orientation = Resources.Configuration.Orientation;
@@ -1035,6 +1107,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private bool SwappedDimensions()
         {
             var swappedDimensions = false;
+
             // Find out if we need to swap dimension to get the preview size relative to sensor
             // coordinate.
             var displayRotation = Activity.WindowManager.DefaultDisplay.Rotation;
