@@ -66,19 +66,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     break;
 
                 case Aspect.AspectFill:
-                    /*if (width > height)
-                    {
-                        SetMeasuredDimension((int)(width * (height / (float)ratioHeight)), height);
-                    }
-                    else if (height > width)
-                    {
-                        SetMeasuredDimension(width, (int)(height * (width / (float)ratioWidth)));
-                    }
-                    else
-                    {
-                        SetMeasuredDimension(width, height);
-                    }*/
-
                     var previewAspectRatio = (double)ratioWidth / ratioHeight;
                     if (previewAspectRatio > 1)
                     {
