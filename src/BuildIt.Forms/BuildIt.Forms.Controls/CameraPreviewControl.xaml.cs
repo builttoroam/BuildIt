@@ -37,6 +37,11 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
+        /// Raised when there's an error opening the camera
+        /// </summary>
+        public event EventHandler ErrorOpeningCamera;
+
+        /// <summary>
         /// Enumeration the available camera facings/positions
         /// </summary>
         public enum CameraFacing
@@ -153,6 +158,11 @@ namespace BuildIt.Forms.Controls
             }
 
             await MediaFrameArrived(mediaFrame);
+        }
+
+        internal void RaiseErrorOpeningCamera()
+        {
+            ErrorOpeningCamera?.Invoke(this, EventArgs.Empty);
         }
     }
 }

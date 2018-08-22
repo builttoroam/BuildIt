@@ -306,9 +306,10 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     await mediaFrameReader.StartAsync();
                     isInitialized = true;
                 }
-                catch (UnauthorizedAccessException)
+                catch (Exception ex)
                 {
-                    Debug.WriteLine("The app was denied access to the camera.");
+                    ex.LogError();
+                    cameraPreviewControl.RaiseErrorOpeningCamera();
                 }
 
                 // If initialization succeeded, start the preview

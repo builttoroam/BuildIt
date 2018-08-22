@@ -448,23 +448,36 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             CameraDevice = null;
             SetUpCameraOutputs(width, height);
             ConfigureTransform(width, height);
+            var errorOccurred = false;
             var manager = (CameraManager)Context.GetSystemService(Context.CameraService);
             try
             {
                 if (!CameraOpenCloseLock.TryAcquire(2500, TimeUnit.Milliseconds))
                 {
-                    throw new RuntimeException("Time out waiting to lock camera opening.");
+                    cameraPreviewControl.RaiseErrorOpeningCamera();
+                    return;
                 }
 
                 manager.OpenCamera(cameraId, stateCallback, BackgroundHandler);
             }
             catch (CameraAccessException e)
             {
+                // currently we do not raise an error here as the user would be prompted to enable permissions at this point
                 e.PrintStackTrace();
             }
             catch (InterruptedException e)
             {
+                errorOccurred = true;
                 throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
+            }
+            catch (Java.Lang.Exception)
+            {
+                errorOccurred = true;
+            }
+
+            if (errorOccurred)
+            {
+                cameraPreviewControl.RaiseErrorOpeningCamera();
             }
         }
 
@@ -474,6 +487,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             var uri = global::Android.Net.Uri.FromFile(file);
             intent.SetData(uri);
             Activity.SendBroadcast(intent);
+        }
+
+        internal void RaiseErrorOpening()
+        {
+            cameraPreviewControl.RaiseErrorOpeningCamera();
         }
 
         protected async Task<string> CaptureCamera2PhotoToFile(bool saveToPhotosLibrary)
