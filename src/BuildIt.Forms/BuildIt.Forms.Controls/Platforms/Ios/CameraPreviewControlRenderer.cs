@@ -88,6 +88,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             catch (Exception ex)
             {
                 ex.LogError();
+                cameraPreviewControl.RaiseErrorOpeningCamera();
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using Android.App;
-using Android.Hardware.Camera2;
+﻿using Android.Hardware.Camera2;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
@@ -29,19 +28,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public override void OnError(CameraDevice cameraDevice, CameraError error)
         {
-            owner.CameraOpenCloseLock.Release();
             cameraDevice.Close();
-            owner.CameraDevice = null;
             if (owner == null)
             {
                 return;
             }
-
-            Activity activity = owner.Activity;
-            if (activity != null)
-            {
-                activity.Finish();
-            }
+            owner.CameraOpenCloseLock.Release();
+            owner.CameraDevice = null;
+            owner.RaiseErrorOpening();
         }
     }
 }
