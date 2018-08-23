@@ -43,6 +43,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     }
 
                     owner.BackgroundHandler.Post(new ImageSaver(bytes, FilePath, SaveToPhotosLibrary, owner, SavePhotoTaskCompletionSource));
+                    FilePath = null;
                 }
             }
             finally
