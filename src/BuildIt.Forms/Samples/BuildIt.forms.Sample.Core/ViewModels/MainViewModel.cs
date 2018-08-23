@@ -29,9 +29,15 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     {
         private bool _enabledVisibility;
 
-        public IStateManager StateManager { get; } = new StateManager();
+        public ItemViewModel()
+        {
+            StateManager.Group<ItemStates>().DefineAllStates();
+            EnabledVisibility = Random.Next(0, 100) > 50;
 
-        private static Random Random { get; } = new Random();
+            //Debug.WriteLine($"Enabled - {EnabledVisibility}");
+        }
+
+        public IStateManager StateManager { get; } = new StateManager();
 
         public bool EnabledVisibility
         {
@@ -43,12 +49,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             }
         }
 
-        public ItemViewModel()
-        {
-            StateManager.Group<ItemStates>().DefineAllStates();
-            EnabledVisibility = Random.Next(0, 100) > 50;
-            //Debug.WriteLine($"Enabled - {EnabledVisibility}");
-        }
+        private static Random Random { get; } = new Random();
 
         public async Task Init()
         {
@@ -72,12 +73,15 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     public class MainViewModel : NotifyBase, IHasStates, IHasImmutableData<Person>
     {
         private ICommand pressedCommand;
-        public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
+        private bool commandIsEnabled;
 
-        public IStateManager StateManager { get; } = new StateManager();
+        private bool visible = true;
 
-        public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
-        public ObservableCollection<ItemViewModel> MoreItems { get; } = new ObservableCollection<ItemViewModel>();
+        private Person _data;
+
+        private Random rnd = new Random();
+
+        private int deleteAllSupressCount;
 
         public MainViewModel()
         {
@@ -86,7 +90,13 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                 .DefineAllStates();
         }
 
-        private bool commandIsEnabled;
+        public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
+
+        public IStateManager StateManager { get; } = new StateManager();
+
+        public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
+
+        public ObservableCollection<ItemViewModel> MoreItems { get; } = new ObservableCollection<ItemViewModel>();
 
         public bool CommandIsEnabled
         {
@@ -95,11 +105,12 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             {
                 commandIsEnabled = value;
                 (PressedCommand as Command).ChangeCanExecute();
+
                 //OnPropertyChanged(()=> PressedCommand);
             }
         }
 
-        private bool visible = true;
+        public Person Data { get => _data; set => SetProperty(ref _data, value); }
 
         public void SwitchStates()
         {
@@ -119,30 +130,38 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
             Items.Fill(items);
             MoreItems.Fill(items);
+
             // need to request runtime permissions for using the camera
-            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera, Permission.Storage);
             if (results.ContainsKey(Permission.Camera))
             {
                 var status = results[Permission.Camera];
                 if (status == PermissionStatus.Granted)
                 {
-                    // permissions were granted
+                    // granted permissions to access the camera
+                }
+            }
+
+            if (results.ContainsKey(Permission.Storage))
+            {
+                var status = results[Permission.Storage];
+                if (status == PermissionStatus.Granted)
+                {
+                    // granted permissions to access storage
                 }
             }
         }
-
-        private Person _data;
-
-        public Person Data { get => _data; set => SetProperty(ref _data, value); }
 
         public void LoadBob()
         {
             Data = new Person { FirstName = "Bob", LastName = "Joe", Child = new Person { FirstName = "Kid1" } };
         }
+
         public void LoadBob2()
         {
             Data = new Person { FirstName = "Bob", LastName = "Joe", Child = new Person { FirstName = "Kids2" } };
         }
+
         public void LoadFred()
         {
             Data = new Person { FirstName = "Fred", LastName = "Mathews" };
@@ -169,11 +188,8 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                 LastName = "People",
                 People = MutateList(state.People)
             };
-
         }
 
-        private Random rnd = new Random();
-        private int deleteAllSupressCount;
         private ObservableCollection<Person> MutateList(ObservableCollection<Person> people)
         {
             var newPeople = people.ToList();
@@ -193,10 +209,12 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                     case 0: // Add
                         newPeople.Add(new Person { FirstName = $"Person (Add): {DateTime.Now.ToString()}" });
                         break;
+
                     case 1: // Remove
                         var removeIdx = rnd.Next(0, 1000) % newPeople.Count;
                         newPeople.RemoveAt(removeIdx);
                         break;
+
                     case 2: // Move
                         if (newPeople.Count < 2) continue;
                         var startIdx = rnd.Next(0, 1000) % newPeople.Count;
@@ -205,15 +223,18 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                         var endIdx = rnd.Next(0, 1000) % newPeople.Count;
                         newPeople.Insert(endIdx, movePerson);
                         break;
+
                     case 3: // Change
                         var changeIdx = rnd.Next(0, 1000) % newPeople.Count;
                         var person = newPeople[changeIdx];
                         person.FirstName = "[changed] " + person.FirstName;
                         break;
+
                     case 4: // Insert
                         var insertIdx = rnd.Next(0, 1000) % newPeople.Count;
                         newPeople.Insert(insertIdx, new Person { FirstName = $"Person (Insert): {DateTime.Now.ToString()}" });
                         break;
+
                     case 5: // Remove all
                         if (deleteAllSupressCount % 50 == 0)
                         {
@@ -233,8 +254,6 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         private readonly Func<object, bool> _canExecute;
 
         private readonly Action<object> _execute;
-
-        public event EventHandler CanExecuteChanged;
 
         public Command(Action<object> execute)
         {
@@ -280,6 +299,8 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             }
         }
 
+        public event EventHandler CanExecuteChanged;
+
         /// <param name="parameter">An <see cref="T:System.Object" /> used as parameter to determine if the Command can be executed.</param>
         /// <summary>Returns a <see cref="T:System.Boolean" /> indicating if the Command can be exectued with the given parameter.</summary>
         /// <returns>
@@ -314,12 +335,12 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             }
             expr_06(this, EventArgs.Empty);
         }
-
     }
 
     public class Person : NotifyBase
     {
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
 
         public Person Child { get; set; }
