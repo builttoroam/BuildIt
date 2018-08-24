@@ -66,7 +66,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     break;
 
                 case Aspect.AspectFill:
-                    var previewAspectRatio = (double)ratioWidth / ratioHeight;
+                    var previewAspectRatio = (float)ratioWidth / ratioHeight;
                     if (previewAspectRatio > 1)
                     {
                         // width > height, so keep the height but scale the width to meet aspect ratio
