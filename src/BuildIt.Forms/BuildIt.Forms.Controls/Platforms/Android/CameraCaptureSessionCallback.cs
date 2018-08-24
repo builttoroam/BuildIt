@@ -32,7 +32,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 owner.PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
 
                 // Flash is automatically enabled when necessary.
-                owner.SetAutoFlash(owner.PreviewRequestBuilder);
+                // owner.SetAutoFlash(owner.PreviewRequestBuilder);
 
                 // Finally, we start displaying the camera preview.
                 owner.PreviewRequest = owner.PreviewRequestBuilder.Build();

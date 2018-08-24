@@ -106,6 +106,8 @@ namespace BuildIt.Forms.Controls
         /// </summary>
         internal Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
 
+        internal Func<Task<bool>> OpenCameraFunc { get; set; }
+
         /// <summary>
         /// Captures the most current video frame to a photo and saves it to local storage. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
         /// </summary>
@@ -148,6 +150,16 @@ namespace BuildIt.Forms.Controls
             }
 
             return await RetrieveCamerasFunc();
+        }
+
+        public async Task<bool> OpenCameraAsync()
+        {
+            if (OpenCameraFunc == null)
+            {
+                return false;
+            }
+
+            return await OpenCameraFunc();
         }
 
         internal async Task OnMediaFrameArrived(MediaFrame mediaFrame)

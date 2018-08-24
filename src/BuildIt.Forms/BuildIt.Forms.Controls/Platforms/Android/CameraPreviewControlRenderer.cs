@@ -85,8 +85,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private AutoFitTextureView textureView;
         private bool useCamera2Api;
         private global::Android.Views.View view;
-        int textureWidth;
-        int textureHeight;
+        private int textureWidth;
+        private int textureHeight;
+        private bool openedCamera;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
@@ -103,6 +104,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         // A reference to the opened CameraDevice
         public CameraDevice CameraDevice { get; set; }
 
+        // A semaphore to prevent the app from exiting before closing the camera
         public Semaphore CameraOpenCloseLock { get; } = new Semaphore(1);
 
         public CameraCaptureListener CaptureCallback { get; private set; }
@@ -137,7 +139,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                 // Use the same AE and AF modes as the preview.
                 stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
-                SetAutoFlash(stillCaptureBuilder);
+                //SetAutoFlash(stillCaptureBuilder);
 
                 // Orientation
                 int rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
@@ -264,19 +266,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             textureWidth = width;
             textureHeight = height;
-            if (useCamera2Api)
-            {
-                OpenCamera(width, height);
-                return;
-            }
-
-            camera = global::Android.Hardware.Camera.Open((int)cameraType);
-            ApplyAspect();
-
+            textureWidth = width;
+            textureHeight = height;
             surfaceTexture = surface;
-
-            camera.SetPreviewTexture(surface);
-            PrepareAndStartCamera();
         }
 
         private void ApplyAspect()
@@ -341,8 +333,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             if (!useCamera2Api)
             {
-                camera.StopPreview();
-                camera.Release();
+                camera?.StopPreview();
+                camera?.Release();
             }
 
             return true;
@@ -353,7 +345,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             if (!useCamera2Api)
             {
-                PrepareAndStartCamera();
+                if (openedCamera)
+                {
+                    PrepareAndStartCamera();
+                }
             }
         }
 
@@ -395,7 +390,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 // Reset the auto-focus trigger
                 PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
-                SetAutoFlash(PreviewRequestBuilder);
+                //SetAutoFlash(PreviewRequestBuilder);
                 CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
 
                 // After this, the camera will go back to the normal state of preview.
@@ -459,6 +454,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 }
 
                 manager.OpenCamera(cameraId, stateCallback, BackgroundHandler);
+                openedCamera = true;
             }
             catch (CameraAccessException e)
             {
@@ -486,11 +482,16 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
         internal void SaveToPhotosLibrary(Java.IO.File file)
-        {
+        { 
+            System.Diagnostics.Debug.WriteLine("save to photos library");
             var intent = new Intent(Intent.ActionMediaScannerScanFile);
+            System.Diagnostics.Debug.WriteLine("intent");
             var uri = global::Android.Net.Uri.FromFile(file);
+            System.Diagnostics.Debug.WriteLine("file");
             intent.SetData(uri);
+            System.Diagnostics.Debug.WriteLine("send broadcast");
             Activity.SendBroadcast(intent);
+            System.Diagnostics.Debug.WriteLine("activity");
         }
 
         internal void RaiseErrorOpening()
@@ -500,27 +501,26 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         protected async Task<string> CaptureCamera2PhotoToFile(bool saveToPhotosLibrary)
         {
-            try
-            {
-                imageAvailableListener.FilePath = BuildFilePath();
-                imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
-                imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
-                LockFocus();
-                var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
-                if (saveToPhotosLibrary)
-                {
-                    using (var file = new Java.IO.File(finalFilePath))
-                    {
-                        SaveToPhotosLibrary(file);
-                    }
-                }
+            System.Diagnostics.Debug.WriteLine("bui: capture");
+            imageAvailableListener.FilePath = BuildFilePath();
+            System.Diagnostics.Debug.WriteLine($"bui: build file path {imageAvailableListener.FilePath}");
+            imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
+            System.Diagnostics.Debug.WriteLine($"bui: create task");
+            imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
+            System.Diagnostics.Debug.WriteLine($"bui: lock");
+            LockFocus();
+            //var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
+            //if (saveToPhotosLibrary)
+            //{
+            //    System.Diagnostics.Debug.WriteLine($"bui: saveToPhotosLibrary");
+            //    /*using (var file = new Java.IO.File(finalFilePath))
+            //    {
+            //        System.Diagnostics.Debug.WriteLine($"bui: open");
+            //        SaveToPhotosLibrary(file);
+            //    }*/
+            //}
 
-                return imageAvailableListener.FilePath;
-            }
-            finally
-            {
-                imageAvailableListener.FilePath = null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -536,22 +536,24 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             try
             {
                 string filePath = BuildFilePath();
-                var fileStream = new FileStream(filePath, FileMode.Create);
-                await image.CompressAsync(Bitmap.CompressFormat.Jpeg, 50, fileStream);
-                fileStream.Close();
-                image.Recycle();
-
-                if (saveToPhotosLibrary)
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    // Broadcasting the the file's Uri in the following intent will allow any Photo Gallery apps to incorporate
-                    // the photo file into their collection -RR
-                    using (var file = new Java.IO.File(filePath))
-                    {
-                        SaveToPhotosLibrary(file);
-                    }
-                }
+                    await image.CompressAsync(Bitmap.CompressFormat.Jpeg, 50, fileStream);
+                    fileStream.Close();
+                    image.Recycle();
 
-                return filePath;
+                    if (saveToPhotosLibrary)
+                    {
+                        // Broadcasting the the file's Uri in the following intent will allow any Photo Gallery apps to incorporate
+                        // the photo file into their collection -RR
+                        using (var file = new Java.IO.File(filePath))
+                        {
+                            SaveToPhotosLibrary(file);
+                        }
+                    }
+
+                    return filePath;
+                }
             }
             catch (System.Exception ex)
             {
@@ -583,11 +585,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras2;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
-                stateCallback = new CameraStateListener(this);
-                CaptureCallback = new CameraCaptureListener(this);
-                imageAvailableListener = new ImageAvailableListener(this);
+                cameraPreviewControl.OpenCameraFunc = OpenCamera2Async;
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
-                StartBackgroundThread();
 
                 // fill Orientations list
                 Orientations.Append((int)SurfaceOrientation.Rotation0, 90);
@@ -600,6 +599,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
+                cameraPreviewControl.OpenCameraFunc = OpenCameraAsync;
             }
 
             try
@@ -881,6 +881,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 // Tell #captureCallback to wait for the lock.
                 State = StateWaitingLock;
                 CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+
             }
             catch (CameraAccessException e)
             {
@@ -1196,7 +1197,23 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private void SwitchCamera2IfNecessary()
         {
             lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
-            OpenCamera(textureView.Width, textureView.Height);
+            if (openedCamera)
+            {
+                var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
+                var cameraIdList = manager.GetCameraIdList();
+                for (var i = 0; i < cameraIdList.Length; i++)
+                {
+                    CameraCharacteristics characteristics = manager.GetCameraCharacteristics(cameraId);
+                    var facing = (int)characteristics.Get(CameraCharacteristics.LensFacing);
+                    if (facing == (int)lensFacing)
+                    {
+                        cameraId = cameraIdList[i];
+                        break;
+                    }
+                }
+
+                OpenCamera(textureView.Width, textureView.Height);
+            }
         }
 
         private void SwitchCameraIfNecessary()
@@ -1209,11 +1226,44 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             cameraType = newCameraType;
 
-            camera.StopPreview();
-            camera.Release();
+            camera?.StopPreview();
+            camera?.Release();
+            if (openedCamera)
+            {
+                camera = global::Android.Hardware.Camera.Open((int)cameraType);
+                camera.SetPreviewTexture(surfaceTexture);
+                PrepareAndStartCamera();
+            }
+        }
+
+        private async Task<bool> OpenCameraAsync()
+        {
+            // skip opening the camera if it has already been opened or the texture for rendering the preview isn't available yet
+            if (openedCamera || surfaceTexture == null)
+            {
+                return false;
+            }
+
             camera = global::Android.Hardware.Camera.Open((int)cameraType);
+            ApplyAspect();
             camera.SetPreviewTexture(surfaceTexture);
             PrepareAndStartCamera();
+            return openedCamera;
+        }
+
+        private async Task<bool> OpenCamera2Async()
+        {
+            if (openedCamera || textureView == null)
+            {
+                return false;
+            }
+
+            stateCallback = new CameraStateListener(this);
+            CaptureCallback = new CameraCaptureListener(this);
+            imageAvailableListener = new ImageAvailableListener(this);
+            StartBackgroundThread();
+            OpenCamera(textureView.Width, textureView.Height);
+            return openedCamera;
         }
     }
 }
