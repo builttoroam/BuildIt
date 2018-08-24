@@ -462,17 +462,20 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             catch (CameraAccessException e)
             {
+                // in case camera is disabled, disconnected or already in use
                 errorOccurred = true;
                 e.PrintStackTrace();
             }
             catch (InterruptedException e)
             {
+                // in case an interruption occurred while trying to lock the camera
+                e.PrintStackTrace();
                 errorOccurred = true;
-                throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
             }
-            catch (Java.Lang.Exception)
+            catch (Java.Lang.Exception e)
             {
-                // note: this may be raised on the first run even when the permissions prompt is being displayed
+                // in case any other error occurred, which may be because permissions have been granted yet
+                e.PrintStackTrace();
                 errorOccurred = true;
             }
 
@@ -639,7 +642,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 if (useCamera2Api)
                 {
-                    ApplyAspect2();
+                    ApplyAspectForCameraApi2();
                 }
                 else
                 {
@@ -1082,7 +1085,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                     // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                     // garbage capture data.
                     previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))), rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth, maxPreviewHeight, largest);
-                    ApplyAspect2();
+                    ApplyAspectForCameraApi2();
 
                     // Check if the flash is supported.
                     var available = (Java.Lang.Boolean)characteristics.Get(CameraCharacteristics.FlashInfoAvailable);
@@ -1109,7 +1112,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private void ApplyAspect2()
+        private void ApplyAspectForCameraApi2()
         {
             // We fit the aspect ratio of TextureView to the size of preview we picked.
             var orientation = Resources.Configuration.Orientation;
