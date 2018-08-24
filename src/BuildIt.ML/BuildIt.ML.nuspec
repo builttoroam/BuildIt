@@ -12,6 +12,7 @@
     <description>Simplies using machine learning in mobile applications using Xamarin.Android, Xamarin.iOS and UWP</description>
     <copyright>Copyright © 2018</copyright>
     <tags>BuildIt, Xamarin, Machine Learning</tags>
+	
   </metadata>
   <files>
     <file src="BuildIt.ML\bin\Release\netstandard1.0\BuildIt.ML.dll" target="lib\netstandard1.0" />
@@ -25,6 +26,6 @@
     <file src="BuildIt.ML\bin\Release\MonoAndroid81\BuildIt.ML.dll" target="lib\MonoAndroid8.1" />
 	<file src="BuildIt.ML\bin\Release\MonoAndroid81\BuildIt.ML.pdb" target="lib\MonoAndroid8.1" />
 	
-	<file src="BuildIt.ML\**\*.cs" target="src\BuildIt.Forms\BuildIt.ML" exclude="BuildIt.ML\obj\**\*.cs" />
+	<file src="BuildIt.ML\**\*.cs" target="src\BuildIt.ML\BuildIt.ML" exclude="BuildIt.ML\obj\**\*.cs" />
   </files>
 </package>
