@@ -128,6 +128,16 @@ namespace BuildIt.Forms.Sample
             (BindingContext as MainViewModel).Mutate();
         }
 
+        private async void StartCameraButton_OnClicked(object sender, EventArgs e)
+        {
+            await CameraPreviewControl.StartPreview();
+        }
+
+        private async void StopCameraButton_OnClicked(object sender, EventArgs e)
+        {
+            await CameraPreviewControl.StopPreview();
+        }
+
         private void FlipCameraButton_OnClicked(object sender, EventArgs e)
         {
             CameraPreviewControl.PreferredCamera =
@@ -135,6 +145,7 @@ namespace BuildIt.Forms.Sample
                     ? CameraPreviewControl.CameraFacing.Front
                     : CameraPreviewControl.CameraFacing.Back;
         }
+
 
         private async void PhotoButton_OnClicked(object sender, EventArgs e)
         {
