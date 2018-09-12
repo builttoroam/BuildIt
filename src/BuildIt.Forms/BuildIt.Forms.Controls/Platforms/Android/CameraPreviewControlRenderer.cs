@@ -219,7 +219,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             StartBackgroundThread();
-            if (textureView == null)
+            if (textureView == null || (cameraPreviewControl != null && cameraPreviewControl.Status != CameraPreviewControl.CameraStatus.Paused))
             {
                 return;
             }
