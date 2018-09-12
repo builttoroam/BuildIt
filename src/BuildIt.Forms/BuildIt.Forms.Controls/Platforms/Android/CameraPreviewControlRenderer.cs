@@ -203,6 +203,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             if (useCamera2Api)
             {
                 CloseCamera();
+                if (cameraPreviewControl != null)
+                {
+                    cameraPreviewControl.Status = CameraPreviewControl.CameraStatus.Paused;
+                }
                 StopBackgroundThread();
             }
         }
@@ -444,6 +448,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         internal void OpenCamera(int width, int height)
         {
+            if (cameraPreviewControl == null ||
+                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.None ||
+                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Started)
+            {
+                return;
+            }
+
             CameraDevice?.Close();
             CameraDevice = null;
             SetUpCameraOutputs(width, height);
@@ -459,6 +470,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 }
 
                 manager.OpenCamera(cameraId, stateCallback, BackgroundHandler);
+                cameraPreviewControl.Status = CameraPreviewControl.CameraStatus.Started;
             }
             catch (CameraAccessException e)
             {
@@ -580,6 +592,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             useCamera2Api = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
             if (useCamera2Api)
             {
+                cameraPreviewControl.StartPreviewFunc = StartCamera2Preview;
+                cameraPreviewControl.StopPreviewFunc = StopCamera2Preview;
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras2;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
@@ -955,6 +969,37 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task StartCamera2Preview()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var width = (int)Element.Width;
+            var height = (int)Element.Height;
+
+            if (textureView?.IsAvailable ?? false)
+            {
+                width = textureView.Width;
+                height = textureView.Height;
+            }
+
+            OpenCamera(width, height);
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task StopCamera2Preview()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            CloseCamera();
+            StopBackgroundThread();
+
+            if (cameraPreviewControl == null)
+            {
+                return;
+            }
+
+            cameraPreviewControl.Status = CameraPreviewControl.CameraStatus.Stopped;
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task<IReadOnlyList<ICamera>> RetrieveCameras2()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
@@ -1180,10 +1225,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         // Stops the background thread and its {@link Handler}.
         private void StopBackgroundThread()
         {
-            backgroundThread.QuitSafely();
+            backgroundThread?.QuitSafely();
             try
             {
-                backgroundThread.Join();
+                backgroundThread?.Join();
                 backgroundThread = null;
                 BackgroundHandler = null;
             }
@@ -1196,6 +1241,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private void SwitchCamera2IfNecessary()
         {
             lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
+            if (cameraPreviewControl != null)
+            {
+                cameraPreviewControl.Status = CameraPreviewControl.CameraStatus.Starting;
+            }
             OpenCamera(textureView.Width, textureView.Height);
         }
 
