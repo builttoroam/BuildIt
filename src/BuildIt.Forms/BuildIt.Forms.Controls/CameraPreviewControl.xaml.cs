@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,6 +14,9 @@ namespace BuildIt.Forms.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CameraPreviewControl
     {
+        private readonly SemaphoreSlim startCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim stopCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
+
         /// <summary>
         /// Informs the previewer as to which camera on the device should be used (if available)
         /// </summary>
@@ -155,14 +159,17 @@ namespace BuildIt.Forms.Controls
         /// <returns></returns>
         public async Task StartPreview()
         {
-            if (StartPreviewFunc == null || Status == CameraStatus.Started)
+            if (StartPreviewFunc == null || Status == CameraStatus.Started || Status == CameraStatus.Starting)
             {
                 return;
             }
 
-            Status = CameraStatus.Starting;
+            if (await startCameraPreviewSemaphoreSlim.WaitAsync(0))
+            {
+                Status = CameraStatus.Starting;
 
-            await StartPreviewFunc.Invoke();
+                await StartPreviewFunc.Invoke();
+            }
         }
 
         /// <summary>
@@ -176,7 +183,10 @@ namespace BuildIt.Forms.Controls
                 return;
             }
 
-            await StopPreviewFunc.Invoke();
+            if (await stopCameraPreviewSemaphoreSlim.WaitAsync(0))
+            {
+                await StopPreviewFunc.Invoke();
+            }
         }
 
         /// <summary>
