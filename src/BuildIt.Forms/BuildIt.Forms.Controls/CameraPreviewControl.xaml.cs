@@ -62,6 +62,39 @@ namespace BuildIt.Forms.Controls
             Front
         }
 
+        public enum CameraStatus
+        {
+            /// <summary>
+            /// Default state of the camera. Camera hasn't been interacted with
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Camera preview about to be started
+            /// </summary>
+            Starting,
+
+            /// <summary>
+            /// Camera preview has been started
+            /// </summary>
+            Started,
+
+            /// <summary>
+            /// Camera preview has been paused
+            /// </summary>
+            Paused,
+
+            /// <summary>
+            /// Camera preview has been stopped
+            /// </summary>
+            Stopped
+        }
+
+        /// <summary>
+        /// Indicator of the current camera status
+        /// </summary>
+        public CameraStatus Status { get; internal set; }
+
         /// <summary>
         /// A callback for when a camera receives a frame
         /// </summary>
@@ -92,6 +125,16 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
+        /// A delegate used by the native renderer implementation to start camera preview
+        /// </summary>
+        internal Func<Task> StartPreviewFunc { get; set; }
+
+        /// <summary>
+        /// A delegate used by the native renderer implementation to stop camera preview
+        /// </summary>
+        internal Func<Task> StopPreviewFunc { get; set; }
+
+        /// <summary>
         /// A delegate used by the native renderer implementation to capture a frame of video to a file
         /// </summary>
         internal Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
@@ -105,6 +148,36 @@ namespace BuildIt.Forms.Controls
         /// A delegate used by the native renderers to return the available cameras
         /// </summary>
         internal Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
+
+        /// <summary>
+        /// Start camera preview
+        /// </summary>
+        /// <returns></returns>
+        public async Task StartPreview()
+        {
+            if (StartPreviewFunc == null || Status == CameraStatus.Started)
+            {
+                return;
+            }
+
+            Status = CameraStatus.Starting;
+
+            await StartPreviewFunc.Invoke();
+        }
+
+        /// <summary>
+        /// Stop camera preview
+        /// </summary>
+        /// <returns></returns>
+        public async Task StopPreview()
+        {
+            if (StopPreviewFunc == null || Status == CameraStatus.Stopped || Status == CameraStatus.None)
+            {
+                return;
+            }
+
+            await StopPreviewFunc.Invoke();
+        }
 
         /// <summary>
         /// Captures the most current video frame to a photo and saves it to local storage. Android: Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
@@ -162,6 +235,7 @@ namespace BuildIt.Forms.Controls
 
         internal void RaiseErrorOpeningCamera()
         {
+            Status = CameraStatus.Stopped;
             ErrorOpeningCamera?.Invoke(this, EventArgs.Empty);
         }
     }
