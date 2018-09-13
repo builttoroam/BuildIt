@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using static Android.App.Application;
+using Application = Android.App.Application;
 using Context = Android.Content.Context;
 using Semaphore = Java.Util.Concurrent.Semaphore;
 
@@ -101,6 +102,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public CameraPreviewControlRenderer(Context context)
             : base(context)
         {
+            Activity.Application.RegisterActivityLifecycleCallbacks(this);
         }
 
         // A handler for running tasks in the background.
@@ -206,7 +208,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public void OnActivityPaused(Activity activity)
         {
-            if (useCamera2Api)
+            if (useCamera2Api &&
+                cameraPreviewControl != null &&
+                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Started)
             {
                 CloseCamera();
                 cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Paused);
@@ -613,7 +617,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 CaptureCallback = new CameraCaptureListener(this);
                 imageAvailableListener = new ImageAvailableListener(this);
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
-                StartBackgroundThread();
 
                 // fill Orientations list
                 Orientations.Append((int)SurfaceOrientation.Rotation0, 90);
@@ -1315,6 +1318,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.None);
             cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Starting);
             await StartCameraPreview();
-        }        
+        }
     }
 }
