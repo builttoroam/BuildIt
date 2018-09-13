@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BuildIt.Forms.Controls.Models;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -69,55 +70,19 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
 
             cameraPreviewControl = cpc;
+            cameraPreviewControl.StartPreviewFunc = StartPreviewFunc;
+            cameraPreviewControl.StopPreviewFunc = StopPreviewFunc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
+
             SetupUserInterface();
-
-            if (!Element.IsVisible)
-            {
-                return;
-            }
-
-            try
-            {
-                SetupLiveCameraStream();
-                AuthorizeCameraUse();
-                isInitialized = true;
-            }
-            catch (Exception ex)
-            {
-                ex.LogError();
-                cameraPreviewControl.RaiseErrorOpeningCamera();
-            }
         }
 
         /// <inheritdoc />
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
-            {
-                try
-                {
-                    if (!isInitialized &&
-                        Element.IsVisible)
-                    {
-                        SetupLiveCameraStream();
-                        AuthorizeCameraUse();
-                        isInitialized = true;
-                    }
-                    else if (isInitialized && !Element.IsVisible)
-                    {
-                        StopCameraFeed();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ex.LogError();
-                }
-            }
 
             if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName &&
                 isInitialized)
@@ -139,7 +104,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
-            StopCameraFeed();
+            StopPreviewFunc(CameraPreviewStopParameters.Default).RunSynchronously();
             base.Dispose(disposing);
         }
 
@@ -197,6 +162,21 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task StartPreviewFunc()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            SetupLiveCameraStream();
+            isInitialized = true;
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task StopPreviewFunc(CameraPreviewStopParameters parameters)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            StopCameraFeed();
+        }
+
         private static CameraPreviewControl.CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
         {
             switch (position)
@@ -243,6 +223,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             videoCaptureQueue?.Dispose();
             videoCaptureQueue = null;
             isInitialized = false;
+
+            SetCameraPreviewControlStatus(CameraPreviewControl.CameraStatus.Stopped);
         }
 
         private void SetupUserInterface()
@@ -287,6 +269,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             captureSession.AddOutput(stillImageOutput);
             captureSession.StartRunning();
+
+            SetCameraPreviewControlStatus(CameraPreviewControl.CameraStatus.Started);
         }
 
         private void ApplyAspect()
@@ -343,15 +327,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-        private async void AuthorizeCameraUse()
-        {
-            var authorizationStatus = AVCaptureDevice.GetAuthorizationStatus(AVMediaType.Video);
-            if (authorizationStatus != AVAuthorizationStatus.Authorized)
-            {
-                await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVMediaType.Video);
-            }
-        }
-
         private void EnableContinuousAutofocus(bool enable)
         {
             if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
@@ -403,6 +378,17 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
 
             return cameras;
+        }
+
+
+        private void SetCameraPreviewControlStatus(CameraPreviewControl.CameraStatus status)
+        {
+            if (cameraPreviewControl == null)
+            {
+                return;
+            }
+
+            cameraPreviewControl.Status = status;
         }
     }
 }

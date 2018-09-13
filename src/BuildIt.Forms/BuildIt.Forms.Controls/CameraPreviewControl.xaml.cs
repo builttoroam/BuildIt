@@ -15,8 +15,7 @@ namespace BuildIt.Forms.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CameraPreviewControl
     {
-        private readonly SemaphoreSlim startCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
-        private readonly SemaphoreSlim stopCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim startStopCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
 
         /// <summary>
         /// Informs the previewer as to which camera on the device should be used (if available)
@@ -165,7 +164,7 @@ namespace BuildIt.Forms.Controls
                 return;
             }
 
-            if (await startCameraPreviewSemaphoreSlim.WaitAsync(0))
+            if (await startStopCameraPreviewSemaphoreSlim.WaitAsync(0))
             {
                 try
                 {
@@ -175,7 +174,7 @@ namespace BuildIt.Forms.Controls
                 }
                 finally
                 {
-                    startCameraPreviewSemaphoreSlim.Release();
+                    startStopCameraPreviewSemaphoreSlim.Release();
                 }
             }
         }
@@ -191,7 +190,7 @@ namespace BuildIt.Forms.Controls
                 return;
             }
 
-            if (await stopCameraPreviewSemaphoreSlim.WaitAsync(0))
+            if (await startStopCameraPreviewSemaphoreSlim.WaitAsync(0))
             {
                 try
                 {
@@ -199,7 +198,7 @@ namespace BuildIt.Forms.Controls
                 }
                 finally
                 {
-                    stopCameraPreviewSemaphoreSlim.Release();
+                    startStopCameraPreviewSemaphoreSlim.Release();
                 }
             }
         }
