@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using BuildIt.Forms.Controls.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -136,7 +137,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// A delegate used by the native renderer implementation to stop camera preview
         /// </summary>
-        internal Func<Task> StopPreviewFunc { get; set; }
+        internal Func<CameraPreviewStopParameters, Task> StopPreviewFunc { get; set; }
 
         /// <summary>
         /// A delegate used by the native renderer implementation to capture a frame of video to a file
@@ -166,9 +167,16 @@ namespace BuildIt.Forms.Controls
 
             if (await startCameraPreviewSemaphoreSlim.WaitAsync(0))
             {
-                Status = CameraStatus.Starting;
+                try
+                {
+                    Status = CameraStatus.Starting;
 
-                await StartPreviewFunc.Invoke();
+                    await StartPreviewFunc.Invoke();
+                }
+                finally
+                {
+                    startCameraPreviewSemaphoreSlim.Release();
+                }
             }
         }
 
@@ -185,7 +193,14 @@ namespace BuildIt.Forms.Controls
 
             if (await stopCameraPreviewSemaphoreSlim.WaitAsync(0))
             {
-                await StopPreviewFunc.Invoke();
+                try
+                {
+                    await StopPreviewFunc.Invoke(CameraPreviewStopParameters.Default);
+                }
+                finally
+                {
+                    stopCameraPreviewSemaphoreSlim.Release();
+                }
             }
         }
 
