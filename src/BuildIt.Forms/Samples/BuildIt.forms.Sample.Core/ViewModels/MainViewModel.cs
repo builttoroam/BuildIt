@@ -120,7 +120,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public async Task Init()
         {
-            // TODO To get the debugging (the app to start quicker) comment out the code that relates to Items and MoreItems
+            // TODO To get the app to start quicker comment out the code that relates to Items and MoreItems
             var items = new List<ItemViewModel>();
             for (int i = 0; i < 2000; i++)
             {
