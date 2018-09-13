@@ -22,6 +22,8 @@ using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using BuildIt.Forms.Controls.Extensions;
+using BuildIt.Forms.Controls.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 using Application = Windows.UI.Xaml.Application;
@@ -77,13 +79,14 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             }
 
             cameraPreviewControl = cpc;
+            cameraPreviewControl.StartPreviewFunc = StartPreviewFunc;
+            cameraPreviewControl.StopPreviewFunc = StopPreviewFunc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
-            isActivePage = true;
-            await SetupBasedOnStateAsync();
 
+            isActivePage = true;
             if (e.OldElement != null)
             {
                 return;
@@ -141,17 +144,12 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
-            {
-                await SetupBasedOnStateAsync();
-            }
 
-            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName &&
-                isUiActive)
+            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName && isUiActive)
             {
                 // restart the previewer so that it can pick up the correct camera preference
-                await CleanupCameraAsync();
-                await InitializeCameraAsync();
+                await StopPreviewAsync();
+                await StartPreviewFunc();
             }
 
             if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
@@ -163,6 +161,16 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             {
                 ConfigureCaptureElementStretch();
             }
+        }
+
+        private async Task StartPreviewFunc()
+        {
+            await SetupBasedOnStateAsync();
+        }
+
+        private async Task StopPreviewFunc(CameraPreviewStopParameters arg)
+        {
+            await CleanupCameraAsync();
         }
 
         private void ConfigureCaptureElementStretch()
@@ -225,25 +233,12 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 await setupTask;
             }
 
-            var wantUiActive = isActivePage && Element.IsVisible && !isSuspending;
-            if (isUiActive != wantUiActive)
+            async Task SetupAsync()
             {
-                isUiActive = wantUiActive;
-
-                async Task SetupAsync()
-                {
-                    if (wantUiActive)
-                    {
-                        await InitializeCameraAsync();
-                    }
-                    else
-                    {
-                        await CleanupCameraAsync();
-                    }
-                }
-
-                setupTask = SetupAsync();
+                await InitializeCameraAsync();
             }
+
+            setupTask = SetupAsync();
 
             await setupTask;
         }
@@ -333,6 +328,8 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     rotationHelper = new CameraRotationHelper(cameraDevice.EnclosureLocation);
                     rotationHelper.OrientationChanged += OnOrientationChanged;
                     await StartPreviewAsync();
+
+                    cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Started);
                 }
             }
         }
@@ -366,6 +363,8 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 rotationHelper.OrientationChanged -= OnOrientationChanged;
                 rotationHelper = null;
             }
+
+            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Stopped);
         }
 
         private async void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
@@ -449,19 +448,32 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private async void OnAppResuming(object sender, object e)
         {
             isSuspending = false;
-            await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
+
+            if (cameraPreviewControl != null &&
+                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Paused)
             {
-                await SetupBasedOnStateAsync();
-            });
+                await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
+                {
+                    await SetupBasedOnStateAsync();
+                });
+            }
         }
 
         private async void OnAppSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
         {
             isSuspending = true;
+
+            if (cameraPreviewControl != null &&
+                cameraPreviewControl.Status != CameraPreviewControl.CameraStatus.Started)
+            {
+                return;
+            }
+
             var deferral = e.SuspendingOperation.GetDeferral();
             await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
-                await SetupBasedOnStateAsync();
+                await StopPreviewFunc(CameraPreviewStopParameters.Default);
+                cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Paused);
                 deferral.Complete();
             });
         }

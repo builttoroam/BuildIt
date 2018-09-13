@@ -1,15 +1,16 @@
-﻿using AVFoundation;
-using BuildIt.Forms.Controls;
-using BuildIt.Forms.Controls.Platforms.Ios;
-using CoreFoundation;
-using Foundation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AVFoundation;
+using BuildIt.Forms.Controls;
+using BuildIt.Forms.Controls.Extensions;
 using BuildIt.Forms.Controls.Models;
+using BuildIt.Forms.Controls.Platforms.Ios;
+using CoreFoundation;
+using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -224,7 +225,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             videoCaptureQueue = null;
             isInitialized = false;
 
-            SetCameraPreviewControlStatus(CameraPreviewControl.CameraStatus.Stopped);
+            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Stopped);
         }
 
         private void SetupUserInterface()
@@ -270,7 +271,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             captureSession.AddOutput(stillImageOutput);
             captureSession.StartRunning();
 
-            SetCameraPreviewControlStatus(CameraPreviewControl.CameraStatus.Started);
+            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Started);
         }
 
         private void ApplyAspect()
@@ -378,17 +379,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
 
             return cameras;
-        }
-
-
-        private void SetCameraPreviewControlStatus(CameraPreviewControl.CameraStatus status)
-        {
-            if (cameraPreviewControl == null)
-            {
-                return;
-            }
-
-            cameraPreviewControl.Status = status;
         }
     }
 }
