@@ -15,6 +15,6 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// The direction the camera is facing
         /// </summary>
-        CameraPreviewControl.CameraFacing CameraFacing { get; }
+        CameraFacing CameraFacing { get; }
     }
 }
