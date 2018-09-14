@@ -91,13 +91,36 @@ namespace BuildIt.Forms.Controls
             /// <summary>
             /// Camera preview has been stopped
             /// </summary>
-            Stopped
+            Stopped,
+
+            /// <summary>
+            /// Camera preview is in an error state
+            /// </summary>
+            Error
+        }
+
+        public enum CameraErrorCode
+        {
+            /// <summary>
+            /// No errors
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Indicates that the camera failure/error relates to the lack of app camera permissions
+            /// </summary>
+            PermissionsNotGranted
         }
 
         /// <summary>
         /// Indicator of the current camera status
         /// </summary>
         public CameraStatus Status { get; internal set; }
+
+        /// <summary>
+        /// Indicator of the current error camera status
+        /// </summary>
+        public CameraErrorCode ErrorCode { get; internal set; }
 
         /// <summary>
         /// A callback for when a camera receives a frame
@@ -127,6 +150,13 @@ namespace BuildIt.Forms.Controls
             get => (Aspect)GetValue(AspectProperty);
             set => SetValue(AspectProperty, value);
         }
+
+        /// <summary>
+        /// Gets or sets the delegate for the logic to request camera permissions
+        ///
+        /// NOTE: The invocation of this method happens when StartPreview has been called
+        /// </summary>
+        public Func<Task<bool>> RequestCameraPermissionsCallback { get; set; }
 
         /// <summary>
         /// A delegate used by the native renderer implementation to start camera preview
@@ -159,7 +189,7 @@ namespace BuildIt.Forms.Controls
         /// <returns></returns>
         public async Task StartPreview()
         {
-            if (StartPreviewFunc == null || Status == CameraStatus.Started || Status == CameraStatus.Starting)
+            if (StartPreviewFunc == null)
             {
                 return;
             }
@@ -168,6 +198,26 @@ namespace BuildIt.Forms.Controls
             {
                 try
                 {
+                    if (Status == CameraStatus.Started || Status == CameraStatus.Starting)
+                    {
+                        return;
+                    }
+
+                    // If the callback hasn't been provided assume that we have all of the permissions
+                    // If it turns out that the app doesn't have permissions, we should handle it gracefully and return with according info
+                    var hasCameraPermissions = true;
+                    if (RequestCameraPermissionsCallback != null)
+                    {
+                        hasCameraPermissions = await RequestCameraPermissionsCallback.Invoke();
+                    }
+
+                    if (!hasCameraPermissions)
+                    {
+                        Status = CameraStatus.Error;
+                        ErrorCode = CameraErrorCode.PermissionsNotGranted;
+                        return;
+                    }
+
                     Status = CameraStatus.Starting;
 
                     await StartPreviewFunc.Invoke();
