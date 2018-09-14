@@ -7,13 +7,13 @@
         <StackLayout>
             <controls:CameraPreviewControl x:Name="CameraPreviewControl"
                                            Aspect="Fill"
-                                           IsVisible="False"
-                                           PreferredCamera="Back"
-                                            />
+                                           PreferredCamera="Back" />
             <Label Text="{Binding Classifications, StringFormat='Classifications: {0}'}" />
             <Button x:Name="ClassifyButton"
                     Text="Start classifying"
                     Clicked="ClassifyButton_Clicked" />
+            <Button Text="Stop classifying"
+                    Clicked="StopClassifyButton_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

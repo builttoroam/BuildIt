@@ -32,11 +32,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 await frameProcessingSemaphore.WaitAsync();
                 using (var image = reader.AcquireNextImage())
                 {
+                    if (image == null)
+                    {
+                        return;
+                    }
+
                     var buffer = image.GetPlanes()[0].Buffer;
                     var bytes = new byte[buffer.Remaining()];
                     buffer.Get(bytes);
                     await owner.OnMediaFrameArrived(bytes);
                     image.Close();
+
                     if (string.IsNullOrWhiteSpace(FilePath))
                     {
                         return;
