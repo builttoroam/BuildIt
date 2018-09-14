@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Simplies using machine learning in mobile applications using Xamarin.Android, Xamarin.iOS and UWP</description>
-    <copyright>Copyright � 2018</copyright>
+    <copyright>Copyright © 2018</copyright>
     <tags>BuildIt, Xamarin, Machine Learning</tags>
   </metadata>
   <files>
