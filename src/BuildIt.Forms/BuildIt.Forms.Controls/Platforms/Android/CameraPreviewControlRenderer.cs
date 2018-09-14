@@ -12,8 +12,9 @@ using Android.Widget;
 using ApxLabs.FastAndroidCamera;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Extensions;
-using BuildIt.Forms.Controls.Models;
+using BuildIt.Forms.Controls.Interfaces;
 using BuildIt.Forms.Controls.Platforms.Android;
+using BuildIt.Forms.Controls.Platforms.Android.Models;
 using Java.Lang;
 using Java.Util;
 using Java.Util.Concurrent;
@@ -26,8 +27,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using static Android.App.Application;
 using Application = Android.App.Application;
+using CameraPreviewStopParameters = BuildIt.Forms.Controls.Platforms.Android.Models.CameraPreviewStopParameters;
 using Context = Android.Content.Context;
 using Semaphore = Java.Util.Concurrent.Semaphore;
 
@@ -37,7 +38,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     /// <summary>
     /// Custom Renderer for <see cref="CameraPreviewControl"/>
     /// </summary>
-    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback, IActivityLifecycleCallbacks
+    public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback, Application.IActivityLifecycleCallbacks
     {
         // Camera state: Showing camera preview.
         internal const int StatePreview = 0;
@@ -1002,11 +1003,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task StopCamera2Preview(CameraPreviewStopParameters parameters)
+        private async Task StopCamera2Preview(ICameraPreviewStopParameters parameters)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             CloseCamera();
-            if (parameters?.StopBackgroundThread ?? false)
+            if ((parameters as CameraPreviewStopParameters)?.StopBackgroundThread ?? true)
             {
                 StopBackgroundThread();
             }
@@ -1055,7 +1056,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task StopCameraPreview(CameraPreviewStopParameters parameters)
+        private async Task StopCameraPreview(ICameraPreviewStopParameters parameters)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             try
@@ -1065,7 +1066,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 camera?.StopPreview();
                 camera?.Release();
 
-                cameraPreviewControl.SetStatus(parameters?.Status ?? CameraPreviewControl.CameraStatus.Stopped);
+                cameraPreviewControl.SetStatus((parameters as CameraPreviewStopParameters)?.Status ?? CameraPreviewControl.CameraStatus.Stopped);
             }
             finally
             {

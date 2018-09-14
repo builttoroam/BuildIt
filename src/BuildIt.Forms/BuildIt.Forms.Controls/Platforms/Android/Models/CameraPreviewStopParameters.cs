@@ -1,9 +1,11 @@
-﻿namespace BuildIt.Forms.Controls.Models
+﻿using BuildIt.Forms.Controls.Interfaces;
+
+namespace BuildIt.Forms.Controls.Platforms.Android.Models
 {
     /// <summary>
     /// Provides a way of passing parameters into the stop camera preview method
     /// </summary>
-    internal class CameraPreviewStopParameters
+    internal class CameraPreviewStopParameters : ICameraPreviewStopParameters
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewStopParameters"/> class.
