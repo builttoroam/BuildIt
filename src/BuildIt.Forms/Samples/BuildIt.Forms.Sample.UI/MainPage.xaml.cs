@@ -5,6 +5,9 @@ using BuildIt.States.Interfaces;
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
@@ -31,6 +34,8 @@ namespace BuildIt.Forms.Sample
                 await VisualStateManager.GoToState(this, "RotateLeft");
                 "Ending".LogMessage();
             });
+
+            CameraPreviewControl.RequestCameraPermissionsCallback = RequestCameraPermissionsCallback;
         }
 
         public void ToggleButtonPressed(object sender, EventArgs e)
@@ -187,6 +192,24 @@ namespace BuildIt.Forms.Sample
         private void PreviewFillButton_Clicked(object sender, EventArgs e)
         {
             CameraPreviewControl.Aspect = Aspect.Fill;
+        }
+
+        private async Task<bool> RequestCameraPermissionsCallback()
+        {
+            if (await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera) == PermissionStatus.Granted)
+            {
+                return true;
+            }
+
+            // need to request runtime permissions for using the camera
+            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+            if (results.ContainsKey(Permission.Camera))
+            {
+                var status = results[Permission.Camera];
+                return status == PermissionStatus.Granted;
+            }
+
+            return false;
         }
     }
 }
