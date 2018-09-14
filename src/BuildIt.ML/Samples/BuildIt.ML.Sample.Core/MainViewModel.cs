@@ -30,7 +30,6 @@ namespace BuildIt.ML.Sample.Core
 
         public async Task InitAsync()
         {
-            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
             await CrossCustomVisionClassifier.Instance.InitAsync("fruits", new[] { "apple", "banana", "pineapple" });
         }
 
