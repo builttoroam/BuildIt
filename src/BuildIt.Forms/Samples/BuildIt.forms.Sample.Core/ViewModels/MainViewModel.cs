@@ -1,5 +1,6 @@
 ﻿using BuildIt.States;
 using BuildIt.States.Interfaces;
+using BuildIt.Forms.Parameters;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
@@ -73,8 +74,10 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     public class MainViewModel : NotifyBase, IHasStates, IHasImmutableData<Person>
     {
         private ICommand pressedCommand;
+        private ICommand cameraPreviewErrorCommand;
         private ICommand testCommand;
         private bool commandIsEnabled;
+        private bool cameraFocusMode;
 
         private bool visible = true;
 
@@ -92,6 +95,16 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         }
 
         public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
+
+        public ICommand CameraPreviewErrorCommand => cameraPreviewErrorCommand ?? (cameraPreviewErrorCommand = new Command(ExecuteCameraPreviewErrorCommand));
+
+        private void ExecuteCameraPreviewErrorCommand(object obj)
+        {
+            if (obj is CameraPreviewControlErrorParameters<CameraFocusMode> cameraFocusErrorParameters)
+            {
+                CameraFocusMode = cameraFocusErrorParameters.Data;
+            }
+        }
 
         public ICommand TestCommand => testCommand ?? (testCommand = new Command(() =>
         {
@@ -114,6 +127,12 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
                 //OnPropertyChanged(()=> PressedCommand);
             }
+        }
+
+        public CameraFocusMode CameraFocusMode
+        {
+            get => CameraFocusMode;
+            set => SetProperty(ref cameraFocusMode, value);
         }
 
         public Person Data { get => _data; set => SetProperty(ref _data, value); }
