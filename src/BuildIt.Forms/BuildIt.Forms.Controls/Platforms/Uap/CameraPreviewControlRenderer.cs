@@ -1,13 +1,14 @@
-﻿using BuildIt.Forms.Controls;
-using BuildIt.Forms.Controls.Platforms.Uap;
-using BuildIt.Forms.Controls.Platforms.Uap.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BuildIt.Forms.Controls;
+using BuildIt.Forms.Controls.Extensions;
+using BuildIt.Forms.Controls.Platforms.Uap;
+using BuildIt.Forms.Controls.Platforms.Uap.Helpers;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
@@ -22,8 +23,8 @@ using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using BuildIt.Forms.Controls.Extensions;
-using BuildIt.Forms.Controls.Models;
+using BuildIt.Forms.Controls.Interfaces;
+using BuildIt.Forms.Controls.Platforms.Uap.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 using Application = Windows.UI.Xaml.Application;
@@ -168,7 +169,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             await SetupBasedOnStateAsync();
         }
 
-        private async Task StopPreviewFunc(CameraPreviewStopParameters arg)
+        private async Task StopPreviewFunc(ICameraPreviewStopParameters parameters = null)
         {
             await CleanupCameraAsync();
         }
@@ -338,7 +339,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             if (isInitialized)
             {
-                if (isPreviewing)
+                if (isPreviewing && !isSuspending)
                 {
                     await StopPreviewAsync();
                 }
@@ -472,7 +473,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             var deferral = e.SuspendingOperation.GetDeferral();
             await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
-                await StopPreviewFunc(CameraPreviewStopParameters.Default);
+                await StopPreviewFunc();
                 cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Paused);
                 deferral.Complete();
             });
