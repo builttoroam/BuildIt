@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using AVFoundation;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Extensions;
-using BuildIt.Forms.Controls.Models;
+using BuildIt.Forms.Controls.Interfaces;
 using BuildIt.Forms.Controls.Platforms.Ios;
+using BuildIt.Forms.Controls.Platforms.Ios.Models;
 using CoreFoundation;
 using Foundation;
 using UIKit;
@@ -105,7 +106,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
-            StopPreviewFunc(CameraPreviewStopParameters.Default).RunSynchronously();
+            StopPreviewFunc().RunSynchronously();
             base.Dispose(disposing);
         }
 
@@ -172,7 +173,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task StopPreviewFunc(CameraPreviewStopParameters parameters)
+        private async Task StopPreviewFunc(ICameraPreviewStopParameters parameters = null)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             StopCameraFeed();

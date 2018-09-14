@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.Forms.Controls.Models;
+using BuildIt.Forms.Controls.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -136,7 +136,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// A delegate used by the native renderer implementation to stop camera preview
         /// </summary>
-        internal Func<CameraPreviewStopParameters, Task> StopPreviewFunc { get; set; }
+        internal Func<ICameraPreviewStopParameters, Task> StopPreviewFunc { get; set; }
 
         /// <summary>
         /// A delegate used by the native renderer implementation to capture a frame of video to a file
@@ -194,7 +194,7 @@ namespace BuildIt.Forms.Controls
             {
                 try
                 {
-                    await StopPreviewFunc.Invoke(CameraPreviewStopParameters.Default);
+                    await StopPreviewFunc.Invoke(null);
                 }
                 finally
                 {
