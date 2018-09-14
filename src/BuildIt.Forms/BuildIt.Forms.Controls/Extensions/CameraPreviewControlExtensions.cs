@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="control">CameraPreviewControl control</param>
         /// <param name="status">Camera status</param>
-        internal static void SetStatus(this CameraPreviewControl control, CameraPreviewControl.CameraStatus status)
+        internal static void SetStatus(this CameraPreviewControl control, CameraStatus status)
         {
             if (control == null)
             {

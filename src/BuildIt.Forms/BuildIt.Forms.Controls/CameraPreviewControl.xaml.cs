@@ -3,85 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using BuildIt.Forms.Controls.Common;
 using BuildIt.Forms.Controls.Interfaces;
+using BuildIt.Forms.Parameters;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace BuildIt.Forms.Controls
 {
-    /// <summary>
-    /// Enumeration the available camera facings/positions
-    /// </summary>
-    public enum CameraFacing
-    {
-        /// <summary>
-        /// An unspecified camera facing
-        /// </summary>
-        Unspecified,
-
-        /// <summary>
-        /// The camera located on the back of the device enclosure
-        /// </summary>
-        Back,
-
-        /// <summary>
-        /// The front-facing camera
-        /// </summary>
-        Front
-    }
-
-    /// <summary>
-    /// Enumeration of camera statuses
-    /// </summary>
-    public enum CameraStatus
-    {
-        /// <summary>
-        /// Default state of the camera. Camera hasn't been interacted with
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// Camera preview about to be started
-        /// </summary>
-        Starting,
-
-        /// <summary>
-        /// Camera preview has been started
-        /// </summary>
-        Started,
-
-        /// <summary>
-        /// Camera preview has been paused
-        /// </summary>
-        Paused,
-
-        /// <summary>
-        /// Camera preview has been stopped
-        /// </summary>
-        Stopped,
-
-        /// <summary>
-        /// Camera preview is in an error state
-        /// </summary>
-        Error
-    }
-
-    /// <summary>
-    /// Enumeration of camera error codes
-    /// </summary>
-    public enum CameraErrorCode
-    {
-        /// <summary>
-        /// No errors
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// Indicates that the camera failure/error relates to the lack of app camera permissions
-        /// </summary>
-        PermissionsNotGranted
-    }
-
     /// <summary>
     /// A simple controled inheritng from <see cref="Frame"/> which shows a live preview of the camera. Defaults to rear/first-available camera
     /// iOS: Requires 'NSCameraUsageDescription' in your info.plist. Android: Requires 'android.permission.CAMERA' in the app manifest. UWP: Requires 'Webcam' and 'Microphone' capabilities
@@ -95,14 +25,19 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty PreferredCameraProperty = BindableProperty.Create(nameof(PreferredCamera), typeof(CameraFacing), typeof(CameraPreviewControl), CameraFacing.Back);
 
         /// <summary>
-        /// Toggles enabling continuous autofocus
+        /// Gets or sets the focus mode for the camera preview
         /// </summary>
-        public static readonly BindableProperty EnableContinuousAutoFocusProperty = BindableProperty.Create(nameof(EnableContinuousAutoFocus), typeof(bool), typeof(CameraPreviewControl), false);
+        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous);
 
         /// <summary>
         /// TODO Add summary
         /// </summary>
         public static readonly BindableProperty AspectProperty = BindableProperty.Create(nameof(Aspect), typeof(Aspect), typeof(CameraPreviewControl), default(Aspect));
+
+        /// <summary>
+        /// Executed when there's an error in the camera preview control
+        /// </summary>
+        public static readonly BindableProperty ErrorCommandProperty = BindableProperty.Create(nameof(ErrorCommand), typeof(ICommand), typeof(CameraPreviewControl), null);
 
         private readonly SemaphoreSlim startStopCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
 
@@ -144,12 +79,30 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether continuous auto-focus is enabled for selected camera device
+        /// Gets or sets the focus mode for the camera preview
         /// </summary>
-        public bool EnableContinuousAutoFocus
+        public CameraFocusMode FocusMode
         {
-            get => (bool)GetValue(EnableContinuousAutoFocusProperty);
-            set => SetValue(EnableContinuousAutoFocusProperty, value);
+            get => (CameraFocusMode)GetValue(FocusModeProperty);
+            set
+            {
+                var supportedFocusModes = RetrieveSupportedFocusModes();
+                if (supportedFocusModes.Any(m => m == value))
+                {
+                    SetValue(FocusModeProperty, value);
+                }
+                else
+                {
+                    var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
+                    SetValue(FocusModeProperty, fallbackFocusMode);
+                    ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>()
+                    {
+                        Data = fallbackFocusMode,
+                        Error = string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode),
+                        Handled = true
+                    });
+                }
+            }
         }
 
         /// <summary>
@@ -159,6 +112,12 @@ namespace BuildIt.Forms.Controls
         {
             get => (Aspect)GetValue(AspectProperty);
             set => SetValue(AspectProperty, value);
+        }
+
+        public ICommand ErrorCommand
+        {
+            get => (ICommand)GetValue(ErrorCommandProperty);
+            set => SetValue(ErrorCommandProperty, value);
         }
 
         /// <summary>

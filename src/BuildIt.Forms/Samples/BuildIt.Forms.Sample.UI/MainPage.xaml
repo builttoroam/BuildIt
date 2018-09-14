@@ -212,12 +212,9 @@
 
         <StackLayout vsm:Ambient.ForeColor="Blue"
                      Margin="20">
-          <controls:CameraPreviewControl x:Name="CameraPreviewControl" />
-          <controls:ContentButton Command="{Binding TestCommand}">
-            <Label VerticalOptions="Center"
-                   HorizontalOptions="Center"
-                   Text="Test"/>
-          </controls:ContentButton>
+          <controls:CameraPreviewControl x:Name="CameraPreviewControl"
+                                         FocusMode="{Binding CameraFocusMode, Mode=OneWay}"
+                                         ErrorCommand="{Binding CameraPreviewErrorCommand, Mode=OneWay}"/>
           <Button Text="Start Camera"
                   Clicked="StartCameraButton_OnClicked" />
           <Button Text="Stop Camera"
