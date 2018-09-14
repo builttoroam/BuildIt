@@ -21,8 +21,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
-    <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj" />
+    <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />

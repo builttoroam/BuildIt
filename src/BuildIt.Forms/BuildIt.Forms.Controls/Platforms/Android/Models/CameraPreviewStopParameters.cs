@@ -12,7 +12,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Models
         /// </summary>
         /// <param name="stopBackgroundThread">Stop background thread indicator (used with camera 2 API)</param>
         /// <param name="status">Value indicating what status should be set after camera preview stops (used with camera API)</param>
-        public CameraPreviewStopParameters(bool stopBackgroundThread = true, CameraPreviewControl.CameraStatus status = CameraPreviewControl.CameraStatus.Stopped)
+        public CameraPreviewStopParameters(bool stopBackgroundThread = true, CameraStatus status = CameraStatus.Stopped)
         {
             StopBackgroundThread = stopBackgroundThread;
             Status = status;
@@ -31,6 +31,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Models
         /// <summary>
         /// Gets a value indicating camera preview status that should be set after camera preview stops
         /// </summary>
-        public CameraPreviewControl.CameraStatus Status { get; private set; }
+        public CameraStatus Status { get; private set; }
     }
 }

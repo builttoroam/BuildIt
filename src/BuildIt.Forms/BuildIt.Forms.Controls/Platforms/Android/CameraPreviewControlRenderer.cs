@@ -758,31 +758,31 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(CameraFacing cameraFacing)
+        private static Controls.CameraFacing ToCameraFacing(global::Android.Hardware.CameraFacing cameraFacing)
         {
-            return cameraFacing == CameraFacing.Back ? CameraPreviewControl.CameraFacing.Back : CameraPreviewControl.CameraFacing.Front;
+            return cameraFacing == global::Android.Hardware.CameraFacing.Back ? Controls.CameraFacing.Back : Controls.CameraFacing.Front;
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(LensFacing lensFacing)
+        private static Controls.CameraFacing ToCameraFacing(LensFacing lensFacing)
         {
             switch (lensFacing)
             {
                 case LensFacing.Back:
-                    return CameraPreviewControl.CameraFacing.Back;
+                    return Controls.CameraFacing.Back;
 
                 case LensFacing.Front:
-                    return CameraPreviewControl.CameraFacing.Front;
+                    return Controls.CameraFacing.Front;
 
                 default:
-                    return CameraPreviewControl.CameraFacing.Unspecified;
+                    return Controls.CameraFacing.Unspecified;
             }
         }
 
-        private static CameraFacing ToCameraFacing(CameraPreviewControl.CameraFacing cameraFacing)
+        private static global::Android.Hardware.CameraFacing ToCameraFacing(Controls.CameraFacing cameraFacing)
         {
-            return cameraFacing == CameraPreviewControl.CameraFacing.Back
-                ? CameraFacing.Back
-                : CameraFacing.Front;
+            return cameraFacing == Controls.CameraFacing.Back
+                ? global::Android.Hardware.CameraFacing.Back
+                : global::Android.Hardware.CameraFacing.Front;
         }
 
         private static ControlAFMode ToControlAFMode(CameraFocusMode cameraFocusMode)
@@ -800,9 +800,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private static LensFacing ToLensFacing(CameraPreviewControl.CameraFacing cameraFacing)
+        private static LensFacing ToLensFacing(Controls.CameraFacing cameraFacing)
         {
-            return cameraFacing == CameraPreviewControl.CameraFacing.Back ? LensFacing.Back :
+            return cameraFacing == Controls.CameraFacing.Back ? LensFacing.Back :
                 LensFacing.Front;
         }
 
