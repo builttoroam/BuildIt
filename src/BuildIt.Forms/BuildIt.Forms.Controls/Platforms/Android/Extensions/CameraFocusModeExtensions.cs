@@ -50,5 +50,25 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Extensions
 
             return default(CameraFocusMode);
         }
+
+        /// <summary>
+        /// Extension method that returns control specific focus mode based on the platform mode
+        /// </summary>
+        /// <param name="focusMode">Platform specific focus mode</param>
+        /// <returns>Control specific focus mode</returns>
+        internal static CameraFocusMode ToPlatformFocusMode(this string focusMode)
+        {
+            switch (focusMode)
+            {
+                case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
+                    return CameraFocusMode.Auto;
+                case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
+                    return CameraFocusMode.Continuous;
+                case global::Android.Hardware.Camera.Parameters.FocusModeFixed:
+                    return CameraFocusMode.Manual;
+            }
+
+            return default(CameraFocusMode);
+        }
     }
 }
