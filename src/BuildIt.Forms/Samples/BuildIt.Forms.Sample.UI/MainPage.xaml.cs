@@ -146,9 +146,9 @@ namespace BuildIt.Forms.Sample
         private void FlipCameraButton_OnClicked(object sender, EventArgs e)
         {
             CameraPreviewControl.PreferredCamera =
-                CameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraFacing.Back
-                    ? CameraPreviewControl.CameraFacing.Front
-                    : CameraPreviewControl.CameraFacing.Back;
+                CameraPreviewControl.PreferredCamera == CameraFacing.Back
+                    ? CameraFacing.Front
+                    : CameraFacing.Back;
         }
 
 
@@ -160,11 +160,6 @@ namespace BuildIt.Forms.Sample
             {
                 await Navigation.PushModalAsync(new SavedPhotoPage(path), true);
             }
-        }
-
-        private void ToggleContinuousAutofocusCameraButton_Clicked(object sender, EventArgs e)
-        {
-            CameraPreviewControl.EnableContinuousAutoFocus = !CameraPreviewControl.EnableContinuousAutoFocus;
         }
 
         private void RetrieveSupportedFocusModesButton_Clicked(object sender, EventArgs e)

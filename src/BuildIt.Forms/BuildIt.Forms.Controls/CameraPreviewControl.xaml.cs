@@ -27,7 +27,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Gets or sets the focus mode for the camera preview
         /// </summary>
-        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous);
+        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous, propertyChanged: FocusModePropertyChanged);
 
         /// <summary>
         /// TODO Add summary
@@ -84,25 +84,7 @@ namespace BuildIt.Forms.Controls
         public CameraFocusMode FocusMode
         {
             get => (CameraFocusMode)GetValue(FocusModeProperty);
-            set
-            {
-                var supportedFocusModes = RetrieveSupportedFocusModes();
-                if (supportedFocusModes.Any(m => m == value))
-                {
-                    SetValue(FocusModeProperty, value);
-                }
-                else
-                {
-                    var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
-                    SetValue(FocusModeProperty, fallbackFocusMode);
-                    ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>()
-                    {
-                        Data = fallbackFocusMode,
-                        Error = string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode),
-                        Handled = true
-                    });
-                }
-            }
+            set => SetValue(FocusModeProperty, value);
         }
 
         /// <summary>
@@ -114,6 +96,11 @@ namespace BuildIt.Forms.Controls
             set => SetValue(AspectProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets the command that will be executed every time the camera preview control got into an error state
+        ///
+        /// NOTE: When binding it in XAML, make sure that it's defined at the very top of the bindable properties
+        /// </summary>
         public ICommand ErrorCommand
         {
             get => (ICommand)GetValue(ErrorCommandProperty);
@@ -310,6 +297,28 @@ namespace BuildIt.Forms.Controls
         {
             Status = CameraStatus.Stopped;
             ErrorOpeningCamera?.Invoke(this, EventArgs.Empty);
+        }
+
+        private static void FocusModePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var cameraPreviewControl = bindable as CameraPreviewControl;
+            if (cameraPreviewControl == null)
+            {
+                return;
+            }
+
+            var value = (CameraFocusMode)newvalue;
+            var supportedFocusModes = cameraPreviewControl.RetrieveSupportedFocusModes();
+            if (supportedFocusModes.Any(m => m == value))
+            {
+                cameraPreviewControl.FocusMode = value;
+            }
+            else
+            {
+                var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
+                cameraPreviewControl.FocusMode = fallbackFocusMode;
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode), fallbackFocusMode, true));
+            }
         }
     }
 }

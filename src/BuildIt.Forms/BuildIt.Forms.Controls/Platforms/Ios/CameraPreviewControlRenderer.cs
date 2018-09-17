@@ -92,9 +92,10 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 SetPreferredCamera();
             }
 
-            if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
+            if (e.PropertyName == CameraPreviewControl.FocusModeProperty.PropertyName)
             {
-                EnableContinuousAutofocus(cameraPreviewControl.EnableContinuousAutoFocus);
+                // TODO Implement
+                // EnableContinuousAutofocus(cameraPreviewControl.EnableContinuousAutoFocus);
             }
 
             if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
@@ -179,18 +180,18 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             StopCameraFeed();
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
+        private static CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
         {
             switch (position)
             {
                 case AVCaptureDevicePosition.Back:
-                    return CameraPreviewControl.CameraFacing.Back;
+                    return CameraFacing.Back;
 
                 case AVCaptureDevicePosition.Front:
-                    return CameraPreviewControl.CameraFacing.Front;
+                    return CameraFacing.Front;
 
                 default:
-                    return CameraPreviewControl.CameraFacing.Unspecified;
+                    return CameraFacing.Unspecified;
             }
         }
 
@@ -226,7 +227,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             videoCaptureQueue = null;
             isInitialized = false;
 
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Stopped);
+            cameraPreviewControl.SetStatus(CameraStatus.Stopped);
         }
 
         private void SetupUserInterface()
@@ -272,7 +273,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             captureSession.AddOutput(stillImageOutput);
             captureSession.StartRunning();
 
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Started);
+            cameraPreviewControl.SetStatus(CameraStatus.Started);
         }
 
         private void ApplyAspect()
@@ -296,9 +297,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-        private AVCaptureDevice GetCameraForPreference(CameraPreviewControl.CameraFacing cameraPreference)
+        private AVCaptureDevice GetCameraForPreference(CameraFacing cameraPreference)
         {
-            var orientation = cameraPreference == CameraPreviewControl.CameraFacing.Back
+            var orientation = cameraPreference == CameraFacing.Back
                 ? AVCaptureDevicePosition.Back
                 : AVCaptureDevicePosition.Front;
 
