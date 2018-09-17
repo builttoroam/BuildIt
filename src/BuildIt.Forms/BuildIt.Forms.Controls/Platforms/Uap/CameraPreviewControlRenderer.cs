@@ -85,6 +85,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl = cpc;
             cameraPreviewControl.StartPreviewFunc = StartPreviewFunc;
             cameraPreviewControl.StopPreviewFunc = StopPreviewFunc;
+            cameraPreviewControl.SetFocusModeFunc = SetFocusModeFunc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
@@ -156,11 +157,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 await StartPreviewFunc();
             }
 
-            if (e.PropertyName == CameraPreviewControl.FocusModeProperty.PropertyName)
-            {
-                await EnableFocusModeAsync(cameraPreviewControl.FocusMode);
-            }
-
             if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
             {
                 ConfigureCaptureElementStretch();
@@ -175,6 +171,11 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private async Task StopPreviewFunc(ICameraPreviewStopParameters parameters = null)
         {
             await CleanupCameraAsync();
+        }
+
+        private async Task SetFocusModeFunc()
+        {
+            await SetFocusModeAsync(cameraPreviewControl.FocusMode);
         }
 
         private void ConfigureCaptureElementStretch()
@@ -291,7 +292,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 try
                 {
                     await mediaCapture.InitializeAsync(settings);
-                    await EnableFocusModeAsync(cameraPreviewControl.FocusMode);
+                    await SetFocusModeAsync(cameraPreviewControl.FocusMode);
                     var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
                     var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
                     if (preferredFormat != null)
@@ -481,7 +482,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             });
         }
 
-        private async Task EnableFocusModeAsync(CameraFocusMode controlFocusMode)
+        private async Task SetFocusModeAsync(CameraFocusMode controlFocusMode)
         {
             var focusMode = controlFocusMode.ToPlatformFocusMode();
             var focusControl = mediaCapture.VideoDeviceController.FocusControl;
@@ -501,10 +502,10 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
             }
 
-            await SetFocusMode(focusControl, focusMode);
+            await SetFocusModeAsync(focusControl, focusMode);
         }
 
-        private async Task SetFocusMode(FocusControl focusControl, FocusMode focusMode)
+        private async Task SetFocusModeAsync(FocusControl focusControl, FocusMode focusMode)
         {
             if (focusControl == null)
             {
