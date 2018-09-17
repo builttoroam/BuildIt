@@ -23,8 +23,11 @@ using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using BuildIt.Forms.Controls.Common;
 using BuildIt.Forms.Controls.Interfaces;
+using BuildIt.Forms.Controls.Platforms.Uap.Extensions;
 using BuildIt.Forms.Controls.Platforms.Uap.Models;
+using BuildIt.Forms.Parameters;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 using Application = Windows.UI.Xaml.Application;
@@ -153,9 +156,9 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 await StartPreviewFunc();
             }
 
-            if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
+            if (e.PropertyName == CameraPreviewControl.FocusModeProperty.PropertyName)
             {
-                await EnableContinuousAutoFocusAsync(cameraPreviewControl.EnableContinuousAutoFocus);
+                await EnableFocusModeAsync(cameraPreviewControl.FocusMode);
             }
 
             if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
@@ -212,18 +215,18 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
         }
 
-        private static CameraPreviewControl.CameraFacing ToCameraFacing(Panel panel)
+        private static CameraFacing ToCameraFacing(Panel panel)
         {
             switch (panel)
             {
                 case Panel.Front:
-                    return CameraPreviewControl.CameraFacing.Front;
+                    return CameraFacing.Front;
 
                 case Panel.Back:
-                    return CameraPreviewControl.CameraFacing.Back;
+                    return CameraFacing.Back;
 
                 default:
-                    return CameraPreviewControl.CameraFacing.Unspecified;
+                    return CameraFacing.Unspecified;
             }
         }
 
@@ -258,7 +261,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             if (mediaCapture == null)
             {
-                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraPreviewControl.CameraFacing.Back
+                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraFacing.Back
                     ? Panel.Back
                     : Panel.Front;
 
@@ -330,7 +333,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     rotationHelper.OrientationChanged += OnOrientationChanged;
                     await StartPreviewAsync();
 
-                    cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Started);
+                    cameraPreviewControl.SetStatus(CameraStatus.Started);
                 }
             }
         }
@@ -365,7 +368,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 rotationHelper = null;
             }
 
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Stopped);
+            cameraPreviewControl.SetStatus(CameraStatus.Stopped);
         }
 
         private async void MediaFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
@@ -451,7 +454,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             isSuspending = false;
 
             if (cameraPreviewControl != null &&
-                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Paused)
+                cameraPreviewControl.Status == CameraStatus.Paused)
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
                 {
@@ -465,7 +468,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             isSuspending = true;
 
             if (cameraPreviewControl != null &&
-                cameraPreviewControl.Status != CameraPreviewControl.CameraStatus.Started)
+                cameraPreviewControl.Status != CameraStatus.Started)
             {
                 return;
             }
@@ -474,21 +477,44 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
                 await StopPreviewFunc();
-                cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Paused);
+                cameraPreviewControl.SetStatus(CameraStatus.Paused);
                 deferral.Complete();
             });
         }
 
-        private async Task EnableContinuousAutoFocusAsync(bool enable)
+        private async Task EnableFocusModeAsync(CameraFocusMode controlFocusMode)
         {
+            var focusMode = controlFocusMode.ToPlatformFocusMode();
             var focusControl = mediaCapture.VideoDeviceController.FocusControl;
-            if (focusControl.SupportedFocusModes.Contains(FocusMode.Continuous))
+            if (controlFocusMode == CameraFocusMode.Unspecified)
             {
-                await focusControl.UnlockAsync();
-                var settings = new FocusSettings { Mode = enable ? FocusMode.Continuous : FocusMode.Auto, AutoFocusRange = AutoFocusRange.FullRange };
-                focusControl.Configure(settings);
-                await focusControl.FocusAsync();
+                focusMode = focusControl.SupportedFocusModes.LastOrDefault();
             }
+            else if (!focusControl.SupportedFocusModes.Contains(focusMode))
+            {
+                var fallbackFocusMode = focusControl.SupportedFocusModes.LastOrDefault().ToControlFocusMode();
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+            }
+
+            await SetFocusMode(focusControl, focusMode);
+        }
+
+        private async Task SetFocusMode(FocusControl focusControl, FocusMode focusMode)
+        {
+            if (focusControl == null)
+            {
+                return;
+            }
+
+            await focusControl.UnlockAsync();
+            var settings = new FocusSettings { Mode = focusMode };
+            if (focusMode == FocusMode.Auto && focusMode == FocusMode.Continuous)
+            {
+                settings.AutoFocusRange = AutoFocusRange.FullRange;
+            }
+
+            focusControl.Configure(settings);
+            await focusControl.FocusAsync();
         }
 
         private IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
