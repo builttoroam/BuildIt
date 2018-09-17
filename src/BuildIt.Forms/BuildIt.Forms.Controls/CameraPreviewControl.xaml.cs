@@ -27,7 +27,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Gets or sets the focus mode for the camera preview
         /// </summary>
-        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous, propertyChanged: FocusModePropertyChanged);
+        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous, propertyChanging: FocusModePropertyChanging, propertyChanged: FocusModePropertyChanged);
 
         /// <summary>
         /// TODO Add summary
@@ -123,6 +123,11 @@ namespace BuildIt.Forms.Controls
         /// Gets or sets a delegate used by the native renderer implementation to stop camera preview
         /// </summary>
         internal Func<ICameraPreviewStopParameters, Task> StopPreviewFunc { get; set; }
+
+        /// <summary>
+        /// Gets or sets a delegate used by the native renderer implementation to set focus mode
+        /// </summary>
+        internal Func<Task> SetFocusModeFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to capture a frame of video to a file
@@ -299,29 +304,36 @@ namespace BuildIt.Forms.Controls
             ErrorOpeningCamera?.Invoke(this, EventArgs.Empty);
         }
 
-        private static void FocusModePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        private static void FocusModePropertyChanging(BindableObject bindable, object oldvalue, object newvalue)
         {
             var cameraPreviewControl = bindable as CameraPreviewControl;
-            if (cameraPreviewControl == null)
+            if (cameraPreviewControl == null ||
+                cameraPreviewControl.Status != CameraStatus.Started)
             {
                 return;
             }
 
             var value = (CameraFocusMode)newvalue;
             var supportedFocusModes = cameraPreviewControl.RetrieveSupportedFocusModes();
-            if (supportedFocusModes.Any(m => m == value))
-            {
-                cameraPreviewControl.FocusMode = value;
-            }
-            else
+            if (!supportedFocusModes.Any(m => m == value))
             {
                 var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
-                if (cameraPreviewControl.FocusMode != fallbackFocusMode)
-                {
-                    cameraPreviewControl.FocusMode = fallbackFocusMode;
-                    cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode), fallbackFocusMode, true));
-                }
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode), fallbackFocusMode, true));
             }
+        }
+
+        private static async void FocusModePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var cameraPreviewControl = bindable as CameraPreviewControl;
+            if (cameraPreviewControl == null ||
+                cameraPreviewControl.Status != CameraStatus.Started ||
+                cameraPreviewControl.SetFocusModeFunc == null)
+            {
+                return;
+            }
+
+
+            await cameraPreviewControl.SetFocusModeFunc.Invoke();
         }
     }
 }
