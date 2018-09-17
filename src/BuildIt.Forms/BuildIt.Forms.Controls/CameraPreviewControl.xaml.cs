@@ -316,8 +316,11 @@ namespace BuildIt.Forms.Controls
             else
             {
                 var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
-                cameraPreviewControl.FocusMode = fallbackFocusMode;
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode), fallbackFocusMode, true));
+                if (cameraPreviewControl.FocusMode != fallbackFocusMode)
+                {
+                    cameraPreviewControl.FocusMode = fallbackFocusMode;
+                    cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode), fallbackFocusMode, true));
+                }
             }
         }
     }
