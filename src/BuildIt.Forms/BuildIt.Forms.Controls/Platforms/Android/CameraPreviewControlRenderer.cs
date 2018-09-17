@@ -188,7 +188,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 // TODO: handle orientation changes
                 int rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
                 PreviewRequestBuilder.Set(CaptureRequest.JpegOrientation, GetOrientation(rotation));
-                SetFocusModeCamera2(cameraPreviewControl.FocusMode);
+                SetCamera2FocusMode(cameraPreviewControl.FocusMode);
 
                 // Here, we create a CameraCaptureSession for camera preview.
                 var surfaces = new List<Surface>();
@@ -614,7 +614,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 cameraPreviewControl.StartPreviewFunc = StartCamera2Preview;
                 cameraPreviewControl.StopPreviewFunc = StopCamera2Preview;
-                cameraPreviewControl.SetFocusModeFunc = SetFocusModeCamera2;
+                cameraPreviewControl.SetFocusModeFunc = SetCamera2FocusMode;
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras2;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
@@ -633,6 +633,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 cameraPreviewControl.StartPreviewFunc = StartCameraPreview;
                 cameraPreviewControl.StopPreviewFunc = StopCameraPreview;
+                cameraPreviewControl.SetFocusModeFunc = SetCameraFocusMode;
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
@@ -834,46 +835,68 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private void EnableContinuousAutoFocus(bool enable)
+        private void SetCameraFocusMode(CameraFocusMode controlFocusMode)
         {
+            if (camera == null)
+            {
+                return;
+            }
+
             var cameraParameters = camera.GetParameters();
-            if (enable)
-            {
-                if (cameraParameters.SupportedFocusModes != null && cameraParameters.SupportedFocusModes.Contains(global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture))
-                {
-                    cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
-                    camera.SetParameters(cameraParameters);
-                }
-            }
-            else
-            {
-                switch (defaultFocusMode)
-                {
-                    case CameraFocusMode.Continuous:
-                        cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
-                        break;
-
-                    default:
-
-                        // fallback to autofocus
-                        cameraParameters.FocusMode = global::Android.Hardware.Camera.Parameters.FocusModeAuto;
-                        break;
-                }
-
-                camera.SetParameters(cameraParameters);
-            }
+            var focusMode = RetrieveCameraFocusMode(controlFocusMode);
+            cameraParameters.FocusMode = focusMode;
+            camera.SetParameters(cameraParameters);
         }
 
-        private void SetFocusModeCamera2(CameraFocusMode controlFocusMode)
+        private string RetrieveCameraFocusMode(CameraFocusMode controlFocusMode)
         {
-            var focusMode = RetrieveFocusModeCamera2(controlFocusMode);
+            var focusMode = global::Android.Hardware.Camera.Parameters.FocusModeFixed;
+            switch (controlFocusMode)
+            {
+                case CameraFocusMode.Auto:
+                    focusMode = global::Android.Hardware.Camera.Parameters.FocusModeAuto;
+                    break;
+                case CameraFocusMode.Continuous:
+                    focusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
+                    break;
+            }
+
+            var cameraParameters = camera.GetParameters();
+            var supportedModes = cameraParameters.SupportedFocusModes;
+
+            if (controlFocusMode == CameraFocusMode.Unspecified)
+            {
+                focusMode = supportedModes.FirstOrDefault();
+            }
+            else if (!supportedModes.Contains(focusMode))
+            {
+                focusMode = supportedModes.FirstOrDefault();
+                var fallbackFocusMode = focusMode.ToPlatformFocusMode();
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+            }
+
+            return focusMode;
+        }
+
+        private void SetCamera2FocusMode(CameraFocusMode controlFocusMode)
+        {
+            var focusMode = RetrieveCamera2FocusMode(controlFocusMode);
 
             CaptureSession?.StopRepeating();
-            SetFocusModeCamera2(focusMode);
+            SetCamera2FocusMode(focusMode);
             CaptureSession?.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
         }
 
-        private ControlAFMode RetrieveFocusModeCamera2(CameraFocusMode controlFocusMode)
+        private void SetCamera2FocusMode(ControlAFMode focusMode)
+        {
+            var current = (int)PreviewRequest?.Get(CaptureRequest.ControlAfMode);
+            if (current != (int)focusMode)
+            {
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
+            }
+        }
+
+        private ControlAFMode RetrieveCamera2FocusMode(CameraFocusMode controlFocusMode)
         {
             var focusMode = controlFocusMode.ToPlatformFocusMode();
             var supportedModes = RetrieveCamera2SupportedFocusModes();
@@ -893,15 +916,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             return focusMode;
-        }
-
-        private void SetFocusModeCamera2(ControlAFMode focusMode)
-        {
-            var current = (int)PreviewRequest?.Get(CaptureRequest.ControlAfMode);
-            if (current != (int)focusMode)
-            {
-                PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
-            }
         }
 
         private int GetOrientation(int rotation)
@@ -952,16 +966,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 camera.AddCallbackBuffer(new FastJavaByteArray(numBytes));
             }
 
-            switch (cameraParameters.FocusMode)
-            {
-                case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
-                    defaultFocusMode = CameraFocusMode.Continuous;
-                    break;
-
-                case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
-                    defaultFocusMode = CameraFocusMode.Auto;
-                    break;
-            }
+            SetCameraFocusMode(cameraPreviewControl.FocusMode);
 
             camera.SetNonMarshalingPreviewCallback(this);
             camera.StartPreview();
@@ -1024,7 +1029,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
 #pragma warning disable 1998
-        private async Task SetFocusModeCamera2()
+        private async Task SetCamera2FocusMode()
 #pragma warning restore 1998
         {
             if (cameraPreviewControl == null)
@@ -1032,7 +1037,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 return;
             }
 
-            SetFocusModeCamera2(cameraPreviewControl.FocusMode);
+            SetCamera2FocusMode(cameraPreviewControl.FocusMode);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1092,6 +1097,18 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 stopCameraPreviewSemaphoreSlim.Release();
             }
+        }
+
+#pragma warning disable 1998
+        private async Task SetCameraFocusMode()
+#pragma warning restore 1998
+        {
+            if (cameraPreviewControl == null)
+            {
+                return;
+            }
+
+            SetCameraFocusMode(cameraPreviewControl.FocusMode);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
