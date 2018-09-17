@@ -614,6 +614,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 cameraPreviewControl.StartPreviewFunc = StartCamera2Preview;
                 cameraPreviewControl.StopPreviewFunc = StopCamera2Preview;
+                cameraPreviewControl.SetFocusModeFunc = SetFocusModeCamera2;
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras2;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
@@ -662,17 +663,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 }
 
                 await SwitchCameraIfNecessary();
-            }
-            else if (e.PropertyName == CameraPreviewControl.FocusModeProperty.PropertyName)
-            {
-                if (useCamera2Api)
-                {
-                    SetFocusModeCamera2(cameraPreviewControl.FocusMode);
-                    return;
-                }
-
-                // TODO Implement
-                // EnableContinuousAutoFocus(cameraPreviewControl.EnableContinuousAutoFocus);
             }
             else if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
             {
@@ -981,6 +971,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private IReadOnlyList<CameraFocusMode> RetrieveCamera2SupportedFocusModes()
         {
+            if (CameraDevice == null)
+            {
+                return new List<CameraFocusMode>();
+            }
+
             var supportedFocusModes = new List<CameraFocusMode>();
             var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
             var cameraCharacteristics = manager.GetCameraCharacteristics(CameraDevice.Id);
@@ -1026,6 +1021,18 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             cameraPreviewControl.SetStatus(CameraStatus.Stopped);
+        }
+
+#pragma warning disable 1998
+        private async Task SetFocusModeCamera2()
+#pragma warning restore 1998
+        {
+            if (cameraPreviewControl == null)
+            {
+                return;
+            }
+
+            SetFocusModeCamera2(cameraPreviewControl.FocusMode);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously

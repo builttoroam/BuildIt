@@ -206,5 +206,31 @@ namespace BuildIt.Forms.Sample
 
             return false;
         }
+
+        private void AutoFocusMode_OnClicked(object sender, EventArgs e)
+        {
+            SetFocusMode(CameraFocusMode.Auto);
+        }
+
+        private void ContinueFocusMode_OnClicked(object sender, EventArgs e)
+        {
+            SetFocusMode(CameraFocusMode.Continuous);
+        }
+
+        private void ManualFocusMode_OnClicked(object sender, EventArgs e)
+        {
+            SetFocusMode(CameraFocusMode.Manual);
+        }
+
+        private void SetFocusMode(CameraFocusMode focusMode)
+        {
+            var currentViewModel = BindingContext as MainViewModel;
+            if (currentViewModel == null)
+            {
+                return;
+            }
+
+            currentViewModel.CameraFocusMode = focusMode;
+        }
     }
 }
