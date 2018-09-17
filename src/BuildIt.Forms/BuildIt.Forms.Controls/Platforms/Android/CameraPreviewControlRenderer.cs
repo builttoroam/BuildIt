@@ -74,7 +74,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private string cameraId;
         private CameraPreviewControl cameraPreviewControl;
-        private CameraFacing cameraType;
+        private global::Android.Hardware.CameraFacing cameraType;
         private CameraFocusMode defaultFocusMode;
         private bool flashSupported;
         private ImageAvailableListener imageAvailableListener;
@@ -211,10 +211,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         {
             if (useCamera2Api &&
                 cameraPreviewControl != null &&
-                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Started)
+                cameraPreviewControl.Status == CameraStatus.Started)
             {
                 CloseCamera();
-                cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Paused);
+                cameraPreviewControl.SetStatus(CameraStatus.Paused);
                 StopBackgroundThread();
             }
         }
@@ -227,7 +227,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             StartBackgroundThread();
-            if (textureView == null || (cameraPreviewControl != null && cameraPreviewControl.Status != CameraPreviewControl.CameraStatus.Paused))
+            if (textureView == null || (cameraPreviewControl != null && cameraPreviewControl.Status != CameraStatus.Paused))
             {
                 return;
             }
@@ -261,7 +261,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         public async void OnPreviewFrame(IntPtr data, global::Android.Hardware.Camera camera)
         {
             if ((cameraPreviewControl != null &&
-                cameraPreviewControl.Status != CameraPreviewControl.CameraStatus.Started) ||
+                cameraPreviewControl.Status != CameraStatus.Started) ||
                 !await stopCameraPreviewSemaphoreSlim.WaitAsync(0))
             {
                 return;
@@ -354,9 +354,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         /// <inheritdoc />
         public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)
         {
-            if (!useCamera2Api && (cameraPreviewControl != null && cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Started))
+            if (!useCamera2Api && (cameraPreviewControl != null && cameraPreviewControl.Status == CameraStatus.Started))
             {
-                var parameters = new CameraPreviewStopParameters(status: CameraPreviewControl.CameraStatus.Paused);
+                var parameters = new CameraPreviewStopParameters(status: CameraStatus.Paused);
                 StopCameraPreview(parameters).ConfigureAwait(true);
             }
 
@@ -369,7 +369,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             if (useCamera2Api ||
                 camera == null ||
                 cameraPreviewControl == null ||
-                cameraPreviewControl.Status != CameraPreviewControl.CameraStatus.Started)
+                cameraPreviewControl.Status != CameraStatus.Started)
             {
                 return;
             }
@@ -466,8 +466,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         internal void OpenCamera(int width, int height)
         {
             if (cameraPreviewControl == null ||
-                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.None ||
-                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Started)
+                cameraPreviewControl.Status == CameraStatus.None ||
+                cameraPreviewControl.Status == CameraStatus.Started)
             {
                 return;
             }
@@ -487,7 +487,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 }
 
                 manager.OpenCamera(cameraId, stateCallback, BackgroundHandler);
-                cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Started);
+                cameraPreviewControl.SetStatus(CameraStatus.Started);
             }
             catch (CameraAccessException e)
             {
@@ -660,15 +660,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                 await SwitchCameraIfNecessary();
             }
-            else if (e.PropertyName == CameraPreviewControl.EnableContinuousAutoFocusProperty.PropertyName)
+            else if (e.PropertyName == CameraPreviewControl.FocusModeProperty.PropertyName)
             {
                 if (useCamera2Api)
                 {
-                    EnableContinuousAutoFocusCamera2(cameraPreviewControl.EnableContinuousAutoFocus);
+                    // TODO Implement
+                    // EnableContinuousAutoFocusCamera2(cameraPreviewControl.EnableContinuousAutoFocus);
                     return;
                 }
 
-                EnableContinuousAutoFocus(cameraPreviewControl.EnableContinuousAutoFocus);
+                // TODO Implement
+                // EnableContinuousAutoFocus(cameraPreviewControl.EnableContinuousAutoFocus);
             }
             else if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
             {
@@ -956,7 +958,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             camera.SetNonMarshalingPreviewCallback(this);
             camera.StartPreview();
 
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Started);
+            cameraPreviewControl.SetStatus(CameraStatus.Started);
         }
 
         private IReadOnlyList<CameraFocusMode> RetrieveCamera2SupportedFocusModes()
@@ -1012,7 +1014,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 StopBackgroundThread();
             }
 
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Stopped);
+            cameraPreviewControl.SetStatus(CameraStatus.Stopped);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1066,7 +1068,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 camera?.StopPreview();
                 camera?.Release();
 
-                cameraPreviewControl.SetStatus((parameters as CameraPreviewStopParameters)?.Status ?? CameraPreviewControl.CameraStatus.Stopped);
+                cameraPreviewControl.SetStatus((parameters as CameraPreviewStopParameters)?.Status ?? CameraStatus.Stopped);
             }
             finally
             {
@@ -1295,8 +1297,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             lensFacing = ToLensFacing(cameraPreviewControl.PreferredCamera);
             var parameters = new CameraPreviewStopParameters(stopBackgroundThread: false);
             await StopCamera2Preview(parameters);
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.None);
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Starting);
+            cameraPreviewControl.SetStatus(CameraStatus.None);
+            cameraPreviewControl.SetStatus(CameraStatus.Starting);
             await StartCamera2Preview();
         }
 
@@ -1311,13 +1313,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraType = newCameraType;
 
             if (cameraPreviewControl != null &&
-                cameraPreviewControl.Status == CameraPreviewControl.CameraStatus.Started)
+                cameraPreviewControl.Status == CameraStatus.Started)
             {
                 await StopCameraPreview(CameraPreviewStopParameters.Default);
             }
 
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.None);
-            cameraPreviewControl.SetStatus(CameraPreviewControl.CameraStatus.Starting);
+            cameraPreviewControl.SetStatus(CameraStatus.None);
+            cameraPreviewControl.SetStatus(CameraStatus.Starting);
             await StartCameraPreview();
         }
     }

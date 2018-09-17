@@ -77,7 +77,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         private ICommand cameraPreviewErrorCommand;
         private ICommand testCommand;
         private bool commandIsEnabled;
-        private bool cameraFocusMode;
+        private CameraFocusMode cameraFocusMode;
 
         private bool visible = true;
 
@@ -131,7 +131,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public CameraFocusMode CameraFocusMode
         {
-            get => CameraFocusMode;
+            get => cameraFocusMode;
             set => SetProperty(ref cameraFocusMode, value);
         }
 
