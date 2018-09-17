@@ -261,13 +261,10 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             if (mediaCapture == null)
             {
-                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraFacing.Back
-                    ? Panel.Back
-                    : Panel.Front;
+                var desiredPanel = cameraPreviewControl.PreferredCamera == CameraFacing.Back ? Panel.Back : Panel.Front;
 
                 // Attempt to get the back camera if one is available, but use any camera device if not
                 var cameraDevice = await FindCameraDeviceByPanelAsync(desiredPanel);
-
                 if (cameraDevice == null)
                 {
                     Debug.WriteLine("No camera device found.");
@@ -286,6 +283,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                    }).Where(t => t.colorSourceInfo != null)
                    .FirstOrDefault();
 
+
                 MediaFrameSourceGroup selectedGroup = selectedGroupObjects?.sourceGroup;
                 MediaFrameSourceInfo colorSourceInfo = selectedGroupObjects?.colorSourceInfo;
                 mediaCapture = new MediaCapture();
@@ -293,6 +291,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 try
                 {
                     await mediaCapture.InitializeAsync(settings);
+                    await EnableFocusModeAsync(cameraPreviewControl.FocusMode);
                     var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
                     var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
                     if (preferredFormat != null)
@@ -486,13 +485,19 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             var focusMode = controlFocusMode.ToPlatformFocusMode();
             var focusControl = mediaCapture.VideoDeviceController.FocusControl;
+            if (!focusControl.Supported)
+            {
+                return;
+            }
+
             if (controlFocusMode == CameraFocusMode.Unspecified)
             {
                 focusMode = focusControl.SupportedFocusModes.LastOrDefault();
             }
             else if (!focusControl.SupportedFocusModes.Contains(focusMode))
             {
-                var fallbackFocusMode = focusControl.SupportedFocusModes.LastOrDefault().ToControlFocusMode();
+                focusMode = focusControl.SupportedFocusModes.LastOrDefault();
+                var fallbackFocusMode = focusMode.ToControlFocusMode();
                 cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
             }
 

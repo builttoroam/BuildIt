@@ -11,10 +11,12 @@ using Android.Views;
 using Android.Widget;
 using ApxLabs.FastAndroidCamera;
 using BuildIt.Forms.Controls;
+using BuildIt.Forms.Controls.Common;
 using BuildIt.Forms.Controls.Extensions;
 using BuildIt.Forms.Controls.Interfaces;
 using BuildIt.Forms.Controls.Platforms.Android;
-using BuildIt.Forms.Controls.Platforms.Android.Models;
+using BuildIt.Forms.Controls.Platforms.Android.Extensions;
+using BuildIt.Forms.Parameters;
 using Java.Lang;
 using Java.Util;
 using Java.Util.Concurrent;
@@ -186,6 +188,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 // TODO: handle orientation changes
                 int rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
                 PreviewRequestBuilder.Set(CaptureRequest.JpegOrientation, GetOrientation(rotation));
+                SetFocusModeCamera2(cameraPreviewControl.FocusMode);
 
                 // Here, we create a CameraCaptureSession for camera preview.
                 var surfaces = new List<Surface>();
@@ -664,8 +667,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 if (useCamera2Api)
                 {
-                    // TODO Implement
-                    // EnableContinuousAutoFocusCamera2(cameraPreviewControl.EnableContinuousAutoFocus);
+                    SetFocusModeCamera2(cameraPreviewControl.FocusMode);
                     return;
                 }
 
@@ -787,21 +789,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 : global::Android.Hardware.CameraFacing.Front;
         }
 
-        private static ControlAFMode ToControlAFMode(CameraFocusMode cameraFocusMode)
-        {
-            switch (cameraFocusMode)
-            {
-                case CameraFocusMode.Auto:
-                    return ControlAFMode.Auto;
-
-                case CameraFocusMode.Continuous:
-                    return ControlAFMode.ContinuousPicture;
-
-                default:
-                    return ControlAFMode.Off;
-            }
-        }
-
         private static LensFacing ToLensFacing(Controls.CameraFacing cameraFacing)
         {
             return cameraFacing == Controls.CameraFacing.Back ? LensFacing.Back :
@@ -887,13 +874,44 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        private void EnableContinuousAutoFocusCamera2(bool enable)
+        private void SetFocusModeCamera2(CameraFocusMode controlFocusMode)
         {
-            CaptureSession.StopRepeating();
-            var current = (int)PreviewRequest.Get(CaptureRequest.ControlAfMode);
+            var focusMode = RetrieveFocusModeCamera2(controlFocusMode);
 
-            PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, enable ? (int)ControlAFMode.ContinuousPicture : (int)ToControlAFMode(defaultFocusMode));
-            CaptureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+            CaptureSession?.StopRepeating();
+            SetFocusModeCamera2(focusMode);
+            CaptureSession?.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+        }
+
+        private ControlAFMode RetrieveFocusModeCamera2(CameraFocusMode controlFocusMode)
+        {
+            var focusMode = controlFocusMode.ToPlatformFocusMode();
+            var supportedModes = RetrieveCamera2SupportedFocusModes();
+
+            if (controlFocusMode == CameraFocusMode.Unspecified)
+            {
+                // Take the best available
+                focusMode = supportedModes.OrderBy(m => m)
+                                          .LastOrDefault()
+                                          .ToPlatformFocusMode();
+            }
+            else if (!supportedModes.Contains(controlFocusMode))
+            {
+                var fallbackFocusMode = supportedModes.LastOrDefault();
+                focusMode = fallbackFocusMode.ToPlatformFocusMode();
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+            }
+
+            return focusMode;
+        }
+
+        private void SetFocusModeCamera2(ControlAFMode focusMode)
+        {
+            var current = (int)PreviewRequest?.Get(CaptureRequest.ControlAfMode);
+            if (current != (int)focusMode)
+            {
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
+            }
         }
 
         private int GetOrientation(int rotation)
@@ -969,14 +987,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             var focusModes = cameraCharacteristics.Get(CameraCharacteristics.ControlAfAvailableModes).ToArray<int>();
             foreach (var focusMode in focusModes)
             {
-                if (focusMode == (int)ControlAFMode.Auto)
-                {
-                    supportedFocusModes.Add(CameraFocusMode.Auto);
-                }
-                else if (focusMode == (int)ControlAFMode.ContinuousPicture)
-                {
-                    supportedFocusModes.Add(CameraFocusMode.Continuous);
-                }
+                supportedFocusModes.Add(((ControlAFMode)focusMode).ToControlFocusMode());
             }
 
             var capabilities = cameraCharacteristics.Get(CameraCharacteristics.RequestAvailableCapabilities).ToArray<int>();
