@@ -73,6 +73,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     public class MainViewModel : NotifyBase, IHasStates, IHasImmutableData<Person>
     {
         private ICommand pressedCommand;
+        private ICommand testCommand;
         private bool commandIsEnabled;
 
         private bool visible = true;
@@ -91,6 +92,11 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         }
 
         public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
+
+        public ICommand TestCommand => testCommand ?? (testCommand = new Command(() =>
+        {
+            
+        }));
 
         public IStateManager StateManager { get; } = new StateManager();
 
@@ -121,16 +127,16 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         public async Task Init()
         {
             // TODO To get the app to start quicker comment out the code that relates to Items and MoreItems
-            var items = new List<ItemViewModel>();
-            for (int i = 0; i < 2000; i++)
-            {
-                var item = new ItemViewModel();
-                await item.Init();
-                items.Add(item);
-            }
+            //var items = new List<ItemViewModel>();
+            //for (int i = 0; i < 2000; i++)
+            //{
+            //    var item = new ItemViewModel();
+            //    await item.Init();
+            //    items.Add(item);
+            //}
 
-            Items.Fill(items);
-            MoreItems.Fill(items);
+            //Items.Fill(items);
+            //MoreItems.Fill(items);
 
             // need to request runtime permissions for using the camera
             var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera, Permission.Storage);
