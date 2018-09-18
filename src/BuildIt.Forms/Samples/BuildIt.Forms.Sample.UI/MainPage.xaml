@@ -6,7 +6,6 @@
              xmlns:anim="clr-namespace:BuildIt.Forms.Animations;assembly=BuildIt.Forms.Core"
              xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              xmlns:converters="clr-namespace:BuildIt.Forms.Converters;assembly=BuildIt.Forms.Core"
-             xmlns:effects="clr-namespace:BuildIt.Forms.Sample.Effects;assembly=BuildIt.Forms.Sample"
              x:Class="BuildIt.Forms.Sample.MainPage">
   <ContentPage.Resources>
     <ResourceDictionary>
