@@ -6,15 +6,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using AVFoundation;
 using BuildIt.Forms.Controls;
+using BuildIt.Forms.Controls.Common;
 using BuildIt.Forms.Controls.Extensions;
 using BuildIt.Forms.Controls.Interfaces;
 using BuildIt.Forms.Controls.Platforms.Ios;
+using BuildIt.Forms.Controls.Platforms.Ios.Extensions;
 using BuildIt.Forms.Controls.Platforms.Ios.Models;
+using BuildIt.Forms.Parameters;
 using CoreFoundation;
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.iOS;
+using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
 namespace BuildIt.Forms.Controls.Platforms.Ios
@@ -74,6 +79,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             cameraPreviewControl = cpc;
             cameraPreviewControl.StartPreviewFunc = StartPreviewFunc;
             cameraPreviewControl.StopPreviewFunc = StopPreviewFunc;
+            cameraPreviewControl.SetFocusModeFunc = SetFocusModeFunc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
@@ -178,6 +184,36 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             StopCameraFeed();
+        }
+
+#pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task SetFocusModeFunc()
+#pragma warning restore 1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            SetFocusModeAsync(cameraPreviewControl.FocusMode);
+        }
+
+        private void SetFocusModeAsync(CameraFocusMode controlFocusMode)
+        {
+            var focusMode = controlFocusMode.ToPlatformFocusMode();
+
+            if (controlFocusMode == CameraFocusMode.Unspecified)
+            {
+                focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
+            }
+
+            if (captureDevice.IsFocusModeSupported(focusMode))
+            {
+                captureDevice.LockForConfiguration(out NSError error);
+                captureDevice.FocusMode = focusMode;
+                captureDevice.UnlockForConfiguration();
+            }
+            else
+            {
+                focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
+                var fallbackFocusMode = focusMode.ToControlFocusMode();
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+            }
         }
 
         private static CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
@@ -326,16 +362,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             {
                 captureDevice.LockForConfiguration(out error);
                 captureDevice.WhiteBalanceMode = AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance;
-                captureDevice.UnlockForConfiguration();
-            }
-        }
-
-        private void EnableContinuousAutofocus(bool enable)
-        {
-            if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
-            {
-                captureDevice.LockForConfiguration(out NSError error);
-                captureDevice.FocusMode = enable ? AVCaptureFocusMode.ContinuousAutoFocus : AVCaptureFocusMode.AutoFocus;
                 captureDevice.UnlockForConfiguration();
             }
         }
