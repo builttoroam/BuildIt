@@ -129,6 +129,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         internal Activity Activity => Context as Activity;
 
+        internal CameraFocusMode DesiredFocusMode => cameraPreviewControl?.FocusMode ?? default(CameraFocusMode);
+
         public void CaptureStillPicture()
         {
             try
@@ -432,6 +434,58 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
+        public IReadOnlyList<CameraFocusMode> RetrieveCamera2SupportedFocusModes()
+        {
+            if (CameraDevice == null)
+            {
+                return new List<CameraFocusMode>();
+            }
+
+            var supportedFocusModes = new List<CameraFocusMode>();
+            var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
+            var cameraCharacteristics = manager.GetCameraCharacteristics(CameraDevice.Id);
+            var focusModes = cameraCharacteristics.Get(CameraCharacteristics.ControlAfAvailableModes).ToArray<int>();
+            foreach (var focusMode in focusModes)
+            {
+                supportedFocusModes.Add(((ControlAFMode)focusMode).ToControlFocusMode());
+            }
+
+            var capabilities = cameraCharacteristics.Get(CameraCharacteristics.RequestAvailableCapabilities).ToArray<int>();
+            if (capabilities.Any(c => c == (int)RequestAvailableCapabilities.ManualSensor))
+            {
+                supportedFocusModes.Add(CameraFocusMode.Manual);
+            }
+
+            return supportedFocusModes.AsReadOnly();
+        }
+
+        public IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
+        {
+            var supportedFocusModes = new List<CameraFocusMode>();
+            var cameraParameters = camera.GetParameters();
+            if (cameraParameters != null)
+            {
+                foreach (var supportedFocusMode in cameraParameters.SupportedFocusModes)
+                {
+                    switch (supportedFocusMode)
+                    {
+                        case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
+                            supportedFocusModes.Add(CameraFocusMode.Auto);
+                            break;
+
+                        case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
+                            supportedFocusModes.Add(CameraFocusMode.Continuous);
+                            break;
+                    }
+                }
+            }
+
+            // manual focus isn't a mode exposed by Android with the old Camera API but achieved through
+            // various method calls so should work
+            supportedFocusModes.Add(CameraFocusMode.Manual);
+            return supportedFocusModes;
+        }
+
         internal void ConfigureTransform(int viewWidth, int viewHeight)
         {
             if (textureView == null || previewSize == null || Activity == null)
@@ -615,6 +669,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 cameraPreviewControl.StartPreviewFunc = StartCamera2Preview;
                 cameraPreviewControl.StopPreviewFunc = StopCamera2Preview;
                 cameraPreviewControl.SetFocusModeFunc = SetCamera2FocusMode;
+                cameraPreviewControl.TryFocusingFunc = TryFocusingCamera2Func;
                 cameraPreviewControl.RetrieveCamerasFunc = RetrieveCameras2;
                 cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveCamera2SupportedFocusModes;
                 cameraPreviewControl.CaptureNativeFrameToFileFunc = CaptureCamera2PhotoToFile;
@@ -880,20 +935,23 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void SetCamera2FocusMode(CameraFocusMode controlFocusMode)
         {
+            if (CaptureSession == null)
+            {
+                return;
+            }
+
             var focusMode = RetrieveCamera2FocusMode(controlFocusMode);
+            var current = (int)PreviewRequest?.Get(CaptureRequest.ControlAfMode);
+            if (current == (int)focusMode)
+            {
+                return;
+            }
+
+            LockFocus();
 
             CaptureSession?.StopRepeating();
-            SetCamera2FocusMode(focusMode);
+            PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
             CaptureSession?.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
-        }
-
-        private void SetCamera2FocusMode(ControlAFMode focusMode)
-        {
-            var current = (int)PreviewRequest?.Get(CaptureRequest.ControlAfMode);
-            if (current != (int)focusMode)
-            {
-                PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
-            }
         }
 
         private ControlAFMode RetrieveCamera2FocusMode(CameraFocusMode controlFocusMode)
@@ -929,6 +987,11 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void LockFocus()
         {
+            if (CaptureSession == null)
+            {
+                return;
+            }
+
             try
             {
                 // This is how to tell the camera to lock focus.
@@ -936,7 +999,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
                 // Tell #captureCallback to wait for the lock.
                 State = StateWaitingLock;
-                CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+                CaptureSession?.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
             }
             catch (CameraAccessException e)
             {
@@ -972,31 +1035,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             camera.StartPreview();
 
             cameraPreviewControl.SetStatus(CameraStatus.Started);
-        }
-
-        private IReadOnlyList<CameraFocusMode> RetrieveCamera2SupportedFocusModes()
-        {
-            if (CameraDevice == null)
-            {
-                return new List<CameraFocusMode>();
-            }
-
-            var supportedFocusModes = new List<CameraFocusMode>();
-            var manager = (CameraManager)Activity.GetSystemService(Context.CameraService);
-            var cameraCharacteristics = manager.GetCameraCharacteristics(CameraDevice.Id);
-            var focusModes = cameraCharacteristics.Get(CameraCharacteristics.ControlAfAvailableModes).ToArray<int>();
-            foreach (var focusMode in focusModes)
-            {
-                supportedFocusModes.Add(((ControlAFMode)focusMode).ToControlFocusMode());
-            }
-
-            var capabilities = cameraCharacteristics.Get(CameraCharacteristics.RequestAvailableCapabilities).ToArray<int>();
-            if (capabilities.Any(c => c == (int)RequestAvailableCapabilities.ManualSensor))
-            {
-                supportedFocusModes.Add(CameraFocusMode.Manual);
-            }
-
-            return supportedFocusModes.AsReadOnly();
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1040,6 +1078,37 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             SetCamera2FocusMode(cameraPreviewControl.FocusMode);
         }
 
+#pragma warning disable 1998
+        private async Task<bool> TryFocusingCamera2Func()
+#pragma warning restore 1998
+        {
+            if (PreviewRequestBuilder == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                // MK Code based on the docs https://developer.android.com/reference/android/hardware/camera2/CaptureResult#CONTROL_AF_STATE
+                //    and StackOverflow answer https://stackoverflow.com/a/42158047/510627
+
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+                CaptureSession?.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+
+                CaptureSession?.StopRepeating();
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Idle);
+                CaptureSession?.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Strings.Errors.CameraFocusingFailed, ex.Message }));
+            }
+
+            return false;
+        }
+
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task<IReadOnlyList<ICamera>> RetrieveCameras2()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1078,6 +1147,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             camera.SetPreviewTexture(surfaceTexture);
             PrepareAndStartCamera();
+        }
+
+
+#pragma warning disable 1998
+        private async Task<bool> TryFocusingCameraFunc()
+#pragma warning restore 1998
+        {
+            // MK AutoFocus has been deprecated in API level 21 https://developer.android.com/reference/android/hardware/Camera.AutoFocusCallback
+            if (cameraPreviewControl == null || cameraPreviewControl.FocusMode != CameraFocusMode.Auto || Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                return false;
+            }
+
+            camera?.AutoFocus(null);
+
+            return true;
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1129,33 +1214,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             return cameras.AsReadOnly();
-        }
-
-        private IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
-        {
-            var supportedFocusModes = new List<CameraFocusMode>();
-            var cameraParameters = camera.GetParameters();
-            if (cameraParameters != null)
-            {
-                foreach (var supportedFocusMode in cameraParameters.SupportedFocusModes)
-                {
-                    switch (supportedFocusMode)
-                    {
-                        case global::Android.Hardware.Camera.Parameters.FocusModeAuto:
-                            supportedFocusModes.Add(CameraFocusMode.Auto);
-                            break;
-
-                        case global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture:
-                            supportedFocusModes.Add(CameraFocusMode.Continuous);
-                            break;
-                    }
-                }
-            }
-
-            // manual focus isn't a mode exposed by Android with the old Camera API but achieved through
-            // various method calls so should work
-            supportedFocusModes.Add(CameraFocusMode.Manual);
-            return supportedFocusModes;
         }
 
         private void SetUpCameraOutputs(int width, int height)

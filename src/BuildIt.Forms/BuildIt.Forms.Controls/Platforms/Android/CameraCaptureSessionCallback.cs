@@ -1,4 +1,7 @@
-﻿using Android.Hardware.Camera2;
+﻿using System.Linq;
+using Android.Hardware.Camera2;
+using Android.OS;
+using BuildIt.Forms.Controls.Platforms.Android.Extensions;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
@@ -28,9 +31,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             owner.CaptureSession = session;
             try
             {
-                // default to auto
-                owner.PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
+                var defaultFocusMode = CameraFocusMode.Auto;
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+                {
+                    var supportedFocusModes = owner.RetrieveCamera2SupportedFocusModes();
+                    if (supportedFocusModes.Contains(owner.DesiredFocusMode))
+                    {
+                        defaultFocusMode = owner.DesiredFocusMode;
+                    }
+                    else
+                    {
+                        defaultFocusMode = supportedFocusModes.OrderBy(m => (int)m)
+                                                              .LastOrDefault();
+                    }
+                }
 
+                owner.PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)defaultFocusMode.ToPlatformFocusMode());
                 // Flash is automatically enabled when necessary.
                 owner.SetAutoFlash(owner.PreviewRequestBuilder);
 
