@@ -86,6 +86,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl.StartPreviewFunc = StartPreviewFunc;
             cameraPreviewControl.StopPreviewFunc = StopPreviewFunc;
             cameraPreviewControl.SetFocusModeFunc = SetFocusModeFunc;
+            cameraPreviewControl.TryFocusingFunc = TryFocusingFunc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
@@ -176,6 +177,29 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private async Task SetFocusModeFunc()
         {
             await SetFocusModeAsync(cameraPreviewControl.FocusMode);
+        }
+
+        private async Task<bool> TryFocusingFunc()
+        {
+            if (mediaCapture?.VideoDeviceController?.FocusControl == null ||
+                !mediaCapture.VideoDeviceController.FocusControl.Supported ||
+                mediaCapture.VideoDeviceController.FocusControl.Mode != FocusMode.Auto)
+            {
+                return false;
+            }
+
+            try
+            {
+                await mediaCapture.VideoDeviceController.FocusControl.FocusAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Strings.Errors.CameraFocusingFailed, ex.Message }));
+            }
+
+            return false;
         }
 
         private void ConfigureCaptureElementStretch()
