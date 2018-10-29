@@ -949,7 +949,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             // MK I'm not perfectly sure if that's what needs to be done when switching between focus states, while the camera preview is on
             //    I found in the docs https://source.android.com/devices/camera/camera3_3Amodes.html, that "Triggering locks focus once currently active sweep concludes"
-            //    Triggering AF with "Start" seems to do the 
+            //    Triggering AF with "Start" seems to do the trick
             if (current == (int)ControlAFMode.ContinuousPicture)
             {
                 PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
