@@ -935,23 +935,30 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void SetCamera2FocusMode(CameraFocusMode controlFocusMode)
         {
-            if (CaptureSession == null)
+            if (CaptureSession == null || PreviewRequestBuilder == null)
             {
                 return;
             }
 
             var focusMode = RetrieveCamera2FocusMode(controlFocusMode);
-            var current = (int)PreviewRequest?.Get(CaptureRequest.ControlAfMode);
+            var current = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAfMode);
             if (current == (int)focusMode)
             {
                 return;
             }
 
-            LockFocus();
+            // MK I'm not perfectly sure if that's what needs to be done when switching between focus states, while the camera preview is on
+            //    I found in the docs https://source.android.com/devices/camera/camera3_3Amodes.html, that "Triggering locks focus once currently active sweep concludes"
+            //    Triggering AF with "Start" seems to do the 
+            if (current == (int)ControlAFMode.ContinuousPicture)
+            {
+                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+                CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+            }
 
-            CaptureSession?.StopRepeating();
+            CaptureSession.StopRepeating();
             PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
-            CaptureSession?.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+            CaptureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
         }
 
         private ControlAFMode RetrieveCamera2FocusMode(CameraFocusMode controlFocusMode)
