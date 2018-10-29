@@ -130,6 +130,11 @@ namespace BuildIt.Forms.Controls
         internal Func<Task> SetFocusModeFunc { get; set; }
 
         /// <summary>
+        /// Gets or sets a delegate used by the native renderer implementation to try focusing the camera
+        /// </summary>
+        internal Func<Task<bool>> TryFocusingFunc { get; set; }
+
+        /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to capture a frame of video to a file
         /// </summary>
         internal Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
@@ -247,20 +252,18 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Method that sets focus to a specific distance
         /// </summary>
-        /// <param name="focusDistance">Focus distance (MUST be between 0.0 and 1.0)</param>
         /// <returns>Indicator if focusing succeeded</returns>
-        public async Task<bool> Focus(double focusDistance)
+        public async Task<bool> TryFocusing()
         {
-            if (Status != CameraStatus.Started)
+            if (Status != CameraStatus.Started || TryFocusingFunc == null)
             {
                 return false;
             }
 
             var supportedFocusModes = RetrieveSupportedFocusModes();
-            if (supportedFocusModes.Any(m => m == CameraFocusMode.Manual))
+            if (supportedFocusModes.Any(m => m == CameraFocusMode.Auto))
             {
-                // TODO Implement
-                return true;
+                return await TryFocusingFunc.Invoke();
             }
 
             return false;
@@ -318,7 +321,7 @@ namespace BuildIt.Forms.Controls
             if (!supportedFocusModes.Any(m => m == value))
             {
                 var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode), fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode) }, fallbackFocusMode, true));
             }
         }
 

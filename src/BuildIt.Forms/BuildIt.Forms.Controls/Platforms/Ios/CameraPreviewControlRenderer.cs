@@ -17,9 +17,7 @@ using CoreFoundation;
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.iOS;
-using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
 namespace BuildIt.Forms.Controls.Platforms.Ios
@@ -80,6 +78,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             cameraPreviewControl.StartPreviewFunc = StartPreviewFunc;
             cameraPreviewControl.StopPreviewFunc = StopPreviewFunc;
             cameraPreviewControl.SetFocusModeFunc = SetFocusModeFunc;
+            cameraPreviewControl.TryFocusingFunc = TryFocusingFunc;
             cameraPreviewControl.CaptureNativeFrameToFileFunc = CapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = RetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
@@ -212,8 +211,31 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             {
                 focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
                 var fallbackFocusMode = focusMode.ToControlFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
+        }
+
+#pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task<bool> TryFocusingFunc()
+#pragma warning restore 1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            try
+            {
+                if (captureDevice.FocusMode == AVCaptureFocusMode.Locked)
+                {
+                    captureDevice.LockForConfiguration(out NSError error);
+                    captureDevice.FocusMode = AVCaptureFocusMode.AutoFocus;
+                    captureDevice.UnlockForConfiguration();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Strings.Errors.CameraFocusingFailed, ex.Message }));
+            }
+
+            return false;
         }
 
         private static CameraFacing ToCameraFacing(AVCaptureDevicePosition position)
