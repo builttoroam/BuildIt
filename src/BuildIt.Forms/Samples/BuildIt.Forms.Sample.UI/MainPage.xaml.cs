@@ -222,6 +222,17 @@ namespace BuildIt.Forms.Sample
             SetFocusMode(CameraFocusMode.Manual);
         }
 
+        private async void TryFocusing_OnClicked(object sender, EventArgs e)
+        {
+            var currentViewModel = BindingContext as MainViewModel;
+            if (currentViewModel == null || currentViewModel.CameraFocusMode != CameraFocusMode.Auto)
+            {
+                return;
+            }
+
+            await CameraPreviewControl.TryFocusing();
+        }
+
         private void SetFocusMode(CameraFocusMode focusMode)
         {
             var currentViewModel = BindingContext as MainViewModel;

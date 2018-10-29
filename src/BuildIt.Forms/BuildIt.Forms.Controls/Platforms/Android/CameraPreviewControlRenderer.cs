@@ -872,7 +872,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 focusMode = supportedModes.FirstOrDefault();
                 var fallbackFocusMode = focusMode.ToPlatformFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
 
             return focusMode;
@@ -912,7 +912,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 var fallbackFocusMode = supportedModes.LastOrDefault();
                 focusMode = fallbackFocusMode.ToPlatformFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
 
             return focusMode;

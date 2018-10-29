@@ -11,6 +11,7 @@
         internal static class Errors
         {
             public const string UnsupportedFocusModeFormat = "The device camera does not support {0} focus mode. The current focus mode has been set to {1}";
+            public const string CameraFocusingFailed = "Failed to focus camera";
         }
     }
 }
