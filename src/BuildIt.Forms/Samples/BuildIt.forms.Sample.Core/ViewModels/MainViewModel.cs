@@ -78,6 +78,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         private ICommand testCommand;
         private bool commandIsEnabled;
         private CameraFocusMode cameraFocusMode;
+        private bool isAutoFocusMode;
 
         private bool visible = true;
 
@@ -132,8 +133,16 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         public CameraFocusMode CameraFocusMode
         {
             get => cameraFocusMode;
-            set => SetProperty(ref cameraFocusMode, value);
+            set
+            {
+                if (SetProperty(ref cameraFocusMode, value))
+                {
+                    RaisePropertyChanged(nameof(IsAutoFocusMode));
+                }
+            }
         }
+
+        public bool IsAutoFocusMode => CameraFocusMode == CameraFocusMode.Auto;
 
         public Person Data { get => _data; set => SetProperty(ref _data, value); }
 

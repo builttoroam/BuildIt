@@ -499,7 +499,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             {
                 focusMode = focusControl.SupportedFocusModes.LastOrDefault();
                 var fallbackFocusMode = focusMode.ToControlFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode), fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
 
             await SetFocusModeAsync(focusControl, focusMode);
