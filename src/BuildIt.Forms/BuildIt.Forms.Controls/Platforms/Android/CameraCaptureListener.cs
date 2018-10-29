@@ -24,25 +24,28 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private void Process(CaptureResult result)
         {
+            var afState = (Integer)result.Get(CaptureResult.ControlAfState);
+            var controlAfState = (ControlAFState)(afState?.IntValue() ?? (int)default(ControlAFState));
+
+            System.Diagnostics.Debug.WriteLine($"AF State is {controlAfState}");
+
             switch (owner.State)
             {
                 case CameraPreviewControlRenderer.StateWaitingLock:
                     {
-                        Integer afState = (Integer)result.Get(CaptureResult.ControlAfState);
                         if (afState == null)
                         {
                             owner.CaptureStillPicture();
                             return;
                         }
 
-                        var controlAFState = (ControlAFState)afState.IntValue();
-                        if ((controlAFState == ControlAFState.FocusedLocked) ||
-                                   (controlAFState == ControlAFState.NotFocusedLocked))
+                        if ((controlAfState == ControlAFState.FocusedLocked) ||
+                            (controlAfState == ControlAFState.NotFocusedLocked))
                         {
                             // ControlAeState can be null on some devices
-                            Integer aeState = (Integer)result.Get(CaptureResult.ControlAeState);
+                            var aeState = (Integer)result.Get(CaptureResult.ControlAeState);
                             if (aeState == null ||
-                                    aeState.IntValue() == ((int)ControlAEState.Converged))
+                                aeState.IntValue() == ((int)ControlAEState.Converged))
                             {
                                 owner.State = CameraPreviewControlRenderer.StatePictureTaken;
                                 owner.CaptureStillPicture();
