@@ -201,8 +201,15 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 focusControl.Configure(settings);
 
                 await focusControl.FocusAsync();
-                // await focusControl.LockAsync();
 
+                // MK Adding the delay here as it seems to help a bit with locking the focus straight after trying to focus
+                //    We might consired revisiting this code, as it seem that the APIs are not doing what they supposed to
+                //    That is, when setting focus mode to Single, and calling focus it should focus once and lock the focus (once acquired)
+                //    Currently, the behaviour is that after FocusAsync is called, the camera keeps on focusing. This might also be somehow related
+                //    to setting up the focus range?
+                await Task.Delay(50);
+
+                await focusControl.LockAsync();
 
                 var focusSucceeded = focusControl.FocusState == MediaCaptureFocusState.Focused;
                 Debug.WriteLine($"Focus state AFTER {focusControl.FocusState}");
@@ -343,10 +350,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     //mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
                     //await mediaFrameReader.StartAsync();
                     isInitialized = true;
-                    if (mediaCapture.VideoDeviceController.FocusControl.FocusChangedSupported)
-                    {
-                        mediaCapture.FocusChanged += MediaCapture_FocusChanged;
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -378,15 +381,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
                     cameraPreviewControl.SetStatus(CameraStatus.Started);
                 }
-            }
-        }
-
-        private async void MediaCapture_FocusChanged(MediaCapture sender, MediaCaptureFocusChangedEventArgs args)
-        {
-            var focusControl = mediaCapture.VideoDeviceController.FocusControl;
-            if (cameraPreviewControl.FocusMode == CameraFocusMode.Auto && args.FocusState == MediaCaptureFocusState.Focused)
-            {
-                await focusControl.LockAsync();
             }
         }
 
