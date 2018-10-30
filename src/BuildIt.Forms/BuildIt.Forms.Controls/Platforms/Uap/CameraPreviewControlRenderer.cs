@@ -61,7 +61,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private bool isSuspending;
         private bool isInitialized;
         private bool isPreviewing;
-        private bool isUiActive;
         private bool isActivePage;
         private bool mirroringPreview;
         private bool externalCamera;
@@ -151,10 +150,10 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName && isUiActive)
+            if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName)
             {
                 // restart the previewer so that it can pick up the correct camera preference
-                await StopPreviewAsync();
+                await CleanupCameraAsync();
                 await StartPreviewFunc();
             }
 
@@ -181,18 +180,33 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
         private async Task<bool> TryFocusingFunc()
         {
-            if (mediaCapture?.VideoDeviceController?.FocusControl == null ||
-                !mediaCapture.VideoDeviceController.FocusControl.Supported ||
-                mediaCapture.VideoDeviceController.FocusControl.Mode != FocusMode.Auto)
+            var focusControl = mediaCapture?.VideoDeviceController?.FocusControl;
+            if (focusControl == null ||
+                !focusControl.Supported)
             {
                 return false;
             }
 
             try
             {
-                await mediaCapture.VideoDeviceController.FocusControl.FocusAsync();
+                var focusRange = focusControl.SupportedFocusRanges.Contains(AutoFocusRange.FullRange) ? AutoFocusRange.FullRange : focusControl.SupportedFocusRanges.FirstOrDefault();
+                var focusMode = focusControl.SupportedFocusModes.Contains(FocusMode.Single) ? FocusMode.Single : focusControl.SupportedFocusModes.FirstOrDefault();
 
-                return true;
+                var settings = new FocusSettings
+                {
+                    Mode = focusMode,
+                    AutoFocusRange = focusRange
+                };
+
+                focusControl.Configure(settings);
+
+                await focusControl.FocusAsync();
+                // await focusControl.LockAsync();
+
+
+                var focusSucceeded = focusControl.FocusState == MediaCaptureFocusState.Focused;
+                Debug.WriteLine($"Focus state AFTER {focusControl.FocusState}");
+                return focusSucceeded;
             }
             catch (Exception ex)
             {
@@ -312,22 +326,27 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 MediaFrameSourceGroup selectedGroup = selectedGroupObjects?.sourceGroup;
                 MediaFrameSourceInfo colorSourceInfo = selectedGroupObjects?.colorSourceInfo;
                 mediaCapture = new MediaCapture();
-                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id, SourceGroup = selectedGroup, StreamingCaptureMode = StreamingCaptureMode.Video };
+
+                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id }; //, SourceGroup = selectedGroup, StreamingCaptureMode = StreamingCaptureMode.Video };
                 try
                 {
                     await mediaCapture.InitializeAsync(settings);
                     await SetFocusModeAsync(cameraPreviewControl.FocusMode);
-                    var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
-                    var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
-                    if (preferredFormat != null)
-                    {
-                        await colorFrameSource.SetFormatAsync(preferredFormat);
-                    }
+                    //var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
+                    //var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
+                    //if (preferredFormat != null)
+                    //{
+                    //    await colorFrameSource.SetFormatAsync(preferredFormat);
+                    //}
 
-                    mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
-                    mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
-                    await mediaFrameReader.StartAsync();
+                    //mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
+                    //mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
+                    //await mediaFrameReader.StartAsync();
                     isInitialized = true;
+                    if (mediaCapture.VideoDeviceController.FocusControl.FocusChangedSupported)
+                    {
+                        mediaCapture.FocusChanged += MediaCapture_FocusChanged;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -359,6 +378,15 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
 
                     cameraPreviewControl.SetStatus(CameraStatus.Started);
                 }
+            }
+        }
+
+        private async void MediaCapture_FocusChanged(MediaCapture sender, MediaCaptureFocusChangedEventArgs args)
+        {
+            var focusControl = mediaCapture.VideoDeviceController.FocusControl;
+            if (cameraPreviewControl.FocusMode == CameraFocusMode.Auto && args.FocusState == MediaCaptureFocusState.Focused)
+            {
+                await focusControl.LockAsync();
             }
         }
 
@@ -536,15 +564,23 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 return;
             }
 
-            await focusControl.UnlockAsync();
-            var settings = new FocusSettings { Mode = focusMode };
-            if (focusMode == FocusMode.Auto && focusMode == FocusMode.Continuous)
+            // Unlock focus in case we're dealing with Continuous Autofocus
+            if (focusMode == FocusMode.Continuous)
             {
-                settings.AutoFocusRange = AutoFocusRange.FullRange;
+                await focusControl.UnlockAsync();
+            }
+            else
+            {
+                await focusControl.LockAsync();
             }
 
+            var settings = new FocusSettings
+            {
+                Mode = focusMode,
+                AutoFocusRange = focusControl.SupportedFocusRanges.Contains(AutoFocusRange.FullRange) ? AutoFocusRange.FullRange : focusControl.SupportedFocusRanges.FirstOrDefault()
+            };
+
             focusControl.Configure(settings);
-            await focusControl.FocusAsync();
         }
 
         private IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
