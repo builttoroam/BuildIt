@@ -75,7 +75,6 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     {
         private ICommand pressedCommand;
         private ICommand cameraPreviewErrorCommand;
-        private ICommand testCommand;
         private bool commandIsEnabled;
         private CameraFocusMode cameraFocusMode;
         private bool isAutoFocusMode;
@@ -106,11 +105,6 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                 CameraFocusMode = cameraFocusErrorParameters.Data;
             }
         }
-
-        public ICommand TestCommand => testCommand ?? (testCommand = new Command(() =>
-        {
-            
-        }));
 
         public IStateManager StateManager { get; } = new StateManager();
 
