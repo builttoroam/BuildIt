@@ -30,7 +30,7 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous, propertyChanging: FocusModePropertyChanging, propertyChanged: FocusModePropertyChanged);
 
         /// <summary>
-        /// TODO Add summary
+        /// Gets or sets the information on how the camera preview control layout will scale
         /// </summary>
         public static readonly BindableProperty AspectProperty = BindableProperty.Create(nameof(Aspect), typeof(Aspect), typeof(CameraPreviewControl), default(Aspect));
 
@@ -88,7 +88,7 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Gets or sets // TODO Add summary
+        /// Gets or sets the information on how the camera preview control layout will scale
         /// </summary>
         public Aspect Aspect
         {
