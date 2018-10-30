@@ -318,37 +318,36 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 }
 
                 var frameSourceGroups = await MediaFrameSourceGroup.FindAllAsync();
-                var selectedGroupObjects = frameSourceGroups.Select(group =>
-                   new
-                   {
-                       sourceGroup = group,
-                       colorSourceInfo = group.SourceInfos.FirstOrDefault((sourceInfo) =>
-                       {
-                           return sourceInfo.SourceKind == MediaFrameSourceKind.Color;
-                       })
-                   }).Where(t => t.colorSourceInfo != null)
-                   .FirstOrDefault();
+                var selectedGroupObjects = frameSourceGroups.Select(group => new
+                {
+                    sourceGroup = group,
+                    colorSourceInfo = group.SourceInfos.FirstOrDefault((sourceInfo) =>
+                    {
+                        return sourceInfo.SourceKind == MediaFrameSourceKind.Color;
+                    })
+                }).Where(t => t.colorSourceInfo != null && t.sourceGroup?.Id == cameraDevice.Id)
+                  .FirstOrDefault();
 
 
                 MediaFrameSourceGroup selectedGroup = selectedGroupObjects?.sourceGroup;
                 MediaFrameSourceInfo colorSourceInfo = selectedGroupObjects?.colorSourceInfo;
                 mediaCapture = new MediaCapture();
 
-                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id }; //, SourceGroup = selectedGroup, StreamingCaptureMode = StreamingCaptureMode.Video };
+                var settings = new MediaCaptureInitializationSettings { VideoDeviceId = cameraDevice.Id, SourceGroup = selectedGroup, StreamingCaptureMode = StreamingCaptureMode.Video };
                 try
                 {
                     await mediaCapture.InitializeAsync(settings);
                     await SetFocusModeAsync(cameraPreviewControl.FocusMode);
-                    //var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
-                    //var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
-                    //if (preferredFormat != null)
-                    //{
-                    //    await colorFrameSource.SetFormatAsync(preferredFormat);
-                    //}
+                    var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
+                    var preferredFormat = colorFrameSource.SupportedFormats.FirstOrDefault(f => f.Subtype == MediaEncodingSubtypes.Argb32);
+                    if (preferredFormat != null)
+                    {
+                        await colorFrameSource.SetFormatAsync(preferredFormat);
+                    }
 
-                    //mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
-                    //mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
-                    //await mediaFrameReader.StartAsync();
+                    mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
+                    mediaFrameReader.FrameArrived += MediaFrameReader_FrameArrived;
+                    await mediaFrameReader.StartAsync();
                     isInitialized = true;
                 }
                 catch (Exception ex)
