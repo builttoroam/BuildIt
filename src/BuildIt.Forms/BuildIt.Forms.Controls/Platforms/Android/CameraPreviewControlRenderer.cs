@@ -80,6 +80,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private CameraFocusMode defaultFocusMode;
         private bool flashSupported;
         private ImageAvailableListener imageAvailableListener;
+        private ImageScanCompletedListener imageScanCompletedListener;
         private ImageReader imageReader;
         private LensFacing lensFacing;
 
@@ -573,10 +574,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         internal void SaveToPhotosLibrary(Java.IO.File file)
         {
-            var intent = new Intent(Intent.ActionMediaScannerScanFile);
             var uri = global::Android.Net.Uri.FromFile(file);
-            intent.SetData(uri);
-            Activity.SendBroadcast(intent);
+            MediaScannerConnection.ScanFile(Context, new[] { uri.Path }, null, imageScanCompletedListener);
         }
 
         internal void RaiseErrorOpening()
@@ -586,27 +585,20 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         protected async Task<string> CaptureCamera2PhotoToFile(bool saveToPhotosLibrary)
         {
-            try
+            imageAvailableListener.FilePath = BuildFilePath();
+            imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
+            imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
+            LockFocus();
+            var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
+            if (saveToPhotosLibrary)
             {
-                imageAvailableListener.FilePath = BuildFilePath();
-                imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
-                imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
-                LockFocus();
-                var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
-                if (saveToPhotosLibrary)
+                using (var file = new Java.IO.File(finalFilePath))
                 {
-                    using (var file = new Java.IO.File(finalFilePath))
-                    {
-                        SaveToPhotosLibrary(file);
-                    }
+                    SaveToPhotosLibrary(file);
                 }
+            }
 
-                return imageAvailableListener.FilePath;
-            }
-            finally
-            {
-                imageAvailableListener.FilePath = null;
-            }
+            return finalFilePath;
         }
 
         /// <summary>
@@ -676,6 +668,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 stateCallback = new CameraStateListener(this);
                 CaptureCallback = new CameraCaptureListener(this);
                 imageAvailableListener = new ImageAvailableListener(this);
+                imageScanCompletedListener = new ImageScanCompletedListener();
                 surfaceTextureListener = new Camera2BasicSurfaceTextureListener(this);
 
                 // fill Orientations list
@@ -1140,7 +1133,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             return cameras.AsReadOnly();
         }
 
-
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task StartCameraPreview()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1156,7 +1148,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             camera.SetPreviewTexture(surfaceTexture);
             PrepareAndStartCamera();
         }
-
 
 #pragma warning disable 1998
         private async Task<bool> TryFocusingCameraFunc()
