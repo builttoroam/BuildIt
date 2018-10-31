@@ -14,7 +14,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public override void OnCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result)
         {
-            Process(result);
+            Process(result, true);
         }
 
         public override void OnCaptureProgressed(CameraCaptureSession session, CaptureRequest request, CaptureResult partialResult)
@@ -22,13 +22,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             Process(partialResult);
         }
 
-        private void Process(CaptureResult result)
+        private void Process(CaptureResult result, bool processCaptureCompleted = false)
         {
             var afState = (Integer)result.Get(CaptureResult.ControlAfState);
             var controlAfState = (ControlAFState)(afState?.IntValue() ?? (int)default(ControlAFState));
 
-            System.Diagnostics.Debug.WriteLine($"AF State is {controlAfState}");
+            if (processCaptureCompleted)
+            {
+                System.Diagnostics.Debug.WriteLine($"AF State is {controlAfState}");
+                owner.CurrentFocusState = controlAfState;
+            }
 
+            Process(result, afState, controlAfState);
+        }
+
+        private void Process(CaptureResult result, Integer afState, ControlAFState controlAfState)
+        {
             switch (owner.State)
             {
                 case CameraPreviewControlRenderer.StateWaitingLock:
