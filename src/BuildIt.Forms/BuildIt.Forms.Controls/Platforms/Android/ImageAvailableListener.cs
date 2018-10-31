@@ -10,7 +10,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
     {
         private readonly CameraPreviewControlRenderer owner;
 
-        private SemaphoreSlim frameProcessingSemaphore = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim frameProcessingSemaphore = new SemaphoreSlim(1);
 
         public ImageAvailableListener(CameraPreviewControlRenderer cameraControlRenderer)
         {
