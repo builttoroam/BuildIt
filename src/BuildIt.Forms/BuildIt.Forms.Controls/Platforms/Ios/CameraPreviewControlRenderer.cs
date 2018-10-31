@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using AVFoundation;
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Controls.Common;
@@ -18,6 +18,8 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using System.Threading;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
 namespace BuildIt.Forms.Controls.Platforms.Ios
@@ -25,7 +27,12 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
     /// <inheritdoc />
     public class CameraPreviewControlRenderer : FrameRenderer, IAVCaptureVideoDataOutputSampleBufferDelegate
     {
+        private readonly SemaphoreSlim tryFocusingSemaphoreSlim = new SemaphoreSlim(1);
+        private readonly IntPtr focusModeChangeObserverContext = (IntPtr)1;
+
         private const string ImageCapture = "ImageCapture";
+        private const string FocusModeObserverValueName = "focusMode";
+
         private AVCaptureSession captureSession;
         private AVCaptureVideoPreviewLayer videoPreviewLayer;
         private AVCaptureDeviceInput captureDeviceInput;
@@ -37,6 +44,8 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         private AVCaptureVideoDataOutput videoOutput;
         private FrameExtractor frameExtractor;
         private DispatchQueue videoCaptureQueue;
+
+        private TaskCompletionSource<bool> autoFocusedCompletionSourceTask;
 
         /// <inheritdoc />
         public override void LayoutSubviews()
@@ -64,6 +73,41 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         }
 
         /// <inheritdoc />
+        public override void ObserveValue(NSString keyPath, NSObject ofObject, NSDictionary change, IntPtr context)
+        {
+            if (context == focusModeChangeObserverContext && string.Equals(keyPath, FocusModeObserverValueName))
+            {
+                var oldValue = -1;
+                var newValue = -1;
+                foreach (var key in change.Keys)
+                {
+                    var value = change[key];
+                    if (value is NSNumber number)
+                    {
+                        Debug.WriteLine($"[{nameof(ObserveValue)}] Value for key {key as NSString} is {((AVCaptureFocusMode)number.Int32Value).ToString()}");
+                        if (string.Equals(key as NSString, nameof(NSKeyValueObservingOptions.New).ToLower()))
+                        {
+                            newValue = number.Int32Value;
+                        }
+                        else if (string.Equals(key as NSString, nameof(NSKeyValueObservingOptions.Old).ToLower()))
+                        {
+                            oldValue = number.Int32Value;
+                        }
+                    }
+                }
+
+                if (oldValue == (int)AVCaptureFocusMode.AutoFocus)
+                {
+                    autoFocusedCompletionSourceTask?.SetResult(newValue == (int)AVCaptureFocusMode.Locked);
+                }
+            }
+            else
+            {
+                base.ObserveValue(keyPath, ofObject, change, context);
+            }
+        }
+
+        /// <inheritdoc />
         protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
             base.OnElementChanged(e);
@@ -87,14 +131,14 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         }
 
         /// <inheritdoc />
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
             if (e.PropertyName == CameraPreviewControl.PreferredCameraProperty.PropertyName &&
                 isInitialized)
             {
-                SetPreferredCamera();
+                await SetPreferredCamera();
             }
 
             if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
@@ -164,11 +208,9 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task StartPreviewFunc()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            SetupLiveCameraStream();
+            await SetupLiveCameraStream();
             isInitialized = true;
         }
 
@@ -209,12 +251,19 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-#pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
         private async Task<bool> TryFocusingFunc()
-#pragma warning restore 1998 // Async method lacks 'await' operators and will run synchronously
         {
+            if (captureDevice.FocusMode == AVCaptureFocusMode.ContinuousAutoFocus)
+            {
+                return false;
+            }
+
             try
             {
+                await tryFocusingSemaphoreSlim.WaitAsync();
+
+                autoFocusedCompletionSourceTask = new TaskCompletionSource<bool>();
+
                 if (captureDevice.FocusMode == AVCaptureFocusMode.Locked)
                 {
                     captureDevice.LockForConfiguration(out NSError error);
@@ -222,11 +271,16 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                     captureDevice.UnlockForConfiguration();
                 }
 
-                return true;
+                return await autoFocusedCompletionSourceTask.Task;
             }
             catch (Exception ex)
             {
                 cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Common.Constants.Errors.CameraFocusingFailed, ex.Message }));
+            }
+            finally
+            {
+                autoFocusedCompletionSourceTask = null;
+                tryFocusingSemaphoreSlim.Release();
             }
 
             return false;
@@ -247,10 +301,10 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
         }
 
-        private void SetPreferredCamera()
+        private async Task SetPreferredCamera()
         {
             captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
-            ConfigureCameraForDevice();
+            await ConfigureCameraForDevice();
 
             captureSession.BeginConfiguration();
             captureSession.RemoveInput(captureDeviceInput);
@@ -288,7 +342,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             Add(liveCameraStream);
         }
 
-        private void SetupLiveCameraStream()
+        private async Task SetupLiveCameraStream()
         {
             captureSession = new AVCaptureSession();
 
@@ -301,7 +355,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             captureDevice = GetCameraForPreference(cameraPreviewControl.PreferredCamera);
 
-            ConfigureCameraForDevice();
+            await ConfigureCameraForDevice();
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
             stillImageOutput = new AVCaptureStillImageOutput
@@ -351,24 +405,24 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
         private AVCaptureDevice GetCameraForPreference(CameraFacing cameraPreference)
         {
+            captureDevice?.RemoveObserver(this, FocusModeObserverValueName);
+
             var orientation = cameraPreference == CameraFacing.Back
                 ? AVCaptureDevicePosition.Back
                 : AVCaptureDevicePosition.Front;
 
             var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaType.Video);
-            return devices.FirstOrDefault(d => d.Position == orientation) ?? devices.FirstOrDefault(d => d.Position == AVCaptureDevicePosition.Unspecified);
+            var device = devices.FirstOrDefault(d => d.Position == orientation) ?? devices.FirstOrDefault(d => d.Position == AVCaptureDevicePosition.Unspecified);
+            device?.AddObserver(this, FocusModeObserverValueName, NSKeyValueObservingOptions.OldNew, focusModeChangeObserverContext);
+
+            return device;
         }
 
-        private void ConfigureCameraForDevice()
+        private async Task ConfigureCameraForDevice()
         {
             var error = new NSError();
-            if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
-            {
-                captureDevice.LockForConfiguration(out error);
-                captureDevice.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
-                captureDevice.UnlockForConfiguration();
-            }
-            else if (captureDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
+            await SetFocusModeFunc();
+            if (captureDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
             {
                 captureDevice.LockForConfiguration(out error);
                 captureDevice.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
