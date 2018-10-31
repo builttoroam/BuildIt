@@ -151,14 +151,17 @@ namespace BuildIt.Forms.Sample
                     : CameraFacing.Back;
         }
 
-
         private async void PhotoButton_OnClicked(object sender, EventArgs e)
         {
-            var path = await CameraPreviewControl.CaptureFrameToFile(true);
-            var result = await DisplayAlert("Photo Captured", path, "View Photo", "Cancel");
-            if (result)
+            await TakePhoto();
+        }
+
+        private async void FocusAndTakePhoto_OnClicked(object sender, EventArgs e)
+        {
+            var focusSucceeded = await CameraPreviewControl.TryFocusing();
+            if (focusSucceeded)
             {
-                await Navigation.PushModalAsync(new SavedPhotoPage(path), true);
+                await TakePhoto();
             }
         }
 
@@ -231,6 +234,16 @@ namespace BuildIt.Forms.Sample
             }
 
             await CameraPreviewControl.TryFocusing();
+        }
+
+        private async Task TakePhoto()
+        {
+            var path = await CameraPreviewControl.CaptureFrameToFile(true);
+            var result = await DisplayAlert("Photo Captured", path, "View Photo", "Cancel");
+            if (result)
+            {
+                await Navigation.PushModalAsync(new SavedPhotoPage(path), true);
+            }
         }
 
         private void SetFocusMode(CameraFocusMode focusMode)
