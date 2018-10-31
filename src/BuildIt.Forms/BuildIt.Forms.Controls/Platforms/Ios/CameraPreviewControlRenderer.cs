@@ -97,12 +97,6 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 SetPreferredCamera();
             }
 
-            if (e.PropertyName == CameraPreviewControl.FocusModeProperty.PropertyName)
-            {
-                // TODO Implement
-                // EnableContinuousAutofocus(cameraPreviewControl.EnableContinuousAutoFocus);
-            }
-
             if (e.PropertyName == CameraPreviewControl.AspectProperty.PropertyName)
             {
                 ApplyAspect();
@@ -211,7 +205,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             {
                 focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
                 var fallbackFocusMode = focusMode.ToControlFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Common.Constants.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
         }
 
@@ -232,7 +226,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
             }
             catch (Exception ex)
             {
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Strings.Errors.CameraFocusingFailed, ex.Message }));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Common.Constants.Errors.CameraFocusingFailed, ex.Message }));
             }
 
             return false;

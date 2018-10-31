@@ -3,7 +3,7 @@
     /// <summary>
     /// Class containing all of the strings
     /// </summary>
-    internal class Strings
+    internal class Constants
     {
         /// <summary>
         /// Error strings
