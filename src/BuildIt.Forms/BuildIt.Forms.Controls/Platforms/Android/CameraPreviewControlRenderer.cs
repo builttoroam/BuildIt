@@ -59,6 +59,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         private const string ImageCapture = "ImageCapture";
 
+        private const int CameraFocusCheckDelayInMiliseconds = 100;
+
         // Max preview height that is guaranteed by Camera2 API
         private static readonly int MaxPreviewHeight = 1080;
 
@@ -68,6 +70,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private static readonly SparseIntArray Orientations = new SparseIntArray();
 
         private readonly SemaphoreSlim stopCameraPreviewSemaphoreSlim = new SemaphoreSlim(1);
+
+        private readonly SemaphoreSlim tryFocusingSemaphoreSlim = new SemaphoreSlim(1);
+
+        private TaskCompletionSource<bool> autoFocusedCompletionSourceTask;
 
         // An additional thread for running tasks that shouldn't block the UI.
         private HandlerThread backgroundThread;
@@ -1084,17 +1090,27 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             SetCamera2FocusMode(cameraPreviewControl.FocusMode);
         }
 
-#pragma warning disable 1998
         private async Task<bool> TryFocusingCamera2Func()
-#pragma warning restore 1998
         {
             if (PreviewRequestBuilder == null)
             {
                 return false;
             }
 
+            var currentFocusMode = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAfMode);
+            if (currentFocusMode == (int)ControlAFMode.ContinuousPicture ||
+                currentFocusMode == (int)ControlAFMode.ContinuousVideo)
+            {
+                return false;
+            }
+
             try
             {
+                await tryFocusingSemaphoreSlim.WaitAsync();
+
+                autoFocusedCompletionSourceTask = new TaskCompletionSource<bool>();
+                StartCameraFocusSetCheckTask();
+
                 // MK Code based on the docs https://developer.android.com/reference/android/hardware/camera2/CaptureResult#CONTROL_AF_STATE
                 //    and StackOverflow answer https://stackoverflow.com/a/42158047/510627
 
@@ -1105,12 +1121,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Idle);
                 CaptureSession?.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
 
-                return true;
+                return await autoFocusedCompletionSourceTask.Task;
             }
             catch (System.Exception ex)
             {
                 cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Common.Constants.Errors.CameraFocusingFailed, ex.Message }));
                 ex.LogError();
+            }
+            finally
+            {
+                autoFocusedCompletionSourceTask = null;
+                tryFocusingSemaphoreSlim.Release();
             }
 
             return false;
@@ -1419,6 +1440,30 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraPreviewControl.SetStatus(CameraStatus.None);
             cameraPreviewControl.SetStatus(CameraStatus.Starting);
             await StartCameraPreview();
+        }
+
+        private void StartCameraFocusSetCheckTask()
+        {
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    if (CurrentFocusState == ControlAFState.FocusedLocked)
+                    {
+                        autoFocusedCompletionSourceTask?.SetResult(true);
+                        break;
+                    }
+
+                    if (CurrentFocusState == ControlAFState.NotFocusedLocked)
+                    {
+                        autoFocusedCompletionSourceTask?.SetResult(false);
+                        break;
+                    }
+
+                    // MK allow some time for the camera to focus
+                    await Task.Delay(CameraFocusCheckDelayInMiliseconds);
+                }
+            });
         }
     }
 }
