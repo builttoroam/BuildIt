@@ -284,7 +284,7 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// TODO Add summary
+        /// Handles camera feed frames
         /// </summary>
         /// <param name="mediaFrame">MediaFrame</param>
         /// <returns></returns>
@@ -321,7 +321,7 @@ namespace BuildIt.Forms.Controls
             if (!supportedFocusModes.Any(m => m == value))
             {
                 var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode) }, fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Common.Constants.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode) }, fallbackFocusMode, true));
             }
         }
 

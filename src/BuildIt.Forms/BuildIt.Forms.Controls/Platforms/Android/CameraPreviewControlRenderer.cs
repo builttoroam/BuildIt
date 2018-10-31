@@ -927,7 +927,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 focusMode = supportedModes.FirstOrDefault();
                 var fallbackFocusMode = focusMode.ToPlatformFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Common.Constants.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
 
             return focusMode;
@@ -977,7 +977,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 var fallbackFocusMode = supportedModes.LastOrDefault();
                 focusMode = fallbackFocusMode.ToPlatformFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Common.Constants.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
 
             return focusMode;
@@ -1073,9 +1073,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             cameraPreviewControl.SetStatus(CameraStatus.Stopped);
         }
 
-#pragma warning disable 1998
+#pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
         private async Task SetCamera2FocusMode()
-#pragma warning restore 1998
+#pragma warning restore 1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (cameraPreviewControl == null)
             {
@@ -1110,7 +1110,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
             catch (System.Exception ex)
             {
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Strings.Errors.CameraFocusingFailed, ex.Message }));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Common.Constants.Errors.CameraFocusingFailed, ex.Message }));
+                ex.LogError();
             }
 
             return false;

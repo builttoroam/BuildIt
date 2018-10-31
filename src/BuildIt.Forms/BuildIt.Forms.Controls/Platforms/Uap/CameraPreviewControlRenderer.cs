@@ -217,7 +217,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             }
             catch (Exception ex)
             {
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Strings.Errors.CameraFocusingFailed, ex.Message }));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters(new[] { Common.Constants.Errors.CameraFocusingFailed, ex.Message }));
             }
 
             return false;
@@ -544,7 +544,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             {
                 focusMode = focusControl.SupportedFocusModes.LastOrDefault();
                 var fallbackFocusMode = focusMode.ToControlFocusMode();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Strings.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
+                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Common.Constants.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
 
             await SetFocusModeAsync(focusControl, focusMode);
