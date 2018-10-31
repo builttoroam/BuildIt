@@ -27,7 +27,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Gets or sets the focus mode for the camera preview
         /// </summary>
-        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous, propertyChanging: FocusModePropertyChanging, propertyChanged: FocusModePropertyChanged);
+        public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreviewControl), CameraFocusMode.Continuous, propertyChanged: FocusModePropertyChanged);
 
         /// <summary>
         /// Gets or sets the information on how the camera preview control layout will scale
@@ -305,24 +305,6 @@ namespace BuildIt.Forms.Controls
         {
             Status = CameraStatus.Stopped;
             ErrorOpeningCamera?.Invoke(this, EventArgs.Empty);
-        }
-
-        private static void FocusModePropertyChanging(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            var cameraPreviewControl = bindable as CameraPreviewControl;
-            if (cameraPreviewControl == null ||
-                cameraPreviewControl.Status != CameraStatus.Started)
-            {
-                return;
-            }
-
-            var value = (CameraFocusMode)newvalue;
-            var supportedFocusModes = cameraPreviewControl.RetrieveSupportedFocusModes();
-            if (!supportedFocusModes.Any(m => m == value))
-            {
-                var fallbackFocusMode = supportedFocusModes.OrderBy(m => m).LastOrDefault();
-                cameraPreviewControl.ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Common.Constants.Errors.UnsupportedFocusModeFormat, value, fallbackFocusMode) }, fallbackFocusMode, true));
-            }
         }
 
         private static async void FocusModePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
