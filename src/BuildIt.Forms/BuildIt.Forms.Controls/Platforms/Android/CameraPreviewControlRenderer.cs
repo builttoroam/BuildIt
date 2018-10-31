@@ -128,6 +128,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
         public int State { get; set; } = StatePreview;
 
+        public ControlAFState CurrentFocusState { get; set; } = ControlAFState.Inactive;
+
         internal Activity Activity => Context as Activity;
 
         internal CameraFocusMode DesiredFocusMode => cameraPreviewControl?.FocusMode ?? default(CameraFocusMode);
@@ -150,11 +152,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 stillCaptureBuilder.AddTarget(imageReader.Surface);
 
                 // Use the same AE and AF modes as the preview.
-                stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
-                SetAutoFlash(stillCaptureBuilder);
+                var currentFocusMode = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAfMode);
+                var currentFlashMode = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAeMode);
+                stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, currentFocusMode);
+                stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, currentFlashMode);
 
                 // Orientation
-                int rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
+                var rotation = (int)Activity.WindowManager.DefaultDisplay.Rotation;
                 stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, GetOrientation(rotation));
 
                 CaptureSession.StopRepeating();
@@ -416,18 +420,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
         }
 
-        public void UnlockFocus()
+        public void HandleCaptureCompleted()
         {
             try
             {
-                // Reset the auto-focus trigger
-                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
-                SetAutoFlash(PreviewRequestBuilder);
-                CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
-
                 // After this, the camera will go back to the normal state of preview.
                 State = StatePreview;
-                CaptureSession.SetRepeatingRequest(PreviewRequest, CaptureCallback, BackgroundHandler);
+                CaptureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
             }
             catch (CameraAccessException e)
             {
@@ -588,7 +587,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             imageAvailableListener.FilePath = BuildFilePath();
             imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
             imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
-            LockFocus();
+            await CaptureCamera2PhotoAndLockFocus();
             var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
             if (saveToPhotosLibrary)
             {
@@ -933,9 +932,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 return;
             }
 
-            var focusMode = RetrieveCamera2FocusMode(controlFocusMode);
-            var current = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAfMode);
-            if (current == (int)focusMode)
+            var newFocusMode = RetrieveCamera2FocusMode(controlFocusMode);
+            var currentFocusMode = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAfMode);
+            if ((int)newFocusMode == currentFocusMode)
             {
                 return;
             }
@@ -943,14 +942,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             // MK I'm not perfectly sure if that's what needs to be done when switching from ContinuousPicture focus mode, while the camera preview is on
             //    I found in the docs https://source.android.com/devices/camera/camera3_3Amodes.html, that "Triggering locks focus once currently active sweep concludes"
             //    Triggering AF with "Start" seems to do the trick
-            if (current == (int)ControlAFMode.ContinuousPicture)
+            if (currentFocusMode == (int)ControlAFMode.ContinuousPicture)
             {
                 PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
                 CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
             }
 
             CaptureSession.StopRepeating();
-            PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)focusMode);
+            PreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)newFocusMode);
             CaptureSession.SetRepeatingRequest(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
         }
 
@@ -985,21 +984,28 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             return (Orientations.Get(rotation) + sensorOrientation + 270) % 360;
         }
 
-        private void LockFocus()
+        private async Task CaptureCamera2PhotoAndLockFocus()
         {
-            if (CaptureSession == null)
+            if (CaptureSession == null ||
+                CurrentFocusState == ControlAFState.FocusedLocked ||
+                CurrentFocusState == ControlAFState.PassiveFocused)
             {
+                // MK Inform CaptureCallback to execute waiting for the focus lock logic
+                State = StateWaitingLock;
                 return;
             }
 
             try
             {
-                // This is how to tell the camera to lock focus.
-                PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+                var currentFocusMode = (int)PreviewRequestBuilder.Get(CaptureRequest.ControlAfMode);
+                if (currentFocusMode == (int)ControlAFMode.ContinuousPicture)
+                {
+                    // MK This is how to tell the camera to lock focus
+                    PreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+                    CaptureSession.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
+                }
 
-                // Tell #captureCallback to wait for the lock.
                 State = StateWaitingLock;
-                CaptureSession?.Capture(PreviewRequestBuilder.Build(), CaptureCallback, BackgroundHandler);
             }
             catch (CameraAccessException e)
             {
