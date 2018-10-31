@@ -207,7 +207,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 //    That is, when setting focus mode to Single, and calling focus it should focus once and lock the focus (once acquired)
                 //    Currently, the behaviour is that after FocusAsync is called, the camera keeps on focusing. This might also be somehow related
                 //    to setting up the focus range?
-                await Task.Delay(50);
+                await Task.Delay(200);
 
                 await focusControl.LockAsync();
 
