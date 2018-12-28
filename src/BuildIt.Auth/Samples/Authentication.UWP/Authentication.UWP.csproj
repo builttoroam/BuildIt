@@ -11,8 +11,8 @@
     <AssemblyName>Authentication.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -89,11 +89,6 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="packages.config" />
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -153,6 +148,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{1cfc3dd3-655b-4f4c-a166-9e6577e17d35}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BuildIt.Auth\BuildIt.Auth.csproj">
+      <Project>{7094b192-eb80-43a0-b9d8-30e354ac229e}</Project>
+      <Name>BuildIt.Auth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Authentication\Authentication.csproj">
       <Project>{a710a12c-969e-43f7-b41d-43bc16c56a81}</Project>
       <Name>Authentication</Name>
