@@ -1,13 +1,10 @@
-﻿using System;
+﻿using CommonServiceLocator;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BuildIt.ServiceLocation;
 
 namespace ServiceLocation.Tests.Mocks
 {
-    class MockServiceLocator : IServiceLocator
+    internal class MockServiceLocator : IServiceLocator
     {
         public object GetInstance(Type serviceType)
         {
