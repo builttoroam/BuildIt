@@ -1,7 +1,7 @@
-﻿using System;
-using BuildIt.ServiceLocation;
+﻿using CommonServiceLocator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceLocation.Tests.Mocks;
+using System;
 
 namespace ServiceLocation.Tests
 {
