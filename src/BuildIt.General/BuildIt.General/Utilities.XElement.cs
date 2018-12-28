@@ -1,15 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using Newtonsoft.Json;
-
 
 namespace BuildIt
 {
@@ -57,6 +47,7 @@ namespace BuildIt
 
             // ReSharper disable PossibleNullReferenceException
             return element.Element(name).Value;
+
             // ReSharper restore PossibleNullReferenceException
         }
 
@@ -75,6 +66,7 @@ namespace BuildIt
 
             // ReSharper disable PossibleNullReferenceException
             return element.Element(name).Value;
+
             // ReSharper restore PossibleNullReferenceException
         }
 
@@ -93,6 +85,7 @@ namespace BuildIt
 
             // ReSharper disable PossibleNullReferenceException
             return element.Attribute(name).Value;
+
             // ReSharper restore PossibleNullReferenceException
         }
 
@@ -111,6 +104,7 @@ namespace BuildIt
 
             // ReSharper disable PossibleNullReferenceException
             return element.Attribute(name).Value;
+
             // ReSharper restore PossibleNullReferenceException
         }
     }
