@@ -1,5 +1,5 @@
 using BuildIt.Logging;
-using BuildIt.ServiceLocation;
+using CommonServiceLocator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

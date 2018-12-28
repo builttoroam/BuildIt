@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommonServiceLocator">
+      <Version>2.0.4</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
   <ItemGroup>
@@ -161,24 +164,6 @@
     <Compile Include="..\BuildIt.General\ReduxHelpers.cs">
       <Link>ReduxHelpers.cs</Link>
     </Compile>
-    <Compile Include="..\BuildIt.General\ServiceLocation\ActivationException.cs">
-      <Link>ServiceLocation\ActivationException.cs</Link>
-    </Compile>
-    <Compile Include="..\BuildIt.General\ServiceLocation\IDependencyContainer.cs">
-      <Link>ServiceLocation\IDependencyContainer.cs</Link>
-    </Compile>
-    <Compile Include="..\BuildIt.General\ServiceLocation\IServiceLocator.cs">
-      <Link>ServiceLocation\IServiceLocator.cs</Link>
-    </Compile>
-    <Compile Include="..\BuildIt.General\ServiceLocation\ServiceLocator.cs">
-      <Link>ServiceLocation\ServiceLocator.cs</Link>
-    </Compile>
-    <Compile Include="..\BuildIt.General\ServiceLocation\ServiceLocatorImplBase.cs">
-      <Link>ServiceLocation\ServiceLocatorImplBase.cs</Link>
-    </Compile>
-    <Compile Include="..\BuildIt.General\ServiceLocation\ServiceLocatorProvider.cs">
-      <Link>ServiceLocation\ServiceLocatorProvider.cs</Link>
-    </Compile>
     <Compile Include="..\BuildIt.General\TripleParameterEventArgs.cs">
       <Link>TripleParameterEventArgs.cs</Link>
     </Compile>
@@ -196,6 +181,9 @@
     </Compile>
     <Compile Include="..\BuildIt.General\Utilities.cs">
       <Link>Utilities.cs</Link>
+    </Compile>
+    <Compile Include="..\BuildIt.General\Utilities.XElement.cs">
+      <Link>Utilities.XElement.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
