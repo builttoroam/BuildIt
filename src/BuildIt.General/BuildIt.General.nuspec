@@ -14,19 +14,24 @@
     <tags>BuildIt</tags>
     <dependencies>
       <group targetFramework=".NETStandard1.0">
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
         <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="UAP10.0.16299">
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
         <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.9" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework=".NETStandard2.0">
-        <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
-      </group>
       <group targetFramework="monoandroid81">
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
         <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="xamarinios10">
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
         <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>
@@ -44,9 +49,9 @@
     <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.pdb" target="lib\uap10.0.16299" />
     <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.dll" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.General\bin\Release\monoandroid81\BuildIt.General.dll" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\BuildIt.General.pdb" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\BuildIt.General.xml" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.General.dll" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.General.pdb" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.General.xml" target="lib\monoandroid81" />
 
     <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.dll" target="lib\xamarinios10" />
     <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.pdb" target="lib\xamarinios10" />
