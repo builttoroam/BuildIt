@@ -29,7 +29,18 @@
         <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
         <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.9" exclude="Build,Analyzers" />
       </group>
+      <group targetFramework="monoandroid81">
+        <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="xamarinios10">
+        <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.1" exclude="Build,Analyzers" />
+      </group>
     </dependencies>
+
   </metadata>
   <files>
     <file src="BuildIt.States\bin\Release\netstandard1.0\BuildIt.States.dll" target="lib\netstandard1.0" />
@@ -43,7 +54,16 @@
     <file src="BuildIt.States\bin\Release\uap10.0.16299\BuildIt.States.dll" target="lib\uap10.0.16299" />
     <file src="BuildIt.States\bin\Release\uap10.0.16299\BuildIt.States.pdb" target="lib\uap10.0.16299" />
     <file src="BuildIt.States\bin\Release\uap10.0.16299\BuildIt.States.xml" target="lib\uap10.0.16299" />
-    
+
+    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.States.dll" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.States.pdb" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.States.xml" target="lib\monoandroid81" />
+
+    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.States.dll" target="lib\xamarinios10" />
+    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.States.pdb" target="lib\xamarinios10" />
+    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.States.xml" target="lib\xamarinios10" />
+
+
     <file src="BuildIt.States\**\*.cs" target="src\BuildIt.States\BuildIt.States" exclude="BuildIt.States\obj\**\*.cs" />
   </files>
 </package>
