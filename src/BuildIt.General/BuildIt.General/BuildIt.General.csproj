@@ -10,7 +10,7 @@
     <RootNamespace>BuildIt</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup> 
     <Compile Remove="Platforms\**\*.cs" />
     <None Include="Platforms\**\*.cs" />
     <Compile Remove="Resources\**\*.cs" />
