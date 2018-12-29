@@ -2,8 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.ServiceLocation;
 using BuildIt.States.Interfaces;
+using CommonServiceLocator;
 
 namespace BuildIt.States
 {
