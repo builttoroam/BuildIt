@@ -42,25 +42,25 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.General\bin\Release\netstandard1.1\BuildIt.Autofac.dll" target="lib\netstandard1.1" />
-    <file src="BuildIt.General\bin\Release\netstandard1.1\BuildIt.Autofac.pdb" target="lib\netstandard1.1" />
-    <file src="BuildIt.General\bin\Release\netstandard1.1\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.dll" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.pdb" target="lib\netstandard1.1" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
 
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.Autofac.dll" target="lib\netstandard2.0" />
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.Autofac.pdb" target="lib\netstandard2.0" />
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.Autofac.xml" target="lib\netstandard2.0" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard2.0\BuildIt.Autofac.dll" target="lib\netstandard2.0" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard2.0\BuildIt.Autofac.pdb" target="lib\netstandard2.0" />
+    <file src="BuildIt.Autofac\bin\Release\netstandard2.0\BuildIt.Autofac.xml" target="lib\netstandard2.0" />
 
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.Autofac.xml" target="lib\uap10.0.16299" />
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.Autofac.pdb" target="lib\uap10.0.16299" />
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.Autofac.dll" target="lib\uap10.0.16299" />
+    <file src="BuildIt.Autofac\bin\Release\uap10.0.16299\BuildIt.Autofac.xml" target="lib\uap10.0.16299" />
+    <file src="BuildIt.Autofac\bin\Release\uap10.0.16299\BuildIt.Autofac.pdb" target="lib\uap10.0.16299" />
+    <file src="BuildIt.Autofac\bin\Release\uap10.0.16299\BuildIt.Autofac.dll" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.Autofac.dll" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.Autofac.pdb" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\**\BuildIt.Autofac.xml" target="lib\monoandroid81" />
+    <file src="BuildIt.Autofac\bin\Release\monoandroid81\**\BuildIt.Autofac.dll" target="lib\monoandroid81" />
+    <file src="BuildIt.Autofac\bin\Release\monoandroid81\**\BuildIt.Autofac.pdb" target="lib\monoandroid81" />
+    <file src="BuildIt.Autofac\bin\Release\monoandroid81\**\BuildIt.Autofac.xml" target="lib\monoandroid81" />
 
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.Autofac.dll" target="lib\xamarinios10" />
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.Autofac.pdb" target="lib\xamarinios10" />
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.Autofac.xml" target="lib\xamarinios10" />
+    <file src="BuildIt.Autofac\bin\Release\xamarin.ios10\BuildIt.Autofac.dll" target="lib\xamarinios10" />
+    <file src="BuildIt.Autofac\bin\Release\xamarin.ios10\BuildIt.Autofac.pdb" target="lib\xamarinios10" />
+    <file src="BuildIt.Autofac\bin\Release\xamarin.ios10\BuildIt.Autofac.xml" target="lib\xamarinios10" />
 
     <file src="BuildIt.Autofac\**\*.cs" target="src\BuildIt.Autofac\BuildIt.Autofac" exclude="BuildIt.Autofac\obj\**\*.cs" />
   </files>
