@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Adds VisualStateManager, ContentButton and IconButton to Xamarin.Forms!</description>
-    <copyright>Copyright © 2018</copyright>
+    <copyright>Copyright © 2019</copyright>
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
     <dependencies>
       <group targetFramework=".NETStandard1.0">
