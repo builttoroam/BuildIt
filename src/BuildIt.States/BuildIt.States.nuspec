@@ -55,9 +55,9 @@
     <file src="BuildIt.States\bin\Release\uap10.0.16299\BuildIt.States.pdb" target="lib\uap10.0.16299" />
     <file src="BuildIt.States\bin\Release\uap10.0.16299\BuildIt.States.xml" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.States\bin\Release\monoandroid81\**\BuildIt.States.dll" target="lib\monoandroid81" />
-    <file src="BuildIt.States\bin\Release\monoandroid81\**\BuildIt.States.pdb" target="lib\monoandroid81" />
-    <file src="BuildIt.States\bin\Release\monoandroid81\**\BuildIt.States.xml" target="lib\monoandroid81" />
+    <file src="BuildIt.States\bin\Release\monoandroid81\**\BuildIt.States.dll" target="lib\monoandroid81\BuildIt.States.dll" />
+    <file src="BuildIt.States\bin\Release\monoandroid81\**\BuildIt.States.pdb" target="lib\monoandroid81\BuildIt.States.pdb" />
+    <file src="BuildIt.States\bin\Release\monoandroid81\**\BuildIt.States.xml" target="lib\monoandroid81\BuildIt.States.xml" />
 
     <file src="BuildIt.States\bin\Release\xamarin.ios10\BuildIt.States.dll" target="lib\xamarinios10" />
     <file src="BuildIt.States\bin\Release\xamarin.ios10\BuildIt.States.pdb" target="lib\xamarinios10" />
