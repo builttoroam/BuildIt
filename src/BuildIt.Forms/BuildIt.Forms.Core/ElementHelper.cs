@@ -156,4 +156,37 @@ namespace BuildIt.Forms
             message.LogMessage(assembly: FormsAssemblyForLogging);
         }
     }
+
+    //public static class SafeNameScopeExtensions
+    //{
+    //    /// <typeparam name="T">The type of instance to find.</typeparam>
+    //    /// <param name="element">An element in the scope to search.</param>
+    //    /// <param name="name">The name of the element to find.</param>
+    //    /// <summary>Returns the instance of type <paramref name="T" /> that has name <paramref name="name" /> in the scope that includes <paramref name="element" />.</summary>
+    //    /// <returns>To be added.</returns>
+    //    /// <remarks>To be added.</remarks>
+    //    public static T FindByName<T>(this Element element, string name)
+    //    {
+    //        try
+    //        {
+    //            return NameScopeExtensions.FindByName<T>(element, name);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            ex.LogError();
+    //        }
+
+    //        try
+    //        {
+    //            var child = (from e in element.Descendants().OfType<VisualElement>()
+    //                         where e.GetValue(Namepr))
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            ex.LogError();
+    //        }
+
+    //        return default;
+    //    }
+    //}
 }

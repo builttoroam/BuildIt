@@ -80,7 +80,7 @@ namespace BuildIt.Forms
             try
             {
                 // If a content view, the state groups should be appended to the first child
-                // (ie the first element inside the template
+                // (ie the first element inside the template)
                 if (view is ContentView cv)
                 {
                     view = cv.Children.FirstOrDefault();
