@@ -54,9 +54,9 @@
     <file src="BuildIt.Autofac\bin\Release\uap10.0.16299\BuildIt.Autofac.pdb" target="lib\uap10.0.16299" />
     <file src="BuildIt.Autofac\bin\Release\uap10.0.16299\BuildIt.Autofac.dll" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.Autofac\bin\Release\monoandroid81\**\BuildIt.Autofac.dll" target="lib\monoandroid81\BuildIt.Autofac.dll" />
-    <file src="BuildIt.Autofac\bin\Release\monoandroid81\**\BuildIt.Autofac.pdb" target="lib\monoandroid81\BuildIt.Autofac.pdb" />
-    <file src="BuildIt.Autofac\bin\Release\monoandroid81\**\BuildIt.Autofac.xml" target="lib\monoandroid81\BuildIt.Autofac.xml" />
+    <file src="BuildIt.Autofac\bin\Release\monoandroid81\MonoAndroid81\BuildIt.Autofac.dll" target="lib\monoandroid81" />
+    <file src="BuildIt.Autofac\bin\Release\monoandroid81\MonoAndroid81\BuildIt.Autofac.pdb" target="lib\monoandroid81" />
+    <file src="BuildIt.Autofac\bin\Release\monoandroid81\MonoAndroid81\BuildIt.Autofac.xml" target="lib\monoandroid81" />
 
     <file src="BuildIt.Autofac\bin\Release\xamarin.ios10\BuildIt.Autofac.dll" target="lib\xamarinios10" />
     <file src="BuildIt.Autofac\bin\Release\xamarin.ios10\BuildIt.Autofac.pdb" target="lib\xamarinios10" />
