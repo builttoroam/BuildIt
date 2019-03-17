@@ -4,7 +4,7 @@
       xmlns:local="using:States.Sample.UWP"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:converters="using:BuildIt.General.UI.Converters"
+      xmlns:converters="using:BuildIt.UI.Converters"
       mc:Ignorable="d">
     <Page.Resources>
         <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
@@ -87,9 +87,12 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Output1}" FontWeight="Bold" />
-                        <TextBlock Text="{Binding Output2}" Visibility="{Binding IsEnabled, Converter={StaticResource BoolVisibilityConverter}}" />
-                        <TextBlock Text="{Binding Output3}" FontStyle="Italic"
+                        <TextBlock Text="{Binding Output1}"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding Output2}"
+                                   Visibility="{Binding IsEnabled, Converter={StaticResource BoolVisibilityConverter}}" />
+                        <TextBlock Text="{Binding Output3}"
+                                   FontStyle="Italic"
                                    Visibility="{Binding IsTwoEnabled, Converter={StaticResource BoolVisibilityConverter}}" />
                     </StackPanel>
                 </DataTemplate>

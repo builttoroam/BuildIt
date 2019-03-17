@@ -11,7 +11,7 @@
     <AssemblyName>States.Sample.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -125,12 +125,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BuildIt.General">
-      <Version>1.1.0.125-beta</Version>
+    <PackageReference Include="CommonServiceLocator">
+      <Version>2.0.4</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.6" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
+      <Project>{c42af4fe-5829-4b26-94f5-93501de44d2e}</Project>
+      <Name>BuildIt.General</Name>
+    </ProjectReference>
     <ProjectReference Include="..\States.Sample.Core\States.Sample.Core.csproj">
       <Project>{9127482c-e5a0-47b5-af0c-6895e15e9c84}</Project>
       <Name>States.Sample.Core</Name>

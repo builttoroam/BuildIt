@@ -4,6 +4,7 @@
     <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
     <AssemblyName>BuildIt.Forms.Sample</AssemblyName>
     <RootNamespace>BuildIt.Forms.Sample</RootNamespace>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.220655" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,12 @@
     <ProjectReference Include="..\..\BuildIt.Forms.Controls\BuildIt.Forms.Controls.csproj" />
     <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
     <ProjectReference Include="..\BuildIt.forms.Sample.Core\BuildIt.Forms.Sample.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="SavedPhotoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />

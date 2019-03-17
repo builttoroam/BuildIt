@@ -144,7 +144,7 @@ namespace BuildIt.Forms
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="args">The event args</param>
-        protected async void ExitDesignTime(object sender, object args)
+        protected async void ExitDesignTime(object sender, TouchActionEventArgs args)
         {
             try
             {
@@ -171,7 +171,7 @@ namespace BuildIt.Forms
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="args">The event args</param>
-        protected void LaunchBuiltToRoamWebsite(object sender, object args)
+        protected void LaunchBuiltToRoamWebsite(object sender, TouchActionEventArgs args)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace BuildIt.Forms
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="args">The event args</param>
-        protected async void LaunchDesignTime(object sender, object args)
+        protected async void LaunchDesignTime(object sender, TouchActionEventArgs args)
         {
             try
             {

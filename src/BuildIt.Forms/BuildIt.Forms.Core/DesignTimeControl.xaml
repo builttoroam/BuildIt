@@ -52,9 +52,9 @@
                     <Image HeightRequest="30"
                            Aspect="AspectFill"
                            Source="{tt:ImageResource BuildIt.Forms.Assets.btrlogo.png, Parent={x:Reference RootControl}}">
-                        <Grid.Effects>
+                        <Image.Effects>
                             <tt:TouchEffect TouchAction="LaunchBuiltToRoamWebsite" />
-                        </Grid.Effects>
+                        </Image.Effects>
                     </Image>
                 </StackLayout>
             </Grid>

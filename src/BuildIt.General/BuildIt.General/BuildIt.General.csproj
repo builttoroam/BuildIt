@@ -10,7 +10,7 @@
     <RootNamespace>BuildIt</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup> 
     <Compile Remove="Platforms\**\*.cs" />
     <None Include="Platforms\**\*.cs" />
     <Compile Remove="Resources\**\*.cs" />
@@ -27,7 +27,11 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
     <Compile Include="Platforms\Net\**\*.cs" />
     <Compile Include="Platforms\Console\**\*.cs" />
-    <PackageReference Include="System.Console" Version="4.3.0" />
+    <PackageReference Include="System.Console" Version="4.3.1" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0'">
@@ -43,46 +47,51 @@
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Ios\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
-    <Compile Remove="Utilities.XElement.cs" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Mac\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
-    <Compile Remove="Utilities.XElement.cs" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Tvos\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
-    <Compile Remove="Utilities.XElement.cs" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.WatchOS')) ">
     <Compile Include="Platforms\Apple-common\**\*.cs" />
     <Compile Include="Platforms\Watchos\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
-    <Compile Remove="Utilities.XElement.cs" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
     <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />
-    <Compile Remove="Utilities.XElement.cs" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('tizen')) ">
     <Compile Include="Platforms\Tizen\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
-    <PackageReference Include="Tizen.NET" Version="4.0.0">
-      <ExcludeAssets>Runtime</ExcludeAssets>
-    </PackageReference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="CommonServiceLocator" Version="2.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 </Project>

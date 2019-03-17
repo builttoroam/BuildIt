@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
+             x:Class="BuildIt.ML.Sample.UI.MainPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <controls:CameraPreviewControl x:Name="CameraPreviewControl"
+                                           Aspect="Fill"
+                                           PreferredCamera="Back" />
+            <Label Text="{Binding Classifications, StringFormat='Classifications: {0}'}" />
+            <Button x:Name="ClassifyButton"
+                    Text="Start classifying"
+                    Clicked="ClassifyButton_Clicked" />
+            <Button Text="Stop classifying"
+                    Clicked="StopClassifyButton_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

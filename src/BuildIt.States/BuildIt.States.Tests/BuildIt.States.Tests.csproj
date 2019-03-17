@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BuildIt.States.Tests</RootNamespace>
     <AssemblyName>BuildIt.States.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -56,6 +56,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj">
+      <Project>{a088c8c7-dfdd-4bb0-a442-b509bae4d6cc}</Project>
+      <Name>BuildIt.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj">
       <Project>{fd17ad8e-6a3f-4c1d-a7cb-dcbf6a125897}</Project>
       <Name>BuildIt.General</Name>
@@ -66,8 +70,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.0" />
-    <PackageReference Include="BuildIt.Autofac" Version="1.1.0.32" />
+    <PackageReference Include="Autofac" Version="4.9.1" />
+    <PackageReference Include="CommonServiceLocator">
+      <Version>2.0.4</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

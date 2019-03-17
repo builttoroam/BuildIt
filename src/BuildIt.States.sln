@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26621.2
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.States", "BuildIt.States\BuildIt.States\BuildIt.States.csproj", "{B18D3D00-AD5F-41E5-8D44-1670F28946FB}"
 EndProject
@@ -21,6 +21,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{5CD8AA35-8DA6-41AB-B95B-2359B995791D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General", "BuildIt.General\BuildIt.General\BuildIt.General.csproj", "{C42AF4FE-5829-4B26-94F5-93501DE44D2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Autofac", "BuildIt.Autofac\BuildIt.Autofac\BuildIt.Autofac.csproj", "{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -123,6 +125,22 @@ Global
 		{C42AF4FE-5829-4B26-94F5-93501DE44D2E}.Release|x64.Build.0 = Release|Any CPU
 		{C42AF4FE-5829-4B26-94F5-93501DE44D2E}.Release|x86.ActiveCfg = Release|Any CPU
 		{C42AF4FE-5829-4B26-94F5-93501DE44D2E}.Release|x86.Build.0 = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|x64.Build.0 = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Debug|x86.Build.0 = Debug|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|ARM.Build.0 = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|x64.ActiveCfg = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|x64.Build.0 = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +149,7 @@ Global
 		{9127482C-E5A0-47B5-AF0C-6895E15E9C84} = {101B69D9-6F4E-4EE5-A583-F9E3FAB60152}
 		{6886417B-DB5F-4C2E-AA75-4E4FF308D53D} = {101B69D9-6F4E-4EE5-A583-F9E3FAB60152}
 		{C42AF4FE-5829-4B26-94F5-93501DE44D2E} = {5CD8AA35-8DA6-41AB-B95B-2359B995791D}
+		{A088C8C7-DFDD-4BB0-A442-B509BAE4D6CC} = {5CD8AA35-8DA6-41AB-B95B-2359B995791D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5EC996C-7D31-4921-A515-245DE679F1D1}

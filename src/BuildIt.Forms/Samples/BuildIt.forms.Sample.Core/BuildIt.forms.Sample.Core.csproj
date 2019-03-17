@@ -15,10 +15,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>RELEASE</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+  </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
-    <ProjectReference Include="..\..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj" />
+    <ProjectReference Include="..\..\BuildIt.Forms.Core\BuildIt.Forms.Core.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
