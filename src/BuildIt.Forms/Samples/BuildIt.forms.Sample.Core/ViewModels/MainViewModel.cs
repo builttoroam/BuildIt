@@ -113,6 +113,8 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public ObservableCollection<ItemViewModel> MoreItems { get; } = new ObservableCollection<ItemViewModel>();
 
+        public ObservableCollection<string> StatefulControlItems { get; } = new ObservableCollection<string>();
+
         public bool CommandIsEnabled
         {
             get => commandIsEnabled;
@@ -155,9 +157,10 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public async Task Init()
         {
-            // TODO To get the app to start quicker comment out the code that relates to Items and MoreItems
+            // TODO To get the app to start quicker reduce the number of items
+            // var numberOfItems = 2000;
             //var items = new List<ItemViewModel>();
-            //for (int i = 0; i < 2000; i++)
+            //for (int i = 0; i < numberOfItems; i++)
             //{
             //    var item = new ItemViewModel();
             //    await item.Init();
@@ -214,6 +217,24 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                     Data = BuildPersonWithPeople(Data);
                 }
             });
+        }
+
+        public async Task UpdateStatefulControlState(StatefulControlStates newState)
+        {
+            // MK Imitate data loading
+            StatefulControlState = StatefulControlStates.Loading;
+            await Task.Delay(2000);
+
+            StatefulControlItems.Clear();
+            if (newState == StatefulControlStates.Loaded)
+            {
+                StatefulControlItems.Add("Bob");
+                StatefulControlItems.Add("Adam");
+                StatefulControlItems.Add("Nick");
+                StatefulControlItems.Add("Andrew");
+            }
+
+            StatefulControlState = newState;
         }
 
         private Person BuildPersonWithPeople(Person state)

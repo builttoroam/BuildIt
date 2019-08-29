@@ -29,6 +29,11 @@
     public enum StatefulControlStates
     {
         /// <summary>
+        /// State that the stateful control starts with (no state)
+        /// </summary>
+        Default,
+
+        /// <summary>
         /// State that indicates that the control is currently processing data
         /// </summary>
         Loading,

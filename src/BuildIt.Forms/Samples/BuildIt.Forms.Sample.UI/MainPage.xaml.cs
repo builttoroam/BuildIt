@@ -262,19 +262,19 @@ namespace BuildIt.Forms.Sample
             currentViewModel.CameraFocusMode = focusMode;
         }
 
-        private void ChangeStatefulControlToEmpty_OnClicked(object sender, EventArgs e)
+        private async void ChangeStatefulControlToEmpty_OnClicked(object sender, EventArgs e)
         {
-            (BindingContext as MainViewModel).StatefulControlState = StatefulControlStates.Empty;
+            await (BindingContext as MainViewModel).UpdateStatefulControlState(StatefulControlStates.Empty);
         }
 
-        private void ChangeStatefulControlToLoadingError_OnClicked(object sender, EventArgs e)
+        private async void ChangeStatefulControlToLoadingError_OnClicked(object sender, EventArgs e)
         {
-            (BindingContext as MainViewModel).StatefulControlState = StatefulControlStates.LoadingError;
+            await (BindingContext as MainViewModel).UpdateStatefulControlState(StatefulControlStates.LoadingError);
         }
 
-        private void ChangeStatefulControlToLoading_OnClicked(object sender, EventArgs e)
+        private async void ChangeStatefulControlToLoaded_OnClicked(object sender, EventArgs e)
         {
-            (BindingContext as MainViewModel).StatefulControlState = StatefulControlStates.Loading;
+            await (BindingContext as MainViewModel).UpdateStatefulControlState(StatefulControlStates.Loaded);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildIt.Forms.Controls.Common;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,13 +15,14 @@ namespace BuildIt.Forms.Controls
 
         private const string EmptyStateContainer = nameof(EmptyStateContainer);
         private const string ErrorStateContainer = nameof(ErrorStateContainer);
-        private const uint FadeAnimationTimeInMilliseconds = 250;
+        private const uint FadeInAnimationTimeInMilliseconds = 250;
+        private const uint FadeOutAnimationTimeInMilliseconds = FadeInAnimationTimeInMilliseconds / 2;
         private const double FullyOpaque = 1;
         private const double FullyTransparent = 0;
         private const string LoadingStateContainer = nameof(LoadingStateContainer);
 
+        private readonly IDictionary<string, VisualElement> statefulContainersByName = new Dictionary<string, VisualElement>();
         private StatefulControlStates? currentState;
-        private IDictionary<string, VisualElement> statefulContainersByName = new Dictionary<string, VisualElement>();
 
         public StatefulControl()
         {
@@ -36,8 +36,6 @@ namespace BuildIt.Forms.Controls
             get => (StatefulControlStates)GetValue(StateProperty);
             set => SetValue(StateProperty, value);
         }
-
-        private StatefulControlTemplate Template => ControlTemplate as StatefulControlTemplate;
 
         private static async void HandleStatePropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
@@ -78,7 +76,7 @@ namespace BuildIt.Forms.Controls
 
             ViewExtensions.CancelAnimations(stateContainer);
 
-            await stateContainer.FadeTo(FullyTransparent, FadeAnimationTimeInMilliseconds);
+            await stateContainer.FadeTo(FullyTransparent, FadeOutAnimationTimeInMilliseconds);
             stateContainer.IsVisible = false;
         }
 
@@ -143,7 +141,7 @@ namespace BuildIt.Forms.Controls
             }
 
             statefulContainer.IsVisible = true;
-            await statefulContainer.FadeTo(FullyOpaque, FadeAnimationTimeInMilliseconds);
+            await statefulContainer.FadeTo(FullyOpaque, FadeInAnimationTimeInMilliseconds);
         }
     }
 }
