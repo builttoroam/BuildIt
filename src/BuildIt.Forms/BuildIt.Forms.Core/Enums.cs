@@ -25,4 +25,27 @@
         /// </summary>
         Continuous = 3
     }
+
+    public enum StatefulControlStates
+    {
+        /// <summary>
+        /// State that indicates that the control is currently processing data
+        /// </summary>
+        Loading,
+
+        /// <summary>
+        /// State that indicates that the control has no data to display
+        /// </summary>
+        Empty,
+
+        /// <summary>
+        /// State that indicates that the control had some issues with loading data
+        /// </summary>
+        LoadingError,
+
+        /// <summary>
+        /// State that indicates that the control has successfully loaded data
+        /// </summary>
+        Loaded
+    }
 }

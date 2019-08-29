@@ -7,457 +7,487 @@
              xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
              xmlns:converters="clr-namespace:BuildIt.Forms.Converters;assembly=BuildIt.Forms.Core"
              x:Class="BuildIt.Forms.Sample.MainPage">
-  <ContentPage.Resources>
-    <ResourceDictionary>
-      <anim:Storyboard x:Key="FadeToHalf"
-                       Element="{x:Reference MultiStateManualAnimateGrid}">
-        <anim:FadeAnimation Opacity="0.1"
-                            Duration="5000" />
-        <anim:ScaleAnimation Scale="2"
-                             Duration="5000" />
-      </anim:Storyboard>
-    </ResourceDictionary>
-  </ContentPage.Resources>
-  <vsm:VisualStateManager.VisualStateGroups>
-    <vsm:VisualStateGroups>
-      <vsm:VisualStateGroup Name="TabStates">
-        <vsm:VisualState Name="ShowTab1">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="true"
-                        Target="Tab1.IsVisible" />
-            <vsm:Setter Value="true"
-                        Element="{x:Reference CameraPreviewControl}"
-                        Property="IsVisible" />
-          </vsm:VisualState.Setters>
-        </vsm:VisualState>
-        <vsm:VisualState Name="ShowTab2">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="true"
-                        Target="Tab2.IsVisible" />
-          </vsm:VisualState.Setters>
-        </vsm:VisualState>
-        <vsm:VisualState Name="ShowTab3">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="true"
-                        Target="Tab3.IsVisible" />
-          </vsm:VisualState.Setters>
-        </vsm:VisualState>
-        <vsm:VisualState Name="ShowTab4">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="true"
-                        Target="Tab4.IsVisible" />
-          </vsm:VisualState.Setters>
-        </vsm:VisualState>
-      </vsm:VisualStateGroup>
-      <vsm:VisualStateGroup Name="SampleStates">
-        <vsm:VisualState Name="Show">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="Shown"
-                        Target="StatusLabel.Text" />
-          </vsm:VisualState.Setters>
-        </vsm:VisualState>
-        <vsm:VisualState Name="Hide">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="false"
-                        Target="HelloLabel.IsVisible" />
-            <vsm:Setter Value="Hidden"
-                        Target="StatusLabel.Text" />
-          </vsm:VisualState.Setters>
-        </vsm:VisualState>
-      </vsm:VisualStateGroup>
-      <vsm:VisualStateGroup Name="BlueGridStates">
-        <vsm:VisualState Name="RotateLeft">
-          <vsm:VisualState.ArrivingAnimations>
-            <anim:AnimationGroup>
-              <anim:AnimationGroup.PostAnimations>
-                <anim:RotateAnimation Rotation="-180"
-                                      Duration="5000"
-                                      Element="{x:Reference MultiStateAnimateGrid}" />
-              </anim:AnimationGroup.PostAnimations>
-            </anim:AnimationGroup>
-          </vsm:VisualState.ArrivingAnimations>
-        </vsm:VisualState>
-        <vsm:VisualState Name="RotateRight">
-          <vsm:VisualState.ArrivingAnimations>
-            <anim:AnimationGroup>
-              <anim:AnimationGroup.PostAnimations>
-                <anim:RotateAnimation Rotation="180"
-                                      Duration="5000"
-                                      Target="MultiStateAnimateGrid" />
-              </anim:AnimationGroup.PostAnimations>
-            </anim:AnimationGroup>
-          </vsm:VisualState.ArrivingAnimations>
-        </vsm:VisualState>
-      </vsm:VisualStateGroup>
-      <vsm:VisualStateGroup Name="GridStates">
-        <vsm:VisualState Name="Default">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="100"
-                        Target="AnimateGrid.HeightRequest"
-                        Duration="500" />
-          </vsm:VisualState.Setters>
-          <vsm:VisualState.ArrivingAnimations>
-            <anim:AnimationGroup>
-              <anim:AnimationGroup.PreAnimations>
-                <anim:RotateAnimation Rotation="-360"
-                                      Duration="500"
-                                      Target="AnimateGrid" />
-                <anim:FadeAnimation Opacity="0"
-                                    Duration="500"
-                                    Target="AnimateGrid" />
-              </anim:AnimationGroup.PreAnimations>
-              <anim:AnimationGroup.PostAnimations>
-                <anim:RotateAnimation Rotation="0"
-                                      Duration="500"
-                                      Target="AnimateGrid" />
-                <anim:FadeAnimation Opacity="1"
-                                    Duration="500"
-                                    Target="AnimateGrid" />
-              </anim:AnimationGroup.PostAnimations>
-            </anim:AnimationGroup>
-          </vsm:VisualState.ArrivingAnimations>
-          <vsm:VisualState.LeavingAnimations>
-            <anim:AnimationGroup>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <anim:Storyboard x:Key="FadeToHalf"
+                             Element="{x:Reference MultiStateManualAnimateGrid}">
+                <anim:FadeAnimation Opacity="0.1"
+                                    Duration="5000" />
+                <anim:ScaleAnimation Scale="2"
+                                     Duration="5000" />
+            </anim:Storyboard>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <vsm:VisualStateManager.VisualStateGroups>
+        <vsm:VisualStateGroups>
+            <vsm:VisualStateGroup Name="TabStates">
+                <vsm:VisualState Name="ShowTab1">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab1.IsVisible" />
+                        <vsm:Setter Value="true"
+                                    Element="{x:Reference CameraPreviewControl}"
+                                    Property="IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="ShowTab2">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab2.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="ShowTab3">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab3.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="ShowTab4">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab4.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="ShowTab5">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="true"
+                                    Target="Tab5.IsVisible" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
+            <vsm:VisualStateGroup Name="SampleStates">
+                <vsm:VisualState Name="Show">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="Shown"
+                                    Target="StatusLabel.Text" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+                <vsm:VisualState Name="Hide">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="false"
+                                    Target="HelloLabel.IsVisible" />
+                        <vsm:Setter Value="Hidden"
+                                    Target="StatusLabel.Text" />
+                    </vsm:VisualState.Setters>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
+            <vsm:VisualStateGroup Name="BlueGridStates">
+                <vsm:VisualState Name="RotateLeft">
+                    <vsm:VisualState.ArrivingAnimations>
+                        <anim:AnimationGroup>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:RotateAnimation Rotation="-180"
+                                                      Duration="5000"
+                                                      Element="{x:Reference MultiStateAnimateGrid}" />
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                </vsm:VisualState>
+                <vsm:VisualState Name="RotateRight">
+                    <vsm:VisualState.ArrivingAnimations>
+                        <anim:AnimationGroup>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:RotateAnimation Rotation="180"
+                                                      Duration="5000"
+                                                      Target="MultiStateAnimateGrid" />
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
+            <vsm:VisualStateGroup Name="GridStates">
+                <vsm:VisualState Name="Default">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="100"
+                                    Target="AnimateGrid.HeightRequest"
+                                    Duration="500" />
+                    </vsm:VisualState.Setters>
+                    <vsm:VisualState.ArrivingAnimations>
+                        <anim:AnimationGroup>
+                            <anim:AnimationGroup.PreAnimations>
+                                <anim:RotateAnimation Rotation="-360"
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
+                                <anim:FadeAnimation Opacity="0"
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
+                            </anim:AnimationGroup.PreAnimations>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:RotateAnimation Rotation="0"
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
+                                <anim:FadeAnimation Opacity="1"
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                    <vsm:VisualState.LeavingAnimations>
+                        <anim:AnimationGroup>
 
-              <anim:AnimationGroup.PreAnimations>
-                <anim:RotateAnimation Rotation="360"
-                                      Duration="500"
-                                      Target="AnimateGrid" />
-                <anim:FadeAnimation Opacity="0"
-                                    Duration="500"
-                                    Target="AnimateGrid" />
-              </anim:AnimationGroup.PreAnimations>
-              <anim:AnimationGroup.PostAnimations>
-                <anim:RotateAnimation Rotation="0"
-                                      Duration="500"
-                                      Target="AnimateGrid" />
-                <anim:FadeAnimation Opacity="1"
-                                    Duration="500"
-                                    Target="AnimateGrid" />
-              </anim:AnimationGroup.PostAnimations>
-            </anim:AnimationGroup>
-          </vsm:VisualState.LeavingAnimations>
-        </vsm:VisualState>
-        <vsm:VisualState Name="DoubleHeight">
-          <vsm:VisualState.Setters>
-            <vsm:Setter Value="300"
-                        Target="AnimateGrid.HeightRequest"
-                        Duration="3000" />
-          </vsm:VisualState.Setters>
-          <vsm:VisualState.ArrivingAnimations>
-            <anim:AnimationGroup>
-              <anim:AnimationGroup.PostAnimations>
-                <anim:ParallelAnimation>
-                  <anim:TranslateAnimation TranslationX="200"
-                                           Duration="3000"
-                                           Target="AnimateGrid" />
-                  <anim:FadeAnimation Opacity="0.2"
-                                      Duration="750"
-                                      Target="AnimateGrid" />
-                  <anim:SequenceAnimation>
-                    <anim:RotateAnimation Rotation="135"
-                                          Duration="750"
-                                          Target="AnimateGrid" />
-                    <anim:RotateAnimation Rotation="0"
-                                          Duration="750"
-                                          Target="AnimateGrid" />
-                    <anim:RotateAnimation Rotation="135"
-                                          Duration="750"
-                                          Target="AnimateGrid" />
-                    <anim:RotateAnimation Rotation="0"
-                                          Duration="750"
-                                          Target="AnimateGrid" />
-                  </anim:SequenceAnimation>
-                </anim:ParallelAnimation>
-              </anim:AnimationGroup.PostAnimations>
-            </anim:AnimationGroup>
-          </vsm:VisualState.ArrivingAnimations>
-        </vsm:VisualState>
-      </vsm:VisualStateGroup>
-    </vsm:VisualStateGroups>
-  </vsm:VisualStateManager.VisualStateGroups>
-  <Grid Margin="0,20,0,0">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <Button Text="Tab1"
-            Clicked="ShowTab1Clicked"
-            Grid.Column="0" />
-    <Button Text="Tab2"
-            Clicked="ShowTab2Clicked"
-            Grid.Column="1" />
-    <Button Text="Tab3"
-            Clicked="ShowTab3Clicked"
-            Grid.Column="2" />
-    <Button Text="Tab4"
-            Clicked="ShowTab4Clicked"
-            Grid.Column="3" />
+                            <anim:AnimationGroup.PreAnimations>
+                                <anim:RotateAnimation Rotation="360"
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
+                                <anim:FadeAnimation Opacity="0"
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
+                            </anim:AnimationGroup.PreAnimations>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:RotateAnimation Rotation="0"
+                                                      Duration="500"
+                                                      Target="AnimateGrid" />
+                                <anim:FadeAnimation Opacity="1"
+                                                    Duration="500"
+                                                    Target="AnimateGrid" />
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.LeavingAnimations>
+                </vsm:VisualState>
+                <vsm:VisualState Name="DoubleHeight">
+                    <vsm:VisualState.Setters>
+                        <vsm:Setter Value="300"
+                                    Target="AnimateGrid.HeightRequest"
+                                    Duration="3000" />
+                    </vsm:VisualState.Setters>
+                    <vsm:VisualState.ArrivingAnimations>
+                        <anim:AnimationGroup>
+                            <anim:AnimationGroup.PostAnimations>
+                                <anim:ParallelAnimation>
+                                    <anim:TranslateAnimation TranslationX="200"
+                                                             Duration="3000"
+                                                             Target="AnimateGrid" />
+                                    <anim:FadeAnimation Opacity="0.2"
+                                                        Duration="750"
+                                                        Target="AnimateGrid" />
+                                    <anim:SequenceAnimation>
+                                        <anim:RotateAnimation Rotation="135"
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
+                                        <anim:RotateAnimation Rotation="0"
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
+                                        <anim:RotateAnimation Rotation="135"
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
+                                        <anim:RotateAnimation Rotation="0"
+                                                              Duration="750"
+                                                              Target="AnimateGrid" />
+                                    </anim:SequenceAnimation>
+                                </anim:ParallelAnimation>
+                            </anim:AnimationGroup.PostAnimations>
+                        </anim:AnimationGroup>
+                    </vsm:VisualState.ArrivingAnimations>
+                </vsm:VisualState>
+            </vsm:VisualStateGroup>
+        </vsm:VisualStateGroups>
+    </vsm:VisualStateManager.VisualStateGroups>
+    <Grid Margin="0,20,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Text="Tab1"
+                Clicked="ShowTab1Clicked"
+                Grid.Column="0" />
+        <Button Text="Tab2"
+                Clicked="ShowTab2Clicked"
+                Grid.Column="1" />
+        <Button Text="Tab3"
+                Clicked="ShowTab3Clicked"
+                Grid.Column="2" />
+        <Button Text="Tab4"
+                Clicked="ShowTab4Clicked"
+                Grid.Column="3" />
+        <Button Text="Tab5"
+                Clicked="ShowTab5Clicked"
+                Grid.Column="4" />
 
-    <Grid Margin="0,10,0,0"
-          Grid.Row="1"
-          Grid.ColumnSpan="3">
-      <!-- Acrylic brushes only in Fall Creators Update -->
-      <!--<Grid.Effects>
+        <Grid Margin="0,10,0,0"
+              Grid.Row="1"
+              Grid.ColumnSpan="3">
+            <!-- Acrylic brushes only in Fall Creators Update -->
+            <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush" />
         </Grid.Effects>-->
-      <ScrollView x:Name="Tab1"
-                  IsVisible="false">
+            <ScrollView x:Name="Tab1"
+                        IsVisible="false">
 
-        <StackLayout vsm:Ambient.ForeColor="Blue"
-                     Margin="20">
-          <controls:CameraPreviewControl x:Name="CameraPreviewControl"
-                                         ErrorCommand="{Binding CameraPreviewErrorCommand, Mode=OneWay}"
-                                         FocusMode="{Binding CameraFocusMode, Mode=OneWay}" />
-          <Button Text="Start Camera"
-                  Clicked="StartCameraButton_OnClicked" />
-          <Button Text="Stop Camera"
-                  Clicked="StopCameraButton_OnClicked" />
-          <StackLayout>
-            <Label>
-              <Label.FormattedText>
-                <FormattedString>
-                  <Span Text="Focus Mode"></Span>
-                  <Span Text="{Binding CameraFocusMode, StringFormat=' [{0}]', Mode=OneWay}"></Span>
-                </FormattedString>
-              </Label.FormattedText>
-            </Label>
-            <ScrollView>
-              <StackLayout Orientation="Horizontal">
-                <Button Text="Auto"
-                        Clicked="AutoFocusMode_OnClicked" />
-                <Button Text="Continue"
-                        Clicked="ContinueFocusMode_OnClicked" />
-                <Button Text="Manual"
-                        Clicked="ManualFocusMode_OnClicked">
-                  <Button.IsVisible>
-                    <OnPlatform x:TypeArguments="x:Boolean">
-                      <On Platform="iOS"
-                          Value="False" />
-                    </OnPlatform>
-                  </Button.IsVisible>
-                </Button>
-              </StackLayout>
-            </ScrollView>
-          </StackLayout>
-          <Button Text="Try focusing"
-                  Clicked="TryFocusing_OnClicked"
-                  HorizontalOptions="Start"
-                  IsVisible="{Binding IsAutoFocusMode, Mode=OneWay}" />
-          <Button Text="Flip Camera"
-                  Clicked="FlipCameraButton_OnClicked" />
-          <Button Text="Take Photo"
-                  Clicked="PhotoButton_OnClicked" />
-          <Button Text="Focus and Take Photo"
-                    Clicked="FocusAndTakePhoto_OnClicked" />
-          <Button Text="Get supported focus modes"
-                  Clicked="RetrieveSupportedFocusModesButton_Clicked" />
-          <Label x:Name="SupportedFocusModesLabel" />
-          <Button Text="Get available cameras"
-                  Clicked="RetrieveAvailableCameras_Clicked" />
-          <Button Text="Preview aspect fit"
-                  Clicked="PreviewAspectFitButton_Clicked" />
-          <Button Text="Preview aspect fill"
-                  Clicked="PreviewAspectFillButton_Clicked" />
-          <Button Text="Preview fill"
-                  Clicked="PreviewFillButton_Clicked" />
-          <Label x:Name="AvailableCamerasLabel" />
+                <StackLayout vsm:Ambient.ForeColor="Blue"
+                             Margin="20">
+                    <controls:CameraPreviewControl x:Name="CameraPreviewControl"
+                                                   ErrorCommand="{Binding CameraPreviewErrorCommand, Mode=OneWay}"
+                                                   FocusMode="{Binding CameraFocusMode, Mode=OneWay}" />
+                    <Button Text="Start Camera"
+                            Clicked="StartCameraButton_OnClicked" />
+                    <Button Text="Stop Camera"
+                            Clicked="StopCameraButton_OnClicked" />
+                    <StackLayout>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Focus Mode"></Span>
+                                    <Span Text="{Binding CameraFocusMode, StringFormat=' [{0}]', Mode=OneWay}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <ScrollView>
+                            <StackLayout Orientation="Horizontal">
+                                <Button Text="Auto"
+                                        Clicked="AutoFocusMode_OnClicked" />
+                                <Button Text="Continue"
+                                        Clicked="ContinueFocusMode_OnClicked" />
+                                <Button Text="Manual"
+                                        Clicked="ManualFocusMode_OnClicked">
+                                    <Button.IsVisible>
+                                        <OnPlatform x:TypeArguments="x:Boolean">
+                                            <On Platform="iOS"
+                                                Value="False" />
+                                        </OnPlatform>
+                                    </Button.IsVisible>
+                                </Button>
+                            </StackLayout>
+                        </ScrollView>
+                    </StackLayout>
+                    <Button Text="Try focusing"
+                            Clicked="TryFocusing_OnClicked"
+                            HorizontalOptions="Start"
+                            IsVisible="{Binding IsAutoFocusMode, Mode=OneWay}" />
+                    <Button Text="Flip Camera"
+                            Clicked="FlipCameraButton_OnClicked" />
+                    <Button Text="Take Photo"
+                            Clicked="PhotoButton_OnClicked" />
+                    <Button Text="Focus and Take Photo"
+                            Clicked="FocusAndTakePhoto_OnClicked" />
+                    <Button Text="Get supported focus modes"
+                            Clicked="RetrieveSupportedFocusModesButton_Clicked" />
+                    <Label x:Name="SupportedFocusModesLabel" />
+                    <Button Text="Get available cameras"
+                            Clicked="RetrieveAvailableCameras_Clicked" />
+                    <Button Text="Preview aspect fit"
+                            Clicked="PreviewAspectFitButton_Clicked" />
+                    <Button Text="Preview aspect fill"
+                            Clicked="PreviewAspectFillButton_Clicked" />
+                    <Button Text="Preview fill"
+                            Clicked="PreviewFillButton_Clicked" />
+                    <Label x:Name="AvailableCamerasLabel" />
 
-          <controls:IconButton Icon="&#xF04B;"
-                               vsm:Ambient.FontSize="40"
-                               Pressed="ContentButton_OnPressed" />
+                    <controls:IconButton Icon="&#xF04B;"
+                                         vsm:Ambient.FontSize="40"
+                                         Pressed="ContentButton_OnPressed" />
 
-          <Grid HeightRequest="200"
-                BackgroundColor="Pink">
-            <Grid.Effects>
-              <vsm:TouchEffect Capture="True"
-                               TouchAction="OnTouchEffectAction" />
-            </Grid.Effects>
-            <Label FontSize="30"
-                   x:Name="HelloLabel"
-                   Text="Hello World - Blue! &#xF04B;"
-                   vsm:Ambient.FontFamily="fontawesome-head.ttf#FontAwesome">
-            </Label>
-          </Grid>
+                    <Grid HeightRequest="200"
+                          BackgroundColor="Pink">
+                        <Grid.Effects>
+                            <vsm:TouchEffect Capture="True"
+                                             TouchAction="OnTouchEffectAction" />
+                        </Grid.Effects>
+                        <Label FontSize="30"
+                               x:Name="HelloLabel"
+                               Text="Hello World - Blue! &#xF04B;"
+                               vsm:Ambient.FontFamily="fontawesome-head.ttf#FontAwesome">
+                        </Label>
+                    </Grid>
 
-          <Label FontSize="30"
-                 x:Name="StatusLabel"
-                 TextColor="Red"
-                 Text="Hello World - Red!" />
-          <Grid HeightRequest="100"
-                WidthRequest="100"
-                x:Name="MultiStateAnimateGrid"
-                HorizontalOptions="Start">
-            <Grid.Effects>
-              <vsm:BackgroundEffect FallbackColor="Blue" />
-            </Grid.Effects>
-          </Grid>
-          <Grid HeightRequest="100"
-                WidthRequest="100"
-                x:Name="MultiStateManualAnimateGrid"
-                HorizontalOptions="Start">
-            <Grid.Effects>
-              <vsm:BackgroundEffect FallbackColor="Red" />
-            </Grid.Effects>
-          </Grid>
-          <StackLayout Orientation="Horizontal">
-            <Button Text="Rotate Left"
-                    Clicked="RotateLeftClicked" />
-            <Button Text="Rotate Right"
-                    Clicked="RotateRightClicked" />
-            <Button Text="Rotate Left Special">
-              <Button.Triggers>
-                <EventTrigger Event="Clicked">
-                  <anim:StoryboardTriggerAction Storyboard="{StaticResource FadeToHalf}" />
-                </EventTrigger>
-              </Button.Triggers>
-            </Button>
-          </StackLayout>
-          <Grid HeightRequest="100"
-                WidthRequest="100"
-                x:Name="AnimateGrid"
-                HorizontalOptions="Start">
-            <Grid.Effects>
-              <vsm:BackgroundEffect FallbackColor="Green" />
-            </Grid.Effects>
-          </Grid>
-          <StackLayout Orientation="Horizontal">
-            <Button Text="Expand"
-                    Clicked="ExpandClicked" />
-            <Button Text="Default"
-                    Clicked="DefaultClicked" />
-          </StackLayout>
-          <Grid Padding="80">
-            <Grid.Effects>
-              <vsm:BackgroundEffect FallbackColor="Red" />
-            </Grid.Effects>
-            <Button Text="Hello World!"
-                    Clicked="ButtonClicked"
-                    HorizontalOptions="Center" />
-          </Grid>
-          <Button Text="Hello World!"
-                  Clicked="ButtonClicked"
-                  x:Name="HelloWorldText"
-                  HorizontalOptions="Center" />
-          <controls:ContentButton VerticalOptions="Center"
-                                  x:Name="DisabledButton"
-                                  vsm:Ambient.FontSize="20"
-                                  Pressed="ToggleButtonPressed"
-                                  HorizontalOptions="Center">
+                    <Label FontSize="30"
+                           x:Name="StatusLabel"
+                           TextColor="Red"
+                           Text="Hello World - Red!" />
+                    <Grid HeightRequest="100"
+                          WidthRequest="100"
+                          x:Name="MultiStateAnimateGrid"
+                          HorizontalOptions="Start">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Blue" />
+                        </Grid.Effects>
+                    </Grid>
+                    <Grid HeightRequest="100"
+                          WidthRequest="100"
+                          x:Name="MultiStateManualAnimateGrid"
+                          HorizontalOptions="Start">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Red" />
+                        </Grid.Effects>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Rotate Left"
+                                Clicked="RotateLeftClicked" />
+                        <Button Text="Rotate Right"
+                                Clicked="RotateRightClicked" />
+                        <Button Text="Rotate Left Special">
+                            <Button.Triggers>
+                                <EventTrigger Event="Clicked">
+                                    <anim:StoryboardTriggerAction Storyboard="{StaticResource FadeToHalf}" />
+                                </EventTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </StackLayout>
+                    <Grid HeightRequest="100"
+                          WidthRequest="100"
+                          x:Name="AnimateGrid"
+                          HorizontalOptions="Start">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Green" />
+                        </Grid.Effects>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Expand"
+                                Clicked="ExpandClicked" />
+                        <Button Text="Default"
+                                Clicked="DefaultClicked" />
+                    </StackLayout>
+                    <Grid Padding="80">
+                        <Grid.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Red" />
+                        </Grid.Effects>
+                        <Button Text="Hello World!"
+                                Clicked="ButtonClicked"
+                                HorizontalOptions="Center" />
+                    </Grid>
+                    <Button Text="Hello World!"
+                            Clicked="ButtonClicked"
+                            x:Name="HelloWorldText"
+                            HorizontalOptions="Center" />
+                    <controls:ContentButton VerticalOptions="Center"
+                                            x:Name="DisabledButton"
+                                            vsm:Ambient.FontSize="20"
+                                            Pressed="ToggleButtonPressed"
+                                            HorizontalOptions="Center">
 
-            <StackLayout>
-              <Label Text="Hello!" />
-              <Label Text="Hello!" />
-              <Label Text="Hello!"
-                     vsm:Ambient.FontSize="30" />
-              <Label Text="Hello!" />
-              <Label Text="Hello!" />
-              <Label Text="Hello!" />
-            </StackLayout>
-          </controls:ContentButton>
-          <controls:ContentButton VerticalOptions="Center"
-                                  x:Name="DisabledCommandButton"
-                                  Command="{Binding PressedCommand}"
-                                  HorizontalOptions="Center">
+                        <StackLayout>
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!"
+                                   vsm:Ambient.FontSize="30" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                        </StackLayout>
+                    </controls:ContentButton>
+                    <controls:ContentButton VerticalOptions="Center"
+                                            x:Name="DisabledCommandButton"
+                                            Command="{Binding PressedCommand}"
+                                            HorizontalOptions="Center">
 
-            <StackLayout>
-              <Label Text="Hello!" />
-              <Label Text="Hello!" />
-              <Label Text="Hello!" />
-              <Label Text="Hello!"
-                     vsm:Ambient.FontSize="30" />
-              <Label Text="Hello!" />
-              <Label Text="Hello!" />
-            </StackLayout>
-          </controls:ContentButton>
+                        <StackLayout>
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!"
+                                   vsm:Ambient.FontSize="30" />
+                            <Label Text="Hello!" />
+                            <Label Text="Hello!" />
+                        </StackLayout>
+                    </controls:ContentButton>
 
-          <local:CustomControl x:Name="Custom">
-            <local:CustomControl.Effects>
-              <vsm:BackgroundEffect FallbackColor="Blue" />
-            </local:CustomControl.Effects>
-          </local:CustomControl>
-        </StackLayout>
-      </ScrollView>
-
-      <Grid x:Name="Tab2"
-            IsVisible="false">
-        <ListView ItemsSource="{Binding Items}"
-                  RowHeight="150">
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <local:ListViewItemControl />
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-      </Grid>
-
-      <Grid x:Name="Tab3"
-            IsVisible="False">
-        <ListView ItemsSource="{Binding MoreItems}"
-                  RowHeight="80">
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <StackLayout>
-                  <Label Text="Hello Xamarin.Forms!" />
-                  <Label Text="Enabled!"
-                         IsVisible="{Binding EnabledVisibility}" />
+                    <local:CustomControl x:Name="Custom">
+                        <local:CustomControl.Effects>
+                            <vsm:BackgroundEffect FallbackColor="Blue" />
+                        </local:CustomControl.Effects>
+                    </local:CustomControl>
                 </StackLayout>
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-      </Grid>
-      <Grid x:Name="Tab4"
-            IsVisible="False">
-        <Grid.Resources>
-          <converters:FormsImmutableDataConverter x:Key="ImmutableDataConverter" />
-        </Grid.Resources>
-        <Grid BindingContext="{Binding Converter={StaticResource ImmutableDataConverter}}">
-          <Grid BindingContext="{Binding Data}">
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackLayout Grid.Row="0">
-              <Label Text="First Name" />
-              <Label Text="{Binding FirstName}" />
-              <Label Text="Last Name" />
-              <Label Text="{Binding LastName}" />
-              <Label Text="{Binding Child.FirstName}" />
-              <Button Text="Bob"
-                      Clicked="BobClick" />
-              <Button Text="Bob2"
-                      Clicked="Bob2Click" />
-              <Button Text="Fred"
-                      Clicked="FredClick" />
-              <Button Text="Mutate"
-                      Clicked="MutateClick" />
-            </StackLayout>
-            <ListView Grid.Row="1"
-                      ItemsSource="{Binding People}">
-              <ListView.ItemTemplate>
-                <DataTemplate>
-                  <ViewCell>
-                    <Frame BorderColor="AliceBlue"
-                           Margin="0,8,0,0">
-                      <Label Text="{Binding FirstName}" />
-                    </Frame>
-                  </ViewCell>
-                </DataTemplate>
-              </ListView.ItemTemplate>
-            </ListView>
-          </Grid>
+            </ScrollView>
+
+            <Grid x:Name="Tab2"
+                  IsVisible="false">
+                <ListView ItemsSource="{Binding Items}"
+                          RowHeight="150">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <local:ListViewItemControl />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <Grid x:Name="Tab3"
+                  IsVisible="False">
+                <ListView ItemsSource="{Binding MoreItems}"
+                          RowHeight="80">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="Hello Xamarin.Forms!" />
+                                    <Label Text="Enabled!"
+                                           IsVisible="{Binding EnabledVisibility}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <Grid x:Name="Tab4"
+                  IsVisible="False">
+                <Grid.Resources>
+                    <converters:FormsImmutableDataConverter x:Key="ImmutableDataConverter" />
+                </Grid.Resources>
+                <Grid BindingContext="{Binding Converter={StaticResource ImmutableDataConverter}}">
+                    <Grid BindingContext="{Binding Data}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackLayout Grid.Row="0">
+                            <Label Text="First Name" />
+                            <Label Text="{Binding FirstName}" />
+                            <Label Text="Last Name" />
+                            <Label Text="{Binding LastName}" />
+                            <Label Text="{Binding Child.FirstName}" />
+                            <Button Text="Bob"
+                                    Clicked="BobClick" />
+                            <Button Text="Bob2"
+                                    Clicked="Bob2Click" />
+                            <Button Text="Fred"
+                                    Clicked="FredClick" />
+                            <Button Text="Mutate"
+                                    Clicked="MutateClick" />
+                        </StackLayout>
+                        <ListView Grid.Row="1"
+                                  ItemsSource="{Binding People}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Frame BorderColor="AliceBlue"
+                                               Margin="0,8,0,0">
+                                            <Label Text="{Binding FirstName}" />
+                                        </Frame>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Tab5"
+                  IsVisible="False">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <controls:StatefulControl State="{Binding StatefulControlState, Mode=OneWay}" />
+                <StackLayout Grid.Row="1"
+                             Orientation="Horizontal"
+                             Padding="10"
+                             Spacing="10">
+                    <Button Text="Empty"
+                            Clicked="ChangeStatefulControlToEmpty_OnClicked" />
+                    <Button Text="Loading"
+                            Clicked="ChangeStatefulControlToLoading_OnClicked" />
+                    <Button Text="Loading Error"
+                            Clicked="ChangeStatefulControlToLoadingError_OnClicked" />
+                </StackLayout>
+            </Grid>
         </Grid>
-      </Grid>
     </Grid>
-  </Grid>
 </ContentPage>

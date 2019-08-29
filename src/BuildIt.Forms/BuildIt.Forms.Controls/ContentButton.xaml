@@ -4,52 +4,52 @@
              xmlns:local="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
              xmlns:tt="clr-namespace:BuildIt.Forms.Controls"
              x:Class="BuildIt.Forms.Controls.ContentButton">
-    <ContentView.ControlTemplate>
-        <ControlTemplate>
-            <Grid x:Name="RootGrid"
-                  BackgroundColor="{TemplateBinding BackgroundColor}">
-                <!--<Grid.Effects>
+  <ContentView.ControlTemplate>
+    <ControlTemplate>
+      <Grid x:Name="RootGrid"
+            BackgroundColor="{TemplateBinding BackgroundColor}">
+        <!--<Grid.Effects>
                     <local:TouchEffect Capture="True"
                                        TouchAction="OnTouchEffectAction" />
                 </Grid.Effects>-->
-                <local:VisualStateManager.VisualStateGroups>
-                    <local:VisualStateGroups>
-                        <local:VisualStateGroup Name="CommonStates"
-                                                DefinitionCacheKey="BuildIt_ContentButtonStates">
-                            <local:VisualState Name="Normal" />
-                            <local:VisualState Name="PointerOver">
-                                <local:VisualState.Setters>
-                                    <local:Setter Value="#33000000"
-                                                  Element="{x:Reference Background}"
-                                                  Property="BackgroundColor" />
-                                </local:VisualState.Setters>
-                            </local:VisualState>
-                            <local:VisualState Name="Pressed">
-                                <local:VisualState.Setters>
-                                    <local:Setter Value="#66000000"
-                                                  Element="{x:Reference Background}"
-                                                  Property="BackgroundColor" />
-                                </local:VisualState.Setters>
-                            </local:VisualState>
-                            <local:VisualState Name="Disabled">
-                                <local:VisualState.Setters>
-                                    <local:Setter Value="#33000000"
-                                                  Element="{x:Reference Background}"
-                                                  Property="BackgroundColor" />
-                                </local:VisualState.Setters>
-                            </local:VisualState>
-                        </local:VisualStateGroup>
-                    </local:VisualStateGroups>
-                </local:VisualStateManager.VisualStateGroups>
-                <BoxView BackgroundColor="Transparent"
-                         x:Name="Background" />
-                <ContentPresenter x:Name="ContentPresenter"
-                                  Content="{TemplateBinding Content}" />
-            </Grid>
-        </ControlTemplate>
-    </ContentView.ControlTemplate>
-    <ContentView.Effects>
-        <local:TouchEffect Capture="True"
-                           TouchAction="OnTouchEffectAction" />
-    </ContentView.Effects>
+        <local:VisualStateManager.VisualStateGroups>
+          <local:VisualStateGroups>
+            <local:VisualStateGroup Name="CommonStates"
+                                    DefinitionCacheKey="BuildIt_ContentButtonStates">
+              <local:VisualState Name="Normal" />
+              <local:VisualState Name="PointerOver">
+                <local:VisualState.Setters>
+                  <local:Setter Value="#33000000"
+                                Element="{x:Reference Background}"
+                                Property="BackgroundColor" />
+                </local:VisualState.Setters>
+              </local:VisualState>
+              <local:VisualState Name="Pressed">
+                <local:VisualState.Setters>
+                  <local:Setter Value="#66000000"
+                                Element="{x:Reference Background}"
+                                Property="BackgroundColor" />
+                </local:VisualState.Setters>
+              </local:VisualState>
+              <local:VisualState Name="Disabled">
+                <local:VisualState.Setters>
+                  <local:Setter Value="#33000000"
+                                Element="{x:Reference Background}"
+                                Property="BackgroundColor" />
+                </local:VisualState.Setters>
+              </local:VisualState>
+            </local:VisualStateGroup>
+          </local:VisualStateGroups>
+        </local:VisualStateManager.VisualStateGroups>
+        <BoxView BackgroundColor="Transparent"
+                 x:Name="Background" />
+        <ContentPresenter x:Name="ContentPresenter"
+                          Content="{TemplateBinding Content}" />
+      </Grid>
+    </ControlTemplate>
+  </ContentView.ControlTemplate>
+  <ContentView.Effects>
+    <local:TouchEffect Capture="True"
+                       TouchAction="OnTouchEffectAction" />
+  </ContentView.Effects>
 </ContentView>
