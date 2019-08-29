@@ -78,6 +78,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         private bool commandIsEnabled;
         private CameraFocusMode cameraFocusMode;
         private bool isAutoFocusMode;
+        public StatefulControlStates statefulControlState;
 
         private bool visible = true;
 
@@ -134,6 +135,12 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                     RaisePropertyChanged(nameof(IsAutoFocusMode));
                 }
             }
+        }
+
+        public StatefulControlStates StatefulControlState
+        {
+            get => statefulControlState;
+            set => SetProperty(ref statefulControlState, value);
         }
 
         public bool IsAutoFocusMode => CameraFocusMode == CameraFocusMode.Auto;

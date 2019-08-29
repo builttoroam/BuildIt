@@ -113,6 +113,11 @@ namespace BuildIt.Forms.Sample
             VisualStateManager.GoToState(this, "ShowTab4");
         }
 
+        private async void ShowTab5Clicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "ShowTab5");
+        }
+
         private void BobClick(object sender, EventArgs e)
         {
             (BindingContext as MainViewModel).LoadBob();
@@ -255,6 +260,21 @@ namespace BuildIt.Forms.Sample
             }
 
             currentViewModel.CameraFocusMode = focusMode;
+        }
+
+        private void ChangeStatefulControlToEmpty_OnClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).StatefulControlState = StatefulControlStates.Empty;
+        }
+
+        private void ChangeStatefulControlToLoadingError_OnClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).StatefulControlState = StatefulControlStates.LoadingError;
+        }
+
+        private void ChangeStatefulControlToLoading_OnClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).StatefulControlState = StatefulControlStates.Loading;
         }
     }
 }

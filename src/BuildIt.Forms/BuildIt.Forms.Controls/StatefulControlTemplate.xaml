@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ControlTemplate xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
+                 mc:Ignorable="d"
+                 x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
+    <Grid>
+        <ContentPresenter />
+
+        <!--Loading State-->
+        <Grid x:Name="LoadingStateContainer"
+              IsVisible="False"
+              Opacity="0"
+              BackgroundColor="Aqua">
+            <ActivityIndicator IsRunning="True" />
+        </Grid>
+
+        <!--Empty State-->
+        <Grid x:Name="EmptyStateContainer"
+              IsVisible="False"
+              Opacity="0"
+              BackgroundColor="Red">
+            <Label Text="There are no elements to show" />
+        </Grid>
+
+        <!--Error State-->
+        <Grid x:Name="ErrorStateContainer"
+              IsVisible="False"
+              Opacity="0"
+              BackgroundColor="Green">
+            <Label Text="Oops, we ran into an issue." />
+        </Grid>
+    </Grid>
+</ControlTemplate>
