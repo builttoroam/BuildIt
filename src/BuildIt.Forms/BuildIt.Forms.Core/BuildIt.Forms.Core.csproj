@@ -9,7 +9,7 @@
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <AndroidResgenFile >false</AndroidResgenFile>
+    <AndroidResgenFile>false</AndroidResgenFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -63,7 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.220655" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,5 +74,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
     <ProjectReference Include="..\..\BuildIt.States\BuildIt.States\BuildIt.States.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 </Project>
