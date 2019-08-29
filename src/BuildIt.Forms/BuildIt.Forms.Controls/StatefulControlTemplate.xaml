@@ -9,14 +9,6 @@
     <Grid>
         <ContentPresenter />
 
-        <!--Loading State-->
-        <Grid x:Name="LoadingStateContainer"
-              IsVisible="False"
-              Opacity="0"
-              BackgroundColor="Aqua">
-            <ActivityIndicator IsRunning="True" />
-        </Grid>
-
         <!--Empty State-->
         <Grid x:Name="EmptyStateContainer"
               IsVisible="False"
@@ -31,6 +23,14 @@
               Opacity="0"
               BackgroundColor="Green">
             <Label Text="Oops, we ran into an issue." />
+        </Grid>
+
+        <!--Loading State-->
+        <Grid x:Name="LoadingStateContainer"
+              IsVisible="False"
+              Opacity="0"
+              BackgroundColor="Aqua">
+            <ActivityIndicator IsRunning="True" />
         </Grid>
     </Grid>
 </ControlTemplate>
