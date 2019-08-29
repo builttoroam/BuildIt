@@ -134,7 +134,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.709244" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
   <ItemGroup>
