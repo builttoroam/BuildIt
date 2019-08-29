@@ -13,13 +13,13 @@ namespace BuildIt.Forms.Controls
     {
         public static readonly BindableProperty StateProperty = BindableProperty.Create(nameof(State), typeof(StatefulControlStates), typeof(StatefulControl), propertyChanged: HandleStatePropertyChanged);
 
-        private const string EmptyStateContainer = nameof(EmptyStateContainer);
-        private const string ErrorStateContainer = nameof(ErrorStateContainer);
+        private const string EmptyStateContainerName = "EmptyStateContainer";
+        private const string ErrorStateContainerName = "ErrorStateContainer";
         private const uint FadeInAnimationTimeInMilliseconds = 250;
         private const uint FadeOutAnimationTimeInMilliseconds = FadeInAnimationTimeInMilliseconds / 2;
         private const double FullyOpaque = 1;
         private const double FullyTransparent = 0;
-        private const string LoadingStateContainer = nameof(LoadingStateContainer);
+        private const string LoadingStateContainerName = "LoadingStateContainer";
 
         private readonly IDictionary<string, VisualElement> statefulContainersByName = new Dictionary<string, VisualElement>();
         private StatefulControlStates? currentState;
@@ -27,8 +27,6 @@ namespace BuildIt.Forms.Controls
         public StatefulControl()
         {
             InitializeComponent();
-
-            ControlTemplate = new StatefulControlTemplate();
         }
 
         public StatefulControlStates State
@@ -86,15 +84,15 @@ namespace BuildIt.Forms.Controls
             switch (state)
             {
                 case StatefulControlStates.Loading:
-                    containerName = LoadingStateContainer;
+                    containerName = LoadingStateContainerName;
                     break;
 
                 case StatefulControlStates.Empty:
-                    containerName = EmptyStateContainer;
+                    containerName = EmptyStateContainerName;
                     break;
 
                 case StatefulControlStates.LoadingError:
-                    containerName = ErrorStateContainer;
+                    containerName = ErrorStateContainerName;
                     break;
             }
 
