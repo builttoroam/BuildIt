@@ -212,7 +212,7 @@
 
     <Grid Margin="0,10,0,0"
           Grid.Row="1"
-          Grid.ColumnSpan="3">
+          Grid.ColumnSpan="5">
       <!-- Acrylic brushes only in Fall Creators Update -->
       <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush" />
@@ -480,7 +480,7 @@
             <ListView.ItemTemplate>
               <DataTemplate>
                 <ViewCell>
-                    <StackLayout Orientation="Horizontal">
+                  <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding ., Mode=OneWay}"></Label>
                   </StackLayout>
                 </ViewCell>
@@ -488,17 +488,19 @@
             </ListView.ItemTemplate>
           </ListView>
         </controls:StatefulControl>
-        <StackLayout Grid.Row="1"
-                     Orientation="Horizontal"
-                     Padding="10"
-                     Spacing="10">
-          <Button Text="Load -> Empty"
-                  Clicked="ChangeStatefulControlToEmpty_OnClicked" />
-          <Button Text="Loaded (aka Success)"
-                  Clicked="ChangeStatefulControlToLoaded_OnClicked" />
-          <Button Text="Load -> Error"
-                  Clicked="ChangeStatefulControlToLoadingError_OnClicked" />
-        </StackLayout>
+        <ScrollView Grid.Row="1"
+                    Orientation="Horizontal">
+          <StackLayout Orientation="Horizontal"
+                       Padding="10"
+                       Spacing="10">
+            <Button Text="Load -> Empty"
+                    Clicked="ChangeStatefulControlToEmpty_OnClicked" />
+            <Button Text="Loaded (aka Success)"
+                    Clicked="ChangeStatefulControlToLoaded_OnClicked" />
+            <Button Text="Load -> Error"
+                    Clicked="ChangeStatefulControlToLoadingError_OnClicked" />
+          </StackLayout>
+        </ScrollView>
       </Grid>
     </Grid>
   </Grid>
