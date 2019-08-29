@@ -2,14 +2,22 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using FFImageLoading.Forms.Platform;
+using Plugin.CurrentActivity;
 using Plugin.Permissions;
+using Xamarin.Forms.Platform.Android;
 
 namespace BuildIt.Forms.Sample.Droid
 {
-    [Activity(Label = "BuildIt.Forms.Sample", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(
+        Label = "BuildIt.Forms.Sample",
+        Icon = "@drawable/icon",
+        Theme = "@style/MainTheme",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : FormsAppCompatActivity
     {
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -19,11 +27,13 @@ namespace BuildIt.Forms.Sample.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
-            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+
+            CrossCurrentActivity.Current.Init(this, bundle);
+            CachedImageRenderer.Init(enableFastRenderer: true);
 
             base.OnCreate(bundle);
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
     }
