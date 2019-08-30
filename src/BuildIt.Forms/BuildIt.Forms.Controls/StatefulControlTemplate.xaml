@@ -6,33 +6,43 @@
                  xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
                  mc:Ignorable="d"
                  x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
-  <Grid BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
-    <Grid.Resources>
-      <ResourceDictionary>
-        <x:Double x:Key="DefaultActivityIndicatorSize">40</x:Double>
-      </ResourceDictionary>
-    </Grid.Resources>
-    <ContentPresenter />
+  <controls:PullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
+    <Grid>
+      <Grid.Resources>
+        <ResourceDictionary>
+          <x:Double x:Key="DefaultActivityIndicatorSize">40</x:Double>
+        </ResourceDictionary>
+      </Grid.Resources>
 
-    <!--Empty State-->
-    <Grid x:Name="EmptyStateContainer"
-          IsVisible="False"
-          Opacity="0">
-    </Grid>
-
-    <!--Error State-->
-    <Grid x:Name="LoadingErrorStateContainer"
-          IsVisible="False"
-          Opacity="0">
-    </Grid>
-
-    <!--Loading State-->
-    <Grid x:Name="LoadingStateContainer"
-          IsVisible="False"
-          Opacity="0">
       <ActivityIndicator IsRunning="True"
+                         TranslationY="-40"
                          WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                         HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
+                         HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
+                         VerticalOptions="Start"
+                         HorizontalOptions="Center"/>
+
+      <ContentPresenter />
+
+      <!--Empty State-->
+      <Grid x:Name="EmptyStateContainer"
+            IsVisible="False"
+            Opacity="0">
+      </Grid>
+
+      <!--Error State-->
+      <Grid x:Name="LoadingErrorStateContainer"
+            IsVisible="False"
+            Opacity="0">
+      </Grid>
+
+      <!--Loading State-->
+      <Grid x:Name="LoadingStateContainer"
+            IsVisible="False"
+            Opacity="0">
+        <ActivityIndicator IsRunning="True"
+                           WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                           HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
+      </Grid>
     </Grid>
-  </Grid>
+  </controls:PullToRefreshControl>
 </ControlTemplate>
