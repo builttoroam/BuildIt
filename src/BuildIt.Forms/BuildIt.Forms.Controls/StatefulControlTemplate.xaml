@@ -6,31 +6,34 @@
                  xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
                  mc:Ignorable="d"
                  x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
-    <Grid>
-        <ContentPresenter />
+  <Grid BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
+    <Grid.Resources>
+      <ResourceDictionary>
+        <x:Double x:Key="DefaultActivityIndicatorSize">40</x:Double>
+      </ResourceDictionary>
+    </Grid.Resources>
+    <ContentPresenter />
 
-        <!--Empty State-->
-        <Grid x:Name="EmptyStateContainer"
-              IsVisible="False"
-              Opacity="0"
-              BackgroundColor="Red">
-            <Label Text="There are no elements to show" />
-        </Grid>
-
-        <!--Error State-->
-        <Grid x:Name="ErrorStateContainer"
-              IsVisible="False"
-              Opacity="0"
-              BackgroundColor="Green">
-            <Label Text="Oops, we ran into an issue." />
-        </Grid>
-
-        <!--Loading State-->
-        <Grid x:Name="LoadingStateContainer"
-              IsVisible="False"
-              Opacity="0"
-              BackgroundColor="Aqua">
-            <ActivityIndicator IsRunning="True" />
-        </Grid>
+    <!--Empty State-->
+    <Grid x:Name="EmptyStateContainer"
+          IsVisible="False"
+          Opacity="0">
     </Grid>
+
+    <!--Error State-->
+    <Grid x:Name="LoadingErrorStateContainer"
+          IsVisible="False"
+          Opacity="0">
+    </Grid>
+
+    <!--Loading State-->
+    <Grid x:Name="LoadingStateContainer"
+          IsVisible="False"
+          Opacity="0"
+          BackgroundColor="Aqua">
+      <ActivityIndicator IsRunning="True"
+                         WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                         HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
+    </Grid>
+  </Grid>
 </ControlTemplate>

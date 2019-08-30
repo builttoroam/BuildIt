@@ -6,6 +6,7 @@ using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -74,6 +75,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     public class MainViewModel : NotifyBase, IHasStates, IHasImmutableData<Person>
     {
         private ICommand pressedCommand;
+        private ICommand statefulControlRetryCommand;
         private ICommand cameraPreviewErrorCommand;
         private bool commandIsEnabled;
         private CameraFocusMode cameraFocusMode;
@@ -96,6 +98,20 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         }
 
         public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
+
+        public ICommand StatefulControlRetryCommand => statefulControlRetryCommand ?? (statefulControlRetryCommand = new Command(ExecuteStatefulControlRetryCommand, () => StatefulControlState == StatefulControlStates.LoadingError));
+
+        private async void ExecuteStatefulControlRetryCommand()
+        {
+            try
+            {
+                await UpdateStatefulControlState(StatefulControlStates.Loaded);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
 
         public ICommand CameraPreviewErrorCommand => cameraPreviewErrorCommand ?? (cameraPreviewErrorCommand = new Command(ExecuteCameraPreviewErrorCommand));
 
@@ -142,7 +158,13 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         public StatefulControlStates StatefulControlState
         {
             get => statefulControlState;
-            set => SetProperty(ref statefulControlState, value);
+            set
+            {
+                if (SetProperty(ref statefulControlState, value))
+                {
+                    (StatefulControlRetryCommand as Command)?.ChangeCanExecute();
+                }
+            }
         }
 
         public bool IsAutoFocusMode => CameraFocusMode == CameraFocusMode.Auto;
