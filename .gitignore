@@ -231,3 +231,4 @@ FakesAssemblies/
 /src/BuildIt.Auth/Samples/Authentication.Android/Resources/Resource.designer.cs
 /src/BuildIt.Forms/Samples/BuildIt.Forms.Sample.Android/Resources/Resource.Designer.cs
 /src/BuildIt.Forms/BuildIt.Forms.Core/Resources/Resource.designer.cs
+/src/BuildIt.Forms/BuildIt.Forms.Controls/Resources/Resource.designer.cs
