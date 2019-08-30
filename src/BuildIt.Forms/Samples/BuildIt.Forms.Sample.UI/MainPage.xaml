@@ -471,11 +471,44 @@
 
       <Grid x:Name="Tab5"
             IsVisible="False">
+        <Grid.Resources>
+          <ResourceDictionary>
+            <DataTemplate x:Key="EmptyStateDataTemplate">
+              <Grid>
+                <Label Text="There are no elements to display"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="24" />
+              </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="LoadingErrorStateTemplate">
+              <StackLayout Spacing="10"
+                           Padding="50, 0"
+                           VerticalOptions="Center">
+                <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
+                       VerticalOptions="Center"
+                       FontSize="20" />
+                <Button Text="Retry"
+                        Command="{Binding StatefulControlRetryCommand, Mode=OneWay}"
+                        HorizontalOptions="Center"/>
+              </StackLayout>
+            </DataTemplate>
+
+            <DataTemplate x:Key="LoadingStateTemplate">
+              <ActivityIndicator IsRunning="True" />
+            </DataTemplate>
+          </ResourceDictionary>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
           <RowDefinition />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <controls:StatefulControl State="{Binding StatefulControlState, Mode=OneWay}">
+        <controls:StatefulControl State="{Binding StatefulControlState, Mode=OneWay}"
+                                  EmptyStateTemplate="{StaticResource EmptyStateDataTemplate}"
+                                  LoadingErrorStateTemplate="{StaticResource LoadingErrorStateTemplate}"
+                                  LoadingStateTemplate="{StaticResource LoadingStateTemplate}">
           <ListView ItemsSource="{Binding StatefulControlItems, Mode=OneWay}">
             <ListView.ItemTemplate>
               <DataTemplate>
