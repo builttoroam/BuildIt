@@ -29,8 +29,7 @@
     <!--Loading State-->
     <Grid x:Name="LoadingStateContainer"
           IsVisible="False"
-          Opacity="0"
-          BackgroundColor="Aqua">
+          Opacity="0">
       <ActivityIndicator IsRunning="True"
                          WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
                          HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
