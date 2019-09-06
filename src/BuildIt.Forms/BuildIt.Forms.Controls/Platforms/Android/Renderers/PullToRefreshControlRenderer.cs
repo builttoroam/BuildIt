@@ -19,10 +19,15 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 
         private MotionEvent downEvent;
         private int currentPercentage;
+        private double pullToRefreshContentTemplateConatinerHeight;
         private float previousY;
         private readonly Context context;
         private readonly int touchSlop;
         private int? distanceToTriggerRefresh;
+        private bool isAnimatingAfterSuccessfulPulToRefresh;
+        private VisualElement pullToRefreshControlContentTemplateContainer;
+        private Grid pullToRefreshContentTemplateContainer;
+        private Controls.PullToRefreshControl pullToRefreshControl;
 
         public PullToRefreshControlRenderer(Context context)
             : base(context)
@@ -31,6 +36,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 
             touchSlop = ViewConfiguration.Get(context).ScaledPagingTouchSlop;
         }
+
+        public Controls.PullToRefreshControl PullToRefreshControl => pullToRefreshControl ?? (pullToRefreshControl = (Element as StatefulControl)?.Children?.FirstOrDefault() as Controls.PullToRefreshControl);
+
+        // TODO MK Use FindByName method instead of visual tree
+        public VisualElement PullToRefreshControlContentTemplateContainer => pullToRefreshControlContentTemplateContainer ?? (pullToRefreshControlContentTemplateContainer = (PullToRefreshControl?.Children?.FirstOrDefault() as Grid)?.Children?.ElementAt(1) as Grid);
+
+        public Grid PullToRefreshContentTemplateContainer => pullToRefreshContentTemplateContainer ?? (pullToRefreshContentTemplateContainer = ((PullToRefreshControl?.Children?.FirstOrDefault() as Grid)?.Children?.FirstOrDefault() as Grid)?.Children?.FirstOrDefault() as Grid);
 
         protected override void OnElementChanged(ElementChangedEventArgs<ContentView> e)
         {
@@ -66,9 +78,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
             }
         }
 
-        public override bool OnInterceptTouchEvent(MotionEvent ev)
+        public override bool OnInterceptTouchEvent(MotionEvent e)
         {
-            return base.OnInterceptTouchEvent(ev);
+            if (isAnimatingAfterSuccessfulPulToRefresh)
+            {
+                return true;
+            }
+
+            return base.OnInterceptTouchEvent(e);
         }
 
         // https://android.googlesource.com/platform/frameworks/support/+/f25dedc/v4/java/android/support/v4/widget/SwipeRefreshLayout.java
@@ -101,7 +118,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
                         // User velocity passed min velocity; trigger a refresh
                         if (positionYDiff > distanceToTriggerRefresh)
                         {
-                            // StartRefresh();
+                            StartRefresh();
+
                             handled = true;
                             break;
                         }
@@ -113,10 +131,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
                         }
 
                         // update content
-                        var ptrElement = (((Element as StatefulControl)?.Children?.FirstOrDefault() as Controls.PullToRefreshControl)?.Children?.FirstOrDefault() as Grid)?.Children?.FirstOrDefault();
-                        if (ptrElement != null)
+                        if (PullToRefreshControlContentTemplateContainer != null)
                         {
-                            ptrElement.TranslationY = offsetTop;
+                            PullToRefreshControlContentTemplateContainer.TranslationY = offsetTop;
                         }
 
                         previousY = e.GetY();
@@ -136,6 +153,21 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
             }
 
             return handled;
+        }
+
+        private async void StartRefresh()
+        {
+            isAnimatingAfterSuccessfulPulToRefresh = true;
+
+            try
+            {
+                await PullToRefreshControlContentTemplateContainer.TranslateTo(0, PullToRefreshContentTemplateContainer.Height, easing: Easing.SpringIn);
+                isAnimatingAfterSuccessfulPulToRefresh = false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
     }
 }

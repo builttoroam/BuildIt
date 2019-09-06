@@ -14,34 +14,41 @@
         </ResourceDictionary>
       </Grid.Resources>
 
-      <ActivityIndicator IsRunning="True"
-                         TranslationY="-40"
-                         WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                         HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
-                         VerticalOptions="Start"
-                         HorizontalOptions="Center"/>
-
-      <ContentPresenter />
-
-      <!--Empty State-->
-      <Grid x:Name="EmptyStateContainer"
-            IsVisible="False"
-            Opacity="0">
+      <Grid BackgroundColor="Pink">
+        <Grid VerticalOptions="Start"
+              HorizontalOptions="FillAndExpand"
+              Padding="20">
+          <ActivityIndicator IsRunning="True"
+                             WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                             HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"/>
+        </Grid>
       </Grid>
 
-      <!--Error State-->
-      <Grid x:Name="LoadingErrorStateContainer"
-            IsVisible="False"
-            Opacity="0">
-      </Grid>
+      <Grid x:Name="ContentPresenterContainer">
+        <ContentPresenter BackgroundColor="White"/>
 
-      <!--Loading State-->
-      <Grid x:Name="LoadingStateContainer"
-            IsVisible="False"
-            Opacity="0">
-        <ActivityIndicator IsRunning="True"
-                           WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                           HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
+        <!--Empty State-->
+        <Grid x:Name="EmptyStateContainer"
+              IsVisible="False"
+              Opacity="0">
+        </Grid>
+
+        <!--Error State-->
+        <Grid x:Name="LoadingErrorStateContainer"
+              IsVisible="False"
+              Opacity="0">
+        </Grid>
+
+        <!--Loading State-->
+        <Grid x:Name="LoadingStateContainer"
+              IsVisible="False"
+              Opacity="0">
+          <ActivityIndicator IsRunning="True"
+                             WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                             HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
+        </Grid>
       </Grid>
     </Grid>
   </controls:PullToRefreshControl>
