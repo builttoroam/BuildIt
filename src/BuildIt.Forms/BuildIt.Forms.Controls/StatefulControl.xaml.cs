@@ -186,7 +186,10 @@ namespace BuildIt.Forms.Controls
                 return;
             }
 
-            await CancelAndFinishPreviousStateUpdate();
+            if (newState != StatefulControlStates.PullToRefresh)
+            {
+                await CancelAndFinishPreviousStateUpdate();
+            }
 
             currentState = newState;
 
