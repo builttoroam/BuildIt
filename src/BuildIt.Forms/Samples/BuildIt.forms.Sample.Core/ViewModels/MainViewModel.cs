@@ -121,11 +121,10 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             try
             {
                 await Task.Delay(3000);
-                var rand = new Random();
-                //if (rand.Next(3) % 2 == 0)
-                //{
-                //    throw new Exception("Every once in a while show an error state for the pull to refresh");
-                //}
+                if (rnd.Next(3) % 2 == 0)
+                {
+                    throw new Exception("Every once in a while show an error state for the pull to refresh");
+                }
 
                 StatefulControlState = StatefulControlStates.Loaded;
             }

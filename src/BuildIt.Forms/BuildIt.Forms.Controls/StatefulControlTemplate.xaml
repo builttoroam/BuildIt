@@ -14,20 +14,35 @@
         </ResourceDictionary>
       </Grid.Resources>
 
-      <Grid BackgroundColor="Pink">
+      <!--Pull To Refresh-->
+      <Grid x:Name="PullToRefreshOuterContainer"
+            BackgroundColor="Pink">
         <Grid VerticalOptions="Start"
               HorizontalOptions="FillAndExpand"
-              Padding="20">
+              Padding="20"
+              x:Name="PullToRefreshInnerContainer">
+
           <ActivityIndicator IsRunning="True"
                              WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
                              HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
                              VerticalOptions="Center"
-                             HorizontalOptions="Center"/>
+                             HorizontalOptions="Center" />
+          <!--Pull To Refresh Error State-->
+          <StackLayout x:Name="PullToRefreshErrorStateContainer"
+                       Spacing="10"
+                       VerticalOptions="Center"
+                       IsVisible="False">
+            <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
+                   VerticalOptions="Center"
+                   FontSize="12" />
+            <Button Text="Retry"
+                    HorizontalOptions="Center" />
+          </StackLayout>
         </Grid>
       </Grid>
 
       <Grid x:Name="ContentPresenterContainer">
-        <ContentPresenter BackgroundColor="White"/>
+        <ContentPresenter BackgroundColor="White" />
 
         <!--Empty State-->
         <Grid x:Name="EmptyStateContainer"
@@ -47,7 +62,7 @@
               Opacity="0">
           <ActivityIndicator IsRunning="True"
                              WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                             HeightRequest="{StaticResource DefaultActivityIndicatorSize}"/>
+                             HeightRequest="{StaticResource DefaultActivityIndicatorSize}" />
         </Grid>
       </Grid>
     </Grid>
