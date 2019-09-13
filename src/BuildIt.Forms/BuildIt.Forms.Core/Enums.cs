@@ -51,6 +51,16 @@
         /// <summary>
         /// State that indicates that the control has successfully loaded data
         /// </summary>
-        Loaded
+        Loaded,
+
+        /// <summary>
+        /// State that indicates that the control is trying to refresh after the pull to refresh gesture
+        /// </summary>
+        PullToRefresh,
+
+        /// <summary>
+        /// State that indicates that the control ran into issue when trying to pull to refresh
+        /// </summary>
+        PullToRefreshError
     }
 }

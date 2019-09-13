@@ -505,10 +505,11 @@
           <RowDefinition />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <controls:StatefulControl State="{Binding StatefulControlState, Mode=OneWay}"
+        <controls:StatefulControl State="{Binding StatefulControlState, Mode=TwoWay}"
                                   EmptyStateTemplate="{StaticResource EmptyStateDataTemplate}"
                                   LoadingErrorStateTemplate="{StaticResource LoadingErrorStateTemplate}"
-                                  LoadingStateTemplate="{StaticResource LoadingStateTemplate}">
+                                  LoadingStateTemplate="{StaticResource LoadingStateTemplate}"
+                                  PullToRefreshCommand="{Binding StatefulControlPullToRefreshCommand, Mode=OneWay}">
           <ListView ItemsSource="{Binding StatefulControlItems, Mode=OneWay}">
             <ListView.ItemTemplate>
               <DataTemplate>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +16,7 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty LoadingStateTemplateProperty = BindableProperty.Create(nameof(LoadingStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingStateTemplateChanged);
         public static readonly BindableProperty LoadingErrorStateTemplateProperty = BindableProperty.Create(nameof(LoadingErrorStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingErrorStateTemplateChanged);
         public static readonly BindableProperty StateProperty = BindableProperty.Create(nameof(State), typeof(StatefulControlStates), typeof(StatefulControl), propertyChanged: HandleStatePropertyChanged);
+        public static readonly BindableProperty PullToRefreshCommandProperty = BindableProperty.Create(nameof(PullToRefreshCommand), typeof(ICommand), typeof(StatefulControl));
 
         private const string EmptyStateContainerName = "EmptyStateContainer";
         private const string LoadingErrorStateContainerName = "LoadingErrorStateContainer";
@@ -55,6 +57,12 @@ namespace BuildIt.Forms.Controls
         {
             get => (StatefulControlStates)GetValue(StateProperty);
             set => SetValue(StateProperty, value);
+        }
+
+        public ICommand PullToRefreshCommand
+        {
+            get => (ICommand)GetValue(PullToRefreshCommandProperty);
+            set => SetValue(PullToRefreshCommandProperty, value);
         }
 
         private static void HandleEmptyStateTemplateChanged(BindableObject bindable, object oldValue, object newValue)
@@ -113,6 +121,10 @@ namespace BuildIt.Forms.Controls
             try
             {
                 await statefulControl.UpdateState(newState);
+                if (newState == StatefulControlStates.PullToRefresh)
+                {
+                    statefulControl.PullToRefreshCommand?.Execute(EventArgs.Empty);
+                }
             }
             catch (Exception e)
             {

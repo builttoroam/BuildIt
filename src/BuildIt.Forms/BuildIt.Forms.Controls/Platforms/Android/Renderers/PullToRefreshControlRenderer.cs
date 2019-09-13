@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using Android.Content;
 using Android.Views;
@@ -12,7 +13,7 @@ using View = Android.Views.View;
 
 namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 {
-    public class PullToRefreshControlRenderer : Xamarin.Forms.Platform.Android.AppCompat.ViewRenderer<ContentView, View>
+    public class PullToRefreshControlRenderer : Xamarin.Forms.Platform.Android.AppCompat.ViewRenderer<StatefulControl, View>
     {
         private const float MaxSwipeDistanceFactor = .6f;
         private const int RefreshTriggerDistance = 120;
@@ -21,6 +22,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
         private int currentPercentage;
         private double pullToRefreshContentTemplateConatinerHeight;
         private float previousY;
+        private StatefulControlStates previousState;
         private readonly Context context;
         private readonly int touchSlop;
         private int? distanceToTriggerRefresh;
@@ -37,14 +39,14 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
             touchSlop = ViewConfiguration.Get(context).ScaledPagingTouchSlop;
         }
 
-        public Controls.PullToRefreshControl PullToRefreshControl => pullToRefreshControl ?? (pullToRefreshControl = (Element as StatefulControl)?.Children?.FirstOrDefault() as Controls.PullToRefreshControl);
+        public Controls.PullToRefreshControl PullToRefreshControl => pullToRefreshControl ?? (pullToRefreshControl = Element.Children?.FirstOrDefault() as Controls.PullToRefreshControl);
 
         // TODO MK Use FindByName method instead of visual tree
         public VisualElement PullToRefreshControlContentTemplateContainer => pullToRefreshControlContentTemplateContainer ?? (pullToRefreshControlContentTemplateContainer = (PullToRefreshControl?.Children?.FirstOrDefault() as Grid)?.Children?.ElementAt(1) as Grid);
 
         public Grid PullToRefreshContentTemplateContainer => pullToRefreshContentTemplateContainer ?? (pullToRefreshContentTemplateContainer = ((PullToRefreshControl?.Children?.FirstOrDefault() as Grid)?.Children?.FirstOrDefault() as Grid)?.Children?.FirstOrDefault() as Grid);
 
-        protected override void OnElementChanged(ElementChangedEventArgs<ContentView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<StatefulControl> e)
         {
             base.OnElementChanged(e);
 
@@ -65,6 +67,22 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 
                 //var pullToRefreshControl = new PullToRefreshControl(context);
                 //SetNativeControl(pullToRefreshControl);
+            }
+        }
+
+        protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(StatefulControl.State))
+            {
+                if (Element.State == StatefulControlStates.Loaded &&
+                    previousState == StatefulControlStates.PullToRefresh)
+                {
+                    await PullToRefreshControlContentTemplateContainer.TranslateTo(0, 0);
+                }
+
+                previousState = Element.State;
             }
         }
 
@@ -158,6 +176,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
         private async void StartRefresh()
         {
             isAnimatingAfterSuccessfulPulToRefresh = true;
+            Element.State = StatefulControlStates.PullToRefresh;
 
             try
             {

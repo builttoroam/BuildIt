@@ -76,6 +76,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     {
         private ICommand pressedCommand;
         private ICommand statefulControlRetryCommand;
+        private ICommand statefulControlPullToRefreshCommand;
         private ICommand cameraPreviewErrorCommand;
         private bool commandIsEnabled;
         private CameraFocusMode cameraFocusMode;
@@ -101,6 +102,8 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public ICommand StatefulControlRetryCommand => statefulControlRetryCommand ?? (statefulControlRetryCommand = new Command(ExecuteStatefulControlRetryCommand, () => StatefulControlState == StatefulControlStates.LoadingError));
 
+        public ICommand StatefulControlPullToRefreshCommand => statefulControlPullToRefreshCommand ?? (statefulControlPullToRefreshCommand = new Command(ExecuteStatefulControlPullToRefreshCommand));
+
         private async void ExecuteStatefulControlRetryCommand()
         {
             try
@@ -110,6 +113,25 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private async void ExecuteStatefulControlPullToRefreshCommand()
+        {
+            try
+            {
+                await Task.Delay(3000);
+                var rand = new Random();
+                //if (rand.Next(3) % 2 == 0)
+                //{
+                //    throw new Exception("Every once in a while show an error state for the pull to refresh");
+                //}
+
+                StatefulControlState = StatefulControlStates.Loaded;
+            }
+            catch (Exception)
+            {
+                StatefulControlState = StatefulControlStates.PullToRefreshError;
             }
         }
 
