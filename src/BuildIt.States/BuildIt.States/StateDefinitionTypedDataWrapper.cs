@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.States
 {

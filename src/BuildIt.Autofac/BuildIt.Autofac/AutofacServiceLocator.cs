@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BuildIt.ServiceLocation;
 using BuildIt.States.Interfaces;
 using BuildIt.States.Interfaces.StateData;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.States
 {
@@ -534,6 +534,7 @@ namespace BuildIt.States
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to await</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         protected virtual async Task ChangeCurrentState(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
@@ -645,6 +646,7 @@ namespace BuildIt.States
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         protected virtual async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
@@ -727,6 +729,7 @@ namespace BuildIt.States
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Whether the state change should be cancelled (true)</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         protected virtual async Task<bool> NotifyStateAboutToChange(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
@@ -758,6 +761,7 @@ namespace BuildIt.States
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         protected virtual async Task NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
@@ -785,6 +789,7 @@ namespace BuildIt.States
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         protected virtual async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {
@@ -812,6 +817,7 @@ namespace BuildIt.States
         /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
         /// <returns>Task to be awaited</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         protected virtual async Task NotifyStateChangeComplete(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
 #pragma warning restore 1998
         {

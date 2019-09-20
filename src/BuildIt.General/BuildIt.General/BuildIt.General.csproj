@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81;monoandroid90;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;monoandroid81;monoandroid90;net461</TargetFrameworks>
     <AssemblyName>BuildIt.General</AssemblyName>
     <PackageId>BuildIt.General</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -75,7 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
     <AndroidResource Include="Resources\**\*.xml" SubType="Designer" Generator="MSBuild:UpdateAndroidResources" />

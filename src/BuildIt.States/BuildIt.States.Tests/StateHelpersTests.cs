@@ -11,7 +11,7 @@ using BuildIt.States.Interfaces;
 using BuildIt.States.Interfaces.Builder;
 using BuildIt.States.Interfaces.StateData;
 using BuildIt.States.Typed.String;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
