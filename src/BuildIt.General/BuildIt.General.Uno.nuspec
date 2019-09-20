@@ -37,24 +37,24 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.Uno.dll" target="lib\netstandard2.0" />
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.Uno.pdb" target="lib\netstandard2.0" />
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.Uno.xml" target="lib\netstandard2.0" />
+    <file src="BuildIt.General.Uno\bin\Release\netstandard2.0\BuildIt.General.Uno.dll" target="lib\netstandard2.0" />
+    <file src="BuildIt.General.Uno\bin\Release\netstandard2.0\BuildIt.General.Uno.pdb" target="lib\netstandard2.0" />
+    <file src="BuildIt.General.Uno\bin\Release\netstandard2.0\BuildIt.General.Uno.xml" target="lib\netstandard2.0" />
     
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.Uno.xml" target="lib\uap10.0.16299" />
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.Uno.pdb" target="lib\uap10.0.16299" />
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.Uno.dll" target="lib\uap10.0.16299" />
+    <file src="BuildIt.General.Uno\bin\Release\uap10.0.16299\BuildIt.General.Uno.xml" target="lib\uap10.0.16299" />
+    <file src="BuildIt.General.Uno\bin\Release\uap10.0.16299\BuildIt.General.Uno.pdb" target="lib\uap10.0.16299" />
+    <file src="BuildIt.General.Uno\bin\Release\uap10.0.16299\BuildIt.General.Uno.dll" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.Uno.dll" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.Uno.pdb" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.Uno.xml" target="lib\monoandroid81" />
+    <file src="BuildIt.General.Uno\bin\Release\monoandroid80\80\BuildIt.General.Uno.dll" target="lib\monoandroid81" />
+    <file src="BuildIt.General.Uno\bin\Release\monoandroid80\80\BuildIt.General.Uno.pdb" target="lib\monoandroid81" />
+    <file src="BuildIt.General.Uno\bin\Release\monoandroid80\80\BuildIt.General.Uno.xml" target="lib\monoandroid81" />
 
-    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.Uno.dll" target="lib\monoandroid90" />
-    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.Uno.pdb" target="lib\monoandroid90" />
-    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.Uno.xml" target="lib\monoandroid90" />
+    <file src="BuildIt.General.Uno\bin\Release\monoandroid90\90\BuildIt.General.Uno.dll" target="lib\monoandroid90" />
+    <file src="BuildIt.General.Uno\bin\Release\monoandroid90\90\BuildIt.General.Uno.pdb" target="lib\monoandroid90" />
+    <file src="BuildIt.General.Uno\bin\Release\monoandroid90\90\BuildIt.General.Uno.xml" target="lib\monoandroid90" />
 
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.Uno.dll" target="lib\xamarinios10" />
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.Uno.pdb" target="lib\xamarinios10" />
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.Uno.xml" target="lib\xamarinios10" />
+    <file src="BuildIt.General.Uno\bin\Release\xamarinios10\BuildIt.General.Uno.dll" target="lib\xamarinios10" />
+    <file src="BuildIt.General.Uno\bin\Release\xamarinios10\BuildIt.General.Uno.pdb" target="lib\xamarinios10" />
+    <file src="BuildIt.General.Uno\bin\Release\xamarinios10\BuildIt.General.Uno.xml" target="lib\xamarinios10" />
   </files>
 </package>
