@@ -12,18 +12,18 @@ using Windows.UI.Xaml.Data;
 namespace BuildIt.UI.Converters
 {
     /// <summary>
-    /// Converts object to visbility based on whether it's null
+    /// Converts object to visbility based on whether it's null.
     /// </summary>
     public class NullToVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// Converts from entity to visibility
+        /// Converts from entity to visibility.
         /// </summary>
-        /// <param name="value">value to convert back</param>
-        /// <param name="targetType">the target type</param>
-        /// <param name="parameter">the conversion parameter</param>
-        /// <param name="language">the conversion language</param>
-        /// <returns>The converted value</returns>
+        /// <param name="value">value to convert back.</param>
+        /// <param name="targetType">the target type.</param>
+        /// <param name="parameter">the conversion parameter.</param>
+        /// <param name="language">the conversion language.</param>
+        /// <returns>The converted value.</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object Convert(object value, Type targetType, object parameter,
 #if !NETFX_CORE
@@ -46,13 +46,13 @@ namespace BuildIt.UI.Converters
         }
 
         /// <summary>
-        /// Not implemented
+        /// Not implemented.
         /// </summary>
-        /// <param name="value">value to convert back</param>
-        /// <param name="targetType">the target type</param>
-        /// <param name="parameter">the conversion parameter</param>
-        /// <param name="language">the conversion language</param>
-        /// <returns>The converted value</returns>
+        /// <param name="value">value to convert back.</param>
+        /// <param name="targetType">the target type.</param>
+        /// <param name="parameter">the conversion parameter.</param>
+        /// <param name="language">the conversion language.</param>
+        /// <returns>The converted value.</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
         public object ConvertBack(object value, Type targetType, object parameter,
 #if !NETFX_CORE

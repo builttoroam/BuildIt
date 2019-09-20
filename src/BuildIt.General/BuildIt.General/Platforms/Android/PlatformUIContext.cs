@@ -6,7 +6,7 @@ using Android.App;
 namespace BuildIt.UI
 {
     /// <summary>
-    /// Implements UI abstraction
+    /// Implements UI abstraction.
     /// </summary>
     public class PlatformUIContext : IUIExecutionContext
     {

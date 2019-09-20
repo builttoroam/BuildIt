@@ -6,37 +6,37 @@ using Windows.UI.Xaml.Media;
 namespace BuildIt.UI
 {
     /// <summary>
-    /// General helper class
+    /// General helper class.
     /// </summary>
     public static class Utilities
     {
         /// <summary>
-        /// Inverts a visibility value
+        /// Inverts a visibility value.
         /// </summary>
-        /// <param name="visible">The value to invert</param>
-        /// <returns>The inverted value</returns>
+        /// <param name="visible">The value to invert.</param>
+        /// <returns>The inverted value.</returns>
         public static Visibility Inverse(this Visibility visible)
         {
             return visible == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
-        /// Converts bool to visibility value
+        /// Converts bool to visibility value.
         /// </summary>
-        /// <param name="isVisible">bool value to convert</param>
-        /// <returns>The corresponding visibility value</returns>
+        /// <param name="isVisible">bool value to convert.</param>
+        /// <returns>The corresponding visibility value.</returns>
         public static Visibility ToVisibility(this bool isVisible)
         {
             return isVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// Returns the selected item, and optionally sets the selected item back to null
+        /// Returns the selected item, and optionally sets the selected item back to null.
         /// </summary>
-        /// <typeparam name="T">The type of the selected item</typeparam>
-        /// <param name="sender">The list element</param>
-        /// <param name="resetSelectedIndex">Whether selected item should be set to null</param>
-        /// <returns>The selected item</returns>
+        /// <typeparam name="T">The type of the selected item.</typeparam>
+        /// <param name="sender">The list element.</param>
+        /// <param name="resetSelectedIndex">Whether selected item should be set to null.</param>
+        /// <returns>The selected item.</returns>
         public static T SelectedItem<T>(this object sender, bool resetSelectedIndex = true)
             where T : class
         {
@@ -73,16 +73,16 @@ namespace BuildIt.UI
         }
 
         /// <summary>
-        /// Finds an element by name and type
+        /// Finds an element by name and type.
         /// </summary>
-        /// <typeparam name="T">The type of element to search for</typeparam>
-        /// <param name="container">The root element to search from</param>
-        /// <param name="name">The (optional) name of element to retrieve</param>
-        /// <returns>The matching element</returns>
+        /// <typeparam name="T">The type of element to search for.</typeparam>
+        /// <param name="container">The root element to search from.</param>
+        /// <param name="name">The (optional) name of element to retrieve.</param>
+        /// <returns>The matching element.</returns>
         public static T FindControlByType<T>(this DependencyObject container, string name = null)
             where T : DependencyObject
         {
-            T foundControl = null;
+            T foundControl = default(T);
 
             // for each child object in the container
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(container); i++)
@@ -110,11 +110,11 @@ namespace BuildIt.UI
         }
 
         /// <summary>
-        /// Returns all descendents to a particular depth
+        /// Returns all descendents to a particular depth.
         /// </summary>
-        /// <param name="root">The root element</param>
-        /// <param name="depth">The depth to return elements to</param>
-        /// <returns>The collection of elements</returns>
+        /// <param name="root">The root element.</param>
+        /// <param name="depth">The depth to return elements to.</param>
+        /// <returns>The collection of elements.</returns>
         public static IEnumerable<DependencyObject> Descendents(this DependencyObject root, int depth)
         {
             int count = VisualTreeHelper.GetChildrenCount(root);
@@ -133,20 +133,20 @@ namespace BuildIt.UI
         }
 
         /// <summary>
-        /// The descendents of an element
+        /// The descendents of an element.
         /// </summary>
-        /// <param name="root">The root element</param>
-        /// <returns>The descendents</returns>
+        /// <param name="root">The root element.</param>
+        /// <returns>The descendents.</returns>
         public static IEnumerable<DependencyObject> Descendents(this DependencyObject root)
         {
             return Descendents(root, int.MaxValue);
         }
 
         /// <summary>
-        /// The ancestors of the element
+        /// The ancestors of the element.
         /// </summary>
-        /// <param name="root">The start element</param>
-        /// <returns>The ancestors</returns>
+        /// <param name="root">The start element.</param>
+        /// <returns>The ancestors.</returns>
         public static IEnumerable<DependencyObject> Ancestors(this DependencyObject root)
         {
             DependencyObject current = VisualTreeHelper.GetParent(root);

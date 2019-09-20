@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26621.2
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29311.281
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General", "BuildIt.General\BuildIt.General\BuildIt.General.csproj", "{FD17AD8E-6A3F-4C1D-A7CB-DCBF6A125897}"
 EndProject
@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{52E6C410-E3B3-403D-A75C-E2D7445DA084}"
 	ProjectSection(SolutionItems) = preProject
 		BuildIt.General\BuildIt.General.nuspec = BuildIt.General\BuildIt.General.nuspec
+		BuildIt.General\BuildIt.General.Uno.nuspec = BuildIt.General\BuildIt.General.Uno.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{DC6A98AE-6220-4C1D-8325-A7D7469D43A8}"
@@ -19,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "General.Samples.Core", "General.Samples.Core\General.Samples.Core.csproj", "{2B02CE94-8E12-49C5-869F-02D17BC20F49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.General.FullFramework", "BuildIt.General\BuildIt.General.Tests\BuildIt.General.FullFramework.csproj", "{25C1EC8C-D170-4160-A934-DC67A0093E9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General.Uno", "BuildIt.General\BuildIt.General.Uno\BuildIt.General.Uno.csproj", "{4C3FF5B3-B2EB-4189-9752-160886EC40BC}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -141,6 +144,26 @@ Global
 		{25C1EC8C-D170-4160-A934-DC67A0093E9C}.Release|x64.Build.0 = Release|Any CPU
 		{25C1EC8C-D170-4160-A934-DC67A0093E9C}.Release|x86.ActiveCfg = Release|Any CPU
 		{25C1EC8C-D170-4160-A934-DC67A0093E9C}.Release|x86.Build.0 = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|ARM.Build.0 = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|ARM64.Build.0 = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|x64.Build.0 = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C3FF5B3-B2EB-4189-9752-160886EC40BC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

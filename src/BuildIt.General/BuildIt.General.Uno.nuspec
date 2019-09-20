@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>BuildIt.General</id>
+    <id>BuildIt.General.Uno</id>
     <version>$version$</version>
-    <title>BuildIt General</title>
+    <title>BuildIt General (Uno)</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
     <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
@@ -37,26 +37,24 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.dll" target="lib\netstandard2.0" />
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.pdb" target="lib\netstandard2.0" />
-    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.xml" target="lib\netstandard2.0" />
+    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.Uno.dll" target="lib\netstandard2.0" />
+    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.Uno.pdb" target="lib\netstandard2.0" />
+    <file src="BuildIt.General\bin\Release\netstandard2.0\BuildIt.General.Uno.xml" target="lib\netstandard2.0" />
     
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.xml" target="lib\uap10.0.16299" />
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.pdb" target="lib\uap10.0.16299" />
-    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.dll" target="lib\uap10.0.16299" />
+    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.Uno.xml" target="lib\uap10.0.16299" />
+    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.Uno.pdb" target="lib\uap10.0.16299" />
+    <file src="BuildIt.General\bin\Release\uap10.0.16299\BuildIt.General.Uno.dll" target="lib\uap10.0.16299" />
 
-    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.dll" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.pdb" target="lib\monoandroid81" />
-    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.xml" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.Uno.dll" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.Uno.pdb" target="lib\monoandroid81" />
+    <file src="BuildIt.General\bin\Release\monoandroid81\81\BuildIt.General.Uno.xml" target="lib\monoandroid81" />
 
-    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.dll" target="lib\monoandroid90" />
-    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.pdb" target="lib\monoandroid90" />
-    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.xml" target="lib\monoandroid90" />
+    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.Uno.dll" target="lib\monoandroid90" />
+    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.Uno.pdb" target="lib\monoandroid90" />
+    <file src="BuildIt.General\bin\Release\monoandroid90\90\BuildIt.General.Uno.xml" target="lib\monoandroid90" />
 
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.dll" target="lib\xamarinios10" />
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.pdb" target="lib\xamarinios10" />
-    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.xml" target="lib\xamarinios10" />
-
-    <file src="BuildIt.General\**\*.cs" target="src\BuildIt.General\BuildIt.General" exclude="BuildIt.General\obj\**\*.cs" />
+    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.Uno.dll" target="lib\xamarinios10" />
+    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.Uno.pdb" target="lib\xamarinios10" />
+    <file src="BuildIt.General\bin\Release\xamarin.ios10\BuildIt.General.Uno.xml" target="lib\xamarinios10" />
   </files>
 </package>

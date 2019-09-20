@@ -1,5 +1,5 @@
 using BuildIt.Logging;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BuildIt
 {
     /// <summary>
-    /// Helper class that simplifies writing log information
+    /// Helper class that simplifies writing log information.
     /// </summary>
     public static class LogHelper
     {
@@ -20,7 +20,7 @@ namespace BuildIt
         private static int wakeUpLock;
 
         /// <summary>
-        /// Gets or sets the LogService instance
+        /// Gets or sets the LogService instance.
         /// </summary>
         public static ILoggerService LogService
         {
@@ -57,7 +57,7 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Gets or sets a simple log output handler
+        /// Gets or sets a simple log output handler.
         /// </summary>
         public static Action<string> LogOutput { get; set; }
 
@@ -68,11 +68,11 @@ namespace BuildIt
         private static AutoResetEvent LogWaiter { get; } = new AutoResetEvent(false);
 
         /// <summary>
-        /// Logs information about an entity
+        /// Logs information about an entity.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entity to write</typeparam>
-        /// <param name="entity">The entity to write (serialized)</param>
-        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        /// <typeparam name="TEntity">The type of entity to write.</typeparam>
+        /// <param name="entity">The entity to write (serialized).</param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name).</param>
         [Obsolete("Use LogEntity()")]
         public static void Log<TEntity>(this TEntity entity, [CallerMemberName] string caller = null)
         {
@@ -81,16 +81,16 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Logs information about an entity
+        /// Logs information about an entity.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entity to write</typeparam>
-        /// <param name="entity">The entity to write (serialized)</param>
-        /// <param name="message">The message to be logged (optional)</param>
-        /// <param name="categories">The category to be logged  (optional)</param>
-        /// <param name="metadata">The metadata to be logged  (optional)</param>
-        /// <param name="level">The log level to log (optional but defaults to Information)</param>
-        /// <param name="assembly">The assembly name to be logged  (optional) </param>
-        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        /// <typeparam name="TEntity">The type of entity to write.</typeparam>
+        /// <param name="entity">The entity to write (serialized).</param>
+        /// <param name="message">The message to be logged (optional).</param>
+        /// <param name="categories">The category to be logged  (optional).</param>
+        /// <param name="metadata">The metadata to be logged  (optional).</param>
+        /// <param name="level">The log level to log (optional but defaults to Information).</param>
+        /// <param name="assembly">The assembly name to be logged  (optional). </param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name).</param>
         public static void LogEntity<TEntity>(this TEntity entity, string message = null, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Information, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
@@ -105,10 +105,10 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Logs a message - for backward compatibility
+        /// Logs a message - for backward compatibility.
         /// </summary>
-        /// <param name="message">The message to be logged (optional)</param>
-        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        /// <param name="message">The message to be logged (optional).</param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name).</param>
         [Obsolete("Use LogMessage()")]
         public static void Log(this string message, [CallerMemberName] string caller = null)
         {
@@ -117,14 +117,14 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Logs a message
+        /// Logs a message.
         /// </summary>
-        /// <param name="message">The message to be logged (optional)</param>
-        /// <param name="categories">The category to be logged  (optional)</param>
-        /// <param name="metadata">The metadata to be logged  (optional)</param>
-        /// <param name="level">The log level to log (optional but defaults to Information)</param>
-        /// <param name="assembly">The assembly name to be logged  (optional) </param>
-        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name)</param>
+        /// <param name="message">The message to be logged (optional).</param>
+        /// <param name="categories">The category to be logged  (optional).</param>
+        /// <param name="metadata">The metadata to be logged  (optional).</param>
+        /// <param name="level">The log level to log (optional but defaults to Information).</param>
+        /// <param name="assembly">The assembly name to be logged  (optional). </param>
+        /// <param name="caller">The name of the calling method  (optional but defaults to the caller method name).</param>
         public static void LogMessage(this string message, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Information, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
@@ -139,11 +139,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Logs an exception - for backward compatibility
+        /// Logs an exception - for backward compatibility.
         /// </summary>
-        /// <param name="exception">The exception to log</param>
-        /// <param name="message">The message (optional) to log</param>
-        /// <param name="caller">The calling method</param>
+        /// <param name="exception">The exception to log.</param>
+        /// <param name="message">The message (optional) to log.</param>
+        /// <param name="caller">The calling method.</param>
         [Obsolete("Use LogError()")]
         public static void LogException(this Exception exception, string message = null, [CallerMemberName] string caller = null)
         {
@@ -152,15 +152,15 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Logs an exception
+        /// Logs an exception.
         /// </summary>
-        /// <param name="exception">The exception to log</param>
-        /// <param name="message">The message (optional) to log</param>
-        /// <param name="categories">The category to be logged  (optional)</param>
-        /// <param name="metadata">The metadata to be logged  (optional)</param>
-        /// <param name="level">The log level to log (optional but defaults to Information)</param>
-        /// <param name="assembly">The assembly name to be logged  (optional) </param>
-        /// <param name="caller">The calling method</param>
+        /// <param name="exception">The exception to log.</param>
+        /// <param name="message">The message (optional) to log.</param>
+        /// <param name="categories">The category to be logged  (optional).</param>
+        /// <param name="metadata">The metadata to be logged  (optional).</param>
+        /// <param name="level">The log level to log (optional but defaults to Information).</param>
+        /// <param name="assembly">The assembly name to be logged  (optional). </param>
+        /// <param name="caller">The calling method.</param>
         public static void LogError(this Exception exception, string message = null, string[] categories = null, IDictionary<string, string> metadata = null, LogLevel level = LogLevel.Error, Assembly assembly = null, [CallerMemberName] string caller = null)
         {
             try
