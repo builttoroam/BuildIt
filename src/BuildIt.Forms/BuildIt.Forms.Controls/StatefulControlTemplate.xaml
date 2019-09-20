@@ -4,6 +4,7 @@
                  xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
+                 xmlns:core="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
                  mc:Ignorable="d"
                  x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
   <controls:PullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
@@ -22,21 +23,27 @@
               Padding="20"
               x:Name="PullToRefreshInnerContainer">
 
-          <ActivityIndicator IsRunning="True"
-                             WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                             HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center" />
+          <Grid x:Name="PullToRefreshContainer">
+            <ActivityIndicator IsRunning="True"
+                               WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                               HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center">
+            </ActivityIndicator>
+          </Grid>
+
           <!--Pull To Refresh Error State-->
           <StackLayout x:Name="PullToRefreshErrorStateContainer"
                        Spacing="10"
                        VerticalOptions="Center"
-                       IsVisible="False">
+                       IsVisible="True"
+                       Opacity="0">
             <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
                    VerticalOptions="Center"
                    FontSize="12" />
             <Button Text="Retry"
-                    HorizontalOptions="Center" />
+                    HorizontalOptions="Center"
+                    Command="{Binding StatefulControlViewModel.StatefulControlPullToRefreshRetryCommand, Mode=OneWay}" />
           </StackLayout>
         </Grid>
       </Grid>

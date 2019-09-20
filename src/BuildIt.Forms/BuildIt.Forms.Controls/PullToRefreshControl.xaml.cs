@@ -12,6 +12,7 @@ namespace BuildIt.Forms.Controls
         private const string EmptyStateContainerName = "EmptyStateContainer";
         private const string LoadingErrorStateContainerName = "LoadingErrorStateContainer";
         private const string LoadingStateContainerName = "LoadingStateContainer";
+        private const string PullToRefreshContainerName = "PullToRefreshContainer";
         private const string PullToRefreshErrorStateContainerName = "PullToRefreshErrorStateContainer";
         private const string PullToRefreshInnerContainerName = "PullToRefreshInnerContainer";
         private const string PullToRefreshOuterContainerName = "PullToRefreshOuterContainer";
@@ -21,6 +22,7 @@ namespace BuildIt.Forms.Controls
         private Grid loadingErrorStateContainer;
         private Grid loadingStateContainer;
         private Grid mainContainer;
+        private Grid pullToRefreshContainer;
         private StackLayout pullToRefreshErrorStateContainer;
         private Grid pullToRefreshInnerContainer;
         private Grid pullToRefreshOuterContainer;
@@ -40,6 +42,8 @@ namespace BuildIt.Forms.Controls
 
         internal Grid MainContainer => mainContainer ?? (mainContainer = Content as Grid);
 
+        internal Grid PullToRefreshContainer => pullToRefreshContainer ?? (pullToRefreshContainer = PullToRefreshInnerContainer?.FindByName<Grid>(PullToRefreshContainerName));
+
         internal StackLayout PullToRefreshErrorStateContainer => pullToRefreshErrorStateContainer ?? (pullToRefreshErrorStateContainer = PullToRefreshOuterContainer?.FindByName<StackLayout>(PullToRefreshErrorStateContainerName));
 
         internal Grid PullToRefreshInnerContainer => pullToRefreshInnerContainer ?? (pullToRefreshInnerContainer = PullToRefreshOuterContainer?.FindByName<Grid>(PullToRefreshInnerContainerName));
@@ -58,6 +62,9 @@ namespace BuildIt.Forms.Controls
 
                 case StatefulControlStates.LoadingError:
                     return LoadingErrorStateContainer;
+
+                case StatefulControlStates.PullToRefresh:
+                    return PullToRefreshContainer;
 
                 case StatefulControlStates.PullToRefreshError:
                     return PullToRefreshErrorStateContainer;

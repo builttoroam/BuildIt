@@ -11,11 +11,14 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         public StatefulControlStates statefulControlState;
 
         private ICommand statefulControlPullToRefreshCommand;
+        private ICommand statefulControlPullToRefreshRetryCommand;
         private ICommand statefulControlRetryCommand;
 
         public ObservableCollection<string> StatefulControlItems { get; } = new ObservableCollection<string>();
 
         public ICommand StatefulControlPullToRefreshCommand => statefulControlPullToRefreshCommand ?? (statefulControlPullToRefreshCommand = new Command(ExecuteStatefulControlPullToRefreshCommand));
+
+        public ICommand StatefulControlPullToRefreshRetryCommand => statefulControlPullToRefreshRetryCommand ?? (statefulControlPullToRefreshRetryCommand = new Command(ExecuteStatefulControlPullToRefreshRetryCommand, () => StatefulControlState == StatefulControlStates.PullToRefreshError));
 
         public ICommand StatefulControlRetryCommand => statefulControlRetryCommand ?? (statefulControlRetryCommand = new Command(ExecuteStatefulControlRetryCommand, () => StatefulControlState == StatefulControlStates.LoadingError));
 
@@ -27,6 +30,7 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                 if (SetProperty(ref statefulControlState, value))
                 {
                     (StatefulControlRetryCommand as Command)?.ChangeCanExecute();
+                    (StatefulControlPullToRefreshRetryCommand as Command)?.ChangeCanExecute();
                 }
             }
         }
@@ -68,6 +72,19 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             catch (Exception)
             {
                 await UpdateStatefulControlState(StatefulControlStates.PullToRefreshError, false);
+            }
+        }
+
+        private async void ExecuteStatefulControlPullToRefreshRetryCommand()
+        {
+            try
+            {
+                await UpdateStatefulControlState(StatefulControlStates.PullToRefresh, false);
+                ExecuteStatefulControlPullToRefreshCommand();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
         }
 

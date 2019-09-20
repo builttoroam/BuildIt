@@ -138,15 +138,10 @@ namespace BuildIt.Forms.Controls
 
             try
             {
-                await statefulControl.UpdateState(newState);
+                await statefulControl.UpdateState(statefulControl, newState);
                 if (newState == StatefulControlStates.Loaded && oldState == StatefulControlStates.PullToRefresh)
                 {
                     await statefulControl.StopPullToRefresh();
-                }
-
-                if (newState == StatefulControlStates.PullToRefresh)
-                {
-                    statefulControl.PullToRefreshCommand?.Execute(EventArgs.Empty);
                 }
             }
             catch (Exception e)
@@ -179,16 +174,47 @@ namespace BuildIt.Forms.Controls
             await Template.ContentPresenterContainer.TranslateTo(0, 0);
         }
 
-        private async Task UpdateState(StatefulControlStates newState)
+        private async Task UpdateState(StatefulControl statefulControl, StatefulControlStates newState)
         {
             if (currentState == newState)
             {
                 return;
             }
 
-            if (newState != StatefulControlStates.PullToRefresh)
+            switch (newState)
             {
-                await CancelAndFinishPreviousStateUpdate();
+                case StatefulControlStates.Default:
+                case StatefulControlStates.Loading:
+                case StatefulControlStates.Empty:
+                case StatefulControlStates.LoadingError:
+                case StatefulControlStates.Loaded:
+                    await CancelAndFinishPreviousStateUpdate();
+                    break;
+
+                case StatefulControlStates.PullToRefreshError:
+                    var pullToRefreshErrorParentAnimation = new Animation();
+                    // var pullToRefreshErrorContainerExpandAnimation = new Animation((x) => Template.PullToRefreshInnerContainer.HeightRequest = x, Template.PullToRefreshInnerContainer.Height, Template.PullToRefreshErrorStateContainer.Height);
+                    var pullToRefreshErrorContainerFadeInAnimation = new Animation((x) => Template.PullToRefreshErrorStateContainer.Opacity = x, Template.PullToRefreshErrorStateContainer.Opacity, FullyOpaque);
+                    var pullToRefreshContainerFadeAnimation = new Animation((x) => Template.PullToRefreshContainer.Opacity = x, Template.PullToRefreshContainer.Opacity, FullyTransparent, Easing.Linear, () => Template.PullToRefreshContainer.IsVisible = false);
+
+                    pullToRefreshErrorParentAnimation.Add(0, 0.5, pullToRefreshContainerFadeAnimation);
+                    pullToRefreshErrorParentAnimation.Add(0, 0.5, pullToRefreshErrorContainerFadeInAnimation);
+                    // pullToRefreshErrorParentAnimation.Add(0, 1, pullToRefreshErrorContainerExpandAnimation);
+
+                    pullToRefreshErrorParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1, length: 150);
+
+                    break;
+
+                case StatefulControlStates.PullToRefresh:
+                    var pullToRefreshParentAnimation = new Animation();
+                    var pullToRefreshErrorContainerFadeOutAnimation = new Animation((x) => Template.PullToRefreshErrorStateContainer.Opacity = x, Template.PullToRefreshErrorStateContainer.Opacity, FullyTransparent, Easing.Linear, () => Template.PullToRefreshErrorStateContainer.IsVisible = false);
+
+                    pullToRefreshParentAnimation.Add(0, 1, pullToRefreshErrorContainerFadeOutAnimation);
+
+                    pullToRefreshParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1, length: 150);
+
+                    statefulControl.PullToRefreshCommand?.Execute(EventArgs.Empty);
+                    break;
             }
 
             currentState = newState;
