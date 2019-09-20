@@ -16,6 +16,8 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty LoadingErrorStateTemplateProperty = BindableProperty.Create(nameof(LoadingErrorStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingErrorStateTemplateChanged);
         public static readonly BindableProperty LoadingStateTemplateProperty = BindableProperty.Create(nameof(LoadingStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingStateTemplateChanged);
         public static readonly BindableProperty PullToRefreshCommandProperty = BindableProperty.Create(nameof(PullToRefreshCommand), typeof(ICommand), typeof(StatefulControl));
+        public static readonly BindableProperty PullToRefreshStateErrorTemplateProperty = BindableProperty.Create(nameof(PullToRefreshStateErrorTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandlePullToRefreshErrorStateTemplateChanged);
+        public static readonly BindableProperty PullToRefreshStateTemplateProperty = BindableProperty.Create(nameof(PullToRefreshStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandlePullToRefreshStateTemplateChanged);
         public static readonly BindableProperty StateProperty = BindableProperty.Create(nameof(State), typeof(StatefulControlStates), typeof(StatefulControl), propertyChanged: HandleStatePropertyChanged);
 
         private const uint FadeInAnimationTimeInMilliseconds = 250;
@@ -54,6 +56,18 @@ namespace BuildIt.Forms.Controls
         {
             get => (ICommand)GetValue(PullToRefreshCommandProperty);
             set => SetValue(PullToRefreshCommandProperty, value);
+        }
+
+        public DataTemplate PullToRefreshStateErrorTemplate
+        {
+            get => (DataTemplate)GetValue(PullToRefreshStateErrorTemplateProperty);
+            set => SetValue(PullToRefreshStateTemplateProperty, value);
+        }
+
+        public DataTemplate PullToRefreshStateTemplate
+        {
+            get => (DataTemplate)GetValue(PullToRefreshStateTemplateProperty);
+            set => SetValue(PullToRefreshStateTemplateProperty, value);
         }
 
         public StatefulControlStates State
@@ -118,6 +132,16 @@ namespace BuildIt.Forms.Controls
         private static void HandleLoadingStateTemplateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             CreateAndAddStateContainerTemplate(bindable, oldValue, newValue, StatefulControlStates.Loading);
+        }
+
+        private static void HandlePullToRefreshErrorStateTemplateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            CreateAndAddStateContainerTemplate(bindable, oldValue, newValue, StatefulControlStates.PullToRefreshError);
+        }
+
+        private static void HandlePullToRefreshStateTemplateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            CreateAndAddStateContainerTemplate(bindable, oldValue, newValue, StatefulControlStates.PullToRefresh);
         }
 
         private static async void HandleStatePropertyChanged(BindableObject bindable, object oldValue, object newValue)

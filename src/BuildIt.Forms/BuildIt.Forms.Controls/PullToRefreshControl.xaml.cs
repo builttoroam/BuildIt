@@ -23,7 +23,7 @@ namespace BuildIt.Forms.Controls
         private Grid loadingStateContainer;
         private Grid mainContainer;
         private Grid pullToRefreshContainer;
-        private StackLayout pullToRefreshErrorStateContainer;
+        private Grid pullToRefreshErrorStateContainer;
         private Grid pullToRefreshInnerContainer;
         private Grid pullToRefreshOuterContainer;
 
@@ -44,7 +44,7 @@ namespace BuildIt.Forms.Controls
 
         internal Grid PullToRefreshContainer => pullToRefreshContainer ?? (pullToRefreshContainer = PullToRefreshInnerContainer?.FindByName<Grid>(PullToRefreshContainerName));
 
-        internal StackLayout PullToRefreshErrorStateContainer => pullToRefreshErrorStateContainer ?? (pullToRefreshErrorStateContainer = PullToRefreshOuterContainer?.FindByName<StackLayout>(PullToRefreshErrorStateContainerName));
+        internal Grid PullToRefreshErrorStateContainer => pullToRefreshErrorStateContainer ?? (pullToRefreshErrorStateContainer = PullToRefreshOuterContainer?.FindByName<Grid>(PullToRefreshErrorStateContainerName));
 
         internal Grid PullToRefreshInnerContainer => pullToRefreshInnerContainer ?? (pullToRefreshInnerContainer = PullToRefreshOuterContainer?.FindByName<Grid>(PullToRefreshInnerContainerName));
 

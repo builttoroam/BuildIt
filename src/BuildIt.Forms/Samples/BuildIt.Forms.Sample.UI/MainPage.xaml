@@ -498,6 +498,27 @@
             <DataTemplate x:Key="LoadingStateTemplate">
               <ActivityIndicator IsRunning="True" />
             </DataTemplate>
+
+            <DataTemplate x:Key="PullToRefreshStateTemplate">
+              <ActivityIndicator IsRunning="True"
+                                 WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                                 HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center">
+              </ActivityIndicator>
+            </DataTemplate>
+
+            <DataTemplate x:Key="PullToRefreshStateErrorTemplate">
+              <StackLayout Spacing="10"
+                           VerticalOptions="Center">
+                <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
+                       VerticalOptions="Center"
+                       FontSize="12" />
+                <Button Text="Retry"
+                        HorizontalOptions="Center"
+                        Command="{Binding StatefulControlViewModel.StatefulControlPullToRefreshRetryCommand, Mode=OneWay}" />
+              </StackLayout>
+            </DataTemplate>
           </ResourceDictionary>
         </Grid.Resources>
 
@@ -509,6 +530,8 @@
                                   EmptyStateTemplate="{StaticResource EmptyStateDataTemplate}"
                                   LoadingErrorStateTemplate="{StaticResource LoadingErrorStateTemplate}"
                                   LoadingStateTemplate="{StaticResource LoadingStateTemplate}"
+                                  PullToRefreshStateTemplate="{StaticResource PullToRefreshStateTemplate}"
+                                  PullToRefreshStateErrorTemplate="{StaticResource PullToRefreshStateErrorTemplate}"
                                   PullToRefreshCommand="{Binding StatefulControlViewModel.StatefulControlPullToRefreshCommand, Mode=OneWay}">
           <ListView ItemsSource="{Binding StatefulControlViewModel.StatefulControlItems, Mode=OneWay}">
             <ListView.ItemTemplate>

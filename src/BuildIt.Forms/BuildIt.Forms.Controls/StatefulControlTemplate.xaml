@@ -24,27 +24,12 @@
               x:Name="PullToRefreshInnerContainer">
 
           <Grid x:Name="PullToRefreshContainer">
-            <ActivityIndicator IsRunning="True"
-                               WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                               HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center">
-            </ActivityIndicator>
           </Grid>
 
           <!--Pull To Refresh Error State-->
-          <StackLayout x:Name="PullToRefreshErrorStateContainer"
-                       Spacing="10"
-                       VerticalOptions="Center"
-                       IsVisible="True"
-                       Opacity="0">
-            <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
-                   VerticalOptions="Center"
-                   FontSize="12" />
-            <Button Text="Retry"
-                    HorizontalOptions="Center"
-                    Command="{Binding StatefulControlViewModel.StatefulControlPullToRefreshRetryCommand, Mode=OneWay}" />
-          </StackLayout>
+          <Grid x:Name="PullToRefreshErrorStateContainer"
+                Opacity="0">
+          </Grid>
         </Grid>
       </Grid>
 
