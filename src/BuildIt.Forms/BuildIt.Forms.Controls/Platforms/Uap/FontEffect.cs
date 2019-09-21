@@ -13,11 +13,10 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.FontEffect), "FontEffect")]
-
 namespace BuildIt.Forms.Controls.UWP
 {
     /// <summary>
-    /// Effect for specifying font on Label elements
+    /// Effect for specifying font on Label elements.
     /// </summary>
     [Preserve]
     public class FontEffect : PlatformEffect
@@ -32,7 +31,7 @@ namespace BuildIt.Forms.Controls.UWP
         private Assembly ParentAssembly { get; set; }
 
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override async void OnAttached()
         {
@@ -81,7 +80,7 @@ namespace BuildIt.Forms.Controls.UWP
         }
 
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         protected override void OnDetached()
         {

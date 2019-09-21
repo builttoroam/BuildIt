@@ -5,10 +5,6 @@ namespace BuildIt.AR
 {
     public struct Vector3 : IEquatable<Vector3>
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Fields
 
         /// <summary>
@@ -26,7 +22,7 @@ namespace BuildIt.AR
         /// </summary>
         public float Z;
 
-        #endregion
+        #endregion Public Fields
 
         #region Public Properties
 
@@ -85,7 +81,7 @@ namespace BuildIt.AR
         /// </summary>
         public static Vector3 Backward { get; } = new Vector3(0f, 0f, 1f);
 
-        #endregion
+        #endregion Public Properties
 
         #region Internal Properties
 
@@ -95,11 +91,12 @@ namespace BuildIt.AR
             this.Z.ToString()
             );
 
-        #endregion
+        #endregion Internal Properties
 
         #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// Constructs a 3d vector with X, Y and Z from three values.
         /// </summary>
         /// <param name="x">The x coordinate in 3d-space.</param>
@@ -113,6 +110,7 @@ namespace BuildIt.AR
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// Constructs a 3d vector with X, Y and Z set to the same value.
         /// </summary>
         /// <param name="value">The x, y and z coordinates in 3d-space.</param>
@@ -128,14 +126,14 @@ namespace BuildIt.AR
         ///// </summary>
         ///// <param name="value">The x and y coordinates in 3d-space.</param>
         ///// <param name="z">The z coordinate in 3d-space.</param>
-        //public Vector3(Vector2 value, float z)
-        //{
+        // public Vector3(Vector2 value, float z)
+        // {
         //    this.X = value.X;
         //    this.Y = value.Y;
         //    this.Z = z;
-        //}
+        // }
 
-        #endregion
+        #endregion Constructors
 
         #region Public Methods
 
@@ -283,9 +281,9 @@ namespace BuildIt.AR
         /// <param name="result">The cross product of two vectors as an output parameter.</param>
         public static void Cross(ref Vector3 vector1, ref Vector3 vector2, out Vector3 result)
         {
-            var x = vector1.Y*vector2.Z - vector2.Y*vector1.Z;
-            var y = -(vector1.X*vector2.Z - vector2.X*vector1.Z);
-            var z = vector1.X*vector2.Y - vector2.X*vector1.Y;
+            var x = (vector1.Y * vector2.Z) - (vector2.Y * vector1.Z);
+            var y = -((vector1.X * vector2.Z) - (vector2.X * vector1.Z));
+            var z = (vector1.X * vector2.Y) - (vector2.X * vector1.Y);
             result.X = x;
             result.Y = y;
             result.Z = z;
@@ -301,7 +299,7 @@ namespace BuildIt.AR
         {
             float result;
             DistanceSquared(ref value1, ref value2, out result);
-            return (float) Math.Sqrt(result);
+            return (float)Math.Sqrt(result);
         }
 
         /// <summary>
@@ -313,7 +311,7 @@ namespace BuildIt.AR
         public static void Distance(ref Vector3 value1, ref Vector3 value2, out float result)
         {
             DistanceSquared(ref value1, ref value2, out result);
-            result = (float) Math.Sqrt(result);
+            result = (float)Math.Sqrt(result);
         }
 
         /// <summary>
@@ -324,9 +322,9 @@ namespace BuildIt.AR
         /// <returns>The squared distance between two vectors.</returns>
         public static float DistanceSquared(Vector3 value1, Vector3 value2)
         {
-            return (value1.X - value2.X)*(value1.X - value2.X) +
-                   (value1.Y - value2.Y)*(value1.Y - value2.Y) +
-                   (value1.Z - value2.Z)*(value1.Z - value2.Z);
+            return ((value1.X - value2.X) * (value1.X - value2.X)) +
+                   ((value1.Y - value2.Y) * (value1.Y - value2.Y)) +
+                   ((value1.Z - value2.Z) * (value1.Z - value2.Z));
         }
 
         /// <summary>
@@ -337,9 +335,9 @@ namespace BuildIt.AR
         /// <param name="result">The squared distance between two vectors as an output parameter.</param>
         public static void DistanceSquared(ref Vector3 value1, ref Vector3 value2, out float result)
         {
-            result = (value1.X - value2.X)*(value1.X - value2.X) +
-                     (value1.Y - value2.Y)*(value1.Y - value2.Y) +
-                     (value1.Z - value2.Z)*(value1.Z - value2.Z);
+            result = ((value1.X - value2.X) * (value1.X - value2.X)) +
+                     ((value1.Y - value2.Y) * (value1.Y - value2.Y)) +
+                     ((value1.Z - value2.Z) * (value1.Z - value2.Z));
         }
 
         /// <summary>
@@ -364,7 +362,7 @@ namespace BuildIt.AR
         /// <returns>The result of dividing a vector by a scalar.</returns>
         public static Vector3 Divide(Vector3 value1, float divider)
         {
-            var factor = 1/divider;
+            var factor = 1 / divider;
             value1.X *= factor;
             value1.Y *= factor;
             value1.Z *= factor;
@@ -379,10 +377,10 @@ namespace BuildIt.AR
         /// <param name="result">The result of dividing a vector by a scalar as an output parameter.</param>
         public static void Divide(ref Vector3 value1, float divider, out Vector3 result)
         {
-            var factor = 1/divider;
-            result.X = value1.X*factor;
-            result.Y = value1.Y*factor;
-            result.Z = value1.Z*factor;
+            var factor = 1 / divider;
+            result.X = value1.X * factor;
+            result.Y = value1.Y * factor;
+            result.Z = value1.Z * factor;
         }
 
         /// <summary>
@@ -393,9 +391,9 @@ namespace BuildIt.AR
         /// <param name="result">The result of dividing the vectors as an output parameter.</param>
         public static void Divide(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
-            result.X = value1.X/value2.X;
-            result.Y = value1.Y/value2.Y;
-            result.Z = value1.Z/value2.Z;
+            result.X = value1.X / value2.X;
+            result.Y = value1.Y / value2.Y;
+            result.Z = value1.Z / value2.Z;
         }
 
         /// <summary>
@@ -406,7 +404,7 @@ namespace BuildIt.AR
         /// <returns>The dot product of two vectors.</returns>
         public static float Dot(Vector3 value1, Vector3 value2)
         {
-            return value1.X*value2.X + value1.Y*value2.Y + value1.Z*value2.Z;
+            return (value1.X * value2.X) + (value1.Y * value2.Y) + (value1.Z * value2.Z);
         }
 
         /// <summary>
@@ -417,7 +415,7 @@ namespace BuildIt.AR
         /// <param name="result">The dot product of two vectors as an output parameter.</param>
         public static void Dot(ref Vector3 value1, ref Vector3 value2, out float result)
         {
-            result = value1.X*value2.X + value1.Y*value2.Y + value1.Z*value2.Z;
+            result = (value1.X * value2.X) + (value1.Y * value2.Y) + (value1.Z * value2.Z);
         }
 
         /// <summary>
@@ -428,9 +426,11 @@ namespace BuildIt.AR
         public override bool Equals(object obj)
         {
             if (!(obj is Vector3))
+            {
                 return false;
+            }
 
-            var other = (Vector3) obj;
+            var other = (Vector3)obj;
             return X == other.X &&
                    Y == other.Y &&
                    Z == other.Z;
@@ -454,7 +454,7 @@ namespace BuildIt.AR
         /// <returns>Hash code of this <see cref="Vector3"/>.</returns>
         public override int GetHashCode()
         {
-            return (int) (this.X + this.Y + this.Z);
+            return (int)(this.X + this.Y + this.Z);
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace BuildIt.AR
         public float Length()
         {
             var result = DistanceSquared(this, Zero);
-            return (float) Math.Sqrt(result);
+            return (float)Math.Sqrt(result);
         }
 
         /// <summary>
@@ -662,9 +662,9 @@ namespace BuildIt.AR
         /// <param name="result">The result of the multiplication with a scalar as an output parameter.</param>
         public static void Multiply(ref Vector3 value1, float scaleFactor, out Vector3 result)
         {
-            result.X = value1.X*scaleFactor;
-            result.Y = value1.Y*scaleFactor;
-            result.Z = value1.Z*scaleFactor;
+            result.X = value1.X * scaleFactor;
+            result.Y = value1.Y * scaleFactor;
+            result.Z = value1.Z * scaleFactor;
         }
 
         /// <summary>
@@ -675,9 +675,9 @@ namespace BuildIt.AR
         /// <param name="result">The result of the vector multiplication as an output parameter.</param>
         public static void Multiply(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
-            result.X = value1.X*value2.X;
-            result.Y = value1.Y*value2.Y;
-            result.Z = value1.Z*value2.Z;
+            result.X = value1.X * value2.X;
+            result.Y = value1.Y * value2.Y;
+            result.Z = value1.Z * value2.Z;
         }
 
         /// <summary>
@@ -719,8 +719,8 @@ namespace BuildIt.AR
         public static Vector3 Normalize(Vector3 value)
         {
             var factor = Distance(value, Zero);
-            factor = 1f/factor;
-            return new Vector3(value.X*factor, value.Y*factor, value.Z*factor);
+            factor = 1f / factor;
+            return new Vector3(value.X * factor, value.Y * factor, value.Z * factor);
         }
 
         /// <summary>
@@ -731,10 +731,10 @@ namespace BuildIt.AR
         public static void Normalize(ref Vector3 value, out Vector3 result)
         {
             var factor = Distance(value, Zero);
-            factor = 1f/factor;
-            result.X = value.X*factor;
-            result.Y = value.Y*factor;
-            result.Z = value.Z*factor;
+            factor = 1f / factor;
+            result.X = value.X * factor;
+            result.Y = value.Y * factor;
+            result.Z = value.Z * factor;
         }
 
         /// <summary>
@@ -750,10 +750,10 @@ namespace BuildIt.AR
             // R = I - (2 * N * ( DotProduct[ I,N] ))
             Vector3 reflectedVector;
             // inline the dotProduct here instead of calling method
-            var dotProduct = ((vector.X*normal.X) + (vector.Y*normal.Y)) + (vector.Z*normal.Z);
-            reflectedVector.X = vector.X - (2.0f*normal.X)*dotProduct;
-            reflectedVector.Y = vector.Y - (2.0f*normal.Y)*dotProduct;
-            reflectedVector.Z = vector.Z - (2.0f*normal.Z)*dotProduct;
+            var dotProduct = (vector.X * normal.X) + (vector.Y * normal.Y) + (vector.Z * normal.Z);
+            reflectedVector.X = vector.X - (2.0f * normal.X * dotProduct);
+            reflectedVector.Y = vector.Y - (2.0f * normal.Y * dotProduct);
+            reflectedVector.Z = vector.Z - (2.0f * normal.Z * dotProduct);
 
             return reflectedVector;
         }
@@ -771,10 +771,10 @@ namespace BuildIt.AR
             // R = I - (2 * N * ( DotProduct[ I,N] ))
 
             // inline the dotProduct here instead of calling method
-            var dotProduct = ((vector.X*normal.X) + (vector.Y*normal.Y)) + (vector.Z*normal.Z);
-            result.X = vector.X - (2.0f*normal.X)*dotProduct;
-            result.Y = vector.Y - (2.0f*normal.Y)*dotProduct;
-            result.Z = vector.Z - (2.0f*normal.Z)*dotProduct;
+            var dotProduct = (vector.X * normal.X) + (vector.Y * normal.Y) + (vector.Z * normal.Z);
+            result.X = vector.X - (2.0f * normal.X * dotProduct);
+            result.Y = vector.Y - (2.0f * normal.Y * dotProduct);
+            result.Z = vector.Z - (2.0f * normal.Z * dotProduct);
         }
 
         /// <summary>
@@ -835,7 +835,7 @@ namespace BuildIt.AR
 
         /// <summary>
         /// Returns a <see cref="String"/> representation of this <see cref="Vector3"/> in the format:
-        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Z:[<see cref="Z"/>]}
+        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Z:[<see cref="Z"/>]}.
         /// </summary>
         /// <returns>A <see cref="String"/> representation of this <see cref="Vector3"/>.</returns>
         public override string ToString()
@@ -873,9 +873,9 @@ namespace BuildIt.AR
         /// <param name="result">Transformed <see cref="Vector3"/> as an output parameter.</param>
         public static void Transform(ref Vector3 position, ref Matrix matrix, out Vector3 result)
         {
-            var x = (position.X*matrix.M11) + (position.Y*matrix.M21) + (position.Z*matrix.M31) + matrix.M41;
-            var y = (position.X*matrix.M12) + (position.Y*matrix.M22) + (position.Z*matrix.M32) + matrix.M42;
-            var z = (position.X*matrix.M13) + (position.Y*matrix.M23) + (position.Z*matrix.M33) + matrix.M43;
+            var x = (position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41;
+            var y = (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42;
+            var z = (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43;
             result.X = x;
             result.Y = y;
             result.Z = z;
@@ -902,13 +902,13 @@ namespace BuildIt.AR
         /// <param name="result">Transformed <see cref="Vector3"/> as an output parameter.</param>
         public static void Transform(ref Vector3 value, ref Quaternion rotation, out Vector3 result)
         {
-            var x = 2*(rotation.Y*value.Z - rotation.Z*value.Y);
-            var y = 2*(rotation.Z*value.X - rotation.X*value.Z);
-            var z = 2*(rotation.X*value.Y - rotation.Y*value.X);
+            var x = 2 * ((rotation.Y * value.Z) - (rotation.Z * value.Y));
+            var y = 2 * ((rotation.Z * value.X) - (rotation.X * value.Z));
+            var z = 2 * ((rotation.X * value.Y) - (rotation.Y * value.X));
 
-            result.X = value.X + x*rotation.W + (rotation.Y*z - rotation.Z*y);
-            result.Y = value.Y + y*rotation.W + (rotation.Z*x - rotation.X*z);
-            result.Z = value.Z + z*rotation.W + (rotation.X*y - rotation.Y*x);
+            result.X = value.X + (x * rotation.W) + ((rotation.Y * z) - (rotation.Z * y));
+            result.Y = value.Y + (y * rotation.W) + ((rotation.Z * x) - (rotation.X * z));
+            result.Z = value.Z + (z * rotation.W) + ((rotation.X * y) - (rotation.Y * x));
         }
 
         /// <summary>
@@ -923,13 +923,24 @@ namespace BuildIt.AR
         public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Matrix matrix, Vector3[] destinationArray, int destinationIndex, int length)
         {
             if (sourceArray == null)
+            {
                 throw new ArgumentNullException("sourceArray");
+            }
+
             if (destinationArray == null)
+            {
                 throw new ArgumentNullException("destinationArray");
+            }
+
             if (sourceArray.Length < sourceIndex + length)
+            {
                 throw new ArgumentException("Source array length is lesser than sourceIndex + length");
+            }
+
             if (destinationArray.Length < destinationIndex + length)
+            {
                 throw new ArgumentException("Destination array length is lesser than destinationIndex + length");
+            }
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
@@ -938,9 +949,9 @@ namespace BuildIt.AR
                 var position = sourceArray[sourceIndex + i];
                 destinationArray[destinationIndex + i] =
                     new Vector3(
-                        (position.X*matrix.M11) + (position.Y*matrix.M21) + (position.Z*matrix.M31) + matrix.M41,
-                        (position.X*matrix.M12) + (position.Y*matrix.M22) + (position.Z*matrix.M32) + matrix.M42,
-                        (position.X*matrix.M13) + (position.Y*matrix.M23) + (position.Z*matrix.M33) + matrix.M43);
+                        (position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41,
+                        (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42,
+                        (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43);
             }
         }
 
@@ -956,13 +967,24 @@ namespace BuildIt.AR
         public static void Transform(Vector3[] sourceArray, int sourceIndex, ref Quaternion rotation, Vector3[] destinationArray, int destinationIndex, int length)
         {
             if (sourceArray == null)
+            {
                 throw new ArgumentNullException("sourceArray");
+            }
+
             if (destinationArray == null)
+            {
                 throw new ArgumentNullException("destinationArray");
+            }
+
             if (sourceArray.Length < sourceIndex + length)
+            {
                 throw new ArgumentException("Source array length is lesser than sourceIndex + length");
+            }
+
             if (destinationArray.Length < destinationIndex + length)
+            {
                 throw new ArgumentException("Destination array length is lesser than destinationIndex + length");
+            }
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
@@ -970,15 +992,15 @@ namespace BuildIt.AR
             {
                 var position = sourceArray[sourceIndex + i];
 
-                var x = 2*(rotation.Y*position.Z - rotation.Z*position.Y);
-                var y = 2*(rotation.Z*position.X - rotation.X*position.Z);
-                var z = 2*(rotation.X*position.Y - rotation.Y*position.X);
+                var x = 2 * ((rotation.Y * position.Z) - (rotation.Z * position.Y));
+                var y = 2 * ((rotation.Z * position.X) - (rotation.X * position.Z));
+                var z = 2 * ((rotation.X * position.Y) - (rotation.Y * position.X));
 
                 destinationArray[destinationIndex + i] =
                     new Vector3(
-                        position.X + x*rotation.W + (rotation.Y*z - rotation.Z*y),
-                        position.Y + y*rotation.W + (rotation.Z*x - rotation.X*z),
-                        position.Z + z*rotation.W + (rotation.X*y - rotation.Y*x));
+                        position.X + (x * rotation.W) + ((rotation.Y * z) - (rotation.Z * y)),
+                        position.Y + (y * rotation.W) + ((rotation.Z * x) - (rotation.X * z)),
+                        position.Z + (z * rotation.W) + ((rotation.X * y) - (rotation.Y * x)));
             }
         }
 
@@ -991,11 +1013,19 @@ namespace BuildIt.AR
         public static void Transform(Vector3[] sourceArray, ref Matrix matrix, Vector3[] destinationArray)
         {
             if (sourceArray == null)
+            {
                 throw new ArgumentNullException("sourceArray");
+            }
+
             if (destinationArray == null)
+            {
                 throw new ArgumentNullException("destinationArray");
+            }
+
             if (destinationArray.Length < sourceArray.Length)
+            {
                 throw new ArgumentException("Destination array length is lesser than source array length");
+            }
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
@@ -1004,9 +1034,9 @@ namespace BuildIt.AR
                 var position = sourceArray[i];
                 destinationArray[i] =
                     new Vector3(
-                        (position.X*matrix.M11) + (position.Y*matrix.M21) + (position.Z*matrix.M31) + matrix.M41,
-                        (position.X*matrix.M12) + (position.Y*matrix.M22) + (position.Z*matrix.M32) + matrix.M42,
-                        (position.X*matrix.M13) + (position.Y*matrix.M23) + (position.Z*matrix.M33) + matrix.M43);
+                        (position.X * matrix.M11) + (position.Y * matrix.M21) + (position.Z * matrix.M31) + matrix.M41,
+                        (position.X * matrix.M12) + (position.Y * matrix.M22) + (position.Z * matrix.M32) + matrix.M42,
+                        (position.X * matrix.M13) + (position.Y * matrix.M23) + (position.Z * matrix.M33) + matrix.M43);
             }
         }
 
@@ -1019,11 +1049,19 @@ namespace BuildIt.AR
         public static void Transform(Vector3[] sourceArray, ref Quaternion rotation, Vector3[] destinationArray)
         {
             if (sourceArray == null)
+            {
                 throw new ArgumentNullException("sourceArray");
+            }
+
             if (destinationArray == null)
+            {
                 throw new ArgumentNullException("destinationArray");
+            }
+
             if (destinationArray.Length < sourceArray.Length)
+            {
                 throw new ArgumentException("Destination array length is lesser than source array length");
+            }
 
             // TODO: Are there options on some platforms to implement a vectorized version of this?
 
@@ -1031,19 +1069,19 @@ namespace BuildIt.AR
             {
                 var position = sourceArray[i];
 
-                var x = 2*(rotation.Y*position.Z - rotation.Z*position.Y);
-                var y = 2*(rotation.Z*position.X - rotation.X*position.Z);
-                var z = 2*(rotation.X*position.Y - rotation.Y*position.X);
+                var x = 2 * ((rotation.Y * position.Z) - (rotation.Z * position.Y));
+                var y = 2 * ((rotation.Z * position.X) - (rotation.X * position.Z));
+                var z = 2 * ((rotation.X * position.Y) - (rotation.Y * position.X));
 
                 destinationArray[i] =
                     new Vector3(
-                        position.X + x*rotation.W + (rotation.Y*z - rotation.Z*y),
-                        position.Y + y*rotation.W + (rotation.Z*x - rotation.X*z),
-                        position.Z + z*rotation.W + (rotation.X*y - rotation.Y*x));
+                        position.X + (x * rotation.W) + ((rotation.Y * z) - (rotation.Z * y)),
+                        position.Y + (y * rotation.W) + ((rotation.Z * x) - (rotation.X * z)),
+                        position.Z + (z * rotation.W) + ((rotation.X * y) - (rotation.Y * x)));
             }
         }
 
-        #endregion
+        #endregion Transform
 
         #region TransformNormal
 
@@ -1067,9 +1105,9 @@ namespace BuildIt.AR
         /// <param name="result">Transformed normal as an output parameter.</param>
         public static void TransformNormal(ref Vector3 normal, ref Matrix matrix, out Vector3 result)
         {
-            var x = (normal.X*matrix.M11) + (normal.Y*matrix.M21) + (normal.Z*matrix.M31);
-            var y = (normal.X*matrix.M12) + (normal.Y*matrix.M22) + (normal.Z*matrix.M32);
-            var z = (normal.X*matrix.M13) + (normal.Y*matrix.M23) + (normal.Z*matrix.M33);
+            var x = (normal.X * matrix.M11) + (normal.Y * matrix.M21) + (normal.Z * matrix.M31);
+            var y = (normal.X * matrix.M12) + (normal.Y * matrix.M22) + (normal.Z * matrix.M32);
+            var z = (normal.X * matrix.M13) + (normal.Y * matrix.M23) + (normal.Z * matrix.M33);
             result.X = x;
             result.Y = y;
             result.Z = z;
@@ -1092,13 +1130,24 @@ namespace BuildIt.AR
             int length)
         {
             if (sourceArray == null)
+            {
                 throw new ArgumentNullException("sourceArray");
+            }
+
             if (destinationArray == null)
+            {
                 throw new ArgumentNullException("destinationArray");
+            }
+
             if (sourceArray.Length < sourceIndex + length)
+            {
                 throw new ArgumentException("Source array length is lesser than sourceIndex + length");
+            }
+
             if (destinationArray.Length < destinationIndex + length)
+            {
                 throw new ArgumentException("Destination array length is lesser than destinationIndex + length");
+            }
 
             for (var x = 0; x < length; x++)
             {
@@ -1106,9 +1155,9 @@ namespace BuildIt.AR
 
                 destinationArray[destinationIndex + x] =
                     new Vector3(
-                        (normal.X*matrix.M11) + (normal.Y*matrix.M21) + (normal.Z*matrix.M31),
-                        (normal.X*matrix.M12) + (normal.Y*matrix.M22) + (normal.Z*matrix.M32),
-                        (normal.X*matrix.M13) + (normal.Y*matrix.M23) + (normal.Z*matrix.M33));
+                        (normal.X * matrix.M11) + (normal.Y * matrix.M21) + (normal.Z * matrix.M31),
+                        (normal.X * matrix.M12) + (normal.Y * matrix.M22) + (normal.Z * matrix.M32),
+                        (normal.X * matrix.M13) + (normal.Y * matrix.M23) + (normal.Z * matrix.M33));
             }
         }
 
@@ -1121,11 +1170,19 @@ namespace BuildIt.AR
         public static void TransformNormal(Vector3[] sourceArray, ref Matrix matrix, Vector3[] destinationArray)
         {
             if (sourceArray == null)
+            {
                 throw new ArgumentNullException("sourceArray");
+            }
+
             if (destinationArray == null)
+            {
                 throw new ArgumentNullException("destinationArray");
+            }
+
             if (destinationArray.Length < sourceArray.Length)
+            {
                 throw new ArgumentException("Destination array length is lesser than source array length");
+            }
 
             for (var i = 0; i < sourceArray.Length; i++)
             {
@@ -1133,15 +1190,15 @@ namespace BuildIt.AR
 
                 destinationArray[i] =
                     new Vector3(
-                        (normal.X*matrix.M11) + (normal.Y*matrix.M21) + (normal.Z*matrix.M31),
-                        (normal.X*matrix.M12) + (normal.Y*matrix.M22) + (normal.Z*matrix.M32),
-                        (normal.X*matrix.M13) + (normal.Y*matrix.M23) + (normal.Z*matrix.M33));
+                        (normal.X * matrix.M11) + (normal.Y * matrix.M21) + (normal.Z * matrix.M31),
+                        (normal.X * matrix.M12) + (normal.Y * matrix.M22) + (normal.Z * matrix.M32),
+                        (normal.X * matrix.M13) + (normal.Y * matrix.M23) + (normal.Z * matrix.M33));
             }
         }
 
-        #endregion
+        #endregion TransformNormal
 
-        #endregion
+        #endregion Public Methods
 
         #region Operators
 
@@ -1163,7 +1220,7 @@ namespace BuildIt.AR
         /// </summary>
         /// <param name="value1"><see cref="Vector3"/> instance on the left of the not equal sign.</param>
         /// <param name="value2"><see cref="Vector3"/> instance on the right of the not equal sign.</param>
-        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>	
+        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
         public static bool operator !=(Vector3 value1, Vector3 value2)
         {
             return !(value1 == value2);
@@ -1272,14 +1329,14 @@ namespace BuildIt.AR
         /// <returns>The result of dividing a vector by a scalar.</returns>
         public static Vector3 operator /(Vector3 value1, float divider)
         {
-            var factor = 1/divider;
+            var factor = 1 / divider;
             value1.X *= factor;
             value1.Y *= factor;
             value1.Z *= factor;
             return value1;
         }
 
-        #endregion
+        #endregion Operators
     }
 
     public static class MathHelper
@@ -1287,7 +1344,7 @@ namespace BuildIt.AR
         /// <summary>
         /// Represents the mathematical constant e(2.71828175).
         /// </summary>
-        public const float E = (float) Math.E;
+        public const float E = (float)Math.E;
 
         /// <summary>
         /// Represents the log base ten of e(0.4342945).
@@ -1302,22 +1359,22 @@ namespace BuildIt.AR
         /// <summary>
         /// Represents the value of pi(3.14159274).
         /// </summary>
-        public const float Pi = (float) Math.PI;
+        public const float Pi = (float)Math.PI;
 
         /// <summary>
         /// Represents the value of pi divided by two(1.57079637).
         /// </summary>
-        public const float PiOver2 = (float) (Math.PI/2.0);
+        public const float PiOver2 = (float)(Math.PI / 2.0);
 
         /// <summary>
         /// Represents the value of pi divided by four(0.7853982).
         /// </summary>
-        public const float PiOver4 = (float) (Math.PI/4.0);
+        public const float PiOver4 = (float)(Math.PI / 4.0);
 
         /// <summary>
         /// Represents the value of pi times two(6.28318548).
         /// </summary>
-        public const float TwoPi = (float) (Math.PI*2.0);
+        public const float TwoPi = (float)(Math.PI * 2.0);
 
         /// <summary>
         /// Returns the Cartesian coordinate for one axis of a point that is defined by a given triangle and two normalized barycentric (areal) coordinates.
@@ -1330,7 +1387,7 @@ namespace BuildIt.AR
         /// <returns>Cartesian coordinate of the specified point with respect to the axis being used.</returns>
         public static float Barycentric(float value1, float value2, float value3, float amount1, float amount2)
         {
-            return value1 + (value2 - value1)*amount1 + (value3 - value1)*amount2;
+            return value1 + ((value2 - value1) * amount1) + ((value3 - value1) * amount2);
         }
 
         /// <summary>
@@ -1346,12 +1403,12 @@ namespace BuildIt.AR
         {
             // Using formula from http://www.mvps.org/directx/articles/catmull/
             // Internally using doubles not to lose precission
-            double amountSquared = amount*amount;
-            var amountCubed = amountSquared*amount;
-            return (float) (0.5*(2.0*value2 +
-                                 (value3 - value1)*amount +
-                                 (2.0*value1 - 5.0*value2 + 4.0*value3 - value4)*amountSquared +
-                                 (3.0*value2 - value1 - 3.0*value3 + value4)*amountCubed));
+            double amountSquared = amount * amount;
+            var amountCubed = amountSquared * amount;
+            return (float)(0.5 * ((2.0 * value2) +
+                                 ((value3 - value1) * amount) +
+                                 (((2.0 * value1) - (5.0 * value2) + (4.0 * value3) - value4) * amountSquared) +
+                                 (((3.0 * value2) - value1 - (3.0 * value3) + value4) * amountCubed)));
         }
 
         /// <summary>
@@ -1412,21 +1469,24 @@ namespace BuildIt.AR
             // All transformed to double not to lose precission
             // Otherwise, for high numbers of param:amount the result is NaN instead of Infinity
             double v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount, result;
-            var sCubed = s*s*s;
-            var sSquared = s*s;
+            var sCubed = s * s * s;
+            var sSquared = s * s;
 
             if (amount == 0f)
+            {
                 result = value1;
+            }
             else if (amount == 1f)
+            {
                 result = value2;
+            }
             else
-                result = (2*v1 - 2*v2 + t2 + t1)*sCubed +
-                         (3*v2 - 3*v1 - 2*t1 - t2)*sSquared +
-                         t1*s +
+                result = (((2 * v1) - (2 * v2) + t2 + t1) * sCubed) +
+                         (((3 * v2) - (3 * v1) - (2 * t1) - t2) * sSquared) +
+                         (t1 * s) +
                          v1;
-            return (float) result;
+            return (float)result;
         }
-
 
         /// <summary>
         /// Linearly interpolates between two values.
@@ -1434,7 +1494,7 @@ namespace BuildIt.AR
         /// <param name="value1">Source value.</param>
         /// <param name="value2">Destination value.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of value2.</param>
-        /// <returns>Interpolated value.</returns> 
+        /// <returns>Interpolated value.</returns>
         /// <remarks>This method performs the linear interpolation based on the following formula:
         /// <code>value1 + (value2 - value1) * amount</code>.
         /// Passing amount a value of 0 will cause value1 to be returned, a value of 1 will cause value2 to be returned.
@@ -1442,9 +1502,8 @@ namespace BuildIt.AR
         /// </remarks>
         public static float Lerp(float value1, float value2, float amount)
         {
-            return value1 + (value2 - value1)*amount;
+            return value1 + ((value2 - value1) * amount);
         }
-
 
         /// <summary>
         /// Linearly interpolates between two values.
@@ -1464,11 +1523,11 @@ namespace BuildIt.AR
         /// This also holds for value1=10^17, value2=10; value1=10^18,value2=10^2... so on.
         /// For an in depth explanation of the issue, see below references:
         /// Relevant Wikipedia Article: https://en.wikipedia.org/wiki/Linear_interpolation#Programming_language_support
-        /// Relevant StackOverflow Answer: http://stackoverflow.com/questions/4353525/floating-point-linear-interpolation#answer-23716956
+        /// Relevant StackOverflow Answer: http://stackoverflow.com/questions/4353525/floating-point-linear-interpolation#answer-23716956.
         /// </remarks>
         public static float LerpPrecise(float value1, float value2, float amount)
         {
-            return ((1 - amount)*value1) + (value2*amount);
+            return ((1 - amount) * value1) + (value2 * amount);
         }
 
         /// <summary>
@@ -1541,11 +1600,11 @@ namespace BuildIt.AR
         /// <remarks>
         /// This method uses double precission internally,
         /// though it returns single float
-        /// Factor = 180 / pi
+        /// Factor = 180 / pi.
         /// </remarks>
         public static float ToDegrees(float radians)
         {
-            return (float) (radians*57.295779513082320876798154814105);
+            return (float)(radians * 57.295779513082320876798154814105);
         }
 
         /// <summary>
@@ -1556,11 +1615,11 @@ namespace BuildIt.AR
         /// <remarks>
         /// This method uses double precission internally,
         /// though it returns single float
-        /// Factor = pi / 180
+        /// Factor = pi / 180.
         /// </remarks>
         public static float ToRadians(float degrees)
         {
-            return (float) (degrees*0.017453292519943295769236907684886);
+            return (float)(degrees * 0.017453292519943295769236907684886);
         }
 
         /// <summary>
@@ -1570,7 +1629,7 @@ namespace BuildIt.AR
         /// <returns>The new angle, in radians.</returns>
         public static float WrapAngle(float angle)
         {
-            angle = (float) Math.IEEERemainder((double) angle, 6.2831854820251465);
+            angle = (float)Math.IEEERemainder((double)angle, 6.2831854820251465);
             if (angle <= -3.14159274f)
             {
                 angle += 6.28318548f;
@@ -1582,6 +1641,7 @@ namespace BuildIt.AR
                     angle -= 6.28318548f;
                 }
             }
+
             return angle;
         }
 

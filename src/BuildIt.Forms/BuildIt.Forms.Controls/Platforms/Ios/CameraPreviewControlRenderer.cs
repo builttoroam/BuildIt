@@ -1,25 +1,23 @@
-﻿using System;
+﻿using AVFoundation;
+using BuildIt.Forms.Controls;
+using BuildIt.Forms.Controls.Extensions;
+using BuildIt.Forms.Controls.Interfaces;
+using BuildIt.Forms.Controls.Platforms.Ios;
+using BuildIt.Forms.Controls.Platforms.Ios.Extensions;
+using BuildIt.Forms.Parameters;
+using CoreFoundation;
+using Foundation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using AVFoundation;
-using BuildIt.Forms.Controls;
-using BuildIt.Forms.Controls.Common;
-using BuildIt.Forms.Controls.Extensions;
-using BuildIt.Forms.Controls.Interfaces;
-using BuildIt.Forms.Controls.Platforms.Ios;
-using BuildIt.Forms.Controls.Platforms.Ios.Extensions;
-using BuildIt.Forms.Controls.Platforms.Ios.Models;
-using BuildIt.Forms.Parameters;
-using CoreFoundation;
-using Foundation;
+using System.Threading;
+using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using System.Threading;
-using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
 namespace BuildIt.Forms.Controls.Platforms.Ios
@@ -155,11 +153,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
         }
 
         /// <summary>
-        /// Captures the most current video frame to a photo and saves it to local storage
+        /// Captures the most current video frame to a photo and saves it to local storage.
         /// </summary>
         /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
-        /// **If Saving to Photos Library** Requires `NSPhotoLibraryUsageDescription' in info.plist</param>
-        /// <returns>The path to the saved photo file</returns>
+        /// **If Saving to Photos Library** Requires `NSPhotoLibraryUsageDescription' in info.plist.</param>
+        /// <returns>The path to the saved photo file.</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             NSError error = null;
@@ -360,11 +358,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
 
             stillImageOutput = new AVCaptureStillImageOutput
             {
-                OutputSettings = new NSDictionary(AVVideo.CodecKey, AVVideo.CodecJPEG)
+                OutputSettings = new NSDictionary(AVVideo.CodecKey, AVVideo.CodecJPEG),
             };
             videoOutput = new AVCaptureVideoDataOutput()
             {
-                AlwaysDiscardsLateVideoFrames = true
+                AlwaysDiscardsLateVideoFrames = true,
             };
             videoCaptureQueue = new DispatchQueue("Video Capture Queue");
             frameExtractor = new FrameExtractor(cameraPreviewControl.OnMediaFrameArrived);
@@ -394,9 +392,11 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                 case Aspect.AspectFill:
                     videoPreviewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspectFill;
                     break;
+
                 case Aspect.AspectFit:
                     videoPreviewLayer.VideoGravity = AVLayerVideoGravity.ResizeAspect;
                     break;
+
                 case Aspect.Fill:
                     videoPreviewLayer.VideoGravity = AVLayerVideoGravity.Resize;
                     break;
@@ -470,7 +470,7 @@ namespace BuildIt.Forms.Controls.Platforms.Ios
                     var camera = new Camera()
                     {
                         Id = device.UniqueID,
-                        CameraFacing = ToCameraFacing(device.Position)
+                        CameraFacing = ToCameraFacing(device.Position),
                     };
                     cameras.Add(camera);
                 }

@@ -1,7 +1,7 @@
 ﻿namespace BuildIt.Forms.Controls
 {
     /// <summary>
-    /// Enumeration the available camera facings/positions
+    /// Enumeration the available camera facings/positions.
     /// </summary>
     public enum CameraFacing
     {
@@ -18,11 +18,11 @@
         /// <summary>
         /// The front-facing camera
         /// </summary>
-        Front
+        Front,
     }
 
     /// <summary>
-    /// Enumeration of camera statuses
+    /// Enumeration of camera statuses.
     /// </summary>
     public enum CameraStatus
     {
@@ -54,11 +54,11 @@
         /// <summary>
         /// Camera preview is in an error state
         /// </summary>
-        Error
+        Error,
     }
 
     /// <summary>
-    /// Enumeration of camera error codes
+    /// Enumeration of camera error codes.
     /// </summary>
     public enum CameraErrorCode
     {
@@ -70,6 +70,6 @@
         /// <summary>
         /// Indicates that the camera failure/error relates to the lack of app camera permissions
         /// </summary>
-        PermissionsNotGranted
+        PermissionsNotGranted,
     }
 }

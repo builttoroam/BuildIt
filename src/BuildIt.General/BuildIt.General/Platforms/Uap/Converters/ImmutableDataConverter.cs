@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Data;
 
 // ReSharper disable once CheckNamespace - Issue with Multi-targetting

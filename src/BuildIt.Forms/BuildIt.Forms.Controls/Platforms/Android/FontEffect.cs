@@ -15,7 +15,7 @@ using Xamarin.Forms.Platform.Android;
 namespace BuildIt.Forms.Controls.Droid
 {
     /// <summary>
-    /// Font effect, used to specify font family for visual elements
+    /// Font effect, used to specify font family for visual elements.
     /// </summary>
     [Preserve]
     public class FontEffect : PlatformEffect
@@ -29,7 +29,7 @@ namespace BuildIt.Forms.Controls.Droid
         private Assembly ParentAssembly { get; set; }
 
         /// <summary>
-        /// Handle when the effect is added to an element
+        /// Handle when the effect is added to an element.
         /// </summary>
         protected override void OnAttached()
         {
@@ -60,7 +60,7 @@ namespace BuildIt.Forms.Controls.Droid
         }
 
         /// <summary>
-        /// Detach effect
+        /// Detach effect.
         /// </summary>
         protected override void OnDetached()
         {

@@ -28,12 +28,4 @@
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsLibraryProject)' == 'true'  and '$(IsTestProject)' != 'true' ">true</GeneratePackageOnBuild>
 
   </PropertyGroup>
-  
-  <ItemGroup Condition="'$(IsLibraryProject)' == 'true'">
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false' and '$(IsLibraryProject)' == 'true'">
-    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" /> 
-  </ItemGroup>
 </Project>

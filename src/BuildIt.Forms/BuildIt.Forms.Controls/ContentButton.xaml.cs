@@ -7,18 +7,18 @@ using Xamarin.Forms;
 namespace BuildIt.Forms.Controls
 {
     /// <summary>
-    /// Represents a button which can have content and uses a content template
+    /// Represents a button which can have content and uses a content template.
     /// </summary>
     public partial class ContentButton
     {
         /// <summary>
-        /// The command parameters
+        /// The command parameters.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty =
             BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(Button), null, BindingMode.OneWay, null, CommandParameterChanged, null, null, null);
 
         /// <summary>
-        /// The command to be invoked when button pressed
+        /// The command to be invoked when button pressed.
         /// </summary>
         public static readonly BindableProperty CommandProperty =
             BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ContentButton), null, BindingMode.OneWay, null, CommandChanged, null, null, null);
@@ -39,7 +39,7 @@ namespace BuildIt.Forms.Controls
         public event EventHandler Pressed;
 
         /// <summary>
-        /// Gets or sets the command to be invoked when button pressed
+        /// Gets or sets the command to be invoked when button pressed.
         /// </summary>
         public ICommand Command
         {
@@ -49,7 +49,7 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Gets or sets the parameter to be sent to the command
+        /// Gets or sets the parameter to be sent to the command.
         /// </summary>
         public object CommandParameter
         {
@@ -81,9 +81,9 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Raises the property changed event
+        /// Raises the property changed event.
         /// </summary>
-        /// <param name="propertyName">The name of the property that has changed</param>
+        /// <param name="propertyName">The name of the property that has changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
@@ -98,9 +98,9 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Raises the property changing event
+        /// Raises the property changing event.
         /// </summary>
-        /// <param name="propertyName">The name of the property that's changing</param>
+        /// <param name="propertyName">The name of the property that's changing.</param>
         protected override void OnPropertyChanging([CallerMemberName] string propertyName = null)
         {
             if (propertyName == CommandProperty.PropertyName)
@@ -116,10 +116,10 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Invoked when a touch event happens and an event needs to be raised
+        /// Invoked when a touch event happens and an event needs to be raised.
         /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The touch event args</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The touch event args.</param>
         protected async void OnTouchEffectAction(object sender, object args)
         {
             try
@@ -176,7 +176,7 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Sends the pressed event
+        /// Sends the pressed event.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected async Task SendPressed()

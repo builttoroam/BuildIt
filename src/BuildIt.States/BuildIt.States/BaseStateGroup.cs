@@ -1,21 +1,20 @@
-﻿using System;
+﻿using BuildIt.ServiceLocation;
+using BuildIt.States.Interfaces;
+using BuildIt.States.Interfaces.StateData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.ServiceLocation;
-using BuildIt.States.Interfaces;
-using BuildIt.States.Interfaces.StateData;
-using Microsoft.Practices.ServiceLocation;
 
 namespace BuildIt.States
 {
     /// <summary>
-    /// Defines a group of states
+    /// Defines a group of states.
     /// </summary>
-    /// <typeparam name="TStateDefinition">Type of state definition</typeparam>
-    /// <typeparam name="TStateGroupDefinition">Type of group definition</typeparam>
+    /// <typeparam name="TStateDefinition">Type of state definition.</typeparam>
+    /// <typeparam name="TStateGroupDefinition">Type of group definition.</typeparam>
     public abstract class BaseStateGroup<TStateDefinition, TStateGroupDefinition>
         : IStateGroup<TStateDefinition, TStateGroupDefinition>
         where TStateDefinition : class, IStateDefinition, new()
@@ -26,7 +25,7 @@ namespace BuildIt.States
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseStateGroup{TStateDefinition, TStateGroupDefinition}"/> class.
         /// </summary>
-        /// <param name="cacheKey">The cacheKey for the state definition</param>
+        /// <param name="cacheKey">The cacheKey for the state definition.</param>
         protected BaseStateGroup(string cacheKey = null)
             : this(CachedOrNewGroupDefinitionByKey(cacheKey))
         {
@@ -35,7 +34,7 @@ namespace BuildIt.States
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseStateGroup{TStateDefinition, TStateGroupDefinition}"/> class.
         /// </summary>
-        /// <param name="groupDefinition">The definition for this stage group</param>
+        /// <param name="groupDefinition">The definition for this stage group.</param>
         protected BaseStateGroup(TStateGroupDefinition groupDefinition)
         {
             TypedGroupDefinition = groupDefinition;
@@ -67,32 +66,32 @@ namespace BuildIt.States
         public event EventHandler<IStateEventArgs> StateChangeComplete;
 
         /// <summary>
-        /// Gets the state group definition (including the states that make up the group)
+        /// Gets the state group definition (including the states that make up the group).
         /// </summary>
         public IStateGroupDefinition GroupDefinition => TypedGroupDefinition;
 
         /// <summary>
-        /// Gets or sets the state group definition (including the states that make up the group)
+        /// Gets or sets the state group definition (including the states that make up the group).
         /// </summary>
         public TStateGroupDefinition TypedGroupDefinition { get; set; }
 
         /// <summary>
-        /// Gets the name of the state group
+        /// Gets the name of the state group.
         /// </summary>
         public string GroupName => TypedGroupDefinition.GroupName;
 
         /// <summary>
-        /// Gets or sets dependency container for registering and retrieving types
+        /// Gets or sets dependency container for registering and retrieving types.
         /// </summary>
         public IDependencyContainer DependencyContainer { get; set; }
 
         /// <summary>
-        /// Gets or sets context for doing UI tasks
+        /// Gets or sets context for doing UI tasks.
         /// </summary>
         public IUIExecutionContext UIContext { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state name
+        /// Gets or sets the current state name.
         /// </summary>
         public virtual string CurrentStateName
         {
@@ -111,34 +110,34 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Gets returns the state definition for the current state
+        /// Gets returns the state definition for the current state.
         /// </summary>
         public IStateDefinition CurrentStateDefinition => CurrentTypedStateDefinition;
 
         /// <summary>
-        /// Gets or sets gets returns the state definition for the current state
+        /// Gets or sets gets returns the state definition for the current state.
         /// </summary>
         public TStateDefinition CurrentTypedStateDefinition { get; protected set; }
 
         /// <summary>
-        /// Gets returns information about the data entity associated with the current state
+        /// Gets returns information about the data entity associated with the current state.
         /// </summary>
         public IStateDefinitionDataWrapper CurrentStateDataWrapper => !IsDefaultState(CurrentStateName)
             ? CurrentStateDefinition?.UntypedStateDataWrapper
             : null;
 
         /// <summary>
-        /// Gets or sets the current state data
+        /// Gets or sets the current state data.
         /// </summary>
         public INotifyPropertyChanged CurrentStateData { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether /// Whether history will be recorded for this state group
+        /// Gets or sets a value indicating whether /// Whether history will be recorded for this state group.
         /// </summary>
         public bool TrackHistory { get; set; } = false;
 
         /// <summary>
-        /// Gets a value indicating whether whether history has been recorded
+        /// Gets a value indicating whether whether history has been recorded.
         /// </summary>
         public bool HasHistory
         {
@@ -155,7 +154,7 @@ namespace BuildIt.States
 
         /// <summary>
         /// Gets a value indicating whether whether the current state is preventing go to previous
-        /// Note: History must be enabled!
+        /// Note: History must be enabled!.
         /// </summary>
         public virtual bool GoToPreviousStateIsBlocked
         {
@@ -174,12 +173,12 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Gets the targets to be used when changing state
+        /// Gets the targets to be used when changing state.
         /// </summary>
         public IDictionary<string, object> StateValueTargets { get; } = new Dictionary<string, object>();
 
         /// <summary>
-        /// Gets cache of state data entities
+        /// Gets cache of state data entities.
         /// </summary>
         protected IDictionary<Type, INotifyPropertyChanged> StateDataCache { get; } =
             new Dictionary<Type, INotifyPropertyChanged>();
@@ -187,39 +186,39 @@ namespace BuildIt.States
         private static IDictionary<string, TStateGroupDefinition> CachedGroupDefinitions { get; } = new Dictionary<string, TStateGroupDefinition>();
 
         /// <summary>
-        /// Gets or sets the cancellation for the current state transition
+        /// Gets or sets the cancellation for the current state transition.
         /// </summary>
         private CancellationTokenSource StateTransitionCancellation { get; set; }
 
         /// <summary>
-        /// Gets or sets the target state name for the current transition
+        /// Gets or sets the target state name for the current transition.
         /// </summary>
         private string StateTransitionDestinationStateName { get; set; }
 
         /// <summary>
-        /// Gets a semaphore to block concurrent state transitions
+        /// Gets a semaphore to block concurrent state transitions.
         /// </summary>
         private SemaphoreSlim StateTransitionSemaphore { get; } = new SemaphoreSlim(1);
 
         /// <summary>
-        /// Gets a lock protecting access to the state transition cancellation source
+        /// Gets a lock protecting access to the state transition cancellation source.
         /// </summary>
         private object CancellationLock { get; } = new object();
 
         /// <summary>
-        /// Gets all triggers defined for the states in this group
+        /// Gets all triggers defined for the states in this group.
         /// </summary>
         private IList<IStateTrigger> Triggers { get; } = new List<IStateTrigger>();
 
         /// <summary>
-        /// Gets the history stack of state names
+        /// Gets the history stack of state names.
         /// </summary>
         private Stack<string> History { get; } = new Stack<string>();
 
         /// <summary>
-        /// Add and start watching a state trigger
+        /// Add and start watching a state trigger.
         /// </summary>
-        /// <param name="trigger">The state trigger to watch</param>
+        /// <param name="trigger">The state trigger to watch.</param>
         public void WatchTrigger(IStateTrigger trigger)
         {
             trigger.IsActiveChanged += Trigger_IsActiveChanged;
@@ -227,46 +226,46 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Change to a new state
+        /// Change to a new state.
         /// </summary>
-        /// <param name="newState">The name of the state to change to</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="newState">The name of the state to change to.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <returns>Success indicator.</returns>
         public Task<bool> ChangeToStateByName(string newState, bool useTransitions = true)
         {
             return ChangeToStateByName(newState, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
-        /// Change to a new state
+        /// Change to a new state.
         /// </summary>
-        /// <param name="newState">The name of the state to change to</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="newState">The name of the state to change to.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Success indicator.</returns>
         public async Task<bool> ChangeToStateByName(string newState, bool useTransitions, CancellationToken cancel)
         {
             return await PerformStateChange(newState, true, useTransitions, null, cancel);
         }
 
         /// <summary>
-        /// Change to state by going back
+        /// Change to state by going back.
         /// </summary>
-        /// <param name="newState">The name of the state to change to</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="newState">The name of the state to change to.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <returns>Success indicator.</returns>
         public Task<bool> ChangeBackToStateByName(string newState, bool useTransitions = true)
         {
             return ChangeBackToStateByName(newState, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
-        /// Change to state by going back
+        /// Change to state by going back.
         /// </summary>
-        /// <param name="newState">The name of the state to change to</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="newState">The name of the state to change to.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Success indicator.</returns>
         public async Task<bool> ChangeBackToStateByName(string newState, bool useTransitions, CancellationToken cancel)
         {
             if (TrackHistory == false)
@@ -284,27 +283,27 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Change to new state
+        /// Change to new state.
         /// </summary>
-        /// <typeparam name="TData">The type of data to be passed in</typeparam>
-        /// <param name="findState">The state to transition to</param>
-        /// <param name="data">The data to be passed in</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <returns>Success indicator</returns>
+        /// <typeparam name="TData">The type of data to be passed in.</typeparam>
+        /// <param name="findState">The state to transition to.</param>
+        /// <param name="data">The data to be passed in.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <returns>Success indicator.</returns>
         public Task<bool> ChangeToStateByNameWithData<TData>(string findState, TData data, bool useTransitions = true)
         {
             return ChangeToStateByNameWithData(findState, data, useTransitions, CancellationToken.None);
         }
 
         /// <summary>
-        /// Change to new state
+        /// Change to new state.
         /// </summary>
-        /// <typeparam name="TData">The type of data to be passed in</typeparam>
-        /// <param name="findState">The state to transition to</param>
-        /// <param name="data">The data to be passed in</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Success indicator</returns>
+        /// <typeparam name="TData">The type of data to be passed in.</typeparam>
+        /// <param name="findState">The state to transition to.</param>
+        /// <param name="data">The data to be passed in.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Success indicator.</returns>
         public async Task<bool> ChangeToStateByNameWithData<TData>(string findState, TData data, bool useTransitions, CancellationToken cancel)
         {
             var dataAsString = data.EncodeJson();
@@ -312,21 +311,21 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Change to the previous state
+        /// Change to the previous state.
         /// </summary>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <returns>Success indicator.</returns>
         public Task<bool> ChangeToPrevious(bool useTransitions = true)
         {
             return ChangeToPrevious(useTransitions, CancellationToken.None);
         }
 
         /// <summary>
-        /// Change to the previous state
+        /// Change to the previous state.
         /// </summary>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancel">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancel">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Success indicator.</returns>
         public async Task<bool> ChangeToPrevious(bool useTransitions, CancellationToken cancel)
         {
             if (History.Count == 0)
@@ -340,11 +339,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Binds one state group to another
+        /// Binds one state group to another.
         /// </summary>
-        /// <param name="groupToBindTo">The source group (ie changes in the source group update this group)</param>
-        /// <param name="bothDirections">Whether updates should flow both directions</param>
-        /// <returns>Binder entity that manages the relationship</returns>
+        /// <param name="groupToBindTo">The source group (ie changes in the source group update this group).</param>
+        /// <param name="bothDirections">Whether updates should flow both directions.</param>
+        /// <returns>Binder entity that manages the relationship.</returns>
         public virtual async Task<IStateBinder> Bind(IStateGroup groupToBindTo, bool bothDirections = true)
         {
             var sg = groupToBindTo; // as IStateGroup<TState>; // This includes INotifyStateChanged
@@ -359,9 +358,9 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Registers any depedencies, including in the defined states and data wrappers
+        /// Registers any depedencies, including in the defined states and data wrappers.
         /// </summary>
-        /// <param name="container">The container to register dependencies into</param>
+        /// <param name="container">The container to register dependencies into.</param>
         public virtual void RegisterDependencies(IDependencyContainer container)
         {
             DependencyContainer = container;
@@ -380,14 +379,14 @@ namespace BuildIt.States
         /// - State definition
         /// - State definition data wrapper
         /// - State data
-        /// Note: If overriding, make sure to call the base method!
+        /// Note: If overriding, make sure to call the base method!.
         /// </summary>
-        /// <param name="newState">The new state to transition to</param>
-        /// <param name="data">The json data to be passed to the new state</param>
-        /// <param name="isNewState">Is this a new state (forward) or going back</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Success indicator</returns>
+        /// <param name="newState">The new state to transition to.</param>
+        /// <param name="data">The json data to be passed to the new state.</param>
+        /// <param name="isNewState">Is this a new state (forward) or going back.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Success indicator.</returns>
         protected virtual async Task<bool> AboutToChangeFrom(string newState, string data, bool isNewState, bool useTransitions, CancellationToken cancelToken)
         {
             // var current = CurrentStateName;
@@ -474,14 +473,14 @@ namespace BuildIt.States
         /// - State definition
         /// - State definition data wrapper
         /// - State data
-        /// Note: If overriding, make sure to call the base method!
+        /// Note: If overriding, make sure to call the base method!.
         /// </summary>
-        /// <param name="newState">The new state</param>
-        /// <param name="dataAsJson">The data to be passed into the new state</param>
-        /// <param name="isNewState">Is this a new state (forward) or going back</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="newState">The new state.</param>
+        /// <param name="dataAsJson">The data to be passed into the new state.</param>
+        /// <param name="isNewState">Is this a new state (forward) or going back.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Task to be awaited.</returns>
         protected virtual async Task ChangingFrom(string newState, string dataAsJson, bool isNewState, bool useTransitions, CancellationToken cancelToken)
         {
             var currentStateDef = CurrentStateDefinition;
@@ -526,13 +525,13 @@ namespace BuildIt.States
 
         /// <summary>
         /// Change to the new state
-        /// Note: If overriding, make sure to call the base method!
+        /// Note: If overriding, make sure to call the base method!.
         /// </summary>
-        /// <param name="newState">The name of the new state to transition to</param>
-        /// <param name="isNewState">Is this a new state (forward) or going back</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Task to await</returns>
+        /// <param name="newState">The name of the new state to transition to.</param>
+        /// <param name="isNewState">Is this a new state (forward) or going back.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Task to await.</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
 
         protected virtual async Task ChangeCurrentState(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
@@ -637,14 +636,14 @@ namespace BuildIt.States
         /// - State data
         /// - State definition data wrapper
         /// - State definition
-        /// Note: If overriding, make sure to call the base method!
+        /// Note: If overriding, make sure to call the base method!.
         /// </summary>
-        /// <param name="oldState">The previous/existing state</param>
-        /// <param name="dataAsJson">Any data that needs to be passed in</param>
-        /// <param name="isNewState">Is this a new state (forward) or going back</param>
-        /// <param name="useTransitions">Should use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="oldState">The previous/existing state.</param>
+        /// <param name="dataAsJson">Any data that needs to be passed in.</param>
+        /// <param name="isNewState">Is this a new state (forward) or going back.</param>
+        /// <param name="useTransitions">Should use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Task to be awaited.</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
 
         protected virtual async Task ChangedToState(string oldState, string dataAsJson, bool isNewState, bool useTransitions, CancellationToken cancelToken)
@@ -721,13 +720,13 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Overridable method to raise the StateAboutToChange event
+        /// Overridable method to raise the StateAboutToChange event.
         /// </summary>
-        /// <param name="newState">The new state to transition to</param>
-        /// <param name="isNewState">Whether this will be a new state or going to previous</param>
-        /// <param name="useTransitions">Whether to use transitions or not</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Whether the state change should be cancelled (true)</returns>
+        /// <param name="newState">The new state to transition to.</param>
+        /// <param name="isNewState">Whether this will be a new state or going to previous.</param>
+        /// <param name="useTransitions">Whether to use transitions or not.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Whether the state change should be cancelled (true).</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
 
         protected virtual async Task<bool> NotifyStateAboutToChange(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
@@ -753,13 +752,13 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Overridable method to raise StateChanging event
+        /// Overridable method to raise StateChanging event.
         /// </summary>
-        /// <param name="newState">The name of the state being changed to</param>
-        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
-        /// <param name="useTransitions">Indicates whether to use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="newState">The name of the state being changed to.</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to.</param>
+        /// <param name="useTransitions">Indicates whether to use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Task to be awaited.</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
 
         protected virtual async Task NotifyStateChanging(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
@@ -781,13 +780,13 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Overridable method to raise StateChanged event
+        /// Overridable method to raise StateChanged event.
         /// </summary>
-        /// <param name="newState">The name of the state being changed to</param>
-        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
-        /// <param name="useTransitions">Indicates whether to use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="newState">The name of the state being changed to.</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to.</param>
+        /// <param name="useTransitions">Indicates whether to use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Task to be awaited.</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
 
         protected virtual async Task NotifyStateChanged(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
@@ -809,13 +808,13 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Overridable method to raise StateChangeComplete event
+        /// Overridable method to raise StateChangeComplete event.
         /// </summary>
-        /// <param name="newState">The name of the state being changed to</param>
-        /// <param name="isNewState">Whether the new state is a new state or being returned to</param>
-        /// <param name="useTransitions">Indicates whether to use transitions</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="newState">The name of the state being changed to.</param>
+        /// <param name="isNewState">Whether the new state is a new state or being returned to.</param>
+        /// <param name="useTransitions">Indicates whether to use transitions.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Task to be awaited.</returns>
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
 
         protected virtual async Task NotifyStateChangeComplete(string newState, bool isNewState, bool useTransitions, CancellationToken cancelToken)
@@ -837,27 +836,27 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Determines whether the supplied state definition is the default state
+        /// Determines whether the supplied state definition is the default state.
         /// </summary>
-        /// <param name="stateDefinition">The state definition</param>
-        /// <returns>True if this is the default state</returns>
+        /// <param name="stateDefinition">The state definition.</param>
+        /// <returns>True if this is the default state.</returns>
         protected virtual bool IsDefaultState(IStateDefinition stateDefinition)
         {
             return IsDefaultState(stateDefinition?.StateName);
         }
 
         /// <summary>
-        /// Determines whether the supplied state name is the default state
+        /// Determines whether the supplied state name is the default state.
         /// </summary>
-        /// <param name="stateName">The state name</param>
-        /// <returns>True if this is the default state</returns>
+        /// <param name="stateName">The state name.</param>
+        /// <returns>True if this is the default state.</returns>
         protected virtual bool IsDefaultState(string stateName)
         {
             return string.IsNullOrWhiteSpace(stateName);
         }
 
         /// <summary>
-        /// Method for raising the event indicating that going to previous has changed
+        /// Method for raising the event indicating that going to previous has changed.
         /// </summary>
         protected virtual void OnGoToPreviousStateIsBlockedChanged()
         {
@@ -865,10 +864,10 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Retrieves any existing entity for a particular entity type
+        /// Retrieves any existing entity for a particular entity type.
         /// </summary>
-        /// <param name="stateDataType">The type to use to look up state data</param>
-        /// <returns>The state data (or null)</returns>
+        /// <param name="stateDataType">The type to use to look up state data.</param>
+        /// <returns>The state data (or null).</returns>
         protected virtual INotifyPropertyChanged Existing(Type stateDataType) =>
             stateDataType == null ? null : StateDataCache.SafeValue(stateDataType);
 
@@ -957,14 +956,14 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Change to new state
+        /// Change to new state.
         /// </summary>
-        /// <param name="newState">The name of the new state</param>
-        /// <param name="isNewState">Whether this is a new state, or change to previous</param>
-        /// <param name="useTransitions">Use transition</param>
-        /// <param name="data">Json data to pass into the new state</param>
-        /// <param name="cancelToken">Cancellation token allowing change to be cancelled</param>
-        /// <returns>Indicates successful transition to the newState</returns>
+        /// <param name="newState">The name of the new state.</param>
+        /// <param name="isNewState">Whether this is a new state, or change to previous.</param>
+        /// <param name="useTransitions">Use transition.</param>
+        /// <param name="data">Json data to pass into the new state.</param>
+        /// <param name="cancelToken">Cancellation token allowing change to be cancelled.</param>
+        /// <returns>Indicates successful transition to the newState.</returns>
         private async Task<bool> PerformStateChange(string newState, bool isNewState, bool useTransitions, string data, CancellationToken cancelToken)
         {
             var newCancellation = new CancellationTokenSource();

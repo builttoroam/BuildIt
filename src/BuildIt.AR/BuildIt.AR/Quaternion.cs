@@ -4,10 +4,6 @@ namespace BuildIt.AR
 {
     public struct Quaternion : IEquatable<Quaternion>
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Fields
 
         /// <summary>
@@ -30,11 +26,12 @@ namespace BuildIt.AR
         /// </summary>
         public float W;
 
-        #endregion
+        #endregion Public Fields
 
         #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// Constructs a quaternion with X, Y, Z and W from four values.
         /// </summary>
         /// <param name="x">The x coordinate in 3d-space.</param>
@@ -50,6 +47,7 @@ namespace BuildIt.AR
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// Constructs a quaternion with X, Y, Z from <see cref="Vector3"/> and rotation component from a scalar.
         /// </summary>
         /// <param name="value">The x, y, z coordinates in 3d-space.</param>
@@ -66,15 +64,15 @@ namespace BuildIt.AR
         ///// Constructs a quaternion from <see cref="Vector4"/>.
         ///// </summary>
         ///// <param name="value">The x, y, z coordinates in 3d-space and the rotation component.</param>
-        //public Quaternion(Vector4 value)
-        //{
+        // public Quaternion(Vector4 value)
+        // {
         //    this.X = value.X;
         //    this.Y = value.Y;
         //    this.Z = value.Z;
         //    this.W = value.W;
-        //}
+        // }
 
-        #endregion
+        #endregion Constructors
 
         #region Public Properties
 
@@ -83,7 +81,7 @@ namespace BuildIt.AR
         /// </summary>
         public static Quaternion Identity { get; } = new Quaternion(0, 0, 0, 1);
 
-        #endregion
+        #endregion Public Properties
 
         #region Internal Properties
 
@@ -105,7 +103,7 @@ namespace BuildIt.AR
             }
         }
 
-        #endregion
+        #endregion Internal Properties
 
         #region Public Methods
 
@@ -141,7 +139,7 @@ namespace BuildIt.AR
             result.W = quaternion1.W + quaternion2.W;
         }
 
-        #endregion
+        #endregion Add
 
         #region Concatenate
 
@@ -165,10 +163,10 @@ namespace BuildIt.AR
             var z2 = value2.Z;
             var w2 = value2.W;
 
-            quaternion.X = ((x2 * w1) + (x1 * w2)) + ((y2 * z1) - (z2 * y1));
-            quaternion.Y = ((y2 * w1) + (y1 * w2)) + ((z2 * x1) - (x2 * z1));
-            quaternion.Z = ((z2 * w1) + (z1 * w2)) + ((x2 * y1) - (y2 * x1));
-            quaternion.W = (w2 * w1) - (((x2 * x1) + (y2 * y1)) + (z2 * z1));
+            quaternion.X = (x2 * w1) + (x1 * w2) + ((y2 * z1) - (z2 * y1));
+            quaternion.Y = (y2 * w1) + (y1 * w2) + ((z2 * x1) - (x2 * z1));
+            quaternion.Z = (z2 * w1) + (z1 * w2) + ((x2 * y1) - (y2 * x1));
+            quaternion.W = (w2 * w1) - ((x2 * x1) + (y2 * y1) + (z2 * z1));
 
             return quaternion;
         }
@@ -191,13 +189,13 @@ namespace BuildIt.AR
             var z2 = value2.Z;
             var w2 = value2.W;
 
-            result.X = ((x2 * w1) + (x1 * w2)) + ((y2 * z1) - (z2 * y1));
-            result.Y = ((y2 * w1) + (y1 * w2)) + ((z2 * x1) - (x2 * z1));
-            result.Z = ((z2 * w1) + (z1 * w2)) + ((x2 * y1) - (y2 * x1));
-            result.W = (w2 * w1) - (((x2 * x1) + (y2 * y1)) + (z2 * z1));
+            result.X = (x2 * w1) + (x1 * w2) + ((y2 * z1) - (z2 * y1));
+            result.Y = (y2 * w1) + (y1 * w2) + ((z2 * x1) - (x2 * z1));
+            result.Z = (z2 * w1) + (z1 * w2) + ((x2 * y1) - (y2 * x1));
+            result.W = (w2 * w1) - ((x2 * x1) + (y2 * y1) + (z2 * z1));
         }
 
-        #endregion
+        #endregion Concatenate
 
         #region Conjugate
 
@@ -234,7 +232,7 @@ namespace BuildIt.AR
             result.W = value.W;
         }
 
-        #endregion
+        #endregion Conjugate
 
         #region CreateFromAxisAngle
 
@@ -269,7 +267,7 @@ namespace BuildIt.AR
             result.W = cos;
         }
 
-        #endregion
+        #endregion CreateFromAxisAngle
 
         #region CreateFromRotationMatrix
 
@@ -297,6 +295,7 @@ namespace BuildIt.AR
 
                 return quaternion;
             }
+
             if ((matrix.M11 >= matrix.M22) && (matrix.M11 >= matrix.M33))
             {
                 sqrt = (float)Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
@@ -309,6 +308,7 @@ namespace BuildIt.AR
 
                 return quaternion;
             }
+
             if (matrix.M22 > matrix.M33)
             {
                 sqrt = (float)Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
@@ -321,6 +321,7 @@ namespace BuildIt.AR
 
                 return quaternion;
             }
+
             sqrt = (float)Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
             half = 0.5f / sqrt;
 
@@ -355,38 +356,38 @@ namespace BuildIt.AR
             }
             else
                 if ((matrix.M11 >= matrix.M22) && (matrix.M11 >= matrix.M33))
-                {
-                    sqrt = (float)Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
-                    half = 0.5f / sqrt;
+            {
+                sqrt = (float)Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
+                half = 0.5f / sqrt;
 
-                    result.X = 0.5f * sqrt;
-                    result.Y = (matrix.M12 + matrix.M21) * half;
-                    result.Z = (matrix.M13 + matrix.M31) * half;
-                    result.W = (matrix.M23 - matrix.M32) * half;
-                }
-                else if (matrix.M22 > matrix.M33)
-                {
-                    sqrt = (float)Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
-                    half = 0.5f / sqrt;
+                result.X = 0.5f * sqrt;
+                result.Y = (matrix.M12 + matrix.M21) * half;
+                result.Z = (matrix.M13 + matrix.M31) * half;
+                result.W = (matrix.M23 - matrix.M32) * half;
+            }
+            else if (matrix.M22 > matrix.M33)
+            {
+                sqrt = (float)Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
+                half = 0.5f / sqrt;
 
-                    result.X = (matrix.M21 + matrix.M12) * half;
-                    result.Y = 0.5f * sqrt;
-                    result.Z = (matrix.M32 + matrix.M23) * half;
-                    result.W = (matrix.M31 - matrix.M13) * half;
-                }
-                else
-                {
-                    sqrt = (float)Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
-                    half = 0.5f / sqrt;
+                result.X = (matrix.M21 + matrix.M12) * half;
+                result.Y = 0.5f * sqrt;
+                result.Z = (matrix.M32 + matrix.M23) * half;
+                result.W = (matrix.M31 - matrix.M13) * half;
+            }
+            else
+            {
+                sqrt = (float)Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
+                half = 0.5f / sqrt;
 
-                    result.X = (matrix.M31 + matrix.M13) * half;
-                    result.Y = (matrix.M32 + matrix.M23) * half;
-                    result.Z = 0.5f * sqrt;
-                    result.W = (matrix.M12 - matrix.M21) * half;
-                }
+                result.X = (matrix.M31 + matrix.M13) * half;
+                result.Y = (matrix.M32 + matrix.M23) * half;
+                result.Z = 0.5f * sqrt;
+                result.W = (matrix.M12 - matrix.M21) * half;
+            }
         }
 
-        #endregion
+        #endregion CreateFromRotationMatrix
 
         #region CreateFromYawPitchRoll
 
@@ -442,7 +443,7 @@ namespace BuildIt.AR
             result.W = (cosYaw * cosPitch * cosRoll) + (sinYaw * sinPitch * sinRoll);
         }
 
-        #endregion
+        #endregion CreateFromYawPitchRoll
 
         #region Divide
 
@@ -459,7 +460,7 @@ namespace BuildIt.AR
             var y = quaternion1.Y;
             var z = quaternion1.Z;
             var w = quaternion1.W;
-            var num14 = (((quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y)) + (quaternion2.Z * quaternion2.Z)) + (quaternion2.W * quaternion2.W);
+            var num14 = (quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y) + (quaternion2.Z * quaternion2.Z) + (quaternion2.W * quaternion2.W);
             var num5 = 1f / num14;
             var num4 = -quaternion2.X * num5;
             var num3 = -quaternion2.Y * num5;
@@ -468,10 +469,10 @@ namespace BuildIt.AR
             var num13 = (y * num2) - (z * num3);
             var num12 = (z * num4) - (x * num2);
             var num11 = (x * num3) - (y * num4);
-            var num10 = ((x * num4) + (y * num3)) + (z * num2);
-            quaternion.X = ((x * num) + (num4 * w)) + num13;
-            quaternion.Y = ((y * num) + (num3 * w)) + num12;
-            quaternion.Z = ((z * num) + (num2 * w)) + num11;
+            var num10 = (x * num4) + (y * num3) + (z * num2);
+            quaternion.X = (x * num) + (num4 * w) + num13;
+            quaternion.Y = (y * num) + (num3 * w) + num12;
+            quaternion.Z = (z * num) + (num2 * w) + num11;
             quaternion.W = (w * num) - num10;
             return quaternion;
         }
@@ -488,7 +489,7 @@ namespace BuildIt.AR
             var y = quaternion1.Y;
             var z = quaternion1.Z;
             var w = quaternion1.W;
-            var num14 = (((quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y)) + (quaternion2.Z * quaternion2.Z)) + (quaternion2.W * quaternion2.W);
+            var num14 = (quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y) + (quaternion2.Z * quaternion2.Z) + (quaternion2.W * quaternion2.W);
             var num5 = 1f / num14;
             var num4 = -quaternion2.X * num5;
             var num3 = -quaternion2.Y * num5;
@@ -497,14 +498,14 @@ namespace BuildIt.AR
             var num13 = (y * num2) - (z * num3);
             var num12 = (z * num4) - (x * num2);
             var num11 = (x * num3) - (y * num4);
-            var num10 = ((x * num4) + (y * num3)) + (z * num2);
-            result.X = ((x * num) + (num4 * w)) + num13;
-            result.Y = ((y * num) + (num3 * w)) + num12;
-            result.Z = ((z * num) + (num2 * w)) + num11;
+            var num10 = (x * num4) + (y * num3) + (z * num2);
+            result.X = (x * num) + (num4 * w) + num13;
+            result.Y = (y * num) + (num3 * w) + num12;
+            result.Z = (z * num) + (num2 * w) + num11;
             result.W = (w * num) - num10;
         }
 
-        #endregion
+        #endregion Divide
 
         #region Dot
 
@@ -516,7 +517,7 @@ namespace BuildIt.AR
         /// <returns>The dot product of two quaternions.</returns>
         public static float Dot(Quaternion quaternion1, Quaternion quaternion2)
         {
-            return ((((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W));
+            return (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
         }
 
         /// <summary>
@@ -527,10 +528,10 @@ namespace BuildIt.AR
         /// <param name="result">The dot product of two quaternions as an output parameter.</param>
         public static void Dot(ref Quaternion quaternion1, ref Quaternion quaternion2, out float result)
         {
-            result = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
+            result = (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
         }
 
-        #endregion
+        #endregion Dot
 
         #region Equals
 
@@ -542,7 +543,10 @@ namespace BuildIt.AR
         public override bool Equals(object obj)
         {
             if (obj is Quaternion)
+            {
                 return Equals((Quaternion)obj);
+            }
+
             return false;
         }
 
@@ -559,7 +563,7 @@ namespace BuildIt.AR
                    W == other.W;
         }
 
-        #endregion
+        #endregion Equals
 
         /// <summary>
         /// Gets the hash code of this <see cref="Quaternion"/>.
@@ -580,7 +584,7 @@ namespace BuildIt.AR
         public static Quaternion Inverse(Quaternion quaternion)
         {
             Quaternion quaternion2;
-            var num2 = (((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y)) + (quaternion.Z * quaternion.Z)) + (quaternion.W * quaternion.W);
+            var num2 = (quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W);
             var num = 1f / num2;
             quaternion2.X = -quaternion.X * num;
             quaternion2.Y = -quaternion.Y * num;
@@ -596,7 +600,7 @@ namespace BuildIt.AR
         /// <param name="result">The inverse quaternion as an output parameter.</param>
         public static void Inverse(ref Quaternion quaternion, out Quaternion result)
         {
-            var num2 = (((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y)) + (quaternion.Z * quaternion.Z)) + (quaternion.W * quaternion.W);
+            var num2 = (quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W);
             var num = 1f / num2;
             result.X = -quaternion.X * num;
             result.Y = -quaternion.Y * num;
@@ -604,7 +608,7 @@ namespace BuildIt.AR
             result.W = quaternion.W * num;
         }
 
-        #endregion
+        #endregion Inverse
 
         /// <summary>
         /// Returns the magnitude of the quaternion components.
@@ -638,7 +642,7 @@ namespace BuildIt.AR
             var num = amount;
             var num2 = 1f - num;
             var quaternion = new Quaternion();
-            var num5 = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
+            var num5 = (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
             if (num5 >= 0f)
             {
                 quaternion.X = (num2 * quaternion1.X) + (num * quaternion2.X);
@@ -653,7 +657,8 @@ namespace BuildIt.AR
                 quaternion.Z = (num2 * quaternion1.Z) - (num * quaternion2.Z);
                 quaternion.W = (num2 * quaternion1.W) - (num * quaternion2.W);
             }
-            var num4 = ((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y)) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W);
+
+            var num4 = (quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W);
             var num3 = 1f / ((float)Math.Sqrt(num4));
             quaternion.X *= num3;
             quaternion.Y *= num3;
@@ -673,7 +678,7 @@ namespace BuildIt.AR
         {
             var num = amount;
             var num2 = 1f - num;
-            var num5 = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
+            var num5 = (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
             if (num5 >= 0f)
             {
                 result.X = (num2 * quaternion1.X) + (num * quaternion2.X);
@@ -688,16 +693,16 @@ namespace BuildIt.AR
                 result.Z = (num2 * quaternion1.Z) - (num * quaternion2.Z);
                 result.W = (num2 * quaternion1.W) - (num * quaternion2.W);
             }
-            var num4 = (((result.X * result.X) + (result.Y * result.Y)) + (result.Z * result.Z)) + (result.W * result.W);
+
+            var num4 = (result.X * result.X) + (result.Y * result.Y) + (result.Z * result.Z) + (result.W * result.W);
             var num3 = 1f / ((float)Math.Sqrt((double)num4));
             result.X *= num3;
             result.Y *= num3;
             result.Z *= num3;
             result.W *= num3;
-
         }
 
-        #endregion
+        #endregion Lerp
 
         #region Slerp
 
@@ -714,13 +719,14 @@ namespace BuildIt.AR
             float num3;
             Quaternion quaternion;
             var num = amount;
-            var num4 = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
+            var num4 = (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
             var flag = false;
             if (num4 < 0f)
             {
                 flag = true;
                 num4 = -num4;
             }
+
             if (num4 > 0.999999f)
             {
                 num3 = 1f - num;
@@ -733,6 +739,7 @@ namespace BuildIt.AR
                 num3 = ((float)Math.Sin((double)((1f - num) * num5))) * num6;
                 num2 = flag ? (((float)-Math.Sin((double)(num * num5))) * num6) : (((float)Math.Sin((double)(num * num5))) * num6);
             }
+
             quaternion.X = (num3 * quaternion1.X) + (num2 * quaternion2.X);
             quaternion.Y = (num3 * quaternion1.Y) + (num2 * quaternion2.Y);
             quaternion.Z = (num3 * quaternion1.Z) + (num2 * quaternion2.Z);
@@ -752,13 +759,14 @@ namespace BuildIt.AR
             float num2;
             float num3;
             var num = amount;
-            var num4 = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
+            var num4 = (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
             var flag = false;
             if (num4 < 0f)
             {
                 flag = true;
                 num4 = -num4;
             }
+
             if (num4 > 0.999999f)
             {
                 num3 = 1f - num;
@@ -771,13 +779,14 @@ namespace BuildIt.AR
                 num3 = ((float)Math.Sin((double)((1f - num) * num5))) * num6;
                 num2 = flag ? (((float)-Math.Sin((double)(num * num5))) * num6) : (((float)Math.Sin((double)(num * num5))) * num6);
             }
+
             result.X = (num3 * quaternion1.X) + (num2 * quaternion2.X);
             result.Y = (num3 * quaternion1.Y) + (num2 * quaternion2.Y);
             result.Z = (num3 * quaternion1.Z) + (num2 * quaternion2.Z);
             result.W = (num3 * quaternion1.W) + (num2 * quaternion2.W);
         }
 
-        #endregion
+        #endregion Slerp
 
         #region Subtract
 
@@ -811,7 +820,7 @@ namespace BuildIt.AR
             result.W = quaternion1.W - quaternion2.W;
         }
 
-        #endregion
+        #endregion Subtract
 
         #region Multiply
 
@@ -835,10 +844,10 @@ namespace BuildIt.AR
             var num12 = (y * num2) - (z * num3);
             var num11 = (z * num4) - (x * num2);
             var num10 = (x * num3) - (y * num4);
-            var num9 = ((x * num4) + (y * num3)) + (z * num2);
-            quaternion.X = ((x * num) + (num4 * w)) + num12;
-            quaternion.Y = ((y * num) + (num3 * w)) + num11;
-            quaternion.Z = ((z * num) + (num2 * w)) + num10;
+            var num9 = (x * num4) + (y * num3) + (z * num2);
+            quaternion.X = (x * num) + (num4 * w) + num12;
+            quaternion.Y = (y * num) + (num3 * w) + num11;
+            quaternion.Z = (z * num) + (num2 * w) + num10;
             quaternion.W = (w * num) - num9;
             return quaternion;
         }
@@ -892,14 +901,14 @@ namespace BuildIt.AR
             var num12 = (y * num2) - (z * num3);
             var num11 = (z * num4) - (x * num2);
             var num10 = (x * num3) - (y * num4);
-            var num9 = ((x * num4) + (y * num3)) + (z * num2);
-            result.X = ((x * num) + (num4 * w)) + num12;
-            result.Y = ((y * num) + (num3 * w)) + num11;
-            result.Z = ((z * num) + (num2 * w)) + num10;
+            var num9 = (x * num4) + (y * num3) + (z * num2);
+            result.X = (x * num) + (num4 * w) + num12;
+            result.Y = (y * num) + (num3 * w) + num11;
+            result.Z = (z * num) + (num2 * w) + num10;
             result.W = (w * num) - num9;
         }
 
-        #endregion
+        #endregion Multiply
 
         #region Negate
 
@@ -926,7 +935,7 @@ namespace BuildIt.AR
             result.W = -quaternion.W;
         }
 
-        #endregion
+        #endregion Negate
 
         #region Normalize
 
@@ -972,11 +981,11 @@ namespace BuildIt.AR
             result.W = quaternion.W * num;
         }
 
-        #endregion
+        #endregion Normalize
 
         /// <summary>
         /// Returns a <see cref="String"/> representation of this <see cref="Quaternion"/> in the format:
-        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Z:[<see cref="Z"/>] W:[<see cref="W"/>]}
+        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Z:[<see cref="Z"/>] W:[<see cref="W"/>]}.
         /// </summary>
         /// <returns>A <see cref="String"/> representation of this <see cref="Quaternion"/>.</returns>
         public override string ToString()
@@ -988,12 +997,12 @@ namespace BuildIt.AR
         ///// Gets a <see cref="Vector4"/> representation for this object.
         ///// </summary>
         ///// <returns>A <see cref="Vector4"/> representation for this object.</returns>
-        //public Vector4 ToVector4()
-        //{
+        // public Vector4 ToVector4()
+        // {
         //    return new Vector4(X, Y, Z, W);
-        //}
+        // }
 
-        #endregion
+        #endregion Public Methods
 
         #region Operators
 
@@ -1026,7 +1035,7 @@ namespace BuildIt.AR
             var y = quaternion1.Y;
             var z = quaternion1.Z;
             var w = quaternion1.W;
-            var num14 = (((quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y)) + (quaternion2.Z * quaternion2.Z)) + (quaternion2.W * quaternion2.W);
+            var num14 = (quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y) + (quaternion2.Z * quaternion2.Z) + (quaternion2.W * quaternion2.W);
             var num5 = 1f / num14;
             var num4 = -quaternion2.X * num5;
             var num3 = -quaternion2.Y * num5;
@@ -1035,10 +1044,10 @@ namespace BuildIt.AR
             var num13 = (y * num2) - (z * num3);
             var num12 = (z * num4) - (x * num2);
             var num11 = (x * num3) - (y * num4);
-            var num10 = ((x * num4) + (y * num3)) + (z * num2);
-            quaternion.X = ((x * num) + (num4 * w)) + num13;
-            quaternion.Y = ((y * num) + (num3 * w)) + num12;
-            quaternion.Z = ((z * num) + (num2 * w)) + num11;
+            var num10 = (x * num4) + (y * num3) + (z * num2);
+            quaternion.X = (x * num) + (num4 * w) + num13;
+            quaternion.Y = (y * num) + (num3 * w) + num12;
+            quaternion.Z = (z * num) + (num2 * w) + num11;
             quaternion.W = (w * num) - num10;
             return quaternion;
         }
@@ -1051,7 +1060,7 @@ namespace BuildIt.AR
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public static bool operator ==(Quaternion quaternion1, Quaternion quaternion2)
         {
-            return ((((quaternion1.X == quaternion2.X) && (quaternion1.Y == quaternion2.Y)) && (quaternion1.Z == quaternion2.Z)) && (quaternion1.W == quaternion2.W));
+            return (quaternion1.X == quaternion2.X) && (quaternion1.Y == quaternion2.Y) && (quaternion1.Z == quaternion2.Z) && (quaternion1.W == quaternion2.W);
         }
 
         /// <summary>
@@ -1059,13 +1068,14 @@ namespace BuildIt.AR
         /// </summary>
         /// <param name="quaternion1"><see cref="Quaternion"/> instance on the left of the not equal sign.</param>
         /// <param name="quaternion2"><see cref="Quaternion"/> instance on the right of the not equal sign.</param>
-        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>	
+        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
         public static bool operator !=(Quaternion quaternion1, Quaternion quaternion2)
         {
-            if (((quaternion1.X == quaternion2.X) && (quaternion1.Y == quaternion2.Y)) && (quaternion1.Z == quaternion2.Z))
+            if ((quaternion1.X == quaternion2.X) && (quaternion1.Y == quaternion2.Y) && (quaternion1.Z == quaternion2.Z))
             {
-                return (quaternion1.W != quaternion2.W);
+                return quaternion1.W != quaternion2.W;
             }
+
             return true;
         }
 
@@ -1089,10 +1099,10 @@ namespace BuildIt.AR
             var num12 = (y * num2) - (z * num3);
             var num11 = (z * num4) - (x * num2);
             var num10 = (x * num3) - (y * num4);
-            var num9 = ((x * num4) + (y * num3)) + (z * num2);
-            quaternion.X = ((x * num) + (num4 * w)) + num12;
-            quaternion.Y = ((y * num) + (num3 * w)) + num11;
-            quaternion.Z = ((z * num) + (num2 * w)) + num10;
+            var num9 = (x * num4) + (y * num3) + (z * num2);
+            quaternion.X = (x * num) + (num4 * w) + num12;
+            quaternion.Y = (y * num) + (num3 * w) + num11;
+            quaternion.Z = (z * num) + (num2 * w) + num10;
             quaternion.W = (w * num) - num9;
             return quaternion;
         }
@@ -1127,7 +1137,6 @@ namespace BuildIt.AR
             quaternion.Z = quaternion1.Z - quaternion2.Z;
             quaternion.W = quaternion1.W - quaternion2.W;
             return quaternion;
-
         }
 
         /// <summary>
@@ -1145,6 +1154,6 @@ namespace BuildIt.AR
             return quaternion2;
         }
 
-        #endregion
+        #endregion Operators
     }
 }

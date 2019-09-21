@@ -6,17 +6,16 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.BackgroundEffect), "BackgroundEffect")]
-
 namespace BuildIt.Forms.Controls.UWP
 {
     /// <summary>
-    /// Effect for setting background on elements that don't support background
+    /// Effect for setting background on elements that don't support background.
     /// </summary>
     [Preserve]
     public class BackgroundEffect : PlatformEffect
     {
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -53,7 +52,7 @@ namespace BuildIt.Forms.Controls.UWP
         }
 
         /// <summary>
-        /// Detact the effect
+        /// Detact the effect.
         /// </summary>
         protected override void OnDetached()
         {

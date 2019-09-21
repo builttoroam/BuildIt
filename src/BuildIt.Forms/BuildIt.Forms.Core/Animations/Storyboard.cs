@@ -6,25 +6,25 @@ using Xamarin.Forms;
 namespace BuildIt.Forms.Animations
 {
     /// <summary>
-    /// Animation storyboard
+    /// Animation storyboard.
     /// </summary>
     [ContentProperty(nameof(Animations))]
     public class Storyboard : BindableObject
     {
         /// <summary>
-        /// Animations property
+        /// Animations property.
         /// </summary>
         public static readonly BindableProperty AnimationsProperty =
             BindableProperty.CreateAttached(nameof(Animations), typeof(IList<StateAnimation>), typeof(VisualState), null, BindingMode.OneWayToSource, null, null, null, null, CreateDefaultAnimations);
 
         /// <summary>
         /// Gets or sets the target element. Can be set either
-        /// in storyboard, or in invidual animations
+        /// in storyboard, or in invidual animations.
         /// </summary>
         public Element Element { get; set; }
 
         /// <summary>
-        /// Gets or sets animations to be run prior to a state change
+        /// Gets or sets animations to be run prior to a state change.
         /// </summary>
         public IList<StateAnimation> Animations
         {
@@ -33,10 +33,10 @@ namespace BuildIt.Forms.Animations
         }
 
         /// <summary>
-        /// Triggers the animation
+        /// Triggers the animation.
         /// </summary>
-        /// <param name="cancelToken">Cancellation token</param>
-        /// <returns>Task to await</returns>
+        /// <param name="cancelToken">Cancellation token.</param>
+        /// <returns>Task to await.</returns>
         public async Task Animate(CancellationToken cancelToken)
         {
             await VisualStateManager.BuildAnimationTasks(Animations, Element, cancelToken);

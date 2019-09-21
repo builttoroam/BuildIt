@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81</TargetFrameworks>
     <AssemblyName>BuildIt.AR</AssemblyName>
     <PackageId>BuildIt.AR</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -80,5 +80,10 @@
     <Compile Include="Platforms\Tizen\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
+  </ItemGroup>
+
 </Project>
 

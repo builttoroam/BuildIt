@@ -20,15 +20,13 @@ namespace BuildIt.AR
 
         public Rectangle Bounds
         {
-            get
-            {
-                //Rectangle result;
-                //result.X = this._x;
-                //result.Y = this._y;
-                //result.Width = this._width;
-                //result.Height = this._height;
-                return new Rectangle(X, Y, Width, Height);
-            }
+            get =>
+                // Rectangle result;
+                // result.X = this._x;
+                // result.Y = this._y;
+                // result.Width = this._width;
+                // result.Height = this._height;
+                new Rectangle(X, Y, Width, Height);
             set
             {
                 this.X = value.X;
@@ -37,6 +35,7 @@ namespace BuildIt.AR
                 this.Height = value.Height;
             }
         }
+
         public float AspectRatio
         {
             get
@@ -45,16 +44,16 @@ namespace BuildIt.AR
                 {
                     return 0f;
                 }
+
                 return (float)this.Width / (float)this.Height;
             }
         }
+
         public Rectangle TitleSafeArea
         {
-            get
-            {
-                return Viewport.GetTitleSafeArea(this.X, this.Y, this.Width, this.Height);
-            }
+            get { return Viewport.GetTitleSafeArea(this.X, this.Y, this.Width, this.Height); }
         }
+
         public Viewport(int x, int y, int width, int height)
         {
             this.X = x;
@@ -64,6 +63,7 @@ namespace BuildIt.AR
             this.MinDepth = 0f;
             this.MaxDepth = 1f;
         }
+
         public Viewport(Rectangle bounds)
         {
             this.X = bounds.X;
@@ -73,60 +73,67 @@ namespace BuildIt.AR
             this.MinDepth = 0f;
             this.MaxDepth = 1f;
         }
+
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "{{X:{0} Y:{1} Width:{2} Height:{3} MinDepth:{4} MaxDepth:{5}}}", new object[]
-            {
-                this.X,
-                this.Y,
-                this.Width,
-                this.Height,
-                this.MinDepth,
-                this.MaxDepth
-            });
+            return string.Format(CultureInfo.CurrentCulture,
+                "{{X:{0} Y:{1} Width:{2} Height:{3} MinDepth:{4} MaxDepth:{5}}}", new object[]
+                {
+                    this.X,
+                    this.Y,
+                    this.Width,
+                    this.Height,
+                    this.MinDepth,
+                    this.MaxDepth,
+                });
         }
+
         private static bool WithinEpsilon(float a, float b)
         {
             var num = a - b;
-            return -1.401298E-45f <= num && num <= 1.401298E-45f;
+            return num >= -1.401298E-45f && num <= 1.401298E-45f;
         }
+
         public Vector3 Project(Vector3 source, Matrix projection, Matrix view, Matrix world)
         {
             var matrix = Matrix.Multiply(world, view);
             matrix = Matrix.Multiply(matrix, projection);
             var vector = Vector3.Transform(source, matrix);
-            var num = source.X * matrix.M14 + source.Y * matrix.M24 + source.Z * matrix.M34 + matrix.M44;
+            var num = (source.X * matrix.M14) + (source.Y * matrix.M24) + (source.Z * matrix.M34) + matrix.M44;
             if (!Viewport.WithinEpsilon(num, 1f))
             {
                 vector /= num;
             }
-            vector.X = (vector.X + 1f) * 0.5f * (float)this.Width + (float)this.X;
-            vector.Y = (-vector.Y + 1f) * 0.5f * (float)this.Height + (float)this.Y;
-            vector.Z = vector.Z * (this.MaxDepth - this.MinDepth) + this.MinDepth;
+
+            vector.X = ((vector.X + 1f) * 0.5f * (float)this.Width) + (float)this.X;
+            vector.Y = ((-vector.Y + 1f) * 0.5f * (float)this.Height) + (float)this.Y;
+            vector.Z = (vector.Z * (this.MaxDepth - this.MinDepth)) + this.MinDepth;
             return vector;
         }
+
         public Vector3 Unproject(Vector3 source, Matrix projection, Matrix view, Matrix world)
         {
             var matrix = Matrix.Multiply(world, view);
             matrix = Matrix.Multiply(matrix, projection);
             matrix = Matrix.Invert(matrix);
-            source.X = (source.X - (float)this.X) / (float)this.Width * 2f - 1f;
-            source.Y = -((source.Y - (float)this.Y) / (float)this.Height * 2f - 1f);
+            source.X = ((source.X - (float)this.X) / (float)this.Width * 2f) - 1f;
+            source.Y = -(((source.Y - (float)this.Y) / (float)this.Height * 2f) - 1f);
             source.Z = (source.Z - this.MinDepth) / (this.MaxDepth - this.MinDepth);
             var vector = Vector3.Transform(source, matrix);
-            var num = source.X * matrix.M14 + source.Y * matrix.M24 + source.Z * matrix.M34 + matrix.M44;
+            var num = (source.X * matrix.M14) + (source.Y * matrix.M24) + (source.Z * matrix.M34) + matrix.M44;
             if (!Viewport.WithinEpsilon(num, 1f))
             {
                 vector /= num;
             }
+
             return vector;
         }
+
         internal static Rectangle GetTitleSafeArea(int x, int y, int w, int h)
         {
             return new Rectangle(x, y, w, h);
         }
     }
-
 
     /// <summary>
     /// Represents the right-handed 4x4 floating point matrix, which can store translation, scale and rotation information.
@@ -137,6 +144,7 @@ namespace BuildIt.AR
         #region Public Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Matrix"/> struct.
         /// Constructs a matrix.
         /// </summary>
         /// <param name="m11">A first row and first column value.</param>
@@ -156,7 +164,7 @@ namespace BuildIt.AR
         /// <param name="m43">A fourth row and third column value.</param>
         /// <param name="m44">A fourth row and fourth column value.</param>
         public Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31,
-                      float m32, float m33, float m34, float m41, float m42, float m43, float m44)
+            float m32, float m33, float m34, float m41, float m42, float m43, float m44)
         {
             this.M11 = m11;
             this.M12 = m12;
@@ -183,8 +191,8 @@ namespace BuildIt.AR
         ///// <param name="row2">A second row of the created matrix.</param>
         ///// <param name="row3">A third row of the created matrix.</param>
         ///// <param name="row4">A fourth row of the created matrix.</param>
-        //public Matrix(Vector4 row1, Vector4 row2, Vector4 row3, Vector4 row4)
-        //{
+        // public Matrix(Vector4 row1, Vector4 row2, Vector4 row3, Vector4 row4)
+        // {
         //    this.M11 = row1.X;
         //    this.M12 = row1.Y;
         //    this.M13 = row1.Z;
@@ -201,9 +209,9 @@ namespace BuildIt.AR
         //    this.M42 = row4.Y;
         //    this.M43 = row4.Z;
         //    this.M44 = row4.W;
-        //}
+        // }
 
-        #endregion
+        #endregion Public Constructors
 
         #region Public Fields
 
@@ -287,7 +295,7 @@ namespace BuildIt.AR
         /// </summary>
         public float M44;
 
-        #endregion
+        #endregion Public Fields
 
         #region Indexers
 
@@ -314,6 +322,7 @@ namespace BuildIt.AR
                     case 14: return M43;
                     case 15: return M44;
                 }
+
                 throw new ArgumentOutOfRangeException();
             }
 
@@ -321,22 +330,70 @@ namespace BuildIt.AR
             {
                 switch (index)
                 {
-                    case 0: M11 = value; break;
-                    case 1: M12 = value; break;
-                    case 2: M13 = value; break;
-                    case 3: M14 = value; break;
-                    case 4: M21 = value; break;
-                    case 5: M22 = value; break;
-                    case 6: M23 = value; break;
-                    case 7: M24 = value; break;
-                    case 8: M31 = value; break;
-                    case 9: M32 = value; break;
-                    case 10: M33 = value; break;
-                    case 11: M34 = value; break;
-                    case 12: M41 = value; break;
-                    case 13: M42 = value; break;
-                    case 14: M43 = value; break;
-                    case 15: M44 = value; break;
+                    case 0:
+                        M11 = value;
+                        break;
+
+                    case 1:
+                        M12 = value;
+                        break;
+
+                    case 2:
+                        M13 = value;
+                        break;
+
+                    case 3:
+                        M14 = value;
+                        break;
+
+                    case 4:
+                        M21 = value;
+                        break;
+
+                    case 5:
+                        M22 = value;
+                        break;
+
+                    case 6:
+                        M23 = value;
+                        break;
+
+                    case 7:
+                        M24 = value;
+                        break;
+
+                    case 8:
+                        M31 = value;
+                        break;
+
+                    case 9:
+                        M32 = value;
+                        break;
+
+                    case 10:
+                        M33 = value;
+                        break;
+
+                    case 11:
+                        M34 = value;
+                        break;
+
+                    case 12:
+                        M41 = value;
+                        break;
+
+                    case 13:
+                        M42 = value;
+                        break;
+
+                    case 14:
+                        M43 = value;
+                        break;
+
+                    case 15:
+                        M44 = value;
+                        break;
+
                     default: throw new ArgumentOutOfRangeException();
                 }
             }
@@ -344,22 +401,12 @@ namespace BuildIt.AR
 
         public float this[int row, int column]
         {
-            get
-            {
-                return this[(row * 4) + column];
-            }
+            get => this[(row * 4) + column];
 
-            set
-            {
-                this[(row * 4) + column] = value;
-            }
+            set => this[(row * 4) + column] = value;
         }
 
-        #endregion
-
-        #region Private Members
-
-        #endregion
+        #endregion Indexers
 
         #region Public Properties
 
@@ -368,10 +415,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Backward
         {
-            get
-            {
-                return new Vector3(this.M31, this.M32, this.M33);
-            }
+            get => new Vector3(this.M31, this.M32, this.M33);
             set
             {
                 this.M31 = value.X;
@@ -385,10 +429,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Down
         {
-            get
-            {
-                return new Vector3(-this.M21, -this.M22, -this.M23);
-            }
+            get => new Vector3(-this.M21, -this.M22, -this.M23);
             set
             {
                 this.M21 = -value.X;
@@ -402,10 +443,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Forward
         {
-            get
-            {
-                return new Vector3(-this.M31, -this.M32, -this.M33);
-            }
+            get => new Vector3(-this.M31, -this.M32, -this.M33);
             set
             {
                 this.M31 = -value.X;
@@ -427,10 +465,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Left
         {
-            get
-            {
-                return new Vector3(-this.M11, -this.M12, -this.M13);
-            }
+            get => new Vector3(-this.M11, -this.M12, -this.M13);
             set
             {
                 this.M11 = -value.X;
@@ -444,10 +479,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Right
         {
-            get
-            {
-                return new Vector3(this.M11, this.M12, this.M13);
-            }
+            get => new Vector3(this.M11, this.M12, this.M13);
             set
             {
                 this.M11 = value.X;
@@ -461,10 +493,7 @@ namespace BuildIt.AR
         /// </summary>
         public Quaternion Rotation
         {
-            get
-            {
-                return Quaternion.CreateFromRotationMatrix(this);
-            }
+            get { return Quaternion.CreateFromRotationMatrix(this); }
         }
 
         /// <summary>
@@ -472,10 +501,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Translation
         {
-            get
-            {
-                return new Vector3(this.M41, this.M42, this.M43);
-            }
+            get => new Vector3(this.M41, this.M42, this.M43);
             set
             {
                 this.M41 = value.X;
@@ -489,10 +515,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Scale
         {
-            get
-            {
-                return new Vector3(this.M11, this.M22, this.M33);
-            }
+            get => new Vector3(this.M11, this.M22, this.M33);
             set
             {
                 this.M11 = value.X;
@@ -506,10 +529,7 @@ namespace BuildIt.AR
         /// </summary>
         public Vector3 Up
         {
-            get
-            {
-                return new Vector3(this.M21, this.M22, this.M23);
-            }
+            get => new Vector3(this.M21, this.M22, this.M23);
             set
             {
                 this.M21 = value.X;
@@ -517,7 +537,8 @@ namespace BuildIt.AR
                 this.M23 = value.Z;
             }
         }
-        #endregion
+
+        #endregion Public Properties
 
         #region Public Methods
 
@@ -572,7 +593,6 @@ namespace BuildIt.AR
             result.M42 = matrix1.M42 + matrix2.M42;
             result.M43 = matrix1.M43 + matrix2.M43;
             result.M44 = matrix1.M44 + matrix2.M44;
-
         }
 
         /// <summary>
@@ -589,7 +609,8 @@ namespace BuildIt.AR
             Matrix result;
 
             // Delegate to the other overload of the function to do the work
-            CreateBillboard(ref objectPosition, ref cameraPosition, ref cameraUpVector, cameraForwardVector, out result);
+            CreateBillboard(ref objectPosition, ref cameraPosition, ref cameraUpVector, cameraForwardVector,
+                out result);
 
             return result;
         }
@@ -620,6 +641,7 @@ namespace BuildIt.AR
             {
                 Vector3.Multiply(ref vector, (float)(1f / ((float)Math.Sqrt((double)num))), out vector);
             }
+
             Vector3.Cross(ref cameraUpVector, ref vector, out vector3);
             vector3.Normalize();
             Vector3.Cross(ref vector, ref vector3, out vector2);
@@ -687,6 +709,7 @@ namespace BuildIt.AR
             {
                 Vector3.Multiply(ref vector2, (float)(1f / ((float)Math.Sqrt((double)num2))), out vector2);
             }
+
             var vector4 = rotateAxis;
             Vector3.Dot(ref rotateAxis, ref vector2, out num);
             if (Math.Abs(num) > 0.9982547f)
@@ -697,15 +720,18 @@ namespace BuildIt.AR
                     Vector3.Dot(ref rotateAxis, ref vector, out num);
                     if (Math.Abs(num) > 0.9982547f)
                     {
-                        num = ((rotateAxis.X * Vector3.Forward.X) + (rotateAxis.Y * Vector3.Forward.Y)) + (rotateAxis.Z * Vector3.Forward.Z);
+                        num = (rotateAxis.X * Vector3.Forward.X) + (rotateAxis.Y * Vector3.Forward.Y) +
+                              (rotateAxis.Z * Vector3.Forward.Z);
                         vector = (Math.Abs(num) > 0.9982547f) ? Vector3.Right : Vector3.Forward;
                     }
                 }
                 else
                 {
-                    num = ((rotateAxis.X * Vector3.Forward.X) + (rotateAxis.Y * Vector3.Forward.Y)) + (rotateAxis.Z * Vector3.Forward.Z);
+                    num = (rotateAxis.X * Vector3.Forward.X) + (rotateAxis.Y * Vector3.Forward.Y) +
+                          (rotateAxis.Z * Vector3.Forward.Z);
                     vector = (Math.Abs(num) > 0.9982547f) ? Vector3.Right : Vector3.Forward;
                 }
+
                 Vector3.Cross(ref rotateAxis, ref vector, out vector3);
                 vector3.Normalize();
                 Vector3.Cross(ref vector3, ref rotateAxis, out vector);
@@ -718,6 +744,7 @@ namespace BuildIt.AR
                 Vector3.Cross(ref vector3, ref vector4, out vector);
                 vector.Normalize();
             }
+
             result.M11 = vector3.X;
             result.M12 = vector3.Y;
             result.M13 = vector3.Z;
@@ -734,7 +761,6 @@ namespace BuildIt.AR
             result.M42 = objectPosition.Y;
             result.M43 = objectPosition.Z;
             result.M44 = 1;
-
         }
 
         /// <summary>
@@ -770,15 +796,15 @@ namespace BuildIt.AR
             var num7 = x * z;
             var num6 = y * z;
             result.M11 = num11 + (num * (1f - num11));
-            result.M12 = (num8 - (num * num8)) + (num2 * z);
-            result.M13 = (num7 - (num * num7)) - (num2 * y);
+            result.M12 = num8 - (num * num8) + (num2 * z);
+            result.M13 = num7 - (num * num7) - (num2 * y);
             result.M14 = 0;
-            result.M21 = (num8 - (num * num8)) - (num2 * z);
+            result.M21 = num8 - (num * num8) - (num2 * z);
             result.M22 = num10 + (num * (1f - num10));
-            result.M23 = (num6 - (num * num6)) + (num2 * x);
+            result.M23 = num6 - (num * num6) + (num2 * x);
             result.M24 = 0;
-            result.M31 = (num7 - (num * num7)) + (num2 * y);
-            result.M32 = (num6 - (num * num6)) - (num2 * x);
+            result.M31 = num7 - (num * num7) + (num2 * y);
+            result.M32 = num6 - (num * num6) - (num2 * x);
             result.M33 = num9 + (num * (1f - num9));
             result.M34 = 0;
             result.M41 = 0;
@@ -842,7 +868,7 @@ namespace BuildIt.AR
         /// <returns>The rotation <see cref="Matrix"/>.</returns>
         /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
         /// </remarks>
-		public static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+        public static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll)
         {
             Matrix matrix;
             CreateFromYawPitchRoll(yaw, pitch, roll, out matrix);
@@ -858,7 +884,7 @@ namespace BuildIt.AR
         /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
         /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
         /// </remarks>
-		public static void CreateFromYawPitchRoll(float yaw, float pitch, float roll, out Matrix result)
+        public static void CreateFromYawPitchRoll(float yaw, float pitch, float roll, out Matrix result)
         {
             Quaternion quaternion;
             Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll, out quaternion);
@@ -886,7 +912,8 @@ namespace BuildIt.AR
         /// <param name="cameraTarget">Lookup vector of the camera.</param>
         /// <param name="cameraUpVector">The direction of the upper edge of the camera.</param>
         /// <param name="result">The viewing <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateLookAt(ref Vector3 cameraPosition, ref Vector3 cameraTarget, ref Vector3 cameraUpVector, out Matrix result)
+        public static void CreateLookAt(ref Vector3 cameraPosition, ref Vector3 cameraTarget,
+            ref Vector3 cameraUpVector, out Matrix result)
         {
             var vector = Vector3.Normalize(cameraPosition - cameraTarget);
             var vector2 = Vector3.Normalize(Vector3.Cross(cameraUpVector, vector));
@@ -932,7 +959,8 @@ namespace BuildIt.AR
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
         /// <param name="result">The new projection <see cref="Matrix"/> for orthographic view as an output parameter.</param>
-        public static void CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane, out Matrix result)
+        public static void CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane,
+            out Matrix result)
         {
             result.M11 = 2f / width;
             result.M12 = result.M13 = result.M14 = 0f;
@@ -955,7 +983,8 @@ namespace BuildIt.AR
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
         /// <returns>The new projection <see cref="Matrix"/> for customized orthographic view.</returns>
-        public static Matrix CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
+        public static Matrix CreateOrthographicOffCenter(float left, float right, float bottom, float top,
+            float zNearPlane, float zFarPlane)
         {
             Matrix matrix;
             CreateOrthographicOffCenter(left, right, bottom, top, zNearPlane, zFarPlane, out matrix);
@@ -972,7 +1001,8 @@ namespace BuildIt.AR
         public static Matrix CreateOrthographicOffCenter(Rectangle viewingVolume, float zNearPlane, float zFarPlane)
         {
             Matrix matrix;
-            CreateOrthographicOffCenter(viewingVolume.Left, viewingVolume.Right, viewingVolume.Bottom, viewingVolume.Top, zNearPlane, zFarPlane, out matrix);
+            CreateOrthographicOffCenter(viewingVolume.Left, viewingVolume.Right, viewingVolume.Bottom,
+                viewingVolume.Top, zNearPlane, zFarPlane, out matrix);
             return matrix;
         }
 
@@ -986,7 +1016,8 @@ namespace BuildIt.AR
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
         /// <param name="result">The new projection <see cref="Matrix"/> for customized orthographic view as an output parameter.</param>
-        public static void CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane, out Matrix result)
+        public static void CreateOrthographicOffCenter(float left, float right, float bottom, float top,
+            float zNearPlane, float zFarPlane, out Matrix result)
         {
             result.M11 = (float)(2.0 / ((double)right - (double)left));
             result.M12 = 0.0f;
@@ -1014,7 +1045,8 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
         /// <returns>The new projection <see cref="Matrix"/> for perspective view.</returns>
-        public static Matrix CreatePerspective(float width, float height, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix CreatePerspective(float width, float height, float nearPlaneDistance,
+            float farPlaneDistance)
         {
             Matrix matrix;
             CreatePerspective(width, height, nearPlaneDistance, farPlaneDistance, out matrix);
@@ -1029,29 +1061,33 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
         /// <param name="result">The new projection <see cref="Matrix"/> for perspective view as an output parameter.</param>
-        public static void CreatePerspective(float width, float height, float nearPlaneDistance, float farPlaneDistance, out Matrix result)
+        public static void CreatePerspective(float width, float height, float nearPlaneDistance, float farPlaneDistance,
+            out Matrix result)
         {
             if (nearPlaneDistance <= 0f)
             {
                 throw new ArgumentException("nearPlaneDistance <= 0");
             }
+
             if (farPlaneDistance <= 0f)
             {
                 throw new ArgumentException("farPlaneDistance <= 0");
             }
+
             if (nearPlaneDistance >= farPlaneDistance)
             {
                 throw new ArgumentException("nearPlaneDistance >= farPlaneDistance");
             }
-            result.M11 = (2f * nearPlaneDistance) / width;
+
+            result.M11 = 2f * nearPlaneDistance / width;
             result.M12 = result.M13 = result.M14 = 0f;
-            result.M22 = (2f * nearPlaneDistance) / height;
+            result.M22 = 2f * nearPlaneDistance / height;
             result.M21 = result.M23 = result.M24 = 0f;
             result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
             result.M31 = result.M32 = 0f;
             result.M34 = -1f;
             result.M41 = result.M42 = result.M44 = 0f;
-            result.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+            result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
         }
 
         /// <summary>
@@ -1062,7 +1098,8 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
         /// <returns>The new projection <see cref="Matrix"/> for perspective view with FOV.</returns>
-        public static Matrix CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance,
+            float farPlaneDistance)
         {
             Matrix result;
             CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance, out result);
@@ -1077,24 +1114,29 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance of the near plane.</param>
         /// <param name="farPlaneDistance">Distance of the far plane.</param>
         /// <param name="result">The new projection <see cref="Matrix"/> for perspective view with FOV as an output parameter.</param>
-        public static void CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, out Matrix result)
+        public static void CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance,
+            float farPlaneDistance, out Matrix result)
         {
             if ((fieldOfView <= 0f) || (fieldOfView >= 3.141593f))
             {
                 throw new ArgumentException("fieldOfView <= 0 or >= PI");
             }
+
             if (nearPlaneDistance <= 0f)
             {
                 throw new ArgumentException("nearPlaneDistance <= 0");
             }
+
             if (farPlaneDistance <= 0f)
             {
                 throw new ArgumentException("farPlaneDistance <= 0");
             }
+
             if (nearPlaneDistance >= farPlaneDistance)
             {
                 throw new ArgumentException("nearPlaneDistance >= farPlaneDistance");
             }
+
             var num = 1f / ((float)Math.Tan((double)(fieldOfView * 0.5f)));
             var num9 = num / aspectRatio;
             result.M11 = num9;
@@ -1105,7 +1147,7 @@ namespace BuildIt.AR
             result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
             result.M34 = -1;
             result.M41 = result.M42 = result.M44 = 0;
-            result.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+            result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
         }
 
         /// <summary>
@@ -1118,12 +1160,14 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
         /// <returns>The new <see cref="Matrix"/> for customized perspective view.</returns>
-        public static Matrix CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix CreatePerspectiveOffCenter(float left, float right, float bottom, float top,
+            float nearPlaneDistance, float farPlaneDistance)
         {
             Matrix result;
             CreatePerspectiveOffCenter(left, right, bottom, top, nearPlaneDistance, farPlaneDistance, out result);
             return result;
         }
+
         /// <summary>
         /// Creates a new projection <see cref="Matrix"/> for customized perspective view.
         /// </summary>
@@ -1131,10 +1175,12 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
         /// <returns>The new <see cref="Matrix"/> for customized perspective view.</returns>
-        public static Matrix CreatePerspectiveOffCenter(Rectangle viewingVolume, float nearPlaneDistance, float farPlaneDistance)
+        public static Matrix CreatePerspectiveOffCenter(Rectangle viewingVolume, float nearPlaneDistance,
+            float farPlaneDistance)
         {
             Matrix result;
-            CreatePerspectiveOffCenter(viewingVolume.Left, viewingVolume.Right, viewingVolume.Bottom, viewingVolume.Top, nearPlaneDistance, farPlaneDistance, out result);
+            CreatePerspectiveOffCenter(viewingVolume.Left, viewingVolume.Right, viewingVolume.Bottom, viewingVolume.Top,
+                nearPlaneDistance, farPlaneDistance, out result);
             return result;
         }
 
@@ -1148,29 +1194,33 @@ namespace BuildIt.AR
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
         /// <param name="result">The new <see cref="Matrix"/> for customized perspective view as an output parameter.</param>
-        public static void CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance, out Matrix result)
+        public static void CreatePerspectiveOffCenter(float left, float right, float bottom, float top,
+            float nearPlaneDistance, float farPlaneDistance, out Matrix result)
         {
             if (nearPlaneDistance <= 0f)
             {
                 throw new ArgumentException("nearPlaneDistance <= 0");
             }
+
             if (farPlaneDistance <= 0f)
             {
                 throw new ArgumentException("farPlaneDistance <= 0");
             }
+
             if (nearPlaneDistance >= farPlaneDistance)
             {
                 throw new ArgumentException("nearPlaneDistance >= farPlaneDistance");
             }
-            result.M11 = (2f * nearPlaneDistance) / (right - left);
+
+            result.M11 = 2f * nearPlaneDistance / (right - left);
             result.M12 = result.M13 = result.M14 = 0;
-            result.M22 = (2f * nearPlaneDistance) / (top - bottom);
+            result.M22 = 2f * nearPlaneDistance / (top - bottom);
             result.M21 = result.M23 = result.M24 = 0;
             result.M31 = (left + right) / (right - left);
             result.M32 = (top + bottom) / (top - bottom);
             result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
             result.M34 = -1;
-            result.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+            result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
             result.M41 = result.M42 = result.M44 = 0;
         }
 
@@ -1364,36 +1414,34 @@ namespace BuildIt.AR
             result.M44 = 1;
         }
 
-
         ///// <summary>
-        ///// Creates a new <see cref="Matrix"/> that flattens geometry into a specified <see cref="Plane"/> as if casting a shadow from a specified light source. 
+        ///// Creates a new <see cref="Matrix"/> that flattens geometry into a specified <see cref="Plane"/> as if casting a shadow from a specified light source.
         ///// </summary>
         ///// <param name="lightDirection">A vector specifying the direction from which the light that will cast the shadow is coming.</param>
         ///// <param name="plane">The plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
         ///// <returns>A <see cref="Matrix"/> that can be used to flatten geometry onto the specified plane from the specified direction. </returns>
-        //public static Matrix CreateShadow(Vector3 lightDirection, Plane plane)
-        //{
+        // public static Matrix CreateShadow(Vector3 lightDirection, Plane plane)
+        // {
         //    Matrix result;
         //    CreateShadow(ref lightDirection, ref plane, out result);
         //    return result;
-        //}
-
+        // }
 
         ///// <summary>
-        ///// Creates a new <see cref="Matrix"/> that flattens geometry into a specified <see cref="Plane"/> as if casting a shadow from a specified light source. 
+        ///// Creates a new <see cref="Matrix"/> that flattens geometry into a specified <see cref="Plane"/> as if casting a shadow from a specified light source.
         ///// </summary>
         ///// <param name="lightDirection">A vector specifying the direction from which the light that will cast the shadow is coming.</param>
         ///// <param name="plane">The plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
         ///// <param name="result">A <see cref="Matrix"/> that can be used to flatten geometry onto the specified plane from the specified direction as an output parameter.</param>
-        //public static void CreateShadow(ref Vector3 lightDirection, ref Plane plane, out Matrix result)
-        //{
+        // public static void CreateShadow(ref Vector3 lightDirection, ref Plane plane, out Matrix result)
+        // {
         //    float dot = (plane.Normal.X * lightDirection.X) + (plane.Normal.Y * lightDirection.Y) + (plane.Normal.Z * lightDirection.Z);
         //    float x = -plane.Normal.X;
         //    float y = -plane.Normal.Y;
         //    float z = -plane.Normal.Z;
         //    float d = -plane.D;
 
-        //    result.M11 = (x * lightDirection.X) + dot;
+        // result.M11 = (x * lightDirection.X) + dot;
         //    result.M12 = x * lightDirection.Y;
         //    result.M13 = x * lightDirection.Z;
         //    result.M14 = 0;
@@ -1409,7 +1457,7 @@ namespace BuildIt.AR
         //    result.M42 = d * lightDirection.Y;
         //    result.M43 = d * lightDirection.Z;
         //    result.M44 = dot;
-        //}
+        // }
 
         /// <summary>
         /// Creates a new translation <see cref="Matrix"/>.
@@ -1494,20 +1542,20 @@ namespace BuildIt.AR
         ///// </summary>
         ///// <param name="value">The plane that used for reflection calculation.</param>
         ///// <returns>The reflection <see cref="Matrix"/>.</returns>
-        //public static Matrix CreateReflection(Plane value)
-        //{
+        // public static Matrix CreateReflection(Plane value)
+        // {
         //    Matrix result;
         //    CreateReflection(ref value, out result);
         //    return result;
-        //}
+        // }
 
         ///// <summary>
         ///// Creates a new reflection <see cref="Matrix"/>.
         ///// </summary>
         ///// <param name="value">The plane that used for reflection calculation.</param>
         ///// <param name="result">The reflection <see cref="Matrix"/> as an output parameter.</param>
-        //public static void CreateReflection(ref Plane value, out Matrix result)
-        //{
+        // public static void CreateReflection(ref Plane value, out Matrix result)
+        // {
         //    Plane plane;
         //    Plane.Normalize(ref value, out plane);
         //    value.Normalize();
@@ -1533,7 +1581,7 @@ namespace BuildIt.AR
         //    result.M42 = num2 * plane.D;
         //    result.M43 = num * plane.D;
         //    result.M44 = 1;
-        //}
+        // }
 
         /// <summary>
         /// Creates a new world <see cref="Matrix"/>.
@@ -1571,7 +1619,7 @@ namespace BuildIt.AR
                 Up = y,
                 Forward = z,
                 Translation = position,
-                M44 = 1f
+                M44 = 1f,
             };
         }
 
@@ -1592,9 +1640,9 @@ namespace BuildIt.AR
             float ys = (Math.Sign(M21 * M22 * M23 * M24) < 0) ? -1 : 1;
             float zs = (Math.Sign(M31 * M32 * M33 * M34) < 0) ? -1 : 1;
 
-            scale.X = xs * (float)Math.Sqrt(this.M11 * this.M11 + this.M12 * this.M12 + this.M13 * this.M13);
-            scale.Y = ys * (float)Math.Sqrt(this.M21 * this.M21 + this.M22 * this.M22 + this.M23 * this.M23);
-            scale.Z = zs * (float)Math.Sqrt(this.M31 * this.M31 + this.M32 * this.M32 + this.M33 * this.M33);
+            scale.X = xs * (float)Math.Sqrt((this.M11 * this.M11) + (this.M12 * this.M12) + (this.M13 * this.M13));
+            scale.Y = ys * (float)Math.Sqrt((this.M21 * this.M21) + (this.M22 * this.M22) + (this.M23 * this.M23));
+            scale.Z = zs * (float)Math.Sqrt((this.M31 * this.M31) + (this.M32 * this.M32) + (this.M33 * this.M33));
 
             if (scale.X == 0.0 || scale.Y == 0.0 || scale.Z == 0.0)
             {
@@ -1603,9 +1651,9 @@ namespace BuildIt.AR
             }
 
             var m1 = new Matrix(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
-                                   this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
-                                   this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
-                                   0, 0, 0, 1);
+                this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
+                this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
+                0, 0, 0, 1);
 
             rotation = Quaternion.CreateFromRotationMatrix(m1);
             return true;
@@ -1614,7 +1662,7 @@ namespace BuildIt.AR
         /// <summary>
         /// Returns a determinant of this <see cref="Matrix"/>.
         /// </summary>
-        /// <returns>Determinant of this <see cref="Matrix"/></returns>
+        /// <returns>Determinant of this <see cref="Matrix"/>.</returns>
         /// <remarks>See more about determinant here - http://en.wikipedia.org/wiki/Determinant.
         /// </remarks>
         public float Determinant()
@@ -1641,7 +1689,10 @@ namespace BuildIt.AR
             var num15 = (num8 * num) - (num5 * num4);
             var num14 = (num8 * num2) - (num6 * num4);
             var num13 = (num8 * num3) - (num7 * num4);
-            return ((((num22 * (((num11 * num18) - (num10 * num17)) + (num9 * num16))) - (num21 * (((num12 * num18) - (num10 * num15)) + (num9 * num14)))) + (num20 * (((num12 * num17) - (num11 * num15)) + (num9 * num13)))) - (num19 * (((num12 * num16) - (num11 * num14)) + (num10 * num13))));
+            return (num22 * ((num11 * num18) - (num10 * num17) + (num9 * num16))) -
+                      (num21 * ((num12 * num18) - (num10 * num15) + (num9 * num14))) +
+                     (num20 * ((num12 * num17) - (num11 * num15) + (num9 * num13))) -
+                    (num19 * ((num12 * num16) - (num11 * num14) + (num10 * num13)));
         }
 
         /// <summary>
@@ -1759,7 +1810,14 @@ namespace BuildIt.AR
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(Matrix other)
         {
-            return ((((((this.M11 == other.M11) && (this.M22 == other.M22)) && ((this.M33 == other.M33) && (this.M44 == other.M44))) && (((this.M12 == other.M12) && (this.M13 == other.M13)) && ((this.M14 == other.M14) && (this.M21 == other.M21)))) && ((((this.M23 == other.M23) && (this.M24 == other.M24)) && ((this.M31 == other.M31) && (this.M32 == other.M32))) && (((this.M34 == other.M34) && (this.M41 == other.M41)) && (this.M42 == other.M42)))) && (this.M43 == other.M43));
+            return (this.M11 == other.M11) && (this.M22 == other.M22) &&
+                       (this.M33 == other.M33) && (this.M44 == other.M44) &&
+                      (this.M12 == other.M12) && (this.M13 == other.M13) &&
+                       (this.M14 == other.M14) && (this.M21 == other.M21) &&
+                     (this.M23 == other.M23) && (this.M24 == other.M24) &&
+                       (this.M31 == other.M31) && (this.M32 == other.M32) &&
+                      (this.M34 == other.M34) && (this.M41 == other.M41) && (this.M42 == other.M42) &&
+                    (this.M43 == other.M43);
         }
 
         /// <summary>
@@ -1774,6 +1832,7 @@ namespace BuildIt.AR
             {
                 flag = this.Equals((Matrix)obj);
             }
+
             return flag;
         }
 
@@ -1783,11 +1842,16 @@ namespace BuildIt.AR
         /// <returns>Hash code of this <see cref="Matrix"/>.</returns>
         public override int GetHashCode()
         {
-            return (((((((((((((((this.M11.GetHashCode() + this.M12.GetHashCode()) + this.M13.GetHashCode()) + this.M14.GetHashCode()) + this.M21.GetHashCode()) + this.M22.GetHashCode()) + this.M23.GetHashCode()) + this.M24.GetHashCode()) + this.M31.GetHashCode()) + this.M32.GetHashCode()) + this.M33.GetHashCode()) + this.M34.GetHashCode()) + this.M41.GetHashCode()) + this.M42.GetHashCode()) + this.M43.GetHashCode()) + this.M44.GetHashCode());
+            return this.M11.GetHashCode() + this.M12.GetHashCode() + this.M13.GetHashCode() +
+                                this.M14.GetHashCode() + this.M21.GetHashCode() + this.M22.GetHashCode() +
+                             this.M23.GetHashCode() + this.M24.GetHashCode() + this.M31.GetHashCode() +
+                          this.M32.GetHashCode() + this.M33.GetHashCode() + this.M34.GetHashCode() +
+                       this.M41.GetHashCode() + this.M42.GetHashCode() + this.M43.GetHashCode() +
+                    this.M44.GetHashCode();
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains inversion of the specified matrix. 
+        /// Creates a new <see cref="Matrix"/> which contains inversion of the specified matrix.
         /// </summary>
         /// <param name="matrix">Source <see cref="Matrix"/>.</param>
         /// <returns>The inverted matrix.</returns>
@@ -1799,7 +1863,7 @@ namespace BuildIt.AR
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains inversion of the specified matrix. 
+        /// Creates a new <see cref="Matrix"/> which contains inversion of the specified matrix.
         /// </summary>
         /// <param name="matrix">Source <see cref="Matrix"/>.</param>
         /// <param name="result">The inverted matrix as output parameter.</param>
@@ -1821,67 +1885,82 @@ namespace BuildIt.AR
             var num14 = matrix.M42;
             var num15 = matrix.M43;
             var num16 = matrix.M44;
-            var num17 = (float)((double)num11 * (double)num16 - (double)num12 * (double)num15);
-            var num18 = (float)((double)num10 * (double)num16 - (double)num12 * (double)num14);
-            var num19 = (float)((double)num10 * (double)num15 - (double)num11 * (double)num14);
-            var num20 = (float)((double)num9 * (double)num16 - (double)num12 * (double)num13);
-            var num21 = (float)((double)num9 * (double)num15 - (double)num11 * (double)num13);
-            var num22 = (float)((double)num9 * (double)num14 - (double)num10 * (double)num13);
-            var num23 = (float)((double)num6 * (double)num17 - (double)num7 * (double)num18 + (double)num8 * (double)num19);
-            var num24 = (float)-((double)num5 * (double)num17 - (double)num7 * (double)num20 + (double)num8 * (double)num21);
-            var num25 = (float)((double)num5 * (double)num18 - (double)num6 * (double)num20 + (double)num8 * (double)num22);
-            var num26 = (float)-((double)num5 * (double)num19 - (double)num6 * (double)num21 + (double)num7 * (double)num22);
-            var num27 = (float)(1.0 / ((double)num1 * (double)num23 + (double)num2 * (double)num24 + (double)num3 * (double)num25 + (double)num4 * (double)num26));
+            var num17 = (float)(((double)num11 * (double)num16) - ((double)num12 * (double)num15));
+            var num18 = (float)(((double)num10 * (double)num16) - ((double)num12 * (double)num14));
+            var num19 = (float)(((double)num10 * (double)num15) - ((double)num11 * (double)num14));
+            var num20 = (float)(((double)num9 * (double)num16) - ((double)num12 * (double)num13));
+            var num21 = (float)(((double)num9 * (double)num15) - ((double)num11 * (double)num13));
+            var num22 = (float)(((double)num9 * (double)num14) - ((double)num10 * (double)num13));
+            var num23 = (float)(((double)num6 * (double)num17) - ((double)num7 * (double)num18) +
+                                 ((double)num8 * (double)num19));
+            var num24 = (float)-(((double)num5 * (double)num17) - ((double)num7 * (double)num20) +
+                                  ((double)num8 * (double)num21));
+            var num25 = (float)(((double)num5 * (double)num18) - ((double)num6 * (double)num20) +
+                                 ((double)num8 * (double)num22));
+            var num26 = (float)-(((double)num5 * (double)num19) - ((double)num6 * (double)num21) +
+                                  ((double)num7 * (double)num22));
+            var num27 = (float)(1.0 / (((double)num1 * (double)num23) + ((double)num2 * (double)num24) +
+                                        ((double)num3 * (double)num25) + ((double)num4 * (double)num26)));
 
             result.M11 = num23 * num27;
             result.M21 = num24 * num27;
             result.M31 = num25 * num27;
             result.M41 = num26 * num27;
-            result.M12 = (float)-((double)num2 * (double)num17 - (double)num3 * (double)num18 + (double)num4 * (double)num19) * num27;
-            result.M22 = (float)((double)num1 * (double)num17 - (double)num3 * (double)num20 + (double)num4 * (double)num21) * num27;
-            result.M32 = (float)-((double)num1 * (double)num18 - (double)num2 * (double)num20 + (double)num4 * (double)num22) * num27;
-            result.M42 = (float)((double)num1 * (double)num19 - (double)num2 * (double)num21 + (double)num3 * (double)num22) * num27;
-            var num28 = (float)((double)num7 * (double)num16 - (double)num8 * (double)num15);
-            var num29 = (float)((double)num6 * (double)num16 - (double)num8 * (double)num14);
-            var num30 = (float)((double)num6 * (double)num15 - (double)num7 * (double)num14);
-            var num31 = (float)((double)num5 * (double)num16 - (double)num8 * (double)num13);
-            var num32 = (float)((double)num5 * (double)num15 - (double)num7 * (double)num13);
-            var num33 = (float)((double)num5 * (double)num14 - (double)num6 * (double)num13);
-            result.M13 = (float)((double)num2 * (double)num28 - (double)num3 * (double)num29 + (double)num4 * (double)num30) * num27;
-            result.M23 = (float)-((double)num1 * (double)num28 - (double)num3 * (double)num31 + (double)num4 * (double)num32) * num27;
-            result.M33 = (float)((double)num1 * (double)num29 - (double)num2 * (double)num31 + (double)num4 * (double)num33) * num27;
-            result.M43 = (float)-((double)num1 * (double)num30 - (double)num2 * (double)num32 + (double)num3 * (double)num33) * num27;
-            var num34 = (float)((double)num7 * (double)num12 - (double)num8 * (double)num11);
-            var num35 = (float)((double)num6 * (double)num12 - (double)num8 * (double)num10);
-            var num36 = (float)((double)num6 * (double)num11 - (double)num7 * (double)num10);
-            var num37 = (float)((double)num5 * (double)num12 - (double)num8 * (double)num9);
-            var num38 = (float)((double)num5 * (double)num11 - (double)num7 * (double)num9);
-            var num39 = (float)((double)num5 * (double)num10 - (double)num6 * (double)num9);
-            result.M14 = (float)-((double)num2 * (double)num34 - (double)num3 * (double)num35 + (double)num4 * (double)num36) * num27;
-            result.M24 = (float)((double)num1 * (double)num34 - (double)num3 * (double)num37 + (double)num4 * (double)num38) * num27;
-            result.M34 = (float)-((double)num1 * (double)num35 - (double)num2 * (double)num37 + (double)num4 * (double)num39) * num27;
-            result.M44 = (float)((double)num1 * (double)num36 - (double)num2 * (double)num38 + (double)num3 * (double)num39) * num27;
-
+            result.M12 = (float)-(((double)num2 * (double)num17) - ((double)num3 * (double)num18) +
+                                   ((double)num4 * (double)num19)) * num27;
+            result.M22 = (float)(((double)num1 * (double)num17) - ((double)num3 * (double)num20) +
+                                  ((double)num4 * (double)num21)) * num27;
+            result.M32 = (float)-(((double)num1 * (double)num18) - ((double)num2 * (double)num20) +
+                                   ((double)num4 * (double)num22)) * num27;
+            result.M42 = (float)(((double)num1 * (double)num19) - ((double)num2 * (double)num21) +
+                                  ((double)num3 * (double)num22)) * num27;
+            var num28 = (float)(((double)num7 * (double)num16) - ((double)num8 * (double)num15));
+            var num29 = (float)(((double)num6 * (double)num16) - ((double)num8 * (double)num14));
+            var num30 = (float)(((double)num6 * (double)num15) - ((double)num7 * (double)num14));
+            var num31 = (float)(((double)num5 * (double)num16) - ((double)num8 * (double)num13));
+            var num32 = (float)(((double)num5 * (double)num15) - ((double)num7 * (double)num13));
+            var num33 = (float)(((double)num5 * (double)num14) - ((double)num6 * (double)num13));
+            result.M13 = (float)(((double)num2 * (double)num28) - ((double)num3 * (double)num29) +
+                                  ((double)num4 * (double)num30)) * num27;
+            result.M23 = (float)-(((double)num1 * (double)num28) - ((double)num3 * (double)num31) +
+                                   ((double)num4 * (double)num32)) * num27;
+            result.M33 = (float)(((double)num1 * (double)num29) - ((double)num2 * (double)num31) +
+                                  ((double)num4 * (double)num33)) * num27;
+            result.M43 = (float)-(((double)num1 * (double)num30) - ((double)num2 * (double)num32) +
+                                   ((double)num3 * (double)num33)) * num27;
+            var num34 = (float)(((double)num7 * (double)num12) - ((double)num8 * (double)num11));
+            var num35 = (float)(((double)num6 * (double)num12) - ((double)num8 * (double)num10));
+            var num36 = (float)(((double)num6 * (double)num11) - ((double)num7 * (double)num10));
+            var num37 = (float)(((double)num5 * (double)num12) - ((double)num8 * (double)num9));
+            var num38 = (float)(((double)num5 * (double)num11) - ((double)num7 * (double)num9));
+            var num39 = (float)(((double)num5 * (double)num10) - ((double)num6 * (double)num9));
+            result.M14 = (float)-(((double)num2 * (double)num34) - ((double)num3 * (double)num35) +
+                                   ((double)num4 * (double)num36)) * num27;
+            result.M24 = (float)(((double)num1 * (double)num34) - ((double)num3 * (double)num37) +
+                                  ((double)num4 * (double)num38)) * num27;
+            result.M34 = (float)-(((double)num1 * (double)num35) - ((double)num2 * (double)num37) +
+                                   ((double)num4 * (double)num39)) * num27;
+            result.M44 = (float)(((double)num1 * (double)num36) - ((double)num2 * (double)num38) +
+                                  ((double)num3 * (double)num39)) * num27;
 
             /*
-			
-			
+
             ///
             // Use Laplace expansion theorem to calculate the inverse of a 4x4 matrix
-            // 
-            // 1. Calculate the 2x2 determinants needed the 4x4 determinant based on the 2x2 determinants 
+            //
+            // 1. Calculate the 2x2 determinants needed the 4x4 determinant based on the 2x2 determinants
             // 3. Create the adjugate matrix, which satisfies: A * adj(A) = det(A) * I
             // 4. Divide adjugate matrix with the determinant to find the inverse
-            
+
             float det1, det2, det3, det4, det5, det6, det7, det8, det9, det10, det11, det12;
             float detMatrix;
-            FindDeterminants(ref matrix, out detMatrix, out det1, out det2, out det3, out det4, out det5, out det6, 
+            FindDeterminants(ref matrix, out detMatrix, out det1, out det2, out det3, out det4, out det5, out det6,
                              out det7, out det8, out det9, out det10, out det11, out det12);
-            
+
             float invDetMatrix = 1f / detMatrix;
-            
+
             Matrix ret; // Allow for matrix and result to point to the same structure
-            
+
             ret.M11 = (matrix.M22*det12 - matrix.M23*det11 + matrix.M24*det10) * invDetMatrix;
             ret.M12 = (-matrix.M12*det12 + matrix.M13*det11 - matrix.M14*det10) * invDetMatrix;
             ret.M13 = (matrix.M42*det6 - matrix.M43*det5 + matrix.M44*det4) * invDetMatrix;
@@ -1898,7 +1977,7 @@ namespace BuildIt.AR
             ret.M42 = (matrix.M11*det10 - matrix.M12*det8 + matrix.M13*det7) * invDetMatrix;
             ret.M43 = (-matrix.M41*det4 + matrix.M42*det2 - matrix.M43*det1) * invDetMatrix;
             ret.M44 = (matrix.M31*det4 - matrix.M32*det2 + matrix.M33*det1) * invDetMatrix;
-            
+
             result = ret;
             */
         }
@@ -1907,7 +1986,7 @@ namespace BuildIt.AR
         /// Creates a new <see cref="Matrix"/> that contains linear interpolation of the values in specified matrixes.
         /// </summary>
         /// <param name="matrix1">The first <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">The second <see cref="Vector2"/>.</param>
+        /// <param name="matrix2">The second <see cref="Matrix"/>.</param>
         /// <param name="amount">Weighting value(between 0.0 and 1.0).</param>
         /// <returns>>The result of linear interpolation of the specified matrixes.</returns>
         public static Matrix Lerp(Matrix matrix1, Matrix matrix2, float amount)
@@ -1935,7 +2014,7 @@ namespace BuildIt.AR
         /// Creates a new <see cref="Matrix"/> that contains linear interpolation of the values in specified matrixes.
         /// </summary>
         /// <param name="matrix1">The first <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">The second <see cref="Vector2"/>.</param>
+        /// <param name="matrix2">The second <see cref="Matrix"/>.</param>
         /// <param name="amount">Weighting value(between 0.0 and 1.0).</param>
         /// <param name="result">The result of linear interpolation of the specified matrixes as an output parameter.</param>
         public static void Lerp(ref Matrix matrix1, ref Matrix matrix2, float amount, out Matrix result)
@@ -1966,22 +2045,38 @@ namespace BuildIt.AR
         /// <returns>Result of the matrix multiplication.</returns>
         public static Matrix Multiply(Matrix matrix1, Matrix matrix2)
         {
-            var m11 = (((matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21)) + (matrix1.M13 * matrix2.M31)) + (matrix1.M14 * matrix2.M41);
-            var m12 = (((matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22)) + (matrix1.M13 * matrix2.M32)) + (matrix1.M14 * matrix2.M42);
-            var m13 = (((matrix1.M11 * matrix2.M13) + (matrix1.M12 * matrix2.M23)) + (matrix1.M13 * matrix2.M33)) + (matrix1.M14 * matrix2.M43);
-            var m14 = (((matrix1.M11 * matrix2.M14) + (matrix1.M12 * matrix2.M24)) + (matrix1.M13 * matrix2.M34)) + (matrix1.M14 * matrix2.M44);
-            var m21 = (((matrix1.M21 * matrix2.M11) + (matrix1.M22 * matrix2.M21)) + (matrix1.M23 * matrix2.M31)) + (matrix1.M24 * matrix2.M41);
-            var m22 = (((matrix1.M21 * matrix2.M12) + (matrix1.M22 * matrix2.M22)) + (matrix1.M23 * matrix2.M32)) + (matrix1.M24 * matrix2.M42);
-            var m23 = (((matrix1.M21 * matrix2.M13) + (matrix1.M22 * matrix2.M23)) + (matrix1.M23 * matrix2.M33)) + (matrix1.M24 * matrix2.M43);
-            var m24 = (((matrix1.M21 * matrix2.M14) + (matrix1.M22 * matrix2.M24)) + (matrix1.M23 * matrix2.M34)) + (matrix1.M24 * matrix2.M44);
-            var m31 = (((matrix1.M31 * matrix2.M11) + (matrix1.M32 * matrix2.M21)) + (matrix1.M33 * matrix2.M31)) + (matrix1.M34 * matrix2.M41);
-            var m32 = (((matrix1.M31 * matrix2.M12) + (matrix1.M32 * matrix2.M22)) + (matrix1.M33 * matrix2.M32)) + (matrix1.M34 * matrix2.M42);
-            var m33 = (((matrix1.M31 * matrix2.M13) + (matrix1.M32 * matrix2.M23)) + (matrix1.M33 * matrix2.M33)) + (matrix1.M34 * matrix2.M43);
-            var m34 = (((matrix1.M31 * matrix2.M14) + (matrix1.M32 * matrix2.M24)) + (matrix1.M33 * matrix2.M34)) + (matrix1.M34 * matrix2.M44);
-            var m41 = (((matrix1.M41 * matrix2.M11) + (matrix1.M42 * matrix2.M21)) + (matrix1.M43 * matrix2.M31)) + (matrix1.M44 * matrix2.M41);
-            var m42 = (((matrix1.M41 * matrix2.M12) + (matrix1.M42 * matrix2.M22)) + (matrix1.M43 * matrix2.M32)) + (matrix1.M44 * matrix2.M42);
-            var m43 = (((matrix1.M41 * matrix2.M13) + (matrix1.M42 * matrix2.M23)) + (matrix1.M43 * matrix2.M33)) + (matrix1.M44 * matrix2.M43);
-            var m44 = (((matrix1.M41 * matrix2.M14) + (matrix1.M42 * matrix2.M24)) + (matrix1.M43 * matrix2.M34)) + (matrix1.M44 * matrix2.M44);
+            var m11 = (matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21) + (matrix1.M13 * matrix2.M31) +
+                      (matrix1.M14 * matrix2.M41);
+            var m12 = (matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22) + (matrix1.M13 * matrix2.M32) +
+                      (matrix1.M14 * matrix2.M42);
+            var m13 = (matrix1.M11 * matrix2.M13) + (matrix1.M12 * matrix2.M23) + (matrix1.M13 * matrix2.M33) +
+                      (matrix1.M14 * matrix2.M43);
+            var m14 = (matrix1.M11 * matrix2.M14) + (matrix1.M12 * matrix2.M24) + (matrix1.M13 * matrix2.M34) +
+                      (matrix1.M14 * matrix2.M44);
+            var m21 = (matrix1.M21 * matrix2.M11) + (matrix1.M22 * matrix2.M21) + (matrix1.M23 * matrix2.M31) +
+                      (matrix1.M24 * matrix2.M41);
+            var m22 = (matrix1.M21 * matrix2.M12) + (matrix1.M22 * matrix2.M22) + (matrix1.M23 * matrix2.M32) +
+                      (matrix1.M24 * matrix2.M42);
+            var m23 = (matrix1.M21 * matrix2.M13) + (matrix1.M22 * matrix2.M23) + (matrix1.M23 * matrix2.M33) +
+                      (matrix1.M24 * matrix2.M43);
+            var m24 = (matrix1.M21 * matrix2.M14) + (matrix1.M22 * matrix2.M24) + (matrix1.M23 * matrix2.M34) +
+                      (matrix1.M24 * matrix2.M44);
+            var m31 = (matrix1.M31 * matrix2.M11) + (matrix1.M32 * matrix2.M21) + (matrix1.M33 * matrix2.M31) +
+                      (matrix1.M34 * matrix2.M41);
+            var m32 = (matrix1.M31 * matrix2.M12) + (matrix1.M32 * matrix2.M22) + (matrix1.M33 * matrix2.M32) +
+                      (matrix1.M34 * matrix2.M42);
+            var m33 = (matrix1.M31 * matrix2.M13) + (matrix1.M32 * matrix2.M23) + (matrix1.M33 * matrix2.M33) +
+                      (matrix1.M34 * matrix2.M43);
+            var m34 = (matrix1.M31 * matrix2.M14) + (matrix1.M32 * matrix2.M24) + (matrix1.M33 * matrix2.M34) +
+                      (matrix1.M34 * matrix2.M44);
+            var m41 = (matrix1.M41 * matrix2.M11) + (matrix1.M42 * matrix2.M21) + (matrix1.M43 * matrix2.M31) +
+                      (matrix1.M44 * matrix2.M41);
+            var m42 = (matrix1.M41 * matrix2.M12) + (matrix1.M42 * matrix2.M22) + (matrix1.M43 * matrix2.M32) +
+                      (matrix1.M44 * matrix2.M42);
+            var m43 = (matrix1.M41 * matrix2.M13) + (matrix1.M42 * matrix2.M23) + (matrix1.M43 * matrix2.M33) +
+                      (matrix1.M44 * matrix2.M43);
+            var m44 = (matrix1.M41 * matrix2.M14) + (matrix1.M42 * matrix2.M24) + (matrix1.M43 * matrix2.M34) +
+                      (matrix1.M44 * matrix2.M44);
             matrix1.M11 = m11;
             matrix1.M12 = m12;
             matrix1.M13 = m13;
@@ -2009,22 +2104,38 @@ namespace BuildIt.AR
         /// <param name="result">Result of the matrix multiplication as an output parameter.</param>
         public static void Multiply(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
         {
-            var m11 = (((matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21)) + (matrix1.M13 * matrix2.M31)) + (matrix1.M14 * matrix2.M41);
-            var m12 = (((matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22)) + (matrix1.M13 * matrix2.M32)) + (matrix1.M14 * matrix2.M42);
-            var m13 = (((matrix1.M11 * matrix2.M13) + (matrix1.M12 * matrix2.M23)) + (matrix1.M13 * matrix2.M33)) + (matrix1.M14 * matrix2.M43);
-            var m14 = (((matrix1.M11 * matrix2.M14) + (matrix1.M12 * matrix2.M24)) + (matrix1.M13 * matrix2.M34)) + (matrix1.M14 * matrix2.M44);
-            var m21 = (((matrix1.M21 * matrix2.M11) + (matrix1.M22 * matrix2.M21)) + (matrix1.M23 * matrix2.M31)) + (matrix1.M24 * matrix2.M41);
-            var m22 = (((matrix1.M21 * matrix2.M12) + (matrix1.M22 * matrix2.M22)) + (matrix1.M23 * matrix2.M32)) + (matrix1.M24 * matrix2.M42);
-            var m23 = (((matrix1.M21 * matrix2.M13) + (matrix1.M22 * matrix2.M23)) + (matrix1.M23 * matrix2.M33)) + (matrix1.M24 * matrix2.M43);
-            var m24 = (((matrix1.M21 * matrix2.M14) + (matrix1.M22 * matrix2.M24)) + (matrix1.M23 * matrix2.M34)) + (matrix1.M24 * matrix2.M44);
-            var m31 = (((matrix1.M31 * matrix2.M11) + (matrix1.M32 * matrix2.M21)) + (matrix1.M33 * matrix2.M31)) + (matrix1.M34 * matrix2.M41);
-            var m32 = (((matrix1.M31 * matrix2.M12) + (matrix1.M32 * matrix2.M22)) + (matrix1.M33 * matrix2.M32)) + (matrix1.M34 * matrix2.M42);
-            var m33 = (((matrix1.M31 * matrix2.M13) + (matrix1.M32 * matrix2.M23)) + (matrix1.M33 * matrix2.M33)) + (matrix1.M34 * matrix2.M43);
-            var m34 = (((matrix1.M31 * matrix2.M14) + (matrix1.M32 * matrix2.M24)) + (matrix1.M33 * matrix2.M34)) + (matrix1.M34 * matrix2.M44);
-            var m41 = (((matrix1.M41 * matrix2.M11) + (matrix1.M42 * matrix2.M21)) + (matrix1.M43 * matrix2.M31)) + (matrix1.M44 * matrix2.M41);
-            var m42 = (((matrix1.M41 * matrix2.M12) + (matrix1.M42 * matrix2.M22)) + (matrix1.M43 * matrix2.M32)) + (matrix1.M44 * matrix2.M42);
-            var m43 = (((matrix1.M41 * matrix2.M13) + (matrix1.M42 * matrix2.M23)) + (matrix1.M43 * matrix2.M33)) + (matrix1.M44 * matrix2.M43);
-            var m44 = (((matrix1.M41 * matrix2.M14) + (matrix1.M42 * matrix2.M24)) + (matrix1.M43 * matrix2.M34)) + (matrix1.M44 * matrix2.M44);
+            var m11 = (matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21) + (matrix1.M13 * matrix2.M31) +
+                      (matrix1.M14 * matrix2.M41);
+            var m12 = (matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22) + (matrix1.M13 * matrix2.M32) +
+                      (matrix1.M14 * matrix2.M42);
+            var m13 = (matrix1.M11 * matrix2.M13) + (matrix1.M12 * matrix2.M23) + (matrix1.M13 * matrix2.M33) +
+                      (matrix1.M14 * matrix2.M43);
+            var m14 = (matrix1.M11 * matrix2.M14) + (matrix1.M12 * matrix2.M24) + (matrix1.M13 * matrix2.M34) +
+                      (matrix1.M14 * matrix2.M44);
+            var m21 = (matrix1.M21 * matrix2.M11) + (matrix1.M22 * matrix2.M21) + (matrix1.M23 * matrix2.M31) +
+                      (matrix1.M24 * matrix2.M41);
+            var m22 = (matrix1.M21 * matrix2.M12) + (matrix1.M22 * matrix2.M22) + (matrix1.M23 * matrix2.M32) +
+                      (matrix1.M24 * matrix2.M42);
+            var m23 = (matrix1.M21 * matrix2.M13) + (matrix1.M22 * matrix2.M23) + (matrix1.M23 * matrix2.M33) +
+                      (matrix1.M24 * matrix2.M43);
+            var m24 = (matrix1.M21 * matrix2.M14) + (matrix1.M22 * matrix2.M24) + (matrix1.M23 * matrix2.M34) +
+                      (matrix1.M24 * matrix2.M44);
+            var m31 = (matrix1.M31 * matrix2.M11) + (matrix1.M32 * matrix2.M21) + (matrix1.M33 * matrix2.M31) +
+                      (matrix1.M34 * matrix2.M41);
+            var m32 = (matrix1.M31 * matrix2.M12) + (matrix1.M32 * matrix2.M22) + (matrix1.M33 * matrix2.M32) +
+                      (matrix1.M34 * matrix2.M42);
+            var m33 = (matrix1.M31 * matrix2.M13) + (matrix1.M32 * matrix2.M23) + (matrix1.M33 * matrix2.M33) +
+                      (matrix1.M34 * matrix2.M43);
+            var m34 = (matrix1.M31 * matrix2.M14) + (matrix1.M32 * matrix2.M24) + (matrix1.M33 * matrix2.M34) +
+                      (matrix1.M34 * matrix2.M44);
+            var m41 = (matrix1.M41 * matrix2.M11) + (matrix1.M42 * matrix2.M21) + (matrix1.M43 * matrix2.M31) +
+                      (matrix1.M44 * matrix2.M41);
+            var m42 = (matrix1.M41 * matrix2.M12) + (matrix1.M42 * matrix2.M22) + (matrix1.M43 * matrix2.M32) +
+                      (matrix1.M44 * matrix2.M42);
+            var m43 = (matrix1.M41 * matrix2.M13) + (matrix1.M42 * matrix2.M23) + (matrix1.M43 * matrix2.M33) +
+                      (matrix1.M44 * matrix2.M43);
+            var m44 = (matrix1.M41 * matrix2.M14) + (matrix1.M42 * matrix2.M24) + (matrix1.M43 * matrix2.M34) +
+                      (matrix1.M44 * matrix2.M44);
             result.M11 = m11;
             result.M12 = m12;
             result.M13 = m13;
@@ -2094,7 +2205,6 @@ namespace BuildIt.AR
             result.M42 = matrix1.M42 * scaleFactor;
             result.M43 = matrix1.M43 * scaleFactor;
             result.M44 = matrix1.M44 * scaleFactor;
-
         }
 
         /// <summary>
@@ -2107,12 +2217,13 @@ namespace BuildIt.AR
         /// </remarks>
         public static float[] ToFloatArray(Matrix matrix)
         {
-            float[] matarray = {
-                                    matrix.M11, matrix.M12, matrix.M13, matrix.M14,
-                                    matrix.M21, matrix.M22, matrix.M23, matrix.M24,
-                                    matrix.M31, matrix.M32, matrix.M33, matrix.M34,
-                                    matrix.M41, matrix.M42, matrix.M43, matrix.M44
-                                };
+            float[] matarray =
+            {
+                matrix.M11, matrix.M12, matrix.M13, matrix.M14,
+                matrix.M21, matrix.M22, matrix.M23, matrix.M24,
+                matrix.M31, matrix.M32, matrix.M33, matrix.M34,
+                matrix.M41, matrix.M42, matrix.M43, matrix.M44,
+            };
             return matarray;
         }
 
@@ -2257,7 +2368,7 @@ namespace BuildIt.AR
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public static bool operator ==(Matrix matrix1, Matrix matrix2)
         {
-            return (
+            return
                 matrix1.M11 == matrix2.M11 &&
                 matrix1.M12 == matrix2.M12 &&
                 matrix1.M13 == matrix2.M13 &&
@@ -2274,7 +2385,7 @@ namespace BuildIt.AR
                 matrix1.M42 == matrix2.M42 &&
                 matrix1.M43 == matrix2.M43 &&
                 matrix1.M44 == matrix2.M44
-                );
+            ;
         }
 
         /// <summary>
@@ -2285,7 +2396,7 @@ namespace BuildIt.AR
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
         public static bool operator !=(Matrix matrix1, Matrix matrix2)
         {
-            return (
+            return
                 matrix1.M11 != matrix2.M11 ||
                 matrix1.M12 != matrix2.M12 ||
                 matrix1.M13 != matrix2.M13 ||
@@ -2302,7 +2413,7 @@ namespace BuildIt.AR
                 matrix1.M42 != matrix2.M42 ||
                 matrix1.M43 != matrix2.M43 ||
                 matrix1.M44 != matrix2.M44
-                );
+            ;
         }
 
         /// <summary>
@@ -2316,22 +2427,38 @@ namespace BuildIt.AR
         /// </remarks>
         public static Matrix operator *(Matrix matrix1, Matrix matrix2)
         {
-            var m11 = (((matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21)) + (matrix1.M13 * matrix2.M31)) + (matrix1.M14 * matrix2.M41);
-            var m12 = (((matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22)) + (matrix1.M13 * matrix2.M32)) + (matrix1.M14 * matrix2.M42);
-            var m13 = (((matrix1.M11 * matrix2.M13) + (matrix1.M12 * matrix2.M23)) + (matrix1.M13 * matrix2.M33)) + (matrix1.M14 * matrix2.M43);
-            var m14 = (((matrix1.M11 * matrix2.M14) + (matrix1.M12 * matrix2.M24)) + (matrix1.M13 * matrix2.M34)) + (matrix1.M14 * matrix2.M44);
-            var m21 = (((matrix1.M21 * matrix2.M11) + (matrix1.M22 * matrix2.M21)) + (matrix1.M23 * matrix2.M31)) + (matrix1.M24 * matrix2.M41);
-            var m22 = (((matrix1.M21 * matrix2.M12) + (matrix1.M22 * matrix2.M22)) + (matrix1.M23 * matrix2.M32)) + (matrix1.M24 * matrix2.M42);
-            var m23 = (((matrix1.M21 * matrix2.M13) + (matrix1.M22 * matrix2.M23)) + (matrix1.M23 * matrix2.M33)) + (matrix1.M24 * matrix2.M43);
-            var m24 = (((matrix1.M21 * matrix2.M14) + (matrix1.M22 * matrix2.M24)) + (matrix1.M23 * matrix2.M34)) + (matrix1.M24 * matrix2.M44);
-            var m31 = (((matrix1.M31 * matrix2.M11) + (matrix1.M32 * matrix2.M21)) + (matrix1.M33 * matrix2.M31)) + (matrix1.M34 * matrix2.M41);
-            var m32 = (((matrix1.M31 * matrix2.M12) + (matrix1.M32 * matrix2.M22)) + (matrix1.M33 * matrix2.M32)) + (matrix1.M34 * matrix2.M42);
-            var m33 = (((matrix1.M31 * matrix2.M13) + (matrix1.M32 * matrix2.M23)) + (matrix1.M33 * matrix2.M33)) + (matrix1.M34 * matrix2.M43);
-            var m34 = (((matrix1.M31 * matrix2.M14) + (matrix1.M32 * matrix2.M24)) + (matrix1.M33 * matrix2.M34)) + (matrix1.M34 * matrix2.M44);
-            var m41 = (((matrix1.M41 * matrix2.M11) + (matrix1.M42 * matrix2.M21)) + (matrix1.M43 * matrix2.M31)) + (matrix1.M44 * matrix2.M41);
-            var m42 = (((matrix1.M41 * matrix2.M12) + (matrix1.M42 * matrix2.M22)) + (matrix1.M43 * matrix2.M32)) + (matrix1.M44 * matrix2.M42);
-            var m43 = (((matrix1.M41 * matrix2.M13) + (matrix1.M42 * matrix2.M23)) + (matrix1.M43 * matrix2.M33)) + (matrix1.M44 * matrix2.M43);
-            var m44 = (((matrix1.M41 * matrix2.M14) + (matrix1.M42 * matrix2.M24)) + (matrix1.M43 * matrix2.M34)) + (matrix1.M44 * matrix2.M44);
+            var m11 = (matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21) + (matrix1.M13 * matrix2.M31) +
+                      (matrix1.M14 * matrix2.M41);
+            var m12 = (matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22) + (matrix1.M13 * matrix2.M32) +
+                      (matrix1.M14 * matrix2.M42);
+            var m13 = (matrix1.M11 * matrix2.M13) + (matrix1.M12 * matrix2.M23) + (matrix1.M13 * matrix2.M33) +
+                      (matrix1.M14 * matrix2.M43);
+            var m14 = (matrix1.M11 * matrix2.M14) + (matrix1.M12 * matrix2.M24) + (matrix1.M13 * matrix2.M34) +
+                      (matrix1.M14 * matrix2.M44);
+            var m21 = (matrix1.M21 * matrix2.M11) + (matrix1.M22 * matrix2.M21) + (matrix1.M23 * matrix2.M31) +
+                      (matrix1.M24 * matrix2.M41);
+            var m22 = (matrix1.M21 * matrix2.M12) + (matrix1.M22 * matrix2.M22) + (matrix1.M23 * matrix2.M32) +
+                      (matrix1.M24 * matrix2.M42);
+            var m23 = (matrix1.M21 * matrix2.M13) + (matrix1.M22 * matrix2.M23) + (matrix1.M23 * matrix2.M33) +
+                      (matrix1.M24 * matrix2.M43);
+            var m24 = (matrix1.M21 * matrix2.M14) + (matrix1.M22 * matrix2.M24) + (matrix1.M23 * matrix2.M34) +
+                      (matrix1.M24 * matrix2.M44);
+            var m31 = (matrix1.M31 * matrix2.M11) + (matrix1.M32 * matrix2.M21) + (matrix1.M33 * matrix2.M31) +
+                      (matrix1.M34 * matrix2.M41);
+            var m32 = (matrix1.M31 * matrix2.M12) + (matrix1.M32 * matrix2.M22) + (matrix1.M33 * matrix2.M32) +
+                      (matrix1.M34 * matrix2.M42);
+            var m33 = (matrix1.M31 * matrix2.M13) + (matrix1.M32 * matrix2.M23) + (matrix1.M33 * matrix2.M33) +
+                      (matrix1.M34 * matrix2.M43);
+            var m34 = (matrix1.M31 * matrix2.M14) + (matrix1.M32 * matrix2.M24) + (matrix1.M33 * matrix2.M34) +
+                      (matrix1.M34 * matrix2.M44);
+            var m41 = (matrix1.M41 * matrix2.M11) + (matrix1.M42 * matrix2.M21) + (matrix1.M43 * matrix2.M31) +
+                      (matrix1.M44 * matrix2.M41);
+            var m42 = (matrix1.M41 * matrix2.M12) + (matrix1.M42 * matrix2.M22) + (matrix1.M43 * matrix2.M32) +
+                      (matrix1.M44 * matrix2.M42);
+            var m43 = (matrix1.M41 * matrix2.M13) + (matrix1.M42 * matrix2.M23) + (matrix1.M43 * matrix2.M33) +
+                      (matrix1.M44 * matrix2.M43);
+            var m44 = (matrix1.M41 * matrix2.M14) + (matrix1.M42 * matrix2.M24) + (matrix1.M43 * matrix2.M34) +
+                      (matrix1.M44 * matrix2.M44);
             matrix1.M11 = m11;
             matrix1.M12 = m12;
             matrix1.M13 = m13;
@@ -2466,22 +2593,25 @@ namespace BuildIt.AR
         /// <param name="result">The result of the matrix subtraction as an output parameter.</param>
         public static void Subtract(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
         {
-            result.M11 = matrix1.M11 - matrix2.M11;
-            result.M12 = matrix1.M12 - matrix2.M12;
-            result.M13 = matrix1.M13 - matrix2.M13;
-            result.M14 = matrix1.M14 - matrix2.M14;
-            result.M21 = matrix1.M21 - matrix2.M21;
-            result.M22 = matrix1.M22 - matrix2.M22;
-            result.M23 = matrix1.M23 - matrix2.M23;
-            result.M24 = matrix1.M24 - matrix2.M24;
-            result.M31 = matrix1.M31 - matrix2.M31;
-            result.M32 = matrix1.M32 - matrix2.M32;
-            result.M33 = matrix1.M33 - matrix2.M33;
-            result.M34 = matrix1.M34 - matrix2.M34;
-            result.M41 = matrix1.M41 - matrix2.M41;
-            result.M42 = matrix1.M42 - matrix2.M42;
-            result.M43 = matrix1.M43 - matrix2.M43;
-            result.M44 = matrix1.M44 - matrix2.M44;
+            result = new Matrix
+            {
+                M11 = matrix1.M11 - matrix2.M11,
+                M12 = matrix1.M12 - matrix2.M12,
+                M13 = matrix1.M13 - matrix2.M13,
+                M14 = matrix1.M14 - matrix2.M14,
+                M21 = matrix1.M21 - matrix2.M21,
+                M22 = matrix1.M22 - matrix2.M22,
+                M23 = matrix1.M23 - matrix2.M23,
+                M24 = matrix1.M24 - matrix2.M24,
+                M31 = matrix1.M31 - matrix2.M31,
+                M32 = matrix1.M32 - matrix2.M32,
+                M33 = matrix1.M33 - matrix2.M33,
+                M34 = matrix1.M34 - matrix2.M34,
+                M41 = matrix1.M41 - matrix2.M41,
+                M42 = matrix1.M42 - matrix2.M42,
+                M43 = matrix1.M43 - matrix2.M43,
+                M44 = matrix1.M44 - matrix2.M44,
+            };
         }
 
         internal string DebugDisplayString
@@ -2494,10 +2624,14 @@ namespace BuildIt.AR
                 }
 
                 return string.Concat(
-                     "( ", this.M11.ToString(), "  ", this.M12.ToString(), "  ", this.M13.ToString(), "  ", this.M14.ToString(), " )  \r\n",
-                     "( ", this.M21.ToString(), "  ", this.M22.ToString(), "  ", this.M23.ToString(), "  ", this.M24.ToString(), " )  \r\n",
-                     "( ", this.M31.ToString(), "  ", this.M32.ToString(), "  ", this.M33.ToString(), "  ", this.M34.ToString(), " )  \r\n",
-                     "( ", this.M41.ToString(), "  ", this.M42.ToString(), "  ", this.M43.ToString(), "  ", this.M44.ToString(), " )");
+                    "( ", this.M11.ToString(), "  ", this.M12.ToString(), "  ", this.M13.ToString(), "  ",
+                    this.M14.ToString(), " )  \r\n",
+                    "( ", this.M21.ToString(), "  ", this.M22.ToString(), "  ", this.M23.ToString(), "  ",
+                    this.M24.ToString(), " )  \r\n",
+                    "( ", this.M31.ToString(), "  ", this.M32.ToString(), "  ", this.M33.ToString(), "  ",
+                    this.M34.ToString(), " )  \r\n",
+                    "( ", this.M41.ToString(), "  ", this.M42.ToString(), "  ", this.M43.ToString(), "  ",
+                    this.M44.ToString(), " )");
             }
         }
 
@@ -2506,15 +2640,15 @@ namespace BuildIt.AR
         /// {M11:[<see cref="M11"/>] M12:[<see cref="M12"/>] M13:[<see cref="M13"/>] M14:[<see cref="M14"/>]}
         /// {M21:[<see cref="M21"/>] M12:[<see cref="M22"/>] M13:[<see cref="M23"/>] M14:[<see cref="M24"/>]}
         /// {M31:[<see cref="M31"/>] M32:[<see cref="M32"/>] M33:[<see cref="M33"/>] M34:[<see cref="M34"/>]}
-        /// {M41:[<see cref="M41"/>] M42:[<see cref="M42"/>] M43:[<see cref="M43"/>] M44:[<see cref="M44"/>]}
+        /// {M41:[<see cref="M41"/>] M42:[<see cref="M42"/>] M43:[<see cref="M43"/>] M44:[<see cref="M44"/>]}.
         /// </summary>
         /// <returns>A <see cref="String"/> representation of this <see cref="Matrix"/>.</returns>
         public override string ToString()
         {
             return "{M11:" + M11 + " M12:" + M12 + " M13:" + M13 + " M14:" + M14 + "}"
-                + " {M21:" + M21 + " M22:" + M22 + " M23:" + M23 + " M24:" + M24 + "}"
-                + " {M31:" + M31 + " M32:" + M32 + " M33:" + M33 + " M34:" + M34 + "}"
-                + " {M41:" + M41 + " M42:" + M42 + " M43:" + M43 + " M44:" + M44 + "}";
+                   + " {M21:" + M21 + " M22:" + M22 + " M23:" + M23 + " M24:" + M24 + "}"
+                   + " {M31:" + M31 + " M32:" + M32 + " M33:" + M33 + " M34:" + M34 + "}"
+                   + " {M41:" + M41 + " M42:" + M42 + " M43:" + M43 + " M44:" + M44 + "}";
         }
 
         /// <summary>
@@ -2560,32 +2694,35 @@ namespace BuildIt.AR
 
             result = ret;
         }
-        #endregion
+
+        #endregion Public Methods
 
         #region Private Static Methods
 
         /// <summary>
-        /// Helper method for using the Laplace expansion theorem using two rows expansions to calculate major and 
+        /// Helper method for using the Laplace expansion theorem using two rows expansions to calculate major and
         /// minor determinants of a 4x4 matrix. This method is used for inverting a matrix.
         /// </summary>
         private static void FindDeterminants(ref Matrix matrix, out float major,
-                                             out float minor1, out float minor2, out float minor3, out float minor4, out float minor5, out float minor6,
-                                             out float minor7, out float minor8, out float minor9, out float minor10, out float minor11, out float minor12)
+            out float minor1, out float minor2, out float minor3, out float minor4, out float minor5, out float minor6,
+            out float minor7, out float minor8, out float minor9, out float minor10, out float minor11,
+            out float minor12)
         {
-            var det1 = (double)matrix.M11 * (double)matrix.M22 - (double)matrix.M12 * (double)matrix.M21;
-            var det2 = (double)matrix.M11 * (double)matrix.M23 - (double)matrix.M13 * (double)matrix.M21;
-            var det3 = (double)matrix.M11 * (double)matrix.M24 - (double)matrix.M14 * (double)matrix.M21;
-            var det4 = (double)matrix.M12 * (double)matrix.M23 - (double)matrix.M13 * (double)matrix.M22;
-            var det5 = (double)matrix.M12 * (double)matrix.M24 - (double)matrix.M14 * (double)matrix.M22;
-            var det6 = (double)matrix.M13 * (double)matrix.M24 - (double)matrix.M14 * (double)matrix.M23;
-            var det7 = (double)matrix.M31 * (double)matrix.M42 - (double)matrix.M32 * (double)matrix.M41;
-            var det8 = (double)matrix.M31 * (double)matrix.M43 - (double)matrix.M33 * (double)matrix.M41;
-            var det9 = (double)matrix.M31 * (double)matrix.M44 - (double)matrix.M34 * (double)matrix.M41;
-            var det10 = (double)matrix.M32 * (double)matrix.M43 - (double)matrix.M33 * (double)matrix.M42;
-            var det11 = (double)matrix.M32 * (double)matrix.M44 - (double)matrix.M34 * (double)matrix.M42;
-            var det12 = (double)matrix.M33 * (double)matrix.M44 - (double)matrix.M34 * (double)matrix.M43;
+            var det1 = ((double)matrix.M11 * (double)matrix.M22) - ((double)matrix.M12 * (double)matrix.M21);
+            var det2 = ((double)matrix.M11 * (double)matrix.M23) - ((double)matrix.M13 * (double)matrix.M21);
+            var det3 = ((double)matrix.M11 * (double)matrix.M24) - ((double)matrix.M14 * (double)matrix.M21);
+            var det4 = ((double)matrix.M12 * (double)matrix.M23) - ((double)matrix.M13 * (double)matrix.M22);
+            var det5 = ((double)matrix.M12 * (double)matrix.M24) - ((double)matrix.M14 * (double)matrix.M22);
+            var det6 = ((double)matrix.M13 * (double)matrix.M24) - ((double)matrix.M14 * (double)matrix.M23);
+            var det7 = ((double)matrix.M31 * (double)matrix.M42) - ((double)matrix.M32 * (double)matrix.M41);
+            var det8 = ((double)matrix.M31 * (double)matrix.M43) - ((double)matrix.M33 * (double)matrix.M41);
+            var det9 = ((double)matrix.M31 * (double)matrix.M44) - ((double)matrix.M34 * (double)matrix.M41);
+            var det10 = ((double)matrix.M32 * (double)matrix.M43) - ((double)matrix.M33 * (double)matrix.M42);
+            var det11 = ((double)matrix.M32 * (double)matrix.M44) - ((double)matrix.M34 * (double)matrix.M42);
+            var det12 = ((double)matrix.M33 * (double)matrix.M44) - ((double)matrix.M34 * (double)matrix.M43);
 
-            major = (float)(det1 * det12 - det2 * det11 + det3 * det10 + det4 * det9 - det5 * det8 + det6 * det7);
+            major = (float)((det1 * det12) - (det2 * det11) + (det3 * det10) + (det4 * det9) - (det5 * det8) +
+                             (det6 * det7));
             minor1 = (float)det1;
             minor2 = (float)det2;
             minor3 = (float)det3;
@@ -2600,8 +2737,6 @@ namespace BuildIt.AR
             minor12 = (float)det12;
         }
 
-        #endregion
+        #endregion Private Static Methods
     }
-
-
 }

@@ -4,24 +4,24 @@ using Xamarin.Forms;
 namespace BuildIt.Forms.Animations
 {
     /// <summary>
-    /// Represents a group of animations - includes two groups: pre and post animations
+    /// Represents a group of animations - includes two groups: pre and post animations.
     /// </summary>
     public class AnimationGroup : BindableObject
     {
         /// <summary>
-        /// PreAnimations property
+        /// PreAnimations property.
         /// </summary>
         public static readonly BindableProperty PreAnimationsProperty =
             BindableProperty.CreateAttached(nameof(PreAnimations), typeof(IList<StateAnimation>), typeof(VisualState), null, BindingMode.OneWayToSource, null, null, null, null, CreateDefaultAnimations);
 
         /// <summary>
-        /// PostAnimations property
+        /// PostAnimations property.
         /// </summary>
         public static readonly BindableProperty PostAnimationsProperty =
             BindableProperty.CreateAttached(nameof(PostAnimations), typeof(IList<StateAnimation>), typeof(VisualState), null, BindingMode.OneWayToSource, null, null, null, null, CreateDefaultAnimations);
 
         /// <summary>
-        /// Gets or sets animations to be run prior to a state change
+        /// Gets or sets animations to be run prior to a state change.
         /// </summary>
         public IList<StateAnimation> PreAnimations
         {
@@ -30,7 +30,7 @@ namespace BuildIt.Forms.Animations
         }
 
         /// <summary>
-        /// Gets or sets animations to be run after a state change
+        /// Gets or sets animations to be run after a state change.
         /// </summary>
         public IList<StateAnimation> PostAnimations
         {

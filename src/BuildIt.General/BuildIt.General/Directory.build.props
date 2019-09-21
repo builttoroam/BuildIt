@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\..\Analysers.props" />
+</Project>

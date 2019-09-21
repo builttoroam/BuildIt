@@ -7,7 +7,7 @@ using Xamarin.Forms;
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// Supporting class for the DesignTimeControl (shouldn't be used in isolation)
+    /// Supporting class for the DesignTimeControl (shouldn't be used in isolation).
     /// </summary>
     public class DesignInfo : NotifyBase
     {
@@ -18,7 +18,7 @@ namespace BuildIt.Forms
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignInfo"/> class.
         /// </summary>
-        /// <param name="element">The element which contains the visual states</param>
+        /// <param name="element">The element which contains the visual states.</param>
         public DesignInfo(Element element)
         {
             Element = element;
@@ -27,22 +27,22 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Gets the element with the visual states
+        /// Gets the element with the visual states.
         /// </summary>
         public Element Element { get; }
 
         /// <summary>
-        /// Gets a collection of design actions
+        /// Gets a collection of design actions.
         /// </summary>
         public ObservableCollection<Tuple<string, Action>> DesignActions { get; } = new ObservableCollection<Tuple<string, Action>>();
 
         /// <summary>
-        /// Gets the state groups that are available
+        /// Gets the state groups that are available.
         /// </summary>
         public IStateGroup[] Groups => groups ?? (groups = StateManager.StateGroups.Select(x => x.Value).ToArray());
 
         /// <summary>
-        /// Gets or sets the states available in the currently selected group
+        /// Gets or sets the states available in the currently selected group.
         /// </summary>
         public IStateDefinition[] States
         {
@@ -55,7 +55,7 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Gets or sets the selected group
+        /// Gets or sets the selected group.
         /// </summary>
         public IStateGroup SelectedGroup
         {
@@ -75,10 +75,10 @@ namespace BuildIt.Forms
         private IStateManager StateManager { get; }
 
         /// <summary>
-        /// Adds a design action
+        /// Adds a design action.
         /// </summary>
-        /// <param name="actionTitle">The title of the action</param>
-        /// <param name="action">The action to perform</param>
+        /// <param name="actionTitle">The title of the action.</param>
+        /// <param name="action">The action to perform.</param>
         public void AddDesignAction(string actionTitle, Action action)
         {
             DesignActions.Add(new Tuple<string, Action>(actionTitle, action));

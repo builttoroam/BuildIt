@@ -3,7 +3,7 @@
 namespace BuildIt.States.Interfaces
 {
     /// <summary>
-    /// Entity that raises a state changing event
+    /// Entity that raises a state changing event.
     /// </summary>
     public interface INotifyStateChange
     {

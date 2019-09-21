@@ -1,4 +1,11 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿#if UNO
+using Microsoft.Practices.ServiceLocation;
+#else
+
+using CommonServiceLocator;
+
+#endif
+
 using System;
 using System.Collections.Generic;
 

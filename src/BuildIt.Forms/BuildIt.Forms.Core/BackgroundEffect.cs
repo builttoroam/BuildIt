@@ -3,7 +3,7 @@
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// Platform agnostic background effect
+    /// Platform agnostic background effect.
     /// </summary>
     public class BackgroundEffect
         : RoutingEffect
@@ -17,12 +17,12 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Gets or sets the resource (XAML) to use for the color
+        /// Gets or sets the resource (XAML) to use for the color.
         /// </summary>
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets the fallback color
+        /// Gets or sets the fallback color.
         /// </summary>
         public Color FallbackColor { get; set; }
     }

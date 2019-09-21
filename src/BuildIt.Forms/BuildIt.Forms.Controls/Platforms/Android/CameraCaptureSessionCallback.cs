@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Android.Hardware.Camera2;
+﻿using Android.Hardware.Camera2;
 using Android.OS;
 using BuildIt.Forms.Controls.Platforms.Android.Extensions;
+using System.Linq;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {

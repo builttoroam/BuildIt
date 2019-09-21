@@ -3,7 +3,7 @@ using System;
 namespace BuildIt.States.Interfaces.StateData
 {
     /// <summary>
-    /// Entity determines whether it is blocked
+    /// Entity determines whether it is blocked.
     /// </summary>
     public interface IIsAbleToBeBlocked
     {
@@ -13,7 +13,7 @@ namespace BuildIt.States.Interfaces.StateData
         event EventHandler IsBlockedChanged;
 
         /// <summary>
-        /// Gets a value indicating whether blocked state
+        /// Gets a value indicating whether blocked state.
         /// </summary>
         bool IsBlocked { get; }
     }

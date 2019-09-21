@@ -12,15 +12,19 @@ namespace BuildIt.AR.UWP.Extensions
                 case Rotation.Rotation0:
                     videoRotation = VideoRotation.Clockwise90Degrees;
                     break;
+
                 case Rotation.Rotation90:
                     break;
+
                 case Rotation.Rotation180:
                     videoRotation = VideoRotation.Clockwise270Degrees;
                     break;
+
                 case Rotation.Rotation270:
                     videoRotation = VideoRotation.Clockwise180Degrees;
                     break;
             }
+
             return videoRotation;
         }
     }

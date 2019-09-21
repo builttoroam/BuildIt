@@ -1,6 +1,4 @@
-﻿using CoreML;
-
-namespace BuildIt.ML
+﻿namespace BuildIt.ML
 {
     public abstract class FeatureValue<T> : Feature
     {

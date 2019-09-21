@@ -24,7 +24,7 @@ namespace BuildIt.Logging.Filters
                 return base.BuildFilter();
             }
 
-            async Task<bool> Fms(ILogEntry entry) => !(await FilterToInvert.IncludeLog(entry));
+            async Task<bool> Fms(ILogEntry entry) => !await FilterToInvert.IncludeLog(entry);
 
             return Fms;
         }

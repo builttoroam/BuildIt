@@ -90,10 +90,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="1.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
   </ItemGroup>
 

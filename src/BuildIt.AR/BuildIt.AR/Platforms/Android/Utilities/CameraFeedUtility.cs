@@ -2,6 +2,7 @@ using Android.Hardware;
 using Android.Hardware.Camera2;
 using BuildIt.AR.Android.Controls;
 using Java.Lang;
+#pragma warning disable 618
 
 namespace BuildIt.AR.Android.Utilities
 {
@@ -31,6 +32,7 @@ namespace BuildIt.AR.Android.Utilities
                         rearFacingCameraId = i;
                     }
                 }
+
                 if (rearFacingCameraId.HasValue)
                 {
                     camera = Camera.Open(rearFacingCameraId.Value);
@@ -40,18 +42,19 @@ namespace BuildIt.AR.Android.Utilities
                     }
                 }
             }
-            catch (CameraAccessException ex)
+            catch (CameraAccessException cex)
             {
+                cex.LogError();
             }
-            catch (NullPointerException)
+            catch (NullPointerException nex)
             {
+                nex.LogError();
             }
             catch (System.Exception ex)
             {
+                ex.LogError();
             }
         }
-
-
 
         public void CleanUpCamera()
         {
@@ -62,6 +65,7 @@ namespace BuildIt.AR.Android.Utilities
                 {
                     cameraPreview.PreviewCamera = null;
                 }
+
                 camera.Release();
                 camera = null;
             }
@@ -75,11 +79,14 @@ namespace BuildIt.AR.Android.Utilities
                 case Rotation.Rotation0:
                     angle = 90;
                     break;
+
                 case Rotation.Rotation90:
                     break;
+
                 case Rotation.Rotation180:
                     angle = 270;
                     break;
+
                 case Rotation.Rotation270:
                     angle = 180;
                     break;

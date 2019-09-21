@@ -12,7 +12,7 @@ namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {
     /// <summary>
-    /// Touch recognizer for intercepting touch behaviour
+    /// Touch recognizer for intercepting touch behaviour.
     /// </summary>
     public class TouchRecognizer : UIGestureRecognizer
     {
@@ -30,9 +30,9 @@ namespace BuildIt.Forms.Controls.iOS
         /// <summary>
         /// Initializes a new instance of the <see cref="TouchRecognizer"/> class.
         /// </summary>
-        /// <param name="element">The element to add the recognizer to</param>
-        /// <param name="view">The view to connect to</param>
-        /// <param name="touchEffect">The touch events to monitor for</param>
+        /// <param name="element">The element to add the recognizer to.</param>
+        /// <param name="view">The view to connect to.</param>
+        /// <param name="touchEffect">The touch events to monitor for.</param>
         public TouchRecognizer(Element element, UIView view, Forms.TouchEffect touchEffect)
         {
             this.element = element;
@@ -43,7 +43,7 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         public void Detach()
         {
@@ -51,10 +51,10 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Touches starts
+        /// Touches starts.
         /// </summary>
-        /// <param name="touches">Touches of interest</param>
-        /// <param name="evt">All touches of type UITouch</param>
+        /// <param name="touches">Touches of interest.</param>
+        /// <param name="evt">All touches of type UITouch.</param>
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             try
@@ -79,10 +79,10 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Touch moved
+        /// Touch moved.
         /// </summary>
-        /// <param name="touches">The touches of interest</param>
-        /// <param name="evt">All the touches</param>
+        /// <param name="touches">The touches of interest.</param>
+        /// <param name="evt">All the touches.</param>
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             try
@@ -115,10 +115,10 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Handle when a touch ends
+        /// Handle when a touch ends.
         /// </summary>
-        /// <param name="touches">The touches ending</param>
-        /// <param name="evt">The touch event</param>
+        /// <param name="touches">The touches ending.</param>
+        /// <param name="evt">The touch event.</param>
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
             try
@@ -153,10 +153,10 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Touch cancelled
+        /// Touch cancelled.
         /// </summary>
-        /// <param name="touches">Touches of interest</param>
-        /// <param name="evt">All the touches</param>
+        /// <param name="touches">Touches of interest.</param>
+        /// <param name="evt">All the touches.</param>
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
             try

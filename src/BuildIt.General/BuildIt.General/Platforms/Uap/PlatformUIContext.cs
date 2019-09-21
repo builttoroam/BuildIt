@@ -17,8 +17,12 @@ namespace BuildIt.UI
         /// <param name="dispatcher">The core dispatcher for UI actions.</param>
         public PlatformUIContext(CoreDispatcher dispatcher = null)
         {
+#if UNO && !UAP
+            Dispatcher = CoreDispatcher.Main;
+#else
             Dispatcher = dispatcher ??
                 ((Window.Current == null) ? CoreApplication.MainView.CoreWindow.Dispatcher : CoreApplication.GetCurrentView().CoreWindow.Dispatcher);
+#endif
         }
 
         /// <inheritdoc/>

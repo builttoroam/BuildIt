@@ -1,7 +1,7 @@
 ﻿namespace BuildIt.Forms
 {
     /// <summary>
-    ///  The available focus modes
+    ///  The available focus modes.
     /// </summary>
     public enum CameraFocusMode
     {
@@ -23,7 +23,7 @@
         /// <summary>
         /// The camera will continuously try to focus
         /// </summary>
-        Continuous = 3
+        Continuous = 3,
     }
 
     public enum StatefulControlStates
@@ -51,6 +51,6 @@
         /// <summary>
         /// State that indicates that the control has successfully loaded data
         /// </summary>
-        Loaded
+        Loaded,
     }
 }

@@ -12,7 +12,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             var rhsSize = (Size)rhs;
 
             // We cast here to ensure the multiplications won't overflow
-            return Long.Signum((long)lhsSize.Width * lhsSize.Height - (long)rhsSize.Width * rhsSize.Height);
+            return Long.Signum(((long)lhsSize.Width * lhsSize.Height) - ((long)rhsSize.Width * rhsSize.Height));
         }
     }
 }

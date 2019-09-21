@@ -3,7 +3,7 @@
 namespace BuildIt.ML
 {
     /// <summary>
-    /// Stores the result of evaluating the input via Windows ML
+    /// Stores the result of evaluating the input via Windows ML.
     /// </summary>
     internal class EvaluationOutput
     {

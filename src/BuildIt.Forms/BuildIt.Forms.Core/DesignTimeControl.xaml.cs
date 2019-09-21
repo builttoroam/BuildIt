@@ -8,7 +8,7 @@ using Xamarin.Forms.Xaml;
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// A control that allows developers to force visual state changes
+    /// A control that allows developers to force visual state changes.
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DesignTimeControl
@@ -31,14 +31,14 @@ namespace BuildIt.Forms
         {
             Base,
             GroupsHidden,
-            GroupsVisible
+            GroupsVisible,
         }
 
         /// <summary>
-        /// Handles the selection changed event for design actions
+        /// Handles the selection changed event for design actions.
         /// </summary>
-        /// <param name="sender">The listview containing design actions</param>
-        /// <param name="e">The selection change</param>
+        /// <param name="sender">The listview containing design actions.</param>
+        /// <param name="e">The selection change.</param>
         public async void DesignActionSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
             try
@@ -61,10 +61,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Handles the selection changed event for groups
+        /// Handles the selection changed event for groups.
         /// </summary>
-        /// <param name="sender">The listview containing groups</param>
-        /// <param name="e">The selection change</param>
+        /// <param name="sender">The listview containing groups.</param>
+        /// <param name="e">The selection change.</param>
         public void GroupSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
             try
@@ -99,10 +99,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// The selection changed handler for states
+        /// The selection changed handler for states.
         /// </summary>
-        /// <param name="sender">The listview of states</param>
-        /// <param name="e">The selection change</param>
+        /// <param name="sender">The listview of states.</param>
+        /// <param name="e">The selection change.</param>
         public async void StateSelectionChanged(object sender, SelectedItemChangedEventArgs e)
         {
             try
@@ -140,10 +140,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Exits the state picker
+        /// Exits the state picker.
         /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The event args</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The event args.</param>
         protected async void ExitDesignTime(object sender, TouchActionEventArgs args)
         {
             try
@@ -167,10 +167,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Launches the Built to Roam website
+        /// Launches the Built to Roam website.
         /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The event args</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The event args.</param>
         protected void LaunchBuiltToRoamWebsite(object sender, TouchActionEventArgs args)
         {
             try
@@ -191,10 +191,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Launches the state picker
+        /// Launches the state picker.
         /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The event args</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The event args.</param>
         protected async void LaunchDesignTime(object sender, TouchActionEventArgs args)
         {
             try
