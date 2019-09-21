@@ -85,5 +85,6 @@
     <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\Analysers.targets" />
 </Project>
 

@@ -59,7 +59,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private bool isSuspending;
         private bool isInitialized;
         private bool isPreviewing;
-        private bool isActivePage;
         private bool mirroringPreview;
         private bool externalCamera;
         private Task setupTask = Task.CompletedTask;
@@ -69,7 +68,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private bool processing;
 
         /// <inheritdoc />
-        protected override async void OnElementChanged(ElementChangedEventArgs<Frame> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
             base.OnElementChanged(e);
 
@@ -89,7 +88,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
 
-            isActivePage = true;
             if (e.OldElement != null)
             {
                 return;

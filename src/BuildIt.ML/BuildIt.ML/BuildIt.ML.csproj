@@ -54,4 +54,6 @@
     <Compile Include="Platforms\Tizen\**\*.cs" />
     <Compile Include="Platforms\Xamarin-common\**\*.cs" />
   </ItemGroup>
+
+  <Import Project="..\..\Analysers.targets" />
 </Project>

@@ -93,8 +93,6 @@
     <ProjectReference Include="..\..\BuildIt.General\BuildIt.General\BuildIt.General.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
-  </ItemGroup>
+  <Import Project="..\..\Analysers.targets" />
 
 </Project>
