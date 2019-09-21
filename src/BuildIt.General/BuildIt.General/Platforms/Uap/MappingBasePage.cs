@@ -1,12 +1,11 @@
 ﻿using System.Globalization;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using DoUnoMvvm.Core.ViewModels;
 using Windows.UI.Xaml;
 
 namespace BuildIt.UI
 {
-    public partial class BasePage : Page
+    public partial class MappingBasePage : Page
     {
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
