@@ -195,7 +195,7 @@ namespace BuildIt.Forms.Controls
 
                 if (statefulControl.statesHistory.Count > MaxStatesHistoryEntries)
                 {
-                    statefulControl.statesHistory.RemoveFirst();
+                    statefulControl.statesHistory.RemoveLast();
                 }
             }
             catch (Exception e)
@@ -279,7 +279,7 @@ namespace BuildIt.Forms.Controls
                     break;
             }
 
-            statesHistory.AddLast(newState);
+            statesHistory.AddFirst(newState);
 
             var statefulContainer = Template.RetrieveStatefulContainer(newState);
             if (statefulContainer == null)
