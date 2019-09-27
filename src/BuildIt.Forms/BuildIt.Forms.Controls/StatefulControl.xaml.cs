@@ -14,6 +14,7 @@ namespace BuildIt.Forms.Controls
     public partial class StatefulControl
     {
         public static readonly BindableProperty EmptyStateTemplateProperty = BindableProperty.Create(nameof(EmptyStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleEmptyStateTemplateChanged);
+        public static readonly BindableProperty IsPullToRefreshEnabledProperty = BindableProperty.Create(nameof(CanPullToRefresh), typeof(bool), typeof(StatefulControl), defaultValue: true);
         public static readonly BindableProperty LoadingErrorStateTemplateProperty = BindableProperty.Create(nameof(LoadingErrorStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingErrorStateTemplateChanged);
         public static readonly BindableProperty LoadingStateTemplateProperty = BindableProperty.Create(nameof(LoadingStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingStateTemplateChanged);
         public static readonly BindableProperty PullToRefreshCommandProperty = BindableProperty.Create(nameof(PullToRefreshCommand), typeof(ICommand), typeof(StatefulControl));
@@ -40,6 +41,12 @@ namespace BuildIt.Forms.Controls
         {
             get => (DataTemplate)GetValue(EmptyStateTemplateProperty);
             set => SetValue(EmptyStateTemplateProperty, value);
+        }
+
+        public bool IsPullToRefreshEnabled
+        {
+            get => (bool)GetValue(IsPullToRefreshEnabledProperty);
+            set => SetValue(IsPullToRefreshEnabledProperty, value);
         }
 
         public DataTemplate LoadingErrorStateTemplate
@@ -82,7 +89,8 @@ namespace BuildIt.Forms.Controls
 
         public bool CanPullToRefresh()
         {
-            return State != StatefulControlStates.PullToRefresh &&
+            return IsPullToRefreshEnabled &&
+                   State != StatefulControlStates.PullToRefresh &&
                    State != StatefulControlStates.Loading;
         }
 
