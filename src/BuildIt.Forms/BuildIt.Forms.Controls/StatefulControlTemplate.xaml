@@ -9,13 +9,8 @@
                  x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
   <controls:PullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
     <Grid>
-      <Grid.Resources>
-        <ResourceDictionary>
-          <x:Double x:Key="DefaultActivityIndicatorSize">40</x:Double>
-        </ResourceDictionary>
-      </Grid.Resources>
 
-      <!--Pull To Refresh-->
+        <!--Pull To Refresh-->
       <Grid x:Name="PullToRefreshOuterContainer"
             BackgroundColor="Pink">
         <Grid VerticalOptions="Start"

@@ -84,16 +84,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="PullToRefreshControl.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Platforms\Android\Renderers\" />
-  </ItemGroup>
+  </ItemGroup>  
 </Project>

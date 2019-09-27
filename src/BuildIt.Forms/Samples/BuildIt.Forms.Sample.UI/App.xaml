@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BuildIt.Forms.Sample.App">
     <Application.Resources>
-
-        <!-- Application resource dictionary -->
+        <x:Double x:Key="DefaultActivityIndicatorSize">40</x:Double>
     </Application.Resources>
 </Application>
