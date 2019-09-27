@@ -9,16 +9,16 @@
                  x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
   <controls:PullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
     <Grid>
-
-        <!--Pull To Refresh-->
+      <!--Pull To Refresh-->
       <Grid x:Name="PullToRefreshOuterContainer"
             BackgroundColor="Pink">
-        <Grid VerticalOptions="Start"
-              HorizontalOptions="FillAndExpand"
-              Padding="20"
-              x:Name="PullToRefreshInnerContainer">
+        <Grid x:Name="PullToRefreshInnerContainer"
+              VerticalOptions="Start"
+              HorizontalOptions="FillAndExpand">
 
-          <Grid x:Name="PullToRefreshContainer">
+          <Grid x:Name="PullToRefreshContainer"
+                VerticalOptions="Start"
+                Padding="20">
           </Grid>
 
           <!--Pull To Refresh Error State-->

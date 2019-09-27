@@ -500,16 +500,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="PullToRefreshStateTemplate">
-              <ActivityIndicator IsRunning="True"
-                                 WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
-                                 HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
-                                 VerticalOptions="Center"
-                                 HorizontalOptions="Center">
-              </ActivityIndicator>
+              <Grid Padding="5">
+                <ActivityIndicator IsRunning="True"
+                                   WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
+                                   HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center">
+                </ActivityIndicator>
+              </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="PullToRefreshStateErrorTemplate">
               <StackLayout Spacing="10"
+                           Padding="20"
                            VerticalOptions="Center">
                 <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
                        VerticalOptions="Center"

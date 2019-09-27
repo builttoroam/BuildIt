@@ -217,13 +217,13 @@ namespace BuildIt.Forms.Controls
 
                 case StatefulControlStates.PullToRefreshError:
                     var pullToRefreshErrorParentAnimation = new Animation();
-                    // var pullToRefreshErrorContainerExpandAnimation = new Animation((x) => Template.PullToRefreshInnerContainer.HeightRequest = x, Template.PullToRefreshInnerContainer.Height, Template.PullToRefreshErrorStateContainer.Height);
+                    var pullToRefreshErrorContentPresenterContainerAdjustTranslationAnimation = new Animation((y) => Template.ContentPresenterContainer.TranslationY = y, Template.ContentPresenterContainer.TranslationY, Template.PullToRefreshErrorStateContainer.Height);
                     var pullToRefreshErrorContainerFadeInAnimation = new Animation((x) => Template.PullToRefreshErrorStateContainer.Opacity = x, Template.PullToRefreshErrorStateContainer.Opacity, FullyOpaque);
                     var pullToRefreshContainerFadeAnimation = new Animation((x) => Template.PullToRefreshContainer.Opacity = x, Template.PullToRefreshContainer.Opacity, FullyTransparent, Easing.Linear, () => Template.PullToRefreshContainer.IsVisible = false);
 
                     pullToRefreshErrorParentAnimation.Add(0, 0.5, pullToRefreshContainerFadeAnimation);
                     pullToRefreshErrorParentAnimation.Add(0, 0.5, pullToRefreshErrorContainerFadeInAnimation);
-                    // pullToRefreshErrorParentAnimation.Add(0, 1, pullToRefreshErrorContainerExpandAnimation);
+                    pullToRefreshErrorParentAnimation.Add(0, 1, pullToRefreshErrorContentPresenterContainerAdjustTranslationAnimation);
 
                     pullToRefreshErrorParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1, length: 150);
 
@@ -231,9 +231,11 @@ namespace BuildIt.Forms.Controls
 
                 case StatefulControlStates.PullToRefresh:
                     var pullToRefreshParentAnimation = new Animation();
+                    var pullToRefreshContentPresenterContainerAdjustTranslationAnimation = new Animation((y) => Template.ContentPresenterContainer.TranslationY = y, Template.ContentPresenterContainer.TranslationY, Template.PullToRefreshContainer.Height);
                     var pullToRefreshErrorContainerFadeOutAnimation = new Animation((x) => Template.PullToRefreshErrorStateContainer.Opacity = x, Template.PullToRefreshErrorStateContainer.Opacity, FullyTransparent, Easing.Linear, () => Template.PullToRefreshErrorStateContainer.IsVisible = false);
 
                     pullToRefreshParentAnimation.Add(0, 1, pullToRefreshErrorContainerFadeOutAnimation);
+                    pullToRefreshParentAnimation.Add(0, 1, pullToRefreshContentPresenterContainerAdjustTranslationAnimation);
 
                     pullToRefreshParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1, length: 150);
 
