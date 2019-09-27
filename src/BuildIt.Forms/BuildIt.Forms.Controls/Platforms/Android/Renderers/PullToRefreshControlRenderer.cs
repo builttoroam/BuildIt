@@ -66,7 +66,9 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 
         public override bool OnInterceptTouchEvent(MotionEvent e)
         {
-            if (isAnimatingAfterSuccessfulPulToRefresh)
+            var canPullToRefresh = Element?.CanPullToRefresh() ?? true;
+            System.Diagnostics.Debug.WriteLine($"[{nameof(OnInterceptTouchEvent)}] {e.Action} | {nameof(canPullToRefresh)}? {canPullToRefresh}");
+            if (isAnimatingAfterSuccessfulPulToRefresh || !canPullToRefresh)
             {
                 return true;
             }
@@ -78,6 +80,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
         public override bool OnTouchEvent(MotionEvent e)
         {
             base.OnTouchEvent(e);
+
+            var canPullToRefresh = Element?.CanPullToRefresh() ?? true;
+            System.Diagnostics.Debug.WriteLine($"[{nameof(OnTouchEvent)}] {e.Action} | {nameof(canPullToRefresh)}? {canPullToRefresh}");
+            if (!canPullToRefresh)
+            {
+                return true;
+            }
 
             var handled = false;
             switch (e.Action)

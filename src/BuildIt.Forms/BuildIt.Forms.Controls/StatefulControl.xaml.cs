@@ -78,9 +78,13 @@ namespace BuildIt.Forms.Controls
             set => SetValue(StateProperty, value);
         }
 
-        private StatefulControlStates? CurrentState => statesHistory.FirstOrDefault();
-
         private PullToRefreshControl Template => template ?? (template = Children?.FirstOrDefault() as PullToRefreshControl);
+
+        public bool CanPullToRefresh()
+        {
+            return State != StatefulControlStates.PullToRefresh &&
+                   State != StatefulControlStates.Loading;
+        }
 
         internal void HandlePullToRefreshDragGesture(float offsetTop)
         {
@@ -166,7 +170,7 @@ namespace BuildIt.Forms.Controls
 
             try
             {
-                await statefulControl.UpdateState(statefulControl, newState);
+                await statefulControl.UpdateState(statefulControl, oldState, newState);
                 if (newState != StatefulControlStates.PullToRefreshError &&
                     oldState == StatefulControlStates.PullToRefresh)
                 {
@@ -214,13 +218,8 @@ namespace BuildIt.Forms.Controls
             await Template.ContentPresenterContainer.TranslateTo(0, 0);
         }
 
-        private async Task UpdateState(StatefulControl statefulControl, StatefulControlStates newState)
+        private async Task UpdateState(StatefulControl statefulControl, StatefulControlStates oldState, StatefulControlStates newState)
         {
-            if (CurrentState == newState)
-            {
-                return;
-            }
-
             switch (newState)
             {
                 case StatefulControlStates.Default:
@@ -228,17 +227,12 @@ namespace BuildIt.Forms.Controls
                 case StatefulControlStates.Empty:
                 case StatefulControlStates.LoadingError:
                 case StatefulControlStates.Loaded:
-                    if (!CurrentState.HasValue)
-                    {
-                        break;
-                    }
-
-                    if (CurrentState.Value.IsPullToRefreshRelated())
+                    if (oldState.IsPullToRefreshRelated())
                     {
                         await StopPullToRefresh();
                     }
 
-                    await CancelAndFinishPreviousStateUpdate(CurrentState.Value);
+                    await CancelAndFinishPreviousStateUpdate(oldState);
 
                     break;
 
