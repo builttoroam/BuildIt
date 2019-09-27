@@ -41,6 +41,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 
             if (e.NewElement != null)
             {
+                Element.CollectionViewTouchEventHandler += HandleCollectionViewTouchEvent;
                 if (!distanceToTriggerRefresh.HasValue)
                 {
                     if (Element.Height > 0)
@@ -62,6 +63,17 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
             {
                 distanceToTriggerRefresh = (int)Math.Min(Element.Height * MaxSwipeDistanceFactor, RefreshTriggerDistance * Resources.DisplayMetrics.Density);
             }
+        }
+
+        public void HandleCollectionViewTouchEvent(object sender, object e)
+        {
+            var motionEvent = e as MotionEvent;
+            if (motionEvent == null)
+            {
+                return;
+            }
+
+            OnTouchEvent(motionEvent);
         }
 
         public override bool OnInterceptTouchEvent(MotionEvent e)

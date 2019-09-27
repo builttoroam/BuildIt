@@ -23,9 +23,13 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty StateProperty = BindableProperty.Create(nameof(State), typeof(StatefulControlStates), typeof(StatefulControl), propertyChanged: HandleStatePropertyChanged);
 
         private const uint FadeInAnimationTimeInMilliseconds = 250;
+
         private const uint FadeOutAnimationTimeInMilliseconds = FadeInAnimationTimeInMilliseconds / 2;
+
         private const double FullyOpaque = 1;
+
         private const double FullyTransparent = 0;
+
         private const int MaxStatesHistoryEntries = 20;
 
         private readonly LinkedList<StatefulControlStates> statesHistory = new LinkedList<StatefulControlStates>();
@@ -36,6 +40,8 @@ namespace BuildIt.Forms.Controls
         {
             InitializeComponent();
         }
+
+        internal event EventHandler<object> CollectionViewTouchEventHandler;
 
         public DataTemplate EmptyStateTemplate
         {
@@ -92,6 +98,11 @@ namespace BuildIt.Forms.Controls
             return IsPullToRefreshEnabled &&
                    State != StatefulControlStates.PullToRefresh &&
                    State != StatefulControlStates.Loading;
+        }
+
+        public void HandleCollectionViewTouchEvents(object touchEventArgs)
+        {
+            CollectionViewTouchEventHandler?.Invoke(this, touchEventArgs);
         }
 
         internal void HandlePullToRefreshDragGesture(float offsetTop)

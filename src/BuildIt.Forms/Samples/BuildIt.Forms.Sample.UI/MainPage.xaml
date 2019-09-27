@@ -536,18 +536,16 @@
                                   PullToRefreshStateTemplate="{StaticResource PullToRefreshStateTemplate}"
                                   PullToRefreshStateErrorTemplate="{StaticResource PullToRefreshStateErrorTemplate}"
                                   PullToRefreshCommand="{Binding StatefulControlViewModel.StatefulControlPullToRefreshCommand, Mode=OneWay}"
-                                  IsPullToRefreshEnabled="False">
-          <ListView ItemsSource="{Binding StatefulControlViewModel.StatefulControlItems, Mode=OneWay}">
-            <ListView.ItemTemplate>
+                                  IsPullToRefreshEnabled="True">
+          <CollectionView ItemsSource="{Binding StatefulControlViewModel.StatefulControlItems, Mode=OneWay}">
+            <CollectionView.ItemTemplate>
               <DataTemplate>
-                <ViewCell>
-                  <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding ., Mode=OneWay}"></Label>
-                  </StackLayout>
-                </ViewCell>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="{Binding ., Mode=OneWay}"></Label>
+                </StackLayout>
               </DataTemplate>
-            </ListView.ItemTemplate>
-          </ListView>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
         </controls:StatefulControl>
         <ScrollView Grid.Row="1"
                     Orientation="Horizontal">
