@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BuildIt.Forms.Controls.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,8 +25,9 @@ namespace BuildIt.Forms.Controls
         private const uint FadeOutAnimationTimeInMilliseconds = FadeInAnimationTimeInMilliseconds / 2;
         private const double FullyOpaque = 1;
         private const double FullyTransparent = 0;
+        private const int MaxStatesHistoryEntries = 20;
 
-        private StatefulControlStates? currentState;
+        private readonly LinkedList<StatefulControlStates> statesHistory = new LinkedList<StatefulControlStates>();
 
         private PullToRefreshControl template;
 
@@ -74,6 +76,19 @@ namespace BuildIt.Forms.Controls
         {
             get => (StatefulControlStates)GetValue(StateProperty);
             set => SetValue(StateProperty, value);
+        }
+
+        private StatefulControlStates? CurrentState
+        {
+            get
+            {
+                if (statesHistory.Any())
+                {
+                    return statesHistory.LastOrDefault();
+                }
+
+                return null;
+            }
         }
 
         private PullToRefreshControl Template => template ?? (template = Children?.FirstOrDefault() as PullToRefreshControl);
@@ -163,9 +178,24 @@ namespace BuildIt.Forms.Controls
             try
             {
                 await statefulControl.UpdateState(statefulControl, newState);
-                if (newState == StatefulControlStates.Loaded && oldState == StatefulControlStates.PullToRefresh)
+                if (newState != StatefulControlStates.PullToRefreshError &&
+                    oldState == StatefulControlStates.PullToRefresh)
                 {
+                    var statesHistoryCollection = statefulControl.statesHistory.ToArray();
+                    // MK Skipping one, as the latest state is the new state, that occured after pull to refresh state
+                    var lastNonPullToRefreshRelatedState = statesHistoryCollection.Skip(1)
+                                                                                  .FirstOrDefault(s => !s.IsPullToRefreshRelated());
+                    if (lastNonPullToRefreshRelatedState != StatefulControlStates.Default)
+                    {
+                        await statefulControl.CancelAndFinishPreviousStateUpdate(lastNonPullToRefreshRelatedState);
+                    }
+
                     await statefulControl.StopPullToRefresh();
+                }
+
+                if (statefulControl.statesHistory.Count > MaxStatesHistoryEntries)
+                {
+                    statefulControl.statesHistory.RemoveFirst();
                 }
             }
             catch (Exception e)
@@ -174,14 +204,9 @@ namespace BuildIt.Forms.Controls
             }
         }
 
-        private async Task CancelAndFinishPreviousStateUpdate()
+        private async Task CancelAndFinishPreviousStateUpdate(StatefulControlStates stateToCancelAndFinish)
         {
-            if (!currentState.HasValue)
-            {
-                return;
-            }
-
-            var stateContainer = Template.RetrieveStatefulContainer(currentState.Value);
+            var stateContainer = Template.RetrieveStatefulContainer(stateToCancelAndFinish);
             if (stateContainer == null)
             {
                 return;
@@ -200,7 +225,7 @@ namespace BuildIt.Forms.Controls
 
         private async Task UpdateState(StatefulControl statefulControl, StatefulControlStates newState)
         {
-            if (currentState == newState)
+            if (CurrentState == newState)
             {
                 return;
             }
@@ -212,7 +237,18 @@ namespace BuildIt.Forms.Controls
                 case StatefulControlStates.Empty:
                 case StatefulControlStates.LoadingError:
                 case StatefulControlStates.Loaded:
-                    await CancelAndFinishPreviousStateUpdate();
+                    if (!CurrentState.HasValue)
+                    {
+                        break;
+                    }
+
+                    if (CurrentState.Value.IsPullToRefreshRelated())
+                    {
+                        await StopPullToRefresh();
+                    }
+
+                    await CancelAndFinishPreviousStateUpdate(CurrentState.Value);
+
                     break;
 
                 case StatefulControlStates.PullToRefreshError:
@@ -243,7 +279,7 @@ namespace BuildIt.Forms.Controls
                     break;
             }
 
-            currentState = newState;
+            statesHistory.AddLast(newState);
 
             var statefulContainer = Template.RetrieveStatefulContainer(newState);
             if (statefulContainer == null)

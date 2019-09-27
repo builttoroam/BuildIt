@@ -44,7 +44,13 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                 await Task.Delay(2000);
             }
 
-            StatefulControlItems.Clear();
+            if (newState != StatefulControlStates.PullToRefresh &&
+                newState != StatefulControlStates.PullToRefreshError &&
+                newState != StatefulControlStates.Loaded)
+            {
+                StatefulControlItems.Clear();
+            }
+
             if (newState == StatefulControlStates.Loaded)
             {
                 StatefulControlItems.Add("Bob");

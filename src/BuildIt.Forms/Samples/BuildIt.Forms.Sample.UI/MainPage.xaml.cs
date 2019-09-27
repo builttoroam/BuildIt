@@ -118,6 +118,11 @@ namespace BuildIt.Forms.Sample
             await (BindingContext as MainViewModel).StatefulControlViewModel.UpdateStatefulControlState(StatefulControlStates.LoadingError);
         }
 
+        private async void ChangeStatefulControlToPullToRefresh_OnClicked(object sender, EventArgs e)
+        {
+            await (BindingContext as MainViewModel).StatefulControlViewModel.UpdateStatefulControlState(StatefulControlStates.PullToRefresh, false);
+        }
+
         private void ContentButton_OnPressed(object sender, EventArgs e)
         {
             "IconButton Pressed - MainPage".LogMessage();

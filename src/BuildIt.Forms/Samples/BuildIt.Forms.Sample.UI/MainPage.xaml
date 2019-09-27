@@ -559,6 +559,8 @@
                     Clicked="ChangeStatefulControlToLoaded_OnClicked" />
             <Button Text="Load -> Error"
                     Clicked="ChangeStatefulControlToLoadingError_OnClicked" />
+            <Button Text="Pull To Refresh"
+                    Clicked="ChangeStatefulControlToPullToRefresh_OnClicked" />
           </StackLayout>
         </ScrollView>
       </Grid>
