@@ -78,18 +78,7 @@ namespace BuildIt.Forms.Controls
             set => SetValue(StateProperty, value);
         }
 
-        private StatefulControlStates? CurrentState
-        {
-            get
-            {
-                if (statesHistory.Any())
-                {
-                    return statesHistory.LastOrDefault();
-                }
-
-                return null;
-            }
-        }
+        private StatefulControlStates? CurrentState => statesHistory.FirstOrDefault();
 
         private PullToRefreshControl Template => template ?? (template = Children?.FirstOrDefault() as PullToRefreshControl);
 
@@ -193,6 +182,8 @@ namespace BuildIt.Forms.Controls
                     await statefulControl.StopPullToRefresh();
                 }
 
+                // MK TODO There should be also a check to make sure that we don't remove the last non pull to refresh related state, so we can cancel it when needed.
+                //         If there's more than MaxStatesHistoryEntries pull to refresh related states in the list then we won't have the before state to cancel and finish
                 if (statefulControl.statesHistory.Count > MaxStatesHistoryEntries)
                 {
                     statefulControl.statesHistory.RemoveLast();
