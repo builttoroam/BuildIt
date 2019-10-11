@@ -41,6 +41,14 @@ namespace BuildIt.Forms.Controls
             Template.StartPullToRefreshCallback = StartPullToRefresh;
             Template.CanPullToRefreshCallback = CanPullToRefresh;
             Template.HandlePullToRefreshDragGestureCallback = HandlePullToRefreshDragGesture;
+
+            Template.ContentPresenterContainer.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(TranslationY))
+                {
+                    Debug.WriteLine($"[{nameof(Template.ContentPresenterContainer)}.{nameof(Template.ContentPresenterContainer.PropertyChanged)}] Pull to refresh container top offset {(sender as Grid)?.TranslationY}");
+                }
+            };
         }
 
         public DataTemplate EmptyStateTemplate
@@ -102,13 +110,14 @@ namespace BuildIt.Forms.Controls
 
         internal void HandlePullToRefreshDragGesture(float offsetTop)
         {
+            Debug.WriteLine($"[{nameof(HandlePullToRefreshDragGesture)}] Pull to refresh container top offset {offsetTop}");
+
             Template.ContentPresenterContainer.TranslationY = offsetTop;
         }
 
-        internal async Task StartPullToRefresh()
+        internal void StartPullToRefresh()
         {
             State = StatefulControlStates.PullToRefresh;
-            await Template.ContentPresenterContainer.TranslateTo(0, Template.PullToRefreshInnerContainer.Height, easing: Easing.SpringIn);
         }
 
         private static void CreateAndAddStateContainerTemplate(BindableObject bindable, object oldValue, object newValue, StatefulControlStates state)
@@ -181,6 +190,8 @@ namespace BuildIt.Forms.Controls
             {
                 return;
             }
+
+            Debug.WriteLine($"[{nameof(HandleStatePropertyChanged)}] Changing state from {oldState} to {newState}");
 
             try
             {
@@ -260,19 +271,22 @@ namespace BuildIt.Forms.Controls
                     pullToRefreshErrorParentAnimation.Add(0, 0.5, pullToRefreshErrorContainerFadeInAnimation);
                     pullToRefreshErrorParentAnimation.Add(0, 1, pullToRefreshErrorContentPresenterContainerAdjustTranslationAnimation);
 
-                    pullToRefreshErrorParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1, length: 150);
+                    pullToRefreshErrorParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1);
 
                     break;
 
                 case StatefulControlStates.PullToRefresh:
+
+                    Debug.WriteLine($"[{nameof(UpdateState)}] About to animate pull animate pull to refresh container from {Template.ContentPresenterContainer.TranslationY} to {Template.PullToRefreshContainer.Height}");
+
                     var pullToRefreshParentAnimation = new Animation();
-                    var pullToRefreshContentPresenterContainerAdjustTranslationAnimation = new Animation((y) => Template.ContentPresenterContainer.TranslationY = y, Template.ContentPresenterContainer.TranslationY, Template.PullToRefreshContainer.Height);
+                    var pullToRefreshContentPresenterContainerAdjustTranslationAnimation = new Animation((y) => Template.ContentPresenterContainer.TranslationY = y, Template.ContentPresenterContainer.TranslationY, Template.PullToRefreshContainer.Height, Easing.SpringIn);
                     var pullToRefreshErrorContainerFadeOutAnimation = new Animation((x) => Template.PullToRefreshErrorStateContainer.Opacity = x, Template.PullToRefreshErrorStateContainer.Opacity, FullyTransparent, Easing.Linear, () => Template.PullToRefreshErrorStateContainer.IsVisible = false);
 
                     pullToRefreshParentAnimation.Add(0, 1, pullToRefreshErrorContainerFadeOutAnimation);
                     pullToRefreshParentAnimation.Add(0, 1, pullToRefreshContentPresenterContainerAdjustTranslationAnimation);
 
-                    pullToRefreshParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1, length: 150);
+                    pullToRefreshParentAnimation.Commit(Template.PullToRefreshOuterContainer, nameof(pullToRefreshErrorParentAnimation), rate: 1);
 
                     statefulControl.PullToRefreshCommand?.Execute(EventArgs.Empty);
                     break;

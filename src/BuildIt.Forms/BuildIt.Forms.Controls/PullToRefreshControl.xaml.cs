@@ -17,7 +17,7 @@ namespace BuildIt.Forms.Controls
 
         public Action<float> HandlePullToRefreshDragGestureCallback { get; set; }
 
-        public Func<Task> StartPullToRefreshCallback { get; set; }
+        public Action StartPullToRefreshCallback { get; set; }
 
         internal bool CanPullToRefresh()
         {
@@ -29,14 +29,9 @@ namespace BuildIt.Forms.Controls
             HandlePullToRefreshDragGestureCallback?.Invoke(offsetTop);
         }
 
-        internal async Task StartPullToRefresh()
+        internal void StartPullToRefresh()
         {
-            if (StartPullToRefreshCallback == null)
-            {
-                return;
-            }
-
-            await StartPullToRefreshCallback.Invoke();
+            StartPullToRefreshCallback?.Invoke();
         }
     }
 }

@@ -146,13 +146,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
             return handled;
         }
 
-        private async void StartRefresh()
+        private void StartRefresh()
         {
             isAnimatingAfterSuccessfulPulToRefresh = true;
 
             try
             {
-                await Element.StartPullToRefresh();
+                Element.StartPullToRefresh();
                 isAnimatingAfterSuccessfulPulToRefresh = false;
             }
             catch (Exception ex)
