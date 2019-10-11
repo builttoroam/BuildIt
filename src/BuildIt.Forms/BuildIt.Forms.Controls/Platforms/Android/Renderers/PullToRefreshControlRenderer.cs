@@ -9,10 +9,10 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using View = Android.Views.View;
 
-[assembly: ExportRenderer(typeof(StatefulControl), typeof(PullToRefreshControlRenderer))]
+[assembly: ExportRenderer(typeof(PullToRefreshControl), typeof(PullToRefreshControlRenderer))]
 namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 {
-    public class PullToRefreshControlRenderer : Xamarin.Forms.Platform.Android.AppCompat.ViewRenderer<StatefulControl, View>
+    public class PullToRefreshControlRenderer : Xamarin.Forms.Platform.Android.AppCompat.ViewRenderer<PullToRefreshControl, View>
     {
         private const float MaxSwipeDistanceFactor = .6f;
         private const int RefreshTriggerDistance = 120;
@@ -30,7 +30,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
             touchSlop = ViewConfiguration.Get(context).ScaledPagingTouchSlop;
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<StatefulControl> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<PullToRefreshControl> e)
         {
             base.OnElementChanged(e);
 
@@ -66,7 +66,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
 
         public override bool OnInterceptTouchEvent(MotionEvent e)
         {
-            var canPullToRefresh = Element?.CanPullToRefresh() ?? true;
+            var canPullToRefresh = Element.CanPullToRefresh();
             System.Diagnostics.Debug.WriteLine($"[{nameof(OnInterceptTouchEvent)}] {e.Action} | {nameof(canPullToRefresh)}? {canPullToRefresh}");
             if (isAnimatingAfterSuccessfulPulToRefresh || !canPullToRefresh)
             {
@@ -81,7 +81,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android.Renderers
         {
             base.OnTouchEvent(e);
 
-            var canPullToRefresh = Element?.CanPullToRefresh() ?? true;
+            var canPullToRefresh = Element.CanPullToRefresh();
             System.Diagnostics.Debug.WriteLine($"[{nameof(OnTouchEvent)}] {e.Action} | {nameof(canPullToRefresh)}? {canPullToRefresh}");
             if (!canPullToRefresh)
             {

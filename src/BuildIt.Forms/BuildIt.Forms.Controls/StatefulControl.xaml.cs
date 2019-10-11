@@ -14,7 +14,7 @@ namespace BuildIt.Forms.Controls
     public partial class StatefulControl
     {
         public static readonly BindableProperty EmptyStateTemplateProperty = BindableProperty.Create(nameof(EmptyStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleEmptyStateTemplateChanged);
-        public static readonly BindableProperty IsPullToRefreshEnabledProperty = BindableProperty.Create(nameof(CanPullToRefresh), typeof(bool), typeof(StatefulControl), defaultValue: true);
+        public static readonly BindableProperty IsPullToRefreshEnabledProperty = BindableProperty.Create(nameof(IsPullToRefreshEnabled), typeof(bool), typeof(StatefulControl), defaultValue: true);
         public static readonly BindableProperty LoadingErrorStateTemplateProperty = BindableProperty.Create(nameof(LoadingErrorStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingErrorStateTemplateChanged);
         public static readonly BindableProperty LoadingStateTemplateProperty = BindableProperty.Create(nameof(LoadingStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingStateTemplateChanged);
         public static readonly BindableProperty PullToRefreshCommandProperty = BindableProperty.Create(nameof(PullToRefreshCommand), typeof(ICommand), typeof(StatefulControl));
@@ -30,11 +30,15 @@ namespace BuildIt.Forms.Controls
 
         private readonly LinkedList<StatefulControlStates> statesHistory = new LinkedList<StatefulControlStates>();
 
-        private PullToRefreshControl template;
+        private StatefulPullToRefreshControl template;
 
         public StatefulControl()
         {
             InitializeComponent();
+
+            Template.StartPullToRefreshCallback = StartPullToRefresh;
+            Template.CanPullToRefreshCallback = CanPullToRefresh;
+            Template.HandlePullToRefreshDragGestureCallback = HandlePullToRefreshDragGesture;
         }
 
         public DataTemplate EmptyStateTemplate
@@ -85,7 +89,7 @@ namespace BuildIt.Forms.Controls
             set => SetValue(StateProperty, value);
         }
 
-        private PullToRefreshControl Template => template ?? (template = Children?.FirstOrDefault() as PullToRefreshControl);
+        private StatefulPullToRefreshControl Template => template ?? (template = Children?.FirstOrDefault() as StatefulPullToRefreshControl);
 
         public bool CanPullToRefresh()
         {

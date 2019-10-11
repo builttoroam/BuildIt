@@ -84,6 +84,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="StatefulPullToRefreshControl.xaml.cs">
+      <DependentUpon>StatefulPullToRefreshControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>  
 </Project>

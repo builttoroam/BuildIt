@@ -7,7 +7,7 @@
                  xmlns:core="clr-namespace:BuildIt.Forms;assembly=BuildIt.Forms.Core"
                  mc:Ignorable="d"
                  x:Class="BuildIt.Forms.Controls.StatefulControlTemplate">
-  <controls:PullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
+  <controls:StatefulPullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
     <Grid>
       <!--Pull To Refresh-->
       <Grid x:Name="PullToRefreshOuterContainer"
@@ -53,5 +53,5 @@
         </Grid>
       </Grid>
     </Grid>
-  </controls:PullToRefreshControl>
+  </controls:StatefulPullToRefreshControl>
 </ControlTemplate>
