@@ -13,11 +13,11 @@ namespace BuildIt.Forms.Controls
             InitializeComponent();
         }
 
-        internal Func<bool> CanPullToRefreshCallback { get; set; }
+        public Func<bool> CanPullToRefreshCallback { get; set; }
 
-        internal Action<float> HandlePullToRefreshDragGestureCallback { get; set; }
+        public Action<float> HandlePullToRefreshDragGestureCallback { get; set; }
 
-        internal Func<Task> StartPullToRefreshCallback { get; set; }
+        public Func<Task> StartPullToRefreshCallback { get; set; }
 
         internal bool CanPullToRefresh()
         {
