@@ -10,15 +10,13 @@
   <controls:StatefulPullToRefreshControl BindingContext="{TemplateBinding Parent.BindingContext, Mode=OneWay}">
     <Grid>
       <!--Pull To Refresh-->
-      <Grid x:Name="PullToRefreshOuterContainer"
-            BackgroundColor="Pink">
+      <Grid x:Name="PullToRefreshOuterContainer">
         <Grid x:Name="PullToRefreshInnerContainer"
               VerticalOptions="Start"
               HorizontalOptions="FillAndExpand">
 
           <Grid x:Name="PullToRefreshContainer"
-                VerticalOptions="Start"
-                Padding="20">
+                VerticalOptions="Start">
           </Grid>
 
           <!--Pull To Refresh Error State-->

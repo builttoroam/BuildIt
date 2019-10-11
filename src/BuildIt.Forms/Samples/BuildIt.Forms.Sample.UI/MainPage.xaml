@@ -500,7 +500,8 @@
             </DataTemplate>
 
             <DataTemplate x:Key="PullToRefreshStateTemplate">
-              <Grid Padding="5">
+              <Grid Padding="20"
+                    BackgroundColor="Pink">
                 <ActivityIndicator IsRunning="True"
                                    WidthRequest="{StaticResource DefaultActivityIndicatorSize}"
                                    HeightRequest="{StaticResource DefaultActivityIndicatorSize}"
@@ -513,7 +514,8 @@
             <DataTemplate x:Key="PullToRefreshStateErrorTemplate">
               <StackLayout Spacing="10"
                            Padding="20"
-                           VerticalOptions="Center">
+                           VerticalOptions="Center"
+                           BackgroundColor="Aqua">
                 <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
                        VerticalOptions="Center"
                        FontSize="12" />
