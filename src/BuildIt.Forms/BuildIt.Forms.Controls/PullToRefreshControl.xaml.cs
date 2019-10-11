@@ -13,25 +13,39 @@ namespace BuildIt.Forms.Controls
             InitializeComponent();
         }
 
-        public Func<bool> CanPullToRefreshCallback { get; set; }
+        public WeakReference<Func<bool>> CanPullToRefreshCallback { get; set; }
 
-        public Action<float> HandlePullToRefreshDragGestureCallback { get; set; }
+        public WeakReference<Action<float>> HandlePullToRefreshDragGestureCallback { get; set; }
 
-        public Action StartPullToRefreshCallback { get; set; }
+        public WeakReference<Action> StartPullToRefreshCallback { get; set; }
 
         internal bool CanPullToRefresh()
         {
-            return CanPullToRefreshCallback?.Invoke() ?? false;
+            if (CanPullToRefreshCallback != null &&
+                CanPullToRefreshCallback.TryGetTarget(out var canPullToRefreshCallback))
+            {
+                return canPullToRefreshCallback.Invoke();
+            }
+
+            return false;
         }
 
         internal void HandlePullToRefreshDragGesture(float offsetTop)
         {
-            HandlePullToRefreshDragGestureCallback?.Invoke(offsetTop);
+            if (HandlePullToRefreshDragGestureCallback != null &&
+                HandlePullToRefreshDragGestureCallback.TryGetTarget(out var handlePullToRefreshDragGestureCallback))
+            {
+                handlePullToRefreshDragGestureCallback.Invoke(offsetTop);
+            }
         }
 
         internal void StartPullToRefresh()
         {
-            StartPullToRefreshCallback?.Invoke();
+            if (StartPullToRefreshCallback != null &&
+                StartPullToRefreshCallback.TryGetTarget(out var startPullToRefreshCallback))
+            {
+                startPullToRefreshCallback.Invoke();
+            }
         }
     }
 }

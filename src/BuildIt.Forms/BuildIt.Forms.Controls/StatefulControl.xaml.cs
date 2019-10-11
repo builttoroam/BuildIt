@@ -19,6 +19,7 @@ namespace BuildIt.Forms.Controls
         public static readonly BindableProperty IsPullToRefreshEnabledProperty = BindableProperty.Create(nameof(IsPullToRefreshEnabled), typeof(bool), typeof(StatefulControl), defaultValue: false);
         public static readonly BindableProperty LoadingErrorStateTemplateProperty = BindableProperty.Create(nameof(LoadingErrorStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingErrorStateTemplateChanged);
         public static readonly BindableProperty LoadingStateTemplateProperty = BindableProperty.Create(nameof(LoadingStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandleLoadingStateTemplateChanged);
+        public static readonly BindableProperty PullToRefreshBackgroundColorProperty = BindableProperty.Create(nameof(PullToRefreshBackgroundColor), typeof(Color), typeof(StatefulControl), propertyChanged: HandlePullToRefreshBackgroundColorPropertyChanged);
         public static readonly BindableProperty PullToRefreshCommandProperty = BindableProperty.Create(nameof(PullToRefreshCommand), typeof(ICommand), typeof(StatefulControl));
         public static readonly BindableProperty PullToRefreshStateErrorTemplateProperty = BindableProperty.Create(nameof(PullToRefreshStateErrorTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandlePullToRefreshErrorStateTemplateChanged);
         public static readonly BindableProperty PullToRefreshStateTemplateProperty = BindableProperty.Create(nameof(PullToRefreshStateTemplate), typeof(DataTemplate), typeof(StatefulControl), propertyChanged: HandlePullToRefreshStateTemplateChanged);
@@ -30,17 +31,25 @@ namespace BuildIt.Forms.Controls
         private const double FullyTransparent = 0;
         private const int MaxStatesHistoryEntries = 20;
 
-        private readonly LinkedList<StatefulControlStates> statesHistory = new LinkedList<StatefulControlStates>();
+        // MK Making sure that these callbacks won't get GC'd --> https://stackoverflow.com/a/51466538/510627
+        private readonly Func<bool> canPullToRefresh;
+        private readonly Action<float> handlePullToRefreshDragGesture;
+        private readonly Action startPullToRefresh;
 
+        private readonly LinkedList<StatefulControlStates> statesHistory = new LinkedList<StatefulControlStates>();
         private StatefulPullToRefreshControl template;
 
         public StatefulControl()
         {
             InitializeComponent();
 
-            Template.StartPullToRefreshCallback = StartPullToRefresh;
-            Template.CanPullToRefreshCallback = CanPullToRefresh;
-            Template.HandlePullToRefreshDragGestureCallback = HandlePullToRefreshDragGesture;
+            startPullToRefresh = StartPullToRefresh;
+            canPullToRefresh = CanPullToRefresh;
+            handlePullToRefreshDragGesture = HandlePullToRefreshDragGesture;
+
+            Template.StartPullToRefreshCallback = new WeakReference<Action>(startPullToRefresh);
+            Template.CanPullToRefreshCallback = new WeakReference<Func<bool>>(canPullToRefresh);
+            Template.HandlePullToRefreshDragGestureCallback = new WeakReference<Action<float>>(handlePullToRefreshDragGesture);
 
             Template.ContentPresenterContainer.PropertyChanged += (sender, args) =>
             {
@@ -73,6 +82,12 @@ namespace BuildIt.Forms.Controls
         {
             get => (DataTemplate)GetValue(LoadingStateTemplateProperty);
             set => SetValue(LoadingStateTemplateProperty, value);
+        }
+
+        public Color PullToRefreshBackgroundColor
+        {
+            get => (Color)GetValue(PullToRefreshBackgroundColorProperty);
+            set => SetValue(PullToRefreshBackgroundColorProperty, value);
         }
 
         public ICommand PullToRefreshCommand
@@ -163,6 +178,17 @@ namespace BuildIt.Forms.Controls
         private static void HandleLoadingStateTemplateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             CreateAndAddStateContainerTemplate(bindable, oldValue, newValue, StatefulControlStates.Loading);
+        }
+
+        private static void HandlePullToRefreshBackgroundColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var statefulControl = bindable as StatefulControl;
+            if (statefulControl?.Template?.PullToRefreshOuterContainer == null || !(newValue is Color newColor))
+            {
+                return;
+            }
+
+            statefulControl.Template.PullToRefreshOuterContainer.BackgroundColor = newColor;
         }
 
         private static void HandlePullToRefreshErrorStateTemplateChanged(BindableObject bindable, object oldValue, object newValue)

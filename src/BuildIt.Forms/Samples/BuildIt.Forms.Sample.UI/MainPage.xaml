@@ -537,6 +537,7 @@
                                   LoadingStateTemplate="{StaticResource LoadingStateTemplate}"
                                   PullToRefreshStateTemplate="{StaticResource PullToRefreshStateTemplate}"
                                   PullToRefreshStateErrorTemplate="{StaticResource PullToRefreshStateErrorTemplate}"
+                                  PullToRefreshBackgroundColor="Pink"
                                   PullToRefreshCommand="{Binding StatefulControlViewModel.StatefulControlPullToRefreshCommand, Mode=OneWay}"
                                   IsPullToRefreshEnabled="True">
           <ListView ItemsSource="{Binding StatefulControlViewModel.StatefulControlItems, Mode=OneWay}">
