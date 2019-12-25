@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='monoandroid80' or '$(TargetFramework)'=='monoandroid90' or '$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Uno.UI" Version="1.46.230-dev.2733" />
+    <PackageReference Include="Uno.UI" Version="2.0.528" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +52,6 @@
 
   <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="1.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 </Project>

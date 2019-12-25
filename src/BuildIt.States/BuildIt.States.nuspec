@@ -10,29 +10,29 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>This library contains a number of helper methods and functions to make working with application states easier</description>
-    <copyright>Copyright © 2019</copyright>
+    <copyright>Copyright © 2020</copyright>
     <tags>BuildIt, States</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.0">
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
-        <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="UAP10.0.16299">
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
-        <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.9" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.9" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="monoandroid81">
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
-        <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="xamarinios10">
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" exclude="Build,Analyzers" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
-        <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
       </group>
     </dependencies>
 

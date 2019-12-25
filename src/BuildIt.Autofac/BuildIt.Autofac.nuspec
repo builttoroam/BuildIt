@@ -10,42 +10,33 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Support for Autofac using BuildIt.General ServiceLocator</description>
-    <copyright>Copyright © 2019</copyright>
+    <copyright>Copyright © 2020</copyright>
     <tags>BuildIt, Autofac, ServiceLocator</tags>
     <dependencies>
-      <group targetFramework=".NETStandard1.1">
-        <dependency id="Autofac" version="4.8.1" />
-        <dependency id="BuildIt.General" version="BuildIt0.0.0.0" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
-      </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Autofac" version="4.8.1" />
+        <dependency id="Autofac" version="4.9.4" />
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="UAP10.0.16299">
-        <dependency id="Autofac" version="4.8.1" />
+        <dependency id="Autofac" version="4.9.4" />
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.1.9" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.9" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="monoandroid81">
-        <dependency id="Autofac" version="4.8.1" />
+        <dependency id="Autofac" version="4.9.4" />
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="xamarinios10">
-        <dependency id="Autofac" version="4.8.1" />
+        <dependency id="Autofac" version="4.9.4" />
         <dependency id="BuildIt.General" version="BuildIt0.0.0.0" />
-        <dependency id="CommonServiceLocator" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="CommonServiceLocator" version="2.0.5" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.dll" target="lib\netstandard1.1" />
-    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.pdb" target="lib\netstandard1.1" />
-    <file src="BuildIt.Autofac\bin\Release\netstandard1.1\BuildIt.Autofac.xml" target="lib\netstandard1.1" />
-
     <file src="BuildIt.Autofac\bin\Release\netstandard2.0\BuildIt.Autofac.dll" target="lib\netstandard2.0" />
     <file src="BuildIt.Autofac\bin\Release\netstandard2.0\BuildIt.Autofac.pdb" target="lib\netstandard2.0" />
     <file src="BuildIt.Autofac\bin\Release\netstandard2.0\BuildIt.Autofac.xml" target="lib\netstandard2.0" />

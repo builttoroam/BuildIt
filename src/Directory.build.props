@@ -2,7 +2,7 @@
   <PropertyGroup>
      <Authors>Built to Roam</Authors>
       <Company>Built to Roam Pty Ltd</Company>
-      <Copyright>Copyright © 2019</Copyright>
+      <Copyright>Copyright © 2020</Copyright>
     <RepositoryType>git</RepositoryType>
       <RepositoryUrl>https://github.com/builttoroam/buildit</RepositoryUrl>
       <PackageTags>BuildIt</PackageTags>

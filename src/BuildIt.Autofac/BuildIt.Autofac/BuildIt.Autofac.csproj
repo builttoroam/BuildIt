@@ -96,7 +96,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.9.1" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
   </ItemGroup>
 
   <ItemGroup>
