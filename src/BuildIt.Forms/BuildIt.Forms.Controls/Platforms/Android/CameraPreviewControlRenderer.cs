@@ -33,6 +33,7 @@ using Semaphore = Java.Util.Concurrent.Semaphore;
 #pragma warning disable 618
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
+
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
     /// <summary>
@@ -99,8 +100,8 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private AutoFitTextureView textureView;
         private bool useCamera2Api;
         private global::Android.Views.View view;
-        int textureWidth;
-        int textureHeight;
+        private int textureWidth;
+        private int textureHeight;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
@@ -305,63 +306,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             textureHeight = height;
 
             surfaceTexture = surface;
-        }
-
-        private void ApplyAspect()
-        {
-            var cameraParameters = camera.GetParameters();
-            var previewWidth = 0;
-            var previewHeight = 0;
-            var orientation = Resources.Configuration.Orientation;
-            if (orientation == global::Android.Content.Res.Orientation.Landscape)
-            {
-                previewWidth = cameraParameters.PreviewSize.Width;
-                previewHeight = cameraParameters.PreviewSize.Height;
-            }
-            else
-            {
-                previewWidth = cameraParameters.PreviewSize.Height;
-                previewHeight = cameraParameters.PreviewSize.Width;
-            }
-
-            switch (cameraPreviewControl.Aspect)
-            {
-                case Aspect.AspectFit:
-                    if (textureWidth < (float)textureHeight * previewWidth / (float)previewHeight)
-                    {
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureWidth * previewHeight / previewWidth);
-                    }
-                    else
-                    {
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureHeight * previewWidth / previewHeight, textureHeight);
-                    }
-
-                    break;
-
-                case Aspect.AspectFill:
-                    var previewAspectRatio = (double)previewWidth / previewHeight;
-                    if (previewAspectRatio > 1)
-                    {
-                        // width > height, so keep the height but scale the width to meet aspect ratio
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams((int)(textureWidth * previewAspectRatio), textureHeight);
-                    }
-                    else if (previewAspectRatio < 1 && previewAspectRatio != 0)
-                    {
-                        // width < height
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, (int)(textureHeight / previewAspectRatio));
-                    }
-                    else
-                    {
-                        // width == height
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
-                    }
-
-                    break;
-
-                case Aspect.Fill:
-                    textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
-                    break;
-            }
         }
 
         /// <inheritdoc />
@@ -738,6 +682,63 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             view.Measure(msw, msh);
             view.Layout(0, 0, r - l, b - t);
+        }
+
+        private void ApplyAspect()
+        {
+            var cameraParameters = camera.GetParameters();
+            var previewWidth = 0;
+            var previewHeight = 0;
+            var orientation = Resources.Configuration.Orientation;
+            if (orientation == global::Android.Content.Res.Orientation.Landscape)
+            {
+                previewWidth = cameraParameters.PreviewSize.Width;
+                previewHeight = cameraParameters.PreviewSize.Height;
+            }
+            else
+            {
+                previewWidth = cameraParameters.PreviewSize.Height;
+                previewHeight = cameraParameters.PreviewSize.Width;
+            }
+
+            switch (cameraPreviewControl.Aspect)
+            {
+                case Aspect.AspectFit:
+                    if (textureWidth < (float)textureHeight * previewWidth / (float)previewHeight)
+                    {
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureWidth * previewHeight / previewWidth);
+                    }
+                    else
+                    {
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureHeight * previewWidth / previewHeight, textureHeight);
+                    }
+
+                    break;
+
+                case Aspect.AspectFill:
+                    var previewAspectRatio = (double)previewWidth / previewHeight;
+                    if (previewAspectRatio > 1)
+                    {
+                        // width > height, so keep the height but scale the width to meet aspect ratio
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams((int)(textureWidth * previewAspectRatio), textureHeight);
+                    }
+                    else if (previewAspectRatio < 1 && previewAspectRatio != 0)
+                    {
+                        // width < height
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, (int)(textureHeight / previewAspectRatio));
+                    }
+                    else
+                    {
+                        // width == height
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
+                    }
+
+                    break;
+
+                case Aspect.Fill:
+                    textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
+                    break;
+            }
         }
 
         private static string BuildFilePath()
