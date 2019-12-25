@@ -6,7 +6,7 @@
     <title>BuildIt.ML</title>
     <authors>Built to Roam Pty Ltd</authors>
     <owners>Built to Roam Pty Ltd</owners>
-    <licenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</licenseUrl>
+    <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Simplies using machine learning in mobile applications using Xamarin.Android, Xamarin.iOS and UWP</description>
