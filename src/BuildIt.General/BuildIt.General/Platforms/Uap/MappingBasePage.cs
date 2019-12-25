@@ -1,7 +1,6 @@
-﻿using System.Globalization;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml;
 
 namespace BuildIt.UI
 {

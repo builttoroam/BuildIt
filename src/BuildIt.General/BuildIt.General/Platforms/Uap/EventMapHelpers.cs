@@ -26,6 +26,7 @@ namespace BuildIt.UI
                 builder.Maps[key] = existing.Union(new[] { map }).ToArray();
                 return;
             }
+
             builder.Maps[key] = new[] { map };
         }
 

@@ -150,7 +150,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Start camera preview.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Task to be awaited</returns>
         public async Task StartPreview()
         {
             if (StartPreviewFunc == null)
@@ -196,7 +196,7 @@ namespace BuildIt.Forms.Controls
         /// <summary>
         /// Stop camera preview.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Task to be awaited</returns>
         public async Task StopPreview()
         {
             if (StopPreviewFunc == null || Status == CameraStatus.Stopped || Status == CameraStatus.None)
@@ -285,7 +285,7 @@ namespace BuildIt.Forms.Controls
         /// Handles camera feed frames.
         /// </summary>
         /// <param name="mediaFrame">MediaFrame.</param>
-        /// <returns></returns>
+        /// <returns>Task to be awaited</returns>
         internal async Task OnMediaFrameArrived(MediaFrame mediaFrame)
         {
             if (MediaFrameArrived == null)

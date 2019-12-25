@@ -35,6 +35,7 @@ using Grid = Windows.UI.Xaml.Controls.Grid;
 using Panel = Windows.Devices.Enumeration.Panel;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
+
 namespace BuildIt.Forms.Controls.Platforms.Uap
 {
     /// <summary>

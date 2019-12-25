@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -171,7 +172,7 @@ namespace BuildIt.Forms
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="args">The event args.</param>
-        protected void LaunchBuiltToRoamWebsite(object sender, TouchActionEventArgs args)
+        protected async void LaunchBuiltToRoamWebsite(object sender, TouchActionEventArgs args)
         {
             try
             {
@@ -182,7 +183,7 @@ namespace BuildIt.Forms
                     return;
                 }
 
-                Device.OpenUri(new Uri("https://www.builttoroam.com"));
+                await Launcher.OpenAsync(new Uri("https://www.builttoroam.com"));
             }
             catch (Exception ex)
             {

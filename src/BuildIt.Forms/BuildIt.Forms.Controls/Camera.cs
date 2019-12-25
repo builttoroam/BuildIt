@@ -6,12 +6,12 @@
     public class Camera : ICamera
     {
         /// <summary>
-        /// Gets the unique identifier for the camera.
+        /// Gets or sets the unique identifier for the camera.
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets the direction the camera is facing.
+        /// Gets or sets the direction the camera is facing.
         /// </summary>
         public CameraFacing CameraFacing { get; set; }
     }
