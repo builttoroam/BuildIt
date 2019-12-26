@@ -7,12 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.General", "BuildIt.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.General.Tests", "BuildIt.General\BuildIt.General.Tests\BuildIt.General.Tests.csproj", "{18F7DCCA-467D-4B0E-B7B8-9FB19A023CF2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{52E6C410-E3B3-403D-A75C-E2D7445DA084}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.General\BuildIt.General.nuspec = BuildIt.General\BuildIt.General.nuspec
-		BuildIt.General\BuildIt.General.Uno.nuspec = BuildIt.General\BuildIt.General.Uno.nuspec
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{DC6A98AE-6220-4C1D-8325-A7D7469D43A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.Samples.UWP", "BuildIt.General\Samples\General.Samples.UWP\General.Samples.UWP.csproj", "{80B749EC-B5C5-4315-9A44-D2B8F2A468E9}"
