@@ -22,7 +22,7 @@ namespace BuildIt.Forms.Controls.iOS
         private UIView view;
 
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -43,7 +43,7 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         protected override void OnDetached()
         {

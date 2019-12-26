@@ -4,18 +4,18 @@ namespace BuildIt
 {
     /// <summary>
     /// Helps generate hashcodes
-    /// https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416
+    /// https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416.
     /// </summary>
     public static class HashHelper
     {
         /// <summary>
-        /// Generates a hash code from two arguments
+        /// Generates a hash code from two arguments.
         /// </summary>
-        /// <typeparam name="T1">Type of first argument</typeparam>
-        /// <typeparam name="T2">Type of second argument</typeparam>
-        /// <param name="arg1">The first arg</param>
-        /// <param name="arg2">The second arg</param>
-        /// <returns>The generated hashcode</returns>
+        /// <typeparam name="T1">Type of first argument.</typeparam>
+        /// <typeparam name="T2">Type of second argument.</typeparam>
+        /// <param name="arg1">The first arg.</param>
+        /// <param name="arg2">The second arg.</param>
+        /// <returns>The generated hashcode.</returns>
         public static int GetHashCode<T1, T2>(T1 arg1, T2 arg2)
         {
             unchecked
@@ -25,15 +25,15 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Generates a hash code from three arguments
+        /// Generates a hash code from three arguments.
         /// </summary>
-        /// <typeparam name="T1">Type of first argument</typeparam>
-        /// <typeparam name="T2">Type of second argument</typeparam>
-        /// <typeparam name="T3">Type of third argument</typeparam>
-        /// <param name="arg1">The first arg</param>
-        /// <param name="arg2">The second arg</param>
-        /// <param name="arg3">The third arg</param>
-        /// <returns>The generated hashcode</returns>
+        /// <typeparam name="T1">Type of first argument.</typeparam>
+        /// <typeparam name="T2">Type of second argument.</typeparam>
+        /// <typeparam name="T3">Type of third argument.</typeparam>
+        /// <param name="arg1">The first arg.</param>
+        /// <param name="arg2">The second arg.</param>
+        /// <param name="arg3">The third arg.</param>
+        /// <returns>The generated hashcode.</returns>
         public static int GetHashCode<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
         {
             unchecked
@@ -45,17 +45,17 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Generates a hash code from four arguments
+        /// Generates a hash code from four arguments.
         /// </summary>
-        /// <typeparam name="T1">Type of first argument</typeparam>
-        /// <typeparam name="T2">Type of second argument</typeparam>
-        /// <typeparam name="T3">Type of third argument</typeparam>
-        /// <typeparam name="T4">Type of fourth argument</typeparam>
-        /// <param name="arg1">The first arg</param>
-        /// <param name="arg2">The second arg</param>
-        /// <param name="arg3">The third arg</param>
-        /// <param name="arg4">The fourth arg</param>
-        /// <returns>The generated hashcode</returns>
+        /// <typeparam name="T1">Type of first argument.</typeparam>
+        /// <typeparam name="T2">Type of second argument.</typeparam>
+        /// <typeparam name="T3">Type of third argument.</typeparam>
+        /// <typeparam name="T4">Type of fourth argument.</typeparam>
+        /// <param name="arg1">The first arg.</param>
+        /// <param name="arg2">The second arg.</param>
+        /// <param name="arg3">The third arg.</param>
+        /// <param name="arg4">The fourth arg.</param>
+        /// <returns>The generated hashcode.</returns>
         public static int GetHashCode<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
             unchecked
@@ -68,11 +68,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Generates a hashcode for a list of items
+        /// Generates a hashcode for a list of items.
         /// </summary>
-        /// <typeparam name="T">The type of items in the list</typeparam>
-        /// <param name="list">The list of items</param>
-        /// <returns>The hashcode</returns>
+        /// <typeparam name="T">The type of items in the list.</typeparam>
+        /// <param name="list">The list of items.</param>
+        /// <returns>The hashcode.</returns>
         public static int GetHashCode<T>(T[] list)
         {
             unchecked
@@ -88,11 +88,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Generates a hashcode for a list of items
+        /// Generates a hashcode for a list of items.
         /// </summary>
-        /// <typeparam name="T">The type of items in the list</typeparam>
-        /// <param name="list">The list of items</param>
-        /// <returns>The hashcode</returns>
+        /// <typeparam name="T">The type of items in the list.</typeparam>
+        /// <param name="list">The list of items.</param>
+        /// <returns>The hashcode.</returns>
         public static int GetHashCode<T>(IEnumerable<T> list)
         {
             unchecked
@@ -112,9 +112,9 @@ namespace BuildIt
         /// does not matter.
         /// So {1, 2, 3} and {3, 2, 1} will get same hash code.
         /// </summary>
-        /// <typeparam name="T">The type of item in list</typeparam>
-        /// <param name="list">The list</param>
-        /// <returns>The hashcode</returns>
+        /// <typeparam name="T">The type of item in list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <returns>The hashcode.</returns>
         public static int GetHashCodeForOrderNoMatterCollection<T>(
             IEnumerable<T> list)
         {
@@ -136,12 +136,12 @@ namespace BuildIt
         /// Alternative way to get a hashcode is to use a fluent
         /// interface like this:<br />
         /// return 0.CombineHashCode(field1).CombineHashCode(field2).
-        ///     CombineHashCode(field3);
+        ///     CombineHashCode(field3);.
         /// </summary>
-        /// <typeparam name="T">The type of entity</typeparam>
-        /// <param name="hashCode">The original hashcode</param>
-        /// <param name="arg">The next item to hash</param>
-        /// <returns>The new hashcode</returns>
+        /// <typeparam name="T">The type of entity.</typeparam>
+        /// <param name="hashCode">The original hashcode.</param>
+        /// <param name="arg">The next item to hash.</param>
+        /// <returns>The new hashcode.</returns>
         public static int CombineHashCode<T>(this int hashCode, T arg)
         {
             unchecked

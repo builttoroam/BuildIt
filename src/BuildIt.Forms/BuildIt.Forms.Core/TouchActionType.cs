@@ -1,7 +1,7 @@
 ﻿namespace BuildIt.Forms
 {
     /// <summary>
-    /// Action states for touch interaction
+    /// Action states for touch interaction.
     /// </summary>
     public enum TouchActionType
     {
@@ -33,6 +33,6 @@
         /// <summary>
         /// Interaction cancelled
         /// </summary>
-        Cancelled
+        Cancelled,
     }
 }

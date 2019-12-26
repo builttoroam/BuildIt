@@ -8,11 +8,13 @@
             {
                 return input;
             }
+
             var result = new float[input.Length];
             for (var i = 0; i < input.Length; i++)
             {
-                result[i] = output[i] + alpha * (input[i] - output[i]);
+                result[i] = output[i] + (alpha * (input[i] - output[i]));
             }
+
             return result;
         }
     }

@@ -1,14 +1,14 @@
 namespace BuildIt.States.Typed.Enum
 {
     /// <summary>
-    /// Defines a state which is specified by an enum type
+    /// Defines a state which is specified by an enum type.
     /// </summary>
-    /// <typeparam name="TState">The type (enum) of the state</typeparam>
+    /// <typeparam name="TState">The type (enum) of the state.</typeparam>
     public class EnumStateDefinition<TState> : TypedStateDefinition<TState>
         where TState : struct
     {
         /// <summary>
-        /// Gets or sets gets the name of the state
+        /// Gets or sets gets the name of the state.
         /// </summary>
         public override string StateName
         {

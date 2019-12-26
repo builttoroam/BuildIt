@@ -4,19 +4,19 @@ using System.Threading.Tasks;
 namespace BuildIt.Logging.Filters
 {
     /// <summary>
-    /// Filter that requires a specific assembly name
+    /// Filter that requires a specific assembly name.
     /// </summary>
     public class AssemblyNameLogFilter : BaseLogFilter
     {
         /// <summary>
-        /// Gets or sets the assembly name
+        /// Gets or sets the assembly name.
         /// </summary>
         public string AssemblyName { get; set; }
 
         /// <summary>
-        /// Generates the filter function
+        /// Generates the filter function.
         /// </summary>
-        /// <returns>Filter function</returns>
+        /// <returns>Filter function.</returns>
         protected override Func<ILogEntry, Task<bool>> BuildFilter()
         {
             if (string.IsNullOrWhiteSpace(AssemblyName))

@@ -1,8 +1,8 @@
-
-using System.Collections.Generic;
 using AVFoundation;
 using Foundation;
+using System.Collections.Generic;
 using UIKit;
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace BuildIt.AR.iOS.Utilities
 {
@@ -13,11 +13,11 @@ namespace BuildIt.AR.iOS.Utilities
         private readonly UIView rootView;
         private readonly IDictionary<UIInterfaceOrientation, AVCaptureVideoOrientation> configDicByRotationChanged = new Dictionary<UIInterfaceOrientation, AVCaptureVideoOrientation>
         {
-            {UIInterfaceOrientation.LandscapeLeft, AVCaptureVideoOrientation.LandscapeLeft},
-            {UIInterfaceOrientation.LandscapeRight, AVCaptureVideoOrientation.LandscapeRight},
-            {UIInterfaceOrientation.Portrait, AVCaptureVideoOrientation.Portrait},
-            {UIInterfaceOrientation.PortraitUpsideDown, AVCaptureVideoOrientation.PortraitUpsideDown},
-            {UIInterfaceOrientation.Unknown, AVCaptureVideoOrientation.Portrait}
+            { UIInterfaceOrientation.LandscapeLeft, AVCaptureVideoOrientation.LandscapeLeft},
+            { UIInterfaceOrientation.LandscapeRight, AVCaptureVideoOrientation.LandscapeRight},
+            { UIInterfaceOrientation.Portrait, AVCaptureVideoOrientation.Portrait},
+            { UIInterfaceOrientation.PortraitUpsideDown, AVCaptureVideoOrientation.PortraitUpsideDown},
+            { UIInterfaceOrientation.Unknown, AVCaptureVideoOrientation.Portrait},
         };
         private readonly UIView cameraView;
 
@@ -31,14 +31,18 @@ namespace BuildIt.AR.iOS.Utilities
         {
             session = new AVCaptureSession
             {
-                SessionPreset = AVCaptureSession.PresetMedium
+                SessionPreset = AVCaptureSession.PresetMedium,
             };
             var captureDevice = AVCaptureDevice.DefaultDeviceWithMediaType(AVMediaType.Video);
 
             NSError error;
             var videoInput = AVCaptureDeviceInput.FromDevice(captureDevice, out error);
 
-            if (videoInput == null || !session.CanAddInput(videoInput)) return;
+            if (videoInput == null || !session.CanAddInput(videoInput))
+            {
+                return;
+            }
+
             session.AddInput(videoInput);
             previewLayer = new AVCaptureVideoPreviewLayer(session) { Frame = rootView.Bounds };
             previewLayer.Connection.VideoOrientation = configDicByRotationChanged[UIApplication.SharedApplication.StatusBarOrientation];
@@ -54,8 +58,12 @@ namespace BuildIt.AR.iOS.Utilities
 
         public void UpdatePreviewRotation(UIInterfaceOrientation orientation)
         {
-            //Re-size camera feed based on orientation
-            if (previewLayer == null) return;
+            // Re-size camera feed based on orientation
+            if (previewLayer == null)
+            {
+                return;
+            }
+
             previewLayer.Connection.VideoOrientation = configDicByRotationChanged[orientation];
             previewLayer.Frame = rootView.Bounds;
         }

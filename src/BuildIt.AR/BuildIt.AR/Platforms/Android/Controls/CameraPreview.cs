@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
 using Android.Content;
 using Android.Hardware;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
+using System;
+using System.Collections.Generic;
+#pragma warning disable 618
 
 namespace BuildIt.AR.Android.Controls
 {
@@ -20,11 +21,15 @@ namespace BuildIt.AR.Android.Controls
 
         public Camera PreviewCamera
         {
-            get { return camera; }
+            get => camera;
             set
             {
                 camera = value;
-                if (camera == null) return;
+                if (camera == null)
+                {
+                    return;
+                }
+
                 mSupportedPreviewSizes = PreviewCamera.GetParameters().SupportedPreviewSizes;
                 RequestLayout();
             }
@@ -49,7 +54,6 @@ namespace BuildIt.AR.Android.Controls
         public CameraPreview(Context context, IAttributeSet attrs, int defStyleAttr, int defStyleRes) : base(context, attrs, defStyleAttr, defStyleRes)
         {
         }
-
 
         public void SurfaceCreated(ISurfaceHolder holder)
         {
@@ -97,6 +101,7 @@ namespace BuildIt.AR.Android.Controls
             }
             catch (Exception ex)
             {
+                ex.LogError();
             }
         }
 
@@ -116,9 +121,9 @@ namespace BuildIt.AR.Android.Controls
             }
             catch (Exception ex)
             {
+                ex.LogError();
             }
         }
-
 
         private Camera.Size GetOptimalPreviewSize(IList<Camera.Size> sizes, int w, int h)
         {
@@ -128,8 +133,9 @@ namespace BuildIt.AR.Android.Controls
                 double targetRatio = (double)w / h;
 
                 if (sizes == null)
+                {
                     return null;
-
+                }
 
                 Camera.Size optimalSize = null;
                 double minDiff = Double.MaxValue;
@@ -142,7 +148,9 @@ namespace BuildIt.AR.Android.Controls
                     double ratio = (double)size.Width / size.Height;
 
                     if (Math.Abs(ratio - targetRatio) > ASPECT_TOLERANCE)
+                    {
                         continue;
+                    }
 
                     if (Math.Abs(size.Height - targetHeight) < minDiff)
                     {
@@ -169,7 +177,9 @@ namespace BuildIt.AR.Android.Controls
             }
             catch (Exception ex)
             {
+                ex.LogError();
             }
+
             return null;
         }
 
@@ -179,18 +189,18 @@ namespace BuildIt.AR.Android.Controls
             {
                 // Now that the size is known, set up the camera parameters and begin
                 // the preview.
-                //Camera.Parameters parameters = PreviewCamera.GetParameters();
-                //parameters.SetPreviewSize(mPreviewSize.Width, mPreviewSize.Height);
+                // Camera.Parameters parameters = PreviewCamera.GetParameters();
+                // parameters.SetPreviewSize(mPreviewSize.Width, mPreviewSize.Height);
                 RequestLayout();
 
-                //PreviewCamera.SetParameters(parameters);
+                // PreviewCamera.SetParameters(parameters);
                 PreviewCamera.StartPreview();
             }
             catch (Exception ex)
             {
+                ex.LogError();
             }
         }
-
 
         public void InitPreview(Context context)
         {
@@ -207,9 +217,8 @@ namespace BuildIt.AR.Android.Controls
             }
             catch (Exception ex)
             {
-
+                ex.LogError();
             }
         }
-
     }
 }

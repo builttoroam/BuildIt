@@ -4,7 +4,7 @@ using System;
 namespace BuildIt.MvvmCross.Interfaces
 {
     /// <summary>
-    /// Interface that defines states and storyboards
+    /// Interface that defines states and storyboards.
     /// </summary>
     public interface IStateAndStoryboards : IHasStates
     {
@@ -22,19 +22,19 @@ namespace BuildIt.MvvmCross.Interfaces
         event EventHandler<ParameterEventArgs<string>> StopStoryboard;
 
         /// <summary>
-        /// Method to invoke state change
+        /// Method to invoke state change.
         /// </summary>
-        /// <typeparam name="T">The state group</typeparam>
-        /// <param name="stateName">The state </param>
-        /// <param name="useTransitions">Whether to use transitions</param>
+        /// <typeparam name="T">The state group.</typeparam>
+        /// <param name="stateName">The state. </param>
+        /// <param name="useTransitions">Whether to use transitions.</param>
         void ChangePageState<T>(T stateName, bool useTransitions = true)
             where T : struct;
 
         /// <summary>
-        /// Method to retrieve current state
+        /// Method to retrieve current state.
         /// </summary>
-        /// <typeparam name="T">The state group</typeparam>
-        /// <returns>The current state</returns>
+        /// <typeparam name="T">The state group.</typeparam>
+        /// <returns>The current state.</returns>
         T CurrentState<T>()
             where T : struct;
     }

@@ -4,7 +4,7 @@
     {
         Android,
         iOS,
-        UWP
+        UWP,
     }
 
     public enum Rotation
@@ -12,6 +12,6 @@
         Rotation0,
         Rotation90,
         Rotation180,
-        Rotation270
+        Rotation270,
     }
 }

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 namespace BuildIt.Logging.Filters
 {
     /// <summary>
-    /// Filter that requires categories
+    /// Filter that requires categories.
     /// </summary>
     public class RequiredCategoriesLogFilter : BaseLogFilter
     {
         /// <summary>
-        /// Gets or sets the required categories
+        /// Gets or sets the required categories.
         /// </summary>
         public string[] RequiredCategories { get; set; }
 
         /// <summary>
-        /// Generates the filter function
+        /// Generates the filter function.
         /// </summary>
-        /// <returns>Filter function</returns>
+        /// <returns>Filter function.</returns>
         protected override Func<ILogEntry, Task<bool>> BuildFilter()
         {
             if (RequiredCategories?.Length == 0)

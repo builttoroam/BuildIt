@@ -14,7 +14,7 @@ namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {
     /// <summary>
-    /// Effect for specifying font
+    /// Effect for specifying font.
     /// </summary>
     [Preserve]
     public class FontEffect : PlatformEffect
@@ -24,7 +24,7 @@ namespace BuildIt.Forms.Controls.iOS
         private Assembly ParentAssembly { get; set; }
 
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -66,7 +66,7 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         protected override void OnDetached()
         {

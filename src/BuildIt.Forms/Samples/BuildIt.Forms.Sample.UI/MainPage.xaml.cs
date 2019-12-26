@@ -2,12 +2,12 @@
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Sample.Core.ViewModels;
 using BuildIt.States.Interfaces;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample

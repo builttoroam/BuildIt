@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using BuildIt.MvvmCross.Interfaces;
+﻿using BuildIt.MvvmCross.Interfaces;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
 using MvvmCross.ViewModels;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BuildIt.MvvmCross.ViewModels
 {
@@ -44,9 +42,8 @@ namespace BuildIt.MvvmCross.ViewModels
             StateManager.RefreshStates(useTransitions);
         }
 
-
         /// <summary>
-        /// Begins a storyboard
+        /// Begins a storyboard.
         /// </summary>
         protected void BeginStoryboard(string storyboard, Action storyboardCompleted = null)
         {
@@ -54,7 +51,7 @@ namespace BuildIt.MvvmCross.ViewModels
         }
 
         /// <summary>
-        /// Ends a storyboard
+        /// Ends a storyboard.
         /// </summary>
         /// <param name="storyboard"></param>
         protected void EndStoryboard(string storyboard)
@@ -65,6 +62,7 @@ namespace BuildIt.MvvmCross.ViewModels
         public event EventHandler ClearPreviousViews;
 
 #pragma warning disable 1998 // Async to allow for implementation
+
         public async virtual Task GoingBack(CancelEventArgs e)
 #pragma warning restore 1998
         {
@@ -92,15 +90,13 @@ namespace BuildIt.MvvmCross.ViewModels
             {
                 waiter.Set();
             }
-
-
         }
 
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
+
         public virtual async Task StartAsync()
 #pragma warning restore 1998
         {
-
         }
 
         public async Task WaitForStartCompleted()

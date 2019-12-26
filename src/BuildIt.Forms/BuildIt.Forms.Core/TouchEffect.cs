@@ -3,7 +3,7 @@
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// Touch effect to allow an entity to react to touch events
+    /// Touch effect to allow an entity to react to touch events.
     /// </summary>
     public class TouchEffect : RoutingEffect
     {
@@ -21,15 +21,15 @@ namespace BuildIt.Forms
         public event TouchActionEventHandler TouchAction;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the touch input has been captured
+        /// Gets or sets a value indicating whether the touch input has been captured.
         /// </summary>
         public bool Capture { get; set; }
 
         /// <summary>
-        /// Raises the touch action event
+        /// Raises the touch action event.
         /// </summary>
-        /// <param name="element">The source element</param>
-        /// <param name="args">The touch arguments</param>
+        /// <param name="element">The source element.</param>
+        /// <param name="args">The touch arguments.</param>
         public void OnTouchAction(Element element, TouchActionEventArgs args)
         {
             TouchAction?.Invoke(element, args);

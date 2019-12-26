@@ -7,18 +7,22 @@ using Windows.UI.Xaml;
 namespace BuildIt.UI
 {
     /// <summary>
-    /// Implements UI abstraction
+    /// Implements UI abstraction.
     /// </summary>
     public class PlatformUIContext : IUIExecutionContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlatformUIContext"/> class.
         /// </summary>
-        /// <param name="dispatcher">The core dispatcher for UI actions</param>
+        /// <param name="dispatcher">The core dispatcher for UI actions.</param>
         public PlatformUIContext(CoreDispatcher dispatcher = null)
         {
+#if UNO && !UAP
+            Dispatcher = CoreDispatcher.Main;
+#else
             Dispatcher = dispatcher ??
                 ((Window.Current == null) ? CoreApplication.MainView.CoreWindow.Dispatcher : CoreApplication.GetCurrentView().CoreWindow.Dispatcher);
+#endif
         }
 
         /// <inheritdoc/>

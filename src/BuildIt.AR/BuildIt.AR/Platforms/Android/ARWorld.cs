@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.Hardware;
 using Android.Locations;
-using Android.OS;
 using Android.Views;
-using Android.Widget;
 using BuildIt.AR.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace BuildIt.AR.Android
 {
@@ -24,9 +21,8 @@ namespace BuildIt.AR.Android
         private float[] gravity;
         private float[] geomagnetic;
         private int updating;
-        
+
         private ScreenWorld world;
-        private LocationManager locationManager;
         private readonly Action<float, float, float> updateElementsOnScreen;
 
         public Rotation Rotation { get; private set; }
@@ -54,6 +50,7 @@ namespace BuildIt.AR.Android
                     world.AddElementToWorld(element);
                 }
             }
+
             world.UpdateRangeOfWorld(VisualRangeKm);
         }
 
@@ -64,6 +61,7 @@ namespace BuildIt.AR.Android
             {
                 offset.Scale = world.CalculateScale(element.Element.DistanceMetres);
             }
+
             return offset;
         }
 
@@ -76,6 +74,7 @@ namespace BuildIt.AR.Android
             {
                 sensorManager?.RegisterListener(this, accelerometer, SensorDelay.Ui);
             }
+
             if (magnetometer != null)
             {
                 sensorManager?.RegisterListener(this, magnetometer, SensorDelay.Ui);
@@ -88,6 +87,7 @@ namespace BuildIt.AR.Android
             {
                 sensorManager?.UnregisterListener(this, magnetometer);
             }
+
             if (accelerometer != null)
             {
                 sensorManager?.UnregisterListener(this, accelerometer);
@@ -96,7 +96,6 @@ namespace BuildIt.AR.Android
 
         public void OnAccuracyChanged(Sensor sensor, SensorStatus accuracy)
         {
-
         }
 
         public void OnSensorChanged(SensorEvent evt)
@@ -104,17 +103,35 @@ namespace BuildIt.AR.Android
             try
             {
                 if (evt.Sensor.Type == SensorType.Accelerometer)
+                {
                     gravity = FilterHelper.LowPassFilter(lowPassFilterThreshold, evt.Values.ToArray(), gravity);
+                }
+
                 if (evt.Sensor.Type == SensorType.MagneticField)
+                {
                     geomagnetic = FilterHelper.LowPassFilter(lowPassFilterThreshold, evt.Values.ToArray(), geomagnetic);
-                if (gravity == null || geomagnetic == null) return;
+                }
+
+                if (gravity == null || geomagnetic == null)
+                {
+                    return;
+                }
+
                 var rotationMatrix = new float[16];
                 var success = SensorManager.GetRotationMatrix(rotationMatrix, null, gravity, geomagnetic);
-                if (!success) return;
+                if (!success)
+                {
+                    return;
+                }
+
                 var orientation = new float[3];
                 SensorManager.GetOrientation(rotationMatrix, orientation);
 
-                if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
+                if (Interlocked.CompareExchange(ref updating, 1, 0) == 1)
+                {
+                    return;
+                }
+
                 activity.RunOnUiThread(() =>
                 {
                     if (Rotation == Rotation.Rotation90 || Rotation == Rotation.Rotation270)
@@ -125,6 +142,7 @@ namespace BuildIt.AR.Android
                     {
                         updateElementsOnScreen?.Invoke(orientation[1], orientation[2], orientation[0]);
                     }
+
                     Interlocked.Exchange(ref updating, 0);
                 });
             }
@@ -159,12 +177,15 @@ namespace BuildIt.AR.Android
                 case SurfaceOrientation.Rotation0:
                     Rotation = Rotation.Rotation0;
                     break;
+
                 case SurfaceOrientation.Rotation90:
                     Rotation = Rotation.Rotation90;
                     break;
+
                 case SurfaceOrientation.Rotation180:
                     Rotation = Rotation.Rotation180;
                     break;
+
                 case SurfaceOrientation.Rotation270:
                     Rotation = Rotation.Rotation270;
                     break;

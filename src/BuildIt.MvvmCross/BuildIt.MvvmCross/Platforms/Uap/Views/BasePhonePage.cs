@@ -4,7 +4,6 @@ using MvvmCross.Platforms.Uap.Views;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Windows.Phone.UI.Input;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,7 +14,6 @@ namespace BuildIt.MvvmCross.Views
 {
     public class BaseStateEnabledPage : MvxWindowsPage
     {
-
         protected IStateAndStoryboards StatesAndTransitionsViewModel
         {
             get
@@ -45,7 +43,6 @@ namespace BuildIt.MvvmCross.Views
             }
         }
 
-
         protected virtual void DumpExistingViewModel(NavigationEventArgs e)
         {
             // Make sure we get a new VM each time we arrive at the page
@@ -62,13 +59,13 @@ namespace BuildIt.MvvmCross.Views
             {
                 DumpExistingViewModel(e);
 
-
                 base.OnNavigatedTo(e);
 
                 if (CanSubscribeToBackRequest)
                 {
                     SubscribeToBackRequestedEvent();
                 }
+
                 if (AutomaticallyShowAppViewBackButton)
                 {
                     if (DisplayAppViewBackButton)
@@ -108,7 +105,6 @@ namespace BuildIt.MvvmCross.Views
                 }
 
                 await OnNavigatedToCompleted();
-
             }
             catch (Exception exception)
             {
@@ -131,7 +127,6 @@ namespace BuildIt.MvvmCross.Views
             var gb = GoBackViewModel;
             if (gb != null)
             {
-
                 var cancel = new CancelEventArgs();
                 await GoBackViewModel.GoingBack(cancel);
                 if (cancel.Cancel)
@@ -140,6 +135,7 @@ namespace BuildIt.MvvmCross.Views
                     return;
                 }
             }
+
             e.Handled = true;
             if (Frame.CanGoBack)
             {
@@ -147,12 +143,10 @@ namespace BuildIt.MvvmCross.Views
             }
         }
 
-
 #pragma warning disable 1998 // Returns a Task so that overrides can do async work
         protected virtual async Task OnNavigatedToCompleted()
 #pragma warning restore 1998
         {
-
         }
 
         private void ClearViews(object sender, EventArgs e)
@@ -174,7 +168,7 @@ namespace BuildIt.MvvmCross.Views
         {
             try
             {
-                //var controlName = e.Parameter1;
+                // var controlName = e.Parameter1;
                 var stateName = e.Parameter1;
                 var useTransitions = e.Parameter2;
 
@@ -188,7 +182,6 @@ namespace BuildIt.MvvmCross.Views
             {
                 Debug.WriteLine(exception.Message);
             }
-
         }
 
         private void RunStoryboard(object sender, DualParameterEventArgs<string, Action> e)
@@ -202,9 +195,12 @@ namespace BuildIt.MvvmCross.Views
                 {
                     try
                     {
-
                         var sb = FindName(storyboardName) as Storyboard;
-                        if (sb == null) return;
+                        if (sb == null)
+                        {
+                            return;
+                        }
+
                         if (completedAction != null)
                         {
                             EventHandler<object> eventHandler = null;
@@ -217,9 +213,10 @@ namespace BuildIt.MvvmCross.Views
                             };
                             sb.Completed += eventHandler;
                         }
-                        sb.Begin();
 
+                        sb.Begin();
                     }
+
                     // ReSharper disable EmptyGeneralCatchClause
                     catch
                     // ReSharper restore EmptyGeneralCatchClause
@@ -231,11 +228,10 @@ namespace BuildIt.MvvmCross.Views
             {
                 Debug.WriteLine(exception.Message);
             }
-
         }
 
         /// <summary>
-        /// Handles the stop storyboard event
+        /// Handles the stop storyboard event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -255,17 +251,18 @@ namespace BuildIt.MvvmCross.Views
                         }
                     }
                 }
+
                 // ReSharper disable EmptyGeneralCatchClause
                 catch
                 {
                 }
+
                 // ReSharper restore EmptyGeneralCatchClause
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.Message);
             }
-
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -276,6 +273,7 @@ namespace BuildIt.MvvmCross.Views
                 {
                     UnsubscribeFromBackRequestedEvent();
                 }
+
                 if (GoBackViewModel != null)
                 {
                     GoBackViewModel.ClearPreviousViews -= ClearViews;
@@ -287,7 +285,7 @@ namespace BuildIt.MvvmCross.Views
                     satvm.StateManager.StateChanged -= ViewModelStateChanged;
                     satvm.RunStoryboard -= RunStoryboard;
                     satvm.StopStoryboard -= StopStoryboard;
-                    //EventsWired = false;
+                    // EventsWired = false;
                 }
 
                 base.OnNavigatedFrom(e);
@@ -298,7 +296,6 @@ namespace BuildIt.MvvmCross.Views
                         NavigationCacheMode = NavigationCacheMode.Disabled;
                     }
                 }
-
             }
             catch (Exception exception)
             {

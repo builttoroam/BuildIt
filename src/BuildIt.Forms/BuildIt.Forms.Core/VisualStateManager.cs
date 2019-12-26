@@ -13,12 +13,12 @@ using Xamarin.Forms;
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// Root class for interacting with visual states in Forms
+    /// Root class for interacting with visual states in Forms.
     /// </summary>
     public static class VisualStateManager
     {
         /// <summary>
-        /// Gets the visual state groups for a particular element
+        /// Gets the visual state groups for a particular element.
         /// </summary>
         public static readonly BindableProperty VisualStateGroupsProperty =
            BindableProperty.CreateAttached(
@@ -36,21 +36,21 @@ namespace BuildIt.Forms
         private const string VisualStateGroupsPropertyName = "VisualStateGroups";
 
         /// <summary>
-        /// Wraps the generation of a state value
+        /// Wraps the generation of a state value.
         /// </summary>
         private interface IStateValueBuilder
         {
             /// <summary>
-            /// Gets the current state value
+            /// Gets the current state value.
             /// </summary>
             IStateValue Value { get; }
         }
 
         /// <summary>
-        /// Transitions the element to the specified state
+        /// Transitions the element to the specified state.
         /// </summary>
-        /// <param name="element">The element to change state</param>
-        /// <param name="stateName">The new state</param>
+        /// <param name="element">The element to change state.</param>
+        /// <param name="stateName">The new state.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task GoToState(Element element, string stateName)
         {
@@ -71,10 +71,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Gets the visual state groups instance associated with the element
+        /// Gets the visual state groups instance associated with the element.
         /// </summary>
-        /// <param name="view">The element to retrieve the visual state group for</param>
-        /// <returns>A visual state groups instance</returns>
+        /// <param name="view">The element to retrieve the visual state group for.</param>
+        /// <returns>A visual state groups instance.</returns>
         public static VisualStateGroups GetVisualStateGroups(BindableObject view)
         {
             try
@@ -96,7 +96,7 @@ namespace BuildIt.Forms
                             var dtc = new DesignTimeControl
                             {
                                 HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.End
+                                VerticalOptions = LayoutOptions.End,
                             };
 
                             if (content.ColumnDefinitions.Count > 0)
@@ -126,10 +126,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Sets a visual state groups instance for an element
+        /// Sets a visual state groups instance for an element.
         /// </summary>
-        /// <param name="view">The element to associated a visual state groups instance with</param>
-        /// <param name="value">The visual state groups instance</param>
+        /// <param name="view">The element to associated a visual state groups instance with.</param>
+        /// <param name="value">The visual state groups instance.</param>
         public static void SetVisualStateGroups(BindableObject view, VisualStateGroups value)
         {
             try
@@ -150,10 +150,10 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Binds together two state managers
+        /// Binds together two state managers.
         /// </summary>
-        /// <param name="element">The element that houses the state manager to be kept up to date</param>
-        /// <param name="stateManager">The state manager to monitor</param>
+        /// <param name="element">The element that houses the state manager to be kept up to date.</param>
+        /// <param name="stateManager">The state manager to monitor.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public static async Task<IStateBinder> Bind(Element element, IStateManager stateManager)
         {
@@ -168,12 +168,12 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Builds the animation task for the series of animations
+        /// Builds the animation task for the series of animations.
         /// </summary>
-        /// <param name="animations">The list of animations</param>
-        /// <param name="element">The element to animate</param>
-        /// <param name="cancelToken">The cancellation token</param>
-        /// <returns>Task to await</returns>
+        /// <param name="animations">The list of animations.</param>
+        /// <param name="element">The element to animate.</param>
+        /// <param name="cancelToken">The cancellation token.</param>
+        /// <returns>Task to await.</returns>
         public static Task BuildAnimationTasks(IList<StateAnimation> animations, Element element, CancellationToken cancelToken)
         {
             var tasks = new List<Task>();
@@ -190,11 +190,11 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Returns a function that build animations for an element
+        /// Returns a function that build animations for an element.
         /// </summary>
-        /// <param name="animations">The animations to use</param>
-        /// <param name="element">The element to animat</param>
-        /// <returns>The function to build an animations task</returns>
+        /// <param name="animations">The animations to use.</param>
+        /// <param name="element">The element to animat.</param>
+        /// <returns>The function to build an animations task.</returns>
         public static Func<CancellationToken, Task> BuildAnimations(IList<StateAnimation> animations, Element element)
         {
             return (cancel) => BuildAnimationTasks(animations, element, cancel);
@@ -393,7 +393,7 @@ namespace BuildIt.Forms
                     var sv = new StateValue<TElement, TPropertyValue>
                     {
                         Element = Element,
-                        TargetId = TargetId
+                        TargetId = TargetId,
                     };
 
                     sv.Key = new Tuple<object, string>(Element != null ? Element : (object)TargetId, Property.Name);

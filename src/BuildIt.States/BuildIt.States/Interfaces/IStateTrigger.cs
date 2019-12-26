@@ -3,7 +3,7 @@ using System;
 namespace BuildIt.States.Interfaces
 {
     /// <summary>
-    /// Trigger for when a state should be active
+    /// Trigger for when a state should be active.
     /// </summary>
     public interface IStateTrigger
     {
@@ -13,7 +13,7 @@ namespace BuildIt.States.Interfaces
         event EventHandler IsActiveChanged;
 
         /// <summary>
-        /// Gets a value indicating whether the active state of the trigger (ie when the conditions are true)
+        /// Gets a value indicating whether the active state of the trigger (ie when the conditions are true).
         /// </summary>
         bool IsActive { get; }
     }

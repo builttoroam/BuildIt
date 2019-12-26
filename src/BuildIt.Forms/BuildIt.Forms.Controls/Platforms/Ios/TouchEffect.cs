@@ -12,7 +12,7 @@ namespace BuildIt.Forms.Controls.iOS
 #pragma warning restore SA1300 // Element must begin with upper-case letter
 {
     /// <summary>
-    /// Effect to detect touch input on any control
+    /// Effect to detect touch input on any control.
     /// </summary>
     [Preserve]
     public class TouchEffect : PlatformEffect
@@ -21,7 +21,7 @@ namespace BuildIt.Forms.Controls.iOS
         private TouchRecognizer touchRecognizer;
 
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -40,7 +40,7 @@ namespace BuildIt.Forms.Controls.iOS
         }
 
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         protected override void OnDetached()
         {

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Globalization;
+
 #if !NETFX_CORE
 using System.Windows.Data;
 
 #else
+
 using Windows.UI.Xaml.Data;
+
 #endif
 
 namespace BuildIt.UI.Converters
@@ -24,6 +27,7 @@ namespace BuildIt.UI.Converters
         /// <param name="language">The language to use for conversion.</param>
         /// <returns>The formatted string.</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
+
         public object Convert(object value, Type targetType, object parameter,
 #if !NETFX_CORE
             CultureInfo culture)
@@ -51,6 +55,7 @@ namespace BuildIt.UI.Converters
         /// <param name="language">The language to use for conversion.</param>
         /// <returns>The converted object.</returns>
 #pragma warning disable SA1117 // Parameters must be on same line or separate lines
+
         public object ConvertBack(object value, Type targetType, object parameter,
 #if !NETFX_CORE
             CultureInfo culture)

@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 namespace BuildIt
 {
     /// <summary>
-    /// UI helper methods
+    /// UI helper methods.
     /// </summary>
     public static class UIHelper
     {
         /// <summary>
-        /// Register entity to access the UI context
+        /// Register entity to access the UI context.
         /// </summary>
-        /// <param name="requiresAccess">Entity that has a reference to the UI context</param>
-        /// <param name="hasAccess">Entity that requires access to UI context</param>
+        /// <param name="requiresAccess">Entity that has a reference to the UI context.</param>
+        /// <param name="hasAccess">Entity that requires access to UI context.</param>
         public static void RegisterForUIAccess(this IRegisterForUIAccess requiresAccess, IRequiresUIAccess hasAccess)
         {
             var cxt = hasAccess?.UIContext;
@@ -25,11 +25,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Runs an action on the UI thread
+        /// Runs an action on the UI thread.
         /// </summary>
-        /// <param name="context">The UI context</param>
-        /// <param name="action">The action to run</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="context">The UI context.</param>
+        /// <param name="action">The action to run.</param>
+        /// <returns>Task to be awaited.</returns>
         public static async Task RunAsync(this IRequiresUIAccess context, Action action)
         {
 #pragma warning disable 1998 // Required to force to Task overloaded method
@@ -38,11 +38,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Runs an action on the UI thread
+        /// Runs an action on the UI thread.
         /// </summary>
-        /// <param name="context">The UI context to run action on</param>
-        /// <param name="action">The action to run</param>
-        /// <returns>Task to be awaited</returns>
+        /// <param name="context">The UI context to run action on.</param>
+        /// <param name="action">The action to run.</param>
+        /// <returns>Task to be awaited.</returns>
         public static async Task RunAsync(this IRequiresUIAccess context, Func<Task> action)
         {
             var tsk = context?.UIContext?.RunAsync(action);
@@ -57,11 +57,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Runs an action on the UI thread
+        /// Runs an action on the UI thread.
         /// </summary>
-        /// <param name="context">The UI context to run the action on</param>
-        /// <param name="action">The action to run</param>
-        /// <returns>Task to await</returns>
+        /// <param name="context">The UI context to run the action on.</param>
+        /// <param name="action">The action to run.</param>
+        /// <returns>Task to await.</returns>
         public static async Task RunAsync(this IUIExecutionContext context, Action action)
         {
 #pragma warning disable 1998 // Required to force to Task overloaded method
@@ -70,11 +70,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Runs an async task on UI thread
+        /// Runs an async task on UI thread.
         /// </summary>
-        /// <param name="context">The UI context to run the task on</param>
-        /// <param name="action">The task to run</param>
-        /// <returns>Task to await</returns>
+        /// <param name="context">The UI context to run the task on.</param>
+        /// <param name="action">The task to run.</param>
+        /// <returns>Task to await.</returns>
         public static async Task RunAsync(this IUIExecutionContext context, Func<Task> action)
         {
             if (context == null)

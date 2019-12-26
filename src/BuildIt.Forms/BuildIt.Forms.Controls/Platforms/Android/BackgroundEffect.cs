@@ -11,13 +11,13 @@ using Xamarin.Forms.Platform.Android;
 namespace BuildIt.Forms.Controls.Droid
 {
     /// <summary>
-    /// Background effect used to set the background to Android views
+    /// Background effect used to set the background to Android views.
     /// </summary>
     [Preserve]
     public class BackgroundEffect : PlatformEffect
     {
         /// <summary>
-        /// Attaching the background effect
+        /// Attaching the background effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -37,7 +37,7 @@ namespace BuildIt.Forms.Controls.Droid
         }
 
         /// <summary>
-        /// Detaches the effects
+        /// Detaches the effects.
         /// </summary>
         protected override void OnDetached()
         {

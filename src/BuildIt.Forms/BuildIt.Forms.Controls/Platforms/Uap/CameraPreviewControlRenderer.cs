@@ -1,14 +1,17 @@
-﻿using System;
+﻿using BuildIt.Forms.Controls;
+using BuildIt.Forms.Controls.Extensions;
+using BuildIt.Forms.Controls.Interfaces;
+using BuildIt.Forms.Controls.Platforms.Uap;
+using BuildIt.Forms.Controls.Platforms.Uap.Extensions;
+using BuildIt.Forms.Controls.Platforms.Uap.Helpers;
+using BuildIt.Forms.Parameters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildIt.Forms.Controls;
-using BuildIt.Forms.Controls.Extensions;
-using BuildIt.Forms.Controls.Platforms.Uap;
-using BuildIt.Forms.Controls.Platforms.Uap.Helpers;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
@@ -23,11 +26,6 @@ using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using BuildIt.Forms.Controls.Common;
-using BuildIt.Forms.Controls.Interfaces;
-using BuildIt.Forms.Controls.Platforms.Uap.Extensions;
-using BuildIt.Forms.Controls.Platforms.Uap.Models;
-using BuildIt.Forms.Parameters;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 using Application = Windows.UI.Xaml.Application;
@@ -37,10 +35,11 @@ using Grid = Windows.UI.Xaml.Controls.Grid;
 using Panel = Windows.Devices.Enumeration.Panel;
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
+
 namespace BuildIt.Forms.Controls.Platforms.Uap
 {
     /// <summary>
-    /// Custom Renderer for <see cref="CameraPreviewControl"/>
+    /// Custom Renderer for <see cref="CameraPreviewControl"/>.
     /// </summary>
     public class CameraPreviewControlRenderer : FrameRenderer
     {
@@ -61,7 +60,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private bool isSuspending;
         private bool isInitialized;
         private bool isPreviewing;
-        private bool isActivePage;
         private bool mirroringPreview;
         private bool externalCamera;
         private Task setupTask = Task.CompletedTask;
@@ -71,7 +69,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         private bool processing;
 
         /// <inheritdoc />
-        protected override async void OnElementChanged(ElementChangedEventArgs<Frame> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
         {
             base.OnElementChanged(e);
 
@@ -91,7 +89,6 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             cameraPreviewControl.RetrieveCamerasFunc = RetrieveCamerasAsync;
             SetupUserInterface();
 
-            isActivePage = true;
             if (e.OldElement != null)
             {
                 return;
@@ -110,11 +107,11 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
         }
 
         /// <summary>
-        /// Captures the most current video frame to a photo and saves it to local storage
+        /// Captures the most current video frame to a photo and saves it to local storage.
         /// </summary>
         /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.
-        /// **If Saving to Photos Library** Requires 'Pictures Library' capability</param>
-        /// <returns>The path to the saved photo file</returns>
+        /// **If Saving to Photos Library** Requires 'Pictures Library' capability.</param>
+        /// <returns>The path to the saved photo file.</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             try
@@ -195,7 +192,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 var settings = new FocusSettings
                 {
                     Mode = focusMode,
-                    AutoFocusRange = focusRange
+                    AutoFocusRange = focusRange,
                 };
 
                 focusControl.Configure(settings);
@@ -230,9 +227,11 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                 case Aspect.AspectFit:
                     captureElement.Stretch = Stretch.Uniform;
                     break;
+
                 case Aspect.AspectFill:
                     captureElement.Stretch = Stretch.UniformToFill;
                     break;
+
                 case Aspect.Fill:
                     captureElement.Stretch = Stretch.Fill;
                     break;
@@ -324,10 +323,9 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     colorSourceInfo = group.SourceInfos.FirstOrDefault((sourceInfo) =>
                     {
                         return sourceInfo.SourceKind == MediaFrameSourceKind.Color;
-                    })
+                    }),
                 }).Where(t => t.colorSourceInfo != null && t.sourceGroup?.Id == cameraDevice.Id)
                   .FirstOrDefault();
-
 
                 MediaFrameSourceGroup selectedGroup = selectedGroupObjects?.sourceGroup;
                 MediaFrameSourceInfo colorSourceInfo = selectedGroupObjects?.colorSourceInfo;
@@ -570,7 +568,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             var settings = new FocusSettings
             {
                 Mode = focusMode,
-                AutoFocusRange = focusControl.SupportedFocusRanges.Contains(AutoFocusRange.FullRange) ? AutoFocusRange.FullRange : focusControl.SupportedFocusRanges.FirstOrDefault()
+                AutoFocusRange = focusControl.SupportedFocusRanges.Contains(AutoFocusRange.FullRange) ? AutoFocusRange.FullRange : focusControl.SupportedFocusRanges.FirstOrDefault(),
             };
 
             focusControl.Configure(settings);
@@ -616,7 +614,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
                     var camera = new Camera()
                     {
                         Id = videoDevice.Id,
-                        CameraFacing = ToCameraFacing(videoDevice.EnclosureLocation?.Panel ?? Panel.Unknown)
+                        CameraFacing = ToCameraFacing(videoDevice.EnclosureLocation?.Panel ?? Panel.Unknown),
                     };
                     cameras.Add(camera);
                 }

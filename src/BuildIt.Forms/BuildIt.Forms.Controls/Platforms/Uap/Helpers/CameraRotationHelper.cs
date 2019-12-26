@@ -8,7 +8,7 @@ using Windows.Storage.FileProperties;
 namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
 {
     /// <summary>
-    /// A helper class for roatating camera feed previews
+    /// A helper class for roatating camera feed previews.
     /// </summary>
     public class CameraRotationHelper
     {
@@ -19,7 +19,7 @@ namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraRotationHelper"/> class.
         /// </summary>
-        /// <param name="cameraEnclosureLocation">The location on the device where the camera is</param>
+        /// <param name="cameraEnclosureLocation">The location on the device where the camera is.</param>
         public CameraRotationHelper(EnclosureLocation cameraEnclosureLocation)
         {
             this.cameraEnclosureLocation = cameraEnclosureLocation;
@@ -37,20 +37,20 @@ namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
         public event EventHandler<bool> OrientationChanged;
 
         /// <summary>
-        /// Detects whether or not the camera is external to the device
+        /// Detects whether or not the camera is external to the device.
         /// </summary>
-        /// <param name="enclosureLocation">The location on the device where the camera is</param>
-        /// <returns><see cref="bool"/></returns>
+        /// <param name="enclosureLocation">The location on the device where the camera is.</param>
+        /// <returns><see cref="bool"/>.</returns>
         public static bool IsEnclosureLocationExternal(EnclosureLocation enclosureLocation)
         {
             return enclosureLocation == null || enclosureLocation.Panel == Panel.Unknown;
         }
 
         /// <summary>
-        /// Converters an instance of <see cref="SimpleOrientation"/> to <see cref="PhotoOrientation"/>
+        /// Converters an instance of <see cref="SimpleOrientation"/> to <see cref="PhotoOrientation"/>.
         /// </summary>
-        /// <param name="orientation">The incoming <see cref="SimpleOrientation"/></param>
-        /// <returns>Converter <see cref="PhotoOrientation"/></returns>
+        /// <param name="orientation">The incoming <see cref="SimpleOrientation"/>.</param>
+        /// <returns>Converter <see cref="PhotoOrientation"/>.</returns>
         public static PhotoOrientation ConvertSimpleOrientationToPhotoOrientation(SimpleOrientation orientation)
         {
             switch (orientation)
@@ -70,10 +70,10 @@ namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
         }
 
         /// <summary>
-        /// Converters an instance of <see cref="SimpleOrientation"/> to the number of degrees clockwise of orientation
+        /// Converters an instance of <see cref="SimpleOrientation"/> to the number of degrees clockwise of orientation.
         /// </summary>
-        /// <param name="orientation">The incoming <see cref="SimpleOrientation"/></param>
-        /// <returns>Degrees rotation clockwise</returns>
+        /// <param name="orientation">The incoming <see cref="SimpleOrientation"/>.</param>
+        /// <returns>Degrees rotation clockwise.</returns>
         public static int ConvertSimpleOrientationToClockwiseDegrees(SimpleOrientation orientation)
         {
             switch (orientation)
@@ -93,9 +93,9 @@ namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
         }
 
         /// <summary>
-        /// Gets the rotation to rotate ui elements
+        /// Gets the rotation to rotate ui elements.
         /// </summary>
-        /// <returns><see cref="SimpleOrientation"/></returns>
+        /// <returns><see cref="SimpleOrientation"/>.</returns>
         public SimpleOrientation GetUiOrientation()
         {
             if (IsEnclosureLocationExternal(cameraEnclosureLocation))
@@ -111,9 +111,9 @@ namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
         }
 
         /// <summary>
-        /// Gets the rotation of the camera to rotate pictures/videos when saving to file
+        /// Gets the rotation of the camera to rotate pictures/videos when saving to file.
         /// </summary>
-        /// <returns><see cref="SimpleOrientation"/></returns>
+        /// <returns><see cref="SimpleOrientation"/>.</returns>
         public SimpleOrientation GetCameraCaptureOrientation()
         {
             if (IsEnclosureLocationExternal(cameraEnclosureLocation))
@@ -136,9 +136,9 @@ namespace BuildIt.Forms.Controls.Platforms.Uap.Helpers
         }
 
         /// <summary>
-        /// Gets the rotation of the camera to display the camera preview
+        /// Gets the rotation of the camera to display the camera preview.
         /// </summary>
-        /// <returns><see cref="SimpleOrientation"/></returns>
+        /// <returns><see cref="SimpleOrientation"/>.</returns>
         public SimpleOrientation GetCameraPreviewOrientation()
         {
             if (IsEnclosureLocationExternal(cameraEnclosureLocation))

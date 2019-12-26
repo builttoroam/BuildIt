@@ -1,12 +1,12 @@
 ﻿namespace BuildIt.Forms.Controls.Common
 {
     /// <summary>
-    /// Class containing all of the strings
+    /// Class containing all of the strings.
     /// </summary>
     internal class Constants
     {
         /// <summary>
-        /// Error strings
+        /// Error strings.
         /// </summary>
         internal static class Errors
         {

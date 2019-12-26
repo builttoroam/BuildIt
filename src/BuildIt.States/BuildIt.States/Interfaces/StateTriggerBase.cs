@@ -3,7 +3,7 @@ using System;
 namespace BuildIt.States.Interfaces
 {
     /// <summary>
-    /// Base class for state trigger
+    /// Base class for state trigger.
     /// </summary>
     public class StateTriggerBase : IStateTriggerActivation, IStateTrigger
     {
@@ -15,7 +15,7 @@ namespace BuildIt.States.Interfaces
         public event EventHandler IsActiveChanged;
 
         /// <summary>
-        /// Gets a value indicating whether getss/Sets the active state of the trigger
+        /// Gets a value indicating whether getss/Sets the active state of the trigger.
         /// </summary>
         public bool IsActive
         {
@@ -33,9 +33,9 @@ namespace BuildIt.States.Interfaces
         }
 
         /// <summary>
-        /// Updates the active state of the trigger
+        /// Updates the active state of the trigger.
         /// </summary>
-        /// <param name="newIsActive">The new active state to set</param>
+        /// <param name="newIsActive">The new active state to set.</param>
         public void UpdateIsActive(bool newIsActive)
         {
             IsActive = newIsActive;

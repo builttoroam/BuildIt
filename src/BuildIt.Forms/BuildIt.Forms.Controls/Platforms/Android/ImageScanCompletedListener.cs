@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using Android.Media;
+﻿using Android.Media;
 using Android.Net;
+using System.Diagnostics;
 
 namespace BuildIt.Forms.Controls.Platforms.Android
 {

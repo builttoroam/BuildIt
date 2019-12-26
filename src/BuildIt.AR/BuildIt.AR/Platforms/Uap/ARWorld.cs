@@ -43,6 +43,7 @@ namespace BuildIt.AR.UWP
                     world.AddElementToWorld(element);
                 }
             }
+
             world.UpdateRangeOfWorld(VisualRangeKm);
         }
 
@@ -53,6 +54,7 @@ namespace BuildIt.AR.UWP
             {
                 offset.Scale = world.CalculateScale(element.Element.DistanceMetres);
             }
+
             return offset;
         }
 
@@ -74,7 +76,10 @@ namespace BuildIt.AR.UWP
 
         private void Inclinometer_ReadingChanged(Inclinometer sender, InclinometerReadingChangedEventArgs args)
         {
-            if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
+            if (Interlocked.CompareExchange(ref updating, 1, 0) == 1)
+            {
+                return;
+            }
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             page.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -89,6 +94,7 @@ namespace BuildIt.AR.UWP
                 {
                     updateElementsOnScreen?.Invoke(pitch, roll, yaw);
                 }
+
                 Interlocked.Exchange(ref updating, 0);
             });
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -128,16 +134,18 @@ namespace BuildIt.AR.UWP
                 case DisplayOrientations.None:
                 case DisplayOrientations.Portrait:
                     break;
+
                 case DisplayOrientations.Landscape:
                     Rotation = Rotation.Rotation90;
                     break;
+
                 case DisplayOrientations.LandscapeFlipped:
                     Rotation = Rotation.Rotation270;
                     break;
+
                 case DisplayOrientations.PortraitFlipped:
                     Rotation = Rotation.Rotation180;
                     break;
-
             }
         }
     }

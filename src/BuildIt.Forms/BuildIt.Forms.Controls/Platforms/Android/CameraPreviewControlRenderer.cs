@@ -1,7 +1,5 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.Graphics;
-using Android.Hardware;
 using Android.Hardware.Camera2;
 using Android.Hardware.Camera2.Params;
 using Android.Media;
@@ -11,7 +9,6 @@ using Android.Views;
 using Android.Widget;
 using ApxLabs.FastAndroidCamera;
 using BuildIt.Forms.Controls;
-using BuildIt.Forms.Controls.Common;
 using BuildIt.Forms.Controls.Extensions;
 using BuildIt.Forms.Controls.Interfaces;
 using BuildIt.Forms.Controls.Platforms.Android;
@@ -33,12 +30,14 @@ using Application = Android.App.Application;
 using CameraPreviewStopParameters = BuildIt.Forms.Controls.Platforms.Android.Models.CameraPreviewStopParameters;
 using Context = Android.Content.Context;
 using Semaphore = Java.Util.Concurrent.Semaphore;
+#pragma warning disable 618
 
 [assembly: ExportRenderer(typeof(CameraPreviewControl), typeof(CameraPreviewControlRenderer))]
+
 namespace BuildIt.Forms.Controls.Platforms.Android
 {
     /// <summary>
-    /// Custom Renderer for <see cref="CameraPreviewControl"/>
+    /// Custom Renderer for <see cref="CameraPreviewControl"/>.
     /// </summary>
     public class CameraPreviewControlRenderer : FrameRenderer, TextureView.ISurfaceTextureListener, INonMarshalingPreviewCallback, Application.IActivityLifecycleCallbacks
     {
@@ -83,7 +82,6 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private string cameraId;
         private CameraPreviewControl cameraPreviewControl;
         private global::Android.Hardware.CameraFacing cameraType;
-        private CameraFocusMode defaultFocusMode;
         private bool flashSupported;
         private ImageAvailableListener imageAvailableListener;
         private ImageScanCompletedListener imageScanCompletedListener;
@@ -102,13 +100,13 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         private AutoFitTextureView textureView;
         private bool useCamera2Api;
         private global::Android.Views.View view;
-        int textureWidth;
-        int textureHeight;
+        private int textureWidth;
+        private int textureHeight;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraPreviewControlRenderer"/> class.
         /// </summary>
-        /// <param name="context"><see cref="Context"/></param>
+        /// <param name="context"><see cref="Context"/>.</param>
         public CameraPreviewControlRenderer(Context context)
             : base(context)
         {
@@ -310,67 +308,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             surfaceTexture = surface;
         }
 
-        private void ApplyAspect()
-        {
-            var cameraParameters = camera.GetParameters();
-            var previewWidth = 0;
-            var previewHeight = 0;
-            var orientation = Resources.Configuration.Orientation;
-            if (orientation == global::Android.Content.Res.Orientation.Landscape)
-            {
-                previewWidth = cameraParameters.PreviewSize.Width;
-                previewHeight = cameraParameters.PreviewSize.Height;
-            }
-            else
-            {
-                previewWidth = cameraParameters.PreviewSize.Height;
-                previewHeight = cameraParameters.PreviewSize.Width;
-            }
-
-            switch (cameraPreviewControl.Aspect)
-            {
-                case Aspect.AspectFit:
-                    if (textureWidth < (float)textureHeight * previewWidth / (float)previewHeight)
-                    {
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureWidth * previewHeight / previewWidth);
-                    }
-                    else
-                    {
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureHeight * previewWidth / previewHeight, textureHeight);
-                    }
-
-                    break;
-
-                case Aspect.AspectFill:
-                    var previewAspectRatio = (double)previewWidth / previewHeight;
-                    if (previewAspectRatio > 1)
-                    {
-                        // width > height, so keep the height but scale the width to meet aspect ratio
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams((int)(textureWidth * previewAspectRatio), textureHeight);
-                    }
-                    else if (previewAspectRatio < 1 && previewAspectRatio != 0)
-                    {
-                        // width < height
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, (int)(textureHeight / previewAspectRatio));
-                    }
-                    else
-                    {
-                        // width == height
-                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
-                    }
-
-                    break;
-
-                case Aspect.Fill:
-                    textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
-                    break;
-            }
-        }
-
         /// <inheritdoc />
         public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)
         {
-            if (!useCamera2Api && (cameraPreviewControl != null && cameraPreviewControl.Status == CameraStatus.Started))
+            if (!useCamera2Api && cameraPreviewControl != null && cameraPreviewControl.Status == CameraStatus.Started)
             {
                 var parameters = new CameraPreviewStopParameters(status: CameraStatus.Paused);
                 StopCameraPreview(parameters).ConfigureAwait(true);
@@ -593,7 +534,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             imageAvailableListener.FilePath = BuildFilePath();
             imageAvailableListener.SaveToPhotosLibrary = saveToPhotosLibrary;
             imageAvailableListener.SavePhotoTaskCompletionSource = new TaskCompletionSource<string>();
-            await CaptureCamera2PhotoAndLockFocus();
+            CaptureCamera2PhotoAndLockFocus();
             var finalFilePath = await imageAvailableListener.SavePhotoTaskCompletionSource.Task;
             if (saveToPhotosLibrary)
             {
@@ -607,10 +548,10 @@ namespace BuildIt.Forms.Controls.Platforms.Android
         }
 
         /// <summary>
-        /// Captures the most current video frame to a photo and saves it to local storage. Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest
+        /// Captures the most current video frame to a photo and saves it to local storage. Requires 'android.permission.WRITE_EXTERNAL_STORAGE' in manifest.
         /// </summary>
-        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library</param>
-        /// <returns>The path to the saved photo file</returns>
+        /// <param name="saveToPhotosLibrary">Whether or not to add the file to the device's photo library.</param>
+        /// <returns>The path to the saved photo file.</returns>
         protected virtual async Task<string> CapturePhotoToFile(bool saveToPhotosLibrary)
         {
             camera.StopPreview();
@@ -741,6 +682,63 @@ namespace BuildIt.Forms.Controls.Platforms.Android
 
             view.Measure(msw, msh);
             view.Layout(0, 0, r - l, b - t);
+        }
+
+        private void ApplyAspect()
+        {
+            var cameraParameters = camera.GetParameters();
+            var previewWidth = 0;
+            var previewHeight = 0;
+            var orientation = Resources.Configuration.Orientation;
+            if (orientation == global::Android.Content.Res.Orientation.Landscape)
+            {
+                previewWidth = cameraParameters.PreviewSize.Width;
+                previewHeight = cameraParameters.PreviewSize.Height;
+            }
+            else
+            {
+                previewWidth = cameraParameters.PreviewSize.Height;
+                previewHeight = cameraParameters.PreviewSize.Width;
+            }
+
+            switch (cameraPreviewControl.Aspect)
+            {
+                case Aspect.AspectFit:
+                    if (textureWidth < (float)textureHeight * previewWidth / (float)previewHeight)
+                    {
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureWidth * previewHeight / previewWidth);
+                    }
+                    else
+                    {
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureHeight * previewWidth / previewHeight, textureHeight);
+                    }
+
+                    break;
+
+                case Aspect.AspectFill:
+                    var previewAspectRatio = (double)previewWidth / previewHeight;
+                    if (previewAspectRatio > 1)
+                    {
+                        // width > height, so keep the height but scale the width to meet aspect ratio
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams((int)(textureWidth * previewAspectRatio), textureHeight);
+                    }
+                    else if (previewAspectRatio < 1 && previewAspectRatio != 0)
+                    {
+                        // width < height
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, (int)(textureHeight / previewAspectRatio));
+                    }
+                    else
+                    {
+                        // width == height
+                        textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
+                    }
+
+                    break;
+
+                case Aspect.Fill:
+                    textureView.LayoutParameters = new FrameLayout.LayoutParams(textureWidth, textureHeight);
+                    break;
+            }
         }
 
         private static string BuildFilePath()
@@ -909,6 +907,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 case CameraFocusMode.Auto:
                     focusMode = global::Android.Hardware.Camera.Parameters.FocusModeAuto;
                     break;
+
                 case CameraFocusMode.Continuous:
                     focusMode = global::Android.Hardware.Camera.Parameters.FocusModeContinuousPicture;
                     break;
@@ -990,7 +989,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             return (Orientations.Get(rotation) + sensorOrientation + 270) % 360;
         }
 
-        private async Task CaptureCamera2PhotoAndLockFocus()
+        private void CaptureCamera2PhotoAndLockFocus()
         {
             if (CaptureSession == null ||
                 CurrentFocusState == ControlAFState.FocusedLocked ||
@@ -1033,7 +1032,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             }
 
             var cameraParameters = camera.GetParameters();
-            int numBytes = (cameraParameters.PreviewSize.Width * cameraParameters.PreviewSize.Height * ImageFormat.GetBitsPerPixel(cameraParameters.PreviewFormat)) / 8;
+            int numBytes = cameraParameters.PreviewSize.Width * cameraParameters.PreviewSize.Height * ImageFormat.GetBitsPerPixel(cameraParameters.PreviewFormat) / 8;
 
             using (FastJavaByteArray buffer = new FastJavaByteArray(numBytes))
             {
@@ -1152,7 +1151,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 var camera = new Camera()
                 {
                     Id = cameraId,
-                    CameraFacing = ToCameraFacing(facing)
+                    CameraFacing = ToCameraFacing(facing),
                 };
                 cameras.Add(camera);
             }
@@ -1234,7 +1233,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
                 var camera = new Camera()
                 {
                     Id = i.ToString(),
-                    CameraFacing = ToCameraFacing(cameraInfo.Facing)
+                    CameraFacing = ToCameraFacing(cameraInfo.Facing),
                 };
                 cameras.Add(camera);
             }

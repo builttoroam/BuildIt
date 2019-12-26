@@ -1,12 +1,8 @@
 ﻿using AVFoundation;
-using BuildIt.Forms.Controls;
-using BuildIt.Forms.Controls.Platforms.Ios;
 using CoreMedia;
 using CoreVideo;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace BuildIt.Forms.Controls.Platforms.Ios
 {

@@ -4,24 +4,24 @@ using System.Threading.Tasks;
 namespace BuildIt.Logging.Filters
 {
     /// <summary>
-    /// Filter that requires a specific message contents
+    /// Filter that requires a specific message contents.
     /// </summary>
     public class MessageContainsLogFilter : BaseLogFilter
     {
         /// <summary>
-        /// Gets or sets a value indicating whether gets or sets whether the message content check is case sensitive (default is false)
+        /// Gets or sets a value indicating whether gets or sets whether the message content check is case sensitive (default is false).
         /// </summary>
         public bool MessageContainsCaseSensitive { get; set; }
 
         /// <summary>
-        /// Gets or sets the message contents to check for
+        /// Gets or sets the message contents to check for.
         /// </summary>
         public string MessageContains { get; set; }
 
         /// <summary>
-        /// Generates the filter function
+        /// Generates the filter function.
         /// </summary>
-        /// <returns>Filter function</returns>
+        /// <returns>Filter function.</returns>
         protected override Func<ILogEntry, Task<bool>> BuildFilter()
         {
             if (string.IsNullOrWhiteSpace(MessageContains))

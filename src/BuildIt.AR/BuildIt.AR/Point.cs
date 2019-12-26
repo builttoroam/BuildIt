@@ -4,10 +4,6 @@ namespace BuildIt.AR
 {
     public struct Point : IEquatable<Point>
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Fields
 
         /// <summary>
@@ -20,7 +16,7 @@ namespace BuildIt.AR
         /// </summary>
         public int Y;
 
-        #endregion
+        #endregion Public Fields
 
         #region Properties
 
@@ -29,7 +25,7 @@ namespace BuildIt.AR
         /// </summary>
         public static Point Zero { get; } = new Point();
 
-        #endregion
+        #endregion Properties
 
         #region Internal Properties
 
@@ -38,11 +34,12 @@ namespace BuildIt.AR
             this.Y.ToString()
             );
 
-        #endregion
+        #endregion Internal Properties
 
         #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Point"/> struct.
         /// Constructs a point with X and Y from two values.
         /// </summary>
         /// <param name="x">The x coordinate in 2d-space.</param>
@@ -54,6 +51,7 @@ namespace BuildIt.AR
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Point"/> struct.
         /// Constructs a point with X and Y set to the same value.
         /// </summary>
         /// <param name="value">The x and y coordinates in 2d-space.</param>
@@ -63,7 +61,7 @@ namespace BuildIt.AR
             this.Y = value;
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Operators
 
@@ -127,13 +125,13 @@ namespace BuildIt.AR
         /// </summary>
         /// <param name="a"><see cref="Point"/> instance on the left of the not equal sign.</param>
         /// <param name="b"><see cref="Point"/> instance on the right of the not equal sign.</param>
-        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>	
+        /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
         public static bool operator !=(Point a, Point b)
         {
             return !a.Equals(b);
         }
 
-        #endregion
+        #endregion Operators
 
         #region Public methods
 
@@ -154,7 +152,7 @@ namespace BuildIt.AR
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(Point other)
         {
-            return ((X == other.X) && (Y == other.Y));
+            return (X == other.X) && (Y == other.Y);
         }
 
         /// <summary>
@@ -168,7 +166,7 @@ namespace BuildIt.AR
 
         /// <summary>
         /// Returns a <see cref="String"/> representation of this <see cref="Point"/> in the format:
-        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>]}
+        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>]}.
         /// </summary>
         /// <returns><see cref="String"/> representation of this <see cref="Point"/>.</returns>
         public override string ToString()
@@ -180,11 +178,11 @@ namespace BuildIt.AR
         ///// Gets a <see cref="Vector2"/> representation for this object.
         ///// </summary>
         ///// <returns>A <see cref="Vector2"/> representation for this object.</returns>
-        //public Vector2 ToVector2()
-        //{
+        // public Vector2 ToVector2()
+        // {
         //    return new Vector2(X, Y);
-        //}
+        // }
 
-        #endregion
+        #endregion Public methods
     }
 }

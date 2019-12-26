@@ -8,9 +8,9 @@ namespace BuildIt.AR
     {
         public static IDictionary<WorldConfiguration, Vector3> CameraUpConfigurations = new Dictionary<WorldConfiguration, Vector3>
         {
-            {WorldConfiguration.Android, Vector3.Up},
-            {WorldConfiguration.iOS, Vector3.Down},
-            {WorldConfiguration.UWP, Vector3.Down}
+            { WorldConfiguration.Android, Vector3.Up},
+            { WorldConfiguration.iOS, Vector3.Down},
+            { WorldConfiguration.UWP, Vector3.Down},
         };
 
         public static IDictionary<WorldConfiguration, IDictionary<Rotation, Matrix>> OrientationMatrixConfigurations = new Dictionary<WorldConfiguration, IDictionary<Rotation, Matrix>>
@@ -18,30 +18,30 @@ namespace BuildIt.AR
             {
                 WorldConfiguration.Android, new Dictionary<Rotation, Matrix>()
                 {
-                    {Rotation.Rotation0, Matrix.CreateRotationY(MathHelper.ToRadians(-90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(-90))},
-                    {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.ToRadians(90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(-90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
-                    {Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.ToRadians(90))*Matrix.CreateRotationZ(MathHelper.ToRadians(90))},
-                    {Rotation.Rotation270, Matrix.CreateRotationY(MathHelper.ToRadians(-90))*Matrix.CreateRotationZ(MathHelper.ToRadians(-90))}
+                    { Rotation.Rotation0, Matrix.CreateRotationY(MathHelper.ToRadians(-90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(-90))},
+                    { Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.ToRadians(90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(-90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
+                    { Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.ToRadians(90))*Matrix.CreateRotationZ(MathHelper.ToRadians(90))},
+                    { Rotation.Rotation270, Matrix.CreateRotationY(MathHelper.ToRadians(-90))*Matrix.CreateRotationZ(MathHelper.ToRadians(-90))},
                 }
             },
             {
                 WorldConfiguration.iOS, new Dictionary<Rotation, Matrix>()
                 {
-					{Rotation.Rotation0, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
-                    {Rotation.Rotation180, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
-					{Rotation.Rotation90, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(180))},
-					{Rotation.Rotation270, Matrix.CreateRotationZ(MathHelper.ToRadians(-90))}
+                    { Rotation.Rotation0, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
+                    { Rotation.Rotation180, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
+                    { Rotation.Rotation90, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateRotationX(MathHelper.ToRadians(180))},
+                    { Rotation.Rotation270, Matrix.CreateRotationZ(MathHelper.ToRadians(-90))},
                 }
             },
             {
                 WorldConfiguration.UWP, new Dictionary<Rotation, Matrix>()
                 {
-                    {Rotation.Rotation0, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2) * Matrix.CreateRotationX(MathHelper.ToRadians(-90))},
-                    {Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.ToRadians(90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(-90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
-                    {Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
-                    {Rotation.Rotation270, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2)}
+                    { Rotation.Rotation0, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2) * Matrix.CreateRotationX(MathHelper.ToRadians(-90))},
+                    { Rotation.Rotation180, Matrix.CreateRotationY(MathHelper.ToRadians(90)) * Matrix.CreateRotationZ(MathHelper.ToRadians(-90)) * Matrix.CreateRotationX(MathHelper.ToRadians(90))},
+                    { Rotation.Rotation90, Matrix.CreateRotationY(MathHelper.PiOver2) *Matrix.CreateRotationZ(-MathHelper.PiOver2)},
+                    { Rotation.Rotation270, Matrix.CreateRotationY(-MathHelper.PiOver2) *Matrix.CreateRotationZ(MathHelper.PiOver2)}
                 }
-            }
+            },
         };
 
         public List<ILocationBasedMarker> Markers { get; private set; } = new List<ILocationBasedMarker>();
@@ -63,6 +63,7 @@ namespace BuildIt.AR
                     }
                 }
             }
+
             Initialize();
         }
 
@@ -87,7 +88,6 @@ namespace BuildIt.AR
         private Vector3 CameraUp { get; }
         private Matrix WorldAdjustment { get; set; }
 
-
         public IEnumerable<IWorldElement<TElement>> ElementsInWorld<TElement>() where TElement : ILocationBasedMarker
         {
             return WorldElements.OfType<IWorldElement<TElement>>().ToArray();
@@ -95,7 +95,10 @@ namespace BuildIt.AR
 
         public bool Initialize(double screenWidth = 500, double screenHeight = 500)
         {
-            if (screenWidth <= 0 || screenHeight <= 0) return false;
+            if (screenWidth <= 0 || screenHeight <= 0)
+            {
+                return false;
+            }
 
             // Initialize the viewport and matrixes for 3d projection.
             Viewport = new Viewport(0, 0, (int)screenWidth, (int)screenHeight);
@@ -107,8 +110,12 @@ namespace BuildIt.AR
 
         public void UpdateWorldAdjustment(Rotation rotation)
         {
-			Debug.WriteLine($"Current Orientation from update: {rotation}");
-            if (!OrientationMatrixConfigurations.ContainsKey(Configuration)) return;
+            Debug.WriteLine($"Current Orientation from update: {rotation}");
+            if (!OrientationMatrixConfigurations.ContainsKey(Configuration))
+            {
+                return;
+            }
+
             var platformSpecificMatrices = OrientationMatrixConfigurations[Configuration];
             if (platformSpecificMatrices == null)
             {
@@ -125,20 +132,20 @@ namespace BuildIt.AR
         {
             #region HACK based on bearing
 
-            //var offset = new ScreenOffset();
-            //var bearing = CentreOfWorld.Bearing(point.Element.GeoLocation);
-            //var diff = yaw - bearing;
+            // var offset = new ScreenOffset();
+            // var bearing = CentreOfWorld.Bearing(point.Element.GeoLocation);
+            // var diff = yaw - bearing;
 
             //// let vof be 90 degrees (45 each side of straight ahead
-            //var vof = (90.0).ToRad();
-            //offset.TranslateX = (Viewport.Width/2)*(1 + (diff/vof)); 
-            //offset.TranslateY = Viewport.Height/2;
+            // var vof = (90.0).ToRad();
+            // offset.TranslateX = (Viewport.Width/2)*(1 + (diff/vof));
+            // offset.TranslateY = Viewport.Height/2;
 
-            //var distance = CentreOfWorld.DistanceInKilometres(point.Element.GeoLocation);
-            //offset.Scale = 1; // Do something here with distance and range etc
-            //return offset;
+            // var distance = CentreOfWorld.DistanceInKilometres(point.Element.GeoLocation);
+            // offset.Scale = 1; // Do something here with distance and range etc
+            // return offset;
 
-            #endregion HACK
+            #endregion HACK based on bearing
 
             var mat = Matrix.CreateFromYawPitchRoll((float)yaw, (float)pitch, (float)roll);
             var currentAttitude = WorldAdjustment * mat;
@@ -149,8 +156,8 @@ namespace BuildIt.AR
 
         public double CalculateScale(double distance)
         {
-            var percentage = (VisualRangeKm * 1000.00 - distance) / (VisualRangeKm * 1000.00);
-            return percentage * MaxScale + MinScale;
+            var percentage = ((VisualRangeKm * 1000.00) - distance) / (VisualRangeKm * 1000.00);
+            return (percentage * MaxScale) + MinScale;
         }
 
         public void UpdateRangeOfWorld(double rangeInKilometres)
@@ -160,7 +167,6 @@ namespace BuildIt.AR
             WorldVisualRange = VisualRangeKm * 10;
             RepositionElements();
         }
-
 
         public void UpdateCentre(Location newCentreOfWorld)
         {
@@ -173,7 +179,7 @@ namespace BuildIt.AR
             var wrapper = new ElementWrapper<TElement> { Element = element };
             WorldElements.Add(wrapper);
             wrapper.PositionInWorld = DeterminePositionInWorld(element);
-            //wrapper.PositionInWorld;
+            // wrapper.PositionInWorld;
         }
 
         private void RepositionElements()
@@ -186,7 +192,6 @@ namespace BuildIt.AR
 
         private Vector3 DeterminePositionInWorld(ILocationBasedMarker element)
         {
-
             var eventItem = element.GeoLocation;
             var eastWestLocation = new Location { Latitude = CentreOfWorld.Latitude, Longitude = eventItem.Longitude };
             var eastWestDistance = eastWestLocation.DistanceInMetres(CentreOfWorld);
@@ -197,7 +202,7 @@ namespace BuildIt.AR
 
             var northSouthDistance = eventItem.DistanceInMetres(eastWestLocation);
 
-            //Debug.WriteLine("distance " + northSouthDistance);
+            // Debug.WriteLine("distance " + northSouthDistance);
             if (eventItem.Latitude > eastWestLocation.Latitude)
             {
                 northSouthDistance *= -1;
@@ -210,8 +215,7 @@ namespace BuildIt.AR
             }
 
             // AddDirectionPoints((int)(-eastWestDistance/ 1000.0), 0, (int)(-northSouthDistance / 1000.0), eventItem.Type);
-            return new Vector3((float)(eastWestDistance / WorldVisualRange), 0, (float)(northSouthDistance / (WorldVisualRange)));
-
+            return new Vector3((float)(eastWestDistance / WorldVisualRange), 0, (float)(northSouthDistance / WorldVisualRange));
         }
 
         private interface IGenericWorldElement

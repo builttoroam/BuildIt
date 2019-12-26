@@ -11,7 +11,7 @@ namespace BuildIt.ML
             var attrs = new CVPixelBufferAttributes
             {
                 CGImageCompatibility = true,
-                CGBitmapContextCompatibility = true
+                CGBitmapContextCompatibility = true,
             };
             var cgImg = image.Scale(size).CGImage;
 

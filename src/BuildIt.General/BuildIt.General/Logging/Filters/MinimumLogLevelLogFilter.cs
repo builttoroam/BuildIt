@@ -4,19 +4,19 @@ using System.Threading.Tasks;
 namespace BuildIt.Logging.Filters
 {
     /// <summary>
-    /// Filter that requires a minimum log level
+    /// Filter that requires a minimum log level.
     /// </summary>
     public class MinimumLogLevelLogFilter : BaseLogFilter
     {
         /// <summary>
-        /// Gets or sets the log level to require
+        /// Gets or sets the log level to require.
         /// </summary>
         public LogLevel MinimumLogLevel { get; set; }
 
         /// <summary>
-        /// Generates the filter function
+        /// Generates the filter function.
         /// </summary>
-        /// <returns>Filter function</returns>
+        /// <returns>Filter function.</returns>
         protected override Func<ILogEntry, Task<bool>> BuildFilter()
         {
             if (MinimumLogLevel == LogLevel.None)
