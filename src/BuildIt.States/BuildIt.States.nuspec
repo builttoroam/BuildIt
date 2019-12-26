@@ -2,15 +2,8 @@
 <package >
   <metadata>
     <id>BuildIt.States</id>
-    <version>$version$</version>
     <title>BuildIt.States</title>
-    <authors>Built to Roam Pty Ltd</authors>
-    <owners>Built to Roam Pty Ltd</owners>
-    <license type="expression">MIT</license>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>This library contains a number of helper methods and functions to make working with application states easier</description>
-    <copyright>Copyright © 2020</copyright>
     <tags>BuildIt, States</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.0">

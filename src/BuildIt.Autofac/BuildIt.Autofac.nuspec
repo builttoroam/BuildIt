@@ -2,15 +2,8 @@
 <package >
   <metadata>
     <id>BuildIt.Autofac</id>
-    <version>$version$</version>
     <title>BuildIt.Autofac</title>
-    <authors>Built to Roam Pty Ltd</authors>
-    <owners>Built to Roam Pty Ltd</owners>
-    <license type="expression">MIT</license>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/builttoroam/BuildIt/</projectUrl>
     <description>Support for Autofac using BuildIt.General ServiceLocator</description>
-    <copyright>Copyright © 2020</copyright>
     <tags>BuildIt, Autofac, ServiceLocator</tags>
     <dependencies>
       <group targetFramework=".NETStandard2.0">
