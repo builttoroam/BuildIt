@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>BuildIt.Forms</id>
+    <id>$id$</id>
     <version>$version$</version>
+    <authors>$authors$</authors>
     <title>BuildIt.Forms</title>
     <description>Adds VisualStateManager, ContentButton and IconButton to Xamarin.Forms!</description>
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
