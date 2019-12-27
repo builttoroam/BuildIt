@@ -9,7 +9,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/builttoroam/buildit</PackageProjectUrl>
-
+    
     <IS_PREVIEW Condition=" '$(IS_PREVIEW)' == '' ">false</IS_PREVIEW>
     <IS_RELEASE Condition=" '$(IS_RELEASE)' == '' ">false</IS_RELEASE>
     <Version Condition=" '$(BUILDIT_RELEASE)' != '' ">$(BUILDIT_RELEASE)</Version>

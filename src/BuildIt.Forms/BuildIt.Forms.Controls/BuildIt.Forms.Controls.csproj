@@ -3,13 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid81;</TargetFrameworks>
     <AssemblyName>BuildIt.Forms.Controls</AssemblyName>
-    <PackageId>BuildIt.Forms.Controls</PackageId>
+    <PackageId>BuildIt.Forms</PackageId>
     <RootNamespace>BuildIt.Forms.Controls</RootNamespace>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
   </PropertyGroup>
 
   <ItemGroup>
