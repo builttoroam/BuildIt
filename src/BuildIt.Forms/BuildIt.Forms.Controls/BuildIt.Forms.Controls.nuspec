@@ -8,7 +8,7 @@
     <description>Adds VisualStateManager, ContentButton and IconButton to Xamarin.Forms!</description>
     <tags>BuildIt, Xamarin Forms, Visual States, Controls</tags>
     <dependencies>
-      <group targetFramework="MonoAndroid8.1">
+      <group targetFramework="MonoAndroid9.0">
         <dependency id="BuildIt.General" version="$version$" exclude="Build,Analyzers" />
         <dependency id="BuildIt.States" version="$version$" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Forms" version="4.4.0.991265" exclude="Build,Analyzers" />
@@ -52,10 +52,10 @@
     <file src="bin\Release\Xamarin.iOS10\BuildIt.Forms.Controls.dll" target="lib\Xamarin.iOS10" />
     <file src="bin\Release\Xamarin.iOS10\BuildIt.Forms.Controls.pdb" target="lib\Xamarin.iOS10" />
 
-    <file src="bin\Release\MonoAndroid81\81\BuildIt.Forms.Core.dll" target="lib\monoandroid81" />
-    <file src="bin\Release\MonoAndroid81\81\BuildIt.Forms.Core.pdb" target="lib\monoandroid81" />
-    <file src="bin\Release\MonoAndroid81\81\BuildIt.Forms.Controls.dll" target="lib\monoandroid81" />
-    <file src="bin\Release\MonoAndroid81\81\BuildIt.Forms.Controls.pdb" target="lib\monoandroid81" />
+    <file src="bin\Release\MonoAndroid90\BuildIt.Forms.Core.dll" target="lib\monoandroid90" />
+    <file src="bin\Release\MonoAndroid90\BuildIt.Forms.Core.pdb" target="lib\monoandroid90" />
+    <file src="bin\Release\MonoAndroid90\BuildIt.Forms.Controls.dll" target="lib\monoandroid90" />
+    <file src="bin\Release\MonoAndroid90\BuildIt.Forms.Controls.pdb" target="lib\monoandroid90" />
 
     <file src="..\BuildIt.Forms.Core\**\*.cs" target="src\BuildIt.Forms.Core" exclude="..\BuildIt.Forms.Core\obj\**\*.cs" />
     <file src="..\BuildIt.Forms.Controls\**\*.cs" target="src\\BuildIt.Forms.Controls" exclude="..\BuildIt.Forms.Controls\obj\**\*.cs" />
