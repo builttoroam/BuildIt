@@ -17,6 +17,8 @@ namespace BuildIt.Forms
     /// </summary>
     public static class VisualStateManager
     {
+        public static bool DesignTimeHelperIsEnabled { get; set; } = false;
+
         /// <summary>
         /// Gets the visual state groups for a particular element.
         /// </summary>
@@ -86,31 +88,34 @@ namespace BuildIt.Forms
                     view = cv.Children.FirstOrDefault();
                 }
 
-                if (view is ContentPage page)
+                if (DesignTimeHelperIsEnabled)
                 {
-                    if (page.Content is Grid content)
+                    if (view is ContentPage page)
                     {
-                        var hasDtc = content.Children.Any(x => x is DesignTimeControl);
-                        if (!hasDtc)
+                        if (page.Content is Grid content)
                         {
-                            var dtc = new DesignTimeControl
+                            var hasDtc = content.Children.Any(x => x is DesignTimeControl);
+                            if (!hasDtc)
                             {
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.End,
-                            };
+                                var dtc = new DesignTimeControl
+                                {
+                                    HorizontalOptions = LayoutOptions.Start,
+                                    VerticalOptions = LayoutOptions.End,
+                                };
 
-                            if (content.ColumnDefinitions.Count > 0)
-                            {
-                                Grid.SetColumnSpan(dtc, content.ColumnDefinitions.Count);
+                                if (content.ColumnDefinitions.Count > 0)
+                                {
+                                    Grid.SetColumnSpan(dtc, content.ColumnDefinitions.Count);
+                                }
+
+                                if (content.RowDefinitions.Count > 0)
+                                {
+                                    Grid.SetRowSpan(dtc, content.RowDefinitions.Count);
+                                }
+
+                                content.Children.Add(dtc);
+                                dtc.BindingContext = new DesignInfo(page);
                             }
-
-                            if (content.RowDefinitions.Count > 0)
-                            {
-                                Grid.SetRowSpan(dtc, content.RowDefinitions.Count);
-                            }
-
-                            content.Children.Add(dtc);
-                            dtc.BindingContext = new DesignInfo(page);
                         }
                     }
                 }
