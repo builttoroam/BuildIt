@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 namespace BuildIt.States
 {
     /// <summary>
-    /// Entity that keeps two state groups in sync
+    /// Entity that keeps two state groups in sync.
     /// </summary>
-    /// <typeparam name="TEntity">The type of the entity to bind</typeparam>
+    /// <typeparam name="TEntity">The type of the entity to bind.</typeparam>
     public abstract class BaseBinder<TEntity> : IStateBinder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseBinder{TEntity}"/> class.
-        /// Creates instance of binder and wires up link between state groups
+        /// Creates instance of binder and wires up link between state groups.
         /// </summary>
-        /// <param name="target">The target group (to be updated when source changes)</param>
-        /// <param name="source">The source group</param>
-        /// <param name="bothDirections">If true, source will be updated by changes to target</param>
+        /// <param name="target">The target group (to be updated when source changes).</param>
+        /// <param name="source">The source group.</param>
+        /// <param name="bothDirections">If true, source will be updated by changes to target.</param>
         protected BaseBinder(TEntity target, TEntity source, bool bothDirections)
         {
             if (target == null)
@@ -39,24 +39,24 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Gets the target for binding (to be updated when source changes)
+        /// Gets the target for binding (to be updated when source changes).
         /// </summary>
         protected TEntity Target { get; private set; }
 
         /// <summary>
-        /// Gets the source to be monitored
+        /// Gets the source to be monitored.
         /// </summary>
         protected TEntity Source { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether whether the target is monitored for changes too
+        /// Gets a value indicating whether whether the target is monitored for changes too.
         /// </summary>
         protected bool BothDirections { get; }
 
         private bool IsBound { get; set; }
 
         /// <summary>
-        /// Binds the source and target state groups
+        /// Binds the source and target state groups.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task Bind()
@@ -76,7 +76,7 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Disconnects the two state groups
+        /// Disconnects the two state groups.
         /// </summary>
         public void Unbind()
         {
@@ -90,7 +90,7 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Disposes (and unbinds) the binder
+        /// Disposes (and unbinds) the binder.
         /// </summary>
         public void Dispose()
         {
@@ -101,13 +101,13 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Binds source and target
+        /// Binds source and target.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected abstract Task InternalBind();
 
         /// <summary>
-        /// Unbinds source and target
+        /// Unbinds source and target.
         /// </summary>
         protected abstract void InternalUnbind();
     }

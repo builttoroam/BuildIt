@@ -3,14 +3,14 @@ using BuildIt.ServiceLocation;
 namespace BuildIt.States.Interfaces
 {
     /// <summary>
-    /// State that can register dependencies
+    /// State that can register dependencies.
     /// </summary>
     public interface IRegisterDependencies
     {
         /// <summary>
-        /// Registers dependencies
+        /// Registers dependencies.
         /// </summary>
-        /// <param name="container">The container to register dependencies into</param>
+        /// <param name="container">The container to register dependencies into.</param>
         void RegisterDependencies(IDependencyContainer container);
     }
 }

@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Pex.Framework;
+﻿using Microsoft.Pex.Framework;
 using Microsoft.Pex.Framework.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace BuildIt.Tests
 {
     [TestClass]
-    [PexClass(typeof (NotifyBase))]
-    [PexAllowedExceptionFromTypeUnderTest(typeof (ArgumentException), AcceptExceptionSubtypes = true)]
-    [PexAllowedExceptionFromTypeUnderTest(typeof (InvalidOperationException))]
+    [PexClass(typeof(NotifyBase))]
+    [PexAllowedExceptionFromTypeUnderTest(typeof(ArgumentException), AcceptExceptionSubtypes = true)]
+    [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
     public partial class NotifyBaseTest
     {
-
         [PexMethod]
         public void ExpressionTest(int val)
         {
             var original = val;
             var target = new TestNotifyClass();
-            target.PropertyChanged += (s,e) => val++;
+            target.PropertyChanged += (s, e) => val++;
             target.ExpressionVariable = val;
-            Assert.AreEqual(target.ExpressionVariable+(original == 0 ?0:1),val);
+            Assert.AreEqual(target.ExpressionVariable + (original == 0 ? 0 : 1), val);
         }
-
 
         [PexMethod]
         public void InvalidExpressionTest(int val)
@@ -33,7 +27,7 @@ namespace BuildIt.Tests
             var original = val;
             var target = new TestNotifyClass();
             target.InvalidExpressionVariable = val;
-            Assert.AreEqual(target.InvalidExpressionVariable , val);
+            Assert.AreEqual(target.InvalidExpressionVariable, val);
         }
 
         [PexMethod]
@@ -52,10 +46,8 @@ namespace BuildIt.Tests
             var target = new TestNotifyClass();
             target.PropertyChanged += (s, e) => val += "test";
             target.CallermemberVariable = val;
-            Assert.AreEqual(target.CallermemberVariable+(original==null?null: "test"), val+null);
+            Assert.AreEqual(target.CallermemberVariable + (original == null ? null : "test"), val + null);
         }
-
-
 
         [PexMethod]
         public void CallerMemberNoHandlerTest(string val)
@@ -63,20 +55,24 @@ namespace BuildIt.Tests
             var original = val;
             var target = new TestNotifyClass();
             target.CallermemberVariable = val;
-            Assert.AreEqual(target.CallermemberVariable , val );
+            Assert.AreEqual(target.CallermemberVariable, val);
         }
     }
 
-    public class TestNotifyClass:NotifyBase
+    public class TestNotifyClass : NotifyBase
     {
         private int expressionVariable;
 
         public int ExpressionVariable
         {
-            get { return expressionVariable; }
+            get => expressionVariable;
             set
             {
-                if (ExpressionVariable == value) return;
+                if (ExpressionVariable == value)
+                {
+                    return;
+                }
+
                 expressionVariable = value;
                 OnPropertyChanged(() => ExpressionVariable);
             }
@@ -84,12 +80,16 @@ namespace BuildIt.Tests
 
         public int InvalidExpressionVariable
         {
-            get { return expressionVariable; }
+            get => expressionVariable;
             set
             {
-                if (InvalidExpressionVariable == value) return;
+                if (InvalidExpressionVariable == value)
+                {
+                    return;
+                }
+
                 expressionVariable = value;
-                OnPropertyChanged(() => InvalidExpressionVariable+ExpressionVariable);
+                OnPropertyChanged(() => InvalidExpressionVariable + ExpressionVariable);
             }
         }
 
@@ -97,15 +97,17 @@ namespace BuildIt.Tests
 
         public string CallermemberVariable
         {
-            get { return _CallermemberVariable; }
+            get => _CallermemberVariable;
             set
             {
-                if (CallermemberVariable == value) return;
+                if (CallermemberVariable == value)
+                {
+                    return;
+                }
+
                 _CallermemberVariable = value;
                 OnPropertyChanged();
             }
         }
-
-
     }
 }

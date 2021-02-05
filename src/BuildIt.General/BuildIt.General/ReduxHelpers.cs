@@ -5,16 +5,16 @@ using System.Collections.ObjectModel;
 namespace BuildIt
 {
     /// <summary>
-    /// Helper methods designed to help with immutable data
+    /// Helper methods designed to help with immutable data.
     /// </summary>
     public static class ReduxHelpers
     {
         /// <summary>
-        /// Takes a deep clone of a collection (ie does deep clone of all elements)
+        /// Takes a deep clone of a collection (ie does deep clone of all elements).
         /// </summary>
-        /// <typeparam name="T">The type of item in collection</typeparam>
-        /// <param name="source">The source collection</param>
-        /// <returns>A deep clone of the collection</returns>
+        /// <typeparam name="T">The type of item in collection.</typeparam>
+        /// <param name="source">The source collection.</param>
+        /// <returns>A deep clone of the collection.</returns>
         public static ObservableCollection<T> DeepClone<T>(this ObservableCollection<T> source)
             where T : new()
         {
@@ -22,11 +22,11 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Does a deep clone of an entity
+        /// Does a deep clone of an entity.
         /// </summary>
-        /// <typeparam name="T">The type of entity to clone</typeparam>
-        /// <param name="source">The source entity</param>
-        /// <returns>The cloned entity</returns>
+        /// <typeparam name="T">The type of entity to clone.</typeparam>
+        /// <param name="source">The source entity.</param>
+        /// <returns>The cloned entity.</returns>
         public static T DeepEntityClone<T>(this T source)
             where T : new()
         {
@@ -42,12 +42,12 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Clones and adds item
+        /// Clones and adds item.
         /// </summary>
-        /// <typeparam name="T">Type of item in collection</typeparam>
-        /// <param name="source">source collection</param>
-        /// <param name="itemToAdd">Item to add</param>
-        /// <returns>new collection</returns>
+        /// <typeparam name="T">Type of item in collection.</typeparam>
+        /// <param name="source">source collection.</param>
+        /// <param name="itemToAdd">Item to add.</param>
+        /// <returns>new collection.</returns>
         public static ObservableCollection<T> DeepAdd<T>(this ObservableCollection<T> source, T itemToAdd)
             where T : new()
         {
@@ -57,13 +57,13 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Clones and inserts item
+        /// Clones and inserts item.
         /// </summary>
-        /// <typeparam name="T">Type of item in collection</typeparam>
-        /// <param name="source">source collection</param>
-        /// <param name="index">position to insert item</param>
-        /// <param name="itemToAdd">Item to insert</param>
-        /// <returns>new collection</returns>
+        /// <typeparam name="T">Type of item in collection.</typeparam>
+        /// <param name="source">source collection.</param>
+        /// <param name="index">position to insert item.</param>
+        /// <param name="itemToAdd">Item to insert.</param>
+        /// <returns>new collection.</returns>
         public static ObservableCollection<T> DeepInsert<T>(this ObservableCollection<T> source, int index, T itemToAdd)
             where T : new()
         {
@@ -73,12 +73,12 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Clones and removes item
+        /// Clones and removes item.
         /// </summary>
-        /// <typeparam name="T">Type of item in collection</typeparam>
-        /// <param name="source">source collection</param>
-        /// <param name="itemToRemove">item to remove</param>
-        /// <returns>new collection</returns>
+        /// <typeparam name="T">Type of item in collection.</typeparam>
+        /// <param name="source">source collection.</param>
+        /// <param name="itemToRemove">item to remove.</param>
+        /// <returns>new collection.</returns>
         public static ObservableCollection<T> DeepRemove<T>(this ObservableCollection<T> source, T itemToRemove)
             where T : new()
         {
@@ -94,12 +94,12 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Clones and removes item
+        /// Clones and removes item.
         /// </summary>
-        /// <typeparam name="T">Type of item in collection</typeparam>
-        /// <param name="source">source collection</param>
-        /// <param name="index">position of item to remove</param>
-        /// <returns>new collection</returns>
+        /// <typeparam name="T">Type of item in collection.</typeparam>
+        /// <param name="source">source collection.</param>
+        /// <param name="index">position of item to remove.</param>
+        /// <returns>new collection.</returns>
         public static ObservableCollection<T> DeepRemoveAt<T>(this ObservableCollection<T> source, int index)
             where T : new()
         {
@@ -108,13 +108,13 @@ namespace BuildIt
         }
 
         /// <summary>
-        /// Maps one collection onto another based on some tranforming function
+        /// Maps one collection onto another based on some tranforming function.
         /// </summary>
-        /// <typeparam name="TCollection">Source collection type</typeparam>
-        /// <typeparam name="TItem">collection item type</typeparam>
-        /// <param name="sourceCollection">The source collection</param>
-        /// <param name="map">The transform function</param>
-        /// <returns>The generated collection</returns>
+        /// <typeparam name="TCollection">Source collection type.</typeparam>
+        /// <typeparam name="TItem">collection item type.</typeparam>
+        /// <param name="sourceCollection">The source collection.</param>
+        /// <param name="map">The transform function.</param>
+        /// <returns>The generated collection.</returns>
         public static TCollection Map<TCollection, TItem>(this TCollection sourceCollection, Func<TItem, TItem> map)
         where TCollection : IList<TItem>, new()
         {

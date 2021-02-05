@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using BuildIt.MvvmCross.Interfaces;
 using BuildIt.States;
 using BuildIt.States.Interfaces;
 using MvvmCross.ViewModels;
+using System;
 
 namespace BuildIt.MvvmCross
 {
@@ -37,7 +36,7 @@ namespace BuildIt.MvvmCross
         }
 
         /// <summary>
-        /// Begins a storyboard
+        /// Begins a storyboard.
         /// </summary>
         protected void BeginStoryboard(string storyboard, Action storyboardCompleted = null)
         {
@@ -45,7 +44,7 @@ namespace BuildIt.MvvmCross
         }
 
         /// <summary>
-        /// Ends a storyboard
+        /// Ends a storyboard.
         /// </summary>
         /// <param name="storyboard"></param>
         protected void EndStoryboard(string storyboard)

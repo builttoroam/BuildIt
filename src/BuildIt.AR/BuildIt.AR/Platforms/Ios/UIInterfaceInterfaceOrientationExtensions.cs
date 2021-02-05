@@ -12,19 +12,24 @@ namespace BuildIt.AR.iOS
                 case UIInterfaceOrientation.LandscapeLeft:
                     rotation = Rotation.Rotation90;
                     break;
+
                 case UIInterfaceOrientation.LandscapeRight:
                     rotation = Rotation.Rotation270;
                     break;
+
                 case UIInterfaceOrientation.Portrait:
                     rotation = Rotation.Rotation0;
                     break;
+
                 case UIInterfaceOrientation.PortraitUpsideDown:
                     rotation = Rotation.Rotation180;
                     break;
+
                 default:
                     rotation = Rotation.Rotation0;
                     break;
             }
+
             return rotation;
         }
     }

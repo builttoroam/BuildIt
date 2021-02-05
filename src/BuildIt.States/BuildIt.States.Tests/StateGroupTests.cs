@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BuildIt.States.Typed;
+using BuildIt.States.Typed.Enum;
+using BuildIt.States.Typed.String;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.States.Typed;
-using BuildIt.States.Typed.Enum;
-using BuildIt.States.Typed.String;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BuildIt.States.Tests
 {
@@ -23,6 +23,7 @@ namespace BuildIt.States.Tests
             {
                 Id = id;
             }
+
             public Guid Id { get; } = Guid.NewGuid();
         }
 
@@ -30,13 +31,12 @@ namespace BuildIt.States.Tests
         {
             public CustomStateDefinition()
             {
-
             }
 
             public override string StateName
             {
                 get => State.Id.ToString();
-                //                set => State.Id = Guid.Parse(value);
+                // set => State.Id = Guid.Parse(value);
             }
         }
 
@@ -48,7 +48,6 @@ namespace BuildIt.States.Tests
 
         private class CustomStateGroup : TypedStateGroup<CustomStateType, CustomStateDefinition, CustomStateGroupDefinition>
         {
-
         }
 
         [TestMethod]
@@ -92,7 +91,7 @@ namespace BuildIt.States.Tests
         public void TestInvalidStateGroupCreationEmptyStringName() => new StateGroup(String.Empty);
 
         [TestMethod]
-        // NR: Ideally this would be an ArgumentNullException but because the exception 
+        // NR: Ideally this would be an ArgumentNullException but because the exception
         // is raised within the constructor of a nested type (ie the GroupDefinition) it
         // is raised as a TargetInvocationException
         [ExpectedException(typeof(TargetInvocationException))]
@@ -100,32 +99,32 @@ namespace BuildIt.States.Tests
         public void TestInvalidEnumStateGroupNotEnum() => new EnumStateGroup<NotAnEnum>();
 
         // NR: Can't invoke this test as method has changed
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestInvalidEnumStateGroupDefineStateWithIncorrectState()
-        //{
+        // [TestMethod]
+        // [ExpectedException(typeof(ArgumentException))]
+        // public void TestInvalidEnumStateGroupDefineStateWithIncorrectState()
+        // {
         //    var esg = new EnumStateGroup<Test1State>();
         //    esg.DefineTypedState(Test1State.OnlyState+"invalid");
-        //}
+        // }
 
         // NR: Can't invoke this test as method has changed
-        //[TestMethod]
-        //[ExpectedException(typeof(NotSupportedException))]
-        //public void TestInvalidEnumStateGroupDefineStateWithData()
-        //{
+        // [TestMethod]
+        // [ExpectedException(typeof(NotSupportedException))]
+        // public void TestInvalidEnumStateGroupDefineStateWithData()
+        // {
         //    var esg = new EnumStateGroup<Test1State>();
         //    esg.DefineStateWithData<DummyStateData>(nameof(Test1State.OnlyState));
-        //}
+        // }
 
         // NR: Can't invoke this test as method has changed
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestInvalidEnumStateGroupDefineStateWithInvalidStateDefinition()
-        //{
+        // [TestMethod]
+        // [ExpectedException(typeof(ArgumentException))]
+        // public void TestInvalidEnumStateGroupDefineStateWithInvalidStateDefinition()
+        // {
         //    var esg = new EnumStateGroup<Test1State>();
         //    var sd = new TypedStateDefinition<Test1State>("test");
         //    esg.DefineTypedState(sd);
-        //}
+        // }
 
         [TestMethod]
         public void TestEmptyStateGroup()
@@ -168,7 +167,6 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(sd, sg.CurrentStateDefinition);
             Assert.IsNull(sg.CurrentStateData);
             Assert.IsNull(sg.CurrentStateDataWrapper);
-
 
             var esg = new EnumStateGroup<Test1State>();
             var esd = esg.TypedGroupDefinition.DefineTypedState(Test1State.OnlyState);
@@ -258,22 +256,24 @@ namespace BuildIt.States.Tests
                     case 2:
                         Assert.AreEqual(Test3State.State1, stepStates[i]);
                         break;
+
                     case 3:
                     case 4:
                     case 5:
                     case 6:
                         Assert.AreEqual(Test3State.State2, stepStates[i]);
                         break;
+
                     case 7:
                     case 8:
                         Assert.AreEqual(Test3State.State3, stepStates[i]);
                         break;
+
                     default:
                         Assert.Fail("Invalid step");
                         break;
                 }
             }
-
         }
 
         [TestMethod]
@@ -309,6 +309,7 @@ namespace BuildIt.States.Tests
                     {
                         steps.Add(3);
                     }
+
                     stepStates.Add(sm.CurrentState<Test3State>());
                 }
             };
@@ -381,12 +382,14 @@ namespace BuildIt.States.Tests
                     case 6:
                         Assert.AreEqual(Test3State.Base, stepStates[i]);
                         break;
+
                     case 7:
                     case 8:
                     case 9:
                     case 10:
                         Assert.AreEqual(Test3State.State1, stepStates[i]);
                         break;
+
                     default:
                         Assert.Fail("Invalid step");
                         break;
@@ -432,7 +435,6 @@ namespace BuildIt.States.Tests
             Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
         }
 
-
         [TestMethod]
         public async Task TestCancelSameStateGroup()
         {
@@ -466,42 +468,40 @@ namespace BuildIt.States.Tests
             Assert.IsFalse(cancelled);
             Assert.AreEqual(1, transitionCount);
             Assert.AreEqual(Test2State.State2, sm.CurrentState<Test2State>());
-
-
         }
+
         public enum Test3State
         {
             Base,
             State1,
             State2,
-            State3
+            State3,
         }
+
         public enum Test2State
         {
             Base,
             State1,
-            State2
+            State2,
         }
 
         public enum Test1State
         {
             Base,
-            OnlyState
+            OnlyState,
         }
 
         public enum TestEnumNoStates
         {
-            Base
+            Base,
         }
 
         public struct NotAnEnum
         {
-
         }
 
         public class DummyStateData : NotifyBase
         {
-
         }
     }
 }

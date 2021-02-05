@@ -6,6 +6,7 @@ using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -74,10 +75,12 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
     public class MainViewModel : NotifyBase, IHasStates, IHasImmutableData<Person>
     {
         private ICommand pressedCommand;
+        private ICommand statefulControlRetryCommand;
         private ICommand cameraPreviewErrorCommand;
         private bool commandIsEnabled;
         private CameraFocusMode cameraFocusMode;
         private bool isAutoFocusMode;
+        public StatefulControlStates statefulControlState;
 
         private bool visible = true;
 
@@ -96,6 +99,20 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public ICommand PressedCommand => pressedCommand ?? (pressedCommand = new Command(SwitchStates, () => CommandIsEnabled));
 
+        public ICommand StatefulControlRetryCommand => statefulControlRetryCommand ?? (statefulControlRetryCommand = new Command(ExecuteStatefulControlRetryCommand, () => StatefulControlState == StatefulControlStates.LoadingError));
+
+        private async void ExecuteStatefulControlRetryCommand()
+        {
+            try
+            {
+                await UpdateStatefulControlState(StatefulControlStates.Loaded);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
         public ICommand CameraPreviewErrorCommand => cameraPreviewErrorCommand ?? (cameraPreviewErrorCommand = new Command(ExecuteCameraPreviewErrorCommand));
 
         private void ExecuteCameraPreviewErrorCommand(object obj)
@@ -111,6 +128,8 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
         public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
 
         public ObservableCollection<ItemViewModel> MoreItems { get; } = new ObservableCollection<ItemViewModel>();
+
+        public ObservableCollection<string> StatefulControlItems { get; } = new ObservableCollection<string>();
 
         public bool CommandIsEnabled
         {
@@ -136,6 +155,18 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
             }
         }
 
+        public StatefulControlStates StatefulControlState
+        {
+            get => statefulControlState;
+            set
+            {
+                if (SetProperty(ref statefulControlState, value))
+                {
+                    (StatefulControlRetryCommand as Command)?.ChangeCanExecute();
+                }
+            }
+        }
+
         public bool IsAutoFocusMode => CameraFocusMode == CameraFocusMode.Auto;
 
         public Person Data { get => _data; set => SetProperty(ref _data, value); }
@@ -148,9 +179,10 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
 
         public async Task Init()
         {
-            // TODO To get the app to start quicker comment out the code that relates to Items and MoreItems
+            // TODO To get the app to start quicker reduce the number of items
+            // var numberOfItems = 2000;
             //var items = new List<ItemViewModel>();
-            //for (int i = 0; i < 2000; i++)
+            //for (int i = 0; i < numberOfItems; i++)
             //{
             //    var item = new ItemViewModel();
             //    await item.Init();
@@ -207,6 +239,24 @@ namespace BuildIt.Forms.Sample.Core.ViewModels
                     Data = BuildPersonWithPeople(Data);
                 }
             });
+        }
+
+        public async Task UpdateStatefulControlState(StatefulControlStates newState)
+        {
+            // MK Imitate data loading
+            StatefulControlState = StatefulControlStates.Loading;
+            await Task.Delay(2000);
+
+            StatefulControlItems.Clear();
+            if (newState == StatefulControlStates.Loaded)
+            {
+                StatefulControlItems.Add("Bob");
+                StatefulControlItems.Add("Adam");
+                StatefulControlItems.Add("Nick");
+                StatefulControlItems.Add("Andrew");
+            }
+
+            StatefulControlState = newState;
         }
 
         private Person BuildPersonWithPeople(Person state)

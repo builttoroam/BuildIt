@@ -3,24 +3,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// Static helper class
+    /// Static helper class.
     /// </summary>
     public static class ElementHelper
     {
         private static Assembly FormsAssemblyForLogging { get; } = typeof(ElementHelper).GetTypeInfo().Assembly;
 
         /// <summary>
-        /// Applies an action to all nested children of an element
+        /// Applies an action to all nested children of an element.
         /// </summary>
-        /// <typeparam name="TElement">The minimum level base class that is necessary for the child for the action to be performed</typeparam>
-        /// <param name="view">The target element</param>
-        /// <param name="action">The action to perform</param>
-        /// <param name="applyToRoot">Apply this action to the target element</param>
+        /// <typeparam name="TElement">The minimum level base class that is necessary for the child for the action to be performed.</typeparam>
+        /// <param name="view">The target element.</param>
+        /// <param name="action">The action to perform.</param>
+        /// <param name="applyToRoot">Apply this action to the target element.</param>
         public static void ApplyToAllNested<TElement>(Element view, Action<TElement> action, bool applyToRoot)
             where TElement : View
         {
@@ -55,11 +54,11 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Adds an action that can be run from the design overlay
+        /// Adds an action that can be run from the design overlay.
         /// </summary>
-        /// <param name="element">The page or user control</param>
-        /// <param name="actionTitle">The text that will appear on screen</param>
-        /// <param name="action">The action to be performed</param>
+        /// <param name="element">The page or user control.</param>
+        /// <param name="actionTitle">The text that will appear on screen.</param>
+        /// <param name="action">The action to be performed.</param>
         public static void AddDesignAction(this ContentPage element, string actionTitle, Action action)
         {
             if (!Debugger.IsAttached)
@@ -79,11 +78,11 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Retrieves the target element and property info for a state action
+        /// Retrieves the target element and property info for a state action.
         /// </summary>
-        /// <param name="element">The root element (to begin search for target element)</param>
-        /// <param name="setter">The state action</param>
-        /// <returns>Reference to the target element and property info</returns>
+        /// <param name="element">The root element (to begin search for target element).</param>
+        /// <param name="setter">The state action.</param>
+        /// <returns>Reference to the target element and property info.</returns>
         public static Tuple<Element, PropertyInfo> FindByTarget(this Element element, TargettedStateAction setter)
         {
             Element setterTarget = null;
@@ -138,27 +137,27 @@ namespace BuildIt.Forms
         }
 
         /// <summary>
-        /// Quick log for states messages
+        /// Quick log for states messages.
         /// </summary>
-        /// <param name="exception">The exception to log</param>
-        /// <param name="message">The message to log</param>
+        /// <param name="exception">The exception to log.</param>
+        /// <param name="message">The message to log.</param>
         internal static void LogFormsException(this Exception exception, string message = null)
         {
             exception.LogError(assembly: FormsAssemblyForLogging, message: message);
         }
 
         /// <summary>
-        /// Quick log for states messages
+        /// Quick log for states messages.
         /// </summary>
-        /// <param name="message">The message to log</param>
+        /// <param name="message">The message to log.</param>
         internal static void LogFormsInfo(this string message)
         {
             message.LogMessage(assembly: FormsAssemblyForLogging);
         }
     }
 
-    //public static class SafeNameScopeExtensions
-    //{
+    // public static class SafeNameScopeExtensions
+    // {
     //    /// <typeparam name="T">The type of instance to find.</typeparam>
     //    /// <param name="element">An element in the scope to search.</param>
     //    /// <param name="name">The name of the element to find.</param>
@@ -176,7 +175,7 @@ namespace BuildIt.Forms
     //            ex.LogError();
     //        }
 
-    //        try
+    // try
     //        {
     //            var child = (from e in element.Descendants().OfType<VisualElement>()
     //                         where e.GetValue(Namepr))
@@ -186,7 +185,7 @@ namespace BuildIt.Forms
     //            ex.LogError();
     //        }
 
-    //        return default;
+    // return default;
     //    }
-    //}
+    // }
 }

@@ -1,7 +1,7 @@
 ﻿namespace BuildIt.States.Completion
 {
     /// <summary>
-    /// A default completion enum
+    /// A default completion enum.
     /// </summary>
     public enum DefaultCompletion
     {
@@ -13,6 +13,6 @@
         /// <summary>
         /// Complete - default for ending state
         /// </summary>
-        Complete
+        Complete,
     }
 }

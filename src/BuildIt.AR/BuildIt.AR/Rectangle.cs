@@ -4,10 +4,6 @@ namespace BuildIt.AR
 {
     public struct Rectangle : IEquatable<Rectangle>
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Fields
 
         /// <summary>
@@ -30,7 +26,7 @@ namespace BuildIt.AR
         /// </summary>
         public int Height;
 
-        #endregion
+        #endregion Public Fields
 
         #region Public Properties
 
@@ -47,7 +43,7 @@ namespace BuildIt.AR
         /// <summary>
         /// Returns the x coordinate of the right edge of this <see cref="Rectangle"/>.
         /// </summary>
-        public int Right => (X + Width);
+        public int Right => X + Width;
 
         /// <summary>
         /// Returns the y coordinate of the top edge of this <see cref="Rectangle"/>.
@@ -57,23 +53,20 @@ namespace BuildIt.AR
         /// <summary>
         /// Returns the y coordinate of the bottom edge of this <see cref="Rectangle"/>.
         /// </summary>
-        public int Bottom => (Y + Height);
+        public int Bottom => Y + Height;
 
         /// <summary>
         /// Whether or not this <see cref="Rectangle"/> has a <see cref="Width"/> and
         /// <see cref="Height"/> of 0, and a <see cref="Location"/> of (0, 0).
         /// </summary>
-        public bool IsEmpty => (((Width == 0) && (Height == 0)) && (X == 0) && (Y == 0));
+        public bool IsEmpty => (Width == 0) && (Height == 0) && (X == 0) && (Y == 0);
 
         /// <summary>
         /// The top-left coordinates of this <see cref="Rectangle"/>.
         /// </summary>
         public Point Location
         {
-            get
-            {
-                return new Point(X, Y);
-            }
+            get => new Point(X, Y);
             set
             {
                 X = value.X;
@@ -86,10 +79,7 @@ namespace BuildIt.AR
         /// </summary>
         public Point Size
         {
-            get
-            {
-                return new Point(Width, Height);
-            }
+            get => new Point(Width, Height);
             set
             {
                 Width = value.X;
@@ -106,7 +96,7 @@ namespace BuildIt.AR
         /// </remarks>
         public Point Center => new Point(X + (Width / 2), Y + (Height / 2));
 
-        #endregion
+        #endregion Public Properties
 
         #region Internal Properties
 
@@ -117,11 +107,12 @@ namespace BuildIt.AR
             Height
             );
 
-        #endregion
+        #endregion Internal Properties
 
         #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Rectangle"/> struct.
         /// Creates a new instance of <see cref="Rectangle"/> struct, with the specified
         /// position, width, and height.
         /// </summary>
@@ -138,6 +129,7 @@ namespace BuildIt.AR
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Rectangle"/> struct.
         /// Creates a new instance of <see cref="Rectangle"/> struct, with the specified
         /// location and size.
         /// </summary>
@@ -151,7 +143,7 @@ namespace BuildIt.AR
             Height = size.Y;
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Operators
 
@@ -163,7 +155,7 @@ namespace BuildIt.AR
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public static bool operator ==(Rectangle a, Rectangle b)
         {
-            return ((a.X == b.X) && (a.Y == b.Y) && (a.Width == b.Width) && (a.Height == b.Height));
+            return (a.X == b.X) && (a.Y == b.Y) && (a.Width == b.Width) && (a.Height == b.Height);
         }
 
         /// <summary>
@@ -177,7 +169,7 @@ namespace BuildIt.AR
             return !(a == b);
         }
 
-        #endregion
+        #endregion Operators
 
         #region Public Methods
 
@@ -228,20 +220,20 @@ namespace BuildIt.AR
         ///// </summary>
         ///// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
         ///// <returns><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
-        //public bool Contains(Vector2 value)
-        //{
+        // public bool Contains(Vector2 value)
+        // {
         //    return ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
-        //}
+        // }
 
         ///// <summary>
         ///// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="Rectangle"/>.
         ///// </summary>
         ///// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
         ///// <param name="result"><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
-        //public void Contains(ref Vector2 value, out bool result)
-        //{
+        // public void Contains(ref Vector2 value, out bool result)
+        // {
         //    result = ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
-        //}
+        // }
 
         /// <summary>
         /// Gets whether or not the provided <see cref="Rectangle"/> lies within the bounds of this <see cref="Rectangle"/>.
@@ -289,11 +281,11 @@ namespace BuildIt.AR
         /// <returns>Hash code of this <see cref="Rectangle"/>.</returns>
         public override int GetHashCode()
         {
-            return (X ^ Y ^ Width ^ Height);
+            return X ^ Y ^ Width ^ Height;
         }
 
         /// <summary>
-        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts. 
+        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts.
         /// </summary>
         /// <param name="horizontalAmount">Value to adjust the left and right edges.</param>
         /// <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
@@ -306,7 +298,7 @@ namespace BuildIt.AR
         }
 
         /// <summary>
-        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts. 
+        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts.
         /// </summary>
         /// <param name="horizontalAmount">Value to adjust the left and right edges.</param>
         /// <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
@@ -330,7 +322,6 @@ namespace BuildIt.AR
                    value.Top < Bottom &&
                    Top < value.Bottom;
         }
-
 
         /// <summary>
         /// Gets whether or not the other <see cref="Rectangle"/> intersects with this rectangle.
@@ -416,15 +407,15 @@ namespace BuildIt.AR
         ///// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
         ///// </summary>
         ///// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
-        //public void Offset(Vector2 amount)
-        //{
+        // public void Offset(Vector2 amount)
+        // {
         //    X += (int)amount.X;
         //    Y += (int)amount.Y;
-        //}
+        // }
 
         /// <summary>
         /// Returns a <see cref="String"/> representation of this <see cref="Rectangle"/> in the format:
-        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Width:[<see cref="Width"/>] Height:[<see cref="Height"/>]}
+        /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Width:[<see cref="Width"/>] Height:[<see cref="Height"/>]}.
         /// </summary>
         /// <returns><see cref="String"/> representation of this <see cref="Rectangle"/>.</returns>
         public override string ToString()
@@ -461,6 +452,6 @@ namespace BuildIt.AR
             result.Height = Math.Max(value1.Bottom, value2.Bottom) - result.Y;
         }
 
-        #endregion
+        #endregion Public Methods
     }
 }

@@ -7,21 +7,21 @@ using Xamarin.Forms;
 namespace BuildIt.Forms.Controls
 {
     /// <summary>
-    /// Represents a button which can have content and uses a content template
+    /// Represents a button which can have content and uses a content template.
     /// </summary>
     public partial class ContentButton
     {
         /// <summary>
-        /// The command to be invoked when button pressed
-        /// </summary>
-        public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ContentButton), null, BindingMode.OneWay, null, CommandChanged, null, null, null);
-
-        /// <summary>
-        /// The command parameters
+        /// The command parameters.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty =
             BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(Button), null, BindingMode.OneWay, null, CommandParameterChanged, null, null, null);
+
+        /// <summary>
+        /// The command to be invoked when button pressed.
+        /// </summary>
+        public static readonly BindableProperty CommandProperty =
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ContentButton), null, BindingMode.OneWay, null, CommandChanged, null, null, null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentButton"/> class.
@@ -39,7 +39,7 @@ namespace BuildIt.Forms.Controls
         public event EventHandler Pressed;
 
         /// <summary>
-        /// Gets or sets the command to be invoked when button pressed
+        /// Gets or sets the command to be invoked when button pressed.
         /// </summary>
         public ICommand Command
         {
@@ -49,7 +49,7 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Gets or sets the parameter to be sent to the command
+        /// Gets or sets the parameter to be sent to the command.
         /// </summary>
         public object CommandParameter
         {
@@ -57,6 +57,8 @@ namespace BuildIt.Forms.Controls
 
             set => SetValue(CommandParameterProperty, value);
         }
+
+        private bool EnterRequired { get; set; }
 
         private bool IsEnabledCore
         {
@@ -66,8 +68,6 @@ namespace BuildIt.Forms.Controls
         private bool IsEntered { get; set; }
 
         private bool IsPressed { get; set; }
-
-        private bool EnterRequired { get; set; }
 
         /// <summary>
         /// Invoked whenever the Parent of an element is set. Implement this method in order
@@ -81,20 +81,9 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Sends the pressed event
+        /// Raises the property changed event.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected async Task SendPressed()
-        {
-            await Task.Yield();
-            Command?.Execute(CommandParameter);
-            Pressed.SafeRaise(this);
-        }
-
-        /// <summary>
-        /// Raises the property changed event
-        /// </summary>
-        /// <param name="propertyName">The name of the property that has changed</param>
+        /// <param name="propertyName">The name of the property that has changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
@@ -109,9 +98,9 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Raises the property changing event
+        /// Raises the property changing event.
         /// </summary>
-        /// <param name="propertyName">The name of the property that's changing</param>
+        /// <param name="propertyName">The name of the property that's changing.</param>
         protected override void OnPropertyChanging([CallerMemberName] string propertyName = null)
         {
             if (propertyName == CommandProperty.PropertyName)
@@ -127,10 +116,10 @@ namespace BuildIt.Forms.Controls
         }
 
         /// <summary>
-        /// Invoked when a touch event happens and an event needs to be raised
+        /// Invoked when a touch event happens and an event needs to be raised.
         /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="args">The touch event args</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The touch event args.</param>
         protected async void OnTouchEffectAction(object sender, object args)
         {
             try
@@ -186,14 +175,42 @@ namespace BuildIt.Forms.Controls
             }
         }
 
-        private static void CommandParameterChanged(BindableObject bindable, object oldvalue, object newvalue)
+        /// <summary>
+        /// Sends the pressed event.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected async Task SendPressed()
         {
-            ((ContentButton)bindable).CommandCanExecuteChanged(bindable, EventArgs.Empty);
+            await Task.Yield();
+            Command?.Execute(CommandParameter);
+            Pressed.SafeRaise(this);
         }
 
         private static void CommandChanged(BindableObject bo, object o, object n)
         {
             ((ContentButton)bo).OnCommandChanged();
+        }
+
+        private static void CommandParameterChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            ((ContentButton)bindable).CommandCanExecuteChanged(bindable, EventArgs.Empty);
+        }
+
+        private void CommandCanExecuteChanged(object sender, EventArgs eventArgs)
+        {
+            ICommand cmd = Command;
+            if (cmd != null)
+            {
+                IsEnabledCore = cmd.CanExecute(CommandParameter);
+            }
+        }
+
+        private async void ContentButton_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IsEnabled))
+            {
+                await UpdateVisualState();
+            }
         }
 
         private void OnCommandChanged()
@@ -206,14 +223,6 @@ namespace BuildIt.Forms.Controls
             }
 
             IsEnabledCore = true;
-        }
-
-        private async void ContentButton_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IsEnabled))
-            {
-                await UpdateVisualState();
-            }
         }
 
         private async Task UpdateVisualState()
@@ -243,15 +252,6 @@ namespace BuildIt.Forms.Controls
             else
             {
                 await VisualStateManager.GoToState(this, "Disabled");
-            }
-        }
-
-        private void CommandCanExecuteChanged(object sender, EventArgs eventArgs)
-        {
-            ICommand cmd = Command;
-            if (cmd != null)
-            {
-                IsEnabledCore = cmd.CanExecute(CommandParameter);
             }
         }
     }

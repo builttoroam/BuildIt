@@ -1,12 +1,11 @@
 ﻿using System;
-using BuildIt.States.Typed;
 
 namespace BuildIt.States.Interfaces
 {
     /// <summary>
-    /// Entity that raises a typed state changing event
+    /// Entity that raises a typed state changing event.
     /// </summary>
-    /// <typeparam name="TState">The type of the state</typeparam>
+    /// <typeparam name="TState">The type of the state.</typeparam>
     public interface INotifyTypedStateChange<TState> : INotifyStateChange
     {
         /// <summary>

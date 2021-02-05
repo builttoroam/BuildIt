@@ -9,11 +9,10 @@ using Xamarin.Forms.Platform.UWP;
 
 [assembly: ResolutionGroupName("BuildIt")]
 [assembly: ExportEffect(typeof(BuildIt.Forms.Controls.UWP.TouchEffect), "TouchEffect")]
-
 namespace BuildIt.Forms.Controls.UWP
 {
     /// <summary>
-    /// Effect for detecting touch input
+    /// Effect for detecting touch input.
     /// </summary>
     [Preserve]
     public class TouchEffect : PlatformEffect
@@ -23,7 +22,7 @@ namespace BuildIt.Forms.Controls.UWP
         private Action<Element, TouchActionEventArgs> onTouchAction;
 
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -50,7 +49,7 @@ namespace BuildIt.Forms.Controls.UWP
         }
 
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         protected override void OnDetached()
         {

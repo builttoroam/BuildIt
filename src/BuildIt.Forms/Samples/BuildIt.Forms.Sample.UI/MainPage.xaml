@@ -48,6 +48,12 @@
                         Target="Tab4.IsVisible" />
           </vsm:VisualState.Setters>
         </vsm:VisualState>
+        <vsm:VisualState Name="ShowTab5">
+          <vsm:VisualState.Setters>
+            <vsm:Setter Value="true"
+                        Target="Tab5.IsVisible" />
+          </vsm:VisualState.Setters>
+        </vsm:VisualState>
       </vsm:VisualStateGroup>
       <vsm:VisualStateGroup Name="SampleStates">
         <vsm:VisualState Name="Show">
@@ -182,6 +188,7 @@
       <ColumnDefinition />
       <ColumnDefinition />
       <ColumnDefinition />
+      <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -199,10 +206,13 @@
     <Button Text="Tab4"
             Clicked="ShowTab4Clicked"
             Grid.Column="3" />
+    <Button Text="Tab5"
+            Clicked="ShowTab5Clicked"
+            Grid.Column="4" />
 
     <Grid Margin="0,10,0,0"
           Grid.Row="1"
-          Grid.ColumnSpan="3">
+          Grid.ColumnSpan="5">
       <!-- Acrylic brushes only in Fall Creators Update -->
       <!--<Grid.Effects>
             <controls:BackgroundEffect Resource="SystemControlAcrylicWindowBrush" />
@@ -255,7 +265,7 @@
           <Button Text="Take Photo"
                   Clicked="PhotoButton_OnClicked" />
           <Button Text="Focus and Take Photo"
-                    Clicked="FocusAndTakePhoto_OnClicked" />
+                  Clicked="FocusAndTakePhoto_OnClicked" />
           <Button Text="Get supported focus modes"
                   Clicked="RetrieveSupportedFocusModesButton_Clicked" />
           <Label x:Name="SupportedFocusModesLabel" />
@@ -457,6 +467,73 @@
             </ListView>
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid x:Name="Tab5"
+            IsVisible="False">
+        <Grid.Resources>
+          <ResourceDictionary>
+            <DataTemplate x:Key="EmptyStateDataTemplate">
+              <Grid>
+                <Label Text="There are no elements to display"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="24" />
+              </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="LoadingErrorStateTemplate">
+              <StackLayout Spacing="10"
+                           Padding="50, 0"
+                           VerticalOptions="Center">
+                <Label Text="Oops, we ran into an issue. Please try again or if the issue persists contact support."
+                       VerticalOptions="Center"
+                       FontSize="20" />
+                <Button Text="Retry"
+                        Command="{Binding StatefulControlRetryCommand, Mode=OneWay}"
+                        HorizontalOptions="Center"/>
+              </StackLayout>
+            </DataTemplate>
+
+            <DataTemplate x:Key="LoadingStateTemplate">
+              <ActivityIndicator IsRunning="True" />
+            </DataTemplate>
+          </ResourceDictionary>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <controls:StatefulControl State="{Binding StatefulControlState, Mode=OneWay}"
+                                  EmptyStateTemplate="{StaticResource EmptyStateDataTemplate}"
+                                  LoadingErrorStateTemplate="{StaticResource LoadingErrorStateTemplate}"
+                                  LoadingStateTemplate="{StaticResource LoadingStateTemplate}">
+          <ListView ItemsSource="{Binding StatefulControlItems, Mode=OneWay}">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <ViewCell>
+                  <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding ., Mode=OneWay}"></Label>
+                  </StackLayout>
+                </ViewCell>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+        </controls:StatefulControl>
+        <ScrollView Grid.Row="1"
+                    Orientation="Horizontal">
+          <StackLayout Orientation="Horizontal"
+                       Padding="10"
+                       Spacing="10">
+            <Button Text="Load -> Empty"
+                    Clicked="ChangeStatefulControlToEmpty_OnClicked" />
+            <Button Text="Loaded (aka Success)"
+                    Clicked="ChangeStatefulControlToLoaded_OnClicked" />
+            <Button Text="Load -> Error"
+                    Clicked="ChangeStatefulControlToLoadingError_OnClicked" />
+          </StackLayout>
+        </ScrollView>
       </Grid>
     </Grid>
   </Grid>

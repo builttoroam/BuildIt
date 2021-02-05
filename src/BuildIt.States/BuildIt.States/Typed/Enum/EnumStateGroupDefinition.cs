@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Reflection;
-using BuildIt.States.Interfaces;
 
 namespace BuildIt.States.Typed.Enum
 {
     /// <summary>
-    /// Definition of a enum state group
+    /// Definition of a enum state group.
     /// </summary>
-    /// <typeparam name="TState">The state type</typeparam>
+    /// <typeparam name="TState">The state type.</typeparam>
     public class EnumStateGroupDefinition<TState>
         : TypedStateGroupDefinition<TState, EnumStateDefinition<TState>>
         where TState : struct
@@ -24,7 +23,7 @@ namespace BuildIt.States.Typed.Enum
         }
 
         /// <summary>
-        /// Defines all states for the enum type
+        /// Defines all states for the enum type.
         /// </summary>
         public void DefineAllStates()
         {

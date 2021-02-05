@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 namespace BuildIt.Logging.Filters
 {
     /// <summary>
-    /// Filter based on meta data
+    /// Filter based on meta data.
     /// </summary>
     public class RequiredMetadataLogFilter : BaseLogFilter
     {
         /// <summary>
         /// Gets or sets the required metadata key/values - leave value empty if
-        /// only requiring the key to be checked
+        /// only requiring the key to be checked.
         /// </summary>
         public IDictionary<string, string> RequiredMetadata { get; set; }
 
         /// <summary>
-        /// Generates the filter function
+        /// Generates the filter function.
         /// </summary>
-        /// <returns>Filter function</returns>
+        /// <returns>Filter function.</returns>
         protected override Func<ILogEntry, Task<bool>> BuildFilter()
         {
             if (RequiredMetadata?.Count == 0)

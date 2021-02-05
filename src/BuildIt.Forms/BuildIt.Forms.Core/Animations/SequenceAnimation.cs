@@ -5,15 +5,15 @@ using Xamarin.Forms;
 namespace BuildIt.Forms.Animations
 {
     /// <summary>
-    /// A list of animations that will be invoked in sequence
+    /// A list of animations that will be invoked in sequence.
     /// </summary>
     public class SequenceAnimation : MultiAnimation
     {
         /// <summary>
-        /// Animate method
+        /// Animate method.
         /// </summary>
-        /// <param name="visualElement">The element to animate</param>
-        /// <param name="cancelToken">Cancellation token to cancel animation</param>
+        /// <param name="visualElement">The element to animate.</param>
+        /// <param name="cancelToken">Cancellation token to cancel animation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public override async Task Animate(VisualElement visualElement, CancellationToken cancelToken)
         {

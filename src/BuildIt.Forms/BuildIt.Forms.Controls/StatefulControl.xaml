@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:BuildIt.Forms.Controls;assembly=BuildIt.Forms.Controls"
+             mc:Ignorable="d"
+             x:Class="BuildIt.Forms.Controls.StatefulControl">
+    <ContentView.ControlTemplate>
+        <controls:StatefulControlTemplate />
+    </ContentView.ControlTemplate>
+</ContentView>

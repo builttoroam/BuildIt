@@ -100,9 +100,9 @@ namespace BuildIt.ML
                     {
                         var val = intValues[i];
 
-                        floatValues[i * 3 + 0] = ((val & 0xFF) - imageMeanB) / 1f;
-                        floatValues[i * 3 + 1] = (((val >> 8) & 0xFF) - imageMeanG) / 1f;
-                        floatValues[i * 3 + 2] = (((val >> 16) & 0xFF) - imageMeanR) / 1f;
+                        floatValues[(i * 3) + 0] = ((val & 0xFF) - imageMeanB) / 1f;
+                        floatValues[(i * 3) + 1] = (((val >> 8) & 0xFF) - imageMeanG) / 1f;
+                        floatValues[(i * 3) + 2] = (((val >> 16) & 0xFF) - imageMeanR) / 1f;
                     }
 
                     resizedBitmap.Recycle();

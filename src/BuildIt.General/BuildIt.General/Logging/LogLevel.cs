@@ -1,7 +1,7 @@
 namespace BuildIt.Logging
 {
     /// <summary>
-    /// The different log levels
+    /// The different log levels.
     /// </summary>
     public enum LogLevel
     {
@@ -23,6 +23,6 @@ namespace BuildIt.Logging
         /// <summary>
         /// Exception level
         /// </summary>
-        Error
+        Error,
     }
 }

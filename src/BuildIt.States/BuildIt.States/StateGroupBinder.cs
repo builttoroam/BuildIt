@@ -1,27 +1,27 @@
-using System.Threading.Tasks;
 using BuildIt.States.Interfaces;
+using System.Threading.Tasks;
 
 namespace BuildIt.States
 {
     /// <summary>
-    /// Entity that keeps two state groups in sync
+    /// Entity that keeps two state groups in sync.
     /// </summary>
     public class StateGroupBinder : BaseBinder<IStateGroup>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StateGroupBinder"/> class.
-        /// Creates instance of binder and wires up link between state groups
+        /// Creates instance of binder and wires up link between state groups.
         /// </summary>
-        /// <param name="target">The target group (to be updated when source changes)</param>
-        /// <param name="source">The source group</param>
-        /// <param name="bothDirections">If true, source will be updated by changes to target</param>
+        /// <param name="target">The target group (to be updated when source changes).</param>
+        /// <param name="source">The source group.</param>
+        /// <param name="bothDirections">If true, source will be updated by changes to target.</param>
         public StateGroupBinder(IStateGroup target, IStateGroup source, bool bothDirections)
             : base(target, source, bothDirections)
         {
         }
 
         /// <summary>
-        /// Disconnects the two state groups
+        /// Disconnects the two state groups.
         /// </summary>
         protected override void InternalUnbind()
         {
@@ -42,7 +42,7 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Binds the source and target state groups
+        /// Binds the source and target state groups.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected override async Task InternalBind()

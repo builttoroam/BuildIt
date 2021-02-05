@@ -2,17 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace BuildIt.Forms
 {
     /// <summary>
-    /// Includes attached properties that will cascade to all nested elements (eg forecolor)
+    /// Includes attached properties that will cascade to all nested elements (eg forecolor).
     /// </summary>
     public class Ambient
     {
         /// <summary>
-        /// Font family attached property
+        /// Font family attached property.
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty =
             BindableProperty.CreateAttached(
@@ -23,7 +22,7 @@ namespace BuildIt.Forms
                 propertyChanged: FontChanged);
 
         /// <summary>
-        /// Font size attached property
+        /// Font size attached property.
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
             BindableProperty.CreateAttached(
@@ -34,7 +33,7 @@ namespace BuildIt.Forms
                 propertyChanged: FontSizeChanged);
 
         /// <summary>
-        /// Foreground color - used for nested Label elements
+        /// Foreground color - used for nested Label elements.
         /// </summary>
         public static readonly BindableProperty ForeColorProperty =
             BindableProperty.CreateAttached(
@@ -53,60 +52,60 @@ namespace BuildIt.Forms
         private static IDictionary<Type, FieldInfo> ColorProperties { get; } = new Dictionary<Type, FieldInfo>();
 
         /// <summary>
-        /// Gets the font family
+        /// Gets the font family.
         /// </summary>
-        /// <param name="view">The element to retrieve the font family for</param>
-        /// <returns>The font family</returns>
+        /// <param name="view">The element to retrieve the font family for.</param>
+        /// <returns>The font family.</returns>
         public static string GetFontFamily(BindableObject view)
         {
             return (string)view.GetValue(FontFamilyProperty);
         }
 
         /// <summary>
-        /// Gets the font size
+        /// Gets the font size.
         /// </summary>
-        /// <param name="view">The element to retrieve the font size for</param>
-        /// <returns>The font size</returns>
+        /// <param name="view">The element to retrieve the font size for.</param>
+        /// <returns>The font size.</returns>
         public static double GetFontSize(BindableObject view)
         {
             return (double)view.GetValue(FontSizeProperty);
         }
 
         /// <summary>
-        /// Gets the forecolor set on an element
+        /// Gets the forecolor set on an element.
         /// </summary>
-        /// <param name="view">The element to get the forecolor of</param>
-        /// <returns>The foreground color</returns>
+        /// <param name="view">The element to get the forecolor of.</param>
+        /// <returns>The foreground color.</returns>
         public static Color GetForeColor(BindableObject view)
         {
             return (Color)view.GetValue(ForeColorProperty);
         }
 
         /// <summary>
-        /// Sets the font family
+        /// Sets the font family.
         /// </summary>
-        /// <param name="view">The element to set the font family on</param>
-        /// <param name="value">The font family value</param>
+        /// <param name="view">The element to set the font family on.</param>
+        /// <param name="value">The font family value.</param>
         public static void SetFontFamily(BindableObject view, string value)
         {
             view.SetValue(FontFamilyProperty, value);
         }
 
         /// <summary>
-        /// Sets the font size
+        /// Sets the font size.
         /// </summary>
-        /// <param name="view">The element to set the font size on</param>
-        /// <param name="value">The font size value</param>
+        /// <param name="view">The element to set the font size on.</param>
+        /// <param name="value">The font size value.</param>
         public static void SetFontSize(BindableObject view, double value)
         {
             view.SetValue(FontSizeProperty, value);
         }
 
         /// <summary>
-        /// Sets the forecolor property on a specific element
+        /// Sets the forecolor property on a specific element.
         /// </summary>
-        /// <param name="view">The element</param>
-        /// <param name="value">The color to set</param>
+        /// <param name="view">The element.</param>
+        /// <param name="value">The color to set.</param>
         public static void SetForeColor(BindableObject view, Color value)
         {
             view.SetValue(ForeColorProperty, value);

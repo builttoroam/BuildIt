@@ -9,30 +9,30 @@ using System;
 namespace BuildIt
 {
     /// <summary>
-    /// Event args with one strongly typed parameter
+    /// Event args with one strongly typed parameter.
     /// </summary>
-    /// <typeparam name="T">The type of the first parameter</typeparam>
+    /// <typeparam name="T">The type of the first parameter.</typeparam>
     public class ParameterEventArgs<T> : EventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterEventArgs{T}"/> class.
-        /// Constructs the event args
+        /// Constructs the event args.
         /// </summary>
-        /// <param name="parameter">The first parameter</param>
+        /// <param name="parameter">The first parameter.</param>
         public ParameterEventArgs(T parameter)
         {
             Parameter1 = parameter;
         }
 
         /// <summary>
-        /// Gets or sets the first parameter
+        /// Gets or sets the first parameter.
         /// </summary>
         public T Parameter1 { get; set; }
 
         /// <summary>
-        /// Converts the parameter into a ParameterEventArgs
+        /// Converts the parameter into a ParameterEventArgs.
         /// </summary>
-        /// <param name="parameter">The first parameter</param>
+        /// <param name="parameter">The first parameter.</param>
         public static implicit operator ParameterEventArgs<T>(T parameter)
         {
             return new ParameterEventArgs<T>(parameter);

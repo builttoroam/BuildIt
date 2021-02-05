@@ -1,8 +1,8 @@
+using CoreMotion;
+using Foundation;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using CoreMotion;
-using Foundation;
 using UIKit;
 
 namespace BuildIt.AR.iOS
@@ -11,7 +11,7 @@ namespace BuildIt.AR.iOS
     {
         private CMMotionManager motion;
         private ScreenWorld world;
-        
+
         private readonly Action<float, float, float> updateElementsOnScreen;
         private UIView view;
 
@@ -41,6 +41,7 @@ namespace BuildIt.AR.iOS
                     world.AddElementToWorld(element);
                 }
             }
+
             world.UpdateRangeOfWorld(VisualRangeKm);
         }
 
@@ -61,7 +62,11 @@ namespace BuildIt.AR.iOS
         {
             try
             {
-                if (Interlocked.CompareExchange(ref updating, 1, 0) == 1) return;
+                if (Interlocked.CompareExchange(ref updating, 1, 0) == 1)
+                {
+                    return;
+                }
+
                 view.InvokeOnMainThread(() =>
                 {
                     if (data != null)

@@ -33,6 +33,7 @@ namespace BuildIt.Forms.Controls.Platforms.Android
             {
                 return;
             }
+
             owner.CameraOpenCloseLock.Release();
             owner.CameraDevice = null;
             owner.RaiseErrorOpening();

@@ -1,18 +1,25 @@
 ﻿<Project>
   <PropertyGroup>
-     <Authors>Built to Roam</Authors>
-      <Company>Built to Roam Pty Ltd</Company>
-      <Copyright>Copyright © 2019</Copyright>
+    <Authors>Built to Roam</Authors>
+    <Company>Built to Roam Pty Ltd</Company>
+    <Copyright>Copyright © 2020</Copyright>
     <RepositoryType>git</RepositoryType>
-      <RepositoryUrl>https://github.com/builttoroam/buildit</RepositoryUrl>
-      <PackageTags>BuildIt</PackageTags>
-      <NeutralLanguage>en</NeutralLanguage>
-      <PackageLicenseUrl>https://github.com/builttoroam/BuildIt/blob/master/LICENSE</PackageLicenseUrl>
-      <PackageProjectUrl>https://github.com/builttoroam/buildit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/builttoroam/buildit</RepositoryUrl>
+    <PackageTags>BuildIt</PackageTags>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/builttoroam/buildit</PackageProjectUrl>
+    
+    <IS_PREVIEW Condition=" '$(IS_PREVIEW)' == '' ">false</IS_PREVIEW>
+    <IS_RELEASE Condition=" '$(IS_RELEASE)' == '' ">false</IS_RELEASE>
+    <Version Condition=" '$(BUILDIT_RELEASE)' != '' ">$(BUILDIT_RELEASE)</Version>
 
-      <Version>2.0.0.0</Version>
-      <AssemblyVersion>2.0.0.0</AssemblyVersion>
-      <FileVersion>2.0.0.0</FileVersion>
+    <VersionPrefix Condition=" '$(BUILDIT_RELEASE)' == '' ">2.0.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <VersionPrefix Condition=" '$(BUILDIT_RELEASE)' == '' And '$(BUILD_BUILDID)' != '' ">$(VersionPrefix).$(BUILD_BUILDID)</VersionPrefix>
+    <VersionSuffix Condition=" '$(BUILDIT_RELEASE)' == '' And '$(IS_PREVIEW)' ">beta</VersionSuffix>
+    <VersionSuffix Condition=" '$(BUILDIT_RELEASE)' == '' And '$(IS_RELEASE)' "></VersionSuffix>
+    
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
 
     <LangVersion>latest</LangVersion>
@@ -28,12 +35,4 @@
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' and '$(IsLibraryProject)' == 'true'  and '$(IsTestProject)' != 'true' ">true</GeneratePackageOnBuild>
 
   </PropertyGroup>
-  
-  <ItemGroup Condition="'$(IsLibraryProject)' == 'true'">
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(SourceLinkEnabled)' != 'false' and '$(IsLibraryProject)' == 'true'">
-    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" /> 
-  </ItemGroup>
 </Project>

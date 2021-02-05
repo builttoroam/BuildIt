@@ -1,58 +1,60 @@
+using BuildIt.States.Interfaces;
+
+using CommonServiceLocator;
+
 using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildIt.States.Interfaces;
-using CommonServiceLocator;
 
 namespace BuildIt.States
 {
     /// <summary>
-    /// Wrapper class for defining a state, and associated data
+    /// Wrapper class for defining a state, and associated data.
     /// </summary>
-    /// <typeparam name="TData">The type (enum) of the state being defined</typeparam>
+    /// <typeparam name="TData">The type (enum) of the state being defined.</typeparam>
     public class StateDefinitionTypedDataWrapper<TData> : IStateDefinitionTypedDataWrapper<TData>
         where TData : INotifyPropertyChanged
     {
         /// <summary>
-        /// Gets or sets the method to call when initializing the state
+        /// Gets or sets the method to call when initializing the state.
         /// </summary>
         public Func<TData, CancellationToken, Task> Initialise { get; set; }
 
         /// <summary>
-        /// Gets or sets the method to call when about to change from a state
+        /// Gets or sets the method to call when about to change from a state.
         /// </summary>
         public Func<TData, StateCancelEventArgs, Task> AboutToChangeFrom { get; set; }
 
         /// <summary>
-        /// Gets or sets the method to call when changing from a state
+        /// Gets or sets the method to call when changing from a state.
         /// </summary>
         public Func<TData, CancellationToken, Task> ChangingFrom { get; set; }
 
         /// <summary>
-        /// Gets or sets the method to call when changed from a state
+        /// Gets or sets the method to call when changed from a state.
         /// </summary>
         public Func<TData, CancellationToken, Task> ChangedFrom { get; set; }
 
         /// <summary>
-        /// Gets or sets the method to call when changed to a state
+        /// Gets or sets the method to call when changed to a state.
         /// </summary>
         public Func<TData, CancellationToken, Task> ChangedTo { get; set; }
 
         /// <summary>
-        /// Gets or sets the method to call when change to a state, passing in data
+        /// Gets or sets the method to call when change to a state, passing in data.
         /// </summary>
         public Func<TData, string, CancellationToken, Task> ChangedToWithData { get; set; }
 
         /// <summary>
-        /// Gets the type of the state data
+        /// Gets the type of the state data.
         /// </summary>
         public Type StateDataType => typeof(TData);
 
         /// <summary>
-        /// Generates a new instance of the state data
+        /// Generates a new instance of the state data.
         /// </summary>
-        /// <returns>The generated instance of state data</returns>
+        /// <returns>The generated instance of state data.</returns>
         public INotifyPropertyChanged Generate()
         {
             $"Creating instance of {typeof(TData).Name}".LogStateInfo();
@@ -63,11 +65,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Invokes the Initialize method
+        /// Invokes the Initialize method.
         /// </summary>
-        /// <param name="dataEntity">The state data to pass into the method</param>
-        /// <param name="cancelToken">Cancels the state transition</param>
-        /// <returns>Task to await</returns>
+        /// <param name="dataEntity">The state data to pass into the method.</param>
+        /// <param name="cancelToken">Cancels the state transition.</param>
+        /// <returns>Task to await.</returns>
         public async Task InvokeInitialise(INotifyPropertyChanged dataEntity, CancellationToken cancelToken)
         {
             if (Initialise == null)
@@ -83,11 +85,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Invokes the AboutToChange method, passing in data and cancel args
+        /// Invokes the AboutToChange method, passing in data and cancel args.
         /// </summary>
-        /// <param name="dataEntity">The state data to pass into the method</param>
-        /// <param name="cancel">Cancels the state transition</param>
-        /// <returns>Task to await</returns>
+        /// <param name="dataEntity">The state data to pass into the method.</param>
+        /// <param name="cancel">Cancels the state transition.</param>
+        /// <returns>Task to await.</returns>
         public async Task InvokeAboutToChangeFrom(INotifyPropertyChanged dataEntity, StateCancelEventArgs cancel)
         {
             if (AboutToChangeFrom == null)
@@ -103,11 +105,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Invokes the changingfrom method
+        /// Invokes the changingfrom method.
         /// </summary>
-        /// <param name="dataEntity">The state data to pass into the method</param>
-        /// <param name="cancelToken">Cancels the state transition</param>
-        /// <returns>Task to await</returns>
+        /// <param name="dataEntity">The state data to pass into the method.</param>
+        /// <param name="cancelToken">Cancels the state transition.</param>
+        /// <returns>Task to await.</returns>
         public async Task InvokeChangingFrom(INotifyPropertyChanged dataEntity, CancellationToken cancelToken)
         {
             if (ChangingFrom == null)
@@ -123,11 +125,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Invokes the changed from method
+        /// Invokes the changed from method.
         /// </summary>
-        /// <param name="dataEntity">The state data to pass into the method</param>
-        /// <param name="cancelToken">Cancels the state transition</param>
-        /// <returns>Task to await</returns>
+        /// <param name="dataEntity">The state data to pass into the method.</param>
+        /// <param name="cancelToken">Cancels the state transition.</param>
+        /// <returns>Task to await.</returns>
         public async Task InvokeChangedFrom(INotifyPropertyChanged dataEntity, CancellationToken cancelToken)
         {
             if (ChangedFrom == null)
@@ -143,11 +145,11 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Invokes the changed to method
+        /// Invokes the changed to method.
         /// </summary>
-        /// <param name="dataEntity">The state data to pass into the method</param>
-        /// <param name="cancelToken">Cancels the state transition</param>
-        /// <returns>Task to await</returns>
+        /// <param name="dataEntity">The state data to pass into the method.</param>
+        /// <param name="cancelToken">Cancels the state transition.</param>
+        /// <returns>Task to await.</returns>
         public async Task InvokeChangedTo(INotifyPropertyChanged dataEntity, CancellationToken cancelToken)
         {
             if (ChangedTo == null)
@@ -163,12 +165,12 @@ namespace BuildIt.States
         }
 
         /// <summary>
-        /// Invokes the changed to with data method
+        /// Invokes the changed to with data method.
         /// </summary>
-        /// <param name="dataEntity">The state data to pass into the method</param>
-        /// <param name="data">The json data to pass into the method</param>
-        /// <param name="cancelToken">Cancels the state transition</param>
-        /// <returns>Task to await</returns>
+        /// <param name="dataEntity">The state data to pass into the method.</param>
+        /// <param name="data">The json data to pass into the method.</param>
+        /// <param name="cancelToken">Cancels the state transition.</param>
+        /// <returns>Task to await.</returns>
         public async Task InvokeChangedToWithData(INotifyPropertyChanged dataEntity, string data, CancellationToken cancelToken)
         {
             if (ChangedToWithData == null)

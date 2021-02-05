@@ -2,12 +2,12 @@
 using BuildIt.Forms.Controls;
 using BuildIt.Forms.Sample.Core.ViewModels;
 using BuildIt.States.Interfaces;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 using Xamarin.Forms;
 
 namespace BuildIt.Forms.Sample
@@ -111,6 +111,11 @@ namespace BuildIt.Forms.Sample
         private async void ShowTab4Clicked(object sender, EventArgs e)
         {
             VisualStateManager.GoToState(this, "ShowTab4");
+        }
+
+        private async void ShowTab5Clicked(object sender, EventArgs e)
+        {
+            VisualStateManager.GoToState(this, "ShowTab5");
         }
 
         private void BobClick(object sender, EventArgs e)
@@ -255,6 +260,21 @@ namespace BuildIt.Forms.Sample
             }
 
             currentViewModel.CameraFocusMode = focusMode;
+        }
+
+        private async void ChangeStatefulControlToEmpty_OnClicked(object sender, EventArgs e)
+        {
+            await (BindingContext as MainViewModel).UpdateStatefulControlState(StatefulControlStates.Empty);
+        }
+
+        private async void ChangeStatefulControlToLoadingError_OnClicked(object sender, EventArgs e)
+        {
+            await (BindingContext as MainViewModel).UpdateStatefulControlState(StatefulControlStates.LoadingError);
+        }
+
+        private async void ChangeStatefulControlToLoaded_OnClicked(object sender, EventArgs e)
+        {
+            await (BindingContext as MainViewModel).UpdateStatefulControlState(StatefulControlStates.Loaded);
         }
     }
 }

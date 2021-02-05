@@ -17,11 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.iOS", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildIt.Forms.Sample.UWP", "BuildIt.Forms\Samples\BuildIt.Forms.Sample.UWP\BuildIt.Forms.Sample.UWP.csproj", "{01D94B8F-59CE-46D4-82D1-808E865621EE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{D0C173D1-828E-462F-ACB2-AD1DB2324CF9}"
-	ProjectSection(SolutionItems) = preProject
-		BuildIt.Forms\BuildIt.Forms.nuspec = BuildIt.Forms\BuildIt.Forms.nuspec
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildIt.Forms.Sample.Core", "BuildIt.Forms\Samples\BuildIt.forms.Sample.Core\BuildIt.Forms.Sample.Core.csproj", "{6DA33F48-46C7-4AA1-9089-9553029FF535}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{FE9D64EF-9B21-40D9-A9EA-CF947F4618A5}"

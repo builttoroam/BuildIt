@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BuildIt.AR.UWP.Extensions;
+using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
 using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using BuildIt.AR.UWP.Extensions;
 using Panel = Windows.Devices.Enumeration.Panel;
 
 namespace BuildIt.AR.UWP.Utilities
@@ -17,7 +15,6 @@ namespace BuildIt.AR.UWP.Utilities
     public class CameraFeedUtility
     {
         private MediaCapture mediaCapture;
-        private bool isPreviewing;
         DisplayRequest displayRequest = new DisplayRequest();
         private readonly CaptureElement captureElement;
         private readonly CoreDispatcher dispatcher;
@@ -40,11 +37,11 @@ namespace BuildIt.AR.UWP.Utilities
                     await mediaCapture.InitializeAsync(settings);
                     captureElement.Source = mediaCapture;
                     await mediaCapture.StartPreviewAsync();
-                    isPreviewing = true;
                     mediaCapture.SetPreviewRotation(videoRotation);
                     displayRequest.RequestActive();
                 }
-                //DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
+
+                // DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
             }
             catch (UnauthorizedAccessException)
             {
@@ -58,9 +55,9 @@ namespace BuildIt.AR.UWP.Utilities
         }
 
         /// <summary>
-        /// Queries the available video capture devices to try and find one mounted on the desired panel
+        /// Queries the available video capture devices to try and find one mounted on the desired panel.
         /// </summary>
-        /// <param name="desiredPanel">The panel on the device that the desired camera is mounted on</param>
+        /// <param name="desiredPanel">The panel on the device that the desired camera is mounted on.</param>
         /// <returns>A DeviceInformation instance with a reference to the camera mounted on the desired panel if available,
         ///          any other camera if not, or null if no camera is available.</returns>
         private static async Task<DeviceInformation> FindCameraDeviceByPanelAsync(Panel desiredPanel)
@@ -84,7 +81,6 @@ namespace BuildIt.AR.UWP.Utilities
         {
             if (mediaCapture != null)
             {
-                isPreviewing = false;
                 await mediaCapture.StopPreviewAsync();
 
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>

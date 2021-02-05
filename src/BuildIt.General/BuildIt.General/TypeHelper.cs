@@ -8,7 +8,7 @@ using System.Reflection;
 namespace BuildIt
 {
     /// <summary>
-    /// Helper for building information about a Type
+    /// Helper for building information about a Type.
     /// </summary>
     public class TypeHelper
     {
@@ -17,38 +17,38 @@ namespace BuildIt
         private Action<object, object> deepUpdater;
 
         /// <summary>
-        /// Defines an entity with an Updater method
+        /// Defines an entity with an Updater method.
         /// </summary>
         private interface ICollectionUpdater
         {
             /// <summary>
-            /// Gets method that is used to update the collection
+            /// Gets method that is used to update the collection.
             /// </summary>
             Action Updater { get; }
         }
 
         /// <summary>
-        /// Gets or sets gets the function for building a hash for entities of this type
+        /// Gets or sets gets the function for building a hash for entities of this type.
         /// </summary>
         public Func<object, int> HashBuilder { get => hashBuilder ?? (hashBuilder = CreateHashBuilder()); set => hashBuilder = value; }
 
         /// <summary>
-        /// Gets or sets gets the function for updating entities of this type
+        /// Gets or sets gets the function for updating entities of this type.
         /// </summary>
         public Action<object, object> DeepUpdater { get => deepUpdater ?? (deepUpdater = CreateDeepUpdater()); set => deepUpdater = value; }
 
         private static IDictionary<Type, TypeHelper> Helpers { get; } = new Dictionary<Type, TypeHelper>();
 
         /// <summary>
-        /// Gets or sets the type to provide helpers for
+        /// Gets or sets the type to provide helpers for.
         /// </summary>
         private Type TypeToHelp { get; set; }
 
         /// <summary>
-        /// Generates a type helper for a specific type
+        /// Generates a type helper for a specific type.
         /// </summary>
-        /// <param name="typeToHelp">The type to provide help for</param>
-        /// <returns>An instance of the TypeHelper</returns>
+        /// <param name="typeToHelp">The type to provide help for.</param>
+        /// <returns>An instance of the TypeHelper.</returns>
         public static TypeHelper RetrieveHelperForType(Type typeToHelp)
         {
             var existing = Helpers.SafeValue(typeToHelp);
@@ -202,8 +202,8 @@ namespace BuildIt
             /// <summary>
             /// Initializes a new instance of the <see cref="TypedCollectionUpdater{T}"/> class.
             /// </summary>
-            /// <param name="list1">The original list</param>
-            /// <param name="list2">The new list</param>
+            /// <param name="list1">The original list.</param>
+            /// <param name="list2">The new list.</param>
             public TypedCollectionUpdater(object list1, object list2)
             {
                 List1 = list1 as ObservableCollection<T>;

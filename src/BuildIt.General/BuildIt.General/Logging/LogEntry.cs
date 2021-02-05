@@ -6,20 +6,20 @@ using System.Text;
 namespace BuildIt.Logging
 {
     /// <summary>
-    /// A entry to place in the log
+    /// A entry to place in the log.
     /// </summary>
     internal class LogEntry : ILogEntry
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LogEntry"/> class.
         /// </summary>
-        /// <param name="level">The log level</param>
-        /// <param name="assemblyName">The assembly name of the code that logged the message</param>
-        /// <param name="method">The method that invoked the log</param>
-        /// <param name="message">The message</param>
-        /// <param name="exception">The exception</param>
-        /// <param name="metaData">The meta data</param>
-        /// <param name="categories">The categories</param>
+        /// <param name="level">The log level.</param>
+        /// <param name="assemblyName">The assembly name of the code that logged the message.</param>
+        /// <param name="method">The method that invoked the log.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="metaData">The meta data.</param>
+        /// <param name="categories">The categories.</param>
         public LogEntry(LogLevel level, string assemblyName, string method, string message, Exception exception, IDictionary<string, string> metaData, params string[] categories)
         {
             Timestamp = DateTime.UtcNow;
@@ -33,49 +33,49 @@ namespace BuildIt.Logging
         }
 
         /// <summary>
-        /// Gets the assembly name of the caller
+        /// Gets the assembly name of the caller.
         /// </summary>
         public string AssemblyName { get; }
 
         /// <summary>
-        /// Gets timestamp (UTC) of the log event
+        /// Gets timestamp (UTC) of the log event.
         /// </summary>
         public DateTime Timestamp { get; }
 
         /// <summary>
-        /// Gets the message
+        /// Gets the message.
         /// </summary>
         public string Message { get; }
 
         /// <summary>
-        /// Gets the categories
+        /// Gets the categories.
         /// </summary>
         public string[] Categories { get; }
 
         /// <summary>
-        /// Gets the method of the caller
+        /// Gets the method of the caller.
         /// </summary>
         public string Method { get; }
 
         /// <summary>
-        /// Gets the exception
+        /// Gets the exception.
         /// </summary>
         public Exception Exception { get; }
 
         /// <summary>
-        /// Gets the log level
+        /// Gets the log level.
         /// </summary>
         public LogLevel Level { get; }
 
         /// <summary>
-        /// Gets the metadata
+        /// Gets the metadata.
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary>
-        /// Provides a string representation of the log message
+        /// Provides a string representation of the log message.
         /// </summary>
-        /// <returns>The log as text</returns>
+        /// <returns>The log as text.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();

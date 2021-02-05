@@ -14,7 +14,7 @@ using Xamarin.Forms.Platform.Android;
 namespace BuildIt.Forms.Controls.Droid
 {
     /// <summary>
-    /// Touch effect implementation for Android
+    /// Touch effect implementation for Android.
     /// </summary>
     [Preserve]
     public class TouchEffect : PlatformEffect
@@ -51,7 +51,7 @@ namespace BuildIt.Forms.Controls.Droid
 
         /// <inheritdoc />
         /// <summary>
-        /// Attach the effect
+        /// Attach the effect.
         /// </summary>
         protected override void OnAttached()
         {
@@ -64,7 +64,7 @@ namespace BuildIt.Forms.Controls.Droid
 
         /// <inheritdoc/>
         /// <summary>
-        /// Detach the effect
+        /// Detach the effect.
         /// </summary>
         protected override void OnDetached()
         {

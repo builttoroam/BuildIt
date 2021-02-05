@@ -1,11 +1,11 @@
-using System;
 using Autofac;
 using BuildIt.ServiceLocation;
+using System;
 
 namespace BuildIt.Autofac
 {
     /// <summary>
-    /// An autofac dependency container that implements the BuildIt IDependencyContainer interface
+    /// An autofac dependency container that implements the BuildIt IDependencyContainer interface.
     /// </summary>
     public class AutofacDependencyContainer : IDependencyContainer
     {
@@ -14,7 +14,7 @@ namespace BuildIt.Autofac
         /// <summary>
         /// Initializes a new instance of the <see cref="AutofacDependencyContainer"/> class.
         /// </summary>
-        /// <param name="container">The Autofac container to use</param>
+        /// <param name="container">The Autofac container to use.</param>
         public AutofacDependencyContainer(IContainer container)
         {
             Container = container;
@@ -27,9 +27,9 @@ namespace BuildIt.Autofac
         private IDisposable Wrapper { get; set; }
 
         /// <summary>
-        /// Start the process of updating the container
+        /// Start the process of updating the container.
         /// </summary>
-        /// <returns>Returns a disposable object that can be used to end the update</returns>
+        /// <returns>Returns a disposable object that can be used to end the update.</returns>
         public IDisposable StartUpdate()
         {
             editCount++;
@@ -43,7 +43,7 @@ namespace BuildIt.Autofac
         }
 
         /// <summary>
-        /// Ends the updating of the container
+        /// Ends the updating of the container.
         /// </summary>
         public void EndUpdate()
         {
@@ -60,10 +60,10 @@ namespace BuildIt.Autofac
         }
 
         /// <summary>
-        /// Register a type with the container
+        /// Register a type with the container.
         /// </summary>
-        /// <typeparam name="TTypeToRegister">The type to register</typeparam>
-        /// <typeparam name="TInterfaceTypeToRegisterAs">The type/interface to register as</typeparam>
+        /// <typeparam name="TTypeToRegister">The type to register.</typeparam>
+        /// <typeparam name="TInterfaceTypeToRegisterAs">The type/interface to register as.</typeparam>
         public void Register<TTypeToRegister, TInterfaceTypeToRegisterAs>()
             where TTypeToRegister : TInterfaceTypeToRegisterAs
         {
@@ -71,18 +71,18 @@ namespace BuildIt.Autofac
         }
 
         /// <summary>
-        /// Register a type with the container
+        /// Register a type with the container.
         /// </summary>
-        /// <typeparam name="TTypeToRegister">The type to register</typeparam>
+        /// <typeparam name="TTypeToRegister">The type to register.</typeparam>
         public void Register<TTypeToRegister>()
         {
             Builder.RegisterType<TTypeToRegister>();
         }
 
         /// <summary>
-        /// Register a type with the container
+        /// Register a type with the container.
         /// </summary>
-        /// <param name="typeToRegister">The type to register</param>
+        /// <param name="typeToRegister">The type to register.</param>
         public void RegisterType(Type typeToRegister)
         {
             Builder.RegisterType(typeToRegister);
