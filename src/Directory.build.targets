@@ -1,61 +1,78 @@
 <Project>
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
 
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
-    <DefineConstants>$(DefineConstants);NETSTANDARD;PORTABLE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('net4'))">
-    <DefineConstants>$(DefineConstants);NET_461;XAML</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('uap'))">
-    <DefineConstants>$(DefineConstants);NETFX_CORE;XAML;WINDOWS;WINDOWS_UWP</DefineConstants>
-    <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
-    <DefineConstants>$(DefineConstants);MONO;UIKIT;COCOA;IOS</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac'))">
-    <DefineConstants>$(DefineConstants);MONO;COCOA;MAC</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.TVOS'))">
-    <DefineConstants>$(DefineConstants);MONO;COCOA;TVOS</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.WatchOS'))">
-    <DefineConstants>$(DefineConstants);MONO;COCOA;WATCHOS</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
-    <DefineConstants>$(DefineConstants);MONO;ANDROID</DefineConstants>
-    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
-    <AndroidResgenClass>Resource</AndroidResgenClass>
-    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('netcoreapp'))">
-    <DefineConstants>$(DefineConstants);NETCOREAPP</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('tizen'))">
-    <DefineConstants>$(DefineConstants);TIZEN</DefineConstants>
-  </PropertyGroup>
+		<IsWinUI>false</IsWinUI>
+		<IsUWP>false</IsUWP>
+		<IsXamarin>false</IsXamarin>
+		<IsIOS>false</IsIOS>
+		<IsAndroid>false</IsAndroid>
+	</PropertyGroup>
 
-  <ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' != 'true' ">
-    <Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
-    <ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' == 'true' ">
-    <Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
+		<DefineConstants>$(DefineConstants);NETSTANDARD;PORTABLE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('net4'))">
+		<DefineConstants>$(DefineConstants);NET_461;WPF;XAML</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('uap'))">
+		<DefineConstants>$(DefineConstants);NETFX_CORE;XAML;WINDOWS;WINDOWS_UWP;UWP</DefineConstants>
+		<TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
+		<TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+		<TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+		<IsUWP>true</IsUWP>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
+		<DefineConstants>$(DefineConstants);MONO;UIKIT;COCOA;IOS;__IOS__</DefineConstants>
+		<IsXamarin>true</IsXamarin>
+		<IsIOS>true</IsIOS>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac'))">
+		<DefineConstants>$(DefineConstants);MONO;COCOA;MAC;__MAC__</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.TVOS'))">
+		<DefineConstants>$(DefineConstants);MONO;COCOA;TVOS;__TVOS__</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.WatchOS'))">
+		<DefineConstants>$(DefineConstants);MONO;COCOA;WATCHOS;__WATCHOS__</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
+		<DefineConstants>$(DefineConstants);MONO;ANDROID</DefineConstants>
+		<MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+		<AndroidResgenClass>Resource</AndroidResgenClass>
+		<AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+		<IsXamarin>true</IsXamarin>
+		<IsAndroid>true</IsAndroid>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('netcoreapp'))">
+		<DefineConstants>$(DefineConstants);NETCORE;NETCOREAPP</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('tizen'))">
+		<DefineConstants>$(DefineConstants);TIZEN</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.Contains('windows10'))">
+		<DefineConstants>$(DefineConstants);NETFX_CORE;WINUI;WINDOWS</DefineConstants>
+		<IsWinUI>true</IsWinUI>
+		<UseWinUI>true</UseWinUI>
+	</PropertyGroup>
 
-  <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
-      <NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
-    </PropertyGroup>
-    <Message Importance="high" Text="NuspecProperties: $(NuspecProperties)" />
-  </Target>
+	<ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' != 'true' ">
+		<Compile Include="..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+	</ItemGroup>
+	<ItemGroup  Condition=" '$(IsLibraryProject)' == 'true' and '$(IsSampleProject)' == 'true' ">
+		<Compile Include="..\..\..\BuildIt.Shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+	</ItemGroup>
+
+	<Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
+		<PropertyGroup>
+			<NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
+		</PropertyGroup>
+		<Message Importance="high" Text="NuspecProperties: $(NuspecProperties)" />
+	</Target>
 </Project>

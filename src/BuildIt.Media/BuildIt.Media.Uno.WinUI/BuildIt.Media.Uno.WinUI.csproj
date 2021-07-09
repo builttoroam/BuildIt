@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.16299;net5.0-windows10.0.19041.0;netstandard2.0;xamarinios10;xamarinmac20;monoandroid10.0;monoandroid11.0</TargetFrameworks>
+  </PropertyGroup>
+	<Import Project="codepackage.targets" />
+
+	<Import Project="..\..\Analysers.targets" />
+	<ItemGroup>
+		<None Remove="**\*.xaml" />
+		<None Remove="**\*.xaml.cs" />
+		<Page Remove="**\*.xaml" />
+		<Compile Remove="**\*.xaml.cs" />
+		<Compile Remove="Content\Platform\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsUWP)'=='true'">
+		<Compile Include="Content\Platform\**\*.uwp.*" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsWinUI)'=='true'">
+		<Compile Include="Content\Platform\**\*.winui.*" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsAndroid)'=='true'">
+		<Compile Include="Content\Platform\**\*.droid.*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
+		<Compile Include="**\*.xaml.cs" Exclude="bin\**\*.cs;obj\**\*.cs">
+			<DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<UpToDateCheckInput Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml;Themes\WinUI\Resources\**\*.xaml;" Visible="False" />
+		<UpToDateCheckInput Include="**\*.cs" Exclude="bin\**\*.cs;obj\**\*.cs;" Visible="False" />
+	</ItemGroup>
+
+</Project>
