@@ -20,14 +20,19 @@
 
 	<ItemGroup Condition="'$(IsWinUI)'=='true'">
 		<Compile Include="Content\Platform\**\*.winui.*" />
+		<Compile Include="Content\Platform\winui\*.*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsAndroid)'=='true'">
 		<Compile Include="Content\Platform\**\*.droid.*" />
 		<Compile Include="Content\Platform\droid\*.*" />
 	</ItemGroup>
-	
-	
+
+	<ItemGroup Condition="'$(IsIOS)'=='true'">
+		<Compile Include="Content\Platform\**\*.ios.*" />
+		<Compile Include="Content\Platform\ios\*.*" />
+	</ItemGroup>
+
 
 	<ItemGroup>
 		<Page Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />

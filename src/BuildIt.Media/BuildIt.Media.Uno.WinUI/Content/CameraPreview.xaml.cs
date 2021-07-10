@@ -347,4 +347,88 @@ namespace BuildIt.Media.Uno.WinUI
         }
 
     }
+
+    internal static class CameraPreviewControlExtensions
+    {
+        /// <summary>
+        /// Extension method that safely sets status.
+        /// </summary>
+        /// <param name="control">CameraPreviewControl control.</param>
+        /// <param name="status">Camera status.</param>
+        internal static void SetStatus(this CameraPreview control, CameraStatus status)
+        {
+            if (control == null)
+            {
+                return;
+            }
+
+            control.Status = status;
+        }
+    }
+
+    /// <summary>
+    /// Provides information about the camera preview error.
+    /// </summary>
+    public class CameraPreviewControlErrorParameters
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CameraPreviewControlErrorParameters"/> class.
+        /// </summary>
+        /// <param name="errors">errors to emit.</param>
+        /// <param name="handled">indicates whether the error has been handled or not.</param>
+        public CameraPreviewControlErrorParameters(string[] errors, bool handled = false)
+        {
+            Errors = errors;
+            Handled = Handled;
+        }
+
+        /// <summary>
+        /// Gets error messages.
+        /// </summary>
+        public string[] Errors { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether an error was handled.
+        /// </summary>
+        public bool Handled { get; }
+    }
+
+    /// <summary>
+    /// Provides information about the camera preview error.
+    /// </summary>
+    /// <typeparam name="TData">Data object passed with the error.</typeparam>
+    public class CameraPreviewControlErrorParameters<TData> : CameraPreviewControlErrorParameters
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CameraPreviewControlErrorParameters{TData}"/> class.
+        /// </summary>
+        /// <param name="errors">errors to emit.</param>
+        /// <param name="data">the data to include relating to the error.</param>
+        /// <param name="handled">indicates whether the error has been handled or not.</param>
+        public CameraPreviewControlErrorParameters(string[] errors, TData data, bool handled = false)
+            : base(errors, handled)
+        {
+            Data = data;
+        }
+
+        /// <summary>
+        /// Gets error data.
+        /// </summary>
+        public TData Data { get; }
+    }
+
+    /// <summary>
+    /// Class containing all of the strings.
+    /// </summary>
+    internal class Constants
+    {
+        /// <summary>
+        /// Error strings.
+        /// </summary>
+        internal static class Errors
+        {
+            public const string UnsupportedFocusModeFormat = "The device camera does not support {0} focus mode. The current focus mode has been set to {1}";
+            public const string CameraFocusingFailed = "Failed to focus camera";
+        }
+    }
 }

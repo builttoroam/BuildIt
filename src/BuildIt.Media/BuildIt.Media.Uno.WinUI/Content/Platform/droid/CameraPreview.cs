@@ -17,16 +17,8 @@ using Java.Util.Concurrent;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Uno.UI;
-using Windows.Graphics.Imaging;
-using Windows.Media.Capture;
-using Windows.Media.Capture.Frames;
-using Windows.Media.MediaProperties;
-using Windows.UI.Core;
-
 
 namespace BuildIt.Media.Uno.WinUI
 {
@@ -56,8 +48,6 @@ namespace BuildIt.Media.Uno.WinUI
             ORIENTATIONS.Append((int)SurfaceOrientation.Rotation90, 0);
             ORIENTATIONS.Append((int)SurfaceOrientation.Rotation180, 270);
             ORIENTATIONS.Append((int)SurfaceOrientation.Rotation270, 180);
-
-           
         }
 
         private Task<IReadOnlyList<ICamera>> PlatformRetrieveCamerasAsync()

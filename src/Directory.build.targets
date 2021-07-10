@@ -24,7 +24,7 @@
 		<TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
 		<IsUWP>true</IsUWP>
 	</PropertyGroup>
-	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('xamarinios'))">
 		<DefineConstants>$(DefineConstants);MONO;UIKIT;COCOA;IOS;__IOS__</DefineConstants>
 		<IsXamarin>true</IsXamarin>
 		<IsIOS>true</IsIOS>
