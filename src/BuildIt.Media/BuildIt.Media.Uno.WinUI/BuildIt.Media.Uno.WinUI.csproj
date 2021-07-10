@@ -24,7 +24,10 @@
 
 	<ItemGroup Condition="'$(IsAndroid)'=='true'">
 		<Compile Include="Content\Platform\**\*.droid.*" />
+		<Compile Include="Content\Platform\droid\*.*" />
 	</ItemGroup>
+	
+	
 
 	<ItemGroup>
 		<Page Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />

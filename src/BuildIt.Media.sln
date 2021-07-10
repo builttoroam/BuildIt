@@ -34,7 +34,9 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		BuildIt.Media\Samples\BuildIt.Media.Sample.Shared\BuildIt.Media.Sample.Shared.projitems*{525faa66-bc5a-4636-9aad-03ef198b59ac}*SharedItemsImports = 4
+		BuildIt.Media\Samples\BuildIt.Media.Sample.Shared\BuildIt.Media.Sample.Shared.projitems*{683aaa25-27c5-46ee-9d1c-31425731c207}*SharedItemsImports = 4
 		BuildIt.Media\Samples\BuildIt.Media.Sample.Shared\BuildIt.Media.Sample.Shared.projitems*{f2e38dc0-8ba7-4a0f-be38-6d6b8fe73bf9}*SharedItemsImports = 13
+		BuildIt.Media\Samples\BuildIt.Media.Sample.Shared\BuildIt.Media.Sample.Shared.projitems*{f37751e5-ddba-46cf-92eb-29dda6c6982e}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
