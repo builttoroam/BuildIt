@@ -35,16 +35,16 @@ namespace BuildIt.Forms.Controls.UWP
 
             if (!string.IsNullOrEmpty(effect.Resource))
             {
-                if (Windows.UI.Xaml.Application.Current.Resources[effect.Resource] is Brush brush)
+                if (Windows.UI.Xaml.Application.Current.Resources[effect.Resource] is Windows.UI.Xaml.Media.Brush brush)
                 {
                     gd.Background = brush;
                 }
             }
 
-            if ((gd.Background as SolidColorBrush) == null ||
-                (!(gd.Background as SolidColorBrush).Color.Equals(default(Color)) && effect.FallbackColor != default(Color)))
+            if ((gd.Background as Windows.UI.Xaml.Media.SolidColorBrush) == null ||
+                (!(gd.Background as Windows.UI.Xaml.Media.SolidColorBrush).Color.Equals(default(Color)) && effect.FallbackColor != default(Color)))
             {
-                gd.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(
+                gd.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(
                     Convert.ToByte(effect.FallbackColor.A * 255),
                     Convert.ToByte(effect.FallbackColor.R * 255),
                     Convert.ToByte(effect.FallbackColor.G * 255),

@@ -29,6 +29,7 @@ using Xamarin.Forms.Platform.Android;
 using Application = Android.App.Application;
 using CameraPreviewStopParameters = BuildIt.Forms.Controls.Platforms.Android.Models.CameraPreviewStopParameters;
 using Context = Android.Content.Context;
+using Rect = Android.Graphics.Rect;
 using Semaphore = Java.Util.Concurrent.Semaphore;
 #pragma warning disable 618
 

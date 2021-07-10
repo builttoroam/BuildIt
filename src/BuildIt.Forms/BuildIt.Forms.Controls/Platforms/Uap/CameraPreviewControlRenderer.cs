@@ -225,15 +225,15 @@ namespace BuildIt.Forms.Controls.Platforms.Uap
             switch (cameraPreviewControl.Aspect)
             {
                 case Aspect.AspectFit:
-                    captureElement.Stretch = Stretch.Uniform;
+                    captureElement.Stretch = Windows.UI.Xaml.Media.Stretch.Uniform;
                     break;
 
                 case Aspect.AspectFill:
-                    captureElement.Stretch = Stretch.UniformToFill;
+                    captureElement.Stretch = Windows.UI.Xaml.Media.Stretch.UniformToFill;
                     break;
 
                 case Aspect.Fill:
-                    captureElement.Stretch = Stretch.Fill;
+                    captureElement.Stretch = Windows.UI.Xaml.Media.Stretch.Fill;
                     break;
             }
         }

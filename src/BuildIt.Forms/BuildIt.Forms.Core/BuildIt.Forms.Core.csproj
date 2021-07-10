@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid90;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;uap10.0.16299;Xamarin.iOS10;MonoAndroid10.0;</TargetFrameworks>
     <AssemblyName>BuildIt.Forms.Core</AssemblyName>
     <RootNamespace>BuildIt.Forms</RootNamespace>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -63,8 +63,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.772" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
   </ItemGroup>
 
   <ItemGroup>
