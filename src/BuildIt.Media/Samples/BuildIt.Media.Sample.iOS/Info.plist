@@ -53,5 +53,9 @@
 	<string>{320, 568}</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app is using the camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app is saving photo to the library</string>
   </dict>
 </plist>

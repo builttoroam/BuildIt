@@ -17,6 +17,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Windows.UI.Popups;
 #endif
 #pragma warning restore SA1005 // Single line comments should begin with single space
 
@@ -31,9 +32,19 @@ namespace BuildIt.Media.Sample.Views
             InitializeComponent();
         }
 
-        public void StartPreviewClick(object sender, RoutedEventArgs args)
+        public async void StartPreviewClick(object sender, RoutedEventArgs args)
         {
-            preview.StartPreview();
+            try
+            {
+
+                await preview.StartPreview();
+
+            }
+            catch(Exception ex)
+            {
+                var dlg = new MessageDialog(ex.Message + "-" + ex.StackTrace, "Error");
+                dlg.ShowAsync();
+            }
         }
     }
 }
