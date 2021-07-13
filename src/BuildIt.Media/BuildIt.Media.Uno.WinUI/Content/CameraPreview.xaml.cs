@@ -143,37 +143,37 @@ namespace BuildIt.Media.Uno.WinUI
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to start camera preview.
         /// </summary>
-        internal Func<Task> StartPreviewFunc { get; set; }
+        private Func<Task> StartPreviewFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to stop camera preview.
         /// </summary>
-        internal Func<ICameraPreviewStopParameters, Task> StopPreviewFunc { get; set; }
+        private Func<ICameraPreviewStopParameters, Task> StopPreviewFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to set focus mode.
         /// </summary>
-        internal Func<Task> SetFocusModeFunc { get; set; }
+        private Func<Task> SetFocusModeFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to try focusing the camera.
         /// </summary>
-        internal Func<Task<bool>> TryFocusingFunc { get; set; }
+        private Func<Task<bool>> TryFocusingFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to capture a frame of video to a file.
         /// </summary>
-        internal Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
+        private Func<bool, Task<string>> CaptureNativeFrameToFileFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderers to return the supported focus modes.
         /// </summary>
-        internal Func<IReadOnlyList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
+        private Func<IReadOnlyList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
         /// Gets or sets A delegate used by the native renderers to return the available cameras.
         /// </summary>
-        internal Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
+        private Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
 
         /// <summary>
         /// Start camera preview.
@@ -330,6 +330,7 @@ namespace BuildIt.Media.Uno.WinUI
         internal void RaiseErrorOpeningCamera()
         {
             Status = CameraStatus.Stopped;
+            ErrorCommand?.Execute(EventArgs.Empty);
             ErrorOpeningCamera?.Invoke(this, EventArgs.Empty);
         }
 

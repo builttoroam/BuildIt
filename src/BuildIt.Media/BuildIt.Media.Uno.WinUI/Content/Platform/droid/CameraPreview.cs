@@ -35,9 +35,9 @@ namespace BuildIt.Media.Uno.WinUI
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = PlatformRetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = PlatformRetrieveCamerasAsync;
 
-            mTextureView = new AutoFitTextureView(ContextHelper.Current);
-            var wrapped = VisualTreeHelper.AdaptNative(mTextureView);
-            RootBorder.Child = wrapped;
+            //nativePreviewElement = new AutoFitTextureView(ContextHelper.Current);
+            //var wrapped = VisualTreeHelper.AdaptNative(nativePreviewElement);
+            //RootBorder.Child = wrapped;
 
 
             mStateCallback = new CameraStateListener(this);
@@ -82,7 +82,7 @@ namespace BuildIt.Media.Uno.WinUI
 
         private async Task PlatformStartPreviewFunc()
         {
-            var started = OpenCamera(mTextureView.Width, mTextureView.Height);
+            var started = OpenCamera(nativePreviewElement.Width, nativePreviewElement.Height);
             if (!started)
             {
                 this.StopPreview();
@@ -124,8 +124,8 @@ namespace BuildIt.Media.Uno.WinUI
         // ID of the current {@link CameraDevice}.
         private string mCameraId;
 
-        // An AutoFitTextureView for camera preview
-        private AutoFitTextureView mTextureView;
+        //// An AutoFitTextureView for camera preview
+        //private AutoFitTextureView nativePreviewElement;
 
         // A {@link CameraCaptureSession } for camera preview.
         public CameraCaptureSession mCaptureSession;
@@ -272,7 +272,7 @@ namespace BuildIt.Media.Uno.WinUI
 
         //public override void OnViewCreated(View view, Bundle savedInstanceState)
         //{
-        //    mTextureView = (AutoFitTextureView)view.FindViewById(Resource.Id.texture);
+        //    nativePreviewElement = (AutoFitTextureView)view.FindViewById(Resource.Id.texture);
         //    view.FindViewById(Resource.Id.picture).SetOnClickListener(this);
         //    view.FindViewById(Resource.Id.info).SetOnClickListener(this);
         //}
@@ -294,13 +294,13 @@ namespace BuildIt.Media.Uno.WinUI
         //    // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
         //    // a camera and start preview from here (otherwise, we wait until the surface is ready in
         //    // the SurfaceTextureListener).
-        //    if (mTextureView.IsAvailable)
+        //    if (nativePreviewElement.IsAvailable)
         //    {
-        //        OpenCamera(mTextureView.Width, mTextureView.Height);
+        //        OpenCamera(nativePreviewElement.Width, nativePreviewElement.Height);
         //    }
         //    else
         //    {
-        //        mTextureView.SurfaceTextureListener = mSurfaceTextureListener;
+        //        nativePreviewElement.SurfaceTextureListener = mSurfaceTextureListener;
         //    }
         //}
 
@@ -431,11 +431,11 @@ namespace BuildIt.Media.Uno.WinUI
                     //var orientation = Resources.Configuration.Orientation;
                     //if (orientation == Orientation.Landscape)
                     //{
-                        mTextureView.SetAspectRatio(mPreviewSize.Width, mPreviewSize.Height);
+                        nativePreviewElement.SetAspectRatio(mPreviewSize.Width, mPreviewSize.Height);
                     //}
                     //else
                     //{
-                    //    mTextureView.SetAspectRatio(mPreviewSize.Height, mPreviewSize.Width);
+                    //    nativePreviewElement.SetAspectRatio(mPreviewSize.Height, mPreviewSize.Width);
                     //}
 
                     // Check if the flash is supported.
@@ -558,7 +558,7 @@ namespace BuildIt.Media.Uno.WinUI
         {
             try
             {
-                SurfaceTexture texture = mTextureView.SurfaceTexture;
+                SurfaceTexture texture = nativePreviewElement.SurfaceTexture;
                 if (texture == null)
                 {
                     throw new IllegalStateException("texture is null");
@@ -594,14 +594,14 @@ namespace BuildIt.Media.Uno.WinUI
         }
 
         // Configures the necessary {@link android.graphics.Matrix}
-        // transformation to `mTextureView`.
+        // transformation to `nativePreviewElement`.
         // This method should be called after the camera preview size is determined in
-        // setUpCameraOutputs and also the size of `mTextureView` is fixed.
+        // setUpCameraOutputs and also the size of `nativePreviewElement` is fixed.
 
         public void ConfigureTransform(int viewWidth, int viewHeight)
         {
             var activity = ((Android.App.Activity)ContextHelper.Current); 
-            if (null == mTextureView || null == mPreviewSize || null == activity)
+            if (null == nativePreviewElement || null == mPreviewSize || null == activity)
             {
                 return;
             }
@@ -623,7 +623,7 @@ namespace BuildIt.Media.Uno.WinUI
             {
                 matrix.PostRotate(180, centerX, centerY);
             }
-            mTextureView.SetTransform(matrix);
+            nativePreviewElement.SetTransform(matrix);
         }
 
         // Initiate a still image capture.

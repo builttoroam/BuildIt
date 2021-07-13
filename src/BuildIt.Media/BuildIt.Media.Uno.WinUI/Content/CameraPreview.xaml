@@ -1,11 +1,16 @@
-﻿<UserControl
-    x:Class="BuildIt.Media.Uno.WinUI.CameraPreview"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-    <Border Background="Red" x:Name="RootBorder">
-    <Image x:Name="imageElement"/>
+﻿<UserControl x:Class="BuildIt.Media.Uno.WinUI.CameraPreview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:android="http://uno.ui/android"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:ios="http://uno.ui/ios"
+             mc:Ignorable="d ios android">
+    <Border Background="Red"
+            x:Name="RootBorder">
+        <win:Image x:Name="nativePreviewElement" />
+        <ios:UIView x:Name="nativePreviewElement" />
+        <android:AutoFitTextureView x:Name="nativePreviewElement" />
     </Border>
 </UserControl>

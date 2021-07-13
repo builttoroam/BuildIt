@@ -28,7 +28,7 @@ namespace BuildIt.Media.Uno.WinUI
         private AVCaptureDeviceInput captureDeviceInput;
         private AVCaptureDevice captureDevice;
         private AVCaptureStillImageOutput stillImageOutput;
-        private UIView liveCameraStream;
+        //private UIView nativePreviewElement;
         private bool isInitialized;
         private AVCaptureVideoDataOutput videoOutput;
         private FrameExtractor frameExtractor;
@@ -51,7 +51,7 @@ namespace BuildIt.Media.Uno.WinUI
             //var wrapped = VisualTreeHelper.AdaptNative(mTextureView);
             //RootBorder.Child = wrapped;
 
-            SetupUserInterface();
+            //SetupUserInterface();
         }
 
         //private Task<IReadOnlyList<ICamera>> PlatformRetrieveCamerasAsync()
@@ -96,21 +96,21 @@ namespace BuildIt.Media.Uno.WinUI
 
             // If our bounds have changed, make sure we update all of our subviews as well
             // (ie. when the screen rotates, or if the size of the control has changed) -RR
-            if (liveCameraStream == null)
+            if (nativePreviewElement == null)
             {
                 return;
             }
 
-            liveCameraStream.Frame = Bounds;
+            nativePreviewElement.Frame = Bounds;
 
-            if (liveCameraStream.Layer?.Sublayers == null)
+            if (nativePreviewElement.Layer?.Sublayers == null)
             {
                 return;
             }
 
-            foreach (var layerSublayer in liveCameraStream.Layer.Sublayers)
+            foreach (var layerSublayer in nativePreviewElement.Layer.Sublayers)
             {
-                layerSublayer.Frame = liveCameraStream.Bounds;
+                layerSublayer.Frame = nativePreviewElement.Bounds;
             }
         }
 
@@ -378,15 +378,13 @@ namespace BuildIt.Media.Uno.WinUI
             this.SetStatus(CameraStatus.Stopped);
         }
 
-        private void SetupUserInterface()
-        {
-            liveCameraStream = new UIView { Frame = Frame };
+        //private void SetupUserInterface()
+        //{
+        //    //nativePreviewElement = new UIView { Frame = Frame };
 
-            //mTextureView = new AutoFitTextureView(ContextHelper.Current);
-            var wrapped = VisualTreeHelper.AdaptNative(liveCameraStream);
-            RootBorder.Child = wrapped;
-            //Add(liveCameraStream);
-        }
+        //    //var wrapped = VisualTreeHelper.AdaptNative(nativePreviewElement);
+        //    //RootBorder.Child = wrapped;
+        //}
 
         private async Task SetupLiveCameraStream()
         {
@@ -394,10 +392,10 @@ namespace BuildIt.Media.Uno.WinUI
 
             videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
             {
-                Frame = liveCameraStream.Bounds,
+                Frame = nativePreviewElement.Bounds,
             };
             ApplyAspect();
-            liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
+            nativePreviewElement.Layer.AddSublayer(videoPreviewLayer);
 
             captureDevice = GetCameraForPreference(this.PreferredCamera);
 

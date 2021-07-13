@@ -22,7 +22,7 @@ namespace BuildIt.Media.Uno.WinUI
 
         partial void PlatformInitCameraPreview()
         {
-            imageElement.Source = new SoftwareBitmapSource();
+            nativePreviewElement.Source = new SoftwareBitmapSource();
 
             var cameraPreviewControl = this;
             cameraPreviewControl.StartPreviewFunc = PlatformStartPreviewFunc;
@@ -151,8 +151,8 @@ namespace BuildIt.Media.Uno.WinUI
                 softwareBitmap = Interlocked.Exchange(ref backBuffer, softwareBitmap);
                 softwareBitmap?.Dispose();
 
-                // Changes to XAML ImageElement must happen on UI thread through Dispatcher
-                var task = imageElement
+                // Changes to XAML nativePreviewElement must happen on UI thread through Dispatcher
+                var task = nativePreviewElement
 #if WINDOWS_UWP
                     .Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
 #else
@@ -173,7 +173,7 @@ namespace BuildIt.Media.Uno.WinUI
                             SoftwareBitmap latestBitmap;
                             while ((latestBitmap = Interlocked.Exchange(ref backBuffer, null)) != null)
                             {
-                                var imageSource = (SoftwareBitmapSource)imageElement.Source;
+                                var imageSource = (SoftwareBitmapSource)nativePreviewElement.Source;
                                 await imageSource.SetBitmapAsync(latestBitmap);
                                 latestBitmap.Dispose();
                             }
