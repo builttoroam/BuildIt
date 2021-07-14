@@ -61,7 +61,8 @@ namespace BuildIt.Media.Uno.WinUI
         {
             var videoController = mediaCapture?.VideoDeviceController;
             var focus = videoController?.FocusControl;
-            if (focus is null) return;
+            if (!(focus?.Supported ?? false)) return;
+
             var modes = focus.SupportedFocusModes.ToArray();
             var dists = focus.SupportedFocusDistances.ToArray();
             var ranges = focus.SupportedFocusRanges.ToArray();
@@ -74,98 +75,31 @@ namespace BuildIt.Media.Uno.WinUI
             nativePreviewElement.Stretch = this.Stretch;
         }
 
-        private Task PlatformStopPreviewFunc(ICameraPreviewStopParameters arg)
+        private async Task PlatformStopPreviewFunc(ICameraPreviewStopParameters arg)
         {
-            throw new NotImplementedException();
+            await StopReaderAsync();
         }
 
+        private SemaphoreSlim PreviewLock { get; } = new SemaphoreSlim(1);
         private async Task<CameraResult> PlatformStartPreviewFunc()
         {
-            var frameSourceGroups = await GetFrameSourceGroupsAsync();// MediaFrameSourceGroup.FindAllAsync();
-
-            var selectedGroupObjects = frameSourceGroups
-   //             .Select(group =>
-   //new
-   //{
-   //    sourceGroup = group,
-   //    colorSourceInfo = group.SourceInfos.FirstOrDefault((sourceInfo) =>
-   //    {
-   //        // On Xbox/Kinect, omit the MediaStreamType and EnclosureLocation tests
-   //        return sourceInfo.MediaStreamType == MediaStreamType.VideoPreview
-   //        && sourceInfo.SourceKind == MediaFrameSourceKind.Color
-   //        && sourceInfo.DeviceInformation?.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Front;
-   //    })
-
-   //}).Where(t => t.colorSourceInfo != null)
-   .FirstOrDefault();
-
-            //    MediaFrameSourceGroup selectedGroup = selectedGroupObjects?.sourceGroup;
-            //    MediaFrameSourceInfo colorSourceInfo = selectedGroupObjects?.colorSourceInfo;
-
-            //    if (selectedGroup == null)
-            //    {
-            //        return;
-            //    }
-
-
-            //    mediaCapture = new MediaCapture();
-
-            //    var settings = new MediaCaptureInitializationSettings()
-            //    {
-            //        SourceGroup = selectedGroup,
-            //        SharingMode = MediaCaptureSharingMode.ExclusiveControl,
-            //        MemoryPreference = MediaCaptureMemoryPreference.Cpu,
-            //        StreamingCaptureMode = StreamingCaptureMode.Video
-            //    };
-            //    try
-            //    {
-            //        await mediaCapture.InitializeAsync(settings);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        System.Diagnostics.Debug.WriteLine("MediaCapture initialization failed: " + ex.Message);
-            //        return;
-            //    }
-
-            //    var colorFrameSource = mediaCapture.FrameSources[colorSourceInfo.Id];
-            //    var preferredFormat = colorFrameSource.SupportedFormats.Where(format =>
-            //    {
-            //        return format.VideoFormat.Width >= 1080
-            //        && format.Subtype == MediaEncodingSubtypes.Argb32;
-
-            //    }).FirstOrDefault();
-
-            //    preferredFormat = preferredFormat ?? colorFrameSource.SupportedFormats.FirstOrDefault();
-            //    if (preferredFormat == null)
-            //    {
-            //        // Our desired format is not supported
-            //        return;
-            //    }
-
-            //    await colorFrameSource.SetFormatAsync(preferredFormat);
-
-            //    mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(colorFrameSource, MediaEncodingSubtypes.Argb32);
-            //    mediaFrameReader.FrameArrived += ColorFrameReader_FrameArrived;
-            //    await mediaFrameReader.StartAsync();
-            //}
-
-
-            //private async Task<CameraHelperResult> InitializeMediaCaptureAsync()
-            //{
-            if (mediaCapture == null)
-            {
-                mediaCapture = new MediaCapture();
-            }
-
-            var settings = new MediaCaptureInitializationSettings()
-            {
-                SourceGroup = selectedGroupObjects,
-                MemoryPreference = MediaCaptureMemoryPreference.Cpu,
-                StreamingCaptureMode = StreamingCaptureMode.Video
-            };
-
+            await PreviewLock.WaitAsync();
+            var cleanUp = true;
             try
             {
+                var frameSourceGroups = await GetFrameSourceGroupsAsync();
+
+                var selectedGroupObjects = frameSourceGroups.FirstOrDefault();
+
+                mediaCapture = new MediaCapture();
+
+                var settings = new MediaCaptureInitializationSettings()
+                {
+                    SourceGroup = selectedGroupObjects,
+                    MemoryPreference = MediaCaptureMemoryPreference.Cpu,
+                    StreamingCaptureMode = StreamingCaptureMode.Video,
+                };
+
                 await mediaCapture.InitializeAsync(settings);
 
                 // Find the first video preview or record stream available
@@ -222,33 +156,53 @@ namespace BuildIt.Media.Uno.WinUI
                         }
                     }
                 }
+
+                // If we get to here then everything is working, so we don't need to clean up
+                cleanUp = false;
             }
             catch (UnauthorizedAccessException)
             {
-                //await StopReaderAsync();
-
-                if (mediaCapture != null)
-                {
-                    mediaCapture.Dispose();
-                    mediaCapture = null;
-                }
-
                 return CameraResult.CameraAccessDenied;
             }
             catch (Exception)
             {
-                //await StopReaderAsync();
+                return CameraResult.InitializationFailed_UnknownError;
+            }
+            finally
+            {
+                PreviewLock.Release();
+                if (cleanUp)
+                {
+                    await StopReaderAsync();
+                }
+            }
+
+            return CameraResult.Success;
+        }
+
+        private async Task StopReaderAsync()
+        {
+            await PreviewLock.WaitAsync();
+            try
+            {
+                if (_frameReader != null)
+                {
+                    _frameReader.FrameArrived -= ColorFrameReader_FrameArrived;
+                    await _frameReader.StopAsync();
+                    _frameReader.Dispose();
+                    _frameReader = null;
+                }
 
                 if (mediaCapture != null)
                 {
                     mediaCapture.Dispose();
                     mediaCapture = null;
                 }
-
-                return CameraResult.InitializationFailed_UnknownError;
             }
-
-            return CameraResult.Success;
+            finally
+            {
+                PreviewLock.Release();
+            }
         }
 
         private void MediaCapture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)

@@ -251,6 +251,7 @@ namespace BuildIt.Media.Uno.WinUI
                 }
                 finally
                 {
+                    Status = CameraStatus.Stopped;
                     startStopCameraPreviewSemaphoreSlim.Release();
                 }
             }
