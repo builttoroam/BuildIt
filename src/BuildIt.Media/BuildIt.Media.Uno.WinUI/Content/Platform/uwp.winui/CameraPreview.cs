@@ -266,44 +266,23 @@ namespace BuildIt.Media.Uno.WinUI
                                                                         && g.SourceInfos.All(sourceInfo => videoDevices.Any(vd => vd.Id == sourceInfo.DeviceInformation.Id))).ToList();
         }
 
-        private int frameLock = 0;
         private void ColorFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
 
-            var isProcessing = false;
-            if (Interlocked.CompareExchange(ref frameLock, 1, 0) != 0)
+            ProcessFrame(sender);
+            ProcessBuffer();
+        }
+
+        private int bufferLock = 0;
+        private void ProcessBuffer()
+        {
+            if (Interlocked.CompareExchange(ref bufferLock, 1, 0) != 0)
             {
                 return;
             }
-            try
-            {
 
-                var mediaFrameReference = sender.TryAcquireLatestFrame();
-
-                try
-                {
-
-                    var videoMediaFrame = mediaFrameReference?.VideoMediaFrame;
-                    var softwareBitmap = videoMediaFrame?.SoftwareBitmap;
-
-
-                    if (softwareBitmap != null)
-                    {
-                        if (softwareBitmap.BitmapPixelFormat != Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8 ||
-                            softwareBitmap.BitmapAlphaMode != Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied)
-                        {
-                            var oldBmp = softwareBitmap;
-                            softwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-                            oldBmp.Dispose();
-                        }
-
-                        //// Swap the processed frame to _backBuffer and dispose of the unused image.
-                        //softwareBitmap = Interlocked.Exchange(ref backBuffer, softwareBitmap);
-                        //softwareBitmap?.Dispose();
-
-                        isProcessing = true;
-                        // Changes to XAML nativePreviewElement must happen on UI thread through Dispatcher
-                        var task = nativePreviewElement
+            // Changes to XAML nativePreviewElement must happen on UI thread through Dispatcher
+            var task = nativePreviewElement
 #if WINDOWS_UWP
                     .Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
 #else
@@ -315,53 +294,192 @@ namespace BuildIt.Media.Uno.WinUI
                                 {
 
                                     // Keep draining frames from the backbuffer until the backbuffer is empty.
-                                    SoftwareBitmap latestBitmap = softwareBitmap;
-                                    //while ((latestBitmap = Interlocked.Exchange(ref backBuffer, null)) != null)
-                                    //{
+                                    FrameBitmap latestBuffer;
+                                    while ((latestBuffer = Interlocked.Exchange(ref backBuffer, null)) != null)
+                                    {
                                         var imageSource = (SoftwareBitmapSource)nativePreviewElement.Source;
-                                        await imageSource.SetBitmapAsync(latestBitmap);
-                                        latestBitmap.Dispose();
-                                    //}
+                                        await imageSource.SetBitmapAsync(latestBuffer.Bitmap);
+                                        latestBuffer.Dispose();
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
                                 }
                                 finally
                                 {
-                                    mediaFrameReference?.Dispose();
-                                    Interlocked.Exchange(ref frameLock, 0);
+                                    Interlocked.Exchange(ref bufferLock, 0);
                                 }
                             });
-                    }
-                }
-                finally
-                {
-
-                    if (!isProcessing)
-                    {
-                        mediaFrameReference?.Dispose();
-
-                    }
-                }
-            }
-            catch (Exception ex)
+#if !WINDOWS_UWP
+            if (!task)
             {
+                Interlocked.Exchange(ref bufferLock, 0);
+            }
+#endif
+        }
+
+        private int frameLock = 0;
+        private void ProcessFrame(MediaFrameReader sender)
+        {
+            // Make sure we're only processing one frame at a time
+            // If we're mid processing, we're just going to dump the frame
+            if (Interlocked.CompareExchange(ref frameLock, 1, 0) != 0)
+            {
+                return;
+            }
+
+            // Try block is here to make sure we release the frameLock
+            try
+            {
+                // Try to acquire the latest frame - if no frame, just return
+                var mediaFrameReference = sender.TryAcquireLatestFrame();
+                if (mediaFrameReference is null)
+                {
+                    // Return before we go into the try block, since we don't want
+                    // to try to dispose null frame reference
+                    return;
+                }
+
+                var softwareBitmap = mediaFrameReference.VideoMediaFrame?.SoftwareBitmap;
+
+                if (softwareBitmap != null)
+                {
+                    if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 ||
+                        softwareBitmap.BitmapAlphaMode != BitmapAlphaMode.Premultiplied)
+                    {
+                        var oldBmp = softwareBitmap;
+                        softwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                        // Make sure we dispose of the old software bitmap to free up resources immediately
+                        oldBmp.Dispose();
+                    }
+
+                    // Push the new frame/bitmap pair onto the back buffer
+                    // Any frame still in the buffer will be returned so it can be disposed
+                    var buffer = new FrameBitmap(mediaFrameReference, softwareBitmap);
+                    var oldBitmap = Interlocked.Exchange(ref backBuffer, buffer);
+                    oldBitmap?.Dispose();
+                }
+                else
+                {
+                    // No software bitmap to process, so just dispose the frame
+                    mediaFrameReference.Dispose();
+                }
             }
             finally
             {
-
-                if (!isProcessing)
-                {
-                    Interlocked.Exchange(ref frameLock, 0);
-                }
+                Interlocked.Exchange(ref frameLock, 0);
             }
-
         }
+
+        //        private void ColorFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
+        //        {
+
+        //            var isProcessing = false;
+        //            if (Interlocked.CompareExchange(ref frameLock, 1, 0) != 0)
+        //            {
+        //                return;
+        //            }
+        //            try
+        //            {
+
+        //                var mediaFrameReference = sender.TryAcquireLatestFrame();
+
+        //                try
+        //                {
+
+        //                    var videoMediaFrame = mediaFrameReference?.VideoMediaFrame;
+        //                    var softwareBitmap = videoMediaFrame?.SoftwareBitmap;
+
+
+        //                    if (softwareBitmap != null)
+        //                    {
+        //                        if (softwareBitmap.BitmapPixelFormat != Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8 ||
+        //                            softwareBitmap.BitmapAlphaMode != Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied)
+        //                        {
+        //                            var oldBmp = softwareBitmap;
+        //                            softwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+        //                            oldBmp.Dispose();
+        //                        }
+
+        //                        //// Swap the processed frame to _backBuffer and dispose of the unused image.
+        //                        //softwareBitmap = Interlocked.Exchange(ref backBuffer, softwareBitmap);
+        //                        //softwareBitmap?.Dispose();
+
+        //                        isProcessing = true;
+        //                        // Changes to XAML nativePreviewElement must happen on UI thread through Dispatcher
+        //                        var task = nativePreviewElement
+        //#if WINDOWS_UWP
+        //                    .Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+        //#else
+        //                    .DispatcherQueue.TryEnqueue(
+        //#endif
+        //                            async () =>
+        //                            {
+        //                                try
+        //                                {
+
+        //                                    // Keep draining frames from the backbuffer until the backbuffer is empty.
+        //                                    SoftwareBitmap latestBitmap = softwareBitmap;
+        //                                    //while ((latestBitmap = Interlocked.Exchange(ref backBuffer, null)) != null)
+        //                                    //{
+        //                                        var imageSource = (SoftwareBitmapSource)nativePreviewElement.Source;
+        //                                        await imageSource.SetBitmapAsync(latestBitmap);
+        //                                        latestBitmap.Dispose();
+        //                                    //}
+        //                                }
+        //                                catch (Exception ex)
+        //                                {
+        //                                }
+        //                                finally
+        //                                {
+        //                                    mediaFrameReference?.Dispose();
+        //                                    Interlocked.Exchange(ref frameLock, 0);
+        //                                }
+        //                            });
+        //                    }
+        //                }
+        //                finally
+        //                {
+
+        //                    if (!isProcessing)
+        //                    {
+        //                        mediaFrameReference?.Dispose();
+
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //            }
+        //            finally
+        //            {
+
+        //                if (!isProcessing)
+        //                {
+        //                    Interlocked.Exchange(ref frameLock, 0);
+        //                }
+        //            }
+
+        //        }
 
         MediaCapture mediaCapture;
         MediaFrameReader mediaFrameReader;
-        private SoftwareBitmap backBuffer;
+        private FrameBitmap backBuffer;
         private bool taskRunning = false;
         private MediaFrameReader _frameReader;
+
+        private record FrameBitmap(MediaFrameReference Frame, SoftwareBitmap Bitmap) : IDisposable
+        {
+            public void Dispose()
+            {
+                Frame?.Dispose();
+                Bitmap?.Dispose();
+            }
+        }
     }
+}
+
+namespace System.Runtime.CompilerServices
+{
+    public class IsExternalInit { }
 }
