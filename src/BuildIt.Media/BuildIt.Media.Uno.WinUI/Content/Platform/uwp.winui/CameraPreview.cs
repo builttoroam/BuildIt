@@ -9,6 +9,7 @@ using Windows.Devices.Enumeration;
 using Windows.Graphics.Imaging;
 using Windows.Media.Capture;
 using Windows.Media.Capture.Frames;
+using Windows.Media.Devices;
 using Windows.Media.MediaProperties;
 using Windows.UI.Core;
 #if WINDOWS_UWP
@@ -42,7 +43,7 @@ namespace BuildIt.Media.Uno.WinUI
             throw new NotImplementedException();
         }
 
-        private IReadOnlyList<CameraFocusMode> PlatformRetrieveSupportedFocusModes()
+        private IReadOnlyList<FocusMode> PlatformRetrieveSupportedFocusModes()
         {
             throw new NotImplementedException();
         }
@@ -56,10 +57,16 @@ namespace BuildIt.Media.Uno.WinUI
         {
             throw new NotImplementedException();
         }
-
-        private Task PlatformSetFocusModeFunc()
+        private async Task PlatformSetFocusModeFunc()
         {
-            throw new NotImplementedException();
+            var videoController = mediaCapture?.VideoDeviceController;
+            var focus = videoController?.FocusControl;
+            if (focus is null) return;
+            var modes = focus.SupportedFocusModes.ToArray();
+            var dists = focus.SupportedFocusDistances.ToArray();
+            var ranges = focus.SupportedFocusRanges.ToArray();
+            focus.Configure(new FocusSettings { Mode = FocusMode, Value = 100, DisableDriverFallback = true });
+            await focus.FocusAsync();
         }
 
         private async Task PlatformSetStretchFunc()
@@ -72,7 +79,7 @@ namespace BuildIt.Media.Uno.WinUI
             throw new NotImplementedException();
         }
 
-        private async Task PlatformStartPreviewFunc()
+        private async Task<CameraResult> PlatformStartPreviewFunc()
         {
             var frameSourceGroups = await GetFrameSourceGroupsAsync();// MediaFrameSourceGroup.FindAllAsync();
 
@@ -172,7 +179,7 @@ namespace BuildIt.Media.Uno.WinUI
 
                 if (PreviewFrameSource == null)
                 {
-                    return;// CameraHelperResult.NoFrameSourceAvailable;
+                    return CameraResult.NoFrameSourceAvailable;
                 }
 
                 // Get only formats of a certain frame-rate and compatible subtype for previewing, order them by resolution
@@ -185,7 +192,7 @@ namespace BuildIt.Media.Uno.WinUI
 
                 if (FrameFormatsAvailable == null || !FrameFormatsAvailable.Any())
                 {
-                    return;// CameraHelperResult.NoCompatibleFrameFormatAvailable;
+                    return CameraResult.NoCompatibleFrameFormatAvailable;
                 }
 
                 // Set the format with the highest resolution available by default
@@ -204,14 +211,14 @@ namespace BuildIt.Media.Uno.WinUI
 
                     if (_frameReader == null)
                     {
-                        return;  //result = CameraHelperResult.CreateFrameReaderFailed;
+                        return CameraResult.CreateFrameReaderFailed;
                     }
                     else
                     {
                         MediaFrameReaderStartStatus statusResult = await _frameReader.StartAsync();
                         if (statusResult != MediaFrameReaderStartStatus.Success)
                         {
-                            return;// result = CameraHelperResult.StartFrameReaderFailed;
+                            return CameraResult.StartFrameReaderFailed;
                         }
                     }
                 }
@@ -226,7 +233,7 @@ namespace BuildIt.Media.Uno.WinUI
                     mediaCapture = null;
                 }
 
-                return;// CameraHelperResult.CameraAccessDenied;
+                return CameraResult.CameraAccessDenied;
             }
             catch (Exception)
             {
@@ -238,10 +245,10 @@ namespace BuildIt.Media.Uno.WinUI
                     mediaCapture = null;
                 }
 
-                return;// CameraHelperResult.InitializationFailed_UnknownError;
+                return CameraResult.InitializationFailed_UnknownError;
             }
 
-            //return CameraHelperResult.Success;
+            return CameraResult.Success;
         }
 
         private void MediaCapture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)
@@ -260,15 +267,10 @@ namespace BuildIt.Media.Uno.WinUI
         }
 
         private int frameLock = 0;
-        private int frameCount = 0;
-        private int processedCount = 0;
-        private int processingCount = 0;
-        private int disposed;
         private void ColorFrameReader_FrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
 
             var isProcessing = false;
-            Debug.WriteLine("Frame " + frameCount++);
             if (Interlocked.CompareExchange(ref frameLock, 1, 0) != 0)
             {
                 return;
@@ -300,7 +302,6 @@ namespace BuildIt.Media.Uno.WinUI
                         //softwareBitmap?.Dispose();
 
                         isProcessing = true;
-                        Debug.WriteLine("Processing " + processingCount++);
                         // Changes to XAML nativePreviewElement must happen on UI thread through Dispatcher
                         var task = nativePreviewElement
 #if WINDOWS_UWP
@@ -321,14 +322,12 @@ namespace BuildIt.Media.Uno.WinUI
                                         await imageSource.SetBitmapAsync(latestBitmap);
                                         latestBitmap.Dispose();
                                     //}
-                                    Debug.WriteLine("Processed " + processedCount++);
                                 }
                                 catch (Exception ex)
                                 {
                                 }
                                 finally
                                 {
-                                    Debug.WriteLine("Disposed " + disposed++);
                                     mediaFrameReference?.Dispose();
                                     Interlocked.Exchange(ref frameLock, 0);
                                 }
@@ -340,7 +339,6 @@ namespace BuildIt.Media.Uno.WinUI
 
                     if (!isProcessing)
                     {
-                        Debug.WriteLine("Disposed " + disposed++);
                         mediaFrameReference?.Dispose();
 
                     }

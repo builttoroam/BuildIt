@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UIKit;
+using Windows.Media.Devices;
 
 namespace BuildIt.Media.Uno.WinUI
 {
@@ -251,10 +252,11 @@ namespace BuildIt.Media.Uno.WinUI
             }
         }
 
-        private async Task PlatformStartPreviewFunc()
+        private async Task<CameraResult> PlatformStartPreviewFunc()
         {
-            await SetupLiveCameraStream();
+            var result = await SetupLiveCameraStream();
             isInitialized = true;
+            return result;
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -262,6 +264,7 @@ namespace BuildIt.Media.Uno.WinUI
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             StopCameraFeed();
+            Status = CameraStatus.Stopped;
         }
 
 #pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
@@ -279,14 +282,14 @@ namespace BuildIt.Media.Uno.WinUI
         }
         
 
-        private void SetFocusModeAsync(CameraFocusMode controlFocusMode)
+        private void SetFocusModeAsync(FocusMode controlFocusMode)
         {
             var focusMode = controlFocusMode.ToPlatformFocusMode();
 
-            if (controlFocusMode == CameraFocusMode.Unspecified)
-            {
-                focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
-            }
+            //if (controlFocusMode == FocusMode.Unspecified)
+            //{
+            //    focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
+            //}
 
             if (captureDevice.IsFocusModeSupported(focusMode))
             {
@@ -298,7 +301,7 @@ namespace BuildIt.Media.Uno.WinUI
             {
                 focusMode = RetrieveSupportedFocusModes().LastOrDefault().ToPlatformFocusMode();
                 var fallbackFocusMode = focusMode.ToControlFocusMode();
-                ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<CameraFocusMode>(new[] { string.Format(Constants.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
+                ErrorCommand?.Execute(new CameraPreviewControlErrorParameters<FocusMode>(new[] { string.Format(Constants.Errors.UnsupportedFocusModeFormat, controlFocusMode, fallbackFocusMode) }, fallbackFocusMode, true));
             }
         }
 
@@ -383,8 +386,6 @@ namespace BuildIt.Media.Uno.WinUI
             videoCaptureQueue?.Dispose();
             videoCaptureQueue = null;
             isInitialized = false;
-
-            this.SetStatus(CameraStatus.Stopped);
         }
 
         //private void SetupUserInterface()
@@ -395,44 +396,45 @@ namespace BuildIt.Media.Uno.WinUI
         //    //RootBorder.Child = wrapped;
         //}
 
-        private async Task SetupLiveCameraStream()
+        private async Task<CameraResult> SetupLiveCameraStream()
         {
-            captureSession = new AVCaptureSession();
+                captureSession = new AVCaptureSession();
 
-            videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
-            {
-                Frame = nativePreviewElement.Bounds,
-            };
-            ApplyAspect();
-            nativePreviewElement.Layer.AddSublayer(videoPreviewLayer);
+                videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
+                {
+                    Frame = nativePreviewElement.Bounds,
+                };
+                ApplyAspect();
+                nativePreviewElement.Layer.AddSublayer(videoPreviewLayer);
 
-            captureDevice = GetCameraForPreference(this.PreferredCamera);
+                captureDevice = GetCameraForPreference(this.PreferredCamera);
 
-            await ConfigureCameraForDevice();
-            captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
+                await ConfigureCameraForDevice();
+                captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
-            stillImageOutput = new AVCaptureStillImageOutput
-            {
-                OutputSettings = new NSDictionary(AVVideo.CodecKey, AVVideo.CodecJPEG),
-            };
-            videoOutput = new AVCaptureVideoDataOutput()
-            {
-                AlwaysDiscardsLateVideoFrames = true,
-            };
-            videoCaptureQueue = new DispatchQueue("Video Capture Queue");
-            frameExtractor = new FrameExtractor(OnMediaFrameArrived);
-            videoOutput.SetSampleBufferDelegateQueue(frameExtractor, videoCaptureQueue);
-            captureSession.AddInput(captureDeviceInput);
+                stillImageOutput = new AVCaptureStillImageOutput
+                {
+                    OutputSettings = new NSDictionary(AVVideo.CodecKey, AVVideo.CodecJPEG),
+                };
+                videoOutput = new AVCaptureVideoDataOutput()
+                {
+                    AlwaysDiscardsLateVideoFrames = true,
+                };
+                videoCaptureQueue = new DispatchQueue("Video Capture Queue");
+                frameExtractor = new FrameExtractor(OnMediaFrameArrived);
+                videoOutput.SetSampleBufferDelegateQueue(frameExtractor, videoCaptureQueue);
+                captureSession.AddInput(captureDeviceInput);
 
-            if (captureSession.CanAddOutput(videoOutput))
-            {
-                captureSession.AddOutput(videoOutput);
-            }
+                if (captureSession.CanAddOutput(videoOutput))
+                {
+                    captureSession.AddOutput(videoOutput);
+                }
 
-            captureSession.AddOutput(stillImageOutput);
-            captureSession.StartRunning();
+                captureSession.AddOutput(stillImageOutput);
+                captureSession.StartRunning();
 
-            this.SetStatus(CameraStatus.Running);
+            return CameraResult.Success;
+
         }
 
         private void ApplyAspect()
@@ -486,22 +488,22 @@ namespace BuildIt.Media.Uno.WinUI
             }
         }
 
-        private IReadOnlyList<CameraFocusMode> PlatformRetrieveSupportedFocusModes()
+        private IReadOnlyList<FocusMode> PlatformRetrieveSupportedFocusModes()
         {
-            var supportedFocusModes = new List<CameraFocusMode>();
+            var supportedFocusModes = new List<FocusMode>();
             if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.AutoFocus))
             {
-                supportedFocusModes.Add(CameraFocusMode.Auto);
+                supportedFocusModes.Add(FocusMode.Auto);
             }
 
             if (captureDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
             {
-                supportedFocusModes.Add(CameraFocusMode.Continuous);
+                supportedFocusModes.Add(FocusMode.Continuous);
             }
 
             if (captureDevice.FocusPointOfInterestSupported)
             {
-                supportedFocusModes.Add(CameraFocusMode.Manual);
+                supportedFocusModes.Add(FocusMode.Manual);
             }
 
             return supportedFocusModes.AsReadOnly();

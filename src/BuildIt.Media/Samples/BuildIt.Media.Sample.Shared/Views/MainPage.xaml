@@ -33,6 +33,16 @@
                 <Button Content="UniformToFill"
                         Click="PreviewStretchClick" />
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Auto"
+                        Click="PreviewFocusClick" />
+                <Button Content="Single"
+                        Click="PreviewFocusClick" />
+                <Button Content="Continuous"
+                        Click="PreviewFocusClick" />
+                <Button Content="Manual"
+                        Click="PreviewFocusClick" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

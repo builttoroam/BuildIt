@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Uno.UI;
+using Windows.Media.Devices;
 
 namespace BuildIt.Media.Uno.WinUI
 {
@@ -55,7 +56,7 @@ namespace BuildIt.Media.Uno.WinUI
             throw new NotImplementedException();
         }
 
-        private IReadOnlyList<CameraFocusMode> PlatformRetrieveSupportedFocusModes()
+        private IReadOnlyList<FocusMode> PlatformRetrieveSupportedFocusModes()
         {
             throw new NotImplementedException();
         }
@@ -80,13 +81,14 @@ namespace BuildIt.Media.Uno.WinUI
             //throw new NotImplementedException();
         }
 
-        private async Task PlatformStartPreviewFunc()
+        private async Task<CameraResult> PlatformStartPreviewFunc()
         {
             var started = OpenCamera(nativePreviewElement.Width, nativePreviewElement.Height);
-            if (!started)
+            if (started!= CameraResult.Success)
             {
-                this.StopPreview();
+                await this.StopPreview();
             }
+            return started;
         }
 
 
@@ -466,14 +468,15 @@ namespace BuildIt.Media.Uno.WinUI
         }
 
         // Opens the camera specified by {@link Camera2BasicFragment#mCameraId}.
-        public bool OpenCamera(int width, int height)
+        public CameraResult OpenCamera(int width, int height)
         {
             var activity = ((Android.App.Activity)ContextHelper.Current);
             if (ContextCompat.CheckSelfPermission(activity, Manifest.Permission.Camera) != Permission.Granted)
             {
                 RequestCameraPermission();
-                return false;
+                return CameraResult.CameraAccessDenied;
             }
+
             SetUpCameraOutputs(width, height);
             ConfigureTransform(width, height);
             var manager = (CameraManager)activity.GetSystemService(Android.Content.Context.CameraService);
@@ -484,7 +487,7 @@ namespace BuildIt.Media.Uno.WinUI
                     throw new RuntimeException("Time out waiting to lock camera opening.");
                 }
                 manager.OpenCamera(mCameraId, mStateCallback, mBackgroundHandler);
-                return true;
+                return CameraResult.Success;
             }
             catch (CameraAccessException e)
             {
@@ -494,7 +497,7 @@ namespace BuildIt.Media.Uno.WinUI
             {
                 throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
             }
-            return false;
+            return CameraResult.InitializationFailed_UnknownError;
         }
 
         // Closes the current {@link CameraDevice}.

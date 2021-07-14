@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Media.Devices;
 #pragma warning disable SA1005 // Single line comments should begin with single space
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -66,6 +67,13 @@ namespace BuildIt.Media.Sample.Views
         {
             var stretch = Enum.Parse<Stretch>((sender as Button).Content as string);
             preview.Stretch = stretch;
+
+        }
+        
+        public void PreviewFocusClick(object sender, RoutedEventArgs args)
+        {
+            var focus = Enum.Parse<FocusMode>((sender as Button).Content as string);
+            preview.FocusMode = focus;
 
         }
     }

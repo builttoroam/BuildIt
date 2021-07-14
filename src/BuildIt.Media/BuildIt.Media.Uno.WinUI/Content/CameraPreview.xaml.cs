@@ -33,6 +33,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Media.Devices;
 
 namespace BuildIt.Media.Uno.WinUI
 {
@@ -51,7 +52,7 @@ namespace BuildIt.Media.Uno.WinUI
         /// Gets or sets the focus mode for the camera preview.
         /// </summary>
         //public static readonly BindableProperty FocusModeProperty = BindableProperty.Create(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreview), CameraFocusMode.Continuous, propertyChanged: FocusModePropertyChanged);
-        public static readonly DependencyProperty FocusModeProperty = DependencyProperty.Register(nameof(FocusMode), typeof(CameraFocusMode), typeof(CameraPreview), new PropertyMetadata(CameraFocusMode.Continuous, FocusModePropertyChanged));
+        public static readonly DependencyProperty FocusModeProperty = DependencyProperty.Register(nameof(FocusMode), typeof(FocusMode), typeof(CameraPreview), new PropertyMetadata(FocusMode.Continuous, FocusModePropertyChanged));
 
         /// <summary>
         /// Gets or sets the information on how the camera preview control layout will scale.
@@ -107,9 +108,9 @@ namespace BuildIt.Media.Uno.WinUI
         /// <summary>
         /// Gets or sets the focus mode for the camera preview.
         /// </summary>
-        public CameraFocusMode FocusMode
+        public FocusMode FocusMode
         {
-            get => (CameraFocusMode)GetValue(FocusModeProperty);
+            get => (FocusMode)GetValue(FocusModeProperty);
             set => SetValue(FocusModeProperty, value);
         }
 
@@ -143,7 +144,7 @@ namespace BuildIt.Media.Uno.WinUI
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to start camera preview.
         /// </summary>
-        private Func<Task> StartPreviewFunc { get; set; }
+        private Func<Task<CameraResult>> StartPreviewFunc { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate used by the native renderer implementation to stop camera preview.
@@ -168,7 +169,7 @@ namespace BuildIt.Media.Uno.WinUI
         /// <summary>
         /// Gets or sets a delegate used by the native renderers to return the supported focus modes.
         /// </summary>
-        private Func<IReadOnlyList<CameraFocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
+        private Func<IReadOnlyList<FocusMode>> RetrieveSupportedFocusModesFunc { get; set; }
 
         /// <summary>
         /// Gets or sets A delegate used by the native renderers to return the available cameras.
@@ -219,7 +220,8 @@ namespace BuildIt.Media.Uno.WinUI
 
                     Status = CameraStatus.Starting;
 
-                    await StartPreviewFunc.Invoke();
+                    var result = await StartPreviewFunc.Invoke();
+                    Status = result == CameraResult.Success ? CameraStatus.Running : CameraStatus.Error;
                 }
                 finally
                 {
@@ -274,11 +276,11 @@ namespace BuildIt.Media.Uno.WinUI
         /// Retrieves the focus modes supported by the currently selected camera.
         /// </summary>
         /// <returns>The supported focus modes.</returns>
-        public IReadOnlyList<CameraFocusMode> RetrieveSupportedFocusModes()
+        public IReadOnlyList<FocusMode> RetrieveSupportedFocusModes()
         {
             if (RetrieveSupportedFocusModesFunc == null)
             {
-                return new List<CameraFocusMode>();
+                return new List<FocusMode>();
             }
 
             return RetrieveSupportedFocusModesFunc();
@@ -296,7 +298,7 @@ namespace BuildIt.Media.Uno.WinUI
             }
 
             var supportedFocusModes = RetrieveSupportedFocusModes();
-            if (supportedFocusModes.Any(m => m == CameraFocusMode.Auto))
+            if (supportedFocusModes.Any(m => m == FocusMode.Auto))
             {
                 return await TryFocusingFunc.Invoke();
             }
@@ -371,23 +373,23 @@ namespace BuildIt.Media.Uno.WinUI
 
     }
 
-    internal static class CameraPreviewControlExtensions
-    {
-        /// <summary>
-        /// Extension method that safely sets status.
-        /// </summary>
-        /// <param name="control">CameraPreviewControl control.</param>
-        /// <param name="status">Camera status.</param>
-        internal static void SetStatus(this CameraPreview control, CameraStatus status)
-        {
-            if (control == null)
-            {
-                return;
-            }
+    //internal static class CameraPreviewControlExtensions
+    //{
+    //    /// <summary>
+    //    /// Extension method that safely sets status.
+    //    /// </summary>
+    //    /// <param name="control">CameraPreviewControl control.</param>
+    //    /// <param name="status">Camera status.</param>
+    //    internal static void SetStatus(this CameraPreview control, CameraStatus status)
+    //    {
+    //        if (control == null)
+    //        {
+    //            return;
+    //        }
 
-            control.Status = status;
-        }
-    }
+    //        control.Status = status;
+    //    }
+    //}
 
     /// <summary>
     /// Provides information about the camera preview error.

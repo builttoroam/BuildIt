@@ -1,4 +1,5 @@
 ﻿using AVFoundation;
+using Windows.Media.Devices;
 
 namespace BuildIt.Media.Uno.WinUI
 {
@@ -12,15 +13,15 @@ namespace BuildIt.Media.Uno.WinUI
         /// </summary>
         /// <param name="focusMode">Control specific focus mode.</param>
         /// <returns>Platform specific focus mode.</returns>
-        internal static AVCaptureFocusMode ToPlatformFocusMode(this CameraFocusMode focusMode)
+        internal static AVCaptureFocusMode ToPlatformFocusMode(this FocusMode focusMode)
         {
             switch (focusMode)
             {
-                case CameraFocusMode.Auto:
-                case CameraFocusMode.Manual:
+                case FocusMode.Auto:
+                case FocusMode.Manual:
                     return AVCaptureFocusMode.AutoFocus;
 
-                case CameraFocusMode.Continuous:
+                case FocusMode.Continuous:
                     return AVCaptureFocusMode.ContinuousAutoFocus;
             }
 
@@ -32,18 +33,18 @@ namespace BuildIt.Media.Uno.WinUI
         /// </summary>
         /// <param name="focusMode">Platform specific focus mode.</param>
         /// <returns>Control specific focus mode.</returns>
-        internal static CameraFocusMode ToControlFocusMode(this AVCaptureFocusMode focusMode)
+        internal static FocusMode ToControlFocusMode(this AVCaptureFocusMode focusMode)
         {
             switch (focusMode)
             {
                 case AVCaptureFocusMode.AutoFocus:
-                    return CameraFocusMode.Auto;
+                    return FocusMode.Auto;
 
                 case AVCaptureFocusMode.ContinuousAutoFocus:
-                    return CameraFocusMode.Continuous;
+                    return FocusMode.Continuous;
             }
 
-            return default(CameraFocusMode);
+            return default(FocusMode);
         }
     }
 }
