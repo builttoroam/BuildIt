@@ -17,11 +17,12 @@
 
 	<ItemGroup Condition="'$(IsUWP)'=='true'">
 		<Compile Include="Content\Platform\**\*.uwp.*" />
+		<Compile Include="Content\Platform\*uwp*\*.*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsWinUI)'=='true'">
 		<Compile Include="Content\Platform\**\*.winui.*" />
-		<Compile Include="Content\Platform\winui\*.*" />
+		<Compile Include="Content\Platform\*winui*\*.*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsAndroid)'=='true'">

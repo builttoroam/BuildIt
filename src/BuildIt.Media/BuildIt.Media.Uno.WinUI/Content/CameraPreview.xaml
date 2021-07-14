@@ -9,7 +9,7 @@
              mc:Ignorable="d ios android">
     <Border Background="Red"
             x:Name="RootBorder">
-        <win:Image x:Name="nativePreviewElement" />
+        <win:Image x:Name="nativePreviewElement" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <ios:UIView x:Name="nativePreviewElement" />
         <android:AutoFitTextureView x:Name="nativePreviewElement" />
     </Border>

@@ -65,7 +65,7 @@
         /// <summary>
         /// Camera preview has been started
         /// </summary>
-        Started,
+        Running,
 
         /// <summary>
         /// Camera preview has been paused
@@ -81,21 +81,5 @@
         /// Camera preview is in an error state
         /// </summary>
         Error,
-    }
-
-    /// <summary>
-    /// Enumeration of camera error codes.
-    /// </summary>
-    public enum CameraErrorCode
-    {
-        /// <summary>
-        /// No errors
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// Indicates that the camera failure/error relates to the lack of app camera permissions
-        /// </summary>
-        PermissionsNotGranted,
     }
 }

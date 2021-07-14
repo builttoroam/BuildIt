@@ -78,10 +78,10 @@
     <EntryPointProjectUniqueName>..\BuildIt.Media.Sample.Windows.Desktop\BuildIt.Media.Sample.Windows.Desktop.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>-->
   <ItemGroup>
-    <PackageReference Include="Microsoft.ProjectReunion" Version="[0.8.0]">
+    <PackageReference Include="Microsoft.ProjectReunion" Version="[0.8.1]">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="[0.8.0]">
+    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="[0.8.1]">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
   </ItemGroup>

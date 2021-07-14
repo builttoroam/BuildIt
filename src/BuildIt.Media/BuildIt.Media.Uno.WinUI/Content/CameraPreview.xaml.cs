@@ -57,7 +57,7 @@ namespace BuildIt.Media.Uno.WinUI
         /// Gets or sets the information on how the camera preview control layout will scale.
         /// </summary>
         //public static readonly BindableProperty AspectProperty = BindableProperty.Create(nameof(Aspect), typeof(Aspect), typeof(CameraPreview), default(Aspect));
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch), typeof(Stretch), typeof(CameraPreview), new PropertyMetadata(default(Stretch)));
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch), typeof(Stretch), typeof(CameraPreview), new PropertyMetadata(default(Stretch), StretchPropertyChanged));
 
         /// <summary>
         /// Executed when there's an error in the camera preview control.
@@ -88,7 +88,7 @@ namespace BuildIt.Media.Uno.WinUI
         /// <summary>
         /// Gets indicator of the current error camera status.
         /// </summary>
-        public CameraErrorCode ErrorCode { get; internal set; }
+        public CameraResult ErrorCode { get; internal set; }
 
         /// <summary>
         /// Gets or sets a callback for when a camera receives a frame.
@@ -176,23 +176,30 @@ namespace BuildIt.Media.Uno.WinUI
         private Func<Task<IReadOnlyList<ICamera>>> RetrieveCamerasFunc { get; set; }
 
         /// <summary>
+        /// Gets or sets a delegate used by the native renderer implementation to set focus mode.
+        /// </summary>
+        private Func<Task> SetStretch { get; set; }
+
+
+
+        /// <summary>
         /// Start camera preview.
         /// </summary>
         /// <returns>Task to be awaited</returns>
-        public async Task StartPreview()
+        public async Task<CameraResult> StartPreview()
         {
             if (StartPreviewFunc == null)
             {
-                return;
+                return CameraResult.NotSupportedOnPlatform;
             }
 
             if (await startStopCameraPreviewSemaphoreSlim.WaitAsync(0))
             {
                 try
                 {
-                    if (Status == CameraStatus.Started || Status == CameraStatus.Starting)
+                    if (Status == CameraStatus.Running || Status == CameraStatus.Starting)
                     {
-                        return;
+                        return CameraResult.Success;
                     }
 
                     // If the callback hasn't been provided assume that we have all of the permissions
@@ -206,8 +213,8 @@ namespace BuildIt.Media.Uno.WinUI
                     if (!hasCameraPermissions)
                     {
                         Status = CameraStatus.Error;
-                        ErrorCode = CameraErrorCode.PermissionsNotGranted;
-                        return;
+                        ErrorCode = CameraResult.CameraAccessDenied;
+                        return ErrorCode;
                     }
 
                     Status = CameraStatus.Starting;
@@ -219,6 +226,8 @@ namespace BuildIt.Media.Uno.WinUI
                     startStopCameraPreviewSemaphoreSlim.Release();
                 }
             }
+
+            return Status == CameraStatus.Running ? CameraResult.Success : ErrorCode;
         }
 
         /// <summary>
@@ -281,7 +290,7 @@ namespace BuildIt.Media.Uno.WinUI
         /// <returns>Indicator if focusing succeeded.</returns>
         public async Task<bool> TryFocusing()
         {
-            if (Status != CameraStatus.Started || TryFocusingFunc == null)
+            if (Status != CameraStatus.Running || TryFocusingFunc == null)
             {
                 return false;
             }
@@ -338,13 +347,26 @@ namespace BuildIt.Media.Uno.WinUI
         {
             var cameraPreview = d as CameraPreview;
             if (cameraPreview == null ||
-                cameraPreview.Status != CameraStatus.Started ||
+                cameraPreview.Status != CameraStatus.Running ||
                 cameraPreview.SetFocusModeFunc == null)
             {
                 return;
             }
 
             await cameraPreview.SetFocusModeFunc.Invoke();
+        }
+
+
+        private static async void StretchPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var cameraPreview = d as CameraPreview;
+            if (cameraPreview == null ||
+                cameraPreview.SetStretch== null)
+            {
+                return;
+            }
+
+            await cameraPreview.SetStretch.Invoke();
         }
 
     }

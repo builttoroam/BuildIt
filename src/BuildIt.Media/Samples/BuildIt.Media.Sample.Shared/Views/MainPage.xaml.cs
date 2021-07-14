@@ -46,5 +46,27 @@ namespace BuildIt.Media.Sample.Views
                 dlg.ShowAsync();
             }
         }
+
+        public async void StopPreviewClick(object sender, RoutedEventArgs args)
+        {
+            try
+            {
+
+                await preview.StopPreview();
+
+            }
+            catch (Exception ex)
+            {
+                var dlg = new MessageDialog(ex.Message + "-" + ex.StackTrace, "Error");
+                dlg.ShowAsync();
+            }
+        }
+
+        public void PreviewStretchClick(object sender, RoutedEventArgs args)
+        {
+            var stretch = Enum.Parse<Stretch>((sender as Button).Content as string);
+            preview.Stretch = stretch;
+
+        }
     }
 }

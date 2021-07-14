@@ -46,6 +46,7 @@ namespace BuildIt.Media.Uno.WinUI
             cameraPreviewControl.CaptureNativeFrameToFileFunc = PlatformCapturePhotoToFile;
             cameraPreviewControl.RetrieveSupportedFocusModesFunc = PlatformRetrieveSupportedFocusModes;
             cameraPreviewControl.RetrieveCamerasFunc = PlatformRetrieveCamerasAsync;
+            cameraPreviewControl.SetStretch = PlatformSetSetStretchFunc;
 
             //mTextureView = new AutoFitTextureView(ContextHelper.Current);
             //var wrapped = VisualTreeHelper.AdaptNative(mTextureView);
@@ -270,6 +271,14 @@ namespace BuildIt.Media.Uno.WinUI
             SetFocusModeAsync(FocusMode);
         }
 
+#pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task PlatformSetSetStretchFunc()
+#pragma warning restore 1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            ApplyAspect();
+        }
+        
+
         private void SetFocusModeAsync(CameraFocusMode controlFocusMode)
         {
             var focusMode = controlFocusMode.ToPlatformFocusMode();
@@ -423,7 +432,7 @@ namespace BuildIt.Media.Uno.WinUI
             captureSession.AddOutput(stillImageOutput);
             captureSession.StartRunning();
 
-            this.SetStatus(CameraStatus.Started);
+            this.SetStatus(CameraStatus.Running);
         }
 
         private void ApplyAspect()

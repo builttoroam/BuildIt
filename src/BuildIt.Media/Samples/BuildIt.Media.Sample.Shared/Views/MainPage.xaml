@@ -17,7 +17,22 @@
             <Button Content="Second" Command="{Binding GoSecondCommand}"/>
 
             <media:CameraPreview Height="200" Width="200" x:Name="preview"/>
-            <Button Content="Start" Click="StartPreviewClick"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Start"
+                        Click="StartPreviewClick" />
+                <Button Content="Stop"
+                        Click="StopPreviewClick" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="None"
+                        Click="PreviewStretchClick" />
+                <Button Content="Fill"
+                        Click="PreviewStretchClick" />
+                <Button Content="Uniform"
+                        Click="PreviewStretchClick" />
+                <Button Content="UniformToFill"
+                        Click="PreviewStretchClick" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
