@@ -53,5 +53,6 @@
   <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	  <PackageReference Include="Uno.SourceGenerationTasks" Version="3.1.0" />
   </ItemGroup>
 </Project>
