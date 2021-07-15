@@ -1,0 +1,26 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);NETFX_CORE;WINUI;WINDOWS</DefineConstants>
+		<IsWinUI>true</IsWinUI>
+		<UseWinUI>true</UseWinUI>
+	</PropertyGroup>
+
+<ItemGroup>
+		<Compile
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.cs"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+		<Page
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.xaml"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\**\*.winui.*" Link="buildit.media\win\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\*winui*\*.*" Link="buildit.media\win\%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+</Project>

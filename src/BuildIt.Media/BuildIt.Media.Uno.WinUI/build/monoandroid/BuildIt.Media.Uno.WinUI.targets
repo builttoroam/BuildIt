@@ -1,0 +1,28 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);MONO;ANDROID</DefineConstants>
+		<MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+		<AndroidResgenClass>Resource</AndroidResgenClass>
+		<AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+		<IsXamarin>true</IsXamarin>
+		<IsAndroid>true</IsAndroid>
+	</PropertyGroup>
+
+<ItemGroup>
+		<Compile
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.cs"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+		<Page
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.xaml"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\**\*.droid.*" Link="buildit.media\droid\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\droid\*.*" Link="buildit.media\droid\%(Filename)%(Extension)"/>
+	</ItemGroup>
+</Project>

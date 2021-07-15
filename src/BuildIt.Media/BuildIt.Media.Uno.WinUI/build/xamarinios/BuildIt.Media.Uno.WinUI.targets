@@ -1,0 +1,26 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);MONO;UIKIT;COCOA;IOS;__IOS__</DefineConstants>
+		<IsXamarin>true</IsXamarin>
+		<IsIOS>true</IsIOS>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.cs"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+		<Page
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.xaml"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\**\*.ios.*" Link="buildit.media\ios\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\ios\*.*" Link="buildit.media\ios\%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+</Project>

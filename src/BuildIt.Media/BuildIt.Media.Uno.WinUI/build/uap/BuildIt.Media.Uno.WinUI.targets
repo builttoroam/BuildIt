@@ -1,0 +1,28 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);NETFX_CORE;XAML;WINDOWS;WINDOWS_UWP;UWP</DefineConstants>
+		<TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
+		<TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+		<TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+		<IsUWP>true</IsUWP>
+	</PropertyGroup>
+
+<ItemGroup>
+		<Compile
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.cs"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+		<Page
+			Include="$(MSBuildThisFileDirectory)..\..\buildit\**\*.xaml"
+			Exclude="$(MSBuildThisFileDirectory)..\..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+
+	</ItemGroup>
+
+	<ItemGroup >
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\**\*.uwp.*" Link="buildit.media\uwp\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\buildit\Platform\*uwp*\*.*" Link="buildit.media\uwp\%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+</Project>

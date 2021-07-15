@@ -11,11 +11,16 @@
 
 	<Import Project="..\..\Analysers.targets" />
 	<ItemGroup>
+		<EmbeddedResource Remove="build\**" />
 		<None Remove="**\*.xaml" />
 		<None Remove="**\*.xaml.cs" />
+		<None Remove="build\**" />
 		<Page Remove="**\*.xaml" />
+		<Page Remove="build\**" />
 		<Compile Remove="**\*.xaml.cs" />
+		<Compile Remove="build\**" />
 		<Compile Remove="Content\Platform\**\*.cs" />
+		<UpToDateCheckInput Remove="build\**" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsUWP)'=='true'">

@@ -1,12 +1,12 @@
 ﻿<Project>
-  <PropertyGroup>
-    <IncludeContentInPack>true</IncludeContentInPack>
+	<PropertyGroup>
+		<IncludeContentInPack>true</IncludeContentInPack>
 
-    <!-- This project does not create any binary -->
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-	  <GenerateLibraryLayout>true</GenerateLibraryLayout>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
+		<!-- This project does not create any binary -->
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<GenerateLibraryLayout>true</GenerateLibraryLayout>
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -14,49 +14,92 @@
 
 
 	<ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="Uno.Core" Version="2.4.0" />
-  </ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+		<PackageReference Include="Uno.Core" Version="2.4.0" />
+	</ItemGroup>
 
 
-  <ItemGroup  Condition="$(TargetFramework.StartsWith('uap'))">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.12" />
-  </ItemGroup>
+	<ItemGroup  Condition="$(TargetFramework.StartsWith('uap'))">
+		<PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.12" />
+	</ItemGroup>
 
-  
-  <ItemGroup>
-    <Content Include="Content\**\*.xaml">
-      <!-- Ensure that the content's build action in the target project is Compile -->
-      <BuildAction>Page</BuildAction>
-    </Content>
-	  
-	  <Content Include="Content\**\*.cs">
-      <!-- Ensure that the content's build action in the target project is Compile -->
-      <BuildAction>Compile</BuildAction>
-    </Content>
-  </ItemGroup>
 
-  <PropertyGroup Condition="'$(IsWinUI)' == 'true'">
-    <!--<Platforms>x86;x64;arm64</Platforms>-->
-    <RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
-  </PropertyGroup>
+	<ItemGroup>
+		<Content Include="Content\**\*.xaml" PackagePath="buildit"/>
+		<Content Include="Content\**\*.cs" PackagePath="buildit"/>
 
-  <ItemGroup Condition="'$(IsWinUI)' != 'true' and '$(IsUWP)' != 'true'">
-    <PackageReference Include="Uno.WinUI" Version="3.8.11" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(IsWinUI)' == 'true'">
-    <PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0" />
-  </ItemGroup>
+		<!--<Content Include="BuildIt.Media.Uno.WinUI.props">
+			<Pack>true</Pack>
+			<PackagePath>build</PackagePath>
+		</Content>
+		<Content Include="BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build</PackagePath>
+		</Content>-->
+		<Content Include="build\xamarinios\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\xamarinios10</PackagePath>
+		</Content>
+		<Content Include="build\monoandroid\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\monoandroid10.0</PackagePath>
+		</Content>
+		<Content Include="build\monoandroid\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\monoandroid11.0</PackagePath>
+		</Content>
+		<Content Include="build\uap\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\uap10.0.16299</PackagePath>
+		</Content>
+		<Content Include="build\net-windows\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\net5.0-windows10.0.19041.0</PackagePath>
+		</Content>
+		
+		<Content Include="build\xamarinios\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\xamarinios10</PackagePath>
+		</Content>
+		<Content Include="build\monoandroid\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>buildTransitive\monoandroid10.0</PackagePath>
+		</Content>
+		<Content Include="build\monoandroid\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>buildTransitive\monoandroid11.0</PackagePath>
+		</Content>
+		<Content Include="build\uap\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>buildTransitive\uap10.0.16299</PackagePath>
+		</Content>
+		<Content Include="build\net-windows\BuildIt.Media.Uno.WinUI.targets">
+			<Pack>true</Pack>
+			<PackagePath>buildTransitive\net5.0-windows10.0.19041.0</PackagePath>
+		</Content>
+	</ItemGroup>
 
-  <!--<ItemGroup>
+	<PropertyGroup Condition="'$(IsWinUI)' == 'true'">
+		<!--<Platforms>x86;x64;arm64</Platforms>-->
+		<RuntimeIdentifiers>win10-x86;win10-x64</RuntimeIdentifiers>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(IsWinUI)' != 'true' and '$(IsUWP)' != 'true'">
+		<PackageReference Include="Uno.WinUI" Version="3.8.11" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(IsWinUI)' == 'true'">
+		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0" />
+	</ItemGroup>
+
+	<!--<ItemGroup>
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.19041.16" />
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.19041.16" />
   </ItemGroup>-->
 
-  <PropertyGroup>
-    <!-- Forces Uno's XamlFileGenerator to write error when XAML is invalid-->
-    <ShouldWriteErrorOnInvalidXaml>True</ShouldWriteErrorOnInvalidXaml>
-  </PropertyGroup>
+	<PropertyGroup>
+		<!-- Forces Uno's XamlFileGenerator to write error when XAML is invalid-->
+		<ShouldWriteErrorOnInvalidXaml>True</ShouldWriteErrorOnInvalidXaml>
+	</PropertyGroup>
 </Project>

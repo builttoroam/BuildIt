@@ -1,0 +1,104 @@
+﻿<Project>
+
+	<!--<PropertyGroup>
+		<IsWinUI>false</IsWinUI>
+		<IsUWP>false</IsUWP>
+		<IsXamarin>false</IsXamarin>
+		<IsIOS>false</IsIOS>
+		<IsAndroid>false</IsAndroid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
+		<DefineConstants>$(DefineConstants);NETSTANDARD;PORTABLE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('net4'))">
+		<DefineConstants>$(DefineConstants);NET_461;WPF;XAML</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('uap'))">
+		<DefineConstants>$(DefineConstants);NETFX_CORE;XAML;WINDOWS;WINDOWS_UWP;UWP</DefineConstants>
+		<TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
+		<TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+		<TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+		<IsUWP>true</IsUWP>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('xamarinios'))">
+		<DefineConstants>$(DefineConstants);MONO;UIKIT;COCOA;IOS;__IOS__</DefineConstants>
+		<IsXamarin>true</IsXamarin>
+		<IsIOS>true</IsIOS>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac'))">
+		<DefineConstants>$(DefineConstants);MONO;COCOA;MAC;__MAC__</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.TVOS'))">
+		<DefineConstants>$(DefineConstants);MONO;COCOA;TVOS;__TVOS__</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('Xamarin.WatchOS'))">
+		<DefineConstants>$(DefineConstants);MONO;COCOA;WATCHOS;__WATCHOS__</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('monoandroid'))">
+		<DefineConstants>$(DefineConstants);MONO;ANDROID</DefineConstants>
+		<MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+		<AndroidResgenClass>Resource</AndroidResgenClass>
+		<AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+		<IsXamarin>true</IsXamarin>
+		<IsAndroid>true</IsAndroid>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('netcoreapp'))">
+		<DefineConstants>$(DefineConstants);NETCORE;NETCOREAPP</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('tizen'))">
+		<DefineConstants>$(DefineConstants);TIZEN</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.Contains('windows10'))">
+		<DefineConstants>$(DefineConstants);NETFX_CORE;WINUI;WINDOWS</DefineConstants>
+		<IsWinUI>true</IsWinUI>
+		<UseWinUI>true</UseWinUI>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(ProjectTypeGuids)'=='{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+		<IsXamarin>true</IsXamarin>
+		<IsIOS>true</IsIOS>
+	</PropertyGroup>
+	--><!--<PropertyGroup Condition="'$(ProjectTypeGuids)'=='{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">mac</PropertyGroup>--><!--
+	<PropertyGroup Condition="'$(ProjectTypeGuids)'=='{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+		<IsXamarin>true</IsXamarin>
+		<IsAndroid>true</IsAndroid>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(ProjectTypeGuids)'=='{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'">
+		<IsUWP>true</IsUWP>
+	</PropertyGroup>-->
+
+
+	<ItemGroup>
+		<Compile
+			Include="$(MSBuildThisFileDirectory)..\buildit\**\*.cs"
+			Exclude="$(MSBuildThisFileDirectory)..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+		<Page
+			Include="$(MSBuildThisFileDirectory)..\buildit\**\*.xaml"
+			Exclude="$(MSBuildThisFileDirectory)..\buildit\platform\**\*.*"
+			Link="buildit.media\%(Filename)%(Extension)"/>
+
+	</ItemGroup>
+
+	<!--<ItemGroup Condition="'$(IsUWP)'=='true'">
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\**\*.uwp.*" Link="buildit.media\uwp\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\*uwp*\*.*" Link="buildit.media\uwp\%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsWinUI)'=='true'">
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\**\*.winui.*" Link="buildit.media\win\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\*winui*\*.*" Link="buildit.media\win\%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsAndroid)'=='true'">
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\**\*.droid.*" Link="buildit.media\droid\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\droid\*.*" Link="buildit.media\droid\%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsIOS)'=='true'">
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\**\*.ios.*" Link="buildit.media\ios\%(Filename)%(Extension)"/>
+		<Compile Include="$(MSBuildThisFileDirectory)..\buildit\Platform\ios\*.*" Link="buildit.media\ios\%(Filename)%(Extension)"/>
+	</ItemGroup>-->
+
+</Project>
