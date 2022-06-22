@@ -40,7 +40,7 @@
   <ItemGroup>
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
     <PackageReference Include="BuildIt.States" Version="1.1.0.97" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
