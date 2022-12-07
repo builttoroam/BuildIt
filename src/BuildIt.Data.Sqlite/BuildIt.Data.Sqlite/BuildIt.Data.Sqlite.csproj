@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="BuildIt.General" Version="1.1.0.92" />
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.0.0" />
