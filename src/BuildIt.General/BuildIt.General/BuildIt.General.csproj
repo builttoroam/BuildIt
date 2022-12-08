@@ -92,7 +92,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
   <Import Project="..\..\Analysers.targets" />
